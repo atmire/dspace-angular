@@ -1,7 +1,10 @@
 import {
-  HrefIndexAction, HrefIndexActionTypes, AddToHrefIndexAction,
+  HrefIndexAction,
+  HrefIndexActionTypes,
+  AddToHrefIndexAction,
   RemoveUUIDFromHrefIndexAction
-} from "./href-index.actions";
+} from './href-index.actions';
+
 export interface HrefIndexState {
   [href: string]: string
 }
@@ -9,22 +12,22 @@ export interface HrefIndexState {
 // Object.create(null) ensures the object has no default js properties (e.g. `__proto__`)
 const initialState: HrefIndexState = Object.create(null);
 
-export const hrefIndexReducer = (state = initialState, action: HrefIndexAction): HrefIndexState => {
+export function hrefIndexReducer(state = initialState, action: HrefIndexAction): HrefIndexState {
   switch (action.type) {
 
     case HrefIndexActionTypes.ADD: {
-      return addToHrefIndex(state, <AddToHrefIndexAction>action);
+      return addToHrefIndex(state, action as AddToHrefIndexAction);
     }
 
     case HrefIndexActionTypes.REMOVE_UUID: {
-      return removeUUIDFromHrefIndex(state, <RemoveUUIDFromHrefIndexAction>action)
+      return removeUUIDFromHrefIndex(state, action as RemoveUUIDFromHrefIndexAction)
     }
 
     default: {
       return state;
     }
   }
-};
+}
 
 function addToHrefIndex(state: HrefIndexState, action: AddToHrefIndexAction): HrefIndexState {
   return Object.assign({}, state, {
@@ -33,8 +36,8 @@ function addToHrefIndex(state: HrefIndexState, action: AddToHrefIndexAction): Hr
 }
 
 function removeUUIDFromHrefIndex(state: HrefIndexState, action: RemoveUUIDFromHrefIndexAction): HrefIndexState {
-  let newState = Object.create(null);
-  for (let href in state) {
+  const newState = Object.create(null);
+  for (const href in state) {
     if (state[href] !== action.payload) {
       newState[href] = state[href];
     }

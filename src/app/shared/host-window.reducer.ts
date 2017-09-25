@@ -1,4 +1,4 @@
-import { HostWindowAction, HostWindowActionTypes } from "./host-window.actions";
+import { HostWindowAction, HostWindowActionTypes } from './host-window.actions';
 
 export interface HostWindowState {
   width: number;
@@ -10,7 +10,7 @@ const initialState: HostWindowState = {
   height: null
 };
 
-export const hostWindowReducer = (state = initialState, action: HostWindowAction): HostWindowState => {
+export function hostWindowReducer(state = initialState, action: HostWindowAction): HostWindowState {
   switch (action.type) {
 
     case HostWindowActionTypes.RESIZE: {
@@ -21,4 +21,4 @@ export const hostWindowReducer = (state = initialState, action: HostWindowAction
       return state;
     }
   }
-};
+}

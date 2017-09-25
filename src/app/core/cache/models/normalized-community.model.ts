@@ -1,8 +1,9 @@
-import { autoserialize, inheritSerialization, autoserializeAs } from "cerialize";
-import { NormalizedDSpaceObject } from "./normalized-dspace-object.model";
-import { Community } from "../../shared/community.model";
-import { mapsTo, relationship } from "../builders/build-decorators";
-import { NormalizedDSOType } from "./normalized-dspace-object-type";
+import { autoserialize, inheritSerialization, autoserializeAs } from 'cerialize';
+
+import { NormalizedDSpaceObject } from './normalized-dspace-object.model';
+import { Community } from '../../shared/community.model';
+import { mapsTo, relationship } from '../builders/build-decorators';
+import { ResourceType } from '../../shared/resource-type';
 
 @mapsTo(Community)
 @inheritSerialization(NormalizedDSpaceObject)
@@ -17,20 +18,26 @@ export class NormalizedCommunity extends NormalizedDSpaceObject {
   /**
    * The Bitstream that represents the logo of this Community
    */
+  @autoserialize
+  @relationship(ResourceType.Bitstream, false)
   logo: string;
 
   /**
    * An array of Communities that are direct parents of this Community
    */
-  parents: Array<string>;
+  @autoserialize
+  @relationship(ResourceType.Community, true)
+  parents: string[];
 
   /**
    * The Community that owns this Community
    */
+  @autoserialize
+  @relationship(ResourceType.Community, false)
   owner: string;
 
   @autoserialize
-  @relationship(NormalizedDSOType.NormalizedCollection)
-  collections: Array<string>;
+  @relationship(ResourceType.Collection, true)
+  collections: string[];
 
 }

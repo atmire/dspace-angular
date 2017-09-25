@@ -1,115 +1,125 @@
-import { TestBed, async } from '@angular/core/testing';
-import { Item } from "./item.model";
-import { Bundle } from "./bundle.model";
-import { Observable } from "rxjs";
-import { RemoteData } from "../data/remote-data";
-import { Bitstream } from "./bitstream.model";
+import { Observable } from 'rxjs/Observable';
 
+import { Item } from './item.model';
+import { RemoteData } from '../data/remote-data';
+import { Bitstream } from './bitstream.model';
+import { isEmpty } from '../../shared/empty.util';
+import { PageInfo } from './page-info.model';
 
 describe('Item', () => {
 
+  let item: Item;
+  const thumbnailBundleName = 'THUMBNAIL';
+  const originalBundleName = 'ORIGINAL';
+  const thumbnailPath = 'thumbnail.jpg';
+  const bitstream1Path = 'document.pdf';
+  const bitstream2Path = 'otherfile.doc';
 
-    let item: Item;
-    const thumbnailBundleName = "THUMBNAIL";
-    const originalBundleName = "ORIGINAL";
-    const thumbnailPath = "thumbnail.jpg";
-    const bitstream1Path = "document.pdf";
-    const bitstream2Path = "otherfile.doc";
+  const nonExistingBundleName = 'c1e568f7-d14e-496b-bdd7-07026998cc00';
+  let bitstreams;
+  let remoteDataThumbnail;
+  let remoteDataFiles;
+  let remoteDataAll;
 
-    const nonExistingBundleName = "c1e568f7-d14e-496b-bdd7-07026998cc00";
-    let remoteBundles;
-    let thumbnailBundle;
-    let originalBundle;
+  beforeEach(() => {
+    const thumbnail = {
+      content: thumbnailPath
+    };
 
-    beforeEach(() => {
-        const thumbnail = {
-            retrieve: thumbnailPath
-        };
+    bitstreams = [{
+      content: bitstream1Path
+    }, {
+      content: bitstream2Path
+    }];
 
-        const bitstreams = [{
-            retrieve: bitstream1Path
-        }, {
-            retrieve: bitstream2Path
-        }];
+    remoteDataThumbnail = createRemoteDataObject(thumbnail);
+    remoteDataFiles = createRemoteDataObject(bitstreams);
+    remoteDataAll = createRemoteDataObject([...bitstreams, thumbnail]);
 
-        const remoteDataThumbnail = createRemoteDataObject(thumbnail);
-        const remoteDataFiles = createRemoteDataObject(bitstreams);
+    // Create Bundles
 
-
-        // Create Bundles
-
-        const bundles =
-            [
-                {
-            name: thumbnailBundleName,
-            primaryBitstream: remoteDataThumbnail
+    const bundles =
+      [
+        {
+          name: thumbnailBundleName,
+          primaryBitstream: remoteDataThumbnail
         },
 
-         {
-            name: originalBundleName,
-            bitstreams: remoteDataFiles
+        {
+          name: originalBundleName,
+          bitstreams: remoteDataFiles
         }];
 
-        remoteBundles = createRemoteDataObject(bundles);
+    item = Object.assign(new Item(), { bitstreams: remoteDataAll });
 
-        item = Object.assign(new Item(), { bundles: remoteBundles });
+  });
 
+  it('should return the bitstreams related to this item with the specified bundle name', () => {
+    const bitObs: Observable<Bitstream[]> = item.getBitstreamsByBundleName(thumbnailBundleName);
+    bitObs.take(1).subscribe((bs) =>
+      expect(bs.every((b) => b.name === thumbnailBundleName)).toBeTruthy());
+  });
+
+  it('should return an empty array when no bitstreams with this bundleName exist for this item', () => {
+    const bs: Observable<Bitstream[]> = item.getBitstreamsByBundleName(nonExistingBundleName);
+    bs.take(1).subscribe((b) => expect(isEmpty(b)).toBeTruthy());
+  });
+
+  describe('get thumbnail', () => {
+    beforeEach(() => {
+      spyOn(item, 'getBitstreamsByBundleName').and.returnValue(Observable.of([remoteDataThumbnail]));
     });
 
+    it('should return the thumbnail of this item', () => {
+      const path: string = thumbnailPath;
+      const bitstream: Observable<Bitstream> = item.getThumbnail();
+      bitstream.map((b) => expect(b.content).toBe(path));
+    });
+  });
 
-    it('should return the bundle with the given name of this item when the bundle exists', () => {
-        let name: string = thumbnailBundleName;
-        let bundle: Observable<Bundle> = item.getBundle(name);
-        bundle.map(b => expect(b.name).toBe(name));
+  describe('get files', () => {
+    beforeEach(() => {
+      spyOn(item, 'getBitstreamsByBundleName').and.returnValue(Observable.of(bitstreams));
     });
 
-    it('should return null when no bundle with this name exists for this item', () => {
-        let name: string = nonExistingBundleName;
-        let bundle: Observable<Bundle> = item.getBundle(name);
-        bundle.map(b => expect(b).toBeUndefined());
+    it("should return all bitstreams with 'ORIGINAL' as bundleName", () => {
+      const paths = [bitstream1Path, bitstream2Path];
+
+      const files: Observable<Bitstream[]> = item.getFiles();
+      let index = 0;
+      files.map((f) => expect(f.length).toBe(2));
+      files.subscribe(
+        (array) => array.forEach(
+          (file) => {
+            expect(file.content).toBe(paths[index]);
+            index++;
+          }
+        )
+      )
     });
 
-
-    describe("get thumbnail", () => {
-        beforeEach(() => {
-            spyOn(item, 'getBundle').and.returnValue(Observable.of(thumbnailBundle));
-        });
-
-        it('should return the thumbnail (the primaryBitstream in the bundle "THUMBNAIL") of this item', () => {
-            let path: string = thumbnailPath;
-            let bitstream: Observable<Bitstream> = item.getThumbnail();
-            bitstream.map(b => expect(b.retrieve).toBe(path));
-        });
-    });
-
-
-    describe("get files", () => {
-        beforeEach(() => {
-            spyOn(item, 'getBundle').and.returnValue(Observable.of(originalBundle));
-        });
-
-        it('should return all files in the ORIGINAL bundle', () => {
-            let paths = [bitstream1Path, bitstream2Path];
-
-            let files: Observable<Bitstream[]> = item.getFiles();
-            let index = 0;
-            files.map(f => expect(f.length).toBe(2));
-            files.subscribe(
-                array => array.forEach(
-                    file => {
-                        expect(file.retrieve).toBe(paths[index]);
-                        index++;
-                    }
-                )
-            )
-        });
-
-    });
-
+  });
 
 });
 
-function createRemoteDataObject(object: Object) {
-    return new RemoteData("", Observable.of(false), Observable.of(false), Observable.of(true), Observable.of(undefined), Observable.of(object));
+function createRemoteDataObject(object: any) {
+  const self = '';
+  const requestPending = Observable.of(false);
+  const responsePending = Observable.of(false);
+  const isSuccessful = Observable.of(true);
+  const errorMessage = Observable.of(undefined);
+  const statusCode = Observable.of('200');
+  const pageInfo = Observable.of(new PageInfo());
+  const payload = Observable.of(object);
+  return new RemoteData(
+    self,
+    requestPending,
+    responsePending,
+    isSuccessful,
+    errorMessage,
+    statusCode,
+    pageInfo,
+    payload
+  );
 
 }

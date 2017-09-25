@@ -1,6 +1,7 @@
-import { Action } from "@ngrx/store";
-import { type } from "../../shared/ngrx/type";
-import { CacheableObject } from "./object-cache.reducer";
+import { Action } from '@ngrx/store';
+
+import { type } from '../../shared/ngrx/type';
+import { CacheableObject } from './object-cache.reducer';
 
 /**
  * The list of ObjectCacheAction type definitions
@@ -11,6 +12,7 @@ export const ObjectCacheActionTypes = {
   RESET_TIMESTAMPS: type('dspace/core/cache/object/RESET_TIMESTAMPS')
 };
 
+/* tslint:disable:max-classes-per-file */
 /**
  * An ngrx action to add an object to the cache
  */
@@ -20,6 +22,7 @@ export class AddToObjectCacheAction implements Action {
     objectToCache: CacheableObject;
     timeAdded: number;
     msToLive: number;
+    requestHref: string;
   };
 
   /**
@@ -31,9 +34,13 @@ export class AddToObjectCacheAction implements Action {
    *    the time it was added
    * @param msToLive
    *    the amount of milliseconds before it should expire
+   * @param requestHref
+   *    The href of the request that resulted in this object
+   *    This isn't necessarily the same as the object's self
+   *    link, it could have been part of a list for example
    */
-  constructor(objectToCache: CacheableObject, timeAdded: number, msToLive: number) {
-    this.payload = { objectToCache, timeAdded, msToLive };
+  constructor(objectToCache: CacheableObject, timeAdded: number, msToLive: number, requestHref: string) {
+    this.payload = { objectToCache, timeAdded, msToLive, requestHref };
   }
 }
 
@@ -72,6 +79,7 @@ export class ResetObjectCacheTimestampsAction implements Action {
     this.payload = newTimestamp;
   }
 }
+/* tslint:enable:max-classes-per-file */
 
 /**
  * A type to encompass all ObjectCacheActions

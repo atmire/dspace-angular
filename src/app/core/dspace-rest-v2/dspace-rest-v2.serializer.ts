@@ -1,8 +1,10 @@
-import { Serialize, Deserialize } from "cerialize";
-import { Serializer } from "../serializer";
-import { DSpaceRESTV2Response } from "./dspace-rest-v2-response.model";
-import { DSpaceRESTv2Validator } from "./dspace-rest-v2.validator";
-import { GenericConstructor } from "../shared/generic-constructor";
+import { Serialize, Deserialize } from 'cerialize';
+
+import { Serializer } from '../serializer';
+import { DSpaceRESTV2Response } from './dspace-rest-v2-response.model';
+import { DSpaceRESTv2Validator } from './dspace-rest-v2.validator';
+import { GenericConstructor } from '../shared/generic-constructor';
+import { hasNoValue, hasValue } from '../../shared/empty.util';
 
 /**
  * This Serializer turns responses from v2 of DSpace's REST API
@@ -25,10 +27,8 @@ export class DSpaceRESTv2Serializer<T> implements Serializer<T> {
    * @param model The model to serialize
    * @returns An object to send to the backend
    */
-  serialize(model: T): DSpaceRESTV2Response {
-    return {
-      "_embedded": Serialize(model, this.modelType)
-    };
+  serialize(model: T): any {
+    return Serialize(model, this.modelType);
   }
 
   /**
@@ -37,10 +37,8 @@ export class DSpaceRESTv2Serializer<T> implements Serializer<T> {
    * @param models The array of models to serialize
    * @returns An object to send to the backend
    */
-  serializeArray(models: Array<T>): DSpaceRESTV2Response {
-    return {
-      "_embedded": Serialize(models, this.modelType)
-    };
+  serializeArray(models: T[]): any {
+    return Serialize(models, this.modelType);
   }
 
   /**
@@ -49,14 +47,14 @@ export class DSpaceRESTv2Serializer<T> implements Serializer<T> {
    * @param response An object returned by the backend
    * @returns a model of type T
    */
-  deserialize(response: DSpaceRESTV2Response): T {
+  deserialize(response: any): T {
     // TODO enable validation, once rest data stabilizes
     // new DSpaceRESTv2Validator(response).validate();
-    if (Array.isArray(response._embedded)) {
+    if (Array.isArray(response)) {
       throw new Error('Expected a single model, use deserializeArray() instead');
     }
-    let normalized = Object.assign({}, response._embedded, this.normalizeLinks(response._embedded._links));
-    return <T> Deserialize(normalized, this.modelType);
+    const normalized = Object.assign({}, response, this.normalizeLinks(response._links));
+    return Deserialize(normalized, this.modelType) as T;
   }
 
   /**
@@ -65,28 +63,27 @@ export class DSpaceRESTv2Serializer<T> implements Serializer<T> {
    * @param response An object returned by the backend
    * @returns an array of models of type T
    */
-  deserializeArray(response: DSpaceRESTV2Response): Array<T> {
-    //TODO enable validation, once rest data stabilizes
+  deserializeArray(response: any): T[] {
+    // TODO: enable validation, once rest data stabilizes
     // new DSpaceRESTv2Validator(response).validate();
-    if (!Array.isArray(response._embedded)) {
+    if (!Array.isArray(response)) {
       throw new Error('Expected an Array, use deserialize() instead');
     }
-    let normalized = response._embedded.map((resource) => {
-       return Object.assign({}, resource, this.normalizeLinks(resource._links));
+    const normalized = response.map((resource) => {
+      return Object.assign({}, resource, this.normalizeLinks(resource._links));
     });
 
-    return <Array<T>> Deserialize(normalized, this.modelType);
+    return Deserialize(normalized, this.modelType) as T[];
   }
 
-  private normalizeLinks(links:any): any {
-    let normalizedLinks = links;
-    for (let link in normalizedLinks) {
+  private normalizeLinks(links: any): any {
+    const normalizedLinks = links;
+    for (const link in normalizedLinks) {
       if (Array.isArray(normalizedLinks[link])) {
-        normalizedLinks[link] = normalizedLinks[link].map(linkedResource => {
+        normalizedLinks[link] = normalizedLinks[link].map((linkedResource) => {
           return linkedResource.href;
         });
-      }
-      else {
+      } else {
         normalizedLinks[link] = normalizedLinks[link].href;
       }
     }

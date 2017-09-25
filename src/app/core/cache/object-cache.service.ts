@@ -1,10 +1,22 @@
-import { Injectable } from "@angular/core";
-import { Store } from "@ngrx/store";
-import { ObjectCacheState, ObjectCacheEntry, CacheableObject } from "./object-cache.reducer";
-import { AddToObjectCacheAction, RemoveFromObjectCacheAction } from "./object-cache.actions";
-import { Observable } from "rxjs";
-import { hasNoValue } from "../../shared/empty.util";
-import { GenericConstructor } from "../shared/generic-constructor";
+import { Injectable } from '@angular/core';
+import { MemoizedSelector, Store } from '@ngrx/store';
+
+import { Observable } from 'rxjs/Observable';
+
+import { ObjectCacheEntry, CacheableObject } from './object-cache.reducer';
+import { AddToObjectCacheAction, RemoveFromObjectCacheAction } from './object-cache.actions';
+import { hasNoValue } from '../../shared/empty.util';
+import { GenericConstructor } from '../shared/generic-constructor';
+import { CoreState } from '../core.reducers';
+import { keySelector } from '../shared/selectors';
+
+function objectFromUuidSelector(uuid: string): MemoizedSelector<CoreState, ObjectCacheEntry> {
+  return keySelector<ObjectCacheEntry>('data/object', uuid);
+}
+
+function uuidFromHrefSelector(href: string): MemoizedSelector<CoreState, string> {
+  return keySelector<string>('index/href', href);
+}
 
 /**
  * A service to interact with the object cache
@@ -12,8 +24,8 @@ import { GenericConstructor } from "../shared/generic-constructor";
 @Injectable()
 export class ObjectCacheService {
   constructor(
-    private store: Store<ObjectCacheState>
-  ) {}
+    private store: Store<CoreState>
+  ) { }
 
   /**
    * Add an object to the cache
@@ -22,9 +34,13 @@ export class ObjectCacheService {
    *    The object to add
    * @param msToLive
    *    The number of milliseconds it should be cached for
+   * @param requestHref
+   *    The href of the request that resulted in this object
+   *    This isn't necessarily the same as the object's self
+   *    link, it could have been part of a list for example
    */
-  add(objectToCache: CacheableObject, msToLive: number): void {
-    this.store.dispatch(new AddToObjectCacheAction(objectToCache, new Date().getTime(), msToLive));
+  add(objectToCache: CacheableObject, msToLive: number, requestHref: string): void {
+    this.store.dispatch(new AddToObjectCacheAction(objectToCache, new Date().getTime(), msToLive, requestHref));
   }
 
   /**
@@ -54,15 +70,30 @@ export class ObjectCacheService {
    *    An observable of the requested object
    */
   get<T extends CacheableObject>(uuid: string, type: GenericConstructor<T>): Observable<T> {
-    return this.store.select<ObjectCacheEntry>('core', 'cache', 'object', uuid)
-      .filter(entry => this.isValid(entry))
-      .distinctUntilChanged()
-      .map((entry: ObjectCacheEntry) => <T> Object.assign(new type(), entry.data));
+    return this.getEntry(uuid)
+      .map((entry: ObjectCacheEntry) => Object.assign(new type(), entry.data) as T);
   }
 
   getBySelfLink<T extends CacheableObject>(href: string, type: GenericConstructor<T>): Observable<T> {
-    return this.store.select<string>('core', 'index', 'href', href)
+    return this.store.select(uuidFromHrefSelector(href))
       .flatMap((uuid: string) => this.get(uuid, type))
+  }
+
+  private getEntry(uuid: string): Observable<ObjectCacheEntry> {
+    return this.store.select(objectFromUuidSelector(uuid))
+      .filter((entry) => this.isValid(entry))
+      .distinctUntilChanged();
+  }
+
+  getRequestHref(uuid: string): Observable<string> {
+    return this.getEntry(uuid)
+      .map((entry: ObjectCacheEntry) => entry.requestHref)
+      .distinctUntilChanged();
+  }
+
+  getRequestHrefBySelfLink(self: string): Observable<string> {
+    return this.store.select(uuidFromHrefSelector(self))
+      .flatMap((uuid: string) => this.getRequestHref(uuid));
   }
 
   /**
@@ -84,7 +115,7 @@ export class ObjectCacheService {
    *    The type of the objects to get
    * @return Observable<Array<T>>
    */
-  getList<T extends CacheableObject>(uuids: Array<string>, type: GenericConstructor<T>): Observable<Array<T>> {
+  getList<T extends CacheableObject>(uuids: string[], type: GenericConstructor<T>): Observable<T[]> {
     return Observable.combineLatest(
       uuids.map((id: string) => this.get<T>(id, type))
     );
@@ -102,9 +133,9 @@ export class ObjectCacheService {
   has(uuid: string): boolean {
     let result: boolean;
 
-    this.store.select<ObjectCacheEntry>('core', 'cache', 'object', uuid)
+    this.store.select(objectFromUuidSelector(uuid))
       .take(1)
-      .subscribe(entry => result = this.isValid(entry));
+      .subscribe((entry) => result = this.isValid(entry));
 
     return result;
   }
@@ -119,9 +150,9 @@ export class ObjectCacheService {
    *    false otherwise
    */
   hasBySelfLink(href: string): boolean {
-    let result: boolean = false;
+    let result = false;
 
-    this.store.select<string>('core', 'index', 'href', href)
+    this.store.select(uuidFromHrefSelector(href))
       .take(1)
       .subscribe((uuid: string) => result = this.has(uuid));
 
@@ -140,8 +171,7 @@ export class ObjectCacheService {
   private isValid(entry: ObjectCacheEntry): boolean {
     if (hasNoValue(entry)) {
       return false;
-    }
-    else {
+    } else {
       const timeOutdated = entry.timeAdded + entry.msToLive;
       const isOutDated = new Date().getTime() > timeOutdated;
       if (isOutDated) {

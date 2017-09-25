@@ -4,6 +4,26 @@
     "link.dspace": "DSpace software",
     "link.duraspace": "DuraSpace"
   },
+  "collection": {
+    "page": {
+      "news": "News",
+      "license": "License",
+      "browse": {
+        "recent": {
+          "head": "Recent Submissions"
+        }
+      }
+    }
+  },
+  "community": {
+    "page": {
+      "news": "News",
+      "license": "License"
+    },
+    "sub-collection-list": {
+      "head": "Collections of this Community"
+    }
+  },
   "item": {
     "page": {
       "author": "Author",
@@ -30,6 +50,7 @@
   },
   "pagination": {
     "results-per-page": "Results Per Page",
+    "sort-direction": "Sort Options",
     "showing": {
       "label": "Now showing items ",
       "detail": "{{ range }} of {{ total }}"

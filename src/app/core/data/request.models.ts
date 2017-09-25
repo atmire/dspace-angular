@@ -1,32 +1,40 @@
-import { SortOptions } from "../cache/models/sort-options.model";
-import { PaginationOptions } from "../cache/models/pagination-options.model";
-import { GenericConstructor } from "../shared/generic-constructor";
+import { SortOptions } from '../cache/models/sort-options.model';
+import { PaginationComponentOptions } from '../../shared/pagination/pagination-component-options.model';
+import { GenericConstructor } from '../shared/generic-constructor';
 
+/* tslint:disable:max-classes-per-file */
 export class Request<T> {
   constructor(
     public href: string,
-    public resourceType: GenericConstructor<T>
-  ) {}
+  ) { }
 }
 
 export class FindByIDRequest<T> extends Request<T> {
   constructor(
     href: string,
-    resourceType: GenericConstructor<T>,
     public resourceID: string
   ) {
-    super(href, resourceType);
+    super(href);
   }
+}
+
+export class FindAllOptions {
+  scopeID?: string;
+  elementsPerPage?: number;
+  currentPage?: number;
+  sort?: SortOptions;
 }
 
 export class FindAllRequest<T> extends Request<T> {
   constructor(
     href: string,
-    resourceType: GenericConstructor<T>,
-    public scopeID?: string,
-    public paginationOptions?: PaginationOptions,
-    public sortOptions?: SortOptions
+    public options?: FindAllOptions,
   ) {
-    super(href, resourceType);
+    super(href);
   }
 }
+
+export class RequestError extends Error {
+  statusText: string;
+}
+/* tslint:enable:max-classes-per-file */
