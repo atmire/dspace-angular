@@ -17,7 +17,12 @@ module.exports = {
     aggregateTimeout: 50,
   },
   module: {
-    rules: [{
+    rules: [
+      {
+        test: /web-animations\.min\.js/,
+        loader: 'imports-loader?this=>window'
+      },
+      {
         test: /\.ts$/,
         loader: '@ngtools/webpack'
       },

@@ -23,7 +23,7 @@
     "prebuild": "yarn run clean:dist",
     "prebuild:aot": "yarn run prebuild",
     "prebuild:prod": "yarn run prebuild",
-    "build": "webpack --progress",
+    "build": "webpack --progress --display verbose",
     "build:aot": "webpack --env.aot --env.server && webpack --env.aot --env.client",
     "build:prod": "webpack --env.aot --env.server -p && webpack --env.aot --env.client -p",
     "postbuild:prod": "yarn run rollup",
