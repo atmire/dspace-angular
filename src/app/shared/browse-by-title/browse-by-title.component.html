@@ -1,0 +1,16 @@
+<h2>{{title}}</h2>
+<h3>Test data: </h3>
+<div class="row">
+  <ds-search-form id="search-form" class="col-xs-12 col-sm-6"
+                  [query]="query"
+                  [currentUrl]="currentUrl">
+  </ds-search-form>
+</div>
+<div *ngIf="(objects | async)?.hasSucceeded && !(objects | async)?.isLoading && (objects | async)?.payload?.page.length > 0" @fadeIn>
+  <ds-viewable-collection
+    [config]="config"
+    [sortConfig]="sortConfig"
+    [objects]="(objects | async)">
+  </ds-viewable-collection>
+</div>
+<ds-loading *ngIf="!objects || (objects | async)?.isLoading" message="{{'loading.search-results' | translate}}"></ds-loading>

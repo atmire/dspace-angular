@@ -48,6 +48,7 @@ import { TruncatableComponent } from './truncatable/truncatable.component';
 import { TruncatableService } from './truncatable/truncatable.service';
 import { TruncatablePartComponent } from './truncatable/truncatable-part/truncatable-part.component';
 import { MockAdminGuard } from './mocks/mock-admin-guard.service';
+import { BrowseByTitleComponent } from './browse-by-title/browse-by-title.component';
 
 const MODULES = [
   // Do NOT include UniversalModule, HttpModule, or JsonpModule here
@@ -89,6 +90,7 @@ const COMPONENTS = [
   ViewModeSwitchComponent,
   TruncatableComponent,
   TruncatablePartComponent,
+  BrowseByTitleComponent
 ];
 
 const ENTRY_COMPONENTS = [
