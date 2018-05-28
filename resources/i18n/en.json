@@ -133,6 +133,9 @@
       }
     }
   },
+  "browse": {
+    "title": "Browsing {{ collection }} by {{ field }} {{ value }}"
+  },
   "loading": {
     "default": "Loading...",
     "top-level-communities": "Loading top level communities...",
@@ -142,7 +145,8 @@
     "recent-submissions": "Loading recent submissions...",
     "item": "Loading item...",
     "objects": "Loading...",
-    "search-results": "Loading search results..."
+    "search-results": "Loading search results...",
+    "browse-by": "Loading items..."
   },
   "error": {
     "default": "Error",
@@ -153,6 +157,7 @@
     "recent-submissions": "Error fetching recent submissions",
     "item": "Error fetching item",
     "objects": "Error fetching objects",
-    "search-results": "Error fetching search results"
+    "search-results": "Error fetching search results",
+    "browse-by": "Error fetching items"
   }
 }

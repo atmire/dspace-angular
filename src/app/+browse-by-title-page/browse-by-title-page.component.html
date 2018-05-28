@@ -1,10 +1,11 @@
 <div class="container">
-  <div class="browse-by-title row">
-    <ds-browse-by-title class="col-xs-12"
-      title="test"
-      [objects]="objects"
+  <div class="browse-by-title w-100 row">
+    <ds-browse-by-title class="col-xs-12 w-100"
+      title="{{'browse.title' | translate:{collection: '', field: 'Title', value: ''} }}"
+      [objects]="itemRDObs"
       [currentUrl]="currentUrl"
-      [config]="config">
+      [paginationConfig]="paginationConfig"
+      [sortConfig]="sortConfig">
     </ds-browse-by-title>
   </div>
 </div>

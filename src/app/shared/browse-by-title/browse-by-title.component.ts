@@ -20,8 +20,7 @@ import { Observable } from 'rxjs/Observable';
 export class BrowseByTitleComponent {
   @Input() title: string;
   @Input() objects: Observable<RemoteData<PaginatedList<DSpaceObject>>>;
-  @Input() viewMode: ViewMode;
-  @Input() config: PaginationComponentOptions;
+  @Input() paginationConfig: PaginationComponentOptions;
   @Input() sortConfig: SortOptions;
   @Input() currentUrl: string;
   query: string;
