@@ -1,24 +1,24 @@
-import { BrowseByTitleComponent } from './browse-by-title.component';
+import { BrowseByComponent } from './browse-by.component';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { By } from '@angular/platform-browser';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-describe('BrowseByTitleComponent', () => {
-  let comp: BrowseByTitleComponent;
-  let fixture: ComponentFixture<BrowseByTitleComponent>;
+describe('BrowseByComponent', () => {
+  let comp: BrowseByComponent;
+  let fixture: ComponentFixture<BrowseByComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
-      declarations: [BrowseByTitleComponent],
+      declarations: [BrowseByComponent],
       schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BrowseByTitleComponent);
+    fixture = TestBed.createComponent(BrowseByComponent);
     comp = fixture.componentInstance;
   });
 

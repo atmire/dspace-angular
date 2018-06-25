@@ -48,7 +48,9 @@ import { TruncatableComponent } from './truncatable/truncatable.component';
 import { TruncatableService } from './truncatable/truncatable.service';
 import { TruncatablePartComponent } from './truncatable/truncatable-part/truncatable-part.component';
 import { MockAdminGuard } from './mocks/mock-admin-guard.service';
-import { BrowseByTitleComponent } from './browse-by-title/browse-by-title.component';
+import { MetadataListElementComponent } from './object-list/metadata-list-element/metadata-list-element.component';
+import { BrowseByModule } from '../+browse-by/browse-by.module';
+import { BrowseByComponent } from './browse-by/browse-by.component';
 
 const MODULES = [
   // Do NOT include UniversalModule, HttpModule, or JsonpModule here
@@ -90,12 +92,13 @@ const COMPONENTS = [
   ViewModeSwitchComponent,
   TruncatableComponent,
   TruncatablePartComponent,
-  BrowseByTitleComponent
+  BrowseByComponent
 ];
 
 const ENTRY_COMPONENTS = [
   // put shared entry components (components that are created dynamically) here
   ItemListElementComponent,
+  MetadataListElementComponent,
   CollectionListElementComponent,
   CommunityListElementComponent,
   SearchResultListElementComponent,
