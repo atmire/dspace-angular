@@ -21,6 +21,7 @@ import { CollectionDataService } from './data/collection-data.service';
 import { CommunityDataService } from './data/community-data.service';
 import { DebugResponseParsingService } from './data/debug-response-parsing.service';
 import { DSOResponseParsingService } from './data/dso-response-parsing.service';
+import { PIDService } from './data/pid.service';
 import { SearchResponseParsingService } from './data/search-response-parsing.service';
 import { DSpaceRESTv2Service } from './dspace-rest-v2/dspace-rest-v2.service';
 import { FormBuilderService } from '../shared/form/builder/form-builder.service';
@@ -124,6 +125,7 @@ const PROVIDERS = [
   IntegrationResponseParsingService,
   UploaderService,
   UUIDService,
+  PIDService,
   // register AuthInterceptor as HttpInterceptor
   {
     provide: HTTP_INTERCEPTORS,
