@@ -107,4 +107,12 @@ export class Item extends DSpaceObject {
       }));
   }
 
+  hasEmbargo(): boolean {
+    const embargo = this.firstMetadataValue('dc.type.embargo');
+    if (hasValue(embargo)) {
+      return embargo !== 'none';
+    }
+    return false;
+  }
+
 }

@@ -18,7 +18,7 @@
           </ng-container>
         </tbody>
       </table>
-      <ds-item-page-full-file-section [item]="item"></ds-item-page-full-file-section>
+      <ds-item-page-full-file-section *ngIf="!(item.firstMetadataValue('relationship.type') === 'DataFile' && item.hasEmbargo())" [item]="item"></ds-item-page-full-file-section>
       <ds-item-page-collections [item]="item"></ds-item-page-collections>
     </div>
   </div>

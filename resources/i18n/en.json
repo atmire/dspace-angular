@@ -294,7 +294,9 @@
     "isSingleVolumeOf": "Journal Volume",
     "isIssueOf": "Journal Issues",
     "isJournalIssueOf": "Journal Issue",
-    "isPublicationOfJournalIssue": "Articles"
+    "isPublicationOfJournalIssue": "Articles",
+    "isDataFileOf": "Data Files",
+    "isDataPackageOf": "Data Package"
   },
   "person": {
     "page": {
@@ -388,6 +390,23 @@
     },
     "listelement": {
       "badge": "Publication"
+    }
+  },
+  "datapackage": {
+    "page": {
+      "titleprefix": "Data Package: ",
+      "prism-publication-name": "Journal Name"
+    },
+    "listelement": {
+      "badge": "Data Package"
+    }
+  },
+  "datafile": {
+    "page": {
+      "titleprefix": "Data File: "
+    },
+    "listelement": {
+      "badge": "Data File"
     }
   },
   "nav": {

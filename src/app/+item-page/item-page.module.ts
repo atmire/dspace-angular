@@ -30,6 +30,8 @@ import { ItemComponent } from './simple/item-types/shared/item.component';
 import { EditItemPageModule } from './edit-item-page/edit-item-page.module';
 import { MetadataRepresentationListComponent } from './simple/metadata-representation-list/metadata-representation-list.component';
 import { RelatedEntitiesSearchComponent } from './simple/related-entities/related-entities-search/related-entities-search.component';
+import { DataPackageComponent } from './simple/item-types/data-package/data-package.component';
+import { DataFileComponent } from './simple/item-types/data-file/data-file.component';
 
 @NgModule({
   imports: [
@@ -63,7 +65,9 @@ import { RelatedEntitiesSearchComponent } from './simple/related-entities/relate
     JournalIssueComponent,
     JournalVolumeComponent,
     MetadataRepresentationListComponent,
-    RelatedEntitiesSearchComponent
+    RelatedEntitiesSearchComponent,
+    DataPackageComponent,
+    DataFileComponent
   ],
   entryComponents: [
     PublicationComponent,
@@ -72,7 +76,9 @@ import { RelatedEntitiesSearchComponent } from './simple/related-entities/relate
     PersonComponent,
     JournalComponent,
     JournalIssueComponent,
-    JournalVolumeComponent
+    JournalVolumeComponent,
+    DataPackageComponent,
+    DataFileComponent
   ]
 })
 export class ItemPageModule {
