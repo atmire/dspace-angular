@@ -27,4 +27,12 @@ export class MetadataValuesComponent {
    */
   @Input() label: string;
 
+  getValue(mdValue: MetadataValue) {
+    let result = mdValue.value;
+    if (result.match('(\\d{4}-\\d\\d-\\d\\d)T\\d\\d:\\d\\d:\\d\\dZ')) {
+      result = result.substring(0, result.indexOf('T'));
+    }
+    return result;
+  }
+
 }

@@ -78,8 +78,11 @@ export class BrowseByDatePageComponent extends BrowseByMetadataPageComponent {
         let lowerLimit = this.config.browseBy.defaultLowerLimit;
         if (hasValue(firstItemRD.payload)) {
           const date = firstItemRD.payload.firstMetadataValue(metadataField);
-          if (hasValue(date) && hasValue(+date.split('-')[0])) {
-            lowerLimit = +date.split('-')[0];
+          if (hasValue(date)) {
+            const dateObj = new Date(date);
+            if (dateObj) {
+              lowerLimit = dateObj.getFullYear();
+            }
           }
         }
         const options = [];

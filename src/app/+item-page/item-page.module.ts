@@ -32,6 +32,8 @@ import { MetadataRepresentationListComponent } from './simple/metadata-represent
 import { RelatedEntitiesSearchComponent } from './simple/related-entities/related-entities-search/related-entities-search.component';
 import { DataPackageComponent } from './simple/item-types/data-package/data-package.component';
 import { DataFileComponent } from './simple/item-types/data-file/data-file.component';
+import { ItemPageDoiFieldComponent } from './simple/field-components/specific-field/doi/item-page-doi-field.component';
+import { MetadataDoiValuesComponent } from './field-components/metadata-doi-values/metadata-doi-values.component';
 
 @NgModule({
   imports: [
@@ -45,10 +47,12 @@ import { DataFileComponent } from './simple/item-types/data-file/data-file.compo
     ItemPageComponent,
     FullItemPageComponent,
     MetadataUriValuesComponent,
+    MetadataDoiValuesComponent,
     ItemPageAuthorFieldComponent,
     ItemPageDateFieldComponent,
     ItemPageAbstractFieldComponent,
     ItemPageUriFieldComponent,
+    ItemPageDoiFieldComponent,
     ItemPageTitleFieldComponent,
     ItemPageFieldComponent,
     FileSectionComponent,
