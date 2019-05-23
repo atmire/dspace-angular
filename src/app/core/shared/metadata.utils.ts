@@ -215,4 +215,12 @@ export class Metadata {
       });
     return metadataMap;
   }
+
+  public static toReadableDate(value: string): string {
+    if (value && value.match('(\\d{4}-\\d\\d-\\d\\d)T\\d\\d:\\d\\d:\\d\\dZ')) {
+      value = value.substring(0, value.indexOf('T'));
+    }
+    return value;
+  }
+
 }

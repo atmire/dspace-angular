@@ -41,7 +41,7 @@ export class SearchResultListElementComponent<T extends SearchResult<K>, K exten
    * @returns {string} the first matching string value, or `undefined`.
    */
   firstMetadataValue(keyOrKeys: string | string[]): string {
-    return Metadata.firstValue([this.object.hitHighlights, this.dso.metadata], keyOrKeys);
+    return Metadata.toReadableDate(Metadata.firstValue([this.object.hitHighlights, this.dso.metadata], keyOrKeys));
   }
 
   isCollapsed(): Observable<boolean> {

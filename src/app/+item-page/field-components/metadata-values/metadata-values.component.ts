@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { MetadataValue } from '../../../core/shared/metadata.models';
+import { Metadata } from '../../../core/shared/metadata.utils';
 
 /**
  * This component renders the configured 'values' into the ds-metadata-field-wrapper component.
@@ -28,11 +29,7 @@ export class MetadataValuesComponent {
   @Input() label: string;
 
   getValue(mdValue: MetadataValue) {
-    let result = mdValue.value;
-    if (result.match('(\\d{4}-\\d\\d-\\d\\d)T\\d\\d:\\d\\d:\\d\\dZ')) {
-      result = result.substring(0, result.indexOf('T'));
-    }
-    return result;
+    return Metadata.toReadableDate(mdValue.value);
   }
 
 }
