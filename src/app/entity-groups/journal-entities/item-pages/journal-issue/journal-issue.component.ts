@@ -14,8 +14,8 @@ import {
 @rendersItemType('JournalIssue', ItemViewMode.Full)
 @Component({
   selector: 'ds-journal-issue',
-  styleUrls: ['./journal-issue.component.scss'],
-  templateUrl: './journal-issue.component.html'
+  styleUrls: ['./themes/journal-issue.component.mantis.scss'],
+  templateUrl: './themes/journal-issue.component.mantis.html'
 })
 /**
  * The component for displaying metadata and relations of an item of the type Journal Issue

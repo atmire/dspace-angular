@@ -15,8 +15,8 @@ import {
 @rendersItemType('Project', ItemViewMode.Full)
 @Component({
   selector: 'ds-project',
-  styleUrls: ['./project.component.scss'],
-  templateUrl: './project.component.html'
+  styleUrls: ['./themes/project.component.mantis.scss'],
+  templateUrl: './themes/project.component.mantis.html'
 })
 /**
  * The component for displaying metadata and relations of an item of the type Project
