@@ -315,6 +315,12 @@
     },
     "listelement": {
       "badge": "Person"
+    },
+    "search": {
+      "title": "DSpace Angular :: Person Search",
+      "results": {
+        "head": "Person Search Results"
+      }
     }
   },
   "project": {
@@ -355,6 +361,12 @@
     },
     "listelement": {
       "badge": "Journal"
+    },
+    "search": {
+      "title": "DSpace Angular :: Journal Search",
+      "results": {
+        "head": "Journal Search Results"
+      }
     }
   },
   "journalvolume": {
@@ -391,6 +403,12 @@
     },
     "listelement": {
       "badge": "Publication"
+    },
+    "search": {
+      "title": "DSpace Angular :: Publication Search",
+      "results": {
+        "head": "Publication Search Results"
+      }
     }
   },
   "datapackage": {
@@ -511,24 +529,6 @@
     }
   },
   "search": {
-    "journal": {
-      "title": "DSpace Angular :: Journal Search",
-      "results": {
-        "head": "Journal Search Results"
-      }
-    },
-    "person": {
-      "title": "DSpace Angular :: Person Search",
-      "results": {
-        "head": "Person Search Results"
-      }
-    },
-    "publication": {
-      "title": "DSpace Angular :: Publication Search",
-      "results": {
-        "head": "Publication Search Results"
-      }
-    },
     "title": "DSpace Angular :: Search",
     "description": "",
     "form": {
@@ -639,6 +639,34 @@
         "birthDate": {
           "placeholder": "Birth Date",
           "head": "Birth Date"
+        },
+        "creativeWorkPublisher": {
+          "placeholder": "Publisher",
+          "head": "Publisher"
+        },
+        "creativeWorkEditor": {
+          "placeholder": "Editor",
+          "head": "Editor"
+        },
+        "creativeWorkKeywords": {
+          "placeholder": "Subject",
+          "head": "Subject"
+        },
+        "creativeDatePublished": {
+          "placeholder": "Date Published",
+          "head": "Date Published"
+        },
+        "organizationAddressCountry": {
+          "placeholder": "Country",
+          "head": "Country"
+        },
+        "organizationAddressLocality": {
+          "placeholder": "City",
+          "head": "City"
+        },
+        "organizationFoundingDate": {
+          "placeholder": "Date Founded",
+          "head": "Date Founded"
         }
       }
     }

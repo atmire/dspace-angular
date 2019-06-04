@@ -20,16 +20,12 @@ import { FullFileSectionComponent } from './full/field-components/file-section/f
 import { RelatedItemsComponent } from './simple/related-items/related-items-component';
 import { SearchPageModule } from '../+search-page/search-page.module';
 import { PublicationComponent } from './simple/item-types/publication/publication.component';
-import { PersonComponent } from './simple/item-types/person/person.component';
-import { OrgunitComponent } from './simple/item-types/orgunit/orgunit.component';
-import { ProjectComponent } from './simple/item-types/project/project.component';
-import { JournalComponent } from './simple/item-types/journal/journal.component';
-import { JournalVolumeComponent } from './simple/item-types/journal-volume/journal-volume.component';
-import { JournalIssueComponent } from './simple/item-types/journal-issue/journal-issue.component';
 import { ItemComponent } from './simple/item-types/shared/item.component';
 import { EditItemPageModule } from './edit-item-page/edit-item-page.module';
 import { MetadataRepresentationListComponent } from './simple/metadata-representation-list/metadata-representation-list.component';
 import { RelatedEntitiesSearchComponent } from './simple/related-entities/related-entities-search/related-entities-search.component';
+import { MetadataValuesComponent } from './field-components/metadata-values/metadata-values.component';
+import { MetadataFieldWrapperComponent } from './field-components/metadata-field-wrapper/metadata-field-wrapper.component';
 import { DataPackageComponent } from './simple/item-types/data-package/data-package.component';
 import { DataFileComponent } from './simple/item-types/data-file/data-file.component';
 import { ItemPageDoiFieldComponent } from './simple/field-components/specific-field/doi/item-page-doi-field.component';
@@ -59,28 +55,25 @@ import { MetadataDoiValuesComponent } from './field-components/metadata-doi-valu
     CollectionsComponent,
     FullFileSectionComponent,
     PublicationComponent,
-    ProjectComponent,
-    OrgunitComponent,
-    PersonComponent,
     RelatedItemsComponent,
     ItemComponent,
     GenericItemPageFieldComponent,
-    JournalComponent,
-    JournalIssueComponent,
-    JournalVolumeComponent,
     MetadataRepresentationListComponent,
     RelatedEntitiesSearchComponent,
     DataPackageComponent,
     DataFileComponent
   ],
+  exports: [
+    ItemComponent,
+    MetadataValuesComponent,
+    MetadataFieldWrapperComponent,
+    GenericItemPageFieldComponent,
+    RelatedEntitiesSearchComponent,
+    RelatedItemsComponent,
+    MetadataRepresentationListComponent
+  ],
   entryComponents: [
     PublicationComponent,
-    ProjectComponent,
-    OrgunitComponent,
-    PersonComponent,
-    JournalComponent,
-    JournalIssueComponent,
-    JournalVolumeComponent,
     DataPackageComponent,
     DataFileComponent
   ]
