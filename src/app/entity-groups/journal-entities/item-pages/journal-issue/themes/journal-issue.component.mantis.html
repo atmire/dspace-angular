@@ -26,6 +26,10 @@
                                                     [label]="'journalissue.page.journal-title'">
                         </ds-generic-item-page-field>
                         <ds-generic-item-page-field [item]="item"
+                                                    [fields]="['publicationvolume.volumeNumber']"
+                                                    [label]="'journalvolume.page.volume'">
+                        </ds-generic-item-page-field>
+                        <ds-generic-item-page-field [item]="item"
                                                     [fields]="['publicationissue.issueNumber']"
                                                     [label]="'journalissue.page.number'">
                         </ds-generic-item-page-field>
