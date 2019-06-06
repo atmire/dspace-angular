@@ -65,7 +65,7 @@
         </div>
     </div>
 </div>
-<div class="relationships-item-page" *ngIf="(projects$ | async) || (orgUnits$ | async) || (journalIssues$ | async)">
+<div class="relationships-item-page" *ngIf="(projects$ | async) || (orgUnits$ | async) || (journalIssues$ | async) || (dataPackages$ | async)">
     <div class="container">
         <div class="row">
             <div class="col-12 col-md-4" *ngIf="projects$ | async">
@@ -84,6 +84,12 @@
                 <ds-related-items
                         [items]="journalIssues$ | async"
                         [label]="'relationships.isJournalIssueOf' | translate">
+                </ds-related-items>
+            </div>
+            <div class="col-12 col-md-4" *ngIf="dataPackages$ | async">
+                <ds-related-items
+                        [items]="dataPackages$ | async"
+                        [label]="'relationships.isDataPackageOf' | translate">
                 </ds-related-items>
             </div>
         </div>

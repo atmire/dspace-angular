@@ -40,6 +40,11 @@ export class PublicationComponent extends ItemComponent implements OnInit {
    */
   journalIssues$: Observable<Item[]>;
 
+  /**
+   * The data packages related to this publication
+   */
+  dataPackages$: Observable<Item[]>;
+
   constructor(
     @Inject(ITEM) public item: Item,
     private ids: ItemDataService
@@ -66,6 +71,11 @@ export class PublicationComponent extends ItemComponent implements OnInit {
 
       this.journalIssues$ = this.resolvedRelsAndTypes$.pipe(
         filterRelationsByTypeLabel('isJournalIssueOfPublication'),
+        relationsToItems(this.item.id, this.ids)
+      );
+
+      this.dataPackages$ = this.resolvedRelsAndTypes$.pipe(
+        filterRelationsByTypeLabel('isDataPackageOfPublication'),
         relationsToItems(this.item.id, this.ids)
       );
 
