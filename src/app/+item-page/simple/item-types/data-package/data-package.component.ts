@@ -37,7 +37,7 @@ export class DataPackageComponent extends ItemComponent implements OnInit {
   ngOnInit(): void {
     super.ngOnInit();
 
-    if (isNotEmpty(this.resolvedRelsAndTypes$)) {
+    if (this.resolvedRelsAndTypes$) {
 
       this.authors$ = this.buildRepresentations('Person', 'dc.contributor.author', this.ids);
 
