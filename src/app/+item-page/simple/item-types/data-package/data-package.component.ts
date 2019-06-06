@@ -25,6 +25,7 @@ export class DataPackageComponent extends ItemComponent implements OnInit {
   authors$: Observable<MetadataRepresentation[]>;
 
   dataFiles$: Observable<Item[]>;
+  publications$: Observable<Item[]>;
 
   constructor(
     @Inject(ITEM) public item: Item,
@@ -36,12 +37,16 @@ export class DataPackageComponent extends ItemComponent implements OnInit {
   ngOnInit(): void {
     super.ngOnInit();
 
-    if (this.resolvedRelsAndTypes$) {
+    if (isNotEmpty(this.resolvedRelsAndTypes$)) {
 
       this.authors$ = this.buildRepresentations('Person', 'dc.contributor.author', this.ids);
 
       this.dataFiles$ = this.resolvedRelsAndTypes$.pipe(
         filterRelationsByTypeLabel('isDataFileOfDataPackage'),
+        relationsToItems(this.item.id, this.ids)
+      );
+      this.publications$ = this.resolvedRelsAndTypes$.pipe(
+        filterRelationsByTypeLabel('isPublicationOfDataPackage'),
         relationsToItems(this.item.id, this.ids)
       );
 
