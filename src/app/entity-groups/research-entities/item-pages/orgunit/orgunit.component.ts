@@ -36,15 +36,15 @@ export class OrgunitComponent extends ItemComponent implements OnInit {
    */
   publications$: Observable<Item[]>;
 
-  /**
-   * The parent org units in the hierarchical tree related to this organisation unit
-   */
-  parentOrgUnits$: Observable<Item[]>;
-
-  /**
-   * The child org units in the hierarchical tree related to this organisation unit
-   */
-  childOrgUnits$: Observable<Item[]>;
+  // /**
+  //  * The parent org units in the hierarchical tree related to this organisation unit
+  //  */
+  // parentOrgUnits$: Observable<Item[]>;
+  //
+  // /**
+  //  * The child org units in the hierarchical tree related to this organisation unit
+  //  */
+  // childOrgUnits$: Observable<Item[]>;
 
   constructor(
     @Inject(ITEM) public item: Item,
@@ -72,14 +72,14 @@ export class OrgunitComponent extends ItemComponent implements OnInit {
         relationsToItems(this.item.id, this.ids)
       );
 
-      this.parentOrgUnits$ = this.resolvedRelsAndTypes$.pipe(
-        filterRelationsByTypeLabel('isParentOrgUnitOf'),
-        relationsToItems(this.item.id, this.ids)
-      );
-
-      this.childOrgUnits$ = this.resolvedRelsAndTypes$.pipe(
-        filterRelationsByTypeLabel('isChildOrgUnitOf'),
-        relationsToItems(this.item.id, this.ids)
-      );
+      // this.parentOrgUnits$ = this.resolvedRelsAndTypes$.pipe(
+      //   filterRelationsByTypeLabel('isParentOrgUnitOf'),
+      //   relationsToItems(this.item.id, this.ids)
+      // );
+      //
+      // this.childOrgUnits$ = this.resolvedRelsAndTypes$.pipe(
+      //   filterRelationsByTypeLabel('isChildOrgUnitOf'),
+      //   relationsToItems(this.item.id, this.ids)
+      // );
     }
   }}
