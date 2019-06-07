@@ -50,7 +50,7 @@
         </div>
     </div>
 </div>
-<div class="relationships-item-page" *ngIf="(people$ | async) || (projects$ | async) || (publications$ | async)">
+<div class="relationships-item-page" *ngIf="(people$ | async) || (projects$ | async) || (publications$ | async) || (parentOrgUnits$ | async) || (childOrgUnits$ | async)">
     <div class="container">
         <div class="row">
             <div class="col-12 col-md-4" *ngIf="people$ | async">
@@ -69,6 +69,18 @@
                 <ds-related-items
                         [items]="publications$ | async"
                         [label]="'relationships.isPublicationOf' | translate">
+                </ds-related-items>
+            </div>
+            <div class="col-12 col-md-4" *ngIf="parentOrgUnits$ | async">
+                <ds-related-items
+                        [items]="parentOrgUnits$ | async"
+                        [label]="'relationships.isParentOrgUnitOf' | translate">
+                </ds-related-items>
+            </div>
+            <div class="col-12 col-md-4" *ngIf="childOrgUnits$ | async">
+                <ds-related-items
+                        [items]="childOrgUnits$ | async"
+                        [label]="'relationships.isChildOrgUnitOf' | translate">
                 </ds-related-items>
             </div>
         </div>

@@ -297,7 +297,9 @@
     "isJournalIssueOf": "Journal Issue",
     "isPublicationOfJournalIssue": "Articles",
     "isDataFileOf": "Data Files",
-    "isDataPackageOf": "Data Package"
+    "isDataPackageOf": "Data Package",
+    "isParentOrgUnitOf": "Parent OrgUnit",
+    "isChildOrgUnitOf": "Child OrgUnits"
   },
   "person": {
     "page": {
