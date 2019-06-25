@@ -1,9 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ItemDataService } from '../../../../core/data/item-data.service';
 import { Item } from '../../../../core/shared/item.model';
 import { ItemViewMode, rendersItemType } from '../../../../shared/items/item-type-decorator';
-import { ITEM } from '../../../../shared/items/switcher/item-type-switcher.component';
 import { isNotEmpty } from '../../../../shared/empty.util';
 import { ItemComponent } from '../../../../+item-page/simple/item-types/shared/item.component';
 import {
@@ -59,17 +57,17 @@ export class OrgunitComponent extends ItemComponent implements OnInit {
     if (isNotEmpty(this.resolvedRelsAndTypes$)) {
       this.people$ = this.resolvedRelsAndTypes$.pipe(
         filterRelationsByTypeLabel('isPersonOfOrgUnit'),
-        relationsToItems(this.item.id, this.ids)
+        relationsToItems(this.item.id)
       );
 
       this.projects$ = this.resolvedRelsAndTypes$.pipe(
         filterRelationsByTypeLabel('isProjectOfOrgUnit'),
-        relationsToItems(this.item.id, this.ids)
+        relationsToItems(this.item.id)
       );
 
       this.publications$ = this.resolvedRelsAndTypes$.pipe(
         filterRelationsByTypeLabel('isPublicationOfOrgUnit'),
-        relationsToItems(this.item.id, this.ids)
+        relationsToItems(this.item.id)
       );
 
       // this.parentOrgUnits$ = this.resolvedRelsAndTypes$.pipe(
