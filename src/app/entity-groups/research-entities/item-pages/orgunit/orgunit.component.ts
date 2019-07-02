@@ -4,7 +4,10 @@ import { Item } from '../../../../core/shared/item.model';
 import { ItemViewMode, rendersItemType } from '../../../../shared/items/item-type-decorator';
 import { isNotEmpty } from '../../../../shared/empty.util';
 import { ItemComponent } from '../../../../+item-page/simple/item-types/shared/item.component';
-import { getRelatedItemsByTypeLabel } from '../../../../+item-page/simple/item-types/shared/item-relationships-utils';
+import {
+  getRelatedItemsByTypeLabel,
+  RelationshipSide
+} from '../../../../+item-page/simple/item-types/shared/item-relationships-utils';
 
 @rendersItemType('OrgUnit', ItemViewMode.Full)
 @Component({
@@ -58,11 +61,11 @@ export class OrgunitComponent extends ItemComponent implements OnInit {
       );
 
       this.parentOrgUnits$ = this.resolvedRelsAndTypes$.pipe(
-        getRelatedItemsByTypeLabel(this.item.id, 'isParentOrgUnitOf')
+        getRelatedItemsByTypeLabel(this.item.id, 'isParentOrgUnitOf', RelationshipSide.left)
       );
 
       this.childOrgUnits$ = this.resolvedRelsAndTypes$.pipe(
-        getRelatedItemsByTypeLabel(this.item.id, 'isChildOrgUnitOf')
+        getRelatedItemsByTypeLabel(this.item.id, 'isChildOrgUnitOf', RelationshipSide.right)
       );
     }
   }}
