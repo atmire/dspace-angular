@@ -31,6 +31,16 @@ export class OrgunitComponent extends ItemComponent implements OnInit {
    */
   publications$: Observable<Item[]>;
 
+  /**
+   * The parent org units in the hierarchical tree related to this organisation unit
+   */
+  parentOrgUnits$: Observable<Item[]>;
+
+  /**
+   * The child org units in the hierarchical tree related to this organisation unit
+   */
+  childOrgUnits$: Observable<Item[]>;
+
   ngOnInit(): void {
     super.ngOnInit();
 
@@ -45,6 +55,14 @@ export class OrgunitComponent extends ItemComponent implements OnInit {
 
       this.publications$ = this.resolvedRelsAndTypes$.pipe(
         getRelatedItemsByTypeLabel(this.item.id, 'isPublicationOfOrgUnit')
+      );
+
+      this.parentOrgUnits$ = this.resolvedRelsAndTypes$.pipe(
+        getRelatedItemsByTypeLabel(this.item.id, 'isParentOrgUnitOf')
+      );
+
+      this.childOrgUnits$ = this.resolvedRelsAndTypes$.pipe(
+        getRelatedItemsByTypeLabel(this.item.id, 'isChildOrgUnitOf')
       );
     }
   }}

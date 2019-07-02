@@ -7,7 +7,7 @@ import {
 } from '../../../../shared/items/item-type-decorator';
 import { ItemComponent } from '../shared/item.component';
 import { MetadataRepresentation } from '../../../../core/shared/metadata-representation/metadata-representation.model';
-import { filterRelationsByTypeLabel, relationsToItems } from '../shared/item-relationships-utils';
+import { getRelatedItemsByTypeLabel } from '../../../../+item-page/simple/item-types/shared/item-relationships-utils';
 
 @rendersItemType('DataFile', ItemViewMode.Full)
 @Component({
@@ -32,8 +32,7 @@ export class DataFileComponent extends ItemComponent implements OnInit {
       this.authors$ = this.buildRepresentations('Person', 'dc.contributor.author');
 
       this.dataPackages$ = this.resolvedRelsAndTypes$.pipe(
-        filterRelationsByTypeLabel('isDataPackageOfDataFile'),
-        relationsToItems(this.item.id)
+        getRelatedItemsByTypeLabel(this.item.id, 'isDataPackageOfDataFile')
       );
 
     }

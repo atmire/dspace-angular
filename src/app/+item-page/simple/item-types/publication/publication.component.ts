@@ -63,8 +63,7 @@ export class PublicationComponent extends ItemComponent implements OnInit {
       );
 
       this.dataPackages$ = this.resolvedRelsAndTypes$.pipe(
-        filterRelationsByTypeLabel('isDataPackageOfPublication'),
-        relationsToItems(this.item.id)
+        getRelatedItemsByTypeLabel(this.item.id, 'isDataPackageOfPublication')
       );
 
     }
