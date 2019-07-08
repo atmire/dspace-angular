@@ -25,6 +25,7 @@ import {
   compareArraysUsingIds, filterRelationsByTypeLabel,
   relationsToItems
 } from '../../+item-page/simple/item-types/shared/item-relationships-utils';
+import { ObjectCacheService } from '../cache/object-cache.service';
 
 /**
  * The service handling all relationship requests
@@ -36,7 +37,8 @@ export class RelationshipService {
   constructor(protected requestService: RequestService,
               protected halService: HALEndpointService,
               protected rdbService: RemoteDataBuildService,
-              protected itemService: ItemDataService) {
+              protected itemService: ItemDataService,
+              protected objectCache: ObjectCacheService) {
   }
 
   /**
@@ -50,6 +52,15 @@ export class RelationshipService {
   }
 
   /**
+   * Find a relationship by its UUID
+   * @param uuid
+   */
+  findById(uuid: string): Observable<RemoteData<Relationship>> {
+    const href$ = this.getRelationshipEndpoint(uuid);
+    return this.rdbService.buildSingle<Relationship>(href$);
+  }
+
+  /**
    * Send a delete request for a relationship by ID
    * @param uuid
    */
@@ -60,7 +71,8 @@ export class RelationshipService {
       map((endpointURL: string) => new DeleteRequest(this.requestService.generateRequestId(), endpointURL)),
       configureRequest(this.requestService),
       switchMap((restRequest: RestRequest) => this.requestService.getByUUID(restRequest.uuid)),
-      getResponseFromEntry()
+      getResponseFromEntry(),
+      tap(() => this.clearRelatedCache(uuid))
     );
   }
 
@@ -201,6 +213,23 @@ export class RelationshipService {
       filterRelationsByTypeLabel(label),
       relationsToItems(item.uuid)
     );
+  }
+
+  /**
+   * Clear object and request caches of the items related to a relationship (left and right items)
+   * @param uuid
+   */
+  clearRelatedCache(uuid: string) {
+    this.findById(uuid).pipe(
+      getSucceededRemoteData(),
+      flatMap((rd: RemoteData<Relationship>) => observableCombineLatest(rd.payload.leftItem.pipe(getSucceededRemoteData()), rd.payload.rightItem.pipe(getSucceededRemoteData()))),
+      take(1)
+    ).subscribe(([leftItem, rightItem]) => {
+      this.objectCache.remove(leftItem.payload.self);
+      this.objectCache.remove(rightItem.payload.self);
+      this.requestService.removeByHrefSubstring(leftItem.payload.self);
+      this.requestService.removeByHrefSubstring(rightItem.payload.self);
+    });
   }
 
 }
