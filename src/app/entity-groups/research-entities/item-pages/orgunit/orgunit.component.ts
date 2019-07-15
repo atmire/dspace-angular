@@ -58,11 +58,11 @@ export class OrgunitComponent extends ItemComponent implements OnInit {
       );
 
       this.parentOrgUnits$ = this.resolvedRelsAndTypes$.pipe(
-        getRelatedItemsByTypeLabel(this.item.id, 'isChildOrgUnitOf')
+        getRelatedItemsByTypeLabel(this.item.id, 'isParentOrgUnitOf')
       );
 
       this.childOrgUnits$ = this.resolvedRelsAndTypes$.pipe(
-        getRelatedItemsByTypeLabel(this.item.id, 'isParentOrgUnitOf')
+        getRelatedItemsByTypeLabel(this.item.id, 'isChildOrgUnitOf')
       );
     }
   }}
