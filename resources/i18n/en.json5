@@ -1569,6 +1569,8 @@
 
   "submission.sections.describe.relationship-lookup.search-tab.tab-title.Funding": "Search for Funding",
 
+  "submission.sections.describe.relationship-lookup.search-tab.tab-title.Client": "Search for Client",
+
   "submission.sections.describe.relationship-lookup.selection-tab.tab-title": "Current Selection ({{ count }})",
 
   "submission.sections.describe.relationship-lookup.title.Journal Issue": "Journal Issues",
@@ -1582,6 +1584,8 @@
   "submission.sections.describe.relationship-lookup.title.Funding Agency": "Funding Agency",
 
   "submission.sections.describe.relationship-lookup.title.Funding": "Funding",
+
+  "submission.sections.describe.relationship-lookup.title.isPMOfClient": "Project Manager",
 
   "submission.sections.describe.relationship-lookup.search-tab.toggle-dropdown": "Toggle dropdown",
 
