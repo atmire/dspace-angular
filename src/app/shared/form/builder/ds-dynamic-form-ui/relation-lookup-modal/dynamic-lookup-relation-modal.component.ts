@@ -67,6 +67,11 @@ export class DsDynamicLookupRelationModalComponent implements OnInit, OnDestroy 
   item;
 
   /**
+   * The collection we're submitting an item to
+   */
+  collection;
+
+  /**
    * Is the selection repeatable?
    */
   repeatable: boolean;
@@ -135,7 +140,6 @@ export class DsDynamicLookupRelationModalComponent implements OnInit, OnDestroy 
     this.externalSourcesRD$ = this.externalSourceService.findAll();
 
     this.setTotals();
-    // this.setExistingNameVariants();
   }
 
   close() {
@@ -232,6 +236,15 @@ export class DsDynamicLookupRelationModalComponent implements OnInit, OnDestroy 
         );
       }
     )
+  }
+
+  /**
+   * Called when an external object has been imported, resets the total values and adds the object to the selected list
+   * @param object
+   */
+  imported(object) {
+    this.setTotals();
+    this.select(object);
   }
 
   /**
