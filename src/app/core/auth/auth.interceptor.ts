@@ -28,7 +28,7 @@ export class AuthInterceptor implements HttpInterceptor {
   // Intercetor is called twice per request,
   // so to prevent RefreshTokenAction is dispatched twice
   // we're creating a refresh token request list
-  protected refreshTokenRequestUrls = [];
+  protected static refreshTokenRequestUrls = [];
 
   constructor(private inj: Injector, private router: Router, private store: Store<AppState>) { }
 
@@ -89,10 +89,10 @@ export class AuthInterceptor implements HttpInterceptor {
         filter((isExpiring) => isExpiring))
         .subscribe(() => {
           // If the current request url is already in the refresh token request list, skip it
-          if (isUndefined(find(this.refreshTokenRequestUrls, req.url))) {
+          if (AuthInterceptor.refreshTokenRequestUrls.indexOf(req.url) < 0) {
             // When a token is about to expire, refresh it
             this.store.dispatch(new RefreshTokenAction(token));
-            this.refreshTokenRequestUrls.push(req.url);
+            AuthInterceptor.refreshTokenRequestUrls.push(req.url);
           }
         });
       // Get the auth header from the service.
@@ -116,7 +116,7 @@ export class AuthInterceptor implements HttpInterceptor {
             authRes = response.clone({body: this.makeAuthStatusObject(true, newToken)});
 
             // clean eventually refresh Requests list
-            this.refreshTokenRequestUrls = [];
+            AuthInterceptor.refreshTokenRequestUrls = [];
           } else {
             // logout successfully
             authRes = response.clone({body: this.makeAuthStatusObject(false)});
@@ -132,7 +132,7 @@ export class AuthInterceptor implements HttpInterceptor {
           // Checks if is a response from a request to an authentication endpoint
           if (this.isAuthRequest(error)) {
             // clean eventually refresh Requests list
-            this.refreshTokenRequestUrls = [];
+            AuthInterceptor.refreshTokenRequestUrls = [];
             // Create a new HttpResponse and return it, so it can be handle properly by AuthService.
             const authResponse = new HttpResponse({
               body: this.makeAuthStatusObject(false, null, error.error),
