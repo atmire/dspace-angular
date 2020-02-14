@@ -11,7 +11,6 @@ import {
   HttpResponse,
   HttpResponseBase
 } from '@angular/common/http';
-import { find } from 'lodash';
 
 import { AppState } from '../../app.reducer';
 import { AuthService } from './auth.service';
