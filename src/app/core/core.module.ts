@@ -142,6 +142,8 @@ import { NormalizedExternalSource } from './cache/models/normalized-external-sou
 import { NormalizedExternalSourceEntry } from './cache/models/normalized-external-source-entry.model';
 import { ExternalSourceService } from './data/external-source.service';
 import { LookupRelationService } from './data/lookup-relation.service';
+import { WorkflowActionDataService } from './data/workflow-action-data.service';
+import { NormalizedWorkflowAction } from './tasks/models/normalized-workflow-action-object.model';
 
 /**
  * When not in production, endpoint responses can be mocked for testing purposes
@@ -257,6 +259,7 @@ const PROVIDERS = [
   RelationshipTypeService,
   ExternalSourceService,
   LookupRelationService,
+  WorkflowActionDataService,
   // register AuthInterceptor as HttpInterceptor
   {
     provide: HTTP_INTERCEPTORS,
@@ -304,7 +307,8 @@ export const normalizedModels =
     NormalizedRelationshipType,
     NormalizedItemType,
     NormalizedExternalSource,
-    NormalizedExternalSourceEntry
+    NormalizedExternalSourceEntry,
+    NormalizedWorkflowAction
   ];
 
 @NgModule({
