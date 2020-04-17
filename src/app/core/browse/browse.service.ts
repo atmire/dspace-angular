@@ -107,6 +107,7 @@ export class BrowseService {
           args.push(`sort=${options.sort.field},${options.sort.direction}`);
         }
         if (isNotEmpty(options.pagination)) {
+          // console.log('options.pagination', options.pagination);
           args.push(`page=${options.pagination.currentPage - 1}`);
           args.push(`size=${options.pagination.pageSize}`);
         }

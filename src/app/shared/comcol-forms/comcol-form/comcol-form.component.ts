@@ -25,6 +25,7 @@ import { hasValue, isNotEmpty } from '../../empty.util';
 import { NotificationsService } from '../../notifications/notifications.service';
 import { UploaderOptions } from '../../uploader/uploader-options.model';
 import { UploaderComponent } from '../../uploader/uploader.component';
+import { deepClone } from 'fast-json-patch/lib/core';
 
 /**
  * A form for creating and editing Communities or Collections
@@ -188,23 +189,31 @@ export class ComColFormComponent<T extends DSpaceObject> implements OnInit, OnDe
 
     const formMetadata = {}  as MetadataMap;
     this.formModel.forEach((fieldModel: DynamicInputModel) => {
-      const value: MetadataValue = {
+      // only add a value is it's filled out, or if it used to exist and has been cleared
+      // no use sending new empty fields to the server
+      if (isNotEmpty(fieldModel.value) || hasValue(this.dso.metadata[fieldModel.name])) {
+        const value: MetadataValue = Object.assign(new MetadataValue(), {
           value: fieldModel.value as string,
-          language: null
-        } as any;
-      if (formMetadata.hasOwnProperty(fieldModel.name)) {
-        formMetadata[fieldModel.name].push(value);
-      } else {
-        formMetadata[fieldModel.name] = [value];
+          language: null,
+          confidence: -1,
+          authority: null
+        });
+        if (formMetadata.hasOwnProperty(fieldModel.name)) {
+          value.place = formMetadata[fieldModel.name].length;
+          formMetadata[fieldModel.name].push(value);
+        } else {
+          value.place = 0;
+          formMetadata[fieldModel.name] = [value];
+        }
       }
     });
 
-    const updatedDSO = Object.assign({}, this.dso, {
+    const clone = deepClone(this.dso);
+    const updatedDSO = Object.assign(clone, {
       metadata: {
-        ...this.dso.metadata,
+        ...clone.metadata,
         ...formMetadata
-      },
-      type: Community.type
+      }
     });
     this.submitForm.emit({
       dso: updatedDSO,

@@ -53,7 +53,9 @@ export class ComcolMetadataComponent<TDomain extends DSpaceObject> implements On
     const uploader = event.uploader;
     const deleteLogo = event.deleteLogo;
 
-    this.dsoDataService.update(dso)
+    this.dsoDataService.update(dso);
+    this.dsoDataService.commitUpdates();
+    this.dsoDataService.findByHref(dso._links.self.href)
       .pipe(getSucceededRemoteData())
       .subscribe((dsoRD: RemoteData<TDomain>) => {
         if (isNotUndefined(dsoRD)) {
