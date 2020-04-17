@@ -191,7 +191,7 @@ export class ComColFormComponent<T extends DSpaceObject> implements OnInit, OnDe
     this.formModel.forEach((fieldModel: DynamicInputModel) => {
       // only add a value is it's filled out, or if it used to exist and has been cleared
       // no use sending new empty fields to the server
-      if (isNotEmpty(fieldModel.value) || hasValue(this.dso.metadata[fieldModel.name])) {
+      if (isNotEmpty(fieldModel.value) || (hasValue(this.dso) && hasValue(this.dso.metadata) && hasValue(this.dso.metadata[fieldModel.name]))) {
         const value: MetadataValue = Object.assign(new MetadataValue(), {
           value: fieldModel.value as string,
           language: null,
