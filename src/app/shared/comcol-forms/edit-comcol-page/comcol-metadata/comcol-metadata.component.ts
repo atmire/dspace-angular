@@ -53,9 +53,7 @@ export class ComcolMetadataComponent<TDomain extends DSpaceObject> implements On
     const uploader = event.uploader;
     const deleteLogo = event.deleteLogo;
 
-    this.dsoDataService.update(dso);
-    this.dsoDataService.commitUpdates();
-    this.dsoDataService.findByHref(dso._links.self.href)
+    this.dsoDataService.update(dso)
       .pipe(getSucceededRemoteData())
       .subscribe((dsoRD: RemoteData<TDomain>) => {
         if (isNotUndefined(dsoRD)) {
@@ -71,6 +69,7 @@ export class ComcolMetadataComponent<TDomain extends DSpaceObject> implements On
           this.notificationsService.success(null, this.translate.get(this.type.value + '.edit.notifications.success'));
         }
       });
+    this.dsoDataService.commitUpdates();
   }
 
   /**
