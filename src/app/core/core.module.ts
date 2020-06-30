@@ -142,6 +142,11 @@ import { WorkflowActionDataService } from './data/workflow-action-data.service';
 import { WorkflowAction } from './tasks/models/workflow-action-object.model';
 import { MetadataSchemaDataService } from './data/metadata-schema-data.service';
 import { MetadataFieldDataService } from './data/metadata-field-data.service';
+import { Feature } from './shared/feature.model';
+import { Authorization } from './shared/authorization.model';
+import { FeatureDataService } from './data/feature-authorization/feature-data.service';
+import { AuthorizationDataService } from './data/feature-authorization/authorization-data.service';
+import { SiteAdministratorGuard } from './data/feature-authorization/feature-authorization-guard/site-administrator.guard';
 
 /**
  * When not in production, endpoint responses can be mocked for testing purposes
@@ -258,6 +263,9 @@ const PROVIDERS = [
   WorkflowActionDataService,
   MetadataSchemaDataService,
   MetadataFieldDataService,
+  FeatureDataService,
+  AuthorizationDataService,
+  SiteAdministratorGuard,
   // register AuthInterceptor as HttpInterceptor
   {
     provide: HTTP_INTERCEPTORS,
@@ -308,7 +316,9 @@ export const models =
     ExternalSourceEntry,
     Version,
     VersionHistory,
-    WorkflowAction
+    WorkflowAction,
+    Feature,
+    Authorization
   ];
 
 @NgModule({
