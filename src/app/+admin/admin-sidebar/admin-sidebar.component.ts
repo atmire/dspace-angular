@@ -93,7 +93,7 @@ export class AdminSidebarComponent extends MenuComponent implements OnInit {
   /**
    * Initialize all menu sections and items for this menu
    */
-  private createMenu() {
+  createMenu() {
     const menuList = [
       /* News */
       {
@@ -453,7 +453,9 @@ export class AdminSidebarComponent extends MenuComponent implements OnInit {
         index: 10
       },
     ];
-    menuList.forEach((menuSection) => this.menuService.addSection(this.menuID, menuSection));
+    menuList.forEach((menuSection) => this.menuService.addSection(this.menuID, Object.assign(menuSection, {
+      shouldPersistOnRouteChange: true
+    })));
 
   }
 
