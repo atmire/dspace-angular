@@ -147,6 +147,7 @@ import { Authorization } from './shared/authorization.model';
 import { FeatureDataService } from './data/feature-authorization/feature-data.service';
 import { AuthorizationDataService } from './data/feature-authorization/authorization-data.service';
 import { SiteAdministratorGuard } from './data/feature-authorization/feature-authorization-guard/site-administrator.guard';
+import { TokenResponseParsingService } from './auth/token-response-parsing.service';
 
 /**
  * When not in production, endpoint responses can be mocked for testing purposes
@@ -266,6 +267,7 @@ const PROVIDERS = [
   FeatureDataService,
   AuthorizationDataService,
   SiteAdministratorGuard,
+  TokenResponseParsingService,
   // register AuthInterceptor as HttpInterceptor
   {
     provide: HTTP_INTERCEPTORS,
