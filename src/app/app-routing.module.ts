@@ -123,6 +123,7 @@ export function getUnauthorizedPath() {
         loadChildren: './profile-page/profile-page.module#ProfilePageModule', canActivate: [AuthenticatedGuard]
       },
       { path: UNAUTHORIZED_PATH, component: UnauthorizedComponent },
+      { path: 'processes', loadChildren: './process-page/process-page.module#ProcessPageModule', canActivate: [AuthenticatedGuard] },
       { path: '**', pathMatch: 'full', component: PageNotFoundComponent },
     ],
     {
