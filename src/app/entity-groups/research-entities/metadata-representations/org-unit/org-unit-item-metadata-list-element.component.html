@@ -1,7 +1,6 @@
 <ng-template #descTemplate>
   <span class="text-muted">
-      <span *ngIf="metadataRepresentation.allMetadata(['dc.description']).length > 0"
-            class="item-list-job-title">
+      <span class="item-list-job-title">
         <span [innerHTML]="metadataRepresentation.firstMetadataValue(['dc.description'])"></span>
       </span>
   </span>

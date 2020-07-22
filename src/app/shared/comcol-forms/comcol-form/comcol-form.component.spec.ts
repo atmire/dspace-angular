@@ -1,27 +1,28 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { Location } from '@angular/common';
-import { RouterTestingModule } from '@angular/router/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { DynamicFormControlModel, DynamicFormService, DynamicInputModel } from '@ng-dynamic-forms/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Community } from '../../../core/shared/community.model';
-import { ComColFormComponent } from './comcol-form.component';
-import { DSpaceObject } from '../../../core/shared/dspace-object.model';
-import { hasValue } from '../../empty.util';
-import { VarDirective } from '../../utils/var.directive';
-import { NotificationsService } from '../../notifications/notifications.service';
-import { NotificationsServiceStub } from '../../testing/notifications-service-stub';
-import { AuthService } from '../../../core/auth/auth.service';
-import { AuthServiceMock } from '../../mocks/mock-auth.service';
+import { By } from '@angular/platform-browser';
+import { RouterTestingModule } from '@angular/router/testing';
+import { DynamicFormControlModel, DynamicFormService, DynamicInputModel } from '@ng-dynamic-forms/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
-import { RemoteData } from '../../../core/data/remote-data';
-import { RestRequestMethod } from '../../../core/data/rest-request-method';
+import { AuthService } from '../../../core/auth/auth.service';
+import { ObjectCacheService } from '../../../core/cache/object-cache.service';
 import { ErrorResponse, RestResponse } from '../../../core/cache/response.models';
+import { RemoteData } from '../../../core/data/remote-data';
 import { RequestError } from '../../../core/data/request.models';
 import { RequestService } from '../../../core/data/request.service';
-import { ObjectCacheService } from '../../../core/cache/object-cache.service';
-import { By } from '@angular/platform-browser';
+import { RestRequestMethod } from '../../../core/data/rest-request-method';
+import { Community } from '../../../core/shared/community.model';
+import { DSpaceObject } from '../../../core/shared/dspace-object.model';
+import { hasValue } from '../../empty.util';
+import { AuthServiceMock } from '../../mocks/auth.service.mock';
+import { NotificationsService } from '../../notifications/notifications.service';
+import { NotificationsServiceStub } from '../../testing/notifications-service.stub';
+import { VarDirective } from '../../utils/var.directive';
+import { ComColFormComponent } from './comcol-form.component';
+import { Operation } from 'fast-json-patch';
 
 describe('ComColFormComponent', () => {
   let comp: ComColFormComponent<DSpaceObject>;
@@ -40,13 +41,10 @@ describe('ComColFormComponent', () => {
     }
   };
   const dcTitle = 'dc.title';
-  const dcRandom = 'dc.random';
   const dcAbstract = 'dc.description.abstract';
 
-  const titleMD = { [dcTitle]: [ { value: 'Community Title', language: null } ] };
-  const randomMD = { [dcRandom]: [ { value: 'Random metadata excluded from form', language: null } ] };
-  const abstractMD = { [dcAbstract]: [ { value: 'Community description', language: null } ] };
-  const newTitleMD = { [dcTitle]: [ { value: 'New Community Title', language: null } ] };
+  const abstractMD = { [dcAbstract]: [{ value: 'Community description', language: null }] };
+  const newTitleMD = { [dcTitle]: [{ value: 'New Community Title', language: null }] };
   const formModel = [
     new DynamicInputModel({
       id: 'title',
@@ -96,7 +94,9 @@ describe('ComColFormComponent', () => {
 
   describe('when the dso doesn\'t contain an ID (newly created)', () => {
     beforeEach(() => {
-      initComponent(new Community());
+      initComponent(Object.assign(new Community(), {
+        _links: { self: { href: 'community-self' } }
+      }));
     });
 
     it('should initialize the uploadFilesOptions with a placeholder url', () => {
@@ -110,34 +110,47 @@ describe('ComColFormComponent', () => {
       });
 
       it('should emit the new version of the community', () => {
-        comp.dso = Object.assign(
-          new Community(),
-          {
-            metadata: {
-              ...titleMD,
-              ...randomMD
-            }
-          }
-        );
-
+        comp.dso = new Community();
         comp.onSubmit();
+
+        const operations: Operation[] = [
+          {
+            op: 'replace',
+            path: '/metadata/dc.title',
+            value: {
+              value: 'New Community Title',
+              language: null,
+            },
+          },
+          {
+            op: 'replace',
+            path: '/metadata/dc.description.abstract',
+            value: {
+              value: 'Community description',
+              language: null,
+            },
+          },
+        ];
 
         expect(comp.submitForm.emit).toHaveBeenCalledWith(
           {
-            dso: Object.assign(
-              {},
-              new Community(),
-              {
+            dso: Object.assign({}, comp.dso, {
                 metadata: {
-                  ...newTitleMD,
-                  ...randomMD,
-                  ...abstractMD
+                  'dc.title': [{
+                    value: 'New Community Title',
+                    language: null,
+                  }],
+                  'dc.description.abstract': [{
+                    value: 'Community description',
+                    language: null,
+                  }],
                 },
-                type: Community.type
-              },
+                type: Community.type,
+              }
             ),
-            uploader: {} as any,
-            deleteLogo: false
+            uploader: undefined,
+            deleteLogo: false,
+            operations: operations,
           }
         );
       })
@@ -163,11 +176,6 @@ describe('ComColFormComponent', () => {
       it('should emit finish', () => {
         expect(comp.finish.emit).toHaveBeenCalled();
       });
-
-      it('should remove the object\'s cache', () => {
-        expect(requestServiceStub.removeByHrefSubstring).toHaveBeenCalled();
-        expect(objectCacheStub.remove).toHaveBeenCalled();
-      });
     });
 
     describe('onUploadError', () => {
@@ -191,7 +199,8 @@ describe('ComColFormComponent', () => {
       beforeEach(() => {
         initComponent(Object.assign(new Community(), {
           id: 'community-id',
-          logo: observableOf(new RemoteData(false, false, true, null, undefined))
+          logo: observableOf(new RemoteData(false, false, true, null, undefined)),
+          _links: { self: { href: 'community-self' } }
         }));
       });
 
@@ -208,7 +217,8 @@ describe('ComColFormComponent', () => {
       beforeEach(() => {
         initComponent(Object.assign(new Community(), {
           id: 'community-id',
-          logo: observableOf(new RemoteData(false, false, true, null, {}))
+          logo: observableOf(new RemoteData(false, false, true, null, {})),
+          _links: { self: { href: 'community-self' } }
         }));
       });
 
@@ -236,10 +246,15 @@ describe('ComColFormComponent', () => {
           it('should display a success notification', () => {
             expect(notificationsService.success).toHaveBeenCalled();
           });
+
+          it('should remove the object\'s cache', () => {
+            expect(requestServiceStub.removeByHrefSubstring).toHaveBeenCalled();
+            expect(objectCacheStub.remove).toHaveBeenCalled();
+          });
         });
 
         describe('when dsoService.deleteLogo returns an error response', () => {
-          const response = new ErrorResponse(new RequestError('errorMessage'));
+          const response = new ErrorResponse(new RequestError('this error was purposely thrown, to test error notifications'));
 
           beforeEach(() => {
             spyOn(dsoService, 'deleteLogo').and.returnValue(observableOf(response));
@@ -313,9 +328,8 @@ describe('ComColFormComponent', () => {
     comp.formModel = [];
     comp.dso = dso;
     (comp as any).type = Community.type;
-    comp.uploaderComponent = Object.assign({
-      uploader: {}
-    });
+    comp.uploaderComponent = {uploader: {}} as any;
+
     (comp as any).dsoService = dsoService;
     fixture.detectChanges();
     location = (comp as any).location;

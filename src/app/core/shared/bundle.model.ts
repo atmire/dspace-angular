@@ -1,37 +1,42 @@
-import { DSpaceObject } from './dspace-object.model';
-import { Bitstream } from './bitstream.model';
-import { Item } from './item.model';
-import { RemoteData } from '../data/remote-data';
+import { deserialize, inheritSerialization } from 'cerialize';
+
 import { Observable } from 'rxjs';
-import { ResourceType } from './resource-type';
+
+import { link, typedObject } from '../cache/builders/build-decorators';
+import { BUNDLE } from './bundle.resource-type';
+import { DSpaceObject } from './dspace-object.model';
+import { HALLink } from './hal-link.model';
+import { RemoteData } from '../data/remote-data';
 import { PaginatedList } from '../data/paginated-list';
+import { BITSTREAM } from './bitstream.resource-type';
+import { Bitstream } from './bitstream.model';
 
+@typedObject
+@inheritSerialization(DSpaceObject)
 export class Bundle extends DSpaceObject {
-  static type = new ResourceType('bundle');
+  static type = BUNDLE;
 
   /**
-   * The bundle's name
+   * The {@link HALLink}s for this Bundle
    */
-  name: string;
+  @deserialize
+  _links: {
+    self: HALLink;
+    primaryBitstream: HALLink;
+    bitstreams: HALLink;
+  };
 
   /**
-   * The primary bitstream of this Bundle
+   * The primary Bitstream of this Bundle
+   * Will be undefined unless the primaryBitstream {@link HALLink} has been resolved.
    */
-  primaryBitstream: Observable<RemoteData<Bitstream>>;
+  @link(BITSTREAM)
+  primaryBitstream?: Observable<RemoteData<Bitstream>>;
 
   /**
-   * An array of Items that are direct parents of this Bundle
+   * The list of Bitstreams that are direct children of this Bundle
+   * Will be undefined unless the bitstreams {@link HALLink} has been resolved.
    */
-  parents: Observable<RemoteData<Item[]>>;
-
-  /**
-   * The Item that owns this Bundle
-   */
-  owner: Observable<RemoteData<Item>>;
-
-  /**
-   * List of Bitstreams that are part of this Bundle
-   */
-  bitstreams: Observable<RemoteData<PaginatedList<Bitstream>>>;
-
+  @link(BITSTREAM, true)
+  bitstreams?: Observable<RemoteData<PaginatedList<Bitstream>>>;
 }

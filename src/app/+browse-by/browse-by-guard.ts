@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 import { getSucceededRemoteData } from '../core/shared/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
-import { GLOBAL_CONFIG, GlobalConfig } from '../../config';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 /**
@@ -14,8 +14,7 @@ import { GLOBAL_CONFIG, GlobalConfig } from '../../config';
  */
 export class BrowseByGuard implements CanActivate {
 
-  constructor(@Inject(GLOBAL_CONFIG) public config: GlobalConfig,
-              protected dsoService: DSpaceObjectDataService,
+  constructor(protected dsoService: DSpaceObjectDataService,
               protected translate: TranslateService) {
   }
 
@@ -24,7 +23,7 @@ export class BrowseByGuard implements CanActivate {
     const id = route.params.id || route.queryParams.id || route.data.id;
     let metadataField = route.data.metadataField;
     if (hasNoValue(metadataField) && hasValue(id)) {
-      const config = this.config.browseBy.types.find((conf) => conf.id === id);
+      const config = environment.browseBy.types.find((conf) => conf.id === id);
       if (hasValue(config) && hasValue(config.metadataField)) {
         metadataField = config.metadataField;
       }
@@ -37,24 +36,24 @@ export class BrowseByGuard implements CanActivate {
       return dsoAndMetadata$.pipe(
         map((dsoRD) => {
           const name = dsoRD.payload.name;
-          route.data = this.createData(title, id, metadataField, name, metadataTranslated, value);
+          route.data = this.createData(title, id, metadataField, name, metadataTranslated, value, route);
           return true;
         })
       );
     } else {
-      route.data = this.createData(title, id, metadataField, '', metadataTranslated, value);
+      route.data = this.createData(title, id, metadataField, '', metadataTranslated, value, route);
       return observableOf(true);
     }
   }
 
-  private createData(title, id, metadataField, collection, field, value) {
-    return {
+  private createData(title, id, metadataField, collection, field, value, route) {
+    return Object.assign({}, route.data, {
       title: title,
       id: id,
       metadataField: metadataField,
       collection: collection,
       field: field,
       value: hasValue(value) ? `"${value}"` : ''
-    }
+    });
   }
 }

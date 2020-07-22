@@ -1,43 +1,39 @@
-import { DataService } from './data.service';
-import { NormalizedObject } from '../cache/models/normalized-object.model';
-import { RequestService } from './request.service';
-import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
-import { CoreState } from '../core.reducers';
+import { HttpClient } from '@angular/common/http';
 import { Store } from '@ngrx/store';
-import { HALEndpointService } from '../shared/hal-endpoint.service';
+import { compare, Operation } from 'fast-json-patch';
 import { Observable, of as observableOf } from 'rxjs';
-import { FindListOptions } from './request.models';
+import { NotificationsService } from '../../shared/notifications/notifications.service';
+import { followLink } from '../../shared/utils/follow-link-config.model';
+import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
 import { SortDirection, SortOptions } from '../cache/models/sort-options.model';
 import { ObjectCacheService } from '../cache/object-cache.service';
-import { compare, Operation } from 'fast-json-patch';
+import { CoreState } from '../core.reducers';
 import { DSpaceObject } from '../shared/dspace-object.model';
-import { ChangeAnalyzer } from './change-analyzer';
-import { HttpClient } from '@angular/common/http';
-import { NormalizedObjectBuildService } from '../cache/builders/normalized-object-build.service';
-import { NotificationsService } from '../../shared/notifications/notifications.service';
+import { HALEndpointService } from '../shared/hal-endpoint.service';
 import { Item } from '../shared/item.model';
-import * as uuidv4 from 'uuid/v4';
-import { createSuccessfulRemoteDataObject$ } from '../../shared/testing/utils';
+import { createSuccessfulRemoteDataObject$ } from '../../shared/remote-data.utils';
+import { ChangeAnalyzer } from './change-analyzer';
+import { DataService } from './data.service';
+import { FindListOptions, PatchRequest } from './request.models';
+import { RequestService } from './request.service';
+import { getMockRequestService } from '../../shared/mocks/request.service.mock';
+import { HALEndpointServiceStub } from '../../shared/testing/hal-endpoint-service.stub';
 
 const endpoint = 'https://rest.api/core';
 
-// tslint:disable:max-classes-per-file
-class NormalizedTestObject extends NormalizedObject<Item> {
-}
-
+/* tslint:disable:max-classes-per-file */
 class TestService extends DataService<any> {
 
   constructor(
     protected requestService: RequestService,
     protected rdbService: RemoteDataBuildService,
-    protected dataBuildService: NormalizedObjectBuildService,
     protected store: Store<CoreState>,
     protected linkPath: string,
     protected halService: HALEndpointService,
     protected objectCache: ObjectCacheService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: ChangeAnalyzer<NormalizedTestObject>
+    protected comparator: ChangeAnalyzer<Item>
   ) {
     super();
   }
@@ -47,8 +43,8 @@ class TestService extends DataService<any> {
   }
 }
 
-class DummyChangeAnalyzer implements ChangeAnalyzer<NormalizedTestObject> {
-  diff(object1: NormalizedTestObject, object2: NormalizedTestObject): Operation[] {
+class DummyChangeAnalyzer implements ChangeAnalyzer<Item> {
+  diff(object1: Item, object2: Item): Operation[] {
     return compare((object1 as any).metadata, (object2 as any).metadata);
   }
 
@@ -57,30 +53,35 @@ class DummyChangeAnalyzer implements ChangeAnalyzer<NormalizedTestObject> {
 describe('DataService', () => {
   let service: TestService;
   let options: FindListOptions;
-  const requestService = {generateRequestId: () => uuidv4()} as RequestService;
-  const halService = {} as HALEndpointService;
-  const rdbService = {} as RemoteDataBuildService;
-  const notificationsService = {} as NotificationsService;
-  const http = {} as HttpClient;
-  const comparator = new DummyChangeAnalyzer() as any;
-  const dataBuildService = {
-    normalize: (object) => object
-  } as NormalizedObjectBuildService;
-  const objectCache = {
-    addPatch: () => {
-      /* empty */
-    },
-    getObjectBySelfLink: () => {
-      /* empty */
-    }
-  } as any;
-  const store = {} as Store<CoreState>;
+  let requestService;
+  let halService;
+  let rdbService;
+  let notificationsService;
+  let http;
+  let comparator;
+  let objectCache;
+  let store;
 
   function initTestService(): TestService {
+    requestService = getMockRequestService();
+    halService = new HALEndpointServiceStub('url') as any;
+    rdbService = {} as RemoteDataBuildService;
+    notificationsService = {} as NotificationsService;
+    http = {} as HttpClient;
+    comparator = new DummyChangeAnalyzer() as any;
+    objectCache = {
+
+      addPatch: () => {
+        /* empty */
+      },
+      getObjectBySelfLink: () => {
+        /* empty */
+      }
+    } as any;
+    store = {} as Store<CoreState>;
     return new TestService(
       requestService,
       rdbService,
-      dataBuildService,
       store,
       endpoint,
       halService,
@@ -91,7 +92,9 @@ describe('DataService', () => {
     );
   }
 
-  service = initTestService();
+  beforeEach(() => {
+    service = initTestService();
+  })
 
   describe('getFindAllHref', () => {
 
@@ -155,21 +158,93 @@ describe('DataService', () => {
       (service as any).getFindAllHref(options).subscribe((value) => {
         expect(value).toBe(expected);
       });
-    })
-  });
-  describe('patch', () => {
-    let operations;
-    let selfLink;
-
-    beforeEach(() => {
-      operations = [{ op: 'replace', path: '/metadata/dc.title', value: 'random string' } as Operation];
-      selfLink = 'https://rest.api/endpoint/1698f1d3-be98-4c51-9fd8-6bfedcbd59b7';
-      spyOn(objectCache, 'addPatch');
     });
 
-    it('should call addPatch on the object cache with the right parameters', () => {
-      service.patch(selfLink, operations);
-      expect(objectCache.addPatch).toHaveBeenCalledWith(selfLink, operations);
+    it('should include single linksToFollow as embed', () => {
+      const expected = `${endpoint}?embed=bundles`;
+
+      (service as any).getFindAllHref({}, null, followLink('bundles')).subscribe((value) => {
+        expect(value).toBe(expected);
+      });
+    });
+
+    it('should include multiple linksToFollow as embed', () => {
+      const expected = `${endpoint}?embed=bundles&embed=owningCollection&embed=templateItemOf`;
+
+      (service as any).getFindAllHref({}, null, followLink('bundles'), followLink('owningCollection'), followLink('templateItemOf')).subscribe((value) => {
+        expect(value).toBe(expected);
+      });
+    });
+
+    it('should not include linksToFollow with shouldEmbed = false', () => {
+      const expected = `${endpoint}?embed=templateItemOf`;
+
+      (service as any).getFindAllHref({}, null, followLink('bundles', undefined, false), followLink('owningCollection', undefined, false), followLink('templateItemOf')).subscribe((value) => {
+        expect(value).toBe(expected);
+      });
+    });
+
+    it('should include nested linksToFollow 3lvl', () => {
+      const expected = `${endpoint}?embed=owningCollection/itemtemplate/relationships`;
+
+      (service as any).getFindAllHref({}, null, followLink('owningCollection', undefined, true, followLink('itemtemplate', undefined, true, followLink('relationships')))).subscribe((value) => {
+        expect(value).toBe(expected);
+      });
+    });
+  });
+
+  describe('getIDHref', () => {
+    const endpointMock = 'https://dspace7-internal.atmire.com/server/api/core/items';
+    const resourceIdMock = '003c99b4-d4fe-44b0-a945-e12182a7ca89';
+
+    it('should return endpoint', () => {
+      const result = (service as any).getIDHref(endpointMock, resourceIdMock);
+      expect(result).toEqual(endpointMock + '/' + resourceIdMock);
+    });
+
+    it('should include single linksToFollow as embed', () => {
+      const expected = `${endpointMock}/${resourceIdMock}?embed=bundles`;
+      const result = (service as any).getIDHref(endpointMock, resourceIdMock, followLink('bundles'));
+      expect(result).toEqual(expected);
+    });
+
+    it('should include multiple linksToFollow as embed', () => {
+      const expected = `${endpointMock}/${resourceIdMock}?embed=bundles&embed=owningCollection&embed=templateItemOf`;
+      const result = (service as any).getIDHref(endpointMock, resourceIdMock, followLink('bundles'), followLink('owningCollection'), followLink('templateItemOf'));
+      expect(result).toEqual(expected);
+    });
+
+    it('should not include linksToFollow with shouldEmbed = false', () => {
+      const expected = `${endpointMock}/${resourceIdMock}?embed=templateItemOf`;
+      const result = (service as any).getIDHref(endpointMock, resourceIdMock, followLink('bundles', undefined, false), followLink('owningCollection', undefined, false), followLink('templateItemOf'));
+      expect(result).toEqual(expected);
+    });
+
+    it('should include nested linksToFollow 3lvl', () => {
+      const expected = `${endpointMock}/${resourceIdMock}?embed=owningCollection/itemtemplate/relationships`;
+      const result = (service as any).getIDHref(endpointMock, resourceIdMock, followLink('owningCollection', undefined, true, followLink('itemtemplate', undefined, true, followLink('relationships'))));
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('patch', () => {
+    const dso = {
+      uuid: 'dso-uuid'
+    };
+    const operations = [
+      Object.assign({
+        op: 'move',
+        from: '/1',
+        path: '/5'
+      }) as Operation
+    ];
+
+    beforeEach(() => {
+      service.patch(dso, operations);
+    });
+
+    it('should configure a PatchRequest', () => {
+      expect(requestService.configure).toHaveBeenCalledWith(jasmine.any(PatchRequest));
     });
   });
 
@@ -184,13 +259,15 @@ describe('DataService', () => {
       operations = [{ op: 'replace', path: '/0/value', value: name2 } as Operation];
       selfLink = 'https://rest.api/endpoint/1698f1d3-be98-4c51-9fd8-6bfedcbd59b7';
 
-      dso = new DSpaceObject();
-      dso.self = selfLink;
-      dso.metadata = [{ key: 'dc.title', value: name1 }];
+      dso = Object.assign(new DSpaceObject(), {
+        _links: { self: { href: selfLink } },
+        metadata: [{ key: 'dc.title', value: name1 }]
+      });
 
-      dso2 = new DSpaceObject();
-      dso2.self = selfLink;
-      dso2.metadata = [{ key: 'dc.title', value: name2 }];
+      dso2 = Object.assign(new DSpaceObject(), {
+        _links: { self: { href: selfLink } },
+        metadata: [{ key: 'dc.title', value: name2 }]
+      });
 
       spyOn(service, 'findByHref').and.returnValue(createSuccessfulRemoteDataObject$(dso));
       spyOn(objectCache, 'addPatch');
@@ -207,3 +284,4 @@ describe('DataService', () => {
     });
   });
 });
+/* tslint:enable:max-classes-per-file */

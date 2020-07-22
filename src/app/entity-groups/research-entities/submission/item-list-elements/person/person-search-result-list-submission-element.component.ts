@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/internal/Observable';
+import { BitstreamDataService } from '../../../../../core/data/bitstream-data.service';
+import { Bitstream } from '../../../../../core/shared/bitstream.model';
+import { getFirstSucceededRemoteDataPayload } from '../../../../../core/shared/operators';
 import { SearchResultListElementComponent } from '../../../../../shared/object-list/search-result-list-element/search-result-list-element.component';
 import { ItemSearchResult } from '../../../../../shared/object-collection/shared/item-search-result.model';
 import { listableObjectComponent } from '../../../../../shared/object-collection/shared/listable-object/listable-object.decorator';
@@ -16,7 +20,7 @@ import { MetadataValue } from '../../../../../core/shared/metadata.models';
 import { ItemDataService } from '../../../../../core/data/item-data.service';
 import { SelectableListService } from '../../../../../shared/object-list/selectable-list/selectable-list.service';
 
-@listableObjectComponent('PersonSearchResult', ViewMode.ListElement, Context.SubmissionModal)
+@listableObjectComponent('PersonSearchResult', ViewMode.ListElement, Context.EntitySearchModalWithNameVariants)
 @Component({
   selector: 'ds-person-search-result-list-submission-element',
   styleUrls: ['./person-search-result-list-submission-element.component.scss'],
@@ -37,6 +41,7 @@ export class PersonSearchResultListSubmissionElementComponent extends SearchResu
               private translateService: TranslateService,
               private modalService: NgbModal,
               private itemDataService: ItemDataService,
+              private bitstreamDataService: BitstreamDataService,
               private selectableListService: SelectableListService) {
     super(truncatableService);
   }
@@ -50,7 +55,7 @@ export class PersonSearchResultListSubmissionElementComponent extends SearchResu
     this.relationshipService.getNameVariant(this.listID, this.dso.uuid)
       .pipe(take(1))
       .subscribe((nameVariant: string) => {
-          this.selectedName = nameVariant || defaultValue;
+        this.selectedName = nameVariant || defaultValue;
         }
       );
   }
@@ -70,29 +75,41 @@ export class PersonSearchResultListSubmissionElementComponent extends SearchResu
     if (!this.allSuggestions.includes(value)) {
       this.openModal(value)
         .then(() => {
+          // user clicked ok: store the name variant in the item
+            const newName: MetadataValue = new MetadataValue();
+            newName.value = value;
 
-          const newName: MetadataValue = new MetadataValue();
-          newName.value = value;
-
-          const existingNames: MetadataValue[] = this.dso.metadata[this.alternativeField] || [];
-          const alternativeNames = { [this.alternativeField]: [...existingNames, newName] };
-          const updatedItem =
-            Object.assign({}, this.dso, {
-              metadata: {
-                ...this.dso.metadata,
-                ...alternativeNames
-              },
-            });
-          this.itemDataService.update(updatedItem).pipe(take(1)).subscribe();
-        })
+            const existingNames: MetadataValue[] = this.dso.metadata[this.alternativeField] || [];
+            const alternativeNames = { [this.alternativeField]: [...existingNames, newName] };
+            const updatedItem =
+              Object.assign({}, this.dso, {
+                metadata: {
+                  ...this.dso.metadata,
+                  ...alternativeNames
+                },
+              });
+            this.itemDataService.update(updatedItem).pipe(take(1)).subscribe();
+            this.itemDataService.commitUpdates();
+      }).catch(() => {
+        // user clicked cancel: use the name variant only for this relation, no further action required
+      }).finally(() => {
+        this.select(value);
+      })
     }
-    this.select(value);
   }
 
   openModal(value): Promise<any> {
     const modalRef = this.modalService.open(NameVariantModalComponent, { centered: true });
+
     const modalComp = modalRef.componentInstance;
     modalComp.value = value;
     return modalRef.result;
+  }
+
+  // TODO refactor to return RemoteData, and thumbnail template to deal with loading
+  getThumbnail(): Observable<Bitstream> {
+    return this.bitstreamDataService.getThumbnailFor(this.dso).pipe(
+      getFirstSucceededRemoteDataPayload()
+    );
   }
 }

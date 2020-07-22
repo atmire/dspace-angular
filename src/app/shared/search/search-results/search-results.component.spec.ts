@@ -6,7 +6,7 @@ import { ResourceType } from '../../../core/shared/resource-type';
 import { Community } from '../../../core/shared/community.model';
 import { TranslateModule } from '@ngx-translate/core';
 import { SearchResultsComponent } from './search-results.component';
-import { QueryParamsDirectiveStub } from '../../testing/query-params-directive-stub';
+import { QueryParamsDirectiveStub } from '../../testing/query-params-directive.stub';
 
 describe('SearchResultsComponent', () => {
   let comp: SearchResultsComponent;
@@ -111,7 +111,11 @@ export const objects = [
         scheduler: null
       }
     },
-    self: 'https://dspace7.4science.it/dspace-spring-rest/api/core/communities/7669c72a-3f2a-451f-a3b9-9210e7a4c02f',
+    _links: {
+      self: {
+        href: 'https://dspace7.4science.it/dspace-spring-rest/api/core/communities/7669c72a-3f2a-451f-a3b9-9210e7a4c02f',
+      },
+    },
     id: '7669c72a-3f2a-451f-a3b9-9210e7a4c02f',
     uuid: '7669c72a-3f2a-451f-a3b9-9210e7a4c02f',
     type: Community.type,
@@ -165,7 +169,11 @@ export const objects = [
           scheduler: null
         }
       },
-      self: 'https://dspace7.4science.it/dspace-spring-rest/api/core/communities/9076bd16-e69a-48d6-9e41-0238cb40d863',
+      _links: {
+        self: {
+          href: 'https://dspace7.4science.it/dspace-spring-rest/api/core/communities/9076bd16-e69a-48d6-9e41-0238cb40d863',
+        },
+      },
       id: '9076bd16-e69a-48d6-9e41-0238cb40d863',
       uuid: '9076bd16-e69a-48d6-9e41-0238cb40d863',
       type: Community.type,

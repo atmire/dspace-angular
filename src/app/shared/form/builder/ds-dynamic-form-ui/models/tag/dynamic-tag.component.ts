@@ -16,8 +16,7 @@ import { DynamicTagModel } from './dynamic-tag.model';
 import { IntegrationSearchOptions } from '../../../../../../core/integration/models/integration-options.model';
 import { Chips } from '../../../../../chips/models/chips.model';
 import { hasValue, isNotEmpty } from '../../../../../empty.util';
-import { GlobalConfig } from '../../../../../../../config/global-config.interface';
-import { GLOBAL_CONFIG } from '../../../../../../../config';
+import { environment } from '../../../../../../../environments/environment';
 
 @Component({
   selector: 'ds-dynamic-tag',
@@ -33,7 +32,7 @@ export class DsDynamicTagComponent extends DynamicFormControlComponent implement
   @Output() change: EventEmitter<any> = new EventEmitter<any>();
   @Output() focus: EventEmitter<any> = new EventEmitter<any>();
 
-  @ViewChild('instance') instance: NgbTypeahead;
+  @ViewChild('instance', {static: false}) instance: NgbTypeahead;
 
   chips: Chips;
   hasAuthority: boolean;
@@ -73,10 +72,9 @@ export class DsDynamicTagComponent extends DynamicFormControlComponent implement
       }),
       map((results) => results.list),
       tap(() => this.changeSearchingStatus(false)),
-      merge(this.hideSearchingWhenUnsubscribed),);
+      merge(this.hideSearchingWhenUnsubscribed));
 
-  constructor(@Inject(GLOBAL_CONFIG) protected EnvConfig: GlobalConfig,
-              private authorityService: AuthorityService,
+  constructor(private authorityService: AuthorityService,
               private cdr: ChangeDetectorRef,
               protected layoutService: DynamicFormLayoutService,
               protected validationService: DynamicFormValidationService
@@ -98,7 +96,7 @@ export class DsDynamicTagComponent extends DynamicFormControlComponent implement
       this.model.value,
       'display',
       null,
-      this.EnvConfig.submission.icons.metadata);
+      environment.submission.icons.metadata);
 
     this.chips.chipsItems
       .subscribe((subItems: any[]) => {
@@ -108,7 +106,7 @@ export class DsDynamicTagComponent extends DynamicFormControlComponent implement
           this.model.valueUpdates.next(items);
           this.change.emit(event);
         }
-      })
+      });
   }
 
   changeSearchingStatus(status: boolean) {

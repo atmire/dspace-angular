@@ -8,9 +8,9 @@ import {
 } from '@ng-dynamic-forms/core';
 
 import { FormBuilderService } from '../../../shared/form/builder/form-builder.service';
-import { getMockFormBuilderService } from '../../../shared/mocks/mock-form-builder-service';
+import { getMockFormBuilderService } from '../../../shared/mocks/form-builder-service.mock';
 import { JsonPatchOperationsBuilder } from '../../../core/json-patch/builder/json-patch-operations-builder';
-import { MockTranslateLoader } from '../../../shared/mocks/mock-translate-loader';
+import { TranslateLoaderMock } from '../../../shared/mocks/translate-loader.mock';
 import { SectionFormOperationsService } from './section-form-operations.service';
 import { JsonPatchOperationPathCombiner } from '../../../core/json-patch/builder/json-patch-operation-path-combiner';
 import { FormFieldPreviousValueObject } from '../../../shared/form/builder/models/form-field-previous-value-object';
@@ -25,7 +25,7 @@ import {
   MockQualdropModel,
   MockRelationModel,
   mockRowGroupModel
-} from '../../../shared/mocks/mock-form-models';
+} from '../../../shared/mocks/form-models.mock';
 import { FormFieldMetadataValueObject } from '../../../shared/form/builder/models/form-field-metadata-value.model';
 import { AuthorityValue } from '../../../core/integration/models/authority.value';
 
@@ -65,7 +65,7 @@ describe('SectionFormOperationsService test suite', () => {
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
-            useClass: MockTranslateLoader
+            useClass: TranslateLoaderMock
           }
         })
       ],
@@ -665,7 +665,7 @@ describe('SectionFormOperationsService test suite', () => {
       spyOn(service, 'getFieldPathFromEvent').and.returnValue('path/1');
       spyOn(service, 'getFieldPathSegmentedFromChangeEvent').and.returnValue('path');
       spyOn(service, 'getFieldValueFromChangeEvent').and.returnValue(new FormFieldMetadataValueObject('test'));
-      spyOn(service, 'getArrayIndexFromEvent').and.returnValue(1);
+      spyOn(service, 'getArrayIndexFromEvent').and.returnValue(0);
       spyOn(serviceAsAny, 'getValueMap');
       spyOn(serviceAsAny, 'dispatchOperationsFromMap');
       formBuilderService.isQualdropGroup.and.returnValue(false);
@@ -676,8 +676,10 @@ describe('SectionFormOperationsService test suite', () => {
       serviceAsAny.dispatchOperationsFromChangeEvent(pathCombiner, event, previousValue, false);
 
       expect(jsonPatchOpBuilder.add).toHaveBeenCalledWith(
-        pathCombiner.getPath('path/1'),
-        new FormFieldMetadataValueObject('test'));
+        pathCombiner.getPath('path'),
+        new FormFieldMetadataValueObject('test'),
+        true
+      );
     });
   });
 

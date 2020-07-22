@@ -1,16 +1,16 @@
+import { HttpClient } from '@angular/common/http';
+import { Store } from '@ngrx/store';
 import { cold, getTestScheduler } from 'jasmine-marbles';
 import { TestScheduler } from 'rxjs/testing';
+import { NotificationsService } from '../../shared/notifications/notifications.service';
+import { followLink } from '../../shared/utils/follow-link-config.model';
 import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
+import { ObjectCacheService } from '../cache/object-cache.service';
+import { CoreState } from '../core.reducers';
 import { HALEndpointService } from '../shared/hal-endpoint.service';
+import { DsoRedirectDataService } from './dso-redirect-data.service';
 import { FindByIDRequest, IdentifierType } from './request.models';
 import { RequestService } from './request.service';
-import { ObjectCacheService } from '../cache/object-cache.service';
-import { NotificationsService } from '../../shared/notifications/notifications.service';
-import { HttpClient } from '@angular/common/http';
-import { NormalizedObjectBuildService } from '../cache/builders/normalized-object-build.service';
-import { DsoRedirectDataService } from './dso-redirect-data.service';
-import { Store } from '@ngrx/store';
-import { CoreState } from '../core.reducers';
 
 describe('DsoRedirectDataService', () => {
   let scheduler: TestScheduler;
@@ -31,14 +31,13 @@ describe('DsoRedirectDataService', () => {
   const notificationsService = {} as NotificationsService;
   const http = {} as HttpClient;
   const comparator = {} as any;
-  const dataBuildService = {} as NormalizedObjectBuildService;
   const objectCache = {} as ObjectCacheService;
-  let setup;
+
   beforeEach(() => {
     scheduler = getTestScheduler();
 
     halService = jasmine.createSpyObj('halService', {
-      getEndpoint: cold('a', {a: pidLink})
+      getEndpoint: cold('a', { a: pidLink })
     });
     requestService = jasmine.createSpyObj('requestService', {
       generateRequestId: requestUUID,
@@ -59,63 +58,55 @@ describe('DsoRedirectDataService', () => {
       }
     };
 
-    setup = () => {
-      rdbService = jasmine.createSpyObj('rdbService', {
-        buildSingle: cold('a', {
-          a: remoteData
-        })
-      });
-      service = new DsoRedirectDataService(
-        requestService,
-        rdbService,
-        dataBuildService,
-        store,
-        objectCache,
-        halService,
-        notificationsService,
-        http,
-        comparator,
-        router
-      );
-    }
+    rdbService = jasmine.createSpyObj('rdbService', {
+      buildSingle: cold('a', {
+        a: remoteData
+      })
+    });
+    service = new DsoRedirectDataService(
+      requestService,
+      rdbService,
+      store,
+      objectCache,
+      halService,
+      notificationsService,
+      http,
+      comparator,
+      router
+    );
   });
 
   describe('findById', () => {
     it('should call HALEndpointService with the path to the pid endpoint', () => {
-      setup();
-      scheduler.schedule(() => service.findById(dsoHandle, IdentifierType.HANDLE));
+      scheduler.schedule(() => service.findByIdAndIDType(dsoHandle, IdentifierType.HANDLE));
       scheduler.flush();
 
       expect(halService.getEndpoint).toHaveBeenCalledWith('pid');
     });
 
     it('should call HALEndpointService with the path to the dso endpoint', () => {
-      setup();
-      scheduler.schedule(() => service.findById(dsoUUID, IdentifierType.UUID));
+      scheduler.schedule(() => service.findByIdAndIDType(dsoUUID, IdentifierType.UUID));
       scheduler.flush();
 
       expect(halService.getEndpoint).toHaveBeenCalledWith('dso');
     });
 
     it('should call HALEndpointService with the path to the dso endpoint when identifier type not specified', () => {
-      setup();
-      scheduler.schedule(() => service.findById(dsoUUID));
+      scheduler.schedule(() => service.findByIdAndIDType(dsoUUID));
       scheduler.flush();
 
       expect(halService.getEndpoint).toHaveBeenCalledWith('dso');
     });
 
     it('should configure the proper FindByIDRequest for uuid', () => {
-      setup();
-      scheduler.schedule(() => service.findById(dsoUUID, IdentifierType.UUID));
+      scheduler.schedule(() => service.findByIdAndIDType(dsoUUID, IdentifierType.UUID));
       scheduler.flush();
 
       expect(requestService.configure).toHaveBeenCalledWith(new FindByIDRequest(requestUUID, requestUUIDURL, dsoUUID));
     });
 
     it('should configure the proper FindByIDRequest for handle', () => {
-      setup();
-      scheduler.schedule(() => service.findById(dsoHandle, IdentifierType.HANDLE));
+      scheduler.schedule(() => service.findByIdAndIDType(dsoHandle, IdentifierType.HANDLE));
       scheduler.flush();
 
       expect(requestService.configure).toHaveBeenCalledWith(new FindByIDRequest(requestUUID, requestHandleURL, dsoHandle));
@@ -123,8 +114,7 @@ describe('DsoRedirectDataService', () => {
 
     it('should navigate to item route', () => {
       remoteData.payload.type = 'item';
-      setup();
-      const redir = service.findById(dsoHandle, IdentifierType.HANDLE);
+      const redir = service.findByIdAndIDType(dsoHandle, IdentifierType.HANDLE);
       // The framework would normally subscribe but do it here so we can test navigation.
       redir.subscribe();
       scheduler.schedule(() => redir);
@@ -134,8 +124,7 @@ describe('DsoRedirectDataService', () => {
 
     it('should navigate to collections route', () => {
       remoteData.payload.type = 'collection';
-      setup();
-      const redir = service.findById(dsoHandle, IdentifierType.HANDLE);
+      const redir = service.findByIdAndIDType(dsoHandle, IdentifierType.HANDLE);
       redir.subscribe();
       scheduler.schedule(() => redir);
       scheduler.flush();
@@ -144,12 +133,43 @@ describe('DsoRedirectDataService', () => {
 
     it('should navigate to communities route', () => {
       remoteData.payload.type = 'community';
-      setup();
-      const redir = service.findById(dsoHandle, IdentifierType.HANDLE);
+      const redir = service.findByIdAndIDType(dsoHandle, IdentifierType.HANDLE);
       redir.subscribe();
       scheduler.schedule(() => redir);
       scheduler.flush();
       expect(router.navigate).toHaveBeenCalledWith(['communities/' + remoteData.payload.uuid]);
     });
-  })
+  });
+
+  describe('getIDHref', () => {
+    it('should return endpoint', () => {
+      const result = (service as any).getIDHref(pidLink, dsoUUID);
+      expect(result).toEqual(requestUUIDURL);
+    });
+
+    it('should include single linksToFollow as embed', () => {
+      const expected = `${requestUUIDURL}&embed=bundles`;
+      const result = (service as any).getIDHref(pidLink, dsoUUID, followLink('bundles'));
+      expect(result).toEqual(expected);
+    });
+
+    it('should include multiple linksToFollow as embed', () => {
+      const expected = `${requestUUIDURL}&embed=bundles&embed=owningCollection&embed=templateItemOf`;
+      const result = (service as any).getIDHref(pidLink, dsoUUID, followLink('bundles'), followLink('owningCollection'), followLink('templateItemOf'));
+      expect(result).toEqual(expected);
+    });
+
+    it('should not include linksToFollow with shouldEmbed = false', () => {
+      const expected = `${requestUUIDURL}&embed=templateItemOf`;
+      const result = (service as any).getIDHref(pidLink, dsoUUID, followLink('bundles', undefined, false), followLink('owningCollection', undefined, false), followLink('templateItemOf'));
+      expect(result).toEqual(expected);
+    });
+
+    it('should include nested linksToFollow 3lvl', () => {
+      const expected = `${requestUUIDURL}&embed=owningCollection/itemtemplate/relationships`;
+      const result = (service as any).getIDHref(pidLink, dsoUUID, followLink('owningCollection', undefined, true, followLink('itemtemplate', undefined, true, followLink('relationships'))));
+      expect(result).toEqual(expected);
+    });
+  });
+
 });

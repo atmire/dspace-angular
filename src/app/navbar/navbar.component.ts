@@ -6,7 +6,7 @@ import { MenuID, MenuItemType } from '../shared/menu/initial-menus-state';
 import { TextMenuItemModel } from '../shared/menu/menu-item/models/text.model';
 import { LinkMenuItemModel } from '../shared/menu/menu-item/models/link.model';
 import { HostWindowService } from '../shared/host-window.service';
-import { GLOBAL_CONFIG, GlobalConfig } from '../../config';
+import { environment } from '../../environments/environment';
 
 /**
  * Component representing the public navbar
@@ -17,15 +17,14 @@ import { GLOBAL_CONFIG, GlobalConfig } from '../../config';
   templateUrl: './navbar.component.html',
   animations: [slideMobileNav]
 })
-export class NavbarComponent extends MenuComponent implements OnInit {
+export class NavbarComponent extends MenuComponent {
   /**
    * The menu ID of the Navbar is PUBLIC
    * @type {MenuID.PUBLIC}
    */
   menuID = MenuID.PUBLIC;
 
-  constructor(@Inject(GLOBAL_CONFIG) public config: GlobalConfig,
-              protected menuService: MenuService,
+  constructor(protected menuService: MenuService,
               protected injector: Injector,
               public windowService: HostWindowService
   ) {
@@ -80,7 +79,7 @@ export class NavbarComponent extends MenuComponent implements OnInit {
       },
     ];
     // Read the different Browse-By types from config and add them to the browse menu
-    const types = this.config.browseBy.types;
+    const types = environment.browseBy.types;
     types.forEach((typeConfig) => {
       menuList.push({
         id: `browse_global_by_${typeConfig.id}`,
@@ -94,7 +93,9 @@ export class NavbarComponent extends MenuComponent implements OnInit {
         } as LinkMenuItemModel
       });
     });
-    menuList.forEach((menuSection) => this.menuService.addSection(this.menuID, menuSection));
+    menuList.forEach((menuSection) => this.menuService.addSection(this.menuID, Object.assign(menuSection, {
+      shouldPersistOnRouteChange: true
+    })));
 
   }
 

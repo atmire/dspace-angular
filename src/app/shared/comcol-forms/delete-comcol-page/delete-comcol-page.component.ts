@@ -7,6 +7,7 @@ import { DataService } from '../../../core/data/data.service';
 import { DSpaceObject } from '../../../core/shared/dspace-object.model';
 import { NotificationsService } from '../../notifications/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
+import { RestResponse } from '../../../core/cache/response.models';
 
 /**
  * Component representing the delete page for communities and collections
@@ -43,10 +44,10 @@ export class DeleteComColPageComponent<TDomain extends DSpaceObject> implements 
    * Deletes an existing DSO and redirects to the home page afterwards, showing a notification that states whether or not the deletion was successful
    */
   onConfirm(dso: TDomain) {
-    this.dsoDataService.delete(dso)
+    this.dsoDataService.delete(dso.id)
       .pipe(first())
-      .subscribe((success: boolean) => {
-        if (success) {
+      .subscribe((response: RestResponse) => {
+        if (response.isSuccessful) {
           const successMessage = this.translate.instant((dso as any).type + '.delete.notification.success');
           this.notifications.success(successMessage)
         } else {

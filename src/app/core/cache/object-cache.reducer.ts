@@ -1,3 +1,5 @@
+import { HALLink } from '../shared/hal-link.model';
+import { HALResource } from '../shared/hal-resource.model';
 import {
   ObjectCacheAction,
   ObjectCacheActionTypes,
@@ -10,12 +12,6 @@ import { hasValue, isNotEmpty } from '../../shared/empty.util';
 import { CacheEntry } from './cache-entry';
 import { ResourceType } from '../shared/resource-type';
 import { applyPatch, Operation } from 'fast-json-patch';
-
-export enum DirtyType {
-  Created = 'Created',
-  Updated = 'Updated',
-  Deleted = 'Deleted'
-}
 
 /**
  * An interface to represent a JsonPatch
@@ -34,6 +30,7 @@ export interface Patch {
 
 export abstract class TypedObject {
   static type: ResourceType;
+  type: ResourceType;
 }
 
 /* tslint:disable:max-classes-per-file */
@@ -42,10 +39,13 @@ export abstract class TypedObject {
  *
  * A cacheable object should have a self link
  */
-export class CacheableObject extends TypedObject {
+export class CacheableObject extends TypedObject implements HALResource {
   uuid?: string;
   handle?: string;
-  self: string;
+
+  _links: {
+    self: HALLink;
+  }
   // isNew: boolean;
   // dirtyType: DirtyType;
   // hasDirtyAttributes: boolean;
@@ -64,6 +64,7 @@ export class ObjectCacheEntry implements CacheEntry {
   patches: Patch[] = [];
   isDirty: boolean;
 }
+
 /* tslint:enable:max-classes-per-file */
 
 /**
@@ -129,9 +130,9 @@ export function objectCacheReducer(state = initialState, action: ObjectCacheActi
  *    the new state, with the object added, or overwritten.
  */
 function addToObjectCache(state: ObjectCacheState, action: AddToObjectCacheAction): ObjectCacheState {
-  const existing = state[action.payload.objectToCache.self];
+  const existing = state[action.payload.objectToCache._links.self.href];
   return Object.assign({}, state, {
-    [action.payload.objectToCache.self]: {
+    [action.payload.objectToCache._links.self.href]: {
       data: action.payload.objectToCache,
       timeAdded: action.payload.timeAdded,
       msToLive: action.payload.msToLive,

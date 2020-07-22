@@ -3,15 +3,17 @@ import { async, TestBed } from '@angular/core/testing';
 import { Store, StoreModule } from '@ngrx/store';
 
 import { GlobalConfig } from '../../../config/global-config.interface';
-import { AuthStatusResponse } from '../cache/response.models';
+import { StoreMock } from '../../shared/testing/store.mock';
 import { ObjectCacheService } from '../cache/object-cache.service';
-import { AuthStatus } from './models/auth-status.model';
-import { AuthResponseParsingService } from './auth-response-parsing.service';
+import { AuthStatusResponse } from '../cache/response.models';
 import { AuthGetRequest, AuthPostRequest } from '../data/request.models';
-import { MockStore } from '../../shared/testing/mock-store';
+import { AuthResponseParsingService } from './auth-response-parsing.service';
+import { AuthStatus } from './models/auth-status.model';
+import { storeModuleConfig } from '../../app.reducer';
 
 describe('AuthResponseParsingService', () => {
   let service: AuthResponseParsingService;
+  let linkServiceStub: any;
 
   const EnvConfig: GlobalConfig = { cache: { msToLive: 1000 } } as any;
   let store: any;
@@ -20,18 +22,21 @@ describe('AuthResponseParsingService', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        StoreModule.forRoot({}),
+        StoreModule.forRoot({}, storeModuleConfig),
       ],
       providers: [
-        { provide: Store, useClass: MockStore }
+        { provide: Store, useClass: StoreMock }
       ]
     }).compileComponents();
   }));
 
   beforeEach(() => {
     store = TestBed.get(Store);
-    objectCacheService = new ObjectCacheService(store as any);
-    service = new AuthResponseParsingService(EnvConfig, objectCacheService);
+    linkServiceStub = jasmine.createSpyObj({
+      removeResolvedLinks: {}
+    });
+    objectCacheService = new ObjectCacheService(store as any, linkServiceStub);
+    service = new AuthResponseParsingService(objectCacheService);
   });
 
   describe('parse', () => {
@@ -141,6 +146,7 @@ describe('AuthResponseParsingService', () => {
     it('should return a AuthStatusResponse if data contains a valid endpoint response', () => {
       const response = service.parse(validRequest2, validResponse2);
       expect(response.constructor).toBe(AuthStatusResponse);
+      expect(linkServiceStub.removeResolvedLinks).toHaveBeenCalled();
     });
 
     it('should return a AuthStatusResponse if data contains an empty 404 endpoint response', () => {

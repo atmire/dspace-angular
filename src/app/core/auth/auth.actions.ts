@@ -1,12 +1,11 @@
 // import @ngrx
 import { Action } from '@ngrx/store';
-
 // import type function
 import { type } from '../../shared/ngrx/type';
-
 // import models
-import { EPerson } from '../eperson/models/eperson.model';
 import { AuthTokenInfo } from './models/auth-token-info.model';
+import { AuthMethod } from './models/auth.method';
+import { AuthStatus } from './models/auth-status.model';
 
 export const AuthActionTypes = {
   AUTHENTICATE: type('dspace/auth/AUTHENTICATE'),
@@ -16,21 +15,25 @@ export const AuthActionTypes = {
   AUTHENTICATED_ERROR: type('dspace/auth/AUTHENTICATED_ERROR'),
   AUTHENTICATED_SUCCESS: type('dspace/auth/AUTHENTICATED_SUCCESS'),
   CHECK_AUTHENTICATION_TOKEN: type('dspace/auth/CHECK_AUTHENTICATION_TOKEN'),
-  CHECK_AUTHENTICATION_TOKEN_ERROR: type('dspace/auth/CHECK_AUTHENTICATION_TOKEN_ERROR'),
+  CHECK_AUTHENTICATION_TOKEN_COOKIE: type('dspace/auth/CHECK_AUTHENTICATION_TOKEN_COOKIE'),
+  RETRIEVE_AUTH_METHODS: type('dspace/auth/RETRIEVE_AUTH_METHODS'),
+  RETRIEVE_AUTH_METHODS_SUCCESS: type('dspace/auth/RETRIEVE_AUTH_METHODS_SUCCESS'),
+  RETRIEVE_AUTH_METHODS_ERROR: type('dspace/auth/RETRIEVE_AUTH_METHODS_ERROR'),
   REDIRECT_TOKEN_EXPIRED: type('dspace/auth/REDIRECT_TOKEN_EXPIRED'),
   REDIRECT_AUTHENTICATION_REQUIRED: type('dspace/auth/REDIRECT_AUTHENTICATION_REQUIRED'),
   REFRESH_TOKEN: type('dspace/auth/REFRESH_TOKEN'),
   REFRESH_TOKEN_SUCCESS: type('dspace/auth/REFRESH_TOKEN_SUCCESS'),
   REFRESH_TOKEN_ERROR: type('dspace/auth/REFRESH_TOKEN_ERROR'),
+  RETRIEVE_TOKEN: type('dspace/auth/RETRIEVE_TOKEN'),
   ADD_MESSAGE: type('dspace/auth/ADD_MESSAGE'),
   RESET_MESSAGES: type('dspace/auth/RESET_MESSAGES'),
   LOG_OUT: type('dspace/auth/LOG_OUT'),
   LOG_OUT_ERROR: type('dspace/auth/LOG_OUT_ERROR'),
   LOG_OUT_SUCCESS: type('dspace/auth/LOG_OUT_SUCCESS'),
-  REGISTRATION: type('dspace/auth/REGISTRATION'),
-  REGISTRATION_ERROR: type('dspace/auth/REGISTRATION_ERROR'),
-  REGISTRATION_SUCCESS: type('dspace/auth/REGISTRATION_SUCCESS'),
   SET_REDIRECT_URL: type('dspace/auth/SET_REDIRECT_URL'),
+  RETRIEVE_AUTHENTICATED_EPERSON: type('dspace/auth/RETRIEVE_AUTHENTICATED_EPERSON'),
+  RETRIEVE_AUTHENTICATED_EPERSON_SUCCESS: type('dspace/auth/RETRIEVE_AUTHENTICATED_EPERSON_SUCCESS'),
+  RETRIEVE_AUTHENTICATED_EPERSON_ERROR: type('dspace/auth/RETRIEVE_AUTHENTICATED_EPERSON_ERROR'),
 };
 
 /* tslint:disable:max-classes-per-file */
@@ -76,11 +79,11 @@ export class AuthenticatedSuccessAction implements Action {
   payload: {
     authenticated: boolean;
     authToken: AuthTokenInfo;
-    user: EPerson
+    userHref: string
   };
 
-  constructor(authenticated: boolean, authToken: AuthTokenInfo, user: EPerson) {
-    this.payload = { authenticated, authToken, user };
+  constructor(authenticated: boolean, authToken: AuthTokenInfo, userHref: string) {
+    this.payload = { authenticated, authToken, userHref };
   }
 }
 
@@ -94,7 +97,7 @@ export class AuthenticatedErrorAction implements Action {
   payload: Error;
 
   constructor(payload: Error) {
-    this.payload = payload ;
+    this.payload = payload;
   }
 }
 
@@ -108,7 +111,7 @@ export class AuthenticationErrorAction implements Action {
   payload: Error;
 
   constructor(payload: Error) {
-    this.payload = payload ;
+    this.payload = payload;
   }
 }
 
@@ -137,11 +140,11 @@ export class CheckAuthenticationTokenAction implements Action {
 
 /**
  * Check Authentication Token Error.
- * @class CheckAuthenticationTokenErrorAction
+ * @class CheckAuthenticationTokenCookieAction
  * @implements {Action}
  */
-export class CheckAuthenticationTokenErrorAction implements Action {
-  public type: string = AuthActionTypes.CHECK_AUTHENTICATION_TOKEN_ERROR;
+export class CheckAuthenticationTokenCookieAction implements Action {
+  public type: string = AuthActionTypes.CHECK_AUTHENTICATION_TOKEN_COOKIE;
 }
 
 /**
@@ -151,7 +154,9 @@ export class CheckAuthenticationTokenErrorAction implements Action {
  */
 export class LogOutAction implements Action {
   public type: string = AuthActionTypes.LOG_OUT;
-  constructor(public payload?: any) {}
+
+  constructor(public payload?: any) {
+  }
 }
 
 /**
@@ -164,7 +169,7 @@ export class LogOutErrorAction implements Action {
   payload: Error;
 
   constructor(payload: Error) {
-    this.payload = payload ;
+    this.payload = payload;
   }
 }
 
@@ -175,7 +180,9 @@ export class LogOutErrorAction implements Action {
  */
 export class LogOutSuccessAction implements Action {
   public type: string = AuthActionTypes.LOG_OUT_SUCCESS;
-  constructor(public payload?: any) {}
+
+  constructor(public payload?: any) {
+  }
 }
 
 /**
@@ -188,7 +195,7 @@ export class RedirectWhenAuthenticationIsRequiredAction implements Action {
   payload: string;
 
   constructor(message: string) {
-    this.payload = message ;
+    this.payload = message;
   }
 }
 
@@ -202,7 +209,7 @@ export class RedirectWhenTokenExpiredAction implements Action {
   payload: string;
 
   constructor(message: string) {
-    this.payload = message ;
+    this.payload = message;
   }
 }
 
@@ -244,45 +251,12 @@ export class RefreshTokenErrorAction implements Action {
 }
 
 /**
- * Sign up.
- * @class RegistrationAction
+ * Retrieve authentication token.
+ * @class RetrieveTokenAction
  * @implements {Action}
  */
-export class RegistrationAction implements Action {
-  public type: string = AuthActionTypes.REGISTRATION;
-  payload: EPerson;
-
-  constructor(user: EPerson) {
-    this.payload = user;
-  }
-}
-
-/**
- * Sign up error.
- * @class RegistrationErrorAction
- * @implements {Action}
- */
-export class RegistrationErrorAction implements Action {
-  public type: string = AuthActionTypes.REGISTRATION_ERROR;
-  payload: Error;
-
-  constructor(payload: Error) {
-    this.payload = payload ;
-  }
-}
-
-/**
- * Sign up success.
- * @class RegistrationSuccessAction
- * @implements {Action}
- */
-export class RegistrationSuccessAction implements Action {
-  public type: string = AuthActionTypes.REGISTRATION_SUCCESS;
-  payload: EPerson;
-
-  constructor(user: EPerson) {
-    this.payload = user;
-  }
+export class RetrieveTokenAction implements Action {
+  public type: string = AuthActionTypes.RETRIEVE_TOKEN;
 }
 
 /**
@@ -308,6 +282,45 @@ export class ResetAuthenticationMessagesAction implements Action {
   public type: string = AuthActionTypes.RESET_MESSAGES;
 }
 
+// // Next three Actions are used by dynamic login methods
+/**
+ * Action that triggers an effect fetching the authentication methods enabled ant the backend
+ * @class  RetrieveAuthMethodsAction
+ * @implements {Action}
+ */
+export class RetrieveAuthMethodsAction implements Action {
+  public type: string = AuthActionTypes.RETRIEVE_AUTH_METHODS;
+
+  payload: AuthStatus;
+
+  constructor(authStatus: AuthStatus) {
+    this.payload = authStatus;
+  }
+}
+
+/**
+ * Get Authentication methods enabled at the backend
+ * @class RetrieveAuthMethodsSuccessAction
+ * @implements {Action}
+ */
+export class RetrieveAuthMethodsSuccessAction implements Action {
+  public type: string = AuthActionTypes.RETRIEVE_AUTH_METHODS_SUCCESS;
+  payload: AuthMethod[];
+
+  constructor(authMethods: AuthMethod[] ) {
+    this.payload = authMethods;
+  }
+}
+
+/**
+ * Set password as default authentication method on error
+ * @class RetrieveAuthMethodsErrorAction
+ * @implements {Action}
+ */
+export class RetrieveAuthMethodsErrorAction implements Action {
+  public type: string = AuthActionTypes.RETRIEVE_AUTH_METHODS_ERROR;
+}
+
 /**
  * Change the redirect url.
  * @class SetRedirectUrlAction
@@ -318,10 +331,51 @@ export class SetRedirectUrlAction implements Action {
   payload: string;
 
   constructor(url: string) {
-    this.payload = url ;
+    this.payload = url;
   }
 }
 
+/**
+ * Retrieve the authenticated eperson.
+ * @class RetrieveAuthenticatedEpersonAction
+ * @implements {Action}
+ */
+export class RetrieveAuthenticatedEpersonAction implements Action {
+  public type: string = AuthActionTypes.RETRIEVE_AUTHENTICATED_EPERSON;
+  payload: string;
+
+  constructor(user: string) {
+    this.payload = user ;
+  }
+}
+
+/**
+ * Set the authenticated eperson in the state.
+ * @class RetrieveAuthenticatedEpersonSuccessAction
+ * @implements {Action}
+ */
+export class RetrieveAuthenticatedEpersonSuccessAction implements Action {
+  public type: string = AuthActionTypes.RETRIEVE_AUTHENTICATED_EPERSON_SUCCESS;
+  payload: string;
+
+  constructor(userId: string) {
+    this.payload = userId ;
+  }
+}
+
+/**
+ * Set the authenticated eperson in the state.
+ * @class RetrieveAuthenticatedEpersonSuccessAction
+ * @implements {Action}
+ */
+export class RetrieveAuthenticatedEpersonErrorAction implements Action {
+  public type: string = AuthActionTypes.RETRIEVE_AUTHENTICATED_EPERSON_ERROR;
+  payload: Error;
+
+  constructor(payload: Error) {
+    this.payload = payload ;
+  }
+}
 /* tslint:enable:max-classes-per-file */
 
 /**
@@ -336,11 +390,20 @@ export type AuthActions
   | AuthenticationErrorAction
   | AuthenticationSuccessAction
   | CheckAuthenticationTokenAction
-  | CheckAuthenticationTokenErrorAction
+  | CheckAuthenticationTokenCookieAction
   | RedirectWhenAuthenticationIsRequiredAction
   | RedirectWhenTokenExpiredAction
-  | RegistrationAction
-  | RegistrationErrorAction
-  | RegistrationSuccessAction
   | AddAuthenticationMessageAction
-  | ResetAuthenticationMessagesAction;
+  | RefreshTokenAction
+  | RefreshTokenErrorAction
+  | RefreshTokenSuccessAction
+  | ResetAuthenticationMessagesAction
+  | RetrieveAuthMethodsAction
+  | RetrieveAuthMethodsSuccessAction
+  | RetrieveAuthMethodsErrorAction
+  | RetrieveTokenAction
+  | ResetAuthenticationMessagesAction
+  | RetrieveAuthenticatedEpersonAction
+  | RetrieveAuthenticatedEpersonErrorAction
+  | RetrieveAuthenticatedEpersonSuccessAction
+  | SetRedirectUrlAction;

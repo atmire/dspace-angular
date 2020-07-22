@@ -4,31 +4,29 @@ import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing'
 import { of as observableOf } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
-import { createTestComponent } from '../../../shared/testing/utils';
+import { createTestComponent } from '../../../shared/testing/utils.test';
 import { NotificationsService } from '../../../shared/notifications/notifications.service';
-import { NotificationsServiceStub } from '../../../shared/testing/notifications-service-stub';
+import { NotificationsServiceStub } from '../../../shared/testing/notifications-service.stub';
 import { SubmissionService } from '../../submission.service';
-import { SubmissionServiceStub } from '../../../shared/testing/submission-service-stub';
-import { getMockTranslateService } from '../../../shared/mocks/mock-translate.service';
+import { SubmissionServiceStub } from '../../../shared/testing/submission-service.stub';
+import { getMockTranslateService } from '../../../shared/mocks/translate.service.mock';
 import { SectionsService } from '../sections.service';
-import { SectionsServiceStub } from '../../../shared/testing/sections-service-stub';
+import { SectionsServiceStub } from '../../../shared/testing/sections-service.stub';
 import { SubmissionSectionformComponent } from './section-form.component';
 import { FormBuilderService } from '../../../shared/form/builder/form-builder.service';
-import { getMockFormBuilderService } from '../../../shared/mocks/mock-form-builder-service';
-import { getMockFormOperationsService } from '../../../shared/mocks/mock-form-operations-service';
+import { getMockFormBuilderService } from '../../../shared/mocks/form-builder-service.mock';
+import { getMockFormOperationsService } from '../../../shared/mocks/form-operations-service.mock';
 import { SectionFormOperationsService } from './section-form-operations.service';
-import { getMockFormService } from '../../../shared/mocks/mock-form-service';
+import { getMockFormService } from '../../../shared/mocks/form-service.mock';
 import { FormService } from '../../../shared/form/form.service';
 import { SubmissionFormsConfigService } from '../../../core/config/submission-forms-config.service';
-import { GLOBAL_CONFIG, GlobalConfig } from '../../../../config';
-import { MOCK_SUBMISSION_CONFIG } from '../../../shared/testing/mock-submission-config';
 import { SectionDataObject } from '../models/section-data.model';
 import { SectionsType } from '../sections-type';
 import {
   mockSubmissionCollectionId,
   mockSubmissionId,
   mockUploadResponse1ParsedErrors
-} from '../../../shared/mocks/mock-submission';
+} from '../../../shared/mocks/submission.mock';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -46,6 +44,9 @@ import { FormRowModel } from '../../../core/config/models/config-submission-form
 import { WorkspaceitemDataService } from '../../../core/submission/workspaceitem-data.service';
 import { RemoteData } from '../../../core/data/remote-data';
 import { WorkspaceItem } from '../../../core/submission/models/workspaceitem.model';
+import { SubmissionObjectDataService } from '../../../core/submission/submission-object-data.service';
+import { ObjectCacheService } from '../../../core/cache/object-cache.service';
+import { RequestService } from '../../../core/data/request.service';
 
 function getMockSubmissionFormsConfigService(): SubmissionFormsConfigService {
   return jasmine.createSpyObj('FormOperationsService', {
@@ -108,21 +109,22 @@ const testFormConfiguration = {
       ]
     } as FormRowModel,
   ],
-  self: 'testFormConfiguration.url',
   type: 'submissionform',
   _links: {
-    self: 'testFormConfiguration.url'
+    self: {
+      href: 'testFormConfiguration.url'
+    }
   }
 } as any;
 
 const testFormModel = [
   new DynamicRowGroupModel({
     id: 'df-row-group-config-1',
-    group: [new DsDynamicInputModel({ id: 'dc.title', metadataFields: [], repeatable: false, submissionId: '1234' })],
+    group: [new DsDynamicInputModel({ id: 'dc.title', metadataFields: [], repeatable: false, submissionId: '1234', hasSelectableMetadata: false })],
   }),
   new DynamicRowGroupModel({
     id: 'df-row-group-config-2',
-    group: [new DsDynamicInputModel({ id: 'dc.contributor', metadataFields: [], repeatable: false, submissionId: '1234' })],
+    group: [new DsDynamicInputModel({ id: 'dc.contributor', metadataFields: [], repeatable: false, submissionId: '1234', hasSelectableMetadata: false })],
   })
 ];
 
@@ -149,7 +151,6 @@ describe('SubmissionSectionformComponent test suite', () => {
   let formBuilderService: any;
   let translateService: any;
 
-  const envConfig: GlobalConfig = MOCK_SUBMISSION_CONFIG;
   const submissionId = mockSubmissionId;
   const collectionId = mockSubmissionCollectionId;
   const parsedSectionErrors: any = mockUploadResponse1ParsedErrors.traditionalpageone;
@@ -178,11 +179,12 @@ describe('SubmissionSectionformComponent test suite', () => {
         { provide: SectionsService, useClass: SectionsServiceStub },
         { provide: SubmissionService, useClass: SubmissionServiceStub },
         { provide: TranslateService, useValue: getMockTranslateService() },
-        { provide: GLOBAL_CONFIG, useValue: envConfig },
+        { provide: ObjectCacheService, useValue: { remove: () => {/*do nothing*/}, hasBySelfLinkObservable: () => observableOf(false) } },
+        { provide: RequestService, useValue: { removeByHrefSubstring: () => {/*do nothing*/}, hasByHrefObservable: () => observableOf(false) } },
         { provide: 'collectionIdProvider', useValue: collectionId },
         { provide: 'sectionDataProvider', useValue: sectionObject },
         { provide: 'submissionIdProvider', useValue: submissionId },
-        { provide: WorkspaceitemDataService, useValue: {findById: () => observableOf(new RemoteData(false, false, true, null, new WorkspaceItem()))}},
+        { provide: SubmissionObjectDataService, useValue: { getHrefByID: () => observableOf('testUrl'), findById: () => observableOf(new RemoteData(false, false, true, null, new WorkspaceItem())) } },
         ChangeDetectorRef,
         SubmissionSectionformComponent
       ],
@@ -255,7 +257,6 @@ describe('SubmissionSectionformComponent test suite', () => {
       expect(comp.isLoading).toBeFalsy();
       expect(comp.initForm).toHaveBeenCalledWith(sectionData);
       expect(comp.subscriptions).toHaveBeenCalled();
-
     });
 
     it('should init form model properly', () => {
@@ -318,7 +319,6 @@ describe('SubmissionSectionformComponent test suite', () => {
       expect(comp.isUpdating).toBeFalsy();
       expect(comp.initForm).toHaveBeenCalled();
       expect(comp.checksForErrors).toHaveBeenCalled();
-      expect(notificationsServiceStub.info).toHaveBeenCalled();
       expect(comp.sectionData.data).toEqual(sectionData);
 
     });
@@ -335,7 +335,7 @@ describe('SubmissionSectionformComponent test suite', () => {
 
       comp.updateForm(sectionData, parsedSectionErrors);
 
-      expect(comp.initForm).not.toHaveBeenCalled();
+      expect(comp.initForm).toHaveBeenCalled();
       expect(comp.checksForErrors).toHaveBeenCalled();
       expect(comp.sectionData.data).toEqual(sectionData);
     });

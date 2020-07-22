@@ -5,11 +5,11 @@ import { of as observableOf } from 'rxjs';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RemoteData } from '../../../../core/data/remote-data';
-import { RouterStub } from '../../../testing/router-stub';
+import { RouterStub } from '../../../testing/router.stub';
 import { Collection } from '../../../../core/shared/collection.model';
 import { CreateItemParentSelectorComponent } from './create-item-parent-selector.component';
 import { MetadataValue } from '../../../../core/shared/metadata.models';
-import { createSuccessfulRemoteDataObject } from '../../../testing/utils';
+import { createSuccessfulRemoteDataObject } from '../../../remote-data.utils';
 
 describe('CreateItemParentSelectorComponent', () => {
   let component: CreateItemParentSelectorComponent;
@@ -32,7 +32,15 @@ describe('CreateItemParentSelectorComponent', () => {
         { provide: NgbActiveModal, useValue: modalStub },
         {
           provide: ActivatedRoute,
-          useValue: { root: { firstChild: { firstChild: { data: observableOf({ collection: collectionRD }) } } } }
+          useValue: {
+            root: {
+              snapshot: {
+                data: {
+                  dso: collectionRD,
+                },
+              },
+            }
+          },
         },
         {
           provide: Router, useValue: router
@@ -59,9 +67,8 @@ describe('CreateItemParentSelectorComponent', () => {
   });
 
   it('should call navigate on the router with the correct create path when navigate is called', () => {
-    /* TODO when there is a specific submission path */
-    // component.navigate(item);
-    // expect(router.navigate).toHaveBeenCalledWith([createPath]);
+    component.navigate(collection);
+    expect(router.navigate).toHaveBeenCalledWith(['/submit'], { queryParams: { collection: collection.uuid } });
   });
 
 });

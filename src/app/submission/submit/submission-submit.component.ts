@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
@@ -10,6 +10,7 @@ import { NotificationsService } from '../../shared/notifications/notifications.s
 import { SubmissionService } from '../submission.service';
 import { SubmissionObject } from '../../core/submission/models/submission-object.model';
 import { Collection } from '../../core/shared/collection.model';
+import { Item } from '../../core/shared/item.model';
 
 /**
  * This component allows to submit a new workspaceitem.
@@ -26,6 +27,13 @@ export class SubmissionSubmitComponent implements OnDestroy, OnInit {
    * @type {string}
    */
   public collectionId: string;
+  public item: Item;
+
+  /**
+   * The collection id input to create a new submission
+   * @type {string}
+   */
+  public collectionParam: string;
 
   /**
    * The submission self url
@@ -60,13 +68,18 @@ export class SubmissionSubmitComponent implements OnDestroy, OnInit {
    * @param {Router} router
    * @param {TranslateService} translate
    * @param {ViewContainerRef} viewContainerRef
+   * @param {ActivatedRoute} route
    */
   constructor(private changeDetectorRef: ChangeDetectorRef,
               private notificationsService: NotificationsService,
               private router: Router,
               private submissionService: SubmissionService,
               private translate: TranslateService,
-              private viewContainerRef: ViewContainerRef) {
+              private viewContainerRef: ViewContainerRef,
+              private route: ActivatedRoute) {
+    this.route
+      .queryParams
+      .subscribe((params) => { this.collectionParam = (params.collection); });
   }
 
   /**
@@ -75,7 +88,7 @@ export class SubmissionSubmitComponent implements OnDestroy, OnInit {
   ngOnInit() {
     // NOTE execute the code on the browser side only, otherwise it is executed twice
     this.subs.push(
-      this.submissionService.createSubmission()
+      this.submissionService.createSubmission(this.collectionParam)
         .subscribe((submissionObject: SubmissionObject) => {
           // NOTE new submission is created on the browser side only
           if (isNotNull(submissionObject)) {
@@ -84,9 +97,10 @@ export class SubmissionSubmitComponent implements OnDestroy, OnInit {
               this.router.navigate(['/mydspace']);
             } else {
               this.collectionId = (submissionObject.collection as Collection).id;
-              this.selfUrl = submissionObject.self;
+              this.selfUrl = submissionObject._links.self.href;
               this.submissionDefinition = (submissionObject.submissionDefinition as SubmissionDefinitionsModel);
               this.submissionId = submissionObject.id;
+              this.item = submissionObject.item as Item;
               this.changeDetectorRef.detectChanges();
             }
           }

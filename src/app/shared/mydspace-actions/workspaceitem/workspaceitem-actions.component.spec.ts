@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Injector, NO_ERRORS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { By } from '@angular/platform-browser';
 
@@ -7,18 +7,18 @@ import { of as observableOf } from 'rxjs';
 import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
-import { MockTranslateLoader } from '../../mocks/mock-translate-loader';
+import { TranslateLoaderMock } from '../../mocks/translate-loader.mock';
 import { NotificationsService } from '../../notifications/notifications.service';
-import { NotificationsServiceStub } from '../../testing/notifications-service-stub';
-import { RouterStub } from '../../testing/router-stub';
+import { NotificationsServiceStub } from '../../testing/notifications-service.stub';
+import { RouterStub } from '../../testing/router.stub';
 import { Item } from '../../../core/shared/item.model';
 import { WorkspaceItem } from '../../../core/submission/models/workspaceitem.model';
 import { WorkspaceitemActionsComponent } from './workspaceitem-actions.component';
 import { WorkspaceitemDataService } from '../../../core/submission/workspaceitem-data.service';
-import { createSuccessfulRemoteDataObject } from '../../testing/utils';
+import { createSuccessfulRemoteDataObject } from '../../remote-data.utils';
 import { RequestService } from '../../../core/data/request.service';
-import { getMockRequestService } from '../../mocks/mock-request.service';
-import { getMockSearchService } from '../../mocks/mock-search-service';
+import { getMockRequestService } from '../../mocks/request.service.mock';
+import { getMockSearchService } from '../../mocks/search-service.mock';
 import { SearchService } from '../../../core/shared/search/search.service';
 
 let component: WorkspaceitemActionsComponent;
@@ -72,11 +72,11 @@ describe('WorkspaceitemActionsComponent', () => {
 
     TestBed.configureTestingModule({
       imports: [
-        NgbModule.forRoot(),
+        NgbModule,
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
-            useClass: MockTranslateLoader
+            useClass: TranslateLoaderMock
           }
         })
       ],
@@ -128,7 +128,7 @@ describe('WorkspaceitemActionsComponent', () => {
     expect(btn).toBeDefined();
   });
 
-  it('should call confirmDiscard on discard confirmation', fakeAsync(() => {
+  it('should call confirmDiscard on discard confirmation', () => {
     mockDataService.delete.and.returnValue(observableOf(true));
     spyOn(component, 'reload');
     const btn = fixture.debugElement.query(By.css('.btn-danger'));
@@ -141,14 +141,14 @@ describe('WorkspaceitemActionsComponent', () => {
     fixture.detectChanges();
 
     fixture.whenStable().then(() => {
-      expect(mockDataService.delete).toHaveBeenCalledWith(mockObject);
+      expect(mockDataService.delete).toHaveBeenCalledWith(mockObject.id);
     });
 
-  }));
+  });
 
   it('should display a success notification on delete success', async(() => {
     spyOn((component as any).modalService, 'open').and.returnValue({result: Promise.resolve('ok')});
-    mockDataService.delete.and.returnValue(observableOf(true));
+    mockDataService.delete.and.returnValue(observableOf({ isSuccessful: true }));
     spyOn(component, 'reload');
 
     component.confirmDiscard('ok');

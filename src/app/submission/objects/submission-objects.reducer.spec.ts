@@ -22,14 +22,13 @@ import {
   SaveAndDepositSubmissionAction,
   SaveForLaterSubmissionFormAction,
   SaveForLaterSubmissionFormErrorAction,
-  SaveForLaterSubmissionFormSuccessAction,
   SaveSubmissionFormAction,
   SaveSubmissionFormErrorAction,
   SaveSubmissionFormSuccessAction,
   SaveSubmissionSectionFormAction,
   SaveSubmissionSectionFormErrorAction,
   SaveSubmissionSectionFormSuccessAction,
-  SectionStatusChangeAction,
+  SectionStatusChangeAction, SubmissionObjectAction,
   UpdateSectionDataAction
 } from './submission-objects.actions';
 import { SectionsType } from '../sections/sections-type';
@@ -39,7 +38,8 @@ import {
   mockSubmissionId,
   mockSubmissionSelfUrl,
   mockSubmissionState
-} from '../../shared/mocks/mock-submission';
+} from '../../shared/mocks/submission.mock';
+import { Item } from '../../core/shared/item.model';
 
 describe('submissionReducer test suite', () => {
 
@@ -68,7 +68,7 @@ describe('submissionReducer test suite', () => {
       }
     };
 
-    const action = new InitSubmissionFormAction(collectionId, submissionId, selfUrl, submissionDefinition, {}, []);
+    const action = new InitSubmissionFormAction(collectionId, submissionId, selfUrl, submissionDefinition, {}, new Item(), []);
     const newState = submissionObjectReducer({}, action);
 
     expect(newState).toEqual(expectedState);
@@ -101,7 +101,7 @@ describe('submissionReducer test suite', () => {
       }
     };
 
-    const action = new ResetSubmissionFormAction(collectionId, submissionId, selfUrl, {}, submissionDefinition);
+    const action = new ResetSubmissionFormAction(collectionId, submissionId, selfUrl, {}, submissionDefinition, new Item());
     const newState = submissionObjectReducer(initState, action);
 
     expect(newState).toEqual(expectedState);
@@ -117,7 +117,7 @@ describe('submissionReducer test suite', () => {
   });
 
   it('should set to true savePendig flag on save', () => {
-    let action = new SaveSubmissionFormAction(submissionId);
+    let action: SubmissionObjectAction = new SaveSubmissionFormAction(submissionId);
     let newState = submissionObjectReducer(initState, action);
 
     expect(newState[826].savePending).toBeTruthy();
@@ -242,7 +242,7 @@ describe('submissionReducer test suite', () => {
       isValid: false
     } as any;
 
-    let action: any = new InitSubmissionFormAction(collectionId, submissionId, selfUrl, submissionDefinition, {}, []);
+    let action: any = new InitSubmissionFormAction(collectionId, submissionId, selfUrl, submissionDefinition, {}, new Item(), []);
     let newState = submissionObjectReducer({}, action);
 
     action = new InitSectionAction(
@@ -273,7 +273,7 @@ describe('submissionReducer test suite', () => {
 
   it('should enable submission section properly', () => {
 
-    let action = new EnableSectionAction(submissionId, 'traditionalpagetwo');
+    let action: SubmissionObjectAction = new EnableSectionAction(submissionId, 'traditionalpagetwo');
     let newState = submissionObjectReducer(initState, action);
 
     action = new DisableSectionAction(submissionId, 'traditionalpagetwo');

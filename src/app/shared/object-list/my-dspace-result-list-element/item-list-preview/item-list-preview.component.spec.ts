@@ -8,7 +8,7 @@ import { TruncatePipe } from '../../../utils/truncate.pipe';
 import { Item } from '../../../../core/shared/item.model';
 import { ItemListPreviewComponent } from './item-list-preview.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { MockTranslateLoader } from '../../../mocks/mock-translate-loader';
+import { TranslateLoaderMock } from '../../../mocks/translate-loader.mock';
 
 let component: ItemListPreviewComponent;
 let fixture: ComponentFixture<ItemListPreviewComponent>;
@@ -47,6 +47,23 @@ const mockItemWithoutAuthorAndDate: Item = Object.assign(new Item(), {
     ]
   }
 });
+const mockItemWithEntityType: Item = Object.assign(new Item(), {
+  bundles: observableOf({}),
+  metadata: {
+    'dc.title': [
+      {
+        language: 'en_US',
+        value: 'This is just another title'
+      }
+    ],
+    'relationship.type': [
+      {
+        language: null,
+        value: 'Publication'
+      }
+    ]
+  }
+});
 
 describe('ItemListPreviewComponent', () => {
   beforeEach(async(() => {
@@ -55,7 +72,7 @@ describe('ItemListPreviewComponent', () => {
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
-            useClass: MockTranslateLoader
+            useClass: TranslateLoaderMock
           }
         }),
       ],
@@ -126,6 +143,18 @@ describe('ItemListPreviewComponent', () => {
     it('should show the issuedate empty placeholder', () => {
       const dateField = fixture.debugElement.query(By.css('span.item-list-date'));
       expect(dateField).not.toBeNull();
+    });
+  });
+
+  describe('When the item has an entity type', () => {
+    beforeEach(() => {
+      component.item = mockItemWithEntityType;
+      fixture.detectChanges();
+    });
+
+    it('should show the entity type span', () => {
+      const entityField = fixture.debugElement.query(By.css('ds-item-type-badge'));
+      expect(entityField).not.toBeNull();
     });
   });
 });

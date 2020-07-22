@@ -6,12 +6,13 @@ import { of as observableOf } from 'rxjs';
 import { NavbarComponent } from './navbar.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HostWindowService } from '../shared/host-window.service';
-import { HostWindowServiceStub } from '../shared/testing/host-window-service-stub';
+import { HostWindowServiceStub } from '../shared/testing/host-window-service.stub';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Injector, NO_ERRORS_SCHEMA } from '@angular/core';
 import { MenuService } from '../shared/menu/menu.service';
-import { MenuServiceStub } from '../shared/testing/menu-service-stub';
-import { ENV_CONFIG, GLOBAL_CONFIG } from '../../config';
+import { MenuServiceStub } from '../shared/testing/menu-service.stub';
+import { ActivatedRoute } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 
 let comp: NavbarComponent;
 let fixture: ComponentFixture<NavbarComponent>;
@@ -25,13 +26,14 @@ describe('NavbarComponent', () => {
       imports: [
         TranslateModule.forRoot(),
         NoopAnimationsModule,
-        ReactiveFormsModule],
+        ReactiveFormsModule,
+        RouterTestingModule],
       declarations: [NavbarComponent],
       providers: [
         { provide: Injector, useValue: {} },
         { provide: MenuService, useValue: menuService },
         { provide: HostWindowService, useValue: new HostWindowServiceStub(800) },
-        { provide: GLOBAL_CONFIG, useValue: ENV_CONFIG }
+        { provide: ActivatedRoute, useValue: {} }
       ],
       schemas: [NO_ERRORS_SCHEMA]
     })

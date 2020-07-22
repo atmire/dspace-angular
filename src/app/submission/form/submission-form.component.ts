@@ -1,19 +1,20 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 
-import { of as observableOf, Observable, Subscription } from 'rxjs';
-import { distinctUntilChanged, filter, flatMap, map, switchMap } from 'rxjs/operators';
+import { Observable, of as observableOf, Subscription } from 'rxjs';
+import { distinctUntilChanged, filter, map, switchMap } from 'rxjs/operators';
+import { AuthService } from '../../core/auth/auth.service';
+import { SubmissionDefinitionsModel } from '../../core/config/models/config-submission-definitions.model';
+import { Collection } from '../../core/shared/collection.model';
+import { HALEndpointService } from '../../core/shared/hal-endpoint.service';
+import { SubmissionObject } from '../../core/submission/models/submission-object.model';
+import { WorkspaceitemSectionsObject } from '../../core/submission/models/workspaceitem-sections.model';
 
 import { hasValue, isNotEmpty } from '../../shared/empty.util';
-import { SubmissionObjectEntry } from '../objects/submission-objects.reducer';
-import { WorkspaceitemSectionsObject } from '../../core/submission/models/workspaceitem-sections.model';
-import { SubmissionDefinitionsModel } from '../../core/config/models/config-submission-definitions.model';
-import { SubmissionService } from '../submission.service';
-import { AuthService } from '../../core/auth/auth.service';
-import { SectionDataObject } from '../sections/models/section-data.model';
 import { UploaderOptions } from '../../shared/uploader/uploader-options.model';
-import { HALEndpointService } from '../../core/shared/hal-endpoint.service';
-import { Collection } from '../../core/shared/collection.model';
-import { SubmissionObject } from '../../core/submission/models/submission-object.model';
+import { SubmissionObjectEntry } from '../objects/submission-objects.reducer';
+import { SectionDataObject } from '../sections/models/section-data.model';
+import { SubmissionService } from '../submission.service';
+import { Item } from '../../core/shared/item.model';
 
 /**
  * This component represents the submission form.
@@ -30,6 +31,7 @@ export class SubmissionFormComponent implements OnChanges, OnDestroy {
    * @type {string}
    */
   @Input() collectionId: string;
+  @Input() item: Item;
 
   /**
    * The list of submission's sections
@@ -150,6 +152,7 @@ export class SubmissionFormComponent implements OnChanges, OnDestroy {
               this.selfUrl,
               this.submissionDefinition,
               this.sections,
+              this.item,
               null);
             this.changeDetectorRef.detectChanges();
           })
@@ -189,9 +192,10 @@ export class SubmissionFormComponent implements OnChanges, OnDestroy {
       this.submissionService.resetSubmissionObject(
         this.collectionId,
         this.submissionId,
-        submissionObject.self,
+        submissionObject._links.self.href,
         this.submissionDefinition,
-        this.sections);
+        this.sections,
+        this.item);
     } else {
       this.changeDetectorRef.detectChanges();
     }

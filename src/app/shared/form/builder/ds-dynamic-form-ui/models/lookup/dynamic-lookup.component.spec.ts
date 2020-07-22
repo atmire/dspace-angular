@@ -6,31 +6,23 @@ import { async, ComponentFixture, fakeAsync, inject, TestBed, tick, } from '@ang
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AuthorityOptions } from '../../../../../../core/integration/models/authority-options.model';
-import {
-  DynamicFormLayoutService,
-  DynamicFormsCoreModule,
-  DynamicFormValidationService
-} from '@ng-dynamic-forms/core';
+import { DynamicFormLayoutService, DynamicFormsCoreModule, DynamicFormValidationService } from '@ng-dynamic-forms/core';
 import { DynamicFormsNGBootstrapUIModule } from '@ng-dynamic-forms/ui-ng-bootstrap';
 import { AuthorityService } from '../../../../../../core/integration/authority.service';
-import { AuthorityServiceStub } from '../../../../../testing/authority-service-stub';
+import { AuthorityServiceStub } from '../../../../../testing/authority-service.stub';
 import { DsDynamicLookupComponent } from './dynamic-lookup.component';
-import { DynamicLookupModel } from './dynamic-lookup.model';
+import { DynamicLookupModel, DynamicLookupModelConfig } from './dynamic-lookup.model';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormFieldMetadataValueObject } from '../../../models/form-field-metadata-value.model';
 import { By } from '@angular/platform-browser';
 import { AuthorityValue } from '../../../../../../core/integration/models/authority.value';
-import { createTestComponent } from '../../../../../testing/utils';
+import { createTestComponent } from '../../../../../testing/utils.test';
 import { DynamicLookupNameModel } from './dynamic-lookup-name.model';
 import { AuthorityConfidenceStateDirective } from '../../../../../authority-confidence/authority-confidence-state.directive';
 import { ObjNgFor } from '../../../../../utils/object-ngfor.pipe';
-import { GLOBAL_CONFIG, GlobalConfig } from '../../../../../../../config';
-import { MOCK_SUBMISSION_CONFIG } from '../../../../../testing/mock-submission-config';
-import { WorkspaceitemsEditPageModule } from '../../../../../../+workspaceitems-edit-page/workspaceitems-edit-page.module';
-import { WorkspaceItem } from '../../../../../../core/submission/models/workspaceitem.model';
 
-let LOOKUP_TEST_MODEL_CONFIG = {
+let LOOKUP_TEST_MODEL_CONFIG: DynamicLookupModelConfig = {
   authorityOptions: {
     closed: false,
     metadata: 'lookup',
@@ -47,11 +39,11 @@ let LOOKUP_TEST_MODEL_CONFIG = {
   readOnly: false,
   required: true,
   repeatable: true,
-  separator: ',',
   validators: { required: null },
   value: undefined,
   metadataFields: [],
-  submissionId: '1234'
+  submissionId: '1234',
+  hasSelectableMetadata: false
 };
 
 let LOOKUP_NAME_TEST_MODEL_CONFIG = {
@@ -71,19 +63,17 @@ let LOOKUP_NAME_TEST_MODEL_CONFIG = {
   readOnly: false,
   required: true,
   repeatable: true,
-  separator: ',',
   validators: { required: null },
   value: undefined,
   metadataFields: [],
-  submissionId: '1234'
+  submissionId: '1234',
+  hasSelectableMetadata: false
 };
 
 let LOOKUP_TEST_GROUP = new FormGroup({
   lookup: new FormControl(),
   lookupName: new FormControl()
 });
-
-const envConfig: GlobalConfig = MOCK_SUBMISSION_CONFIG;
 
 describe('Dynamic Lookup component', () => {
   function init() {
@@ -104,11 +94,11 @@ describe('Dynamic Lookup component', () => {
       readOnly: false,
       required: true,
       repeatable: true,
-      separator: ',',
       validators: { required: null },
       value: undefined,
       metadataFields: [],
-      submissionId: '1234'
+      submissionId: '1234',
+      hasSelectableMetadata: false
     };
 
     LOOKUP_NAME_TEST_MODEL_CONFIG = {
@@ -128,11 +118,11 @@ describe('Dynamic Lookup component', () => {
       readOnly: false,
       required: true,
       repeatable: true,
-      separator: ',',
       validators: { required: null },
       value: undefined,
       metadataFields: [],
-      submissionId: '1234'
+      submissionId: '1234',
+      hasSelectableMetadata: false
     };
 
     LOOKUP_TEST_GROUP = new FormGroup({
@@ -160,7 +150,7 @@ describe('Dynamic Lookup component', () => {
         FormsModule,
         InfiniteScrollModule,
         ReactiveFormsModule,
-        NgbModule.forRoot(),
+        NgbModule,
         TranslateModule.forRoot()
       ],
       declarations: [
@@ -172,7 +162,6 @@ describe('Dynamic Lookup component', () => {
       providers: [
         ChangeDetectorRef,
         DsDynamicLookupComponent,
-        { provide: GLOBAL_CONFIG, useValue: envConfig },
         { provide: AuthorityService, useValue: authorityService },
         { provide: DynamicFormLayoutService, useValue: {} },
         { provide: DynamicFormValidationService, useValue: {} }

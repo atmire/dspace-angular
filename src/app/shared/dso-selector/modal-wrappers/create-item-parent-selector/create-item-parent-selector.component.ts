@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { DSpaceObjectType } from '../../../../core/shared/dspace-object-type.model';
 import { DSpaceObject } from '../../../../core/shared/dspace-object.model';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -13,7 +13,8 @@ import { DSOSelectorModalWrapperComponent, SelectorActionType } from '../dso-sel
 @Component({
   selector: 'ds-create-item-parent-selector',
   // styleUrls: ['./create-item-parent-selector.component.scss'],
-  templateUrl: '../dso-selector-modal-wrapper.component.html',
+  // templateUrl: '../dso-selector-modal-wrapper.component.html',
+  templateUrl: './create-item-parent-selector.component.html'
 })
 export class CreateItemParentSelectorComponent extends DSOSelectorModalWrapperComponent implements OnInit {
   objectType = DSpaceObjectType.ITEM;
@@ -28,6 +29,11 @@ export class CreateItemParentSelectorComponent extends DSOSelectorModalWrapperCo
    * Navigate to the item create page
    */
   navigate(dso: DSpaceObject) {
-   // There's no submit path per collection yet...
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        ['collection']: dso.uuid,
+      }
+    };
+    this.router.navigate(['/submit'], navigationExtras);
   }
 }

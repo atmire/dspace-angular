@@ -29,7 +29,6 @@ import {
 } from './objects/submission-objects.reducer';
 import { submissionObjectFromIdSelector } from './selectors';
 import { GlobalConfig } from '../../config/global-config.interface';
-import { GLOBAL_CONFIG } from '../../config';
 import { HttpOptions } from '../core/dspace-rest-v2/dspace-rest-v2.service';
 import { SubmissionRestService } from '../core/submission/submission-rest.service';
 import { SectionDataObject } from './sections/models/section-data.model';
@@ -43,9 +42,11 @@ import { WorkspaceitemSectionsObject } from '../core/submission/models/workspace
 import { RemoteData } from '../core/data/remote-data';
 import { ErrorResponse } from '../core/cache/response.models';
 import { RemoteDataError } from '../core/data/remote-data-error';
-import { createFailedRemoteDataObject$, createSuccessfulRemoteDataObject } from '../shared/testing/utils';
+import { createFailedRemoteDataObject$, createSuccessfulRemoteDataObject } from '../shared/remote-data.utils';
 import { RequestService } from '../core/data/request.service';
 import { SearchService } from '../core/shared/search/search.service';
+import { Item } from '../core/shared/item.model';
+import { environment } from '../../environments/environment';
 
 /**
  * A service that provides methods used in submission process.
@@ -77,8 +78,7 @@ export class SubmissionService {
    * @param {SearchService} searchService
    * @param {RequestService} requestService
    */
-  constructor(@Inject(GLOBAL_CONFIG) protected EnvConfig: GlobalConfig,
-              protected notificationsService: NotificationsService,
+  constructor(protected notificationsService: NotificationsService,
               protected restService: SubmissionRestService,
               protected router: Router,
               protected routeService: RouteService,
@@ -103,11 +103,13 @@ export class SubmissionService {
   /**
    * Perform a REST call to create a new workspaceitem and return response
    *
+   * @param collectionId
+   *    The owning collection id
    * @return Observable<SubmissionObject>
    *    observable of SubmissionObject
    */
-  createSubmission(): Observable<SubmissionObject> {
-    return this.restService.postToEndpoint(this.workspaceLinkPath, {}).pipe(
+  createSubmission(collectionId?: string): Observable<SubmissionObject> {
+    return this.restService.postToEndpoint(this.workspaceLinkPath, {}, null, null, collectionId).pipe(
       map((workspaceitem: SubmissionObject[]) => workspaceitem[0] as SubmissionObject),
       catchError(() => observableOf({} as SubmissionObject)))
   }
@@ -162,8 +164,9 @@ export class SubmissionService {
     selfUrl: string,
     submissionDefinition: SubmissionDefinitionsModel,
     sections: WorkspaceitemSectionsObject,
+    item: Item,
     errors: SubmissionSectionError[]) {
-    this.store.dispatch(new InitSubmissionFormAction(collectionId, submissionId, selfUrl, submissionDefinition, sections, errors));
+    this.store.dispatch(new InitSubmissionFormAction(collectionId, submissionId, selfUrl, submissionDefinition, sections, item, errors));
   }
 
   /**
@@ -501,9 +504,10 @@ export class SubmissionService {
     submissionId: string,
     selfUrl: string,
     submissionDefinition: SubmissionDefinitionsModel,
-    sections: WorkspaceitemSectionsObject
+    sections: WorkspaceitemSectionsObject,
+    item: Item
   ) {
-    this.store.dispatch(new ResetSubmissionFormAction(collectionId, submissionId, selfUrl, sections, submissionDefinition));
+    this.store.dispatch(new ResetSubmissionFormAction(collectionId, submissionId, selfUrl, sections, submissionDefinition, item));
   }
 
   /**
@@ -547,7 +551,7 @@ export class SubmissionService {
     this.stopAutoSave();
     // AUTOSAVE submission
     // Retrieve interval from config and convert to milliseconds
-    const duration = this.EnvConfig.submission.autosave.timer * (1000 * 60);
+    const duration = environment.submission.autosave.timer * (1000 * 60);
     // Dispatch save action after given duration
     this.timer$ = observableTimer(duration, duration);
     this.autoSaveSub = this.timer$

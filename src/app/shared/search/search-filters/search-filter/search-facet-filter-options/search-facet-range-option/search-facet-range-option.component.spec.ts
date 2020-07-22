@@ -8,9 +8,9 @@ import { FacetValue } from '../../../../facet-value.model';
 import { FormsModule } from '@angular/forms';
 import { of as observableOf } from 'rxjs';
 import { SearchService } from '../../../../../../core/shared/search/search.service';
-import { SearchServiceStub } from '../../../../../testing/search-service-stub';
+import { SearchServiceStub } from '../../../../../testing/search-service.stub';
 import { Router } from '@angular/router';
-import { RouterStub } from '../../../../../testing/router-stub';
+import { RouterStub } from '../../../../../testing/router.stub';
 import { SearchConfigurationService } from '../../../../../../core/shared/search/search-configuration.service';
 import { SearchFilterService } from '../../../../../../core/shared/search/search-filter.service';
 import { By } from '@angular/platform-browser';
@@ -38,7 +38,14 @@ describe('SearchFacetRangeOptionComponent', () => {
     label: value2,
     value: value2,
     count: 20,
-    search: ''
+    _links: {
+      self: {
+        href: ''
+      },
+      search: {
+        href: ''
+      }
+    }
   };
 
   const searchLink = '/search';
@@ -96,7 +103,14 @@ describe('SearchFacetRangeOptionComponent', () => {
         label: '50-60',
         value: '50-60',
         count: 20,
-        search: ''
+        _links: {
+          self: {
+            href: ''
+          },
+          search: {
+            href: ''
+          }
+        }
       };
       (comp as any).updateChangeParams();
       expect(comp.changeQueryParams).toEqual({

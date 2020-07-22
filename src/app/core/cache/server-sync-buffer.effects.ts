@@ -1,28 +1,22 @@
 import { delay, exhaustMap, map, switchMap, take } from 'rxjs/operators';
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { coreSelector } from '../core.selectors';
-import {
-  AddToSSBAction,
-  CommitSSBAction,
-  EmptySSBAction,
-  ServerSyncBufferActionTypes
-} from './server-sync-buffer.actions';
-import { GLOBAL_CONFIG } from '../../../config';
-import { GlobalConfig } from '../../../config/global-config.interface';
+import { AddToSSBAction, CommitSSBAction, EmptySSBAction, ServerSyncBufferActionTypes } from './server-sync-buffer.actions';
 import { CoreState } from '../core.reducers';
 import { Action, createSelector, MemoizedSelector, select, Store } from '@ngrx/store';
 import { ServerSyncBufferEntry, ServerSyncBufferState } from './server-sync-buffer.reducer';
 import { combineLatest as observableCombineLatest, of as observableOf } from 'rxjs';
 import { RequestService } from '../data/request.service';
-import { PutRequest } from '../data/request.models';
+import { PatchRequest } from '../data/request.models';
 import { ObjectCacheService } from './object-cache.service';
 import { ApplyPatchObjectCacheAction } from './object-cache.actions';
-import { DSpaceRESTv2Serializer } from '../dspace-rest-v2/dspace-rest-v2.serializer';
-import { GenericConstructor } from '../shared/generic-constructor';
 import { hasValue, isNotEmpty, isNotUndefined } from '../../shared/empty.util';
 import { Observable } from 'rxjs/internal/Observable';
 import { RestRequestMethod } from '../data/rest-request-method';
+import { environment } from '../../../environments/environment';
+import { ObjectCacheEntry } from './object-cache.reducer';
+import { Operation } from 'fast-json-patch';
 
 @Injectable()
 export class ServerSyncBufferEffects {
@@ -37,7 +31,7 @@ export class ServerSyncBufferEffects {
     .pipe(
       ofType(ServerSyncBufferActionTypes.ADD),
       exhaustMap((action: AddToSSBAction) => {
-        const autoSyncConfig = this.EnvConfig.cache.autoSync;
+        const autoSyncConfig = environment.cache.autoSync;
         const timeoutInSeconds = autoSyncConfig.timePerMethod[action.payload.method] || autoSyncConfig.defaultTime;
         return observableOf(new CommitSSBAction(action.payload.method)).pipe(
           delay(timeoutInSeconds * 1000),
@@ -85,7 +79,7 @@ export class ServerSyncBufferEffects {
               return observableOf({ type: 'NO_ACTION' });
             }
           })
-        )
+        );
       })
     );
 
@@ -96,24 +90,25 @@ export class ServerSyncBufferEffects {
    * @returns {Observable<Action>} ApplyPatchObjectCacheAction to be dispatched
    */
   private applyPatch(href: string): Observable<Action> {
-    const patchObject = this.objectCache.getObjectBySelfLink(href).pipe(take(1));
+    const patchObject = this.objectCache.getBySelfLink(href).pipe(take(1));
 
     return patchObject.pipe(
-      map((object) => {
-        const serializedObject = new DSpaceRESTv2Serializer(object.constructor as GenericConstructor<{}>).serialize(object);
-
-        this.requestService.configure(new PutRequest(this.requestService.generateRequestId(), href, serializedObject));
-
-        return new ApplyPatchObjectCacheAction(href)
+      map((entry: ObjectCacheEntry) => {
+        if (isNotEmpty(entry.patches)) {
+          const flatPatch: Operation[] = [].concat(...entry.patches.map((patch) => patch.operations));
+          if (isNotEmpty(flatPatch)) {
+            this.requestService.configure(new PatchRequest(this.requestService.generateRequestId(), href, flatPatch));
+          }
+        }
+        return new ApplyPatchObjectCacheAction(href);
       })
-    )
+    );
   }
 
   constructor(private actions$: Actions,
               private store: Store<CoreState>,
               private requestService: RequestService,
-              private objectCache: ObjectCacheService,
-              @Inject(GLOBAL_CONFIG) private EnvConfig: GlobalConfig) {
+              private objectCache: ObjectCacheService) {
 
   }
 }

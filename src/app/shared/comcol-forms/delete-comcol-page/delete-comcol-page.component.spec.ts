@@ -12,7 +12,7 @@ import { DSpaceObject } from '../../../core/shared/dspace-object.model';
 import { DataService } from '../../../core/data/data.service';
 import { DeleteComColPageComponent } from './delete-comcol-page.component';
 import { NotificationsService } from '../../notifications/notifications.service';
-import { NotificationsServiceStub } from '../../testing/notifications-service-stub';
+import { NotificationsServiceStub } from '../../testing/notifications-service.stub';
 
 describe('DeleteComColPageComponent', () => {
   let comp: DeleteComColPageComponent<DSpaceObject>;
@@ -48,7 +48,7 @@ describe('DeleteComColPageComponent', () => {
     dsoDataService = jasmine.createSpyObj(
       'dsoDataService',
       {
-        delete: observableOf(true)
+        delete: observableOf({ isSuccessful: true })
       });
 
     routerStub = {
@@ -106,7 +106,7 @@ describe('DeleteComColPageComponent', () => {
     });
 
     it('should show an error notification on failure', () => {
-      (dsoDataService.delete as any).and.returnValue(observableOf(false));
+      (dsoDataService.delete as any).and.returnValue(observableOf({ isSuccessful: false }));
       spyOn(router, 'navigate');
       comp.onConfirm(data2);
       fixture.detectChanges();
@@ -125,7 +125,7 @@ describe('DeleteComColPageComponent', () => {
     it('should call delete on the data service', () => {
       comp.onConfirm(data1);
       fixture.detectChanges();
-      expect(dsoDataService.delete).toHaveBeenCalledWith(data1);
+      expect(dsoDataService.delete).toHaveBeenCalledWith(data1.id);
     });
   });
 

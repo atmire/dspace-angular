@@ -5,12 +5,12 @@ import { TestScheduler } from 'rxjs/testing';
 import { of as observableOf } from 'rxjs';
 import { Store, StoreModule } from '@ngrx/store';
 
-import { getMockRequestService } from '../../shared/mocks/mock-request.service';
+import { getMockRequestService } from '../../shared/mocks/request.service.mock';
 import { RequestService } from '../data/request.service';
 import { SubmissionPatchRequest } from '../data/request.models';
-import { HALEndpointServiceStub } from '../../shared/testing/hal-endpoint-service-stub';
+import { HALEndpointServiceStub } from '../../shared/testing/hal-endpoint-service.stub';
 import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
-import { getMockRemoteDataBuildService } from '../../shared/mocks/mock-remote-data-build.service';
+import { getMockRemoteDataBuildService } from '../../shared/mocks/remote-data-build.service.mock';
 import { JsonPatchOperationsService } from './json-patch-operations.service';
 import { SubmitDataResponseDefinitionObject } from '../shared/submit-data-response-definition.model';
 import { CoreState } from '../core.reducers';
@@ -21,7 +21,6 @@ import {
   RollbacktPatchOperationsAction,
   StartTransactionPatchOperationsAction
 } from './json-patch-operations.actions';
-import { MockStore } from '../../shared/testing/mock-store';
 import { RequestEntry } from '../data/request.reducer';
 import { catchError } from 'rxjs/operators';
 
@@ -98,27 +97,22 @@ describe('JsonPatchOperationsService test suite', () => {
 
   }
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        StoreModule.forRoot({}),
-      ],
-      providers: [
-        { provide: Store, useClass: MockStore }
-      ]
-    }).compileComponents();
-  }));
+  function getStore() {
+    return jasmine.createSpyObj('store', {
+      dispatch: {},
+      select: observableOf(mockState['json/patch'][testJsonPatchResourceType]),
+      pipe: observableOf(true)
+    });
+  }
 
   beforeEach(() => {
-    store = TestBed.get(Store);
+    store = getStore();
     requestService = getMockRequestService(getRequestEntry$(true));
     rdbService = getMockRemoteDataBuildService();
     scheduler = getTestScheduler();
     halService = new HALEndpointServiceStub(resourceEndpointURL);
     service = initTestService();
 
-    spyOn(store, 'select').and.returnValue(observableOf(mockState['json/patch'][testJsonPatchResourceType]));
-    spyOn(store, 'dispatch').and.callThrough();
     spyOn(Date.prototype, 'getTime').and.callFake(() => {
       return timestamp;
     });
@@ -163,7 +157,7 @@ describe('JsonPatchOperationsService test suite', () => {
 
     describe('when request is not successful', () => {
       beforeEach(() => {
-        store = TestBed.get(Store);
+        store = getStore();
         requestService = getMockRequestService(getRequestEntry$(false));
         rdbService = getMockRemoteDataBuildService();
         scheduler = getTestScheduler();
@@ -226,7 +220,7 @@ describe('JsonPatchOperationsService test suite', () => {
 
     describe('when request is not successful', () => {
       beforeEach(() => {
-        store = TestBed.get(Store);
+        store = getStore();
         requestService = getMockRequestService(getRequestEntry$(false));
         rdbService = getMockRemoteDataBuildService();
         scheduler = getTestScheduler();

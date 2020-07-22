@@ -1,7 +1,7 @@
-import { type } from '../../../shared/ngrx/type';
-import { Action } from '@ngrx/store';
-import { Identifiable } from './object-updates.reducer';
-import { INotification } from '../../../shared/notifications/models/notification.model';
+import {type} from '../../../shared/ngrx/type';
+import {Action} from '@ngrx/store';
+import {Identifiable} from './object-updates.reducer';
+import {INotification} from '../../../shared/notifications/models/notification.model';
 
 /**
  * The list of ObjectUpdatesAction type definitions
@@ -11,10 +11,12 @@ export const ObjectUpdatesActionTypes = {
   SET_EDITABLE_FIELD: type('dspace/core/cache/object-updates/SET_EDITABLE_FIELD'),
   SET_VALID_FIELD: type('dspace/core/cache/object-updates/SET_VALID_FIELD'),
   ADD_FIELD: type('dspace/core/cache/object-updates/ADD_FIELD'),
+  SELECT_VIRTUAL_METADATA: type('dspace/core/cache/object-updates/SELECT_VIRTUAL_METADATA'),
   DISCARD: type('dspace/core/cache/object-updates/DISCARD'),
   REINSTATE: type('dspace/core/cache/object-updates/REINSTATE'),
   REMOVE: type('dspace/core/cache/object-updates/REMOVE'),
-  REMOVE_FIELD: type('dspace/core/cache/object-updates/REMOVE_FIELD'),
+  REMOVE_ALL: type('dspace/core/cache/object-updates/REMOVE_ALL'),
+  REMOVE_FIELD: type('dspace/core/cache/object-updates/REMOVE_FIELD')
 };
 
 /* tslint:disable:max-classes-per-file */
@@ -46,6 +48,9 @@ export class InitializeFieldsAction implements Action {
    *    the unique url of the page for which the fields are being initialized
    * @param fields The identifiable fields of which the updates are kept track of
    * @param lastModified The last modified date of the object that belongs to the page
+   * @param order A custom order to keep track of objects moving around
+   * @param pageSize The page size used to fill empty pages for the custom order
+   * @param page The first page to populate in the custom order
    */
   constructor(
     url: string,
@@ -80,6 +85,41 @@ export class AddFieldUpdateAction implements Action {
     field: Identifiable,
     changeType: FieldChangeType) {
     this.payload = { url, field, changeType };
+  }
+}
+
+/**
+ * An ngrx action to select/deselect virtual metadata in the ObjectUpdates state for a certain page url
+ */
+export class SelectVirtualMetadataAction implements Action {
+
+  type = ObjectUpdatesActionTypes.SELECT_VIRTUAL_METADATA;
+  payload: {
+    url: string,
+    source: string,
+    uuid: string,
+    select: boolean;
+  };
+
+  /**
+   * Create a new SelectVirtualMetadataAction
+   *
+   * @param url
+   *    the unique url of the page for which a field update is added
+   * @param source
+   *    the id of the relationship which adds the virtual metadata
+   * @param uuid
+   *    the id of the item which has the virtual metadata
+   * @param select
+   *    whether to select or deselect the virtual metadata to be saved as real metadata
+   */
+  constructor(
+    url: string,
+    source: string,
+    uuid: string,
+    select: boolean,
+  ) {
+    this.payload = { url, source, uuid, select: select};
   }
 }
 
@@ -144,7 +184,8 @@ export class DiscardObjectUpdatesAction implements Action {
   type = ObjectUpdatesActionTypes.DISCARD;
   payload: {
     url: string,
-    notification: INotification
+    notification: INotification,
+    discardAll: boolean;
   };
 
   /**
@@ -153,12 +194,14 @@ export class DiscardObjectUpdatesAction implements Action {
    * @param url
    *    the unique url of the page for which the changes should be discarded
    * @param notification The notification that is raised when changes are discarded
+   * @param discardAll  discard all
    */
   constructor(
     url: string,
-    notification: INotification
+    notification: INotification,
+    discardAll = false
   ) {
-    this.payload = { url, notification };
+    this.payload = { url, notification, discardAll };
   }
 }
 
@@ -207,6 +250,13 @@ export class RemoveObjectUpdatesAction implements Action {
 }
 
 /**
+ * An ngrx action to remove all previously discarded updates in the ObjectUpdates state
+ */
+export class RemoveAllObjectUpdatesAction implements Action {
+  type = ObjectUpdatesActionTypes.REMOVE_ALL;
+}
+
+/**
  * An ngrx action to remove a single field update in the ObjectUpdates state for a certain page url and field uuid
  */
 export class RemoveFieldUpdateAction implements Action {
@@ -242,4 +292,8 @@ export type ObjectUpdatesAction
   | DiscardObjectUpdatesAction
   | ReinstateObjectUpdatesAction
   | RemoveObjectUpdatesAction
-  | RemoveFieldUpdateAction;
+  | RemoveFieldUpdateAction
+  | RemoveAllObjectUpdatesAction
+  | SelectVirtualMetadataAction
+  | SetEditableFieldUpdateAction
+  | SetValidFieldUpdateAction;

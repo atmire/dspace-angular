@@ -5,13 +5,13 @@ import { Observable } from 'rxjs';
 import { ListableObject } from '../../../../../object-collection/shared/listable-object.model';
 import { RemoteData } from '../../../../../../core/data/remote-data';
 import { map, switchMap, take } from 'rxjs/operators';
-import { createSuccessfulRemoteDataObject } from '../../../../../testing/utils';
 import { PaginationComponentOptions } from '../../../../../pagination/pagination-component-options.model';
 import { PaginatedList } from '../../../../../../core/data/paginated-list';
 import { Router } from '@angular/router';
 import { PaginatedSearchOptions } from '../../../../../search/paginated-search-options.model';
 import { PageInfo } from '../../../../../../core/shared/page-info.model';
 import { Context } from '../../../../../../core/shared/context.model';
+import { createSuccessfulRemoteDataObject } from '../../../../../remote-data.utils';
 
 @Component({
   selector: 'ds-dynamic-lookup-relation-selection-tab',
@@ -30,9 +30,9 @@ import { Context } from '../../../../../../core/shared/context.model';
  */
 export class DsDynamicLookupRelationSelectionTabComponent {
   /**
-   * The label to use to display i18n messages (describing the type of relationship)
+   * A string that describes the type of relationship
    */
-  @Input() label: string;
+  @Input() relationshipType: string;
 
   /**
    * The ID of the list to add/remove selected items to/from

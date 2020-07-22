@@ -4,11 +4,12 @@ import {
   DiscardObjectUpdatesAction,
   FieldChangeType,
   InitializeFieldsAction,
-  ReinstateObjectUpdatesAction,
-  RemoveFieldUpdateAction, RemoveObjectUpdatesAction,
+  ReinstateObjectUpdatesAction, RemoveAllObjectUpdatesAction,
+  RemoveFieldUpdateAction, RemoveObjectUpdatesAction, SelectVirtualMetadataAction,
   SetEditableFieldUpdateAction, SetValidFieldUpdateAction
 } from './object-updates.actions';
 import { OBJECT_UPDATES_TRASH_PATH, objectUpdatesReducer } from './object-updates.reducer';
+import {Relationship} from '../../shared/item-relationships/relationship.model';
 
 class NullAction extends RemoveFieldUpdateAction {
   type = null;
@@ -44,6 +45,7 @@ const identifiable3 = {
   language: null,
   value: 'Unchanged value'
 };
+const relationship: Relationship = Object.assign(new Relationship(), {uuid: 'test relationship uuid'});
 
 const modDate = new Date(2010, 2, 11);
 const uuid = identifiable1.uuid;
@@ -79,7 +81,10 @@ describe('objectUpdatesReducer', () => {
           changeType: FieldChangeType.ADD
         }
       },
-      lastModified: modDate
+      lastModified: modDate,
+      virtualMetadataSources: {
+        [relationship.uuid]: {[identifiable1.uuid]: true}
+      },
     }
   };
 
@@ -102,7 +107,10 @@ describe('objectUpdatesReducer', () => {
           isValid: true
         },
       },
-      lastModified: modDate
+      lastModified: modDate,
+      virtualMetadataSources: {
+        [relationship.uuid]: {[identifiable1.uuid]: true}
+      },
     },
     [url + OBJECT_UPDATES_TRASH_PATH]: {
       fieldStates: {
@@ -133,7 +141,10 @@ describe('objectUpdatesReducer', () => {
           changeType: FieldChangeType.ADD
         }
       },
-      lastModified: modDate
+      lastModified: modDate,
+      virtualMetadataSources: {
+        [relationship.uuid]: {[identifiable1.uuid]: true}
+      },
     }
   };
 
@@ -195,6 +206,12 @@ describe('objectUpdatesReducer', () => {
     objectUpdatesReducer(testState, action);
   });
 
+  it('should perform the SELECT_VIRTUAL_METADATA action without affecting the previous state', () => {
+    const action = new SelectVirtualMetadataAction(url, relationship.uuid, identifiable1.uuid, true);
+    // testState has already been frozen above
+    objectUpdatesReducer(testState, action);
+  });
+
   it('should initialize all fields when the INITIALIZE action is dispatched, based on the payload', () => {
     const action = new InitializeFieldsAction(url, [identifiable1, identifiable3], modDate);
 
@@ -213,6 +230,7 @@ describe('objectUpdatesReducer', () => {
           },
         },
         fieldUpdates: {},
+        virtualMetadataSources: {},
         lastModified: modDate
       }
     };
@@ -261,6 +279,14 @@ describe('objectUpdatesReducer', () => {
     const action = new RemoveObjectUpdatesAction(url);
 
     const newState = objectUpdatesReducer(discardedTestState, action);
+    expect(newState[url].fieldUpdates).toBeUndefined();
+    expect(newState[url + OBJECT_UPDATES_TRASH_PATH]).toBeUndefined();
+  });
+
+  it('should remove all updates from the state when the REMOVE_ALL action is dispatched', () => {
+    const action = new RemoveAllObjectUpdatesAction();
+
+    const newState = objectUpdatesReducer(discardedTestState, action as any);
     expect(newState[url].fieldUpdates).toBeUndefined();
     expect(newState[url + OBJECT_UPDATES_TRASH_PATH]).toBeUndefined();
   });

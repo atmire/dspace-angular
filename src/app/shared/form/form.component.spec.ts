@@ -19,11 +19,11 @@ import { FormService } from './form.service';
 import { FormBuilderService } from './builder/form-builder.service';
 import { FormState } from './form.reducer';
 import { FormChangeAction, FormStatusChangeAction } from './form.actions';
-import { MockStore } from '../testing/mock-store';
+import { StoreMock } from '../testing/store.mock';
 import { FormFieldMetadataValueObject } from './builder/models/form-field-metadata-value.model';
-import { GLOBAL_CONFIG } from '../../../config';
-import { createTestComponent } from '../testing/utils';
+import { createTestComponent } from '../testing/utils.test';
 import { BehaviorSubject } from 'rxjs';
+import { storeModuleConfig } from '../../app.reducer';
 
 let TEST_FORM_MODEL;
 
@@ -32,7 +32,7 @@ let TEST_FORM_MODEL_WITH_ARRAY;
 let config;
 let formState: FormState;
 let html;
-let store: MockStore<FormState>;
+let store: StoreMock<FormState>;
 
 function init() {
   TEST_FORM_MODEL = [
@@ -92,7 +92,6 @@ function init() {
       groupFactory: () => {
         return [
           new DynamicInputModel({
-
             id: 'bootstrapArrayGroupInput',
             placeholder: 'example array group input',
             readOnly: false
@@ -142,8 +141,8 @@ describe('FormComponent test suite', () => {
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        NgbModule.forRoot(),
-        StoreModule.forRoot({}),
+        NgbModule,
+        StoreModule.forRoot({}, storeModuleConfig),
         TranslateModule.forRoot()
       ],
       declarations: [
@@ -156,8 +155,7 @@ describe('FormComponent test suite', () => {
         FormBuilderService,
         FormComponent,
         FormService,
-        { provide: GLOBAL_CONFIG, useValue: config },
-        { provide: Store, useClass: MockStore }
+        { provide: Store, useClass: StoreMock }
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     });
@@ -363,7 +361,7 @@ describe('FormComponent test suite', () => {
 
       spyOn((formComp as any).formService, 'validateAllFormFields');
 
-      form.next(formState.testForm)
+      form.next(formState.testForm);
       formFixture.detectChanges();
 
       formComp.onSubmit();
@@ -419,7 +417,7 @@ describe('FormComponent test suite', () => {
     }));
 
     it('should dispatch FormChangeAction when an item has been removed from an array', inject([FormBuilderService], (service: FormBuilderService) => {
-      formComp.removeItem(new Event('click'), formComp.formModel[0] as DynamicFormArrayModel, 0);
+      formComp.removeItem(new Event('click'), formComp.formModel[0] as DynamicFormArrayModel, 1);
 
       expect(store.dispatch).toHaveBeenCalledWith(new FormChangeAction('testFormArray', service.getValueFromModel(formComp.formModel)));
     }));
@@ -427,7 +425,7 @@ describe('FormComponent test suite', () => {
     it('should emit removeArrayItem Event when an item has been removed from an array', inject([FormBuilderService], (service: FormBuilderService) => {
       spyOn(formComp.removeArrayItem, 'emit');
 
-      formComp.removeItem(new Event('click'), formComp.formModel[0] as DynamicFormArrayModel, 0);
+      formComp.removeItem(new Event('click'), formComp.formModel[0] as DynamicFormArrayModel, 1);
 
       expect(formComp.removeArrayItem.emit).toHaveBeenCalled();
     }));

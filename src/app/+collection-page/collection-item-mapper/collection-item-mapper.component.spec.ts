@@ -1,3 +1,4 @@
+import { filter, tap } from 'rxjs/operators';
 import { CollectionItemMapperComponent } from './collection-item-mapper.component';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -6,11 +7,11 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { SearchFormComponent } from '../../shared/search-form/search-form.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ActivatedRouteStub } from '../../shared/testing/active-router-stub';
-import { RouterStub } from '../../shared/testing/router-stub';
-import { SearchServiceStub } from '../../shared/testing/search-service-stub';
+import { ActivatedRouteStub } from '../../shared/testing/active-router.stub';
+import { RouterStub } from '../../shared/testing/router.stub';
+import { SearchServiceStub } from '../../shared/testing/search-service.stub';
 import { NotificationsService } from '../../shared/notifications/notifications.service';
-import { NotificationsServiceStub } from '../../shared/testing/notifications-service-stub';
+import { NotificationsServiceStub } from '../../shared/testing/notifications-service.stub';
 import { ItemDataService } from '../../core/data/item-data.service';
 import { FormsModule } from '@angular/forms';
 import { Collection } from '../../core/shared/collection.model';
@@ -19,7 +20,7 @@ import { PaginationComponentOptions } from '../../shared/pagination/pagination-c
 import { SortDirection, SortOptions } from '../../core/cache/models/sort-options.model';
 import { EventEmitter } from '@angular/core';
 import { HostWindowService } from '../../shared/host-window.service';
-import { HostWindowServiceStub } from '../../shared/testing/host-window-service-stub';
+import { HostWindowServiceStub } from '../../shared/testing/host-window-service.stub';
 import { By } from '@angular/platform-browser';
 import { PaginatedList } from '../../core/data/paginated-list';
 import { PageInfo } from '../../core/shared/page-info.model';
@@ -28,7 +29,7 @@ import { PaginationComponent } from '../../shared/pagination/pagination.componen
 import { EnumKeysPipe } from '../../shared/utils/enum-keys-pipe';
 import { ItemSelectComponent } from '../../shared/object-select/item-select/item-select.component';
 import { ObjectSelectService } from '../../shared/object-select/object-select.service';
-import { ObjectSelectServiceStub } from '../../shared/testing/object-select-service-stub';
+import { ObjectSelectServiceStub } from '../../shared/testing/object-select-service.stub';
 import { VarDirective } from '../../shared/utils/var.directive';
 import { of as observableOf, of } from 'rxjs/internal/observable/of';
 import { RestResponse } from '../../core/cache/response.models';
@@ -52,7 +53,12 @@ describe('CollectionItemMapperComponent', () => {
 
   const mockCollection: Collection = Object.assign(new Collection(), {
     id: 'ce41d451-97ed-4a9c-94a1-7de34f16a9f4',
-    name: 'test-collection'
+    name: 'test-collection',
+    _links: {
+      self: {
+        href: 'https://rest.api/collections/ce41d451-97ed-4a9c-94a1-7de34f16a9f4'
+      }
+    }
   });
   const mockCollectionRD: RemoteData<Collection> = new RemoteData<Collection>(false, false, true, null, mockCollection);
   const mockSearchOptions = of(new PaginatedSearchOptions({
@@ -77,7 +83,7 @@ describe('CollectionItemMapperComponent', () => {
   const itemDataServiceStub = {
     mapToCollection: () => of(new RestResponse(true, 200, 'OK'))
   };
-  const activatedRouteStub = new ActivatedRouteStub({}, { collection: mockCollectionRD });
+  const activatedRouteStub = new ActivatedRouteStub({}, { dso: mockCollectionRD });
   const translateServiceStub = {
     get: () => of('test-message of collection ' + mockCollection.name),
     onLangChange: new EventEmitter(),
@@ -116,7 +122,7 @@ describe('CollectionItemMapperComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [CommonModule, FormsModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), NgbModule.forRoot()],
+      imports: [CommonModule, FormsModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), NgbModule],
       declarations: [CollectionItemMapperComponent, ItemSelectComponent, SearchFormComponent, PaginationComponent, EnumKeysPipe, VarDirective, ErrorComponent, LoadingComponent],
       providers: [
         { provide: ActivatedRoute, useValue: activatedRouteStub },

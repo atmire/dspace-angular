@@ -8,15 +8,15 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { FileService } from '../../../../core/shared/file.service';
 import { FormService } from '../../../../shared/form/form.service';
-import { getMockFormService } from '../../../../shared/mocks/mock-form-service';
+import { getMockFormService } from '../../../../shared/mocks/form-service.mock';
 import { HALEndpointService } from '../../../../core/shared/hal-endpoint.service';
-import { HALEndpointServiceStub } from '../../../../shared/testing/hal-endpoint-service-stub';
+import { HALEndpointServiceStub } from '../../../../shared/testing/hal-endpoint-service.stub';
 import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { JsonPatchOperationsBuilder } from '../../../../core/json-patch/builder/json-patch-operations-builder';
-import { SubmissionJsonPatchOperationsServiceStub } from '../../../../shared/testing/submission-json-patch-operations-service-stub';
+import { SubmissionJsonPatchOperationsServiceStub } from '../../../../shared/testing/submission-json-patch-operations-service.stub';
 import { SubmissionJsonPatchOperationsService } from '../../../../core/submission/submission-json-patch-operations.service';
 import { SubmissionSectionUploadFileComponent } from './section-upload-file.component';
-import { SubmissionServiceStub } from '../../../../shared/testing/submission-service-stub';
+import { SubmissionServiceStub } from '../../../../shared/testing/submission-service.stub';
 import {
   mockFileFormData,
   mockGroup,
@@ -25,15 +25,15 @@ import {
   mockSubmissionObject,
   mockUploadConfigResponse,
   mockUploadFiles
-} from '../../../../shared/mocks/mock-submission';
+} from '../../../../shared/mocks/submission.mock';
 
 import { SubmissionService } from '../../../submission.service';
 import { SectionUploadService } from '../section-upload.service';
-import { createTestComponent } from '../../../../shared/testing/utils';
+import { createTestComponent } from '../../../../shared/testing/utils.test';
 import { FileSizePipe } from '../../../../shared/utils/file-size-pipe';
 import { POLICY_DEFAULT_WITH_LIST } from '../section-upload.component';
 import { JsonPatchOperationPathCombiner } from '../../../../core/json-patch/builder/json-patch-operation-path-combiner';
-import { getMockSectionUploadService } from '../../../../shared/mocks/mock-section-upload.service';
+import { getMockSectionUploadService } from '../../../../shared/mocks/section-upload.service.mock';
 import { FormFieldMetadataValueObject } from '../../../../shared/form/builder/models/form-field-metadata-value.model';
 import { Group } from '../../../../core/eperson/models/group.model';
 import { SubmissionSectionUploadFileEditComponent } from './edit/section-upload-file-edit.component';
@@ -86,7 +86,7 @@ describe('SubmissionSectionUploadFileComponent test suite', () => {
       imports: [
         BrowserModule,
         CommonModule,
-        NgbModule.forRoot(),
+        NgbModule,
         TranslateModule.forRoot()
       ],
       declarations: [
@@ -190,7 +190,7 @@ describe('SubmissionSectionUploadFileComponent test suite', () => {
       expect(comp.fileData).toEqual(fileData);
     });
 
-    it('should call deleteFile on delete confirmation', fakeAsync(() => {
+    it('should call deleteFile on delete confirmation', () => {
       spyOn(compAsAny, 'deleteFile');
       comp.fileData = fileData;
 
@@ -209,7 +209,7 @@ describe('SubmissionSectionUploadFileComponent test suite', () => {
       fixture.whenStable().then(() => {
         expect(compAsAny.deleteFile).toHaveBeenCalled();
       });
-    }));
+    });
 
     it('should delete file properly', () => {
       compAsAny.pathCombiner = pathCombiner;

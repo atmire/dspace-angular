@@ -1,36 +1,35 @@
 import { Injectable } from '@angular/core';
-
 import { combineLatest as observableCombineLatest, Observable, of as observableOf, race as observableRace } from 'rxjs';
-import { distinctUntilChanged, flatMap, map, startWith, switchMap, tap } from 'rxjs/operators';
-
+import { distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
 import { hasValue, hasValueOperator, isEmpty, isNotEmpty, isNotUndefined } from '../../../shared/empty.util';
+import { createSuccessfulRemoteDataObject$ } from '../../../shared/remote-data.utils';
+import { FollowLinkConfig } from '../../../shared/utils/follow-link-config.model';
 import { PaginatedList } from '../../data/paginated-list';
 import { RemoteData } from '../../data/remote-data';
 import { RemoteDataError } from '../../data/remote-data-error';
-import { GetRequest } from '../../data/request.models';
 import { RequestEntry } from '../../data/request.reducer';
 import { RequestService } from '../../data/request.service';
-import { NormalizedObject } from '../models/normalized-object.model';
+import { filterSuccessfulResponses, getRequestFromRequestHref, getRequestFromRequestUUID, getResourceLinksFromResponse } from '../../shared/operators';
+import { PageInfo } from '../../shared/page-info.model';
+import { CacheableObject } from '../object-cache.reducer';
 import { ObjectCacheService } from '../object-cache.service';
 import { DSOSuccessResponse, ErrorResponse } from '../response.models';
-import { getMapsTo, getRelationMetadata, getRelationships } from './build-decorators';
-import { PageInfo } from '../../shared/page-info.model';
-import {
-  filterSuccessfulResponses,
-  getRequestFromRequestHref,
-  getRequestFromRequestUUID,
-  getResourceLinksFromResponse
-} from '../../shared/operators';
-import { CacheableObject, TypedObject } from '../object-cache.reducer';
-import { createSuccessfulRemoteDataObject$ } from '../../../shared/testing/utils';
+import { LinkService } from './link.service';
 
 @Injectable()
 export class RemoteDataBuildService {
   constructor(protected objectCache: ObjectCacheService,
+              protected linkService: LinkService,
               protected requestService: RequestService) {
   }
 
-  buildSingle<T extends CacheableObject>(href$: string | Observable<string>): Observable<RemoteData<T>> {
+  /**
+   * Creates a single {@link RemoteData} object based on the response of a request to the REST server, with a list of
+   * {@link FollowLinkConfig} that indicate which embedded info should be added to the object
+   * @param href$             Observable href of object we want to retrieve
+   * @param linksToFollow     List of {@link FollowLinkConfig} that indicate which {@link HALLink}s should be automatically resolved
+   */
+  buildSingle<T extends CacheableObject>(href$: string | Observable<string>, ...linksToFollow: Array<FollowLinkConfig<T>>): Observable<RemoteData<T>> {
     if (typeof href$ === 'string') {
       href$ = observableOf(href$);
     }
@@ -70,9 +69,9 @@ export class RemoteDataBuildService {
           }
         }),
         hasValueOperator(),
-        map((normalized: NormalizedObject<T>) => {
-          return this.build<T>(normalized);
-        }),
+        map((obj: T) =>
+          this.linkService.resolveLinks(obj, ...linksToFollow)
+        ),
         startWith(undefined),
         distinctUntilChanged()
       );
@@ -86,13 +85,15 @@ export class RemoteDataBuildService {
         const responsePending = hasValue(reqEntry) && hasValue(reqEntry.responsePending) ? reqEntry.responsePending : false;
         let isSuccessful: boolean;
         let error: RemoteDataError;
-        if (hasValue(reqEntry) && hasValue(reqEntry.response)) {
-          isSuccessful = reqEntry.response.isSuccessful;
-          const errorMessage = isSuccessful === false ? (reqEntry.response as ErrorResponse).errorMessage : undefined;
+        const response = reqEntry ? reqEntry.response : undefined;
+        if (hasValue(response)) {
+          isSuccessful = response.statusCode === 204 ||
+            response.statusCode >= 200 && response.statusCode < 300 && hasValue(payload);
+          const errorMessage = isSuccessful === false ? (response as ErrorResponse).errorMessage : undefined;
           if (hasValue(errorMessage)) {
             error = new RemoteDataError(
-              (reqEntry.response as ErrorResponse).statusCode,
-              (reqEntry.response as ErrorResponse).statusText,
+              response.statusCode,
+              response.statusText,
               errorMessage
             );
           }
@@ -102,13 +103,21 @@ export class RemoteDataBuildService {
           responsePending,
           isSuccessful,
           error,
-          payload
+          payload,
+          hasValue(response) ? response.statusCode : undefined
+
         );
       })
     );
   }
 
-  buildList<T extends CacheableObject>(href$: string | Observable<string>): Observable<RemoteData<PaginatedList<T>>> {
+  /**
+   * Creates a list of {@link RemoteData} objects based on the response of a request to the REST server, with a list of
+   * {@link FollowLinkConfig} that indicate which embedded info should be added to the objects
+   * @param href$             Observable href of objects we want to retrieve
+   * @param linksToFollow     List of {@link FollowLinkConfig} that indicate which {@link HALLink}s should be automatically resolved
+   */
+  buildList<T extends CacheableObject>(href$: string | Observable<string>, ...linksToFollow: Array<FollowLinkConfig<T>>): Observable<RemoteData<PaginatedList<T>>> {
     if (typeof href$ === 'string') {
       href$ = observableOf(href$);
     }
@@ -118,10 +127,10 @@ export class RemoteDataBuildService {
       getResourceLinksFromResponse(),
       switchMap((resourceUUIDs: string[]) => {
         return this.objectCache.getList(resourceUUIDs).pipe(
-          map((normList: Array<NormalizedObject<T>>) => {
-            return normList.map((normalized: NormalizedObject<T>) => {
-              return this.build<T>(normalized);
-            });
+          map((objs: T[]) => {
+            return objs.map((obj: T) =>
+              this.linkService.resolveLinks(obj, ...linksToFollow)
+            );
           }));
       }),
       startWith([]),
@@ -131,71 +140,18 @@ export class RemoteDataBuildService {
       filterSuccessfulResponses(),
       map((response: DSOSuccessResponse) => {
         if (hasValue((response as DSOSuccessResponse).pageInfo)) {
-          const resPageInfo = (response as DSOSuccessResponse).pageInfo;
-          if (isNotEmpty(resPageInfo) && resPageInfo.currentPage >= 0) {
-            return Object.assign({}, resPageInfo, { currentPage: resPageInfo.currentPage + 1 });
-          } else {
-            return resPageInfo;
-          }
+          return (response as DSOSuccessResponse).pageInfo;
         }
       })
     );
 
-    const payload$ = observableCombineLatest(tDomainList$, pageInfo$).pipe(
+    const payload$ = observableCombineLatest([tDomainList$, pageInfo$]).pipe(
       map(([tDomainList, pageInfo]) => {
         return new PaginatedList(pageInfo, tDomainList);
       })
     );
 
     return this.toRemoteDataObservable(requestEntry$, payload$);
-  }
-
-  build<T extends CacheableObject>(normalized: NormalizedObject<T>): T {
-    const links: any = {};
-    const relationships = getRelationships(normalized.constructor) || [];
-
-    relationships.forEach((relationship: string) => {
-      let result;
-      if (hasValue(normalized[relationship])) {
-        const { resourceType, isList } = getRelationMetadata(normalized, relationship);
-        const objectList = normalized[relationship].page || normalized[relationship];
-        if (typeof objectList !== 'string') {
-          objectList.forEach((href: string) => {
-            this.requestService.configure(new GetRequest(this.requestService.generateRequestId(), href))
-          });
-
-          const rdArr = [];
-          objectList.forEach((href: string) => {
-            rdArr.push(this.buildSingle(href));
-          });
-
-          if (isList) {
-            result = this.aggregate(rdArr);
-          } else if (rdArr.length === 1) {
-            result = rdArr[0];
-          }
-        } else {
-          this.requestService.configure(new GetRequest(this.requestService.generateRequestId(), objectList));
-
-          // The rest API can return a single URL to represent a list of resources (e.g. /items/:id/bitstreams)
-          // in that case only 1 href will be stored in the normalized obj (so the isArray above fails),
-          // but it should still be built as a list
-          if (isList) {
-            result = this.buildList(objectList);
-          } else {
-            result = this.buildSingle(objectList);
-          }
-        }
-
-        if (hasValue(normalized[relationship].page)) {
-          links[relationship] = this.toPaginatedList(result, normalized[relationship].pageInfo);
-        } else {
-          links[relationship] = result;
-        }
-      }
-    });
-    const domainModel = getMapsTo(normalized.constructor);
-    return Object.assign(new domainModel(), normalized, links);
   }
 
   aggregate<T>(input: Array<Observable<RemoteData<T>>>): Observable<RemoteData<T[]>> {

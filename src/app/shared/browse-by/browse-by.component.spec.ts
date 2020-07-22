@@ -12,12 +12,13 @@ import { PaginatedList } from '../../core/data/paginated-list';
 import { PageInfo } from '../../core/shared/page-info.model';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { StoreModule } from '@ngrx/store';
-import { MockTranslateLoader } from '../mocks/mock-translate-loader';
+import { TranslateLoaderMock } from '../mocks/translate-loader.mock';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PaginationComponentOptions } from '../pagination/pagination-component-options.model';
 import { SortDirection, SortOptions } from '../../core/cache/models/sort-options.model';
-import { createSuccessfulRemoteDataObject$ } from '../testing/utils';
+import { createSuccessfulRemoteDataObject$ } from '../remote-data.utils';
+import { storeModuleConfig } from '../../app.reducer';
 
 describe('BrowseByComponent', () => {
   let comp: BrowseByComponent;
@@ -51,12 +52,12 @@ describe('BrowseByComponent', () => {
         CommonModule,
         TranslateModule.forRoot(),
         SharedModule,
-        NgbModule.forRoot(),
-        StoreModule.forRoot({}),
+        NgbModule,
+        StoreModule.forRoot({}, storeModuleConfig),
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
-            useClass: MockTranslateLoader
+            useClass: TranslateLoaderMock
           }
         }),
         RouterTestingModule,

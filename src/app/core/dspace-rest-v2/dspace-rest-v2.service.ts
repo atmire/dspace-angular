@@ -4,7 +4,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http'
 
 import { DSpaceRESTV2Response } from './dspace-rest-v2-response.model';
-import { HttpObserve } from '@angular/common/http/src/client';
 import { RestRequestMethod } from '../data/rest-request-method';
 import { hasNoValue, isNotEmpty } from '../../shared/empty.util';
 import { DSpaceObject } from '../shared/dspace-object.model';
@@ -14,7 +13,7 @@ export interface HttpOptions {
   body?: any;
   headers?: HttpHeaders;
   params?: HttpParams;
-  observe?: HttpObserve;
+  observe?: 'body' | 'events' | 'response';
   reportProgress?: boolean;
   responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
   withCredentials?: boolean;
@@ -70,10 +69,12 @@ export class DSpaceRESTv2Service {
    *    an optional body for the request
    * @param options
    *    the HttpOptions object
+   * @param isMultipart
+   *     true when this concerns a multipart request
    * @return {Observable<string>}
    *      An Observable<string> containing the response from the server
    */
-  request(method: RestRequestMethod, url: string, body?: any, options?: HttpOptions): Observable<DSpaceRESTV2Response> {
+  request(method: RestRequestMethod, url: string, body?: any, options?: HttpOptions, isMultipart?: boolean): Observable<DSpaceRESTV2Response> {
     const requestOptions: HttpOptions = {};
     requestOptions.body = body;
     if (method === RestRequestMethod.POST && isNotEmpty(body) && isNotEmpty(body.name)) {
@@ -91,7 +92,15 @@ export class DSpaceRESTv2Service {
       requestOptions.headers = options.headers;
     }
 
-    if (!requestOptions.headers.has('Content-Type')) {
+    if (options && options.params) {
+      requestOptions.params = options.params;
+    }
+
+    if (options && options.withCredentials) {
+      requestOptions.withCredentials = options.withCredentials;
+    }
+
+    if (!requestOptions.headers.has('Content-Type') && !isMultipart) {
       // Because HttpHeaders is immutable, the set method returns a new object instead of updating the existing headers
       requestOptions.headers = requestOptions.headers.set('Content-Type', DEFAULT_CONTENT_TYPE);
     }

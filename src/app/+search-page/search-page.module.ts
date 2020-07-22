@@ -2,10 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CoreModule } from '../core/core.module';
 import { SharedModule } from '../shared/shared.module';
-import { SearchPageRoutingModule } from './search-page-routing.module';
 import { SearchComponent } from './search.component';
 import { SidebarService } from '../shared/sidebar/sidebar.service';
-import { EffectsModule } from '@ngrx/effects';
 import { ConfigurationSearchPageComponent } from './configuration-search-page.component';
 import { ConfigurationSearchPageGuard } from './configuration-search-page.guard';
 import { SearchTrackerComponent } from './search-tracker.component';
@@ -24,11 +22,10 @@ const components = [
 
 @NgModule({
   imports: [
-    SearchPageRoutingModule,
     CommonModule,
     SharedModule,
     CoreModule.forRoot(),
-    StatisticsModule.forRoot(),
+    StatisticsModule.forRoot()
   ],
   declarations: components,
   providers: [

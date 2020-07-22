@@ -11,10 +11,10 @@ import { PaginationComponent } from '../../../shared/pagination/pagination.compo
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EnumKeysPipe } from '../../../shared/utils/enum-keys-pipe';
 import { HostWindowService } from '../../../shared/host-window.service';
-import { HostWindowServiceStub } from '../../../shared/testing/host-window-service-stub';
+import { HostWindowServiceStub } from '../../../shared/testing/host-window-service.stub';
 import { BitstreamFormatDataService } from '../../../core/data/bitstream-format-data.service';
 import { NotificationsService } from '../../../shared/notifications/notifications.service';
-import { NotificationsServiceStub } from '../../../shared/testing/notifications-service-stub';
+import { NotificationsServiceStub } from '../../../shared/testing/notifications-service.stub';
 import { BitstreamFormat } from '../../../core/shared/bitstream-format.model';
 import { BitstreamFormatSupportLevel } from '../../../core/shared/bitstream-format-support-level';
 import { cold, getTestScheduler, hot } from 'jasmine-marbles';
@@ -92,7 +92,7 @@ describe('BitstreamFormatsComponent', () => {
     });
 
     TestBed.configureTestingModule({
-      imports: [CommonModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), NgbModule.forRoot()],
+      imports: [CommonModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), NgbModule],
       declarations: [BitstreamFormatsComponent, PaginationComponent, EnumKeysPipe],
       providers: [
         {provide: BitstreamFormatDataService, useValue: bitstreamFormatService},
@@ -209,12 +209,12 @@ describe('BitstreamFormatsComponent', () => {
           selectBitstreamFormat: {},
           deselectBitstreamFormat: {},
           deselectAllBitstreamFormats: {},
-          delete: observableOf(true),
+          delete: observableOf({ isSuccessful: true }),
           clearBitStreamFormatRequests: observableOf('cleared')
         });
 
         TestBed.configureTestingModule({
-          imports: [CommonModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), NgbModule.forRoot()],
+          imports: [CommonModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), NgbModule],
           declarations: [BitstreamFormatsComponent, PaginationComponent, EnumKeysPipe],
           providers: [
             {provide: BitstreamFormatDataService, useValue: bitstreamFormatService},
@@ -230,10 +230,10 @@ describe('BitstreamFormatsComponent', () => {
       comp.deleteFormats();
 
       expect(bitstreamFormatService.clearBitStreamFormatRequests).toHaveBeenCalled();
-      expect(bitstreamFormatService.delete).toHaveBeenCalledWith(bitstreamFormat1);
-      expect(bitstreamFormatService.delete).toHaveBeenCalledWith(bitstreamFormat2);
-      expect(bitstreamFormatService.delete).toHaveBeenCalledWith(bitstreamFormat3);
-      expect(bitstreamFormatService.delete).toHaveBeenCalledWith(bitstreamFormat4);
+      expect(bitstreamFormatService.delete).toHaveBeenCalledWith(bitstreamFormat1.id);
+      expect(bitstreamFormatService.delete).toHaveBeenCalledWith(bitstreamFormat2.id);
+      expect(bitstreamFormatService.delete).toHaveBeenCalledWith(bitstreamFormat3.id);
+      expect(bitstreamFormatService.delete).toHaveBeenCalledWith(bitstreamFormat4.id);
 
       expect(notificationsServiceStub.success).toHaveBeenCalledWith('admin.registries.bitstream-formats.delete.success.head',
         'admin.registries.bitstream-formats.delete.success.amount');
@@ -260,7 +260,7 @@ describe('BitstreamFormatsComponent', () => {
         });
 
         TestBed.configureTestingModule({
-          imports: [CommonModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), NgbModule.forRoot()],
+          imports: [CommonModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), NgbModule],
           declarations: [BitstreamFormatsComponent, PaginationComponent, EnumKeysPipe],
           providers: [
             {provide: BitstreamFormatDataService, useValue: bitstreamFormatService},
@@ -276,10 +276,10 @@ describe('BitstreamFormatsComponent', () => {
       comp.deleteFormats();
 
       expect(bitstreamFormatService.clearBitStreamFormatRequests).toHaveBeenCalled();
-      expect(bitstreamFormatService.delete).toHaveBeenCalledWith(bitstreamFormat1);
-      expect(bitstreamFormatService.delete).toHaveBeenCalledWith(bitstreamFormat2);
-      expect(bitstreamFormatService.delete).toHaveBeenCalledWith(bitstreamFormat3);
-      expect(bitstreamFormatService.delete).toHaveBeenCalledWith(bitstreamFormat4);
+      expect(bitstreamFormatService.delete).toHaveBeenCalledWith(bitstreamFormat1.id);
+      expect(bitstreamFormatService.delete).toHaveBeenCalledWith(bitstreamFormat2.id);
+      expect(bitstreamFormatService.delete).toHaveBeenCalledWith(bitstreamFormat3.id);
+      expect(bitstreamFormatService.delete).toHaveBeenCalledWith(bitstreamFormat4.id);
 
       expect(notificationsServiceStub.error).toHaveBeenCalledWith('admin.registries.bitstream-formats.delete.failure.head',
         'admin.registries.bitstream-formats.delete.failure.amount');

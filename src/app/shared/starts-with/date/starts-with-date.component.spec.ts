@@ -8,9 +8,9 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { of as observableOf } from 'rxjs/internal/observable/of';
 import { By } from '@angular/platform-browser';
 import { StartsWithDateComponent } from './starts-with-date.component';
-import { ActivatedRouteStub } from '../../testing/active-router-stub';
+import { ActivatedRouteStub } from '../../testing/active-router.stub';
 import { EnumKeysPipe } from '../../utils/enum-keys-pipe';
-import { RouterStub } from '../../testing/router-stub';
+import { RouterStub } from '../../testing/router.stub';
 
 describe('StartsWithDateComponent', () => {
   let comp: StartsWithDateComponent;
@@ -27,7 +27,7 @@ describe('StartsWithDateComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [CommonModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), NgbModule.forRoot()],
+      imports: [CommonModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), NgbModule],
       declarations: [StartsWithDateComponent, EnumKeysPipe],
       providers: [
         { provide: 'startsWithOptions', useValue: options },

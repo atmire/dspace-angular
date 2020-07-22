@@ -110,12 +110,12 @@ export class FormBuilderService extends DynamicFormService {
       if (isString(controlValue)) {
         return new FormFieldMetadataValueObject(controlValue, controlLanguage, null, null, controlModelIndex);
       } else if (isObject(controlValue)) {
-        const authority = controlValue.authority || controlValue.id || null;
-        const place = controlModelIndex || controlValue.place;
+        const authority = (controlValue as any).authority || (controlValue as any).id || null;
+        const place = controlModelIndex || (controlValue as any).place;
         if (isNgbDateStruct(controlValue)) {
-          return new FormFieldMetadataValueObject(controlValue, controlLanguage, authority, controlValue, place);
+          return new FormFieldMetadataValueObject(controlValue, controlLanguage, authority, controlValue as any, place);
         } else {
-          return new FormFieldMetadataValueObject(controlValue.value, controlLanguage, authority, controlValue.display, place, controlValue.confidence);
+          return new FormFieldMetadataValueObject((controlValue as any).value, controlLanguage, authority, (controlValue as any).display, place, (controlValue as any).confidence);
         }
       }
     };
@@ -175,13 +175,13 @@ export class FormBuilderService extends DynamicFormService {
                   }
                 }
               });
-          })
+          });
         } else if (isNotUndefined((controlModel as any).value) && isNotEmpty((controlModel as any).value)) {
           const controlArrayValue = [];
           // Normalize control value as an array of FormFieldMetadataValueObject
           const values = Array.isArray((controlModel as any).value) ? (controlModel as any).value : [(controlModel as any).value];
           values.forEach((controlValue) => {
-            controlArrayValue.push(normalizeValue(controlModel, controlValue, controlModelIndex))
+            controlArrayValue.push(normalizeValue(controlModel, controlValue, controlModelIndex));
           });
 
           if (controlId && iterateResult.hasOwnProperty(controlId) && isNotNull(iterateResult[controlId])) {
@@ -226,7 +226,7 @@ export class FormBuilderService extends DynamicFormService {
   }
 
   hasArrayGroupValue(model: DynamicFormControlModel): boolean {
-    return model && (this.isListGroup(model) || model.type === DYNAMIC_FORM_CONTROL_TYPE_TAG);
+    return model && (this.isListGroup(model) || model.type === DYNAMIC_FORM_CONTROL_TYPE_TAG || model.type === DYNAMIC_FORM_CONTROL_TYPE_ARRAY);
   }
 
   hasMappedGroupValue(model: DynamicFormControlModel): boolean {
@@ -283,11 +283,16 @@ export class FormBuilderService extends DynamicFormService {
     return isNotEmpty(fieldModel) ? formGroup.get(this.getPath(fieldModel)) : null;
   }
 
+  /**
+   * Note (discovered while debugging) this is not the ID as used in the form,
+   * but the first part of the path needed in a patch operation:
+   * e.g. add foo/0 -> the id is 'foo'
+   */
   getId(model: DynamicPathable): string {
     let tempModel: DynamicFormControlModel;
 
     if (this.isArrayGroup(model as DynamicFormControlModel)) {
-      return model.index.toString();
+      return hasValue((model as any).metadataKey) ? (model as any).metadataKey : model.index.toString();
     } else if (this.isModelInCustomGroup(model as DynamicFormControlModel)) {
       tempModel = (model as any).parent;
     } else {

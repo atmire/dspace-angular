@@ -21,7 +21,8 @@ describe('MetadataSchemaFormComponent', () => {
   const registryServiceStub = {
     getActiveMetadataSchema: () => observableOf(undefined),
     createOrUpdateMetadataSchema: (schema: MetadataSchema) => observableOf(schema),
-    cancelEditMetadataSchema: () => {}
+    cancelEditMetadataSchema: () => {},
+    clearMetadataSchemaRequests: () => observableOf(undefined)
   };
   const formBuilderServiceStub = {
     createFormGroup: () => {
@@ -34,7 +35,7 @@ describe('MetadataSchemaFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [CommonModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), NgbModule.forRoot()],
+      imports: [CommonModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), NgbModule],
       declarations: [ MetadataSchemaFormComponent, EnumKeysPipe ],
       providers: [
         { provide: RegistryService, useValue: registryServiceStub },

@@ -8,13 +8,13 @@ import { TranslateModule } from '@ngx-translate/core';
 import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
 
-import { SubmissionServiceStub } from '../../../shared/testing/submission-service-stub';
-import { mockSubmissionId } from '../../../shared/mocks/mock-submission';
+import { SubmissionServiceStub } from '../../../shared/testing/submission-service.stub';
+import { mockSubmissionId } from '../../../shared/mocks/submission.mock';
 import { SubmissionService } from '../../submission.service';
-import { SubmissionRestServiceStub } from '../../../shared/testing/submission-rest-service-stub';
+import { SubmissionRestServiceStub } from '../../../shared/testing/submission-rest-service.stub';
 import { SubmissionFormFooterComponent } from './submission-form-footer.component';
 import { SubmissionRestService } from '../../../core/submission/submission-rest.service';
-import { createTestComponent } from '../../../shared/testing/utils';
+import { createTestComponent } from '../../../shared/testing/utils.test';
 
 describe('SubmissionFormFooterComponent Component', () => {
 
@@ -34,7 +34,7 @@ describe('SubmissionFormFooterComponent Component', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        NgbModule.forRoot(),
+        NgbModule,
         TranslateModule.forRoot()
       ],
       declarations: [
@@ -188,7 +188,7 @@ describe('SubmissionFormFooterComponent Component', () => {
       expect(submissionServiceStub.dispatchDeposit).toHaveBeenCalledWith(submissionId);
     });
 
-    it('should call dispatchDiscard on discard confirmation', fakeAsync(() => {
+    it('should call dispatchDiscard on discard confirmation', () => {
       comp.showDepositAndDiscard = observableOf(true);
       fixture.detectChanges();
       const modalBtn = fixture.debugElement.query(By.css('.btn-danger'));
@@ -204,7 +204,7 @@ describe('SubmissionFormFooterComponent Component', () => {
       fixture.whenStable().then(() => {
         expect(submissionServiceStub.dispatchDiscard).toHaveBeenCalledWith(submissionId);
       });
-    }));
+    });
 
     it('should have deposit button disabled when submission is not valid', () => {
       comp.showDepositAndDiscard = observableOf(true);

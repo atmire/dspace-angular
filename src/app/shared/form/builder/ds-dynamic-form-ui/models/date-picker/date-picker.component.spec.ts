@@ -12,7 +12,7 @@ import { FormBuilderService } from '../../../form-builder.service';
 
 import { FormComponent } from '../../../../form.component';
 import { FormService } from '../../../../form.service';
-import { createTestComponent } from '../../../../../testing/utils';
+import { createTestComponent } from '../../../../../testing/utils.test';
 
 export const DATE_TEST_GROUP = new FormGroup({
   date: new FormControl()
@@ -43,7 +43,7 @@ describe('DsDatePickerComponent test suite', () => {
 
     TestBed.configureTestingModule({
       imports: [
-        NgbModule.forRoot()
+        NgbModule
       ],
       declarations: [
         DsDatePickerComponent,

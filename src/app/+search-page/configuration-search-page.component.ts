@@ -1,3 +1,4 @@
+import { switchMap } from 'rxjs/operators';
 import { HostWindowService } from '../shared/host-window.service';
 import { SidebarService } from '../shared/sidebar/sidebar.service';
 import { SearchComponent } from './search.component';
@@ -62,7 +63,7 @@ export class ConfigurationSearchPageComponent extends SearchComponent implements
       this.routeService.setParameter('configuration', this.configuration);
     }
     if (hasValue(this.fixedFilterQuery)) {
-      this.routeService.setParameter('fixedFilter', this.fixedFilterQuery);
+      this.routeService.setParameter('fixedFilterQuery', this.fixedFilterQuery);
     }
   }
 }

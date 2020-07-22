@@ -19,19 +19,25 @@ import { AuthService } from '../../app/core/auth/auth.service';
 import { ServerAuthService } from '../../app/core/auth/server-auth.service';
 
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
-import { AngularticsMock } from '../../app/shared/mocks/mock-angulartics.service';
+import { AngularticsMock } from '../../app/shared/mocks/angulartics.service.mock';
 import { SubmissionService } from '../../app/submission/submission.service';
 import { ServerSubmissionService } from '../../app/submission/server-submission.service';
 import { Angulartics2DSpace } from '../../app/statistics/angulartics/dspace-provider';
-import { Angulartics2Module } from 'angulartics2';
+import { Angulartics2RouterlessModule } from 'angulartics2/routerlessmodule';
+import { ModuleMapLoaderModule } from '@nguniversal/module-map-ngfactory-loader';
+import { ServerLocaleService } from 'src/app/core/locale/server-locale.service';
+import { LocaleService } from 'src/app/core/locale/locale.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ForwardClientIpInterceptor } from '../../app/core/forward-client-ip/forward-client-ip.interceptor';
 
 export function createTranslateLoader() {
-  return new TranslateJson5UniversalLoader('dist/assets/i18n/', '.json5');
+  return new TranslateJson5UniversalLoader('dist/server/assets/i18n/', '.json5');
 }
 
 @NgModule({
   bootstrap: [AppComponent],
   imports: [
+    ModuleMapLoaderModule,
     BrowserModule.withServerTransition({
       appId: 'dspace-angular'
     }),
@@ -47,7 +53,7 @@ export function createTranslateLoader() {
         deps: []
       }
     }),
-    Angulartics2Module.forRoot(),
+    Angulartics2RouterlessModule.forRoot(),
     ServerModule,
     AppModule
   ],
@@ -71,7 +77,17 @@ export function createTranslateLoader() {
     {
       provide: SubmissionService,
       useClass: ServerSubmissionService
-    }
+    },
+    {
+      provide: LocaleService,
+      useClass: ServerLocaleService
+    },
+    // register ForwardClientIpInterceptor as HttpInterceptor
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ForwardClientIpInterceptor,
+      multi: true
+    },
   ]
 })
 export class ServerAppModule {
