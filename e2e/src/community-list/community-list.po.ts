@@ -13,7 +13,7 @@ export class ProtractorPage {
   }
 
   getRandomCommunityWithChildren() {
-    return element(by.xpath('//ds-community-list//cdk-tree-node[div/button[@class="btn btn-default visible"]]'));
+    return element(by.xpath('//ds-community-list//cdk-tree-node[div/button[contains(@class,\'visible\') and not(contains(@class,\'invisible\'))]'));
   }
 
   countNodes() {
@@ -21,7 +21,7 @@ export class ProtractorPage {
   }
 
   getRandomCommunityWithoutChildren() {
-    return element(by.xpath('//ds-community-list//cdk-tree-node[div/button[@class="btn btn-default invisible"]]'));
+    return element(by.xpath('//ds-community-list//cdk-tree-node[div/button[contains(@class,\'invisible\')]]'));
   }
 
   clickButtonForCommunity(community: ElementFinder) {
