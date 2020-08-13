@@ -11,6 +11,7 @@ describe('protractor SearchPage', () => {
   it('should have a community', () => {
     page.navigateToCommunityList();
     page.waitUntilNotLoading();
+    browser.sleep(1000);
     const url = page.getRandomCommunity().element(by.tagName('a')).getAttribute('href');
     expect<any>(url).toContain('/communities/');
   });
@@ -18,6 +19,7 @@ describe('protractor SearchPage', () => {
   it('should have a community with children', () => {
     page.navigateToCommunityList();
     page.waitUntilNotLoading();
+    browser.sleep(1000);
     const community = page.getRandomCommunityWithChildren();
     expect<any>(community).toBeDefined();
     const url = community.element(by.tagName('a')).getAttribute('href');
@@ -45,6 +47,7 @@ describe('protractor SearchPage', () => {
   it('should be able to open community with children', () => {
     page.navigateToCommunityList();
     page.waitUntilNotLoading();
+    browser.sleep(1000);
     const community = page.getRandomCommunityWithChildren();
     expect<any>(community).toBeDefined();
     const nodes = page.countNodes();
