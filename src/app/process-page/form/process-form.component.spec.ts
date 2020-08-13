@@ -48,7 +48,7 @@ describe('ProcessFormComponent', () => {
     };
   }
 
-  beforeEach(async(() => {
+  beforeEach((() => {
     init();
     TestBed.configureTestingModule({
       imports: [
@@ -69,15 +69,12 @@ describe('ProcessFormComponent', () => {
       schemas: [NO_ERRORS_SCHEMA]
     })
       .compileComponents();
-  }));
-
-  beforeEach(() => {
     fixture = TestBed.createComponent(ProcessFormComponent);
     component = fixture.componentInstance;
     component.parameters = parameterValues;
     component.selectedScript = script;
     fixture.detectChanges();
-  });
+  }));
 
   it('should create', () => {
     expect(component).toBeTruthy();
