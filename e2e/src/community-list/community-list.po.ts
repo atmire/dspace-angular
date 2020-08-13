@@ -13,7 +13,7 @@ export class ProtractorPage {
   }
 
   getRandomCommunityWithChildren() {
-    return element(by.xpath('//ds-community-list//cdk-tree-node[div/button[contains(@class,\'visible\') and not(contains(@class,\'invisible\'))]'));
+    return element(by.xpath('//ds-community-list//cdk-tree-node[div/button[contains(@class,\'visible\') and not(contains(@class,\'invisible\'))]]'));
   }
 
   countNodes() {
