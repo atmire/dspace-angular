@@ -35,4 +35,12 @@ export class ProtractorPage {
     const notLoading = EC.not(EC.presenceOf(loading));
     return browser.wait(notLoading, 10000);
   }
+
+  elementTag(tag: string) {
+    return element(by.tagName(tag));
+  }
+
+  elementTags(tag: string) {
+    return element.all(by.tagName(tag));
+  }
 }

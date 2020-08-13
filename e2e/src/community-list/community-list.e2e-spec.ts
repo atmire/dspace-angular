@@ -18,7 +18,6 @@ describe('protractor SearchPage', () => {
   it('should have a community with children', () => {
     page.navigateToCommunityList();
     page.waitUntilNotLoading();
-    browser.sleep(100);
     const community = page.getRandomCommunityWithChildren();
     expect<any>(community).toBeDefined();
     const url = community.element(by.tagName('a')).getAttribute('href');
@@ -36,6 +35,7 @@ describe('protractor SearchPage', () => {
   it('should have a community without children', () => {
     page.navigateToCommunityList();
     page.waitUntilNotLoading();
+    browser.sleep(100);
     const community = page.getRandomCommunityWithoutChildren();
     expect<any>(community).toBeDefined();
     const url = community.element(by.tagName('a')).getAttribute('href');
@@ -45,7 +45,6 @@ describe('protractor SearchPage', () => {
   it('should be able to open community with children', () => {
     page.navigateToCommunityList();
     page.waitUntilNotLoading();
-    browser.sleep(100);
     const community = page.getRandomCommunityWithChildren();
     expect<any>(community).toBeDefined();
     const nodes = page.countNodes();
@@ -71,6 +70,20 @@ describe('protractor SearchPage', () => {
       .then((count: number) => {
         return expect<any>(nodes).toBe(count);
       });
+  });
+
+  it('test page contents', () => {
+    page.navigateToCommunityList();
+    page.waitUntilNotLoading();
+    const text = page.elementTags('div').getText();
+    expect<any>(text).toContain('THIS IS NOT PRESENT, SO THE TEST WILL FAIL');
+  });
+
+  it('test URI contents', () => {
+    page.navigateToCommunityList();
+    page.waitUntilNotLoading();
+    const text = page.elementTags('a').getAttribute('href');
+    expect<any>(text).toContain('THIS IS NOT PRESENT, SO THE TEST WILL FAIL');
   });
 
 });
