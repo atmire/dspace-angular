@@ -258,7 +258,7 @@ export class RelationshipService extends DataService<Relationship> {
     if (options) {
       findListOptions = Object.assign(new FindListOptions(), options);
     }
-    const searchParams = [new RequestParam('label', label), new RequestParam('dso', item.id)];
+    const searchParams = [new RequestParam('label', label), new RequestParam('archivedOnly', 'true'), new RequestParam('dso', item.id)];
     if (findListOptions.searchParams) {
       findListOptions.searchParams = [...findListOptions.searchParams, ...searchParams];
     } else {
