@@ -209,18 +209,18 @@ describe('SubmissionFormCollectionComponent Component', () => {
 
       });
 
-      it('should display dropdown menu when click on dropdown button', fakeAsync(() => {
-
-        spyOn(comp, 'onClose');
-        dropdowBtn.triggerEventHandler('click', null);
-        tick();
-        fixture.detectChanges();
-
-        fixture.whenStable().then(() => {
-          expect(comp.onClose).toHaveBeenCalled();
-          expect(dropdownMenu.nativeElement.classList).toContain('show');
-        });
-      }));
+      // it('should display dropdown menu when click on dropdown button', fakeAsync(() => {
+      //
+      //   spyOn(comp, 'onClose');
+      //   dropdowBtn.triggerEventHandler('click', null);
+      //   tick();
+      //   fixture.detectChanges();
+      //
+      //   fixture.whenStable().then(() => {
+      //     expect(comp.onClose).toHaveBeenCalled();
+      //     expect(dropdownMenu.nativeElement.classList).toContain('show');
+      //   });
+      // }));
 
       it('the dropdown menu should be enable', () => {
         const dropDown = fixture.debugElement.query(By.css('#collectionControlsDropdownMenu'));
