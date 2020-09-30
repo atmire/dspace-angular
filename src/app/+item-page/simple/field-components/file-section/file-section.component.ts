@@ -1,10 +1,15 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { BitstreamDataService } from '../../../../core/data/bitstream-data.service';
 
 import { Bitstream } from '../../../../core/shared/bitstream.model';
 import { Item } from '../../../../core/shared/item.model';
-import { getFirstSucceededRemoteListPayload } from '../../../../core/shared/operators';
+import { filter, take } from 'rxjs/operators';
+import { RemoteData } from '../../../../core/data/remote-data';
+import { hasValue } from '../../../../shared/empty.util';
+import { PaginatedList } from '../../../../core/data/paginated-list';
+import { NotificationsService } from '../../../../shared/notifications/notifications.service';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
  * This component renders the file section of the item
@@ -22,21 +27,56 @@ export class FileSectionComponent implements OnInit {
 
   separator = '<br/>';
 
-  bitstreams$: Observable<Bitstream[]>;
+  bitstreams$: BehaviorSubject<Bitstream[]>;
+
+  currentPage: number;
+
+  isLoading: boolean;
+
+  isLastPage: boolean;
+
+  pageSize = 5;
 
   constructor(
-    protected bitstreamDataService: BitstreamDataService
+    protected bitstreamDataService: BitstreamDataService,
+    protected notificationsService: NotificationsService,
+    protected translateService: TranslateService
   ) {
   }
 
   ngOnInit(): void {
-    this.initialize();
+    this.getNextPage();
   }
 
-  initialize(): void {
-    this.bitstreams$ = this.bitstreamDataService.findAllByItemAndBundleName(this.item, 'ORIGINAL').pipe(
-      getFirstSucceededRemoteListPayload()
-    );
+  /**
+   * This method will retrieve the next page of Bitstreams from the external BitstreamDataService call.
+   * It'll retrieve the currentPage from the class variables and it'll add the next page of bitstreams with the
+   * already existing one.
+   * If the currentPage variable is undefined, we'll set it to 1 and retrieve the first page of Bitstreams
+   */
+  getNextPage(): void {
+    this.isLoading = true;
+    if (this.currentPage === undefined) {
+      this.currentPage = 1;
+      this.bitstreams$ = new BehaviorSubject([]);
+    } else {
+      this.currentPage++;
+    }
+    this.bitstreamDataService.findAllByItemAndBundleName(this.item, 'ORIGINAL', {
+      currentPage: this.currentPage,
+      elementsPerPage: this.pageSize
+    }).pipe(
+      filter((bitstreamsRD: RemoteData<PaginatedList<Bitstream>>) => hasValue(bitstreamsRD) && (hasValue(bitstreamsRD.error) || hasValue(bitstreamsRD.payload))),
+      take(1),
+    ).subscribe((bitstreamsRD: RemoteData<PaginatedList<Bitstream>>) => {
+      if (bitstreamsRD.error) {
+        this.notificationsService.error(this.translateService.get('file-section.error.header'), `${bitstreamsRD.error.statusCode} ${bitstreamsRD.error.message}`);
+      } else if (hasValue(bitstreamsRD.payload)) {
+        const current: Bitstream[] = this.bitstreams$.getValue();
+        this.bitstreams$.next([...current, ...bitstreamsRD.payload.page]);
+        this.isLoading = false;
+        this.isLastPage = this.currentPage === bitstreamsRD.payload.totalPages;
+      }
+    });
   }
-
 }
