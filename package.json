@@ -42,7 +42,9 @@
     "clean:prod": "yarn run clean:coverage && yarn run clean:doc && yarn run clean:dist && yarn run clean:log && yarn run clean:json && yarn run clean:bld",
     "clean": "yarn run clean:prod && yarn run clean:env && yarn run clean:node",
     "clean:env": "rimraf src/environments/environment.ts",
-    "sync-i18n": "yarn run config:dev && ts-node --project ./tsconfig.ts-node.json scripts/sync-i18n-files.ts"
+    "sync-i18n": "yarn run config:dev && ts-node --project ./tsconfig.ts-node.json scripts/sync-i18n-files.ts",
+    "snyk-protect": "snyk protect",
+    "prepare": "yarn run snyk-protect"
   },
   "browser": {
     "fs": false,
@@ -111,7 +113,7 @@
     "ngx-sortablejs": "^3.1.4",
     "nouislider": "^11.0.0",
     "pem": "1.13.2",
-    "postcss-cli": "^6.0.0",
+    "postcss-cli": "^8.0.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~6.4.0",
     "rxjs-spy": "^7.5.1",
@@ -119,7 +121,8 @@
     "sortablejs": "1.7.0",
     "tslib": "^1.10.0",
     "webfontloader": "1.6.28",
-    "zone.js": "^0.9.1"
+    "zone.js": "^0.9.1",
+    "snyk": "^1.431.1"
   },
   "devDependencies": {
     "@angular-builders/custom-webpack": "8.4.1",
@@ -180,5 +183,6 @@
     "webpack-bundle-analyzer": "^3.3.2",
     "webpack-cli": "^3.1.0",
     "webpack-node-externals": "1.7.2"
-  }
+  },
+  "snyk": true
 }
