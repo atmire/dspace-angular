@@ -232,7 +232,7 @@ export class SubmissionSectionUploadFileComponent implements OnChanges, OnInit {
       first())
       .subscribe((url) => {
         const fileUrl = `${url}/${this.fileData.uuid}/content`;
-        this.fileService.downloadFile(fileUrl);
+        this.fileService.retrieveFileDownloadLink(fileUrl);
       });
   }
 
