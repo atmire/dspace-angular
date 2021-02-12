@@ -5,11 +5,16 @@ import { Item } from './core/shared/item.model';
 import { getCommunityPageRoute } from './+community-page/community-page-routing-paths';
 import { getCollectionPageRoute } from './+collection-page/collection-page-routing-paths';
 import { getItemPageRoute } from './+item-page/item-page-routing-paths';
+import { URLCombiner } from './core/url-combiner/url-combiner';
 
 export const BITSTREAM_MODULE_PATH = 'bitstreams';
 
 export function getBitstreamModuleRoute() {
   return `/${BITSTREAM_MODULE_PATH}`;
+}
+
+export function getBitstreamDownloadRoute(bitstream) : string{
+  return new URLCombiner(getBitstreamModuleRoute(), bitstream.uuid, 'download').toString();
 }
 
 export const ADMIN_MODULE_PATH = 'admin';
