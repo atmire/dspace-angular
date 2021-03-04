@@ -1,12 +1,19 @@
 import { MetadataRepresentationType } from '../../core/shared/metadata-representation/metadata-representation.model';
 import { hasNoValue, hasValue } from '../empty.util';
 import { Context } from '../../core/shared/context.model';
+import { InjectionToken } from '@angular/core';
+import { GenericConstructor } from '../../core/shared/generic-constructor';
 
 export const map = new Map();
 
 export const DEFAULT_ENTITY_TYPE = 'Publication';
 export const DEFAULT_REPRESENTATION_TYPE = MetadataRepresentationType.PlainText;
 export const DEFAULT_CONTEXT = Context.Undefined;
+
+export const METADATA_REPRESENTATION_COMPONENT_FACTORY = new InjectionToken<(entityType: string, mdRepresentationType: MetadataRepresentationType, context: Context) => GenericConstructor<any>>('getMetadataRepresentationComponent', {
+  providedIn: 'root',
+  factory: () => getMetadataRepresentationComponent
+});
 
 /**
  * Decorator function to store metadata representation mapping

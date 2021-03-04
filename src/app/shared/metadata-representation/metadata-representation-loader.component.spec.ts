@@ -10,6 +10,8 @@ import { PlainTextMetadataListElementComponent } from '../object-list/metadata-r
 import { spyOnExported } from '../testing/utils.test';
 import { MetadataRepresentationDirective } from './metadata-representation.directive';
 import * as metadataRepresentationDecorator from './metadata-representation.decorator';
+import { METADATA_REPRESENTATION_COMPONENT_FACTORY } from './metadata-representation.decorator';
+import createSpyObj = jasmine.createSpyObj;
 
 const testType = 'TestType';
 const testContext = Context.Search;
@@ -29,7 +31,7 @@ class TestType implements MetadataRepresentation {
   }
 }
 
-xdescribe('MetadataRepresentationLoaderComponent', () => {
+fdescribe('MetadataRepresentationLoaderComponent', () => {
   let comp: MetadataRepresentationLoaderComponent;
   let fixture: ComponentFixture<MetadataRepresentationLoaderComponent>;
 
@@ -38,7 +40,9 @@ xdescribe('MetadataRepresentationLoaderComponent', () => {
       imports: [],
       declarations: [MetadataRepresentationLoaderComponent, PlainTextMetadataListElementComponent, MetadataRepresentationDirective],
       schemas: [NO_ERRORS_SCHEMA],
-      providers: [ComponentFactoryResolver]
+      providers: [
+        { provide: METADATA_REPRESENTATION_COMPONENT_FACTORY, useValue: jasmine.createSpy('getMetadataRepresentationComponent').and.returnValue(PlainTextMetadataListElementComponent) }
+      ]
     }).overrideComponent(MetadataRepresentationLoaderComponent, {
       set: {
         changeDetection: ChangeDetectionStrategy.Default,
@@ -54,14 +58,13 @@ xdescribe('MetadataRepresentationLoaderComponent', () => {
     comp.mdRepresentation = new TestType();
     comp.context = testContext;
 
-    spyOnExported(metadataRepresentationDecorator, 'getMetadataRepresentationComponent').and.returnValue(PlainTextMetadataListElementComponent);
     fixture.detectChanges();
 
   }));
 
   describe('When the component is rendered', () => {
     it('should call the getMetadataRepresentationComponent function with the right entity type, representation type and context', () => {
-      expect(metadataRepresentationDecorator.getMetadataRepresentationComponent).toHaveBeenCalledWith(testType, testRepresentationType, testContext);
+      expect((comp as any).getMetadataRepresentationComponent).toHaveBeenCalledWith(testType, testRepresentationType, testContext);
     });
   });
 });

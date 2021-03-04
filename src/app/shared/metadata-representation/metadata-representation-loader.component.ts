@@ -1,6 +1,18 @@
-import { Component, ComponentFactoryResolver, Input, OnInit, ViewChild } from '@angular/core';
-import { MetadataRepresentation } from '../../core/shared/metadata-representation/metadata-representation.model';
-import { getMetadataRepresentationComponent } from './metadata-representation.decorator';
+import {
+  Component,
+  ComponentFactoryResolver,
+  Input,
+  OnInit,
+  ViewChild,
+  Inject
+} from '@angular/core';
+import {
+  MetadataRepresentation,
+  MetadataRepresentationType
+} from '../../core/shared/metadata-representation/metadata-representation.model';
+import {
+  METADATA_REPRESENTATION_COMPONENT_FACTORY
+} from './metadata-representation.decorator';
 import { Context } from '../../core/shared/context.model';
 import { GenericConstructor } from '../../core/shared/generic-constructor';
 import { MetadataRepresentationListElementComponent } from '../object-list/metadata-representation-list-element/metadata-representation-list-element.component';
@@ -42,7 +54,9 @@ export class MetadataRepresentationLoaderComponent implements OnInit {
    */
   @ViewChild(MetadataRepresentationDirective, {static: true}) mdRepDirective: MetadataRepresentationDirective;
 
-  constructor(private componentFactoryResolver: ComponentFactoryResolver) {
+  constructor(private componentFactoryResolver: ComponentFactoryResolver,
+              @Inject(METADATA_REPRESENTATION_COMPONENT_FACTORY)  private getMetadataRepresentationComponent: (entityType: string, mdRepresentationType: MetadataRepresentationType, context: Context) => GenericConstructor<MetadataRepresentationListElementComponent>
+              ) {
   }
 
   /**
@@ -64,6 +78,6 @@ export class MetadataRepresentationLoaderComponent implements OnInit {
    * @returns {string}
    */
   private getComponent(): GenericConstructor<MetadataRepresentationListElementComponent> {
-    return getMetadataRepresentationComponent(this.mdRepresentation.itemType, this.mdRepresentation.representationType, this.context);
+    return this.getMetadataRepresentationComponent(this.mdRepresentation.itemType, this.mdRepresentation.representationType, this.context);
   }
 }
