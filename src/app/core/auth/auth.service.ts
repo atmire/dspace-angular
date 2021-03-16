@@ -514,7 +514,17 @@ export class AuthService {
    */
   getShortlivedToken(): Observable<string> {
     return this.isAuthenticated().pipe(
-      switchMap((authenticated) => authenticated ? this.authRequestService.getShortlivedToken() : observableOf(null))
+      switchMap((authenticated) => {
+        if (authenticated) {
+          console.log('token: authenticated');
+          const token$ = this.authRequestService.getShortlivedToken();
+          token$.subscribe((t) => {console.log('token$', t)});
+          return token$;
+        } else {
+          console.log('token: not authenticated');
+          return observableOf(null);
+        }
+      })
     );
   }
 

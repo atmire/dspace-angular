@@ -112,6 +112,9 @@ export class DspaceRestService {
         statusText: res.statusText
       })),
       catchError((err) => {
+        if (method === RestRequestMethod.POST) {
+          console.log('http err', err, method, url, requestOptions);
+        }
         return observableThrowError({
           statusCode: err.status,
           statusText: err.statusText,

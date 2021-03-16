@@ -68,12 +68,13 @@ export class XsrfInterceptor implements HttpInterceptor {
         // Also skip any request which is NOT to our trusted/configured REST API
         if (req.method !== 'GET' && req.method !== 'HEAD' && reqUrl.startsWith(restUrl)) {
             // parse token from XSRF-TOKEN (client-side) cookie
-            const token = this.tokenExtractor.getToken() as string;
+            const token = this.cookieService.get('XSRF-TOKEN') as string;
 
             // send token in request's X-XSRF-TOKEN header (anti-CSRF security) to backend
             if (token !== null && !req.headers.has(requestCsrfHeader)) {
                 req = req.clone({ headers: req.headers.set(requestCsrfHeader, token) });
             }
+          console.log('XsrfInterceptor', 'url', req.url, 'token', token, 'header', req.headers.get(requestCsrfHeader));
         }
         // Pass to next interceptor, but intercept EVERY response event as well
         return next.handle(req).pipe(

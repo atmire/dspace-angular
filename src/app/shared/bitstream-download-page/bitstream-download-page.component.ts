@@ -68,16 +68,17 @@ export class BitstreamDownloadPageComponent implements OnInit {
         }
       })
     ).subscribe(([isAuthorized, isLoggedIn, bitstream, fileLink]: [boolean, boolean, Bitstream, string]) => {
-      if (isAuthorized && isLoggedIn && isNotEmpty(fileLink)) {
-        this.hardRedirectService.redirect(fileLink);
-      } else if (isAuthorized && !isLoggedIn) {
-        this.hardRedirectService.redirect(bitstream._links.content.href);
-      } else if (!isAuthorized && isLoggedIn) {
-        this.router.navigateByUrl(getForbiddenRoute(), {skipLocationChange: true});
-      } else if (!isAuthorized && !isLoggedIn) {
-        this.auth.setRedirectUrl(this.router.url);
-        this.router.navigateByUrl('login');
-      }
+      console.log('subscribe', isAuthorized, isLoggedIn, fileLink);
+      // if (isAuthorized && isLoggedIn && isNotEmpty(fileLink)) {
+      //   this.hardRedirectService.redirect(fileLink);
+      // } else if (isAuthorized && !isLoggedIn) {
+      //   this.hardRedirectService.redirect(bitstream._links.content.href);
+      // } else if (!isAuthorized && isLoggedIn) {
+      //   this.router.navigateByUrl(getForbiddenRoute(), {skipLocationChange: true});
+      // } else if (!isAuthorized && !isLoggedIn) {
+      //   this.auth.setRedirectUrl(this.router.url);
+      //   this.router.navigateByUrl('login');
+      // }
     });
   }
 }
