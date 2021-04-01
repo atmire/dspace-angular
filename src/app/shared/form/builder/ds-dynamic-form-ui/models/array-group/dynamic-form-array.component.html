@@ -11,14 +11,10 @@
              [formGroupName]="idx"
              [ngClass]="[getClass('element', 'group'), getClass('grid', 'group')]"
              cdkDrag
+             [cdkDragPreviewClass]="'ds-subm-reorder-dragging'"
              cdkDragHandle
              [cdkDragDisabled]="dragDisabled">
           <!-- Item content -->
-          <div *cdkDragPreview>
-            <div class="alert alert-info">
-              <i class="fas fa-sort"></i> {{ 'form.repeatable.sort.tip' | translate }}
-            </div>
-          </div>
 
           <i class="drag-icon fas fa-grip-vertical fa-fw" [class.invisible]="dragDisabled"></i>
           <ng-container *ngTemplateOutlet="startTemplate?.templateRef; context: groupModel"></ng-container>
