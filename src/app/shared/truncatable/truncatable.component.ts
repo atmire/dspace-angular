@@ -2,6 +2,7 @@ import {
   Component, Input
 } from '@angular/core';
 import { TruncatableService } from './truncatable.service';
+import { isLeftButton, hasModifierKey } from '../utils/click.utils';
 
 @Component({
   selector: 'ds-truncatable',
@@ -64,8 +65,11 @@ export class TruncatableComponent {
   /**
    * Expands the truncatable when it's collapsed, collapses it when it's expanded
    */
-  public toggle() {
-    this.service.toggle(this.id);
+  public toggle(event?) {
+    console.log(event);
+    if (!event || (isLeftButton(event) && !hasModifierKey(event))) {
+      this.service.toggle(this.id);
+    }
   }
 
 }
