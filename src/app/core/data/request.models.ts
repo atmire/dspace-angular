@@ -10,6 +10,7 @@ import { TaskResponseParsingService } from '../tasks/task-response-parsing.servi
 import { ContentSourceResponseParsingService } from './content-source-response-parsing.service';
 import { DspaceRestResponseParsingService } from './dspace-rest-response-parsing.service';
 import { environment } from '../../../environments/environment';
+import { Projection } from '../shared/projection.model';
 
 /* tslint:disable:max-classes-per-file */
 
@@ -136,6 +137,7 @@ export class FindListOptions {
   sort?: SortOptions;
   searchParams?: RequestParam[];
   startsWith?: string;
+  projections?: Projection[]
 }
 
 export class FindListRequest extends GetRequest {

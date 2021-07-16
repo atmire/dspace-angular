@@ -45,6 +45,7 @@ import { RestRequestMethod } from './rest-request-method';
 import { UpdateDataService } from './update-data.service';
 import { GenericConstructor } from '../shared/generic-constructor';
 import { NoContent } from '../shared/NoContent.model';
+import { Projection } from '../shared/projection.model';
 
 export abstract class DataService<T extends CacheableObject> implements UpdateDataService<T> {
   protected abstract requestService: RequestService;
@@ -149,6 +150,11 @@ export abstract class DataService<T extends CacheableObject> implements UpdateDa
       options.searchParams.forEach((param: RequestParam) => {
         args = this.addHrefArg(href, args, `${param.fieldName}=${param.fieldValue}`);
       });
+    }
+    if (hasValue(options.projections)) {
+      options.projections.forEach((projection: Projection) => {
+        args = this.addHrefArg(href, args, projection.toString());
+      })
     }
     args = this.addEmbedParams(href, args, ...linksToFollow);
     if (isNotEmpty(args)) {
