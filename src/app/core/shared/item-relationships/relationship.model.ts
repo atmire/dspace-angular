@@ -66,6 +66,18 @@ export class Relationship implements CacheableObject {
   rightwardValue: string;
 
   /**
+   * Whether the uuid (provided to the projection) is on the left side of the relationship.
+   */
+  @deserialize
+  relatedItemLeft?: boolean;
+
+  /**
+   * Whether the uuid (provided to the projection) is on the right side of the relationship.
+   */
+  @deserialize
+  relatedItemRight?: boolean;
+
+  /**
    * The {@link HALLink}s for this Relationship
    */
   @deserialize

@@ -82,6 +82,18 @@ export class RelationshipType implements CacheableObject {
   rightMinCardinality: number;
 
   /**
+   * Whether the entity type (provided to the projection) is on the left side of this relationship type.
+   */
+  @deserialize
+  relatedTypeLeft?: boolean;
+
+  /**
+   * Whether the entity type (provided to the projection) is on the right side of this relationship type.
+   */
+  @deserialize
+  relatedTypeRight?: boolean;
+
+  /**
    * The {@link HALLink}s for this RelationshipType
    */
   @deserialize

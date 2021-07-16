@@ -61,6 +61,12 @@ export class Item extends DSpaceObject implements ChildHALResource {
   isWithdrawn: boolean;
 
   /**
+   * A list of related Items
+   */
+  @deserialize
+  relatedItems?: string[];
+
+  /**
    * The {@link HALLink}s for this Item
    */
   @deserialize
