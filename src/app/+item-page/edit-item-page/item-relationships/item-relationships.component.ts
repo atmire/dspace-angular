@@ -32,6 +32,7 @@ import { FieldChangeType } from '../../../core/data/object-updates/object-update
 import { Relationship } from '../../../core/shared/item-relationships/relationship.model';
 import { NoContent } from '../../../core/shared/NoContent.model';
 import { hasValue } from '../../../shared/empty.util';
+import { Projection } from '../../../core/shared/projection.model';
 
 @Component({
   selector: 'ds-item-relationships',
@@ -87,7 +88,12 @@ export class ItemRelationshipsComponent extends AbstractItemUpdateComponent {
         switchMap((entityType) =>
           this.entityTypeService.getEntityTypeRelationships(
             entityType.id,
-            true,
+            {
+              projections: [
+                new Projection('CheckSideEntityInRelationshipType', 'checkSideEntityInRelationshipType', entityType.label),
+              ],
+            },
+            false,
             true,
             followLink('leftType'),
             followLink('rightType'))

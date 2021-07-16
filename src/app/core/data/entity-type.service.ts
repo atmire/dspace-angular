@@ -18,6 +18,7 @@ import { PaginatedList } from './paginated-list.model';
 import { ItemType } from '../shared/item-relationships/item-type.model';
 import { getRemoteDataPayload, getFirstSucceededRemoteData } from '../shared/operators';
 import { RelationshipTypeService } from './relationship-type.service';
+import { FindListOptions } from './request.models';
 
 /**
  * Service handling all ItemType requests
@@ -70,6 +71,7 @@ export class EntityTypeService extends DataService<ItemType> {
   /**
    * Get the allowed relationship types for an entity type
    * @param entityTypeId
+   * @param options                     Find list options object
    * @param useCachedVersionIfAvailable If this is true, the request will only be sent if there's
    *                                    no valid cached version. Defaults to true
    * @param reRequestOnStale            Whether or not the request should automatically be re-
@@ -77,9 +79,9 @@ export class EntityTypeService extends DataService<ItemType> {
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  getEntityTypeRelationships(entityTypeId: string, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<RelationshipType>[]): Observable<RemoteData<PaginatedList<RelationshipType>>> {
+  getEntityTypeRelationships(entityTypeId: string, options?: FindListOptions, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<RelationshipType>[]): Observable<RemoteData<PaginatedList<RelationshipType>>> {
     const href$ = this.getRelationshipTypesEndpoint(entityTypeId);
-    return this.relationshipTypeService.findAllByHref(href$, undefined, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+    return this.relationshipTypeService.findAllByHref(href$, options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
   }
 
   /**

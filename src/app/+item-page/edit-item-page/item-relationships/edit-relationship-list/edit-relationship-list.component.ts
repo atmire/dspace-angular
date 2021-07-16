@@ -49,6 +49,7 @@ import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { PaginationComponentOptions } from '../../../../shared/pagination/pagination-component-options.model';
 import { PaginationService } from '../../../../core/pagination/pagination.service';
+import { Projection } from '../../../../core/shared/projection.model';
 
 @Component({
   selector: 'ds-edit-relationship-list',
@@ -79,16 +80,6 @@ export class EditRelationshipListComponent implements OnInit, OnDestroy {
    */
   @Input() relationshipType: RelationshipType;
 
-  /**
-   * Observable that emits the left and right item type of {@link relationshipType} simultaneously.
-   */
-  private relationshipLeftAndRightType$: Observable<[ItemType, ItemType]>;
-
-  /**
-   * Observable that emits true if {@link itemType} is on the left-hand side of {@link relationshipType},
-   * false if it is on the right-hand side and undefined in the rare case that it is on neither side.
-   */
-  private currentItemIsLeftItem$: Observable<boolean>;
 
   private relatedEntityType$: Observable<ItemType>;
 
@@ -337,40 +328,22 @@ export class EditRelationshipListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // store the left and right type of the relationship in a single observable
-    this.relationshipLeftAndRightType$ = observableCombineLatest([
-      this.relationshipType.leftType,
-      this.relationshipType.rightType,
-    ].map((type) => type.pipe(
-      getFirstSucceededRemoteData(),
-      getRemoteDataPayload(),
-    ))) as Observable<[ItemType, ItemType]>;
-
-    this.relatedEntityType$ = this.relationshipLeftAndRightType$.pipe(
-      map((relatedTypes: ItemType[]) => relatedTypes.find((relatedType) => relatedType.uuid !== this.itemType.uuid)),
-      hasValueOperator()
-    );
+    this.relatedEntityType$ =
+      observableCombineLatest([
+        this.relationshipType.leftType,
+        this.relationshipType.rightType,
+      ].map((type) => type.pipe(
+        getFirstSucceededRemoteData(),
+        getRemoteDataPayload(),
+      ))).pipe(
+        map((relatedTypes: ItemType[]) => relatedTypes.find((relatedType) => relatedType.uuid !== this.itemType.uuid)),
+        hasValueOperator()
+      );
 
     this.relatedEntityType$.pipe(
       take(1)
     ).subscribe(
       (relatedEntityType) => this.listId = `edit-relationship-${this.itemType.id}-${relatedEntityType.id}`
-    );
-
-    this.currentItemIsLeftItem$ = this.relationshipLeftAndRightType$.pipe(
-      map(([leftType, rightType]: [ItemType, ItemType]) => {
-        if (leftType.id === this.itemType.id) {
-          return true;
-        }
-
-        if (rightType.id === this.itemType.id) {
-          return false;
-        }
-
-        // should never happen...
-        console.warn(`The item ${this.item.uuid} is not on the right or the left side of relationship type ${this.relationshipType.uuid}`);
-        return undefined;
-      })
     );
 
     // initialize the pagination options
@@ -388,18 +361,20 @@ export class EditRelationshipListComponent implements OnInit, OnDestroy {
     );
 
     this.subs.push(
-      observableCombineLatest([
-        currentPagination$,
-        this.currentItemIsLeftItem$,
-      ]).pipe(
-        switchMap(([currentPagination, currentItemIsLeftItem]: [PaginationComponentOptions, boolean]) =>
+      currentPagination$.pipe(
+        switchMap((currentPagination: PaginationComponentOptions) =>
           // get the relationships for the current item, relationshiptype and page
           this.relationshipService.getItemRelationshipsByLabel(
             this.item,
-            currentItemIsLeftItem ? this.relationshipType.leftwardType : this.relationshipType.rightwardType,
+            this.relationshipType.relatedTypeLeft
+              ? this.relationshipType.leftwardType
+              : this.relationshipType.rightwardType,
             {
               elementsPerPage: currentPagination.pageSize,
               currentPage: currentPagination.currentPage,
+              projections: [  // make sure to include relationship.relatedItem(Left/Right) projection
+                new Projection('CheckSideItemInRelationship', 'checkSideItemInRelationship', this.item.uuid),
+              ],
             },
             false,
             true,
@@ -422,33 +397,17 @@ export class EditRelationshipListComponent implements OnInit, OnDestroy {
     this.subs.push(this.relationshipsRd$.pipe(
       hasValueOperator(),
       getAllSucceededRemoteData(),
-      switchMap((rd: RemoteData<PaginatedList<Relationship>>) =>
-        // emit each relationship in the page separately
-        observableFrom(rd.payload.page).pipe(
-          mergeMap((relationship: Relationship) =>
-            // check for each relationship whether it's the left item
-            this.relationshipService.isLeftItem(relationship, this.item).pipe(
-              // emit an array containing both the relationship and whether it's the left item,
-              // as we'll need both
-              map((isLeftItem: boolean) => [relationship, isLeftItem])
-            )
-          ),
-          map(([relationship, isLeftItem]: [Relationship, boolean]) => {
-            // turn it into a RelationshipIdentifiable, an
-            const nameVariant =
-              isLeftItem ? relationship.rightwardValue : relationship.leftwardValue;
+      switchMap((rd: RemoteData<PaginatedList<Relationship>>) => {
+        return observableOf(
+          rd.payload.page.map((relationship: Relationship) => {
             return {
               uuid: relationship.id,
               type: this.relationshipType,
               relationship,
-              nameVariant,
+              nameVariant: relationship.relatedItemLeft ? relationship.rightwardValue : relationship.leftwardValue,
             } as RelationshipIdentifiable;
-          }),
-          // wait until all relationships have been processed, and emit them all as a single array
-          toArray(),
-          // if the pipe above completes without emitting anything, emit an empty array instead
-          defaultIfEmpty([])
-      )),
+        }));
+      }),
       switchMap((nextFields: RelationshipIdentifiable[]) => {
         // Get a list that contains the unsaved changes for the page, as well as the page of
         // RelationshipIdentifiables, as a single list of FieldUpdates

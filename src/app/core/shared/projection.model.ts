@@ -21,8 +21,9 @@ export class Projection {
     let out = `projection=${encodeURIComponent(this.name)}`;
 
     if (isNotEmpty(this.param)) {
-      out += this.param.map(p => encodeURIComponent(p))
-                       .join('=');
+      const params = this.param.map(p => encodeURIComponent(p))
+                         .join('=');
+      out += '&' + params;
     }
 
     return out;
