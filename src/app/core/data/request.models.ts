@@ -137,7 +137,7 @@ export class FindListOptions {
   sort?: SortOptions;
   searchParams?: RequestParam[];
   startsWith?: string;
-  projections?: Projection[]
+  projections?: Projection[];
 }
 
 export class FindListRequest extends GetRequest {

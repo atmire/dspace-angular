@@ -22,13 +22,13 @@ export class Projection {
   public static CheckSideItemInRelationShip(item: Item): Projection {
     return new Projection(
       'CheckSideItemInRelationship', 'checkSideItemInRelationship', item.uuid
-    )
+    );
   }
 
   public static CheckSideEntityInRelationshipType(itemType: ItemType): Projection {
     return new Projection(
       'CheckSideEntityInRelationshipType', 'checkSideEntityInRelationshipType', itemType.label
-    )
+    );
   }
 
   public toString(): string {

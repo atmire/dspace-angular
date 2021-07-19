@@ -154,7 +154,7 @@ export abstract class DataService<T extends CacheableObject> implements UpdateDa
     if (hasValue(options.projections)) {
       options.projections.forEach((projection: Projection) => {
         args = this.addHrefArg(href, args, projection.toString());
-      })
+      });
     }
     args = this.addEmbedParams(href, args, ...linksToFollow);
     if (isNotEmpty(args)) {
