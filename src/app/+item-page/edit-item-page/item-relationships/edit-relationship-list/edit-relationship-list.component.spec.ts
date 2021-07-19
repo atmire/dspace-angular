@@ -235,6 +235,7 @@ describe('EditRelationshipListComponent', () => {
           uuid: '1',
           leftType: createSuccessfulRemoteDataObject$(entityType), // publication
           rightType: createSuccessfulRemoteDataObject$(relatedEntityType), // author
+          relatedTypeLeft: true,
           leftwardType: 'isAuthorOfPublication',
           rightwardType: 'isPublicationOfAuthor',
         });
