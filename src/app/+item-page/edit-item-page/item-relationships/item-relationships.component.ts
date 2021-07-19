@@ -90,7 +90,7 @@ export class ItemRelationshipsComponent extends AbstractItemUpdateComponent {
             entityType.id,
             {
               projections: [
-                new Projection('CheckSideEntityInRelationshipType', 'checkSideEntityInRelationshipType', entityType.label),
+                Projection.CheckSideEntityInRelationshipType(entityType),
               ],
             },
             false,

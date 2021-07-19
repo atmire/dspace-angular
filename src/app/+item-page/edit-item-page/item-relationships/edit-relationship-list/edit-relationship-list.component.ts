@@ -373,7 +373,7 @@ export class EditRelationshipListComponent implements OnInit, OnDestroy {
               elementsPerPage: currentPagination.pageSize,
               currentPage: currentPagination.currentPage,
               projections: [  // make sure to include relationship.relatedItem(Left/Right) projection
-                new Projection('CheckSideItemInRelationship', 'checkSideItemInRelationship', this.item.uuid),
+                Projection.CheckSideItemInRelationShip(this.item),
               ],
             },
             false,
