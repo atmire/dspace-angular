@@ -25,6 +25,7 @@ import { ExternalSourceService } from '../../../../../core/data/external-source.
 import { Router } from '@angular/router';
 import { RemoteDataBuildService } from '../../../../../core/cache/builders/remote-data-build.service';
 import { getAllSucceededRemoteDataPayload } from '../../../../../core/shared/operators';
+import { RelationshipType } from '../../../../../core/shared/item-relationships/relationship-type.model';
 
 @Component({
   selector: 'ds-dynamic-lookup-relation-modal',
@@ -63,6 +64,8 @@ export class DsDynamicLookupRelationModalComponent implements OnInit, OnDestroy 
    * The item we're adding relationships to
    */
   item;
+
+  relationshipType: RelationshipType;
 
   /**
    * The collection we're submitting an item to

@@ -200,6 +200,8 @@ export class EditRelationshipListComponent implements OnInit, OnDestroy {
     modalComp.repeatable = true;
     modalComp.listId = this.listId;
     modalComp.item = this.item;
+    modalComp.relationshipType = this.relationshipType;
+
     this.item.owningCollection.pipe(
       getFirstSucceededRemoteDataPayload()
     ).subscribe((collection: Collection) => {

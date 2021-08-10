@@ -43,9 +43,10 @@
         <ngb-tab [title]="'submission.sections.describe.relationship-lookup.selection-tab.tab-title' | translate : {count: (selection$ | async)?.length}">
             <ng-template ngbTabContent>
                 <ds-dynamic-lookup-relation-selection-tab
-                        [selection$]="selection$"
                         [listId]="listId"
-                        [relationshipType]="relationshipOptions.relationshipType"
+                        [item]="item"
+                        [relationship]="relationshipOptions.relationshipType"
+                        [relationshipType]="relationshipType"
                         [repeatable]="repeatable"
                         [context]="context"
                         (selectObject)="select($event)"
