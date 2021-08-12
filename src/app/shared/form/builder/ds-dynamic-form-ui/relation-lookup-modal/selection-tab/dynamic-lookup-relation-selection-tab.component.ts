@@ -17,13 +17,15 @@ import { RelationshipService } from '../../../../../../core/data/relationship.se
 import { Projection } from '../../../../../../core/shared/projection.model';
 import { followLink } from '../../../../../utils/follow-link-config.model';
 import { Relationship } from '../../../../../../core/shared/item-relationships/relationship.model';
-import { PageInfo } from '../../../../../../core/shared/page-info.model';
 import { getAllSucceededRemoteData, getFirstCompletedRemoteData } from '../../../../../../core/shared/operators';
 import { RelationshipType } from '../../../../../../core/shared/item-relationships/relationship-type.model';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { hasValue } from '../../../../../empty.util';
 import { RelationshipOptions } from '../../../models/relationship-options.model';
+import { SelectableListService } from '../../../../../object-list/selectable-list/selectable-list.service';
+import { SearchResult } from '../../../../../search/search-result.model';
+import { ItemSearchResult } from '../../../../../object-collection/shared/item-search-result.model';
 
 @Component({
   selector: 'ds-dynamic-lookup-relation-selection-tab',
@@ -105,6 +107,7 @@ export class DsDynamicLookupRelationSelectionTabComponent implements OnDestroy {
               private searchConfigService: SearchConfigurationService,
               private paginationService: PaginationService,
               private relationshipService: RelationshipService,
+              private selectableListService: SelectableListService,
   ) {
   }
 
@@ -149,16 +152,18 @@ export class DsDynamicLookupRelationSelectionTabComponent implements OnDestroy {
               } else {
                 return relationship.leftItem.pipe(getFirstCompletedRemoteData());
               }
-
             }),
             toArray(),
             map((rds: RemoteData<Item>[]) => {
-              const items = buildPaginatedList(new PageInfo(), rds.map(itemRd => itemRd.payload));
-
-              // reuse pagination info from original PaginatedList
-              items.pageInfo = paginatedListRd.payload.pageInfo;
-
-              return createSuccessfulRemoteDataObject(items);
+              return createSuccessfulRemoteDataObject(
+                buildPaginatedList(
+                  paginatedListRd.payload.pageInfo,  // reuse pagination from PaginatedList<Relationship>
+                  rds.map(itemRd => Object.assign(
+                    new ItemSearchResult(),          // wrap in search results so (de)select methods don't break
+                    { indexableObject: itemRd.payload, hitHighlights: {} }
+                  ))
+                )
+              );
             })
           )
         ),
