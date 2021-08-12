@@ -1,3 +1,8 @@
 .position-absolute {
     right: var(--bs-spacer);
 }
+
+div.input-group-append {
+  // prevent excessive overlap between prepend/append; Bootstrap doesn't expect them to be right next to eachother
+  margin-left: 0;
+}
