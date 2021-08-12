@@ -65,6 +65,9 @@ export class DsDynamicLookupRelationModalComponent implements OnInit, OnDestroy 
    */
   item;
 
+  /**
+   * The relationship type to show in this modal
+   */
   relationshipType: RelationshipType;
 
   /**
