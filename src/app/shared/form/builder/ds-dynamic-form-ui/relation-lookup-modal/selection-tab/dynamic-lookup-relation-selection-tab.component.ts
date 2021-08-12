@@ -1,27 +1,35 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SEARCH_CONFIG_SERVICE } from '../../../../../../+my-dspace-page/my-dspace-page.component';
 import { SearchConfigurationService } from '../../../../../../core/shared/search/search-configuration.service';
-import { combineLatest, Observable } from 'rxjs';
+import { combineLatest, Observable, from as observableFrom } from 'rxjs';
 import { ListableObject } from '../../../../../object-collection/shared/listable-object.model';
 import { RemoteData } from '../../../../../../core/data/remote-data';
-import { map, switchMap, take, tap } from 'rxjs/operators';
+import { map, switchMap, take, tap, distinctUntilChanged, toArray, mergeMap } from 'rxjs/operators';
 import { PaginationComponentOptions } from '../../../../../pagination/pagination-component-options.model';
-import { buildPaginatedList, PaginatedList } from '../../../../../../core/data/paginated-list.model';
+import {
+  buildPaginatedList,
+  PaginatedList
+} from '../../../../../../core/data/paginated-list.model';
 import { Router } from '@angular/router';
 import { PaginatedSearchOptions } from '../../../../../search/paginated-search-options.model';
 import { Context } from '../../../../../../core/shared/context.model';
-import { createSuccessfulRemoteDataObject, createSuccessfulRemoteDataObject$ } from '../../../../../remote-data.utils';
+import {
+  createSuccessfulRemoteDataObject,
+  createSuccessfulRemoteDataObject$
+} from '../../../../../remote-data.utils';
 import { PaginationService } from '../../../../../../core/pagination/pagination.service';
 import { Item } from '../../../../../../core/shared/item.model';
 import { RelationshipService } from '../../../../../../core/data/relationship.service';
 import { Projection } from '../../../../../../core/shared/projection.model';
 import { followLink } from '../../../../../utils/follow-link-config.model';
 import { Relationship } from '../../../../../../core/shared/item-relationships/relationship.model';
-import { createPaginatedList } from '../../../../../testing/utils.test';
 import { PageInfo } from '../../../../../../core/shared/page-info.model';
-import { getAllSucceededRemoteData } from '../../../../../../core/shared/operators';
-import { RelationshipOptions } from '../../../models/relationship-options.model';
+import {
+  getAllSucceededRemoteData,
+  getFirstCompletedRemoteData
+} from '../../../../../../core/shared/operators';
 import { RelationshipType } from '../../../../../../core/shared/item-relationships/relationship-type.model';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 
 @Component({
   selector: 'ds-dynamic-lookup-relation-selection-tab',
@@ -64,7 +72,7 @@ export class DsDynamicLookupRelationSelectionTabComponent {
   /**
    * The paginated list of selected items
    */
-  @Input() selectionRD$: Observable<RemoteData<PaginatedList<ListableObject>>>;
+  @Input() selectionRD$: BehaviorSubject<RemoteData<PaginatedList<ListableObject>>> = new BehaviorSubject(undefined);
 
   /**
    * The context to display lists
@@ -106,8 +114,9 @@ export class DsDynamicLookupRelationSelectionTabComponent {
    */
   ngOnInit() {
     this.resetRoute();
-    this.selectionRD$ = this.searchConfigService.paginatedSearchOptions.pipe(
+    this.searchConfigService.paginatedSearchOptions.pipe(
       map((options: PaginatedSearchOptions) => options.pagination),
+      distinctUntilChanged((a: PaginationComponentOptions, b: PaginationComponentOptions) => a.pageSize === b.pageSize && a.currentPage === b.currentPage),
       switchMap((pagination: PaginationComponentOptions) => {
         return this.relationshipService.getItemRelationshipsByLabel(
           this.item,
@@ -121,34 +130,38 @@ export class DsDynamicLookupRelationSelectionTabComponent {
               Projection.CheckSideItemInRelationShip(this.item),
             ],
           },
-          false,
+          true,
           true,
           followLink('leftItem'),
           followLink('rightItem'),
         );
       }),
       getAllSucceededRemoteData(),
-      switchMap((rd: RemoteData<PaginatedList<Relationship>>) => {
-        return combineLatest(rd.payload.page.map(
-          (relationship: Relationship) =>
+      switchMap((paginatedListRd: RemoteData<PaginatedList<Relationship>>) =>
+        observableFrom(paginatedListRd.payload.page).pipe(
+          mergeMap((relationship: Relationship) => {
             // return the other Item in the relationship
-            relationship.relatedItemLeft ? relationship.rightItem : relationship.leftItem
-        )).pipe(
-          switchMap((rds: RemoteData<Item>[]) => {
-            const items = createPaginatedList(rds.map(rd => rd.payload));
+            if (relationship.relatedItemLeft) {
+              return relationship.rightItem.pipe(getFirstCompletedRemoteData());
+            } else {
+              return relationship.leftItem.pipe(getFirstCompletedRemoteData());
+            }
+
+          }),
+          toArray(),
+          map((rds: RemoteData<Item>[]) => {
+            const items = buildPaginatedList(new PageInfo(), rds.map(itemRd => itemRd.payload));
 
             // reuse pagination info from original PaginatedList
-            items.pageInfo = rd.payload.pageInfo;
+            items.pageInfo = paginatedListRd.payload.pageInfo;
 
-            return createSuccessfulRemoteDataObject$(items);
-          }),
-          tap((rd) => {
-            console.log('selectionRD$ emits');
-            console.log(rd);
+            return createSuccessfulRemoteDataObject(items);
           })
         )
-      }),
-    );
+      ),
+    ).subscribe((v) => {  //TODO @yura track and destroy this subscribe
+      this.selectionRD$.next(v);
+    });
     this.currentPagination$ = this.paginationService.getCurrentPagination(
       this.searchConfigService.paginationID, this.initialPagination
     );
