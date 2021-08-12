@@ -101,7 +101,7 @@ describe('DsDynamicLookupRelationSearchTabComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(DsDynamicLookupRelationSearchTabComponent);
     component = fixture.componentInstance;
-    component.relationship = relationship;
+    component.relationshipOptions = relationship;
     component.selection$ = selection$;
     component.listId = listID;
     fixture.detectChanges();

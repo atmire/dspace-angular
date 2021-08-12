@@ -12,14 +12,18 @@ import { ListableObject } from '../../../../../object-collection/shared/listable
 import { SearchService } from '../../../../../../core/shared/search/search.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SelectableListService } from '../../../../../object-list/selectable-list/selectable-list.service';
-import { hasValue } from '../../../../../empty.util';
+import { hasValue, isNotUndefined } from '../../../../../empty.util';
 import { map, startWith, switchMap, take, tap } from 'rxjs/operators';
-import { getFirstSucceededRemoteData } from '../../../../../../core/shared/operators';
+import { getAllCompletedRemoteData, getFirstSucceededRemoteData } from '../../../../../../core/shared/operators';
 import { RouteService } from '../../../../../../core/services/route.service';
 import { CollectionElementLinkType } from '../../../../../object-collection/collection-element-link.type';
 import { Context } from '../../../../../../core/shared/context.model';
 import { LookupRelationService } from '../../../../../../core/data/lookup-relation.service';
 import { PaginationService } from '../../../../../../core/pagination/pagination.service';
+import { RelationshipType } from '../../../../../../core/shared/item-relationships/relationship-type.model';
+import { Subscription } from 'rxjs/internal/Subscription';
+import { PaginatedSearchOptions } from '../../../../../search/paginated-search-options.model';
+import { Projection } from '../../../../../../core/shared/projection.model';
 
 @Component({
   selector: 'ds-dynamic-lookup-relation-search-tab',
@@ -38,9 +42,19 @@ import { PaginationService } from '../../../../../../core/pagination/pagination.
  */
 export class DsDynamicLookupRelationSearchTabComponent implements OnInit, OnDestroy {
   /**
-   * Options for searching related items
+   * The item we're adding relationships to
    */
-  @Input() relationship: RelationshipOptions;
+  @Input() item: Item;
+
+  /**
+   * The relationship type to show in this tab
+   */
+  @Input() relationshipOptions: RelationshipOptions;
+
+  /**
+   * The relationship type to show in this tab
+   */
+  @Input() relationshipType: RelationshipType;
 
   /**
    * The ID of the list to add/remove selected items to/from
@@ -52,11 +66,6 @@ export class DsDynamicLookupRelationSearchTabComponent implements OnInit, OnDest
    * Is the selection repeatable?
    */
   @Input() repeatable: boolean;
-
-  /**
-   * The list of selected items
-   */
-  @Input() selection$: Observable<ListableObject[]>;
 
   /**
    * The context to display lists
@@ -94,11 +103,6 @@ export class DsDynamicLookupRelationSearchTabComponent implements OnInit, OnDest
   selectAllLoading: boolean;
 
   /**
-   * Subscription to unsubscribe from
-   */
-  subscription;
-
-  /**
    * The initial pagination to use
    */
   initialPagination = {
@@ -110,6 +114,8 @@ export class DsDynamicLookupRelationSearchTabComponent implements OnInit, OnDest
    * The type of links to display
    */
   linkTypes = CollectionElementLinkType;
+
+  private subs: Subscription[] = [];
 
   constructor(
     private searchService: SearchService,
@@ -128,10 +134,33 @@ export class DsDynamicLookupRelationSearchTabComponent implements OnInit, OnDest
    */
   ngOnInit(): void {
     this.resetRoute();
-    this.routeService.setParameter('fixedFilterQuery', this.relationship.filter);
-    this.routeService.setParameter('configuration', this.relationship.searchConfiguration);
+    this.routeService.setParameter('fixedFilterQuery', this.relationshipOptions.filter);
+    this.routeService.setParameter('configuration', this.relationshipOptions.searchConfiguration);
     this.resultsRD$ = this.searchConfigService.paginatedSearchOptions.pipe(
-      switchMap((options) => this.lookupRelationService.getLocalResults(this.relationship, options).pipe(startWith(undefined)))
+      map((pso: PaginatedSearchOptions) => {
+        if (isNotUndefined(this.item)) {
+          return Object.assign(
+            pso, {
+            projections: [
+              Projection.CheckRelatedItem(this.item),
+            ]
+          });
+        }
+        return pso;
+      }),
+      switchMap((options) =>
+        this.lookupRelationService.getLocalResults(this.relationshipOptions, options).pipe(startWith(undefined))
+      ),
+      getAllCompletedRemoteData(),
+    );
+    this.subs.push(
+      this.resultsRD$.subscribe((resultsRD: RemoteData<PaginatedList<SearchResult<Item>>>) => {
+        const selectedResults = resultsRD.payload.page.filter(
+          (sri: SearchResult<Item>) => sri.indexableObject.relatedItems?.includes(this.item.uuid)
+        );
+
+        this.selectableListService.select(this.listId, selectedResults);
+      })
     );
   }
 
@@ -147,10 +176,12 @@ export class DsDynamicLookupRelationSearchTabComponent implements OnInit, OnDest
    * @param page The page to select
    */
   selectPage(page: SearchResult<Item>[]) {
-    this.selection$
-      .pipe(take(1))
+    this.resultsRD$
+      .pipe(take(1), map(sriRD => sriRD?.payload?.page))
       .subscribe((selection: SearchResult<Item>[]) => {
-        const filteredPage = page.filter((pageItem) => selection.findIndex((selected) => selected.equals(pageItem)) < 0);
+        const filteredPage = page.filter(
+          (pageItem) => selection.findIndex((selected) => selected.equals(pageItem)) < 0
+        );
         this.selectObject.emit(...filteredPage);
       });
     this.selectableListService.select(this.listId, page);
@@ -162,12 +193,14 @@ export class DsDynamicLookupRelationSearchTabComponent implements OnInit, OnDest
    */
   deselectPage(page: SearchResult<Item>[]) {
     this.allSelected = false;
-    this.selection$
-      .pipe(take(1))
-      .subscribe((selection: SearchResult<Item>[]) => {
-        const filteredPage = page.filter((pageItem) => selection.findIndex((selected) => selected.equals(pageItem)) >= 0);
-        this.deselectObject.emit(...filteredPage);
-      });
+    this.resultsRD$
+        .pipe(take(1), map(sriRD => sriRD?.payload?.page))
+        .subscribe((selection: SearchResult<Item>[]) => {
+          const filteredPage = page.filter(
+            (pageItem) => selection.findIndex((selected) => selected.equals(pageItem)) >= 0
+          );
+          this.deselectObject.emit(...filteredPage);
+        });
     this.selectableListService.deselect(this.listId, page);
   }
 
@@ -188,10 +221,12 @@ export class DsDynamicLookupRelationSearchTabComponent implements OnInit, OnDest
       map((resultsRD) => resultsRD.payload.page),
       tap(() => this.selectAllLoading = false),
     ).subscribe((results) => {
-        this.selection$
-          .pipe(take(1))
+      this.resultsRD$
+          .pipe(take(1), map(sriRD => sriRD?.payload?.page))
           .subscribe((selection: SearchResult<Item>[]) => {
-            const filteredResults = results.filter((pageItem) => selection.findIndex((selected) => selected.equals(pageItem)) < 0);
+            const filteredResults = results.filter(
+              (pageItem) => selection.findIndex((selected) => selected.equals(pageItem)) < 0
+            );
             this.selectObject.emit(...filteredResults);
           });
         this.selectableListService.select(this.listId, results);
@@ -204,15 +239,14 @@ export class DsDynamicLookupRelationSearchTabComponent implements OnInit, OnDest
    */
   deselectAll() {
     this.allSelected = false;
-    this.selection$
-      .pipe(take(1))
-      .subscribe((selection: SearchResult<Item>[]) => this.deselectObject.emit(...selection));
+    this.resultsRD$
+        .pipe(take(1), map(sriRD => sriRD?.payload?.page))
+        .subscribe((selection: SearchResult<Item>[]) => this.deselectObject.emit(...selection));
     this.selectableListService.deselectAll(this.listId);
   }
 
   ngOnDestroy(): void {
-    if (hasValue(this.subscription)) {
-      this.subscription.unsubscribe();
-    }
+    this.subs.filter((sub) => hasValue(sub))
+             .forEach((sub) => sub.unsubscribe());
   }
 }
