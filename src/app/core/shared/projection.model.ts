@@ -31,6 +31,10 @@ export class Projection {
     );
   }
 
+  public static CheckRelatedItem(item: Item): Projection {
+    return new Projection('CheckRelatedItem', 'checkRelatedItem', item.uuid);
+  }
+
   public toString(): string {
     let out = `projection=${encodeURIComponent(this.name)}`;
 
