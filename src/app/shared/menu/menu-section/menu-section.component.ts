@@ -65,6 +65,7 @@ export class MenuSectionComponent implements OnInit, OnDestroy {
   toggleSection(event: Event) {
     event.preventDefault();
     this.menuService.toggleActiveSection(this.menuID, this.section.id);
+    event.stopPropagation();
   }
 
   /**

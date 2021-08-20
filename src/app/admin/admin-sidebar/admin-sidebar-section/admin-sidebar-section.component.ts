@@ -43,9 +43,10 @@ export class AdminSidebarSectionComponent extends MenuSectionComponent implement
   }
 
   navigate(event: any): void {
-    event.stopPropagation();
+    event.preventDefault();
     if (this.hasLink) {
       this.router.navigate(this.itemModel.link);
     }
+    event.stopPropagation();
   }
 }

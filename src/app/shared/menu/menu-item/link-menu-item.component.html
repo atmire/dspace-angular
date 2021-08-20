@@ -2,7 +2,8 @@
    [ngClass]="{ 'disabled': !hasLink }"
    [attr.aria-disabled]="!hasLink"
    [title]="item.text"
-   [routerLink]="getRouterLink()"
+   (click)="navigate($event)"
    (keyup.space)="navigate($event)"
+   (keyup.enter)="navigate($event)"
    href="javascript:void(0);"
 >{{item.text | translate}}</a>
