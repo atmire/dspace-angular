@@ -59,6 +59,21 @@
                 "bundleName": "custom-theme"
               },
               {
+                "input": "src/themes/theme-c/styles/theme.scss",
+                "inject": false,
+                "bundleName": "theme-c-theme"
+              },
+              {
+                "input": "src/themes/theme-b/styles/theme.scss",
+                "inject": false,
+                "bundleName": "theme-b-theme"
+              },
+              {
+                "input": "src/themes/theme-a/styles/theme.scss",
+                "inject": false,
+                "bundleName": "theme-a-theme"
+              },
+              {
                 "input": "src/themes/dspace/styles/theme.scss",
                 "inject": false,
                 "bundleName": "dspace-theme"

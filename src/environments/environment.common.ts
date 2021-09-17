@@ -272,7 +272,15 @@ export const environment: GlobalConfig = {
     //   // This theme will use the default bootstrap styling for DSpace components
     //   name: BASE_THEME_NAME
     // },
-
+    {
+      name: 'theme-c', extends: 'theme-b'
+    },
+    {
+      name: 'theme-b', extends: 'theme-a'
+    },
+    {
+      name: 'theme-a'
+    },
     {
       // The default dspace theme
       name: 'dspace'
