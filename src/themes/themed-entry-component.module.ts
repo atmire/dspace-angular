@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { ENTRY_COMPONENTS as CUSTOM } from './custom/entry-components';
+import { ENTRY_COMPONENTS as THEME_B } from './theme-b/entry-components';
 
 const ENTRY_COMPONENTS = [
   ...CUSTOM,
+  ...THEME_B,
 ];
 
 

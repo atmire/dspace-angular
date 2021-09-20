@@ -40,6 +40,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SubmissionModule } from '../../app/submission/submission.module';
 import { MyDSpacePageModule } from '../../app/my-dspace-page/my-dspace-page.module';
 import { HomeNewsComponent } from './app/home-page/home-news/home-news.component';
+import { JournalComponent } from './app/entity-groups/journal-entities/item-pages/journal/journal.component';
 
 @NgModule({
   imports: [
@@ -87,6 +88,7 @@ import { HomeNewsComponent } from './app/home-page/home-news/home-news.component
   ],
   declarations: [
     HomeNewsComponent,
+    JournalComponent,
   ],
 })
   /**
