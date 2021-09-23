@@ -14,7 +14,7 @@ export class HomePageComponent implements OnInit {
   site$: Observable<Site>;
 
   constructor(
-    private route: ActivatedRoute,
+    protected route: ActivatedRoute,
   ) {
   }
 

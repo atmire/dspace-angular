@@ -1,2 +1,8 @@
 <p class="text-warning">HomePageComponent ~ theme-a</p>
 <ds-themed-home-news></ds-themed-home-news>
+<br>
+<br>
+<h2>
+  <a *ngIf="communityRoute$ | async" [routerLink]="communityRoute$ | async">Go to community page</a>
+  <ds-loading *ngIf="!(communityRoute$ | async)" [showMessage]="false"></ds-loading>
+</h2>
