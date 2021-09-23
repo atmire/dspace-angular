@@ -251,13 +251,13 @@ export const environment: GlobalConfig = {
     //   name: 'custom',
     //   handle: '10673/1233'
     // },
-    // {
-    //   // A theme with a regex property will match the route using a regular expression. If it
-    //   // matches the route for a community or collection it will also apply to all collections
-    //   // and/or items within it
-    //   name: 'custom',
-    //   regex: 'collections\/e8043bc2.*'
-    // },
+    {
+      // A theme with a regex property will match the route using a regular expression. If it
+      // matches the route for a community or collection it will also apply to all collections
+      // and/or items within it
+      name: 'custom',
+      regex: 'communities\/.*'
+    },
     // {
     //   // A theme with a uuid property will match the community, collection or item with the given
     //   // ID, and all collections and/or items within it

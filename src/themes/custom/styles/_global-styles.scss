@@ -2,3 +2,7 @@
 
 // imports the base global style
 @import '../../../styles/_global-styles.scss';
+
+body, header {
+  background-color: red !important;
+}
