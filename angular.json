@@ -192,16 +192,13 @@
               }
             },
             "outputPath": "dist/server",
-            "main": "src/main.server.ts",
+            "main": "server.ts",
             "tsConfig": "tsconfig.server.json"
           },
           "configurations": {
             "production": {
               "sourceMap": false,
-              "optimization": {
-                "scripts": false,
-                "styles": true
-              }
+              "optimization": true
             }
           }
         },
@@ -253,5 +250,8 @@
       }
     }
   },
-  "defaultProject": "dspace-angular"
+  "defaultProject": "dspace-angular",
+  "cli": {
+    "analytics": false
+  }
 }

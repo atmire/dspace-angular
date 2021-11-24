@@ -159,24 +159,16 @@ export const environment: GlobalConfig = {
     label: 'English',
     active: true,
   }, {
-    code: 'de',
-    label: 'Deutsch',
-    active: true,
-  }, {
     code: 'cs',
     label: 'Čeština',
     active: true,
   }, {
-    code: 'nl',
-    label: 'Nederlands',
+    code: 'de',
+    label: 'Deutsch',
     active: true,
-  },{
-    code: 'pt-BR',
-    label: 'Português do Brasil',
-    active: true,
-  },{
-    code: 'pt-PT',
-    label: 'Português',
+  }, {
+    code: 'es',
+    label: 'Español',
     active: true,
   }, {
     code: 'fr',
@@ -186,13 +178,25 @@ export const environment: GlobalConfig = {
     code: 'lv',
     label: 'Latviešu',
     active: true,
+  }, {
+    code: 'hu',
+    label: 'Magyar',
+    active: true,
+  }, {
+    code: 'nl',
+    label: 'Nederlands',
+    active: true,
+  }, {
+    code: 'pt-PT',
+    label: 'Português',
+    active: true,
+  },{
+    code: 'pt-BR',
+    label: 'Português do Brasil',
+    active: true,
   },{
     code: 'fi',
     label: 'Suomi',
-    active: true,
-  },{
-    code: 'hu',
-    label: 'magyar',
     active: true,
   }],
   // Browse-By Pages
@@ -265,6 +269,19 @@ export const environment: GlobalConfig = {
     //   uuid: '0958c910-2037-42a9-81c7-dca80e3892b4'
     // },
     // {
+    //   // The extends property specifies an ancestor theme (by name). Whenever a themed component is not found
+    //   // in the current theme, its ancestor theme(s) will be checked recursively before falling back to default.
+    //   name: 'custom-A',
+    //   extends: 'custom-B',
+    //   // Any of the matching properties above can be used
+    //   handle: '10673/34',
+    // },
+    // {
+    //   name: 'custom-B',
+    //   extends: 'custom',
+    //   handle: '10673/12',
+    // },
+    // {
     //   // A theme with only a name will match every route
     //   name: 'custom'
     // },
@@ -283,7 +300,39 @@ export const environment: GlobalConfig = {
     },
     {
       // The default dspace theme
-      name: 'dspace'
+      name: 'dspace',
+      headTags: [
+        {
+          tagName: 'link',
+          attributes: {
+            'rel': 'icon',
+            'href': 'assets/dspace/images/favicons/favicon.ico',
+            'sizes': 'any',
+          }
+        },
+        {
+          tagName: 'link',
+          attributes: {
+            'rel': 'icon',
+            'href': 'assets/dspace/images/favicons/favicon.svg',
+            'type': 'image/svg+xml',
+          }
+        },
+        {
+          tagName: 'link',
+          attributes: {
+            'rel': 'apple-touch-icon',
+            'href': 'assets/dspace/images/favicons/apple-touch-icon.png',
+          }
+        },
+        {
+          tagName: 'link',
+          attributes: {
+            'rel': 'manifest',
+            'href': 'assets/dspace/images/favicons/manifest.webmanifest',
+          }
+        },
+      ]
     },
   ],
   // Whether to enable media viewer for image and/or video Bitstreams (i.e. Bitstreams whose MIME type starts with "image" or "video").
