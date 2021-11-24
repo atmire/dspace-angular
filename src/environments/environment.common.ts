@@ -255,13 +255,13 @@ export const environment: GlobalConfig = {
     //   name: 'custom',
     //   handle: '10673/1233'
     // },
-    {
-      // A theme with a regex property will match the route using a regular expression. If it
-      // matches the route for a community or collection it will also apply to all collections
-      // and/or items within it
-      name: 'custom',
-      regex: 'communities\/.*'
-    },
+    // {
+    //   // A theme with a regex property will match the route using a regular expression. If it
+    //   // matches the route for a community or collection it will also apply to all collections
+    //   // and/or items within it
+    //   name: 'custom',
+    //   regex: 'communities\/.*'
+    // },
     // {
     //   // A theme with a uuid property will match the community, collection or item with the given
     //   // ID, and all collections and/or items within it
@@ -290,23 +290,19 @@ export const environment: GlobalConfig = {
     //   name: BASE_THEME_NAME
     // },
     {
-      name: 'theme-c', extends: 'theme-b'
+      name: 'theme-c', extends: 'theme-b',
+      regex: 'communities\/.*',
+      // NOTE: favicon should come from 'theme-b'
     },
     {
-      name: 'theme-b', extends: 'theme-a'
-    },
-    {
-      name: 'theme-a'
-    },
-    {
-      // The default dspace theme
-      name: 'dspace',
+      name: 'theme-b', extends: 'theme-a',
+      regex: 'collections\/.*',
       headTags: [
         {
           tagName: 'link',
           attributes: {
             'rel': 'icon',
-            'href': 'assets/dspace/images/favicons/favicon.ico',
+            'href': 'assets/theme-b/images/favicons/favicon.ico',
             'sizes': 'any',
           }
         },
@@ -314,25 +310,124 @@ export const environment: GlobalConfig = {
           tagName: 'link',
           attributes: {
             'rel': 'icon',
-            'href': 'assets/dspace/images/favicons/favicon.svg',
-            'type': 'image/svg+xml',
+            'type': 'image/png',
+            'href': 'assets/theme-b/images/favicons/favicon-32x32.png',
+            'sizes': '32x32',
+          }
+        },
+        {
+          tagName: 'link',
+          attributes: {
+            'rel': 'icon',
+            'type': 'image/png',
+            'href': 'assets/theme-b/images/favicons/favicon-16x16.png',
+            'sizes': '16x16',
           }
         },
         {
           tagName: 'link',
           attributes: {
             'rel': 'apple-touch-icon',
-            'href': 'assets/dspace/images/favicons/apple-touch-icon.png',
+            'href': 'assets/theme-b/images/favicons/apple-touch-icon.png',
           }
         },
         {
           tagName: 'link',
           attributes: {
             'rel': 'manifest',
-            'href': 'assets/dspace/images/favicons/manifest.webmanifest',
+            'href': 'assets/theme-b/images/favicons/site.webmanifest',
           }
         },
       ]
+    },
+    {
+      name: 'theme-a',
+      regex: 'search',
+      headTags: [
+        {
+          tagName: 'link',
+          attributes: {
+            'rel': 'icon',
+            'href': 'assets/theme-a/images/favicons/favicon.ico',
+            'sizes': 'any',
+          }
+        },
+        {
+          tagName: 'link',
+          attributes: {
+            'rel': 'icon',
+            'type': 'image/png',
+            'href': 'assets/theme-a/images/favicons/favicon-32x32.png',
+            'sizes': '32x32',
+          }
+        },
+        {
+          tagName: 'link',
+          attributes: {
+            'rel': 'icon',
+            'type': 'image/png',
+            'href': 'assets/theme-a/images/favicons/favicon-16x16.png',
+            'sizes': '16x16',
+          }
+        },
+        {
+          tagName: 'link',
+          attributes: {
+            'rel': 'apple-touch-icon',
+            'href': 'assets/theme-a/images/favicons/apple-touch-icon.png',
+          }
+        },
+        {
+          tagName: 'link',
+          attributes: {
+            'rel': 'manifest',
+            'href': 'assets/theme-a/images/favicons/site.webmanifest',
+          }
+        },
+      ]
+    },
+    {
+      name: 'custom',
+      regex: 'browse\/.*'
+      // NOTE: favicon should come from 'dspace' theme (or src/assets/images/favicon.ico)
+    },
+
+    {
+      // The default dspace theme
+      name: 'dspace',
+      // NOTE: if put in comments, favicon should come from src/assets/images/favicon.ico
+      // headTags: [
+      //   {
+      //     tagName: 'link',
+      //     attributes: {
+      //       'rel': 'icon',
+      //       'href': 'assets/dspace/images/favicons/favicon.ico',
+      //       'sizes': 'any',
+      //     }
+      //   },
+      //   {
+      //     tagName: 'link',
+      //     attributes: {
+      //       'rel': 'icon',
+      //       'href': 'assets/dspace/images/favicons/favicon.svg',
+      //       'type': 'image/svg+xml',
+      //     }
+      //   },
+      //   {
+      //     tagName: 'link',
+      //     attributes: {
+      //       'rel': 'apple-touch-icon',
+      //       'href': 'assets/dspace/images/favicons/apple-touch-icon.png',
+      //     }
+      //   },
+      //   {
+      //     tagName: 'link',
+      //     attributes: {
+      //       'rel': 'manifest',
+      //       'href': 'assets/dspace/images/favicons/manifest.webmanifest',
+      //     }
+      //   },
+      // ]
     },
   ],
   // Whether to enable media viewer for image and/or video Bitstreams (i.e. Bitstreams whose MIME type starts with "image" or "video").
