@@ -6,7 +6,7 @@ import {
 import { ViewMode } from '../../../../../../../app/core/shared/view-mode.model';
 import { ItemComponent } from '../../../../../../../app/item-page/simple/item-types/shared/item.component';
 
-@listableObjectComponent('Journal', ViewMode.StandalonePage, DEFAULT_CONTEXT, 'theme-c')
+@listableObjectComponent('Journal', ViewMode.StandalonePage, DEFAULT_CONTEXT, 'theme-b')
 @Component({
   selector: 'ds-journal',
   styleUrls: ['./journal.component.scss'],
