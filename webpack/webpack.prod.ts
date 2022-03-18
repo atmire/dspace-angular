@@ -17,4 +17,7 @@ module.exports = Object.assign({}, commonExports, {
   recordsOutputPath: projectRoot('webpack.records.json'),
   entry: projectRoot('./server.ts'),
   target: 'node',
+  optimization: {
+    minimize: false,  // todo: disable minification in order to catch SSR title tag issue
+  }
 });
