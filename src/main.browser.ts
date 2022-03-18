@@ -45,7 +45,7 @@ const main = () => {
 };
 
 // support async tag or hmr
-if (hasValue(environment.universal) && environment.universal.preboot === false) {
+if (document.readyState === 'complete' && hasValue(environment.universal) && environment.universal.preboot === false) {
   main();
 } else {
   document.addEventListener('DOMContentLoaded', main);
