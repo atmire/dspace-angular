@@ -144,7 +144,7 @@ jobs:
       # This step also prints entire HTML of homepage for easier debugging if grep fails.
       - name: Verify SSR (server-side rendering)
         run: |
-          result=$(wget -O- -q http://localhost:4000/home)
+          result=$(wget --server-response -O- -q http://localhost:4000/home)
           echo "$result"
           echo "$result" | grep -oE "<meta name=\"title\" [^>]*>" | grep DSpace
 
