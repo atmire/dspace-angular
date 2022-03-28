@@ -112,6 +112,11 @@ export class ListableObjectComponentLoaderComponent implements OnInit, OnChanges
   protected subs: Subscription[] = [];
 
   /**
+   * The subscription to listable object updates
+   */
+  private subReloadedObject: Subscription;
+
+  /**
    * The reference to the dynamic component
    */
   protected compRef: ComponentRef<Component>;
@@ -180,10 +185,13 @@ export class ListableObjectComponentLoaderComponent implements OnInit, OnChanges
     this.connectInputsAndOutputs();
 
     if ((this.compRef.instance as any).reloadedObject) {
-      (this.compRef.instance as any).reloadedObject.pipe(take(1)).subscribe((reloadedObject: DSpaceObject) => {
+      this.subReloadedObject = (this.compRef.instance as any).reloadedObject.pipe(
+        take(1)
+      ).subscribe((reloadedObject: DSpaceObject) => {
         if (reloadedObject) {
           this.compRef.destroy();
           this.object = reloadedObject;
+          this.subReloadedObject.unsubscribe();
           this.instantiateComponent(reloadedObject);
           this.contentChange.emit(reloadedObject);
         }
