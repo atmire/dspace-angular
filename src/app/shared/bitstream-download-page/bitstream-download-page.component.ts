@@ -46,7 +46,8 @@ export class BitstreamDownloadPageComponent implements OnInit {
   ngOnInit(): void {
 
     this.bitstreamRD$ = this.route.data.pipe(
-      map((data) => data.bitstream));
+      map((data) => data.bitstream)
+    );
 
     this.bitstream$ = this.bitstreamRD$.pipe(
       redirectOn4xx(this.router, this.auth),
@@ -68,7 +69,8 @@ export class BitstreamDownloadPageComponent implements OnInit {
             take(1),
             map((fileLink) => {
               return [isAuthorized, isLoggedIn, bitstream, fileLink];
-            }));
+            })
+          );
         } else {
           return [[isAuthorized, isLoggedIn, bitstream, '']];
         }

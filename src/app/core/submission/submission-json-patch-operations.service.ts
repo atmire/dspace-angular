@@ -22,7 +22,8 @@ export class SubmissionJsonPatchOperationsService extends JsonPatchOperationsSer
     protected requestService: RequestService,
     protected store: Store<CoreState>,
     protected rdbService: RemoteDataBuildService,
-    protected halService: HALEndpointService) {
+    protected halService: HALEndpointService
+  ) {
 
     super();
   }

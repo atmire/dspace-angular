@@ -111,7 +111,7 @@ describe('SearchFormComponent', () => {
   //
   //   expect(comp.updateSearch).toHaveBeenCalledWith({ scope: scope, query: query });
   // }));
-   });
+});
 
 export const objects: DSpaceObject[] = [
   Object.assign(new Community(), {
@@ -238,6 +238,5 @@ export const objects: DSpaceObject[] = [
           }
         ],
       }
-    }
-  )
+    })
 ];

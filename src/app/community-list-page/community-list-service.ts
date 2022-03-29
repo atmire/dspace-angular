@@ -112,8 +112,11 @@ export const MAX_COMCOLS_PER_PAGE = 20;
 @Injectable()
 export class CommunityListService {
 
-  constructor(private communityDataService: CommunityDataService, private collectionDataService: CollectionDataService,
-              private store: Store<any>) {
+  constructor(
+    private communityDataService: CommunityDataService,
+    private collectionDataService: CollectionDataService,
+    private store: Store<any>
+  ) {
   }
 
   private configOnePage: FindListOptions = Object.assign(new FindListOptions(), {
@@ -167,15 +170,15 @@ export class CommunityListService {
    */
   private getTopCommunities(options: FindListOptions): Observable<PaginatedList<Community>> {
     return this.communityDataService.findTop({
-        currentPage: options.currentPage,
-        elementsPerPage: MAX_COMCOLS_PER_PAGE,
-        sort: {
-          field: options.sort.field,
-          direction: options.sort.direction
-        }
-      },
-      followLink('subcommunities', { findListOptions: this.configOnePage }),
-      followLink('collections', { findListOptions: this.configOnePage }))
+      currentPage: options.currentPage,
+      elementsPerPage: MAX_COMCOLS_PER_PAGE,
+      sort: {
+        field: options.sort.field,
+        direction: options.sort.direction
+      }
+    },
+    followLink('subcommunities', { findListOptions: this.configOnePage }),
+    followLink('collections', { findListOptions: this.configOnePage }))
       .pipe(
         getFirstSucceededRemoteData(),
         map((results) => results.payload),
@@ -190,9 +193,9 @@ export class CommunityListService {
    * @param expandedNodes                 List of expanded nodes; if a node is not expanded its subcommunities and collections need not be added to the list
    */
   public transformListOfCommunities(listOfPaginatedCommunities: PaginatedList<Community>,
-                                    level: number,
-                                    parent: FlatNode,
-                                    expandedNodes: FlatNode[]): Observable<FlatNode[]> {
+    level: number,
+    parent: FlatNode,
+    expandedNodes: FlatNode[]): Observable<FlatNode[]> {
     if (isNotEmpty(listOfPaginatedCommunities.page)) {
       let currentPage = listOfPaginatedCommunities.currentPage;
       if (isNotEmpty(parent)) {
@@ -239,11 +242,11 @@ export class CommunityListService {
       let subcoms = [];
       for (let i = 1; i <= currentCommunityPage; i++) {
         const nextSetOfSubcommunitiesPage = this.communityDataService.findByParent(community.uuid, {
-            elementsPerPage: MAX_COMCOLS_PER_PAGE,
-            currentPage: i
-          },
-          followLink('subcommunities', { findListOptions: this.configOnePage }),
-          followLink('collections', { findListOptions: this.configOnePage }))
+          elementsPerPage: MAX_COMCOLS_PER_PAGE,
+          currentPage: i
+        },
+        followLink('subcommunities', { findListOptions: this.configOnePage }),
+        followLink('collections', { findListOptions: this.configOnePage }))
           .pipe(
             getFirstCompletedRemoteData(),
             switchMap((rd: RemoteData<PaginatedList<Community>>) => {

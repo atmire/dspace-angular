@@ -214,7 +214,8 @@ describe('SubmissionSectionUploadFileComponent test suite', () => {
         'workspaceitems',
         submissionId,
         pathCombiner.rootElement,
-        pathCombiner.subRootElement);
+        pathCombiner.subRootElement
+      );
     });
 
     it('should open edit modal when edit button is clicked', () => {

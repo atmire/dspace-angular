@@ -50,8 +50,10 @@ export class TopLevelCommunityListComponent implements OnInit, OnDestroy {
    */
   currentPageSubscription: Subscription;
 
-  constructor(private cds: CommunityDataService,
-              private paginationService: PaginationService) {
+  constructor(
+    private cds: CommunityDataService,
+    private paginationService: PaginationService
+  ) {
     this.config = new PaginationComponentOptions();
     this.config.id = this.pageId;
     this.config.pageSize = 5;

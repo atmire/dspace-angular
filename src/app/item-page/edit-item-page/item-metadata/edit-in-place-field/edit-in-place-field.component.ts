@@ -131,8 +131,8 @@ export class EditInPlaceFieldComponent implements OnInit, OnChanges {
         getFirstSucceededRemoteData(),
         metadataFieldsToString(),
       ).subscribe((fieldNames: string[]) => {
-          this.setInputSuggestions(fieldNames);
-        });
+        this.setInputSuggestions(fieldNames);
+      });
     } else {
       this.metadataFieldSuggestions.next([]);
     }

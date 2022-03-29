@@ -30,12 +30,13 @@ export class NavbarComponent extends MenuComponent {
    */
   menuID = MenuID.PUBLIC;
 
-  constructor(protected menuService: MenuService,
+  constructor(
+    protected menuService: MenuService,
     protected injector: Injector,
-              public windowService: HostWindowService,
-              public browseService: BrowseService,
-              public authorizationService: AuthorizationDataService,
-              public route: ActivatedRoute
+    public windowService: HostWindowService,
+    public browseService: BrowseService,
+    public authorizationService: AuthorizationDataService,
+    public route: ActivatedRoute
   ) {
     super(menuService, injector, authorizationService, route);
   }

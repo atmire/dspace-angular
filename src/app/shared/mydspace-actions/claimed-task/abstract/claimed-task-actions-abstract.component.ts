@@ -43,12 +43,14 @@ export abstract class ClaimedTaskActionsAbstractComponent extends MyDSpaceReload
 
   subs = [];
 
-  protected constructor(protected injector: Injector,
-                        protected router: Router,
-                        protected notificationsService: NotificationsService,
-                        protected translate: TranslateService,
-                        protected searchService: SearchService,
-                        protected requestService: RequestService) {
+  protected constructor(
+    protected injector: Injector,
+    protected router: Router,
+    protected notificationsService: NotificationsService,
+    protected translate: TranslateService,
+    protected searchService: SearchService,
+    protected requestService: RequestService
+  ) {
     super(CLAIMED_TASK, injector, router, notificationsService, translate, searchService, requestService);
   }
 
@@ -90,8 +92,8 @@ export abstract class ClaimedTaskActionsAbstractComponent extends MyDSpaceReload
     }
     this.subs.push(this.object.workflowitem.pipe(
       getFirstSucceededRemoteDataPayload(),
-      switchMap((workflowItem: WorkflowItem) => workflowItem.item.pipe(getFirstSucceededRemoteDataPayload())
-      ))
+      switchMap((workflowItem: WorkflowItem) => workflowItem.item.pipe(getFirstSucceededRemoteDataPayload()))
+    )
       .subscribe((item: Item) => {
         this.itemUuid = item.uuid;
       }));

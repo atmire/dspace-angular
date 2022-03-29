@@ -72,8 +72,7 @@ import { StatisticsAdministratorGuard } from '../core/data/feature-authorization
         component: ThemedCommunityStatisticsPageComponent,
         canActivate: [StatisticsAdministratorGuard]
       },
-    ]
-    )
+    ])
   ],
   providers: [
     I18nBreadcrumbResolver,

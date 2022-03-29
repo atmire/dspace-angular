@@ -23,7 +23,8 @@ export class ServerCheckGuard implements CanActivateChild {
    */
   canActivateChild(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean> {
+    state: RouterStateSnapshot
+  ): Observable<boolean> {
 
     return this.rootDataService.checkServerAvailability().pipe(
       take(1),

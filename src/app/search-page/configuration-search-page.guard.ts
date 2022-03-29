@@ -11,7 +11,8 @@ import { Observable } from 'rxjs';
 export class ConfigurationSearchPageGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+    state: RouterStateSnapshot
+  ): Observable<boolean> | Promise<boolean> | boolean {
     const configuration = route.params.configuration;
 
     const newTitle = configuration + '.search.title';

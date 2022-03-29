@@ -53,8 +53,7 @@ export class ThemeService {
     this.hasDynamicTheme = environment.themes.some((themeConfig: any) =>
       hasValue(themeConfig.regex) ||
       hasValue(themeConfig.handle) ||
-      hasValue(themeConfig.uuid)
-    );
+      hasValue(themeConfig.uuid));
   }
 
   setTheme(newName: string) {
@@ -67,8 +66,7 @@ export class ThemeService {
       select(currentThemeSelector),
       take(1)
     ).subscribe((name: string) =>
-      currentTheme = name
-    );
+      currentTheme = name);
     return currentTheme;
   }
 

@@ -21,11 +21,13 @@ export class ItemPublicComponent extends AbstractSimpleItemActionComponent {
   protected messageKey = 'public';
   protected predicate = (rd: RemoteData<Item>) => rd.payload.isDiscoverable;
 
-  constructor(protected route: ActivatedRoute,
-              protected router: Router,
-              protected notificationsService: NotificationsService,
-              protected itemDataService: ItemDataService,
-              protected translateService: TranslateService) {
+  constructor(
+    protected route: ActivatedRoute,
+    protected router: Router,
+    protected notificationsService: NotificationsService,
+    protected itemDataService: ItemDataService,
+    protected translateService: TranslateService
+  ) {
     super(route, router, notificationsService, itemDataService, translateService);
   }
 

@@ -54,8 +54,7 @@ export const relationsToItems = (thisId: string) =>
       mergeMap((rels: Relationship[]) =>
         observableZip(
           ...rels.map((rel: Relationship) => observableCombineLatest(rel.leftItem, rel.rightItem))
-        )
-      ),
+        )),
       map((arr) =>
         arr
           .filter(([leftItem, rightItem]) => leftItem.hasSucceeded && rightItem.hasSucceeded)
@@ -66,8 +65,7 @@ export const relationsToItems = (thisId: string) =>
               return leftItem.payload;
             }
           })
-          .filter((item: Item) => hasValue(item))
-      ),
+          .filter((item: Item) => hasValue(item))),
       distinctUntilChanged(compareArraysUsingIds()),
     );
 
@@ -86,9 +84,8 @@ export const paginatedRelationsToItems = (thisId: string) =>
           relationshipsRD.payload.page.map((rel: Relationship) =>
             observableCombineLatest([
               rel.leftItem.pipe(getFirstSucceededRemoteDataPayload()),
-              rel.rightItem.pipe(getFirstSucceededRemoteDataPayload())]
-            )
-          )).pipe(
+              rel.rightItem.pipe(getFirstSucceededRemoteDataPayload())]))
+        ).pipe(
           map((arr) =>
             arr
               .map(([leftItem, rightItem]) => {
@@ -98,12 +95,10 @@ export const paginatedRelationsToItems = (thisId: string) =>
                   return leftItem;
                 }
               })
-              .filter((item: Item) => hasValue(item))
-          ),
+              .filter((item: Item) => hasValue(item))),
           distinctUntilChanged(compareArraysUsingIds()),
           map((relatedItems: Item[]) =>
-            Object.assign(relationshipsRD, { payload: Object.assign(relationshipsRD.payload, { page: relatedItems } )})
-          )
+            Object.assign(relationshipsRD, { payload: Object.assign(relationshipsRD.payload, { page: relatedItems } )}))
         );
       })
     );

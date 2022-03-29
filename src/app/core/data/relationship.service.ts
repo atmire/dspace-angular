@@ -77,17 +77,19 @@ export class RelationshipService extends DataService<Relationship> {
   protected linkPath = 'relationships';
   protected responseMsToLive = 15 * 60 * 1000;
 
-  constructor(protected itemService: ItemDataService,
-              protected requestService: RequestService,
-              protected rdbService: RemoteDataBuildService,
-              protected store: Store<CoreState>,
-              protected halService: HALEndpointService,
-              protected objectCache: ObjectCacheService,
-              protected notificationsService: NotificationsService,
-              protected http: HttpClient,
-              protected comparator: DefaultChangeAnalyzer<Relationship>,
-              protected appStore: Store<AppState>,
-              @Inject(PAGINATED_RELATIONS_TO_ITEMS_OPERATOR) private paginatedRelationsToItems: (thisId: string) => (source: Observable<RemoteData<PaginatedList<Relationship>>>) => Observable<RemoteData<PaginatedList<Item>>>) {
+  constructor(
+    protected itemService: ItemDataService,
+    protected requestService: RequestService,
+    protected rdbService: RemoteDataBuildService,
+    protected store: Store<CoreState>,
+    protected halService: HALEndpointService,
+    protected objectCache: ObjectCacheService,
+    protected notificationsService: NotificationsService,
+    protected http: HttpClient,
+    protected comparator: DefaultChangeAnalyzer<Relationship>,
+    protected appStore: Store<AppState>,
+    @Inject(PAGINATED_RELATIONS_TO_ITEMS_OPERATOR) private paginatedRelationsToItems: (thisId: string) => (source: Observable<RemoteData<PaginatedList<Relationship>>>) => Observable<RemoteData<PaginatedList<Item>>>
+  ) {
     super();
   }
 
@@ -111,8 +113,7 @@ export class RelationshipService extends DataService<Relationship> {
       take(1),
       distinctUntilChanged(),
       map((endpointURL: string) =>
-        new DeleteRequest(this.requestService.generateRequestId(), endpointURL + '?copyVirtualMetadata=' + copyVirtualMetadata)
-      ),
+        new DeleteRequest(this.requestService.generateRequestId(), endpointURL + '?copyVirtualMetadata=' + copyVirtualMetadata)),
       sendRequest(this.requestService),
       switchMap((restRequest: RestRequest) => this.rdbService.buildFromRequestUUID(restRequest.uuid)),
       getFirstCompletedRemoteData(),
@@ -159,8 +160,7 @@ export class RelationshipService extends DataService<Relationship> {
       switchMap((rel: Relationship) => observableCombineLatest(
         rel.leftItem.pipe(getFirstSucceededRemoteData(), getRemoteDataPayload()),
         rel.rightItem.pipe(getFirstSucceededRemoteData(), getRemoteDataPayload())
-        )
-      ),
+      )),
       take(1)
     ).subscribe(([item1, item2]) => {
       this.refreshRelationshipItemsInCache(item1);
@@ -227,8 +227,8 @@ export class RelationshipService extends DataService<Relationship> {
             return relationshipType.rightwardType;
           }
         })
-        )
-      ));
+      ))
+    );
   }
 
   /**
@@ -333,21 +333,21 @@ export class RelationshipService extends DataService<Relationship> {
       followLink('leftItem'),
       followLink('rightItem')
     ).pipe(
-        getFirstSucceededRemoteData(),
+      getFirstSucceededRemoteData(),
         // the mergemap below will emit all elements of the list as separate events
-        mergeMap((relationshipListRD: RemoteData<PaginatedList<Relationship>>) => relationshipListRD.payload.page),
-        mergeMap((relationship: Relationship) => {
-          return observableCombineLatest([
-            this.itemService.findByHref(relationship._links.leftItem.href).pipe(compareItemsByUUID(item2)),
-            this.itemService.findByHref(relationship._links.rightItem.href).pipe(compareItemsByUUID(item2))
-          ]).pipe(
-            map(([isLeftItem, isRightItem]) => isLeftItem || isRightItem),
-            map((isMatch) => isMatch ? relationship : undefined)
-          );
-        }),
-        filter((relationship) => hasValue(relationship)),
-        take(1)
-      );
+      mergeMap((relationshipListRD: RemoteData<PaginatedList<Relationship>>) => relationshipListRD.payload.page),
+      mergeMap((relationship: Relationship) => {
+        return observableCombineLatest([
+          this.itemService.findByHref(relationship._links.leftItem.href).pipe(compareItemsByUUID(item2)),
+          this.itemService.findByHref(relationship._links.rightItem.href).pipe(compareItemsByUUID(item2))
+        ]).pipe(
+          map(([isLeftItem, isRightItem]) => isLeftItem || isRightItem),
+          map((isMatch) => isMatch ? relationship : undefined)
+        );
+      }),
+      filter((relationship) => hasValue(relationship)),
+      take(1)
+    );
   }
 
   /**
@@ -405,8 +405,7 @@ export class RelationshipService extends DataService<Relationship> {
             map((type) => {
               return { relation, type };
             })
-          )
-        ),
+          )),
         switchMap((relationshipAndType: { relation: Relationship, type: RelationshipType }) => {
           const { relation, type } = relationshipAndType;
           let updatedRelationship;
@@ -481,31 +480,31 @@ export class RelationshipService extends DataService<Relationship> {
   searchByItemsAndType(typeId: string,itemUuid: string,relationshipLabel: string, arrayOfItemIds: string[] ): Observable<RemoteData<PaginatedList<Relationship>>> {
 
     const searchParams = [
-          {
-            fieldName: 'typeId',
-            fieldValue: typeId
-          },
-          {
-            fieldName: 'focusItem',
-            fieldValue: itemUuid
-          },
-          {
-            fieldName: 'relationshipLabel',
-            fieldValue: relationshipLabel
-          },
-          {
-            fieldName: 'size',
-            fieldValue: arrayOfItemIds.length
-          },
-          {
-            fieldName: 'embed',
-            fieldValue: 'leftItem'
-          },
-          {
-            fieldName: 'embed',
-            fieldValue: 'rightItem'
-          },
-        ];
+      {
+        fieldName: 'typeId',
+        fieldValue: typeId
+      },
+      {
+        fieldName: 'focusItem',
+        fieldValue: itemUuid
+      },
+      {
+        fieldName: 'relationshipLabel',
+        fieldValue: relationshipLabel
+      },
+      {
+        fieldName: 'size',
+        fieldValue: arrayOfItemIds.length
+      },
+      {
+        fieldName: 'embed',
+        fieldValue: 'leftItem'
+      },
+      {
+        fieldName: 'embed',
+        fieldValue: 'rightItem'
+      },
+    ];
 
     arrayOfItemIds.forEach( (itemId) => {
       searchParams.push(
@@ -520,7 +519,8 @@ export class RelationshipService extends DataService<Relationship> {
       'byItemsAndType',
       {
         searchParams: searchParams
-      }) as Observable<RemoteData<PaginatedList<Relationship>>>;
+      }
+    ) as Observable<RemoteData<PaginatedList<Relationship>>>;
 
   }
 }

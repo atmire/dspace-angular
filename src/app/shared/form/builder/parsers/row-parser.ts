@@ -27,11 +27,11 @@ export class RowParser {
   }
 
   public parse(submissionId: string,
-               rowData,
-               scopeUUID,
-               initFormValues: any,
-               submissionScope,
-               readOnly: boolean): DynamicRowGroupModel {
+    rowData,
+    scopeUUID,
+    initFormValues: any,
+    submissionScope,
+    readOnly: boolean): DynamicRowGroupModel {
     let fieldModel: any = null;
     let parsedResult = null;
     const config: DynamicFormGroupModelConfig = {

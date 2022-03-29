@@ -23,17 +23,17 @@ import { ExportMetadataSelectorComponent } from './export-metadata-selector.comp
 
 // No way to add entryComponents yet to testbed; alternative implemented; source: https://stackoverflow.com/questions/41689468/how-to-shallow-test-a-component-with-an-entrycomponents
 @NgModule({
-    imports: [NgbModalModule,
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useClass: TranslateLoaderMock
-            }
-        }),
-    ],
-    exports: [],
-    declarations: [ConfirmationModalComponent],
-    providers: []
+  imports: [NgbModalModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useClass: TranslateLoaderMock
+      }
+    }),
+  ],
+  exports: [],
+  declarations: [ConfirmationModalComponent],
+  providers: []
 })
 class ModelTestModule {
 }
@@ -93,8 +93,7 @@ describe('ExportMetadataSelectorComponent', () => {
     scriptService = jasmine.createSpyObj('scriptService',
       {
         invoke: createSuccessfulRemoteDataObject$({ processId: '45' })
-      }
-    );
+      });
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot(), RouterTestingModule.withRoutes([]), ModelTestModule],
       declarations: [ExportMetadataSelectorComponent],

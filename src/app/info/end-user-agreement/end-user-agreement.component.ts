@@ -26,13 +26,15 @@ export class EndUserAgreementComponent implements OnInit {
    */
   accepted = false;
 
-  constructor(protected endUserAgreementService: EndUserAgreementService,
-              protected notificationsService: NotificationsService,
-              protected translate: TranslateService,
-              protected authService: AuthService,
-              protected store: Store<AppState>,
-              protected router: Router,
-              protected route: ActivatedRoute) {
+  constructor(
+    protected endUserAgreementService: EndUserAgreementService,
+    protected notificationsService: NotificationsService,
+    protected translate: TranslateService,
+    protected authService: AuthService,
+    protected store: Store<AppState>,
+    protected router: Router,
+    protected route: ActivatedRoute
+  ) {
   }
 
   /**

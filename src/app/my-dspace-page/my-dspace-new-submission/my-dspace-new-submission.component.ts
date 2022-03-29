@@ -57,12 +57,14 @@ export class MyDSpaceNewSubmissionComponent implements OnDestroy, OnInit {
    * @param {TranslateService} translate
    * @param {NgbModal} modalService
    */
-  constructor(private authService: AuthService,
-              private changeDetectorRef: ChangeDetectorRef,
-              private halService: HALEndpointService,
-              private notificationsService: NotificationsService,
-              private translate: TranslateService,
-              private modalService: NgbModal) {
+  constructor(
+    private authService: AuthService,
+    private changeDetectorRef: ChangeDetectorRef,
+    private halService: HALEndpointService,
+    private notificationsService: NotificationsService,
+    private translate: TranslateService,
+    private modalService: NgbModal
+  ) {
   }
 
   /**
@@ -71,11 +73,10 @@ export class MyDSpaceNewSubmissionComponent implements OnDestroy, OnInit {
   ngOnInit() {
     this.uploadFilesOptions.autoUpload = false;
     this.sub = this.halService.getEndpoint('workspaceitems').pipe(first()).subscribe((url) => {
-        this.uploadFilesOptions.url = url;
-        this.uploadFilesOptions.authToken = this.authService.buildAuthHeader();
-        this.changeDetectorRef.detectChanges();
-      }
-    );
+      this.uploadFilesOptions.url = url;
+      this.uploadFilesOptions.authToken = this.authService.buildAuthHeader();
+      this.changeDetectorRef.detectChanges();
+    });
   }
 
   /**
@@ -96,7 +97,8 @@ export class MyDSpaceNewSubmissionComponent implements OnDestroy, OnInit {
           link,
           'mydspace.general.text-here',
           'mydspace.upload.upload-successful',
-          'here');
+          'here'
+        );
       } else if (workspaceitems.length > 1) {
         this.notificationsService.success(null, this.translate.get('mydspace.upload.upload-multiple-successful', {qty: workspaceitems.length}));
       }

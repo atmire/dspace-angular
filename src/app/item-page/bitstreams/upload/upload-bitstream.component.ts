@@ -86,14 +86,16 @@ export class UploadBitstreamComponent implements OnInit, OnDestroy {
    */
   subs: Subscription[] = [];
 
-  constructor(protected route: ActivatedRoute,
-              protected router: Router,
-              protected itemService: ItemDataService,
-              protected bundleService: BundleDataService,
-              protected authService: AuthService,
-              protected notificationsService: NotificationsService,
-              protected translate: TranslateService,
-              protected requestService: RequestService) {
+  constructor(
+    protected route: ActivatedRoute,
+    protected router: Router,
+    protected itemService: ItemDataService,
+    protected bundleService: BundleDataService,
+    protected authService: AuthService,
+    protected notificationsService: NotificationsService,
+    protected translate: TranslateService,
+    protected requestService: RequestService
+  ) {
   }
 
   /**

@@ -15,8 +15,10 @@ import { AuthorizationDataService } from '../../../core/data/feature-authorizati
  */
 export class CollectionSelectComponent extends ObjectSelectComponent<Collection> {
 
-  constructor(protected objectSelectService: ObjectSelectService,
-              protected authorizationService: AuthorizationDataService) {
+  constructor(
+    protected objectSelectService: ObjectSelectService,
+    protected authorizationService: AuthorizationDataService
+  ) {
     super(objectSelectService, authorizationService);
   }
 

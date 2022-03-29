@@ -33,15 +33,16 @@ export class PersonSearchResultListSubmissionElementComponent extends SearchResu
   selectedName: string;
   alternativeField = 'dc.title.alternative';
 
-  constructor(protected truncatableService: TruncatableService,
-              private relationshipService: RelationshipService,
-              private notificationsService: NotificationsService,
-              private translateService: TranslateService,
-              private modalService: NgbModal,
-              private itemDataService: ItemDataService,
-              private bitstreamDataService: BitstreamDataService,
-              private selectableListService: SelectableListService,
-              protected dsoNameService: DSONameService
+  constructor(
+    protected truncatableService: TruncatableService,
+    private relationshipService: RelationshipService,
+    private notificationsService: NotificationsService,
+    private translateService: TranslateService,
+    private modalService: NgbModal,
+    private itemDataService: ItemDataService,
+    private bitstreamDataService: BitstreamDataService,
+    private selectableListService: SelectableListService,
+    protected dsoNameService: DSONameService
   ) {
     super(truncatableService, dsoNameService);
   }
@@ -56,8 +57,7 @@ export class PersonSearchResultListSubmissionElementComponent extends SearchResu
       .pipe(take(1))
       .subscribe((nameVariant: string) => {
         this.selectedName = nameVariant || defaultValue;
-        }
-      );
+      });
   }
 
   select(value) {
@@ -76,25 +76,25 @@ export class PersonSearchResultListSubmissionElementComponent extends SearchResu
       this.openModal(value)
         .then(() => {
           // user clicked ok: store the name variant in the item
-            const newName: MetadataValue = new MetadataValue();
-            newName.value = value;
+          const newName: MetadataValue = new MetadataValue();
+          newName.value = value;
 
-            const existingNames: MetadataValue[] = this.dso.metadata[this.alternativeField] || [];
-            const alternativeNames = { [this.alternativeField]: [...existingNames, newName] };
-            const updatedItem =
+          const existingNames: MetadataValue[] = this.dso.metadata[this.alternativeField] || [];
+          const alternativeNames = { [this.alternativeField]: [...existingNames, newName] };
+          const updatedItem =
               Object.assign({}, this.dso, {
                 metadata: {
                   ...this.dso.metadata,
                   ...alternativeNames
                 },
               });
-            this.itemDataService.update(updatedItem).pipe(take(1)).subscribe();
-            this.itemDataService.commitUpdates();
-      }).catch(() => {
+          this.itemDataService.update(updatedItem).pipe(take(1)).subscribe();
+          this.itemDataService.commitUpdates();
+        }).catch(() => {
         // user clicked cancel: use the name variant only for this relation, no further action required
-      }).finally(() => {
-        this.select(value);
-      });
+        }).finally(() => {
+          this.select(value);
+        });
     }
   }
 

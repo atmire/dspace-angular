@@ -26,11 +26,13 @@ export class SearchSettingsComponent {
    */
   @Input() sortOptionsList: SortOptions[];
 
-  constructor(private service: SearchService,
-              private route: ActivatedRoute,
-              private router: Router,
-              private paginationService: PaginationService,
-              @Inject(SEARCH_CONFIG_SERVICE) public searchConfigurationService: SearchConfigurationService) {
+  constructor(
+    private service: SearchService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private paginationService: PaginationService,
+    @Inject(SEARCH_CONFIG_SERVICE) public searchConfigurationService: SearchConfigurationService
+  ) {
   }
 
   /**

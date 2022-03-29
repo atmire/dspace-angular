@@ -81,9 +81,11 @@ export class SearchConfigurationService implements OnDestroy {
    * @param {PaginationService} paginationService
    * @param {ActivatedRoute} route
    */
-  constructor(protected routeService: RouteService,
-              protected paginationService: PaginationService,
-              protected route: ActivatedRoute) {
+  constructor(
+    protected routeService: RouteService,
+    protected paginationService: PaginationService,
+    protected route: ActivatedRoute
+  ) {
 
     this.initDefaults();
   }
@@ -141,7 +143,8 @@ export class SearchConfigurationService implements OnDestroy {
   getCurrentDSOType(): Observable<DSpaceObjectType> {
     return this.routeService.getQueryParameterValue('dsoType').pipe(
       filter((type) => isNotEmpty(type) && hasValue(DSpaceObjectType[type.toUpperCase()])),
-      map((type) => DSpaceObjectType[type.toUpperCase()]),);
+      map((type) => DSpaceObjectType[type.toUpperCase()]),
+    );
   }
 
   /**
@@ -254,8 +257,7 @@ export class SearchConfigurationService implements OnDestroy {
     this.subs
       .forEach((subs: Subscription[]) => subs
         .filter((sub) => hasValue(sub))
-        .forEach((sub) => sub.unsubscribe())
-      );
+        .forEach((sub) => sub.unsubscribe()));
 
     this.subs = new Map<string, Subscription[]>(null);
   }

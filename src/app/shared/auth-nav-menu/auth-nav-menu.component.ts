@@ -40,9 +40,10 @@ export class AuthNavMenuComponent implements OnInit {
 
   public sub: Subscription;
 
-  constructor(private store: Store<AppState>,
-              private windowService: HostWindowService,
-              private authService: AuthService
+  constructor(
+    private store: Store<AppState>,
+    private windowService: HostWindowService,
+    private authService: AuthService
   ) {
     this.isXsOrSm$ = this.windowService.isXsOrSm();
   }
@@ -60,8 +61,7 @@ export class AuthNavMenuComponent implements OnInit {
       select(routerStateSelector),
       filter((router: RouterReducerState) => isNotUndefined(router) && isNotUndefined(router.state)),
       map((router: RouterReducerState) => (!router.state.url.startsWith(LOGIN_ROUTE)
-        && !router.state.url.startsWith(LOGOUT_ROUTE))
-      )
+        && !router.state.url.startsWith(LOGOUT_ROUTE)))
     );
   }
 }

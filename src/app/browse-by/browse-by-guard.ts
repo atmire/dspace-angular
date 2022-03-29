@@ -15,9 +15,11 @@ import { BrowseDefinition } from '../core/shared/browse-definition.model';
  */
 export class BrowseByGuard implements CanActivate {
 
-  constructor(protected dsoService: DSpaceObjectDataService,
-              protected translate: TranslateService,
-              protected browseDefinitionService: BrowseDefinitionDataService) {
+  constructor(
+    protected dsoService: DSpaceObjectDataService,
+    protected translate: TranslateService,
+    protected browseDefinitionService: BrowseDefinitionDataService
+  ) {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {

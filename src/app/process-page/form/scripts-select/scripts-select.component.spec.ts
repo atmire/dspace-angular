@@ -27,8 +27,7 @@ describe('ScriptsSelectComponent', () => {
     scriptService = jasmine.createSpyObj('scriptService',
       {
         findAll: createSuccessfulRemoteDataObject$(buildPaginatedList(undefined, [script1, script2]))
-      }
-    );
+      });
   }
 
   beforeEach(waitForAsync(() => {

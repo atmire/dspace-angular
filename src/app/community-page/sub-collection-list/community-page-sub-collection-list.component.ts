@@ -42,9 +42,9 @@ export class CommunityPageSubCollectionListComponent implements OnInit {
    */
   subCollectionsRDObs: BehaviorSubject<RemoteData<PaginatedList<Collection>>> = new BehaviorSubject<RemoteData<PaginatedList<Collection>>>({} as any);
 
-  constructor(private cds: CollectionDataService,
-              private paginationService: PaginationService,
-
+  constructor(
+    private cds: CollectionDataService,
+    private paginationService: PaginationService,
   ) {}
 
   ngOnInit(): void {
@@ -60,8 +60,8 @@ export class CommunityPageSubCollectionListComponent implements OnInit {
    * Initialise the list of collections
    */
   initPage() {
-     const pagination$ = this.paginationService.getCurrentPagination(this.config.id, this.config);
-     const sort$ = this.paginationService.getCurrentSort(this.config.id, this.sortConfig);
+    const pagination$ = this.paginationService.getCurrentPagination(this.config.id, this.config);
+    const sort$ = this.paginationService.getCurrentSort(this.config.id, this.sortConfig);
 
     observableCombineLatest([pagination$, sort$]).pipe(
       switchMap(([currentPagination, currentSort]) => {

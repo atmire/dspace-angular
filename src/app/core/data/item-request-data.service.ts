@@ -55,7 +55,8 @@ export class ItemRequestDataService extends DataService<ItemRequest> {
   getItemRequestEndpointByToken(token: string): Observable<string> {
     return this.halService.getEndpoint(this.linkPath).pipe(
       filter((href: string) => isNotEmpty(href)),
-      map((href: string) => `${href}/${token}`));
+      map((href: string) => `${href}/${token}`)
+    );
   }
 
   /**
@@ -123,7 +124,8 @@ export class ItemRequestDataService extends DataService<ItemRequest> {
           suggestOpenAccess,
         }), options);
       }),
-      sendRequest(this.requestService)).subscribe();
+      sendRequest(this.requestService)
+    ).subscribe();
 
     return this.rdbService.buildFromRequestUUID(requestId);
   }

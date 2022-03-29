@@ -55,29 +55,29 @@ export class SearchTrackerComponent extends SearchComponent implements OnInit {
           }))
         )),
     ).subscribe(({ config, searchQueryResponse }) => {
-        const filters: { filter: string, operator: string, value: string, label: string; }[] = [];
-        const appliedFilters = searchQueryResponse.appliedFilters || [];
-        for (let i = 0, filtersLength = appliedFilters.length; i < filtersLength; i++) {
-          const appliedFilter = appliedFilters[i];
-          filters.push(appliedFilter);
-        }
-        this.angulartics2.eventTrack.next({
-          action: 'search',
-          properties: {
-            searchOptions: config,
-            page: {
-              size: config.pagination.size, // same as searchQueryResponse.page.elementsPerPage
-              totalElements: searchQueryResponse.pageInfo.totalElements,
-              totalPages: searchQueryResponse.pageInfo.totalPages,
-              number: config.pagination.currentPage, // same as searchQueryResponse.page.currentPage
-            },
-            sort: {
-              by: config.sort.field,
-              order: config.sort.direction
-            },
-            filters: filters,
+      const filters: { filter: string, operator: string, value: string, label: string; }[] = [];
+      const appliedFilters = searchQueryResponse.appliedFilters || [];
+      for (let i = 0, filtersLength = appliedFilters.length; i < filtersLength; i++) {
+        const appliedFilter = appliedFilters[i];
+        filters.push(appliedFilter);
+      }
+      this.angulartics2.eventTrack.next({
+        action: 'search',
+        properties: {
+          searchOptions: config,
+          page: {
+            size: config.pagination.size, // same as searchQueryResponse.page.elementsPerPage
+            totalElements: searchQueryResponse.pageInfo.totalElements,
+            totalPages: searchQueryResponse.pageInfo.totalPages,
+            number: config.pagination.currentPage, // same as searchQueryResponse.page.currentPage
           },
-        });
+          sort: {
+            by: config.sort.field,
+            order: config.sort.direction
+          },
+          filters: filters,
+        },
       });
+    });
   }
 }

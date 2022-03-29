@@ -54,7 +54,8 @@ class DataServiceImpl extends ItemDataService {
     protected http: HttpClient,
     protected comparator: DSOChangeAnalyzer<Item>,
     protected bundleService: BundleDataService,
-    protected collectionService: CollectionDataService) {
+    protected collectionService: CollectionDataService
+  ) {
     super(requestService, rdbService, store, bs, objectCache, halService, notificationsService, http, comparator, bundleService);
   }
 
@@ -166,7 +167,8 @@ export class ItemTemplateDataService implements UpdateDataService<Item> {
     protected http: HttpClient,
     protected comparator: DSOChangeAnalyzer<Item>,
     protected bundleService: BundleDataService,
-    protected collectionService: CollectionDataService) {
+    protected collectionService: CollectionDataService
+  ) {
     this.dataService = new DataServiceImpl(requestService, rdbService, store, bs, objectCache, halService, notificationsService, http, comparator, bundleService, collectionService);
   }
 

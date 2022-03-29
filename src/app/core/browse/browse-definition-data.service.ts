@@ -31,7 +31,8 @@ class DataServiceImpl extends DataService<BrowseDefinition> {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DefaultChangeAnalyzer<BrowseDefinition>) {
+    protected comparator: DefaultChangeAnalyzer<BrowseDefinition>
+  ) {
     super();
   }
 }
@@ -54,7 +55,8 @@ export class BrowseDefinitionDataService {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DefaultChangeAnalyzer<BrowseDefinition>) {
+    protected comparator: DefaultChangeAnalyzer<BrowseDefinition>
+  ) {
     this.dataService = new DataServiceImpl(requestService, rdbService, null, objectCache, halService, notificationsService, http, comparator);
   }
 

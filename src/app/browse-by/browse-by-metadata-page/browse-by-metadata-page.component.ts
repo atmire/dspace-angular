@@ -102,18 +102,20 @@ export class BrowseByMetadataPageComponent implements OnInit {
   /**
    * The authority key (may be undefined) associated with {@link #value}.
    */
-   authority: string;
+  authority: string;
 
   /**
    * The current startsWith option (fetched and updated from query-params)
    */
   startsWith: string;
 
-  public constructor(protected route: ActivatedRoute,
-                     protected browseService: BrowseService,
-                     protected dsoService: DSpaceObjectDataService,
-                     protected paginationService: PaginationService,
-                     protected router: Router) {
+  public constructor(
+    protected route: ActivatedRoute,
+    protected browseService: BrowseService,
+    protected dsoService: DSpaceObjectDataService,
+    protected paginationService: PaginationService,
+    protected router: Router
+  ) {
   }
 
   ngOnInit(): void {
@@ -127,18 +129,19 @@ export class BrowseByMetadataPageComponent implements OnInit {
           return [Object.assign({}, routeParams, queryParams),currentPage,currentSort];
         })
       ).subscribe(([params, currentPage, currentSort]: [Params, PaginationComponentOptions, SortOptions]) => {
-          this.browseId = params.id || this.defaultBrowseId;
-          this.authority = params.authority;
-          this.value = +params.value || params.value || '';
-          this.startsWith = +params.startsWith || params.startsWith;
-          const searchOptions = browseParamsToOptions(params, currentPage, currentSort, this.browseId);
-          if (isNotEmpty(this.value)) {
-            this.updatePageWithItems(searchOptions, this.value, this.authority);
-          } else {
-            this.updatePage(searchOptions);
-          }
-          this.updateParent(params.scope);
-        }));
+        this.browseId = params.id || this.defaultBrowseId;
+        this.authority = params.authority;
+        this.value = +params.value || params.value || '';
+        this.startsWith = +params.startsWith || params.startsWith;
+        const searchOptions = browseParamsToOptions(params, currentPage, currentSort, this.browseId);
+        if (isNotEmpty(this.value)) {
+          this.updatePageWithItems(searchOptions, this.value, this.authority);
+        } else {
+          this.updatePage(searchOptions);
+        }
+        this.updateParent(params.scope);
+      })
+    );
     this.updateStartsWithTextOptions();
   }
 
@@ -234,9 +237,9 @@ export class BrowseByMetadataPageComponent implements OnInit {
  * @param metadata          Optional metadata definition to fetch browse entries/items for
  */
 export function browseParamsToOptions(params: any,
-                                      paginationConfig: PaginationComponentOptions,
-                                      sortConfig: SortOptions,
-                                      metadata?: string): BrowseEntrySearchOptions {
+  paginationConfig: PaginationComponentOptions,
+  sortConfig: SortOptions,
+  metadata?: string): BrowseEntrySearchOptions {
   return new BrowseEntrySearchOptions(
     metadata,
     paginationConfig,

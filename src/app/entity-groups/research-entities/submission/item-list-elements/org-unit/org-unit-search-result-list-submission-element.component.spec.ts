@@ -66,7 +66,8 @@ function init() {
           ]
         }
       })
-    });
+    }
+  );
   mockItemWithoutMetadata = Object.assign(
     new ItemSearchResult(),
     {
@@ -81,7 +82,8 @@ function init() {
           ]
         }
       })
-    });
+    }
+  );
 
   nameVariant = 'Doe J.';
   mockRelationshipService = {

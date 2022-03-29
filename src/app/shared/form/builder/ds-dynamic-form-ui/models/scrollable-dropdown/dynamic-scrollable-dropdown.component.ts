@@ -41,10 +41,11 @@ export class DsDynamicScrollableDropdownComponent extends DsDynamicVocabularyCom
   public pageInfo: PageInfo;
   public optionsList: any;
 
-  constructor(protected vocabularyService: VocabularyService,
-              protected cdr: ChangeDetectorRef,
-              protected layoutService: DynamicFormLayoutService,
-              protected validationService: DynamicFormValidationService
+  constructor(
+    protected vocabularyService: VocabularyService,
+    protected cdr: ChangeDetectorRef,
+    protected layoutService: DynamicFormLayoutService,
+    protected validationService: DynamicFormValidationService
   ) {
     super(vocabularyService, layoutService, validationService);
   }
@@ -59,8 +60,8 @@ export class DsDynamicScrollableDropdownComponent extends DsDynamicVocabularyCom
       catchError(() => observableOf(buildPaginatedList(
         new PageInfo(),
         []
-        ))
-      ))
+      )))
+    )
       .subscribe((list: PaginatedList<VocabularyEntry>) => {
         this.optionsList = list.page;
         if (this.model.value) {
@@ -115,9 +116,9 @@ export class DsDynamicScrollableDropdownComponent extends DsDynamicVocabularyCom
         catchError(() => observableOf(buildPaginatedList(
           new PageInfo(),
           []
-          ))
-        ),
-        tap(() => this.loading = false))
+        ))),
+        tap(() => this.loading = false)
+      )
         .subscribe((list: PaginatedList<VocabularyEntry>) => {
           this.optionsList = this.optionsList.concat(list.page);
           this.updatePageInfo(

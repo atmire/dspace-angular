@@ -28,10 +28,11 @@ export class ItemAdminSearchResultGridElementComponent extends SearchResultGridE
   @ViewChild('badges', { static: true }) badges: ElementRef;
   @ViewChild('buttons', { static: true }) buttons: ElementRef;
 
-  constructor(protected truncatableService: TruncatableService,
-              protected bitstreamDataService: BitstreamDataService,
-              private themeService: ThemeService,
-              private componentFactoryResolver: ComponentFactoryResolver
+  constructor(
+    protected truncatableService: TruncatableService,
+    protected bitstreamDataService: BitstreamDataService,
+    private themeService: ThemeService,
+    private componentFactoryResolver: ComponentFactoryResolver
   ) {
     super(truncatableService, bitstreamDataService);
   }
@@ -53,7 +54,8 @@ export class ItemAdminSearchResultGridElementComponent extends SearchResultGridE
       [
         [this.badges.nativeElement],
         [this.buttons.nativeElement]
-      ]);
+      ]
+    );
     (componentRef.instance as any).object = this.object;
     (componentRef.instance as any).index = this.index;
     (componentRef.instance as any).linkType = this.linkType;

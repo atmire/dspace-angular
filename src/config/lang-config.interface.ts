@@ -6,7 +6,7 @@ import { Config } from './config.interface';
  * (e.g. ‘Français’), and a boolean to determine whether or not it should be listed in the language select.
  */
 export interface LangConfig extends Config {
-      code: string;
-      label: string;
-      active: boolean;
+  code: string;
+  label: string;
+  active: boolean;
 }

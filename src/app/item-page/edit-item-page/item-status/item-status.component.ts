@@ -56,8 +56,10 @@ export class ItemStatusComponent implements OnInit {
    */
   itemPageRoute$: Observable<string>;
 
-  constructor(private route: ActivatedRoute,
-              private authorizationService: AuthorizationDataService) {
+  constructor(
+    private route: ActivatedRoute,
+    private authorizationService: AuthorizationDataService
+  ) {
   }
 
   ngOnInit(): void {

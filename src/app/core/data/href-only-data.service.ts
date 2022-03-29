@@ -33,7 +33,8 @@ class DataServiceImpl extends DataService<any> {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DefaultChangeAnalyzer<any>) {
+    protected comparator: DefaultChangeAnalyzer<any>
+  ) {
     super();
   }
 }
@@ -62,7 +63,8 @@ export class HrefOnlyDataService {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DefaultChangeAnalyzer<any>) {
+    protected comparator: DefaultChangeAnalyzer<any>
+  ) {
     this.dataService = new DataServiceImpl(requestService, rdbService, store, objectCache, halService, notificationsService, http, comparator);
   }
 

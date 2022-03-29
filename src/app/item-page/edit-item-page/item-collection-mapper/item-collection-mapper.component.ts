@@ -85,15 +85,17 @@ export class ItemCollectionMapperComponent implements OnInit {
    */
   performedSearch = false;
 
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private searchConfigService: SearchConfigurationService,
-              private searchService: SearchService,
-              private notificationsService: NotificationsService,
-              private itemDataService: ItemDataService,
-              private collectionDataService: CollectionDataService,
-              private translateService: TranslateService,
-              private dsoNameService: DSONameService) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private searchConfigService: SearchConfigurationService,
+    private searchService: SearchService,
+    private notificationsService: NotificationsService,
+    private itemDataService: ItemDataService,
+    private collectionDataService: CollectionDataService,
+    private translateService: TranslateService,
+    private dsoNameService: DSONameService
+  ) {
   }
 
   ngOnInit(): void {
@@ -181,9 +183,8 @@ export class ItemCollectionMapperComponent implements OnInit {
       switchMap(([itemId, excludingIds]) =>
         observableCombineLatest(
           this.filterIds(ids, excludingIds).map((id: string) =>
-            this.itemDataService.mapToCollection(itemId, id).pipe(getFirstCompletedRemoteData())
+            this.itemDataService.mapToCollection(itemId, id).pipe(getFirstCompletedRemoteData()))
         ))
-      )
     );
 
     this.showNotifications(responses$, 'item.edit.item-mapper.notifications.add');
@@ -199,9 +200,8 @@ export class ItemCollectionMapperComponent implements OnInit {
       map((itemRD: RemoteData<Item>) => itemRD.payload.id),
       switchMap((itemId: string) => observableCombineLatest(
         ids.map((id: string) =>
-          this.itemDataService.removeMappingFromCollection(itemId, id).pipe(getFirstCompletedRemoteData())
-        ))
-      )
+          this.itemDataService.removeMappingFromCollection(itemId, id).pipe(getFirstCompletedRemoteData()))
+      ))
     );
 
     this.showNotifications(responses$, 'item.edit.item-mapper.notifications.remove');

@@ -50,7 +50,8 @@ export class BitstreamFormatDataService extends DataService<BitstreamFormat> {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DefaultChangeAnalyzer<BitstreamFormat>) {
+    protected comparator: DefaultChangeAnalyzer<BitstreamFormat>
+  ) {
     super();
   }
 
@@ -82,7 +83,8 @@ export class BitstreamFormatDataService extends DataService<BitstreamFormat> {
       distinctUntilChanged(),
       map((endpointURL: string) =>
         new PutRequest(requestId, endpointURL, bitstreamFormat)),
-      sendRequest(this.requestService)).subscribe();
+      sendRequest(this.requestService)
+    ).subscribe();
 
     return this.rdbService.buildFromRequestUUID(requestId);
 

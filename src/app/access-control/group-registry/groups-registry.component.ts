@@ -93,17 +93,19 @@ export class GroupsRegistryComponent implements OnInit, OnDestroy {
    */
   subs: Subscription[] = [];
 
-  constructor(public groupService: GroupDataService,
-              private ePersonDataService: EPersonDataService,
-              private dSpaceObjectDataService: DSpaceObjectDataService,
-              private translateService: TranslateService,
-              private notificationsService: NotificationsService,
-              private formBuilder: FormBuilder,
-              protected routeService: RouteService,
-              private router: Router,
-              private authorizationService: AuthorizationDataService,
-              private paginationService: PaginationService,
-              public requestService: RequestService) {
+  constructor(
+    public groupService: GroupDataService,
+    private ePersonDataService: EPersonDataService,
+    private dSpaceObjectDataService: DSpaceObjectDataService,
+    private translateService: TranslateService,
+    private notificationsService: NotificationsService,
+    private formBuilder: FormBuilder,
+    protected routeService: RouteService,
+    private router: Router,
+    private authorizationService: AuthorizationDataService,
+    private paginationService: PaginationService,
+    public requestService: RequestService
+  ) {
     this.currentSearchQuery = '';
     this.searchForm = this.formBuilder.group(({
       query: this.currentSearchQuery,
@@ -154,16 +156,15 @@ export class GroupsRegistryComponent implements OnInit, OnDestroy {
                   this.getMembers(group)
                 ]).pipe(
                   map(([canDelete, canManageGroup, hasLinkedDSO, subgroups, members]:
-                         [boolean, boolean, boolean, RemoteData<PaginatedList<Group>>, RemoteData<PaginatedList<EPerson>>]) => {
-                      const groupDtoModel: GroupDtoModel = new GroupDtoModel();
-                      groupDtoModel.ableToDelete = canDelete && !hasLinkedDSO;
-                      groupDtoModel.ableToEdit = canManageGroup;
-                      groupDtoModel.group = group;
-                      groupDtoModel.subgroups = subgroups.payload;
-                      groupDtoModel.epersons = members.payload;
-                      return groupDtoModel;
-                    }
-                  )
+                  [boolean, boolean, boolean, RemoteData<PaginatedList<Group>>, RemoteData<PaginatedList<EPerson>>]) => {
+                    const groupDtoModel: GroupDtoModel = new GroupDtoModel();
+                    groupDtoModel.ableToDelete = canDelete && !hasLinkedDSO;
+                    groupDtoModel.ableToEdit = canManageGroup;
+                    groupDtoModel.group = group;
+                    groupDtoModel.subgroups = subgroups.payload;
+                    groupDtoModel.epersons = members.payload;
+                    return groupDtoModel;
+                  })
                 );
               }
             })).pipe(map((dtos: GroupDtoModel[]) => {
@@ -179,7 +180,7 @@ export class GroupsRegistryComponent implements OnInit, OnDestroy {
     });
 
     this.subs.push(this.searchSub);
-      }
+  }
 
   canManageGroup$(isSiteAdmin: boolean, group: Group): Observable<boolean> {
     if (isSiteAdmin) {
@@ -203,9 +204,10 @@ export class GroupsRegistryComponent implements OnInit, OnDestroy {
           } else {
             this.notificationsService.error(
               this.translateService.get(this.messagePrefix + 'notification.deleted.failure.title', { name: group.group.name }),
-              this.translateService.get(this.messagePrefix + 'notification.deleted.failure.content', { cause: rd.errorMessage }));
+              this.translateService.get(this.messagePrefix + 'notification.deleted.failure.content', { cause: rd.errorMessage })
+            );
           }
-      });
+        });
     }
   }
 

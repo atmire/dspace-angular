@@ -133,7 +133,8 @@ export class GroupFormComponent implements OnInit, OnDestroy {
   groupNameValueChangeSubscribe: Subscription;
 
 
-  constructor(public groupDataService: GroupDataService,
+  constructor(
+    public groupDataService: GroupDataService,
     private ePersonDataService: EPersonDataService,
     private dSpaceObjectDataService: DSpaceObjectDataService,
     private formBuilderService: FormBuilderService,
@@ -144,7 +145,8 @@ export class GroupFormComponent implements OnInit, OnDestroy {
     private authorizationService: AuthorizationDataService,
     private modalService: NgbModal,
     public requestService: RequestService,
-    protected changeDetectorRef: ChangeDetectorRef) {
+    protected changeDetectorRef: ChangeDetectorRef
+  ) {
   }
 
   ngOnInit() {
@@ -165,7 +167,8 @@ export class GroupFormComponent implements OnInit, OnDestroy {
           this.hasLinkedDSO(group),
           (isAuthorized: ObservedValueOf<Observable<boolean>>, hasLinkedDSO: ObservedValueOf<Observable<boolean>>) => {
             return isAuthorized && !hasLinkedDSO;
-          });
+          }
+        );
       })
     );
     observableCombineLatest(
@@ -380,7 +383,8 @@ export class GroupFormComponent implements OnInit, OnDestroy {
     this.groupDataService.findById(groupId)
       .pipe(
         getFirstSucceededRemoteData(),
-        getRemoteDataPayload())
+        getRemoteDataPayload()
+      )
       .subscribe((group: Group) => {
         this.groupDataService.editGroup(group);
       });
@@ -397,7 +401,8 @@ export class GroupFormComponent implements OnInit, OnDestroy {
         this.groupDataService.findByHref(groupSelfLink, false, false, followLink('subgroups'), followLink('epersons'), followLink('object'))
           .pipe(
             getFirstSucceededRemoteData(),
-            getRemoteDataPayload())
+            getRemoteDataPayload()
+          )
           .subscribe((group: Group) => {
             this.groupDataService.editGroup(group);
           });
@@ -430,7 +435,8 @@ export class GroupFormComponent implements OnInit, OnDestroy {
                 } else {
                   this.notificationsService.error(
                     this.translateService.get(this.messagePrefix + '.notification.deleted.failure.title', { name: group.name }),
-                    this.translateService.get(this.messagePrefix + '.notification.deleted.failure.content', { cause: rd.errorMessage }));
+                    this.translateService.get(this.messagePrefix + '.notification.deleted.failure.content', { cause: rd.errorMessage })
+                  );
                 }
               });
           }

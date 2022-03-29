@@ -78,9 +78,9 @@ export class ItemRelationshipsComponent extends AbstractItemUpdateComponent {
     const label = this.item.firstMetadataValue('dspace.entity.type');
     if (label !== undefined) {
       this.relationshipTypes$ = this.relationshipTypeService.searchByEntityType(label, true, true, ...this.getRelationshipTypeFollowLinks())
-      .pipe(
-        map((relationshipTypes: PaginatedList<RelationshipType>) => relationshipTypes.page)
-      );
+        .pipe(
+          map((relationshipTypes: PaginatedList<RelationshipType>) => relationshipTypes.page)
+        );
 
       this.entityType$ = this.entityTypeService.getEntityTypeByLabel(label).pipe(
         getFirstSucceededRemoteData(),
@@ -109,16 +109,14 @@ export class ItemRelationshipsComponent extends AbstractItemUpdateComponent {
     const removedRelationshipIDs$: Observable<DeleteRelationship[]> = this.relationshipService.getItemRelationshipsArray(this.item).pipe(
       startWith([]),
       map((relationships: Relationship[]) => relationships.map((relationship) =>
-        Object.assign(new Relationship(), relationship, { uuid: relationship.id })
-      )),
+        Object.assign(new Relationship(), relationship, { uuid: relationship.id }))),
       switchMap((relationships: Relationship[]) => {
         return this.objectUpdatesService.getFieldUpdatesExclusive(this.url, relationships) as Observable<FieldUpdates>;
       }),
       map((fieldUpdates: FieldUpdates) =>
         Object.values(fieldUpdates)
           .filter((fieldUpdate: FieldUpdate) => fieldUpdate.changeType === FieldChangeType.REMOVE)
-          .map((fieldUpdate: FieldUpdate) => fieldUpdate.field as DeleteRelationship)
-      ),
+          .map((fieldUpdate: FieldUpdate) => fieldUpdate.field as DeleteRelationship)),
     );
 
     const addRelatedItems$: Observable<RelationshipIdentifiable[]> = this.objectUpdatesService.getFieldUpdates(this.url, []).pipe(
@@ -126,8 +124,7 @@ export class ItemRelationshipsComponent extends AbstractItemUpdateComponent {
         Object.values(fieldUpdates)
           .filter((fieldUpdate: FieldUpdate) => hasValue(fieldUpdate))
           .filter((fieldUpdate: FieldUpdate) => fieldUpdate.changeType === FieldChangeType.ADD)
-          .map((fieldUpdate: FieldUpdate) => fieldUpdate.field as RelationshipIdentifiable)
-      ),
+          .map((fieldUpdate: FieldUpdate) => fieldUpdate.field as RelationshipIdentifiable)),
     );
 
     observableCombineLatest(
@@ -148,26 +145,24 @@ export class ItemRelationshipsComponent extends AbstractItemUpdateComponent {
             this.displayNotifications(response);
             this.modalService.dismissAll();
           }
-        })
-      );
+        }));
     });
   }
 
   deleteRelationships(deleteRelationshipIDs: DeleteRelationship[]): Observable<RemoteData<NoContent>[]> {
     return observableZip(...deleteRelationshipIDs.map((deleteRelationship) => {
-        let copyVirtualMetadata: string;
-        if (deleteRelationship.keepLeftVirtualMetadata && deleteRelationship.keepRightVirtualMetadata) {
-          copyVirtualMetadata = 'all';
-        } else if (deleteRelationship.keepLeftVirtualMetadata) {
-          copyVirtualMetadata = 'left';
-        } else if (deleteRelationship.keepRightVirtualMetadata) {
-          copyVirtualMetadata = 'right';
-        } else {
-          copyVirtualMetadata = 'none';
-        }
-        return this.relationshipService.deleteRelationship(deleteRelationship.uuid, copyVirtualMetadata);
+      let copyVirtualMetadata: string;
+      if (deleteRelationship.keepLeftVirtualMetadata && deleteRelationship.keepRightVirtualMetadata) {
+        copyVirtualMetadata = 'all';
+      } else if (deleteRelationship.keepLeftVirtualMetadata) {
+        copyVirtualMetadata = 'left';
+      } else if (deleteRelationship.keepRightVirtualMetadata) {
+        copyVirtualMetadata = 'right';
+      } else {
+        copyVirtualMetadata = 'none';
       }
-    ));
+      return this.relationshipService.deleteRelationship(deleteRelationship.uuid, copyVirtualMetadata);
+    }));
   }
 
   addRelationships(addRelatedItems: RelationshipIdentifiable[]): Observable<RemoteData<Relationship>[]> {
@@ -192,8 +187,7 @@ export class ItemRelationshipsComponent extends AbstractItemUpdateComponent {
           }
           return this.relationshipService.addRelationship(addRelationship.type.id, leftItem, rightItem, leftwardValue, rightwardValue);
         }),
-      )
-    ));
+      )));
   }
 
   /**

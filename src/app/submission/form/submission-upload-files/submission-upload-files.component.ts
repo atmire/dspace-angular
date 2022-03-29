@@ -79,7 +79,8 @@ export class SubmissionUploadFilesComponent implements OnChanges {
     const sub: Subscription = this.operationsService.jsonPatchByResourceType(
       this.submissionService.getSubmissionObjectLinkName(),
       this.submissionId,
-      'sections')
+      'sections'
+    )
       .subscribe();
     this.subs.push(sub);
     return sub;
@@ -94,11 +95,13 @@ export class SubmissionUploadFilesComponent implements OnChanges {
    * @param {SubmissionService} submissionService
    * @param {TranslateService} translate
    */
-  constructor(private notificationsService: NotificationsService,
-              private operationsService: SubmissionJsonPatchOperationsService,
-              private sectionService: SectionsService,
-              private submissionService: SubmissionService,
-              private translate: TranslateService) {
+  constructor(
+    private notificationsService: NotificationsService,
+    private operationsService: SubmissionJsonPatchOperationsService,
+    private sectionService: SectionsService,
+    private submissionService: SubmissionService,
+    private translate: TranslateService
+  ) {
   }
 
   /**
@@ -132,17 +135,17 @@ export class SubmissionUploadFilesComponent implements OnChanges {
                   const sectionData = normalizeSectionData(sections[sectionId]);
                   const sectionErrors = errorsList[sectionId];
                   this.sectionService.isSectionType(this.submissionId, sectionId, SectionsType.Upload)
-                      .pipe(take(1))
-                      .subscribe((isUpload) => {
-                        if (isUpload) {
+                    .pipe(take(1))
+                    .subscribe((isUpload) => {
+                      if (isUpload) {
                           // Look for errors on upload
-                          if ((isEmpty(sectionErrors))) {
-                            this.notificationsService.success(null, this.translate.get('submission.sections.upload.upload-successful'));
-                          } else {
-                            this.notificationsService.error(null, this.translate.get('submission.sections.upload.upload-failed'));
-                          }
+                        if ((isEmpty(sectionErrors))) {
+                          this.notificationsService.success(null, this.translate.get('submission.sections.upload.upload-successful'));
+                        } else {
+                          this.notificationsService.error(null, this.translate.get('submission.sections.upload.upload-failed'));
                         }
-                      });
+                      }
+                    });
                   this.sectionService.updateSectionData(this.submissionId, sectionId, sectionData, sectionErrors, sectionErrors);
                 });
             }

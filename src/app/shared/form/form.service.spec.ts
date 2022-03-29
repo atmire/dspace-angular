@@ -99,20 +99,19 @@ describe('FormService test suite', () => {
   }));
 
   beforeEach(inject([Store], (store: Store<AppState>) => {
-      builderService = getMockFormBuilderService();
-      store
-        .subscribe((state) => {
-          state.forms = formState;
-        });
-      const author: AbstractControl = new FormControl('test');
-      const title: AbstractControl = new FormControl(undefined, Validators.required);
-      const date: AbstractControl = new FormControl(undefined);
-      const description: AbstractControl = new FormControl(undefined);
-      formGroup = new FormGroup({ author, title, date, description });
-      controls = { author, title, date, description };
-      service = new FormService(builderService, store);
-    })
-  )
+    builderService = getMockFormBuilderService();
+    store
+      .subscribe((state) => {
+        state.forms = formState;
+      });
+    const author: AbstractControl = new FormControl('test');
+    const title: AbstractControl = new FormControl(undefined, Validators.required);
+    const date: AbstractControl = new FormControl(undefined);
+    const description: AbstractControl = new FormControl(undefined);
+    formGroup = new FormGroup({ author, title, date, description });
+    controls = { author, title, date, description };
+    service = new FormService(builderService, store);
+  }))
   ;
 
   it('should check whether form state is init', () => {

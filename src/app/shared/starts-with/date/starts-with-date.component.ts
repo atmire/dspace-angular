@@ -34,10 +34,10 @@ export class StartsWithDateComponent extends StartsWithAbstractComponent {
   startsWithYear: number;
 
   public constructor(@Inject('startsWithOptions') public startsWithOptions: any[],
-                     @Inject('paginationId') public paginationId: string,
-                     protected paginationService: PaginationService,
-                     protected route: ActivatedRoute,
-                     protected router: Router) {
+    @Inject('paginationId') public paginationId: string,
+    protected paginationService: PaginationService,
+    protected route: ActivatedRoute,
+    protected router: Router) {
     super(startsWithOptions, paginationId, paginationService, route, router);
   }
 

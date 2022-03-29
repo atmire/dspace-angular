@@ -57,13 +57,15 @@ export class PoolTaskActionsComponent extends MyDSpaceReloadableActionsComponent
    * @param {SearchService} searchService
    * @param {RequestService} requestService
    */
-  constructor(protected injector: Injector,
-              protected router: Router,
-              protected notificationsService: NotificationsService,
-              protected claimedTaskService: ClaimedTaskDataService,
-              protected translate: TranslateService,
-              protected searchService: SearchService,
-              protected requestService: RequestService) {
+  constructor(
+    protected injector: Injector,
+    protected router: Router,
+    protected notificationsService: NotificationsService,
+    protected claimedTaskService: ClaimedTaskDataService,
+    protected translate: TranslateService,
+    protected searchService: SearchService,
+    protected requestService: RequestService
+  ) {
     super(PoolTask.type, injector, router, notificationsService, translate, searchService, requestService);
   }
 
@@ -84,14 +86,15 @@ export class PoolTaskActionsComponent extends MyDSpaceReloadableActionsComponent
     this.workflowitem$ = (this.object.workflowitem as Observable<RemoteData<WorkflowItem>>).pipe(
       filter((rd: RemoteData<WorkflowItem>) => ((!rd.isRequestPending) && isNotUndefined(rd.payload))),
       map((rd: RemoteData<WorkflowItem>) => rd.payload),
-      take(1));
+      take(1)
+    );
   }
 
   actionExecution(): Observable<ProcessTaskResponse> {
     return this.objectDataService.getPoolTaskEndpointById(this.object.id)
       .pipe(switchMap((poolTaskHref) => {
         return this.claimedTaskService.claimTask(this.object.id, poolTaskHref);
-    }));
+      }));
   }
 
   reloadObjectExecution(): Observable<RemoteData<DSpaceObject> | DSpaceObject> {
@@ -104,11 +107,11 @@ export class PoolTaskActionsComponent extends MyDSpaceReloadableActionsComponent
   initReloadAnchor() {
     (this.object as any).workflowitem.pipe(
       getFirstSucceededRemoteDataPayload(),
-      switchMap((workflowItem: WorkflowItem) => workflowItem.item.pipe(getFirstSucceededRemoteDataPayload())
-      ))
+      switchMap((workflowItem: WorkflowItem) => workflowItem.item.pipe(getFirstSucceededRemoteDataPayload()))
+    )
       .subscribe((item: Item) => {
-      this.itemUuid = item.uuid;
-    });
+        this.itemUuid = item.uuid;
+      });
   }
 
   ngOnDestroy() {

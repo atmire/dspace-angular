@@ -35,7 +35,8 @@ export abstract class MyDSpaceReloadableActionsComponent<T extends DSpaceObject,
     protected notificationsService: NotificationsService,
     protected translate: TranslateService,
     protected searchService: SearchService,
-    protected requestService: RequestService) {
+    protected requestService: RequestService
+  ) {
     super(objectType, injector, router, notificationsService, translate, searchService, requestService);
   }
 
@@ -71,14 +72,16 @@ export abstract class MyDSpaceReloadableActionsComponent<T extends DSpaceObject,
               (reloadedObject) => {
                 this.processing$.next(false);
                 this.handleReloadableActionResponse(res.hasSucceeded, reloadedObject);
-              })
+              }
+            )
           );
         } else {
           this.processing$.next(false);
           this.handleReloadableActionResponse(res.hasSucceeded, null);
           return of(null);
         }
-      }));
+      })
+    );
   }
 
   /**
@@ -136,8 +139,9 @@ export abstract class MyDSpaceReloadableActionsComponent<T extends DSpaceObject,
         } else {
           return of(res);
         }
-      })).pipe(map((dso) => {
-          return dso ? this.convertReloadedObject(dso) : dso;
+      })
+    ).pipe(map((dso) => {
+      return dso ? this.convertReloadedObject(dso) : dso;
     }));
   }
 

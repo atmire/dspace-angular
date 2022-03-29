@@ -51,7 +51,8 @@ export class VersionHistoryDataService extends DataService<VersionHistory> {
     protected notificationsService: NotificationsService,
     protected versionDataService: VersionDataService,
     protected http: HttpClient,
-    protected comparator: DefaultChangeAnalyzer<VersionHistory>) {
+    protected comparator: DefaultChangeAnalyzer<VersionHistory>
+  ) {
     super();
   }
 

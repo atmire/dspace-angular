@@ -25,8 +25,7 @@ describe('AbstractTrackableComponent', () => {
       info: infoNotification,
       warning: warningNotification,
       success: successNotification
-    }
-  );
+    });
 
   const url = 'http://test-url.com/test-url';
 
@@ -40,8 +39,7 @@ describe('AbstractTrackableComponent', () => {
         hasUpdates: observableOf(true),
         isReinstatable: observableOf(false), // should always return something --> its in ngOnInit
         isValidPage: observableOf(true)
-      }
-    );
+      });
 
     scheduler = getTestScheduler();
 

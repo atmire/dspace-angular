@@ -37,11 +37,13 @@ export class AbstractSimpleItemActionComponent implements OnInit {
 
   protected predicate: Predicate<RemoteData<Item>>;
 
-  constructor(protected route: ActivatedRoute,
-              protected router: Router,
-              protected notificationsService: NotificationsService,
-              protected itemDataService: ItemDataService,
-              protected translateService: TranslateService) {
+  constructor(
+    protected route: ActivatedRoute,
+    protected router: Router,
+    protected notificationsService: NotificationsService,
+    protected itemDataService: ItemDataService,
+    protected translateService: TranslateService
+  ) {
   }
 
   ngOnInit(): void {
@@ -51,10 +53,9 @@ export class AbstractSimpleItemActionComponent implements OnInit {
     )as Observable<RemoteData<Item>>;
 
     this.itemRD$.pipe(first()).subscribe((rd) => {
-        this.item = rd.payload;
-        this.itemPageRoute = getItemPageRoute(this.item);
-      }
-    );
+      this.item = rd.payload;
+      this.itemPageRoute = getItemPageRoute(this.item);
+    });
 
     this.confirmMessage = 'item.edit.' + this.messageKey + '.confirm';
     this.cancelMessage = 'item.edit.' + this.messageKey + '.cancel';
@@ -75,7 +76,8 @@ export class AbstractSimpleItemActionComponent implements OnInit {
   processRestResponse(response: RemoteData<any>) {
     if (response.hasSucceeded) {
       this.itemDataService.findById(this.item.id).pipe(
-        findSuccessfulAccordingTo(this.predicate)).subscribe(() => {
+        findSuccessfulAccordingTo(this.predicate)
+      ).subscribe(() => {
         this.notificationsService.success(this.translateService.get('item.edit.' + this.messageKey + '.success'));
         this.router.navigate([getItemEditRoute(this.item)]);
       });

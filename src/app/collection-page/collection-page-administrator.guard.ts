@@ -15,10 +15,12 @@ import { AuthService } from '../core/auth/auth.service';
  * Guard for preventing unauthorized access to certain {@link Collection} pages requiring administrator rights
  */
 export class CollectionPageAdministratorGuard extends DsoPageSingleFeatureGuard<Collection> {
-  constructor(protected resolver: CollectionPageResolver,
-              protected authorizationService: AuthorizationDataService,
-              protected router: Router,
-              protected authService: AuthService) {
+  constructor(
+    protected resolver: CollectionPageResolver,
+    protected authorizationService: AuthorizationDataService,
+    protected router: Router,
+    protected authService: AuthService
+  ) {
     super(resolver, authorizationService, router, authService);
   }
 

@@ -145,16 +145,18 @@ export class InitSectionAction implements Action {
    * @param errors
    *    the section's errors
    */
-  constructor(submissionId: string,
-              sectionId: string,
-              header: string,
-              config: string,
-              mandatory: boolean,
-              sectionType: SectionsType,
-              visibility: SectionVisibility,
-              enabled: boolean,
-              data: WorkspaceitemSectionDataType,
-              errors: SubmissionSectionError[]) {
+  constructor(
+    submissionId: string,
+    sectionId: string,
+    header: string,
+    config: string,
+    mandatory: boolean,
+    sectionType: SectionsType,
+    visibility: SectionVisibility,
+    enabled: boolean,
+    data: WorkspaceitemSectionDataType,
+    errors: SubmissionSectionError[]
+  ) {
     this.payload = { submissionId, sectionId, header, config, mandatory, sectionType, visibility, enabled, data, errors };
   }
 }
@@ -174,8 +176,10 @@ export class EnableSectionAction implements Action {
    * @param sectionId
    *    the section's ID to add
    */
-  constructor(submissionId: string,
-              sectionId: string) {
+  constructor(
+    submissionId: string,
+    sectionId: string
+  ) {
     this.payload = { submissionId, sectionId };
   }
 }
@@ -227,12 +231,14 @@ export class UpdateSectionDataAction implements Action {
    * @param metadata
    *    the section's metadata
    */
-  constructor(submissionId: string,
-              sectionId: string,
-              data: WorkspaceitemSectionDataType,
-              errorsToShow: SubmissionSectionError[],
-              serverValidationErrors: SubmissionSectionError[],
-              metadata?: string[]) {
+  constructor(
+    submissionId: string,
+    sectionId: string,
+    data: WorkspaceitemSectionDataType,
+    errorsToShow: SubmissionSectionError[],
+    serverValidationErrors: SubmissionSectionError[],
+    metadata?: string[]
+  ) {
     this.payload = { submissionId, sectionId, data, errorsToShow, serverValidationErrors, metadata };
   }
 }
@@ -331,13 +337,15 @@ export class InitSubmissionFormAction implements Action {
    * @param errors
    *    the submission's sections errors
    */
-  constructor(collectionId: string,
-              submissionId: string,
-              selfUrl: string,
-              submissionDefinition: SubmissionDefinitionsModel,
-              sections: WorkspaceitemSectionsObject,
-              item: Item,
-              errors: SubmissionError) {
+  constructor(
+    collectionId: string,
+    submissionId: string,
+    selfUrl: string,
+    submissionDefinition: SubmissionDefinitionsModel,
+    sections: WorkspaceitemSectionsObject,
+    item: Item,
+    errors: SubmissionError
+  ) {
     this.payload = { collectionId, submissionId, selfUrl, submissionDefinition, sections, item, errors };
   }
 }
@@ -808,36 +816,36 @@ export class DeleteUploadedFileAction implements Action {
  * so that reducers can easily compose action types
  */
 export type SubmissionObjectAction = DisableSectionAction
-  | InitSectionAction
-  | SetSectionFormId
-  | EnableSectionAction
-  | InitSubmissionFormAction
-  | ResetSubmissionFormAction
-  | CancelSubmissionFormAction
-  | CompleteInitSubmissionFormAction
-  | ChangeSubmissionCollectionAction
-  | SaveAndDepositSubmissionAction
-  | DepositSubmissionAction
-  | DepositSubmissionSuccessAction
-  | DepositSubmissionErrorAction
-  | DiscardSubmissionAction
-  | DiscardSubmissionSuccessAction
-  | DiscardSubmissionErrorAction
-  | SectionStatusChangeAction
-  | NewUploadedFileAction
-  | EditFileDataAction
-  | DeleteUploadedFileAction
-  | InertSectionErrorsAction
-  | DeleteSectionErrorsAction
-  | UpdateSectionDataAction
-  | RemoveSectionErrorsAction
-  | SaveForLaterSubmissionFormAction
-  | SaveForLaterSubmissionFormSuccessAction
-  | SaveForLaterSubmissionFormErrorAction
-  | SaveSubmissionFormAction
-  | SaveSubmissionFormSuccessAction
-  | SaveSubmissionFormErrorAction
-  | SaveSubmissionSectionFormAction
-  | SaveSubmissionSectionFormSuccessAction
-  | SaveSubmissionSectionFormErrorAction
-  | SetActiveSectionAction;
+| InitSectionAction
+| SetSectionFormId
+| EnableSectionAction
+| InitSubmissionFormAction
+| ResetSubmissionFormAction
+| CancelSubmissionFormAction
+| CompleteInitSubmissionFormAction
+| ChangeSubmissionCollectionAction
+| SaveAndDepositSubmissionAction
+| DepositSubmissionAction
+| DepositSubmissionSuccessAction
+| DepositSubmissionErrorAction
+| DiscardSubmissionAction
+| DiscardSubmissionSuccessAction
+| DiscardSubmissionErrorAction
+| SectionStatusChangeAction
+| NewUploadedFileAction
+| EditFileDataAction
+| DeleteUploadedFileAction
+| InertSectionErrorsAction
+| DeleteSectionErrorsAction
+| UpdateSectionDataAction
+| RemoveSectionErrorsAction
+| SaveForLaterSubmissionFormAction
+| SaveForLaterSubmissionFormSuccessAction
+| SaveForLaterSubmissionFormErrorAction
+| SaveSubmissionFormAction
+| SaveSubmissionFormSuccessAction
+| SaveSubmissionFormErrorAction
+| SaveSubmissionSectionFormAction
+| SaveSubmissionSectionFormSuccessAction
+| SaveSubmissionSectionFormErrorAction
+| SetActiveSectionAction;

@@ -40,7 +40,8 @@ class TestService extends TasksService<TestTask> {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DSOChangeAnalyzer<TestTask>) {
+    protected comparator: DSOChangeAnalyzer<TestTask>
+  ) {
     super();
   }
 }

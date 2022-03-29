@@ -92,13 +92,15 @@ export class SearchFacetFilterComponent implements OnInit, OnDestroy {
    */
   currentUrl: string;
 
-  constructor(protected searchService: SearchService,
-              protected filterService: SearchFilterService,
-              protected rdbs: RemoteDataBuildService,
-              protected router: Router,
-              @Inject(SEARCH_CONFIG_SERVICE) public searchConfigService: SearchConfigurationService,
-              @Inject(IN_PLACE_SEARCH) public inPlaceSearch: boolean,
-              @Inject(FILTER_CONFIG) public filterConfig: SearchFilterConfig) {
+  constructor(
+    protected searchService: SearchService,
+    protected filterService: SearchFilterService,
+    protected rdbs: RemoteDataBuildService,
+    protected router: Router,
+    @Inject(SEARCH_CONFIG_SERVICE) public searchConfigService: SearchConfigurationService,
+    @Inject(IN_PLACE_SEARCH) public inPlaceSearch: boolean,
+    @Inject(FILTER_CONFIG) public filterConfig: SearchFilterConfig
+  ) {
   }
 
   /**
@@ -120,12 +122,11 @@ export class SearchFacetFilterComponent implements OnInit, OnDestroy {
           .pipe(
             getFirstSucceededRemoteData(),
             map((results) => {
-                return {
-                  values: observableOf(results),
-                  page: page
-                };
-              }
-            )
+              return {
+                values: observableOf(results),
+                page: page
+              };
+            })
           );
       })
     );
@@ -234,22 +235,21 @@ export class SearchFacetFilterComponent implements OnInit, OnDestroy {
    */
   onSubmit(data: any) {
     this.selectedValues$.pipe(take(1)).subscribe((selectedValues) => {
-        if (isNotEmpty(data)) {
-          this.router.navigate(this.getSearchLinkParts(), {
-            queryParams:
+      if (isNotEmpty(data)) {
+        this.router.navigate(this.getSearchLinkParts(), {
+          queryParams:
               {
                 [this.filterConfig.paramName]: [
                   ...selectedValues.map((facet) => this.getFacetValue(facet)),
                   data
                 ]
               },
-            queryParamsHandling: 'merge'
-          });
-          this.filter = '';
-        }
-        this.filterSearchResults = observableOf([]);
+          queryParamsHandling: 'merge'
+        });
+        this.filter = '';
       }
-    );
+      this.filterSearchResults = observableOf([]);
+    });
   }
 
   /**
@@ -297,7 +297,8 @@ export class SearchFacetFilterComponent implements OnInit, OnDestroy {
                     };
                   });
                 }
-              ));
+              )
+            );
         }
       );
     } else {

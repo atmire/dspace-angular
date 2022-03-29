@@ -178,7 +178,8 @@ export class SubmissionSectionCcLicensesComponent extends SectionModelComponent 
       return observableOf(this.storedCcLicenseLink);
     }
     if (!this.getSelectedCcLicense() || this.getSelectedCcLicense().fields.some(
-      (field) => !this.getSelectedOption(this.getSelectedCcLicense(), field))) {
+      (field) => !this.getSelectedOption(this.getSelectedCcLicense(), field)
+    )) {
       return undefined;
     }
     const selectedCcLicense = this.getSelectedCcLicense();

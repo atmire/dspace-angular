@@ -94,8 +94,7 @@ describe('SubmissionEditComponent Component', () => {
   it('should redirect to mydspace when an empty SubmissionObject has been retrieved',() => {
 
     route.testParams = { id: submissionId };
-    submissionServiceStub.retrieveSubmission.and.returnValue(createSuccessfulRemoteDataObject$({})
-    );
+    submissionServiceStub.retrieveSubmission.and.returnValue(createSuccessfulRemoteDataObject$({}));
 
     fixture.detectChanges();
 

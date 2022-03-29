@@ -174,11 +174,11 @@ export class SubmissionSectionUploadFileComponent implements OnChanges, OnInit {
       this.subscriptions.push(
         this.uploadService
           .getFileData(this.submissionId, this.sectionId, this.fileId).pipe(
-            filter((bitstream) => isNotUndefined(bitstream)))
-          .subscribe((bitstream) => {
-              this.fileData = bitstream;
-            }
+            filter((bitstream) => isNotUndefined(bitstream))
           )
+          .subscribe((bitstream) => {
+            this.fileData = bitstream;
+          })
       );
     }
   }
@@ -256,8 +256,7 @@ export class SubmissionSectionUploadFileComponent implements OnChanges, OnInit {
           this.formMetadata.push(metadatum.metadata);
         });
       });
-    }
-    );
+    });
   }
 
   /**
@@ -269,7 +268,8 @@ export class SubmissionSectionUploadFileComponent implements OnChanges, OnInit {
       this.submissionService.getSubmissionObjectLinkName(),
       this.submissionId,
       this.pathCombiner.rootElement,
-      this.pathCombiner.subRootElement)
+      this.pathCombiner.subRootElement
+    )
       .subscribe(() => {
         this.uploadService.removeUploadedFile(this.submissionId, this.sectionId, this.fileId);
         this.processingDelete$.next(false);

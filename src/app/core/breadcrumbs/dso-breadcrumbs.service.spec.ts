@@ -52,8 +52,7 @@ describe('DSOBreadcrumbsService', () => {
           parentCommunity: 'site',
           self: communityPath + communityUUID
         }
-      }
-    );
+      });
 
     testCollection = Object.assign(new Collection(),
       {
@@ -67,8 +66,7 @@ describe('DSOBreadcrumbsService', () => {
           parentCommunity: communityPath + communityUUID,
           self: communityPath + collectionUUID
         }
-      }
-    );
+      });
 
     testItem = Object.assign(new Item(),
       {
@@ -82,8 +80,7 @@ describe('DSOBreadcrumbsService', () => {
           owningCollection: collectionPath + collectionUUID,
           self: itemPath + itemUUID
         }
-      }
-    );
+      });
 
     dsoNameService = { getName: (dso) => getName(dso) };
   }

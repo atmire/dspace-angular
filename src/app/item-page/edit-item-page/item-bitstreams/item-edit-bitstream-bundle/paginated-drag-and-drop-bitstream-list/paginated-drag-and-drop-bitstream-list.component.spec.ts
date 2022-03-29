@@ -101,8 +101,7 @@ describe('PaginatedDragAndDropBitstreamListComponent', () => {
         isValidPage: observableOf(true),
         initializeWithCustomOrder: {},
         addPageToCustomOrder: {}
-      }
-    );
+      });
 
     bundleService = jasmine.createSpyObj('bundleService', {
       getBitstreams: createSuccessfulRemoteDataObject$(createPaginatedList([bitstream1, bitstream2])),

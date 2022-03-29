@@ -85,15 +85,17 @@ export class EPeopleRegistryComponent implements OnInit, OnDestroy {
    */
   subs: Subscription[] = [];
 
-  constructor(private epersonService: EPersonDataService,
-              private translateService: TranslateService,
-              private notificationsService: NotificationsService,
-              private authorizationService: AuthorizationDataService,
-              private formBuilder: FormBuilder,
-              private router: Router,
-              private modalService: NgbModal,
-              private paginationService: PaginationService,
-              public requestService: RequestService) {
+  constructor(
+    private epersonService: EPersonDataService,
+    private translateService: TranslateService,
+    private notificationsService: NotificationsService,
+    private authorizationService: AuthorizationDataService,
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private modalService: NgbModal,
+    private paginationService: PaginationService,
+    public requestService: RequestService
+  ) {
     this.currentSearchQuery = '';
     this.currentSearchScope = 'metadata';
     this.searchForm = this.formBuilder.group(({
@@ -137,7 +139,8 @@ export class EPeopleRegistryComponent implements OnInit, OnDestroy {
           // if it's empty, simply forward the empty list
           return [epeople];
         }
-      })).subscribe((value: PaginatedList<EpersonDtoModel>) => {
+      })
+    ).subscribe((value: PaginatedList<EpersonDtoModel>) => {
       this.searching$.next(false);this.ePeopleDto$.next(value);
       this.pageInfoState$.next(value.pageInfo);
     }));
@@ -154,35 +157,33 @@ export class EPeopleRegistryComponent implements OnInit, OnDestroy {
     }
     this.findListOptionsSub = this.paginationService.getCurrentPagination(this.config.id, this.config).pipe(
       switchMap((findListOptions) => {
-          const query: string = data.query;
-          const scope: string = data.scope;
-          if (query != null && this.currentSearchQuery !== query) {
-            this.router.navigate([this.epersonService.getEPeoplePageRouterLink()], {
-              queryParamsHandling: 'merge'
-            });
-            this.currentSearchQuery = query;
-            this.paginationService.resetPage(this.config.id);
-          }
-          if (scope != null && this.currentSearchScope !== scope) {
-            this.router.navigate([this.epersonService.getEPeoplePageRouterLink()], {
-              queryParamsHandling: 'merge'
-            });
-            this.currentSearchScope = scope;
-            this.paginationService.resetPage(this.config.id);
-
-          }
-          return this.epersonService.searchByScope(this.currentSearchScope, this.currentSearchQuery, {
-            currentPage: findListOptions.currentPage,
-            elementsPerPage: findListOptions.pageSize
+        const query: string = data.query;
+        const scope: string = data.scope;
+        if (query != null && this.currentSearchQuery !== query) {
+          this.router.navigate([this.epersonService.getEPeoplePageRouterLink()], {
+            queryParamsHandling: 'merge'
           });
+          this.currentSearchQuery = query;
+          this.paginationService.resetPage(this.config.id);
         }
-      ),
+        if (scope != null && this.currentSearchScope !== scope) {
+          this.router.navigate([this.epersonService.getEPeoplePageRouterLink()], {
+            queryParamsHandling: 'merge'
+          });
+          this.currentSearchScope = scope;
+          this.paginationService.resetPage(this.config.id);
+
+        }
+        return this.epersonService.searchByScope(this.currentSearchScope, this.currentSearchQuery, {
+          currentPage: findListOptions.currentPage,
+          elementsPerPage: findListOptions.pageSize
+        });
+      }),
       getAllSucceededRemoteData(),
     ).subscribe((peopleRD) => {
-        this.ePeople$.next(peopleRD.payload);
-        this.pageInfoState$.next(peopleRD.payload.pageInfo);
-      }
-    );
+      this.ePeople$.next(peopleRD.payload);
+      this.pageInfoState$.next(peopleRD.payload.pageInfo);
+    });
   }
 
   /**

@@ -55,7 +55,8 @@ export class DspaceRestService {
           statusText: err.statusText,
           message: (hasValue(err.error) && isNotEmpty(err.error.message)) ? err.error.message : err.message
         });
-      }));
+      })
+    );
   }
 
   /**
@@ -121,7 +122,8 @@ export class DspaceRestService {
         } else {
           return observableThrowError(err);
         }
-      }));
+      })
+    );
   }
 
   /**

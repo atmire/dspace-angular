@@ -212,7 +212,8 @@ describe('AuthEffects', () => {
           observableOf(
             {
               authenticated: true
-            })
+            }
+          )
         );
         actions = hot('--a-', { a: { type: AuthActionTypes.CHECK_AUTHENTICATION_TOKEN_COOKIE } });
 
@@ -227,7 +228,8 @@ describe('AuthEffects', () => {
       it('should return a RETRIEVE_AUTH_METHODS action in response to a CHECK_AUTHENTICATION_TOKEN_COOKIE action when authenticated is false', () => {
         spyOn((authEffects as any).authService, 'checkAuthenticationCookie').and.returnValue(
           observableOf(
-            { authenticated: false })
+            { authenticated: false }
+          )
         );
         actions = hot('--a-', { a: { type: AuthActionTypes.CHECK_AUTHENTICATION_TOKEN_COOKIE } });
 

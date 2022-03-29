@@ -26,8 +26,9 @@ export class DsDynamicDisabledComponent extends DynamicFormControlComponent {
   @Output() change: EventEmitter<any> = new EventEmitter<any>();
   @Output() focus: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(protected layoutService: DynamicFormLayoutService,
-              protected validationService: DynamicFormValidationService
+  constructor(
+    protected layoutService: DynamicFormLayoutService,
+    protected validationService: DynamicFormValidationService
   ) {
     super(layoutService, validationService);
   }

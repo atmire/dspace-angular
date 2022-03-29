@@ -156,10 +156,9 @@ export class EditBitstreamPageComponent implements OnInit, OnDestroy {
    * The Dynamic Switch Model for the file's name
    */
   primaryBitstreamModel = new DynamicCustomSwitchModel({
-      id: 'primaryBitstream',
-      name: 'primaryBitstream'
-    }
-  );
+    id: 'primaryBitstream',
+    name: 'primaryBitstream'
+  });
 
   /**
    * The Dynamic TextArea Model for the file's description
@@ -195,11 +194,11 @@ export class EditBitstreamPageComponent implements OnInit, OnDestroy {
     id: 'iiifLabel',
     name: 'iiifLabel'
   },
-    {
-        grid: {
-          host: 'col col-lg-6 d-inline-block'
-        }
-    });
+  {
+    grid: {
+      host: 'col col-lg-6 d-inline-block'
+    }
+  });
   iiifLabelContainer = new DynamicFormGroupModel({
     id: 'iiifLabelContainer',
     group: [this.iiifLabelModel]
@@ -281,10 +280,10 @@ export class EditBitstreamPageComponent implements OnInit, OnDestroy {
         this.primaryBitstreamModel
       ]
     },{
-        grid: {
-          host: 'form-row'
-        }
-      }),
+      grid: {
+        host: 'form-row'
+      }
+    }),
     new DynamicFormGroupModel({
       id: 'descriptionContainer',
       group: [
@@ -388,16 +387,18 @@ export class EditBitstreamPageComponent implements OnInit, OnDestroy {
   protected subs: Subscription[] = [];
 
 
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private changeDetectorRef: ChangeDetectorRef,
-              private location: Location,
-              private formService: DynamicFormService,
-              private translate: TranslateService,
-              private bitstreamService: BitstreamDataService,
-              private dsoNameService: DSONameService,
-              private notificationsService: NotificationsService,
-              private bitstreamFormatService: BitstreamFormatDataService) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private changeDetectorRef: ChangeDetectorRef,
+    private location: Location,
+    private formService: DynamicFormService,
+    private translate: TranslateService,
+    private bitstreamService: BitstreamDataService,
+    private dsoNameService: DSONameService,
+    private notificationsService: NotificationsService,
+    private bitstreamFormatService: BitstreamFormatDataService
+  ) {
   }
 
   /**
@@ -437,8 +438,8 @@ export class EditBitstreamPageComponent implements OnInit, OnDestroy {
     this.subs.push(
       this.translate.onLangChange
         .subscribe(() => {
-        this.updateFieldTranslations();
-      })
+          this.updateFieldTranslations();
+        })
     );
   }
 
@@ -629,11 +630,11 @@ export class EditBitstreamPageComponent implements OnInit, OnDestroy {
       } else {
         Metadata.setFirstValue(newMetadata, this.IIIF_LABEL_METADATA, rawForm.iiifLabelContainer.iiifLabel);
       }
-     if (isEmpty(rawForm.iiifTocContainer.iiifToc)) {
-       delete newMetadata[this.IIIF_TOC_METADATA];
-     } else {
+      if (isEmpty(rawForm.iiifTocContainer.iiifToc)) {
+        delete newMetadata[this.IIIF_TOC_METADATA];
+      } else {
         Metadata.setFirstValue(newMetadata, this.IIIF_TOC_METADATA, rawForm.iiifTocContainer.iiifToc);
-     }
+      }
       if (isEmpty(rawForm.iiifWidthContainer.iiifWidth)) {
         delete newMetadata[this.IMAGE_WIDTH_METADATA];
       } else {
@@ -668,10 +669,10 @@ export class EditBitstreamPageComponent implements OnInit, OnDestroy {
       this.router.navigate([getEntityEditRoute(this.entityType, this.itemId), 'bitstreams']);
     } else {
       this.bitstream.bundle.pipe(getFirstSucceededRemoteDataPayload(),
-          mergeMap((bundle: Bundle) => bundle.item.pipe(getFirstSucceededRemoteDataPayload())))
-          .subscribe((item) => {
-            this.router.navigate(([getItemEditRoute(item), 'bitstreams']));
-          });
+        mergeMap((bundle: Bundle) => bundle.item.pipe(getFirstSucceededRemoteDataPayload())))
+        .subscribe((item) => {
+          this.router.navigate(([getItemEditRoute(item), 'bitstreams']));
+        });
     }
   }
 
@@ -687,21 +688,24 @@ export class EditBitstreamPageComponent implements OnInit, OnDestroy {
 
     const isImage$ = this.bitstream.format.pipe(
       getFirstSucceededRemoteData(),
-      map((format: RemoteData<BitstreamFormat>) => format.payload.mimetype.includes('image/')));
+      map((format: RemoteData<BitstreamFormat>) => format.payload.mimetype.includes('image/'))
+    );
 
     const isIIIFBundle$ = this.bitstream.bundle.pipe(
       getFirstSucceededRemoteData(),
       map((bundle: RemoteData<Bundle>) =>
-        this.dsoNameService.getName(bundle.payload).match(regexExcludeBundles) == null));
+        this.dsoNameService.getName(bundle.payload).match(regexExcludeBundles) == null)
+    );
 
     const isEnabled$ = this.bitstream.bundle.pipe(
       getFirstSucceededRemoteData(),
       map((bundle: RemoteData<Bundle>) => bundle.payload.item.pipe(
-          getFirstSucceededRemoteData(),
-          map((item: RemoteData<Item>) =>
-            (item.payload.firstMetadataValue('dspace.iiif.enabled') &&
-              item.payload.firstMetadataValue('dspace.iiif.enabled').match(regexIIIFItem) !== null)
-      ))));
+        getFirstSucceededRemoteData(),
+        map((item: RemoteData<Item>) =>
+          (item.payload.firstMetadataValue('dspace.iiif.enabled') &&
+              item.payload.firstMetadataValue('dspace.iiif.enabled').match(regexIIIFItem) !== null))
+      ))
+    );
 
     const iiifSub = combineLatest(
       isImage$,

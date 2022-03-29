@@ -107,7 +107,8 @@ export class ReorderableRelationship extends Reorderable {
     protected store: Store<AppState>,
     protected submissionID: string,
     oldIndex?: number,
-    newIndex?: number) {
+    newIndex?: number
+  ) {
     super(oldIndex, newIndex);
     this.relationship = relationship;
     this.useLeftItem = useLeftItem;
@@ -200,7 +201,8 @@ export class ExistingMetadataListElementComponent implements OnInit, OnChanges, 
     this.submissionService.dispatchSave(this.submissionId);
     this.submissionService.getSubmissionObject(this.submissionId).pipe(
       filter((state: SubmissionObjectEntry) => !state.savePending && !state.isLoading),
-      take(1)).subscribe(() => {
+      take(1)
+    ).subscribe(() => {
       this.selectableListService.deselectSingle(this.listId, Object.assign(new ItemSearchResult(), { indexableObject: this.relatedItem }));
       this.store.dispatch(new RemoveRelationshipAction(this.submissionItem, this.relatedItem, this.relationshipOptions.relationshipType, this.submissionId));
       this.remove.emit();

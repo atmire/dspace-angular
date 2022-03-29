@@ -100,17 +100,18 @@ describe('WorkflowItemActionPageComponent', () => {
 });
 
 @Component({
-    selector: 'ds-workflow-item-test-action-page',
-    templateUrl: 'workflow-item-action-page.component.html'
-  }
-)
+  selector: 'ds-workflow-item-test-action-page',
+  templateUrl: 'workflow-item-action-page.component.html'
+})
 class TestComponent extends WorkflowItemActionPageComponent {
-  constructor(protected route: ActivatedRoute,
-              protected workflowItemService: WorkflowItemDataService,
-              protected router: Router,
-              protected routeService: RouteService,
-              protected notificationsService: NotificationsService,
-              protected translationService: TranslateService) {
+  constructor(
+    protected route: ActivatedRoute,
+    protected workflowItemService: WorkflowItemDataService,
+    protected router: Router,
+    protected routeService: RouteService,
+    protected notificationsService: NotificationsService,
+    protected translationService: TranslateService
+  ) {
     super(route, workflowItemService, router, routeService, notificationsService, translationService);
   }
 

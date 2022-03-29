@@ -49,9 +49,11 @@ export class NotificationsBoardComponent implements OnInit, OnDestroy {
    */
   public isPaused$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  constructor(private service: NotificationsService,
-              private store: Store<AppState>,
-              private cdr: ChangeDetectorRef) {
+  constructor(
+    private service: NotificationsService,
+    private store: Store<AppState>,
+    private cdr: ChangeDetectorRef
+  ) {
   }
 
   ngOnInit(): void {

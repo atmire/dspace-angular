@@ -64,7 +64,8 @@ describe('WorkflowItemAdminWorkflowGridElementComponent', () => {
           { provide: BitstreamDataService, useValue: {} },
         ],
         schemas: [NO_ERRORS_SCHEMA]
-      })
+      }
+    )
       .overrideComponent(WorkflowItemSearchResultAdminWorkflowGridElementComponent, {
         set: {
           entryComponents: [ItemGridElementComponent]

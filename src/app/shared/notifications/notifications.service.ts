@@ -16,8 +16,10 @@ import { environment } from '../../../environments/environment';
 @Injectable()
 export class NotificationsService {
 
-  constructor(private store: Store<Notification>,
-              private translate: TranslateService) {
+  constructor(
+    private store: Store<Notification>,
+    private translate: TranslateService
+  ) {
   }
 
   private add(notification: Notification) {
@@ -27,9 +29,9 @@ export class NotificationsService {
   }
 
   success(title: any = observableOf(''),
-          content: any = observableOf(''),
-          options: Partial<NotificationOptions> = {},
-          html: boolean = false): INotification {
+    content: any = observableOf(''),
+    options: Partial<NotificationOptions> = {},
+    html: boolean = false): INotification {
     const notificationOptions = { ...this.getDefaultOptions(), ...options };
     const notification = new Notification(uniqueId(), NotificationType.Success, title, content, notificationOptions, html);
     this.add(notification);
@@ -37,9 +39,9 @@ export class NotificationsService {
   }
 
   error(title: any = observableOf(''),
-        content: any = observableOf(''),
-        options: Partial<NotificationOptions> = {},
-        html: boolean = false): INotification {
+    content: any = observableOf(''),
+    options: Partial<NotificationOptions> = {},
+    html: boolean = false): INotification {
     const notificationOptions = { ...this.getDefaultOptions(), ...options };
     const notification = new Notification(uniqueId(), NotificationType.Error, title, content, notificationOptions, html);
     this.add(notification);
@@ -47,9 +49,9 @@ export class NotificationsService {
   }
 
   info(title: any = observableOf(''),
-       content: any = observableOf(''),
-       options: Partial<NotificationOptions> = {},
-       html: boolean = false): INotification {
+    content: any = observableOf(''),
+    options: Partial<NotificationOptions> = {},
+    html: boolean = false): INotification {
     const notificationOptions = { ...this.getDefaultOptions(), ...options };
     const notification = new Notification(uniqueId(), NotificationType.Info, title, content, notificationOptions, html);
     this.add(notification);
@@ -57,9 +59,9 @@ export class NotificationsService {
   }
 
   warning(title: any = observableOf(''),
-          content: any = observableOf(''),
-          options: NotificationOptions = this.getDefaultOptions(),
-          html: boolean = false): INotification {
+    content: any = observableOf(''),
+    options: NotificationOptions = this.getDefaultOptions(),
+    html: boolean = false): INotification {
     const notificationOptions = { ...this.getDefaultOptions(), ...options };
     const notification = new Notification(uniqueId(), NotificationType.Warning, title, content, notificationOptions, html);
     this.add(notification);
@@ -67,11 +69,11 @@ export class NotificationsService {
   }
 
   notificationWithAnchor(notificationType: NotificationType,
-                         options: NotificationOptions,
-                         href: string,
-                         hrefTranslateLabel: string,
-                         messageTranslateLabel: string,
-                         interpolateParam: string) {
+    options: NotificationOptions,
+    href: string,
+    hrefTranslateLabel: string,
+    messageTranslateLabel: string,
+    interpolateParam: string) {
     this.translate.get(hrefTranslateLabel)
       .pipe(first())
       .subscribe((hrefMsg) => {

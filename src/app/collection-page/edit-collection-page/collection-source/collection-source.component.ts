@@ -228,15 +228,17 @@ export class CollectionSourceComponent extends AbstractTrackableComponent implem
    */
   displayedNotifications: INotification[] = [];
 
-  public constructor(public objectUpdatesService: ObjectUpdatesService,
-                     public notificationsService: NotificationsService,
-                     protected location: Location,
-                     protected formService: DynamicFormService,
-                     protected translate: TranslateService,
-                     protected route: ActivatedRoute,
-                     protected router: Router,
-                     protected collectionService: CollectionDataService,
-                     protected requestService: RequestService) {
+  public constructor(
+    public objectUpdatesService: ObjectUpdatesService,
+    public notificationsService: NotificationsService,
+    protected location: Location,
+    protected formService: DynamicFormService,
+    protected translate: TranslateService,
+    protected route: ActivatedRoute,
+    protected router: Router,
+    protected collectionService: CollectionDataService,
+    protected requestService: RequestService
+  ) {
     super(objectUpdatesService, notificationsService, translate);
   }
 

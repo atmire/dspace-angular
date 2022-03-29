@@ -33,7 +33,8 @@ export class ProcessDataService extends DataService<Process> {
     protected notificationsService: NotificationsService,
     protected bitstreamDataService: BitstreamDataService,
     protected http: HttpClient,
-    protected comparator: DefaultChangeAnalyzer<Process>) {
+    protected comparator: DefaultChangeAnalyzer<Process>
+  ) {
     super();
   }
 

@@ -43,17 +43,18 @@ export class BitstreamRequestACopyPageComponent implements OnInit, OnDestroy {
   bitstream: Bitstream;
   bitstreamName: string;
 
-  constructor(private location: Location,
-              private translateService: TranslateService,
-              private route: ActivatedRoute,
-              protected router: Router,
-              private authorizationService: AuthorizationDataService,
-              private auth: AuthService,
-              private formBuilder: FormBuilder,
-              private itemRequestDataService: ItemRequestDataService,
-              private notificationsService: NotificationsService,
-              private dsoNameService: DSONameService,
-              private bitstreamService: BitstreamDataService,
+  constructor(
+    private location: Location,
+    private translateService: TranslateService,
+    private route: ActivatedRoute,
+    protected router: Router,
+    private authorizationService: AuthorizationDataService,
+    private auth: AuthService,
+    private formBuilder: FormBuilder,
+    private itemRequestDataService: ItemRequestDataService,
+    private notificationsService: NotificationsService,
+    private dsoNameService: DSONameService,
+    private bitstreamService: BitstreamDataService,
   ) {
   }
 
@@ -64,7 +65,7 @@ export class BitstreamRequestACopyPageComponent implements OnInit, OnDestroy {
       }),
       email: new FormControl('', {
         validators: [Validators.required,
-        Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]
+          Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]
       }),
       allfiles: new FormControl(''),
       message: new FormControl(''),

@@ -52,7 +52,8 @@ export class BrowserKlaroService extends KlaroService {
     private translateService: TranslateService,
     private authService: AuthService,
     private ePersonService: EPersonDataService,
-    private cookieService: CookieService) {
+    private cookieService: CookieService
+  ) {
     super();
   }
   /**
@@ -221,12 +222,11 @@ export class BrowserKlaroService extends KlaroService {
       .pipe(
         take(1),
         switchMap((operations: Operation[]) => {
-            if (isNotEmpty(operations)) {
-              return this.ePersonService.patch(user, operations);
-            }
-            return observableOf(undefined);
+          if (isNotEmpty(operations)) {
+            return this.ePersonService.patch(user, operations);
           }
-        )
+          return observableOf(undefined);
+        })
       ).subscribe();
   }
 

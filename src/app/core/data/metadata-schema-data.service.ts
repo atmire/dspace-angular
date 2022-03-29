@@ -33,7 +33,8 @@ export class MetadataSchemaDataService extends DataService<MetadataSchema> {
     protected objectCache: ObjectCacheService,
     protected comparator: DefaultChangeAnalyzer<MetadataSchema>,
     protected http: HttpClient,
-    protected notificationsService: NotificationsService) {
+    protected notificationsService: NotificationsService
+  ) {
     super();
   }
 

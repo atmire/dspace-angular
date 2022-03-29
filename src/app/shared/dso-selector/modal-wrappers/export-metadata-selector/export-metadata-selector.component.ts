@@ -33,10 +33,15 @@ export class ExportMetadataSelectorComponent extends DSOSelectorModalWrapperComp
   selectorTypes = [DSpaceObjectType.COLLECTION, DSpaceObjectType.COMMUNITY];
   action = SelectorActionType.EXPORT_METADATA;
 
-  constructor(protected activeModal: NgbActiveModal, protected route: ActivatedRoute, private router: Router,
-              protected notificationsService: NotificationsService, protected translationService: TranslateService,
-              protected scriptDataService: ScriptDataService,
-              private modalService: NgbModal) {
+  constructor(
+    protected activeModal: NgbActiveModal,
+    protected route: ActivatedRoute,
+    private router: Router,
+    protected notificationsService: NotificationsService,
+    protected translationService: TranslateService,
+    protected scriptDataService: ScriptDataService,
+    private modalService: NgbModal
+  ) {
     super(activeModal, route);
   }
 
@@ -100,6 +105,7 @@ export class ExportMetadataSelectorComponent extends DSOSelectorModalWrapperComp
             this.notificationsService.error(title, content);
             return false;
           }
-        }));
+        })
+      );
   }
 }

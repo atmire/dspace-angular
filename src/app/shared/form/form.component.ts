@@ -103,9 +103,11 @@ export class FormComponent implements OnDestroy, OnInit {
    */
   private subs: Subscription[] = [];
 
-  constructor(private formService: FormService,
-              protected changeDetectorRef: ChangeDetectorRef,
-              private formBuilderService: FormBuilderService) {
+  constructor(
+    private formService: FormService,
+    protected changeDetectorRef: ChangeDetectorRef,
+    private formBuilderService: FormBuilderService
+  ) {
   }
 
   /**
@@ -161,7 +163,8 @@ export class FormComponent implements OnDestroy, OnInit {
     this.formValid = this.getFormGroupValidStatus();
 
     this.subs.push(this.formGroup.statusChanges.pipe(
-      filter(() => this.formValid !== this.getFormGroupValidStatus()))
+      filter(() => this.formValid !== this.getFormGroupValidStatus())
+    )
       .subscribe(() => {
         this.formService.setStatusChanged(this.formId, this.getFormGroupValidStatus());
         this.formValid = this.getFormGroupValidStatus();
@@ -171,7 +174,8 @@ export class FormComponent implements OnDestroy, OnInit {
       this.formService.getForm(this.formId).pipe(
         filter((formState: FormEntry) => !!formState && (isNotEmpty(formState.errors) || isNotEmpty(this.formErrors))),
         map((formState) => formState.errors),
-        distinctUntilChanged())
+        distinctUntilChanged()
+      )
         .subscribe((errors: FormError[]) => {
           const { formGroup, formModel } = this;
           errors

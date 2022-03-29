@@ -12,11 +12,13 @@ import { AuthService } from '../../../auth/auth.service';
  * Test implementation of abstract class DsoPageSingleFeatureGuard
  */
 class DsoPageSingleFeatureGuardImpl extends DsoPageSingleFeatureGuard<any> {
-  constructor(protected resolver: Resolve<RemoteData<any>>,
-              protected authorizationService: AuthorizationDataService,
-              protected router: Router,
-              protected authService: AuthService,
-              protected featureID: FeatureID) {
+  constructor(
+    protected resolver: Resolve<RemoteData<any>>,
+    protected authorizationService: AuthorizationDataService,
+    protected router: Router,
+    protected authService: AuthService,
+    protected featureID: FeatureID
+  ) {
     super(resolver, authorizationService, router, authService);
   }
 

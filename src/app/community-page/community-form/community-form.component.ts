@@ -67,13 +67,15 @@ export class CommunityFormComponent extends ComColFormComponent<Community> {
     }),
   ];
 
-  public constructor(protected formService: DynamicFormService,
-                     protected translate: TranslateService,
-                     protected notificationsService: NotificationsService,
-                     protected authService: AuthService,
-                     protected dsoService: CommunityDataService,
-                     protected requestService: RequestService,
-                     protected objectCache: ObjectCacheService) {
+  public constructor(
+    protected formService: DynamicFormService,
+    protected translate: TranslateService,
+    protected notificationsService: NotificationsService,
+    protected authService: AuthService,
+    protected dsoService: CommunityDataService,
+    protected requestService: RequestService,
+    protected objectCache: ObjectCacheService
+  ) {
     super(formService, translate, notificationsService, authService, requestService, objectCache);
   }
 }

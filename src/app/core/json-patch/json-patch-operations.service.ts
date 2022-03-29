@@ -74,14 +74,17 @@ export abstract class JsonPatchOperationsService<ResponseDefinitionDomain, Patch
               }
             }
             return this.getRequestInstance(requestId, endpointURL, body);
-          }));
-      })));
+          })
+        );
+      })
+    ));
 
     return observableMerge(
       emptyRequest$.pipe(
         filter((request: PatchRequestDefinition) => isEmpty(request.body)),
         tap(() => startTransactionTime = null),
-        map(() => null)),
+        map(() => null)
+      ),
       patchRequest$.pipe(
         filter((request: PatchRequestDefinition) => isNotEmpty(request.body)),
         tap(() => this.store.dispatch(new StartTransactionPatchOperationsAction(resourceType, resourceId, startTransactionTime))),
@@ -100,8 +103,9 @@ export abstract class JsonPatchOperationsService<ResponseDefinitionDomain, Patch
               }
             }),
             distinctUntilChanged()
-        );
-        }))
+          );
+        })
+      )
     );
   }
 
@@ -148,7 +152,8 @@ export abstract class JsonPatchOperationsService<ResponseDefinitionDomain, Patch
     const href$ = this.halService.getEndpoint(linkPath).pipe(
       filter((href: string) => isNotEmpty(href)),
       distinctUntilChanged(),
-      map((endpointURL: string) => this.getEndpointByIDHref(endpointURL, scopeId)));
+      map((endpointURL: string) => this.getEndpointByIDHref(endpointURL, scopeId))
+    );
 
     return this.submitJsonPatchOperations(href$, resourceType);
   }
@@ -183,7 +188,8 @@ export abstract class JsonPatchOperationsService<ResponseDefinitionDomain, Patch
     const hrefObs = this.halService.getEndpoint(linkPath).pipe(
       filter((href: string) => isNotEmpty(href)),
       distinctUntilChanged(),
-      map((endpointURL: string) => this.getEndpointByIDHref(endpointURL, scopeId)));
+      map((endpointURL: string) => this.getEndpointByIDHref(endpointURL, scopeId))
+    );
 
     return this.submitJsonPatchOperations(hrefObs, resourceType, resourceId);
   }

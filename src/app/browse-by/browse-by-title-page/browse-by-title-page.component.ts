@@ -26,11 +26,13 @@ import { PaginationComponentOptions } from '../../shared/pagination/pagination-c
 @rendersBrowseBy(BrowseByDataType.Title)
 export class BrowseByTitlePageComponent extends BrowseByMetadataPageComponent {
 
-  public constructor(protected route: ActivatedRoute,
-                     protected browseService: BrowseService,
-                     protected dsoService: DSpaceObjectDataService,
-                     protected paginationService: PaginationService,
-                     protected router: Router) {
+  public constructor(
+    protected route: ActivatedRoute,
+    protected browseService: BrowseService,
+    protected dsoService: DSpaceObjectDataService,
+    protected paginationService: PaginationService,
+    protected router: Router
+  ) {
     super(route, browseService, dsoService, paginationService, router);
   }
 
@@ -48,7 +50,8 @@ export class BrowseByTitlePageComponent extends BrowseByMetadataPageComponent {
         this.browseId = params.id || this.defaultBrowseId;
         this.updatePageWithItems(browseParamsToOptions(params, currentPage, currentSort, this.browseId), undefined, undefined);
         this.updateParent(params.scope);
-      }));
+      })
+    );
     this.updateStartsWithTextOptions();
   }
 

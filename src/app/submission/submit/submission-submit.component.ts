@@ -91,14 +91,16 @@ export class SubmissionSubmitComponent implements OnDestroy, OnInit {
    * @param {ViewContainerRef} viewContainerRef
    * @param {ActivatedRoute} route
    */
-  constructor(private changeDetectorRef: ChangeDetectorRef,
-              private notificationsService: NotificationsService,
-              private router: Router,
-              private itemDataService: ItemDataService,
-              private submissionService: SubmissionService,
-              private translate: TranslateService,
-              private viewContainerRef: ViewContainerRef,
-              private route: ActivatedRoute) {
+  constructor(
+    private changeDetectorRef: ChangeDetectorRef,
+    private notificationsService: NotificationsService,
+    private router: Router,
+    private itemDataService: ItemDataService,
+    private submissionService: SubmissionService,
+    private translate: TranslateService,
+    private viewContainerRef: ViewContainerRef,
+    private route: ActivatedRoute
+  ) {
     this.route
       .queryParams
       .subscribe((params) => {
@@ -127,8 +129,7 @@ export class SubmissionSubmitComponent implements OnDestroy, OnInit {
       this.itemLink$.pipe(
         isNotEmptyOperator(),
         switchMap((itemLink: string) =>
-          this.itemDataService.findByHref(itemLink)
-        ),
+          this.itemDataService.findByHref(itemLink)),
         getAllSucceededRemoteData(),
         // Multiple sources can update the item in quick succession.
         // We only want to rerender the form if the item is unchanged for some time

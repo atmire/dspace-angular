@@ -50,10 +50,11 @@ export class DsDynamicTagComponent extends DsDynamicVocabularyComponent implemen
   currentValue: any;
   public pageInfo: PageInfo;
 
-  constructor(protected vocabularyService: VocabularyService,
-              private cdr: ChangeDetectorRef,
-              protected layoutService: DynamicFormLayoutService,
-              protected validationService: DynamicFormValidationService
+  constructor(
+    protected vocabularyService: VocabularyService,
+    private cdr: ChangeDetectorRef,
+    protected layoutService: DynamicFormLayoutService,
+    protected validationService: DynamicFormValidationService
   ) {
     super(vocabularyService, layoutService, validationService);
   }
@@ -85,12 +86,14 @@ export class DsDynamicTagComponent extends DsDynamicVocabularyComponent implemen
                 new PageInfo(),
                 []
               ));
-            }));
+            })
+          );
         }
       }),
       map((list: PaginatedList<VocabularyEntry>) => list.page),
       tap(() => this.changeSearchingStatus(false)),
-      merge(this.hideSearchingWhenUnsubscribed));
+      merge(this.hideSearchingWhenUnsubscribed)
+    );
 
   /**
    * Initialize the component, setting up the init form value
@@ -102,7 +105,8 @@ export class DsDynamicTagComponent extends DsDynamicVocabularyComponent implemen
       this.model.value as any[],
       'display',
       null,
-      environment.submission.icons.metadata);
+      environment.submission.icons.metadata
+    );
 
     this.chips.chipsItems
       .subscribe((subItems: any[]) => {

@@ -40,7 +40,9 @@ export class JsonPatchOperationsBuilder {
       new NewPatchAddOperationAction(
         path.rootElement,
         path.subRootElement,
-        path.path, this.prepareValue(value, plain, first)));
+        path.path, this.prepareValue(value, plain, first)
+      )
+    );
   }
 
   /**
@@ -62,7 +64,9 @@ export class JsonPatchOperationsBuilder {
           path.rootElement,
           path.subRootElement,
           path.path,
-          this.prepareValue(value, plain, false)));
+          this.prepareValue(value, plain, false)
+        )
+      );
     }
   }
 
@@ -96,7 +100,9 @@ export class JsonPatchOperationsBuilder {
       new NewPatchRemoveOperationAction(
         path.rootElement,
         path.subRootElement,
-        path.path));
+        path.path
+      )
+    );
   }
 
   protected prepareValue(value: any, plain: boolean, first: boolean) {

@@ -20,10 +20,11 @@ export abstract class AuthRequestService {
   protected browseEndpoint = '';
   protected shortlivedtokensEndpoint = 'shortlivedtokens';
 
-  constructor(protected halService: HALEndpointService,
-              protected requestService: RequestService,
-              private rdbService: RemoteDataBuildService
-              ) {
+  constructor(
+    protected halService: HALEndpointService,
+    protected requestService: RequestService,
+    private rdbService: RemoteDataBuildService
+  ) {
   }
 
   protected fetchRequest(request: RestRequest): Observable<RemoteData<AuthStatus>> {
@@ -44,7 +45,8 @@ export abstract class AuthRequestService {
       map((endpointURL: string) => new PostRequest(this.requestService.generateRequestId(), endpointURL, body, options)),
       tap((request: PostRequest) => this.requestService.send(request)),
       mergeMap((request: PostRequest) => this.fetchRequest(request)),
-      distinctUntilChanged());
+      distinctUntilChanged()
+    );
   }
 
   public getRequest(method: string, options?: HttpOptions): Observable<RemoteData<AuthStatus>> {
@@ -55,7 +57,8 @@ export abstract class AuthRequestService {
       map((endpointURL: string) => new GetRequest(this.requestService.generateRequestId(), endpointURL, undefined, options)),
       tap((request: GetRequest) => this.requestService.send(request)),
       mergeMap((request: GetRequest) => this.fetchRequest(request)),
-      distinctUntilChanged());
+      distinctUntilChanged()
+    );
   }
 
   /**

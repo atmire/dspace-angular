@@ -216,7 +216,8 @@ function newOperation(state: JsonPatchOperationsState, action): JsonPatchOperati
     action.type,
     action.payload.path,
     hasValue(action.payload.value) ? action.payload.value : null,
-    hasValue(action.payload.from) ? action.payload.from : null);
+    hasValue(action.payload.from) ? action.payload.from : null
+  );
 
   if (hasValue(newState[ action.payload.resourceType ])
     && hasValue(newState[ action.payload.resourceType ].children)) {

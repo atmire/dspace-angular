@@ -140,21 +140,23 @@ export class SubmissionSectionFormComponent extends SectionModelComponent {
    * @param {SectionDataObject} injectedSectionData
    * @param {string} injectedSubmissionId
    */
-  constructor(protected cdr: ChangeDetectorRef,
-              protected formBuilderService: FormBuilderService,
-              protected formOperationsService: SectionFormOperationsService,
-              protected formService: FormService,
-              protected formConfigService: SubmissionFormsConfigService,
-              protected notificationsService: NotificationsService,
-              protected sectionService: SectionsService,
-              protected submissionService: SubmissionService,
-              protected translate: TranslateService,
-              protected submissionObjectService: SubmissionObjectDataService,
-              protected objectCache: ObjectCacheService,
-              protected requestService: RequestService,
-              @Inject('collectionIdProvider') public injectedCollectionId: string,
-              @Inject('sectionDataProvider') public injectedSectionData: SectionDataObject,
-              @Inject('submissionIdProvider') public injectedSubmissionId: string) {
+  constructor(
+    protected cdr: ChangeDetectorRef,
+    protected formBuilderService: FormBuilderService,
+    protected formOperationsService: SectionFormOperationsService,
+    protected formService: FormService,
+    protected formConfigService: SubmissionFormsConfigService,
+    protected notificationsService: NotificationsService,
+    protected sectionService: SectionsService,
+    protected submissionService: SubmissionService,
+    protected translate: TranslateService,
+    protected submissionObjectService: SubmissionObjectDataService,
+    protected objectCache: ObjectCacheService,
+    protected requestService: RequestService,
+    @Inject('collectionIdProvider') public injectedCollectionId: string,
+    @Inject('sectionDataProvider') public injectedSectionData: SectionDataObject,
+    @Inject('submissionIdProvider') public injectedSubmissionId: string
+  ) {
     super(injectedCollectionId, injectedSectionData, injectedSubmissionId);
   }
 
@@ -173,9 +175,11 @@ export class SubmissionSectionFormComponent extends SectionModelComponent {
           this.sectionService.getSectionData(this.submissionId, this.sectionData.id, this.sectionData.sectionType),
           this.submissionObjectService.findById(this.submissionId, true, false, followLink('item')).pipe(
             getFirstSucceededRemoteData(),
-            getRemoteDataPayload())
+            getRemoteDataPayload()
+          )
         ])),
-      take(1))
+      take(1)
+    )
       .subscribe(([sectionData, submissionObject]: [WorkspaceitemSectionFormObject, SubmissionObject]) => {
         if (isUndefined(this.formModel)) {
           // this.sectionData.errorsToShow = [];
@@ -337,7 +341,8 @@ export class SubmissionSectionFormComponent extends SectionModelComponent {
    */
   checksForErrors(errors: SubmissionSectionError[]): void {
     this.formService.isFormInitialized(this.formId).pipe(
-      find((status: boolean) => status === true && !this.isUpdating))
+      find((status: boolean) => status === true && !this.isUpdating)
+    )
       .subscribe(() => {
         this.sectionService.checkSectionErrors(this.submissionId, this.sectionData.id, this.formId, errors, this.sectionData.errorsToShow);
         this.sectionData.errorsToShow = errors;
@@ -354,7 +359,8 @@ export class SubmissionSectionFormComponent extends SectionModelComponent {
        * Subscribe to form's data
        */
       this.formService.getFormData(this.formId).pipe(
-        distinctUntilChanged())
+        distinctUntilChanged()
+      )
         .subscribe((formData) => {
           this.formData = formData;
         }),
@@ -366,7 +372,8 @@ export class SubmissionSectionFormComponent extends SectionModelComponent {
         filter((sectionState: SubmissionSectionObject) => {
           return isNotEmpty(sectionState) && (isNotEmpty(sectionState.data) || isNotEmpty(sectionState.errorsToShow));
         }),
-        distinctUntilChanged())
+        distinctUntilChanged()
+      )
         .subscribe((sectionState: SubmissionSectionObject) => {
           this.fieldsOnTheirWayToBeRemoved = new Map();
           this.sectionMetadata = sectionState.metadata;
@@ -387,7 +394,8 @@ export class SubmissionSectionFormComponent extends SectionModelComponent {
       this.pathCombiner,
       event,
       this.previousValue,
-      this.hasStoredValue(this.formBuilderService.getId(event.model), this.formOperationsService.getArrayIndexFromEvent(event)));
+      this.hasStoredValue(this.formBuilderService.getId(event.model), this.formOperationsService.getArrayIndexFromEvent(event))
+    );
     const metadata = this.formOperationsService.getFieldPathSegmentedFromChangeEvent(event);
     const value = this.formOperationsService.getFieldValueFromChangeEvent(event);
 
@@ -450,7 +458,8 @@ export class SubmissionSectionFormComponent extends SectionModelComponent {
       this.pathCombiner,
       event,
       this.previousValue,
-      this.hasStoredValue(fieldId, fieldIndex));
+      this.hasStoredValue(fieldId, fieldIndex)
+    );
 
   }
 
@@ -494,6 +503,7 @@ export class SubmissionSectionFormComponent extends SectionModelComponent {
       this.pathCombiner,
       event,
       this.previousValue,
-      null);
+      null
+    );
   }
 }

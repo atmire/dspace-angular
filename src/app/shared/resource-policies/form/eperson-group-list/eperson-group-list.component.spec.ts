@@ -45,8 +45,7 @@ describe('EpersonGroupListComponent test suite', () => {
     },
     {
       linkPath: 'epersons'
-    }
-  );
+    });
 
   const mockGroupService = jasmine.createSpyObj('groupService',
     {
@@ -56,8 +55,7 @@ describe('EpersonGroupListComponent test suite', () => {
     },
     {
       linkPath: 'groups'
-    }
-  );
+    });
 
   const epersonPaginatedList = buildPaginatedList(new PageInfo(), [EPersonMock, EPersonMock]);
   const epersonPaginatedListRD = createSuccessfulRemoteDataObject(epersonPaginatedList);

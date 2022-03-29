@@ -25,9 +25,12 @@ export class VocabularyTreeFlatDataSource<T, F> extends DataSource<F> {
     this._treeControl.dataNodes = this._flattenedData.value;
   }
 
-  constructor(private _treeControl: FlatTreeControl<F>,
-              private _treeFlattener: VocabularyTreeFlattener<T, F>,
-              initialData: T[] = []) {
+  constructor(
+    private _treeControl: FlatTreeControl<F>,
+    private _treeFlattener: VocabularyTreeFlattener<T,
+    F>,
+    initialData: T[] = []
+  ) {
     super();
     this._data = new BehaviorSubject<T[]>(initialData);
   }
@@ -40,7 +43,8 @@ export class VocabularyTreeFlatDataSource<T, F> extends DataSource<F> {
     ];
     return merge(...changes).pipe(map(() => {
       this._expandedData.next(
-        this._treeFlattener.expandFlattenedNodes(this._flattenedData.value, this._treeControl));
+        this._treeFlattener.expandFlattenedNodes(this._flattenedData.value, this._treeControl)
+      );
       return this._expandedData.value;
     }));
   }

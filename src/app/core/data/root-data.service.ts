@@ -38,7 +38,8 @@ class DataServiceImpl extends DataService<Root> {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DefaultChangeAnalyzer<Root>) {
+    protected comparator: DefaultChangeAnalyzer<Root>
+  ) {
     super();
   }
 }
@@ -63,7 +64,8 @@ export class RootDataService {
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
     protected comparator: DefaultChangeAnalyzer<Root>,
-    protected restService: DspaceRestService) {
+    protected restService: DspaceRestService
+  ) {
     this.dataService = new DataServiceImpl(requestService, rdbService, null, objectCache, halService, notificationsService, http, comparator);
   }
 

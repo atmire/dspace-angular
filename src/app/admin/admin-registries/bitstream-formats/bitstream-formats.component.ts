@@ -45,12 +45,13 @@ export class BitstreamFormatsComponent implements OnInit, OnDestroy {
     pageSize: 20
   });
 
-  constructor(private notificationsService: NotificationsService,
-              private router: Router,
-              private translateService: TranslateService,
-              private bitstreamFormatService: BitstreamFormatDataService,
-              private paginationService: PaginationService,
-              ) {
+  constructor(
+    private notificationsService: NotificationsService,
+    private router: Router,
+    private translateService: TranslateService,
+    private bitstreamFormatService: BitstreamFormatDataService,
+    private paginationService: PaginationService,
+  ) {
   }
 
 

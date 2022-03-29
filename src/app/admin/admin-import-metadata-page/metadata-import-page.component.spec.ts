@@ -29,8 +29,7 @@ describe('MetadataImportPageComponent', () => {
     scriptService = jasmine.createSpyObj('scriptService',
       {
         invoke: createSuccessfulRemoteDataObject$({ processId: '45' })
-      }
-    );
+      });
     router = jasmine.createSpyObj('router', {
       navigateByUrl: jasmine.createSpy('navigateByUrl')
     });

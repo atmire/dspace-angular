@@ -83,12 +83,14 @@ export class SubgroupsListComponent implements OnInit, OnDestroy {
   // current active group being edited
   groupBeingEdited: Group;
 
-  constructor(public groupDataService: GroupDataService,
-              private translateService: TranslateService,
-              private notificationsService: NotificationsService,
-              private formBuilder: FormBuilder,
-              private paginationService: PaginationService,
-              private router: Router) {
+  constructor(
+    public groupDataService: GroupDataService,
+    private translateService: TranslateService,
+    private notificationsService: NotificationsService,
+    private formBuilder: FormBuilder,
+    private paginationService: PaginationService,
+    private router: Router
+  ) {
     this.currentSearchQuery = '';
   }
 
@@ -116,16 +118,16 @@ export class SubgroupsListComponent implements OnInit, OnDestroy {
       SubKey.Members,
       this.paginationService.getCurrentPagination(this.config.id, this.config).pipe(
         switchMap((config) => this.groupDataService.findAllByHref(this.groupBeingEdited._links.subgroups.href, {
-            currentPage: config.currentPage,
-            elementsPerPage: config.pageSize
-          },
-          true,
-          true,
-          followLink('object')
-        ))
+          currentPage: config.currentPage,
+          elementsPerPage: config.pageSize
+        },
+        true,
+        true,
+        followLink('object')))
       ).subscribe((rd: RemoteData<PaginatedList<Group>>) => {
         this.subGroups$.next(rd);
-      }));
+      })
+    );
   }
 
   /**
@@ -147,7 +149,8 @@ export class SubgroupsListComponent implements OnInit, OnDestroy {
                 getFirstSucceededRemoteData(),
                 getRemoteDataPayload(),
                 map((listTotalGroups: PaginatedList<Group>) => listTotalGroups.page.filter((groupInList: Group) => groupInList.id === possibleSubgroup.id)),
-                map((groups: Group[]) => groups.length > 0));
+                map((groups: Group[]) => groups.length > 0)
+              );
           }
         } else {
           return observableOf(false);
@@ -221,8 +224,7 @@ export class SubgroupsListComponent implements OnInit, OnDestroy {
       switchMap((config) => this.groupDataService.searchGroups(this.currentSearchQuery, {
         currentPage: config.currentPage,
         elementsPerPage: config.pageSize
-      }, true, true, followLink('object')
-      ))
+      }, true, true, followLink('object')))
     ).subscribe((rd: RemoteData<PaginatedList<Group>>) => {
       this.searchResults$.next(rd);
     }));

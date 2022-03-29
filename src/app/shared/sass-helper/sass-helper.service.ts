@@ -6,7 +6,8 @@ import { AddCSSVariableAction } from './sass-helper.actions';
 @Injectable()
 export class CSSVariableService {
   constructor(
-    protected store: Store<AppState>) {
+    protected store: Store<AppState>
+  ) {
   }
 
   addCSSVariable(name: string, value: string) {

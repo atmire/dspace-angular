@@ -12,11 +12,13 @@ import { DsoPageSomeFeatureGuard } from './dso-page-some-feature.guard';
  * Test implementation of abstract class DsoPageSomeFeatureGuard
  */
 class DsoPageSomeFeatureGuardImpl extends DsoPageSomeFeatureGuard<any> {
-  constructor(protected resolver: Resolve<RemoteData<any>>,
-              protected authorizationService: AuthorizationDataService,
-              protected router: Router,
-              protected authService: AuthService,
-              protected featureIDs: FeatureID[]) {
+  constructor(
+    protected resolver: Resolve<RemoteData<any>>,
+    protected authorizationService: AuthorizationDataService,
+    protected router: Router,
+    protected authService: AuthService,
+    protected featureIDs: FeatureID[]
+  ) {
     super(resolver, authorizationService, router, authService);
   }
 

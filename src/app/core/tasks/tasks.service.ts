@@ -59,7 +59,8 @@ export abstract class TasksService<T extends CacheableObject> extends DataServic
       map((endpointURL: string) => new TaskPostRequest(requestId, endpointURL, body, options)),
       tap((request: PostRequest) => this.requestService.send(request)),
       mergeMap((request: PostRequest) => this.fetchRequest(requestId)),
-      distinctUntilChanged());
+      distinctUntilChanged()
+    );
   }
 
   /**
@@ -80,7 +81,8 @@ export abstract class TasksService<T extends CacheableObject> extends DataServic
       map((endpointURL: string) => new TaskDeleteRequest(requestId, endpointURL, null, options)),
       tap((request: DeleteRequest) => this.requestService.send(request)),
       mergeMap((request: DeleteRequest) => this.fetchRequest(requestId)),
-      distinctUntilChanged());
+      distinctUntilChanged()
+    );
   }
 
   /**
@@ -92,7 +94,8 @@ export abstract class TasksService<T extends CacheableObject> extends DataServic
     return this.halService.getEndpoint(linkPath || this.linkPath).pipe(
       filter((href: string) => isNotEmpty(href)),
       distinctUntilChanged(),
-      map((endpointURL: string) => this.getEndpointByIDHref(endpointURL, scopeId)));
+      map((endpointURL: string) => this.getEndpointByIDHref(endpointURL, scopeId))
+    );
   }
 
   /**
@@ -110,8 +113,8 @@ export abstract class TasksService<T extends CacheableObject> extends DataServic
       find((href: string) => hasValue(href)),
       mergeMap((href) => this.findByHref(href, false, true).pipe(
         getAllCompletedRemoteData(),
-        tap(() => this.requestService.setStaleByHrefSubstring(href)))
-      )
+        tap(() => this.requestService.setStaleByHrefSubstring(href))
+      ))
     );
   }
 

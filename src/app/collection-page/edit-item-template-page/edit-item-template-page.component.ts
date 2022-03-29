@@ -35,8 +35,10 @@ export class EditItemTemplatePageComponent implements OnInit {
    */
   AlertTypeEnum = AlertType;
 
-  constructor(protected route: ActivatedRoute,
-              public itemTemplateService: ItemTemplateDataService) {
+  constructor(
+    protected route: ActivatedRoute,
+    public itemTemplateService: ItemTemplateDataService
+  ) {
   }
 
   ngOnInit(): void {

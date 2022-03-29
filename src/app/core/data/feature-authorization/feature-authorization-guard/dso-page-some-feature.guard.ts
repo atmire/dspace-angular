@@ -14,10 +14,12 @@ import { SomeFeatureAuthorizationGuard } from './some-feature-authorization.guar
  * This guard utilizes a resolver to retrieve the relevant object to check authorizations for
  */
 export abstract class DsoPageSomeFeatureGuard<T extends DSpaceObject> extends SomeFeatureAuthorizationGuard {
-  constructor(protected resolver: Resolve<RemoteData<T>>,
-              protected authorizationService: AuthorizationDataService,
-              protected router: Router,
-              protected authService: AuthService) {
+  constructor(
+    protected resolver: Resolve<RemoteData<T>>,
+    protected authorizationService: AuthorizationDataService,
+    protected router: Router,
+    protected authService: AuthService
+  ) {
     super(authorizationService, router, authService);
   }
 

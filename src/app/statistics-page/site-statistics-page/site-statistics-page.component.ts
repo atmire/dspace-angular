@@ -49,8 +49,7 @@ export class SiteStatisticsPageComponent extends StatisticsPageComponent<Site> {
   protected getReports$() {
     return this.scope$.pipe(
       switchMap((scope) =>
-        this.usageReportService.searchStatistics(scope._links.self.href, 0, 10),
-      ),
+        this.usageReportService.searchStatistics(scope._links.self.href, 0, 10),),
     );
   }
 }

@@ -71,7 +71,8 @@ export abstract class MyDSpaceActionsComponent<T extends DSpaceObject, TService 
     protected notificationsService: NotificationsService,
     protected translate: TranslateService,
     protected searchService: SearchService,
-    protected requestService: RequestService) {
+    protected requestService: RequestService
+  ) {
     const factory = new MydspaceActionsServiceFactory<T, TService>();
     this.objectDataService = injector.get(factory.getConstructor(objectType));
   }

@@ -51,8 +51,7 @@ export class ClaimedTaskSearchResultDetailElementComponent extends SearchResultD
     super.ngOnInit();
     this.linkService.resolveLinks(this.dso, followLink('workflowitem', {},
       followLink('item', {}, followLink('bundles')),
-      followLink('submitter')
-    ), followLink('action'));
+      followLink('submitter')), followLink('action'));
     this.workflowitemRD$ = this.dso.workflowitem as Observable<RemoteData<WorkflowItem>>;
   }
 

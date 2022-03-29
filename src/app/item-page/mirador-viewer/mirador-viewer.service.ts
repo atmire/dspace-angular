@@ -47,7 +47,7 @@ export class MiradorViewerService {
         )),
         map((format: BitstreamFormat) => {
           if (format.mimetype.includes('image')) {
-          count++;
+            count++;
           }
           return count;
         }),

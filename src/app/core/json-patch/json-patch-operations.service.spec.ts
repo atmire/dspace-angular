@@ -34,7 +34,8 @@ class TestService extends JsonPatchOperationsService<SubmitDataResponseDefinitio
     protected requestService: RequestService,
     protected store: Store<CoreState>,
     protected halService: HALEndpointService,
-    protected rdbService: RemoteDataBuildService) {
+    protected rdbService: RemoteDataBuildService
+  ) {
 
     super();
   }

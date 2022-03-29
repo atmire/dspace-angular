@@ -61,8 +61,7 @@ describe('ItemEditBitstreamComponent', () => {
         hasUpdates: observableOf(true),
         isReinstatable: observableOf(false),
         isValidPage: observableOf(true)
-      }
-    );
+      });
 
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],

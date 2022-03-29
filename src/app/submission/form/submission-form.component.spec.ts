@@ -151,7 +151,8 @@ describe('SubmissionFormComponent Component', () => {
         submissionDefinition,
         sectionsData,
         comp.item,
-        null);
+        null
+      );
       expect(submissionServiceStub.startAutoSave).toHaveBeenCalled();
       done();
     });

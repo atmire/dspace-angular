@@ -256,7 +256,8 @@ export const returnForbiddenUrlTreeOrLoginOnAllFalse = (router: Router, authServ
             return router.parseUrl('login');
           }
         }
-      }));
+      })
+    );
 
 /**
  * Operator that returns a UrlTree to the unauthorized page when the boolean received is false
@@ -270,7 +271,8 @@ export const returnEndUserAgreementUrlTreeOnFalse = (router: Router, redirect: s
       map((hasAgreed: boolean) => {
         const queryParams = { redirect: encodeURIComponent(redirect) };
         return hasAgreed ? hasAgreed : router.createUrlTree([getEndUserAgreementPath()], { queryParams });
-      }));
+      })
+    );
 
 export const getFinishedRemoteData = <T>() =>
   (source: Observable<RemoteData<T>>): Observable<RemoteData<T>> =>
@@ -302,8 +304,7 @@ export const getBrowseDefinitionLinks = (definitionID: string) =>
       getRemoteDataPayload(),
       getPaginatedListPayload(),
       map((browseDefinitions: BrowseDefinition[]) => browseDefinitions
-        .find((def: BrowseDefinition) => def.id === definitionID)
-      ),
+        .find((def: BrowseDefinition) => def.id === definitionID)),
       map((def: BrowseDefinition) => {
         if (isNotEmpty(def)) {
           return def._links;

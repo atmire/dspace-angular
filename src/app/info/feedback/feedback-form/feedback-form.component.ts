@@ -42,7 +42,8 @@ export class FeedbackFormComponent implements OnInit {
     protected translate: TranslateService,
     private feedbackDataService: FeedbackDataService,
     private authService: AuthService,
-    private router: Router) {
+    private router: Router
+  ) {
   }
 
   /**

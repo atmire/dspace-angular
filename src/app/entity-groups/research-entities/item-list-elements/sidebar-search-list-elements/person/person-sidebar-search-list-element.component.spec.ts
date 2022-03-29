@@ -41,5 +41,4 @@ const parent = Object.assign(new Collection(), {
 describe('PersonSidebarSearchListElementComponent',
   createSidebarSearchListElementTests(PersonSidebarSearchListElementComponent, object, parent, 'parent title', 'family name, given name', 'job title', [
     { provide: TranslateService, useValue: jasmine.createSpyObj('translate', { instant: '' }) }
-  ])
-);
+  ]));

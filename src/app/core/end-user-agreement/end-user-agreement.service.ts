@@ -16,9 +16,11 @@ export const END_USER_AGREEMENT_METADATA_FIELD = 'dspace.agreements.end-user';
 @Injectable()
 export class EndUserAgreementService {
 
-  constructor(protected cookie: CookieService,
-              protected authService: AuthService,
-              protected ePersonService: EPersonDataService) {
+  constructor(
+    protected cookie: CookieService,
+    protected authService: AuthService,
+    protected ePersonService: EPersonDataService
+  ) {
   }
 
   /**

@@ -38,8 +38,7 @@ describe('RelatedItemsComponent', () => {
     relationshipService = jasmine.createSpyObj('relationshipService',
       {
         getRelatedItemsByLabel: createSuccessfulRemoteDataObject$(createPaginatedList(mockItems)),
-      }
-    );
+      });
 
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],

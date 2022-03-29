@@ -32,7 +32,8 @@ const mockItemWithMetadata: ItemSearchResult = Object.assign(
         // ]
       }
     })
-  });
+  }
+);
 
 const mockItemWithoutMetadata: ItemSearchResult = Object.assign(
   new ItemSearchResult(),
@@ -48,7 +49,8 @@ const mockItemWithoutMetadata: ItemSearchResult = Object.assign(
         ]
       }
     })
-  });
+  }
+);
 
 describe('ProjectSearchResultListElementComponent', () => {
   beforeEach(waitForAsync(() => {

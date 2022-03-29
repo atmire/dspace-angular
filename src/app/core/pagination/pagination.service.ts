@@ -28,8 +28,9 @@ export class PaginationService {
 
   private clearParams = {};
 
-  constructor(protected routeService: RouteService,
-              protected router: Router
+  constructor(
+    protected routeService: RouteService,
+    protected router: Router
   ) {
   }
 
@@ -66,11 +67,10 @@ export class PaginationService {
     const sortDirection$ = this.routeService.getQueryParameterValue(`${paginationId}.sd`);
     const sortField$ = this.routeService.getQueryParameterValue(`${paginationId}.sf`);
     return observableCombineLatest([sortDirection$, sortField$]).pipe(map(([sortDirection, sortField]) => {
-        const field = sortField || defaultSort?.field;
-        const direction = SortDirection[sortDirection] || defaultSort?.direction;
-        return new SortOptions(field, direction);
-      })
-    );
+      const field = sortField || defaultSort?.field;
+      const direction = SortDirection[sortDirection] || defaultSort?.direction;
+      return new SortOptions(field, direction);
+    }));
   }
 
   /**
@@ -95,7 +95,8 @@ export class PaginationService {
           currentPage: currentPagination.currentPage,
           elementsPerPage: currentPagination.pageSize
         });
-      }));
+      })
+    );
   }
 
   /**

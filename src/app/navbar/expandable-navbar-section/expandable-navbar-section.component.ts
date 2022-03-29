@@ -25,10 +25,9 @@ export class ExpandableNavbarSectionComponent extends NavbarSectionComponent imp
   menuID = MenuID.PUBLIC;
 
   constructor(@Inject('sectionDataProvider') menuSection,
-              protected menuService: MenuService,
-              protected injector: Injector,
-              private windowService: HostWindowService
-  ) {
+    protected menuService: MenuService,
+    protected injector: Injector,
+    private windowService: HostWindowService) {
     super(menuSection, menuService, injector);
   }
 

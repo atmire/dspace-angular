@@ -75,11 +75,10 @@ export class MenuService {
       select(menuByIDSelector(menuID)),
       select(menuSectionStateSelector),
       map((sections: MenuSections) => {
-          return Object.values(sections)
-            .filter((section: MenuSection) => hasNoValue(section.parentID))
-            .filter((section: MenuSection) => !mustBeVisible || section.visible);
-        }
-      )
+        return Object.values(sections)
+          .filter((section: MenuSection) => hasNoValue(section.parentID))
+          .filter((section: MenuSection) => !mustBeVisible || section.visible);
+      })
     );
   }
 
@@ -96,8 +95,7 @@ export class MenuService {
       select(getSubSectionsFromSectionSelector(parentID)),
       map((ids: string[]) => isNotEmpty(ids) ? ids : []),
       switchMap((ids: string[]) =>
-        observableCombineLatest(ids.map((id: string) => this.getMenuSection(menuID, id)))
-      ),
+        observableCombineLatest(ids.map((id: string) => this.getMenuSection(menuID, id)))),
       map((sections: MenuSection[]) => sections.filter((section: MenuSection) => hasValue(section) && (!mustBeVisible || section.visible)))
     );
   }

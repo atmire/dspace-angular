@@ -118,12 +118,14 @@ export class ComColFormComponent<T extends Collection | Community> implements On
    */
   protected dsoService: ComColDataService<Community | Collection>;
 
-  public constructor(protected formService: DynamicFormService,
-                     protected translate: TranslateService,
-                     protected notificationsService: NotificationsService,
-                     protected authService: AuthService,
-                     protected requestService: RequestService,
-                     protected objectCache: ObjectCacheService) {
+  public constructor(
+    protected formService: DynamicFormService,
+    protected translate: TranslateService,
+    protected notificationsService: NotificationsService,
+    protected authService: AuthService,
+    protected requestService: RequestService,
+    protected objectCache: ObjectCacheService
+  ) {
   }
 
   ngOnInit(): void {

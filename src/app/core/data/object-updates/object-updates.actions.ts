@@ -85,7 +85,8 @@ export class AddFieldUpdateAction implements Action {
   constructor(
     url: string,
     field: Identifiable,
-    changeType: FieldChangeType) {
+    changeType: FieldChangeType
+  ) {
     this.payload = { url, field, changeType };
   }
 }
@@ -147,7 +148,8 @@ export class SetEditableFieldUpdateAction implements Action {
   constructor(
     url: string,
     fieldUUID: string,
-    editable: boolean) {
+    editable: boolean
+  ) {
     this.payload = { url, uuid: fieldUUID, editable };
   }
 }
@@ -174,7 +176,8 @@ export class SetValidFieldUpdateAction implements Action {
   constructor(
     url: string,
     fieldUUID: string,
-    isValid: boolean) {
+    isValid: boolean
+  ) {
     this.payload = { url, uuid: fieldUUID, isValid };
   }
 }

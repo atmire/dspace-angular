@@ -24,10 +24,12 @@ export class PageSizeSelectorComponent implements OnInit {
   paginationOptions$: Observable<PaginationComponentOptions>;
 
 
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private paginationService: PaginationService,
-              @Inject(SEARCH_CONFIG_SERVICE) public searchConfigurationService: SearchConfigurationService) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private paginationService: PaginationService,
+    @Inject(SEARCH_CONFIG_SERVICE) public searchConfigurationService: SearchConfigurationService
+  ) {
   }
 
   /**

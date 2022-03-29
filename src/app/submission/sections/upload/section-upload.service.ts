@@ -40,7 +40,8 @@ export class SectionUploadService {
   public getUploadedFileList(submissionId: string, sectionId: string): Observable<any> {
     return this.store.select(submissionUploadedFilesFromIdSelector(submissionId, sectionId)).pipe(
       map((state) => state),
-      distinctUntilChanged());
+      distinctUntilChanged()
+    );
   }
 
   /**
@@ -65,7 +66,8 @@ export class SectionUploadService {
           .forEach((key) => fileState = state[key]);
         return fileState;
       }),
-      distinctUntilChanged());
+      distinctUntilChanged()
+    );
   }
 
   /**
@@ -83,7 +85,8 @@ export class SectionUploadService {
   public getDefaultPolicies(submissionId: string, sectionId: string, fileUUID: string): Observable<any> {
     return this.store.select(submissionUploadedFileFromUuidSelector(submissionId, sectionId, fileUUID)).pipe(
       map((state) => state),
-      distinctUntilChanged());
+      distinctUntilChanged()
+    );
   }
 
   /**

@@ -38,8 +38,10 @@ export class LoginPageComponent implements OnDestroy, OnInit {
    * @param {ActivatedRoute} route
    * @param {Store<AppState>} store
    */
-  constructor(private route: ActivatedRoute,
-              private store: Store<AppState>) {}
+  constructor(
+    private route: ActivatedRoute,
+    private store: Store<AppState>
+  ) {}
 
   /**
    * Initialize instance variables

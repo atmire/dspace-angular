@@ -49,9 +49,11 @@ export class SearchSwitchConfigurationComponent implements OnDestroy, OnInit {
    */
   @Output() changeConfiguration: EventEmitter<SearchConfigurationOption> = new EventEmitter<SearchConfigurationOption>();
 
-  constructor(private router: Router,
-              private searchService: SearchService,
-              @Inject(SEARCH_CONFIG_SERVICE) private searchConfigService: SearchConfigurationService) {
+  constructor(
+    private router: Router,
+    private searchService: SearchService,
+    @Inject(SEARCH_CONFIG_SERVICE) private searchConfigService: SearchConfigurationService
+  ) {
   }
 
   /**

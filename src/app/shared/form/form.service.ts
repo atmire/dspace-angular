@@ -27,7 +27,8 @@ export class FormService {
 
   constructor(
     private formBuilderService: FormBuilderService,
-    private store: Store<AppState>) {
+    private store: Store<AppState>
+  ) {
   }
 
   /**

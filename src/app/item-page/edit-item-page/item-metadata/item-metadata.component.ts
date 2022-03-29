@@ -65,7 +65,7 @@ export class ItemMetadataComponent extends AbstractItemUpdateComponent {
    */
   public initializeUpdates(): void {
     this.updates$ = this.objectUpdatesService.getFieldUpdates(this.url, this.item.metadataAsList);
-    }
+  }
 
   /**
    * Initialize the prefix for notification messages

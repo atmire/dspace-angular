@@ -88,8 +88,10 @@ export abstract class ObjectSelectComponent<TDomain> implements OnInit, OnDestro
    */
   selectedIds$: Observable<string[]>;
 
-  constructor(protected objectSelectService: ObjectSelectService,
-              protected authorizationService: AuthorizationDataService) {
+  constructor(
+    protected objectSelectService: ObjectSelectService,
+    protected authorizationService: AuthorizationDataService
+  ) {
   }
 
   ngOnInit(): void {

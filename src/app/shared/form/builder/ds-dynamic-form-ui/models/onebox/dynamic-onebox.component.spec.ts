@@ -123,8 +123,7 @@ describe('DsDynamicOneboxComponent test suite', () => {
         open: jasmine.createSpy('open'),
         close: jasmine.createSpy('close'),
         dismiss: jasmine.createSpy('dismiss'),
-      }
-    );
+      });
     init();
     TestBed.configureTestingModule({
       imports: [

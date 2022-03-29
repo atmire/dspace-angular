@@ -83,9 +83,10 @@ export class DsDynamicLookupRelationSelectionTabComponent {
    */
   currentPagination$: Observable<PaginationComponentOptions>;
 
-  constructor(private router: Router,
-              private searchConfigService: SearchConfigurationService,
-              private paginationService: PaginationService
+  constructor(
+    private router: Router,
+    private searchConfigService: SearchConfigurationService,
+    private paginationService: PaginationService
   ) {
   }
 
@@ -110,7 +111,8 @@ export class DsDynamicLookupRelationSelectionTabComponent {
                   totalElements: selected.length,
                   currentPage: pagination.currentPage,
                   totalPages: Math.ceil(selected.length / pagination.pageSize)
-                });
+                }
+              );
               return createSuccessfulRemoteDataObject(buildPaginatedList(pageInfo, selection));
             })
           );

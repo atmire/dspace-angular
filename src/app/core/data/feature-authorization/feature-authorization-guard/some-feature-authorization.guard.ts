@@ -12,9 +12,11 @@ import { AuthService } from '../../../auth/auth.service';
  * Override the desired getters in the parent class for checking specific authorization on a list of features and/or object.
  */
 export abstract class SomeFeatureAuthorizationGuard implements CanActivate {
-  constructor(protected authorizationService: AuthorizationDataService,
-              protected router: Router,
-              protected authService: AuthService) {
+  constructor(
+    protected authorizationService: AuthorizationDataService,
+    protected router: Router,
+    protected authService: AuthService
+  ) {
   }
 
   /**
@@ -24,8 +26,7 @@ export abstract class SomeFeatureAuthorizationGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> {
     return observableCombineLatest(this.getFeatureIDs(route, state), this.getObjectUrl(route, state), this.getEPersonUuid(route, state)).pipe(
       switchMap(([featureIDs, objectUrl, ePersonUuid]) =>
-        observableCombineLatest(...featureIDs.map((featureID) => this.authorizationService.isAuthorized(featureID, objectUrl, ePersonUuid)))
-      ),
+        observableCombineLatest(...featureIDs.map((featureID) => this.authorizationService.isAuthorized(featureID, objectUrl, ePersonUuid)))),
       returnForbiddenUrlTreeOrLoginOnAllFalse(this.router, this.authService, state.url)
     );
   }

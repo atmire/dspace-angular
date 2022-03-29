@@ -43,7 +43,8 @@ export class BundleDataService extends DataService<Bundle> {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DefaultChangeAnalyzer<Bundle>) {
+    protected comparator: DefaultChangeAnalyzer<Bundle>
+  ) {
     super();
   }
 

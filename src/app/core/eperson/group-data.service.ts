@@ -279,7 +279,8 @@ export class GroupDataService extends DataService<Group> {
         requestId,
         link,
         JSON.stringify(group),
-      ));
+      )
+    );
 
     const responseRD$ = this.rdbService.buildFromRequestUUID<Group>(requestId).pipe(
       getFirstCompletedRemoteData(),
@@ -307,7 +308,8 @@ export class GroupDataService extends DataService<Group> {
       new DeleteRequest(
         requestId,
         link,
-      ));
+      )
+    );
 
     const responseRD$ = this.rdbService.buildFromRequestUUID(requestId).pipe(
       getFirstCompletedRemoteData(),

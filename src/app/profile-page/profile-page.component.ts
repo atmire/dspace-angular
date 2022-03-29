@@ -71,11 +71,13 @@ export class ProfilePageComponent implements OnInit {
   private currentUser: EPerson;
   canChangePassword$: Observable<boolean>;
 
-  constructor(private authService: AuthService,
-              private notificationsService: NotificationsService,
-              private translate: TranslateService,
-              private epersonService: EPersonDataService,
-              private authorizationService: AuthorizationDataService) {
+  constructor(
+    private authService: AuthService,
+    private notificationsService: NotificationsService,
+    private translate: TranslateService,
+    private epersonService: EPersonDataService,
+    private authorizationService: AuthorizationDataService
+  ) {
   }
 
   ngOnInit(): void {

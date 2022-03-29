@@ -39,8 +39,9 @@ export class PageWithSidebarComponent implements OnInit {
 
   sidebarClasses: Observable<string>;
 
-  constructor(protected sidebarService: SidebarService,
-              protected windowService: HostWindowService,
+  constructor(
+    protected sidebarService: SidebarService,
+    protected windowService: HostWindowService,
   ) {
   }
 

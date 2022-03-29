@@ -50,13 +50,14 @@ export class ItemMoveComponent implements OnInit {
 
   COLLECTIONS = [DSpaceObjectType.COLLECTION];
 
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private notificationsService: NotificationsService,
-              private itemDataService: ItemDataService,
-              private searchService: SearchService,
-              private translateService: TranslateService,
-              private requestService: RequestService,
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private notificationsService: NotificationsService,
+    private itemDataService: ItemDataService,
+    private searchService: SearchService,
+    private translateService: TranslateService,
+    private requestService: RequestService,
   ) {}
 
   ngOnInit(): void {
@@ -68,9 +69,8 @@ export class ItemMoveComponent implements OnInit {
       map((item) => getItemPageRoute(item))
     );
     this.itemRD$.subscribe((rd) => {
-        this.item = rd.payload;
-      }
-    );
+      this.item = rd.payload;
+    });
     this.itemRD$.pipe(
       getFirstSucceededRemoteData(),
       getRemoteDataPayload(),
@@ -123,7 +123,7 @@ export class ItemMoveComponent implements OnInit {
           false,
           true,
           followLink('owningCollection')
-      )),
+        )),
       getFirstCompletedRemoteData()
     ).subscribe(() => {
       this.processing = false;

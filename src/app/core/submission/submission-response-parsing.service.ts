@@ -87,8 +87,9 @@ export class SubmissionResponseParsingService extends BaseResponseParsingService
    */
   protected shouldDirectlyAttachEmbeds = true;
 
-  constructor(protected objectCache: ObjectCacheService,
-              protected dsoParser: DSOResponseParsingService
+  constructor(
+    protected objectCache: ObjectCacheService,
+    protected dsoParser: DSOResponseParsingService
   ) {
     super();
   }

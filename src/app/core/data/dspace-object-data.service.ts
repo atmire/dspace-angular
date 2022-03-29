@@ -30,7 +30,8 @@ class DataServiceImpl extends DataService<DSpaceObject> {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DSOChangeAnalyzer<DSpaceObject>) {
+    protected comparator: DSOChangeAnalyzer<DSpaceObject>
+  ) {
     super();
   }
 
@@ -53,7 +54,8 @@ export class DSpaceObjectDataService {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DSOChangeAnalyzer<DSpaceObject>) {
+    protected comparator: DSOChangeAnalyzer<DSpaceObject>
+  ) {
     this.dataService = new DataServiceImpl(requestService, rdbService, null, objectCache, halService, notificationsService, http, comparator);
   }
 

@@ -36,7 +36,8 @@ export class SearchLabelComponent implements OnInit {
     private searchService: SearchService,
     private paginationService: PaginationService,
     private searchConfigurationService: SearchConfigurationService,
-    private router: Router) {
+    private router: Router
+  ) {
   }
 
   ngOnInit(): void {

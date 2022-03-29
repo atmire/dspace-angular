@@ -57,9 +57,11 @@ export class ItemEditBitstreamComponent implements OnChanges, OnInit {
    */
   format$: Observable<BitstreamFormat>;
 
-  constructor(private objectUpdatesService: ObjectUpdatesService,
-              private dsoNameService: DSONameService,
-              private viewContainerRef: ViewContainerRef) {
+  constructor(
+    private objectUpdatesService: ObjectUpdatesService,
+    private dsoNameService: DSONameService,
+    private viewContainerRef: ViewContainerRef
+  ) {
   }
 
   ngOnInit(): void {

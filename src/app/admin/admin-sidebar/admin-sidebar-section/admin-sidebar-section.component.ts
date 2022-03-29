@@ -28,7 +28,7 @@ export class AdminSidebarSectionComponent extends MenuSectionComponent implement
   itemModel;
   hasLink: boolean;
   constructor(
-    @Inject('sectionDataProvider') menuSection: MenuSection,
+  @Inject('sectionDataProvider') menuSection: MenuSection,
     protected menuService: MenuService,
     protected injector: Injector,
     protected router: Router,

@@ -59,12 +59,13 @@ export class DsDynamicRelationGroupComponent extends DynamicFormControlComponent
 
   @ViewChild('formRef') private formRef: FormComponent;
 
-  constructor(private vocabularyService: VocabularyService,
-              private formBuilderService: FormBuilderService,
-              private formService: FormService,
-              private cdr: ChangeDetectorRef,
-              protected layoutService: DynamicFormLayoutService,
-              protected validationService: DynamicFormValidationService
+  constructor(
+    private vocabularyService: VocabularyService,
+    private formBuilderService: FormBuilderService,
+    private formService: FormService,
+    private cdr: ChangeDetectorRef,
+    protected layoutService: DynamicFormLayoutService,
+    protected validationService: DynamicFormValidationService
   ) {
     super(layoutService, validationService);
   }
@@ -89,7 +90,8 @@ export class DsDynamicRelationGroupComponent extends DynamicFormControlComponent
       this.model.scopeUUID,
       {},
       this.model.submissionScope,
-      this.model.readOnly);
+      this.model.readOnly
+    );
     this.initChipsFromModelValue();
   }
 
@@ -244,8 +246,9 @@ export class DsDynamicRelationGroupComponent extends DynamicFormControlComponent
                     valueObj[fieldName],
                     {
                       otherInformation: entryDetail.otherInformation
-                    })
-                  ));
+                    }
+                  ))
+                );
               } else {
                 return$ = observableOf(valueObj[fieldName]);
               }
@@ -259,11 +262,10 @@ export class DsDynamicRelationGroupComponent extends DynamicFormControlComponent
         mergeMap((valueListObj: Observable<any>, index: number) => {
           return valueListObj.pipe(
             map((valueObj: any) => ({
-                index: index, value: valueObj.reduce(
+              index: index, value: valueObj.reduce(
                 (acc: any, value: any) => Object.assign({}, acc, value)
-                )
-              })
-            )
+              )
+            }))
           );
         }),
         scan((acc: any[], valueObj: any) => {
@@ -288,7 +290,8 @@ export class DsDynamicRelationGroupComponent extends DynamicFormControlComponent
       initChipsValue,
       'value',
       this.model.mandatoryField,
-      environment.submission.icons.metadata);
+      environment.submission.icons.metadata
+    );
     this.subs.push(
       this.chips.chipsItems
         .subscribe(() => {

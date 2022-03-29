@@ -71,14 +71,16 @@ export class ProcessDetailComponent implements OnInit {
    */
   dateFormat = 'yyyy-MM-dd HH:mm:ss ZZZZ';
 
-  constructor(protected route: ActivatedRoute,
-              protected router: Router,
-              protected processService: ProcessDataService,
-              protected bitstreamDataService: BitstreamDataService,
-              protected nameService: DSONameService,
-              private zone: NgZone,
-              protected authService: AuthService,
-              protected http: HttpClient) {
+  constructor(
+    protected route: ActivatedRoute,
+    protected router: Router,
+    protected processService: ProcessDataService,
+    protected bitstreamDataService: BitstreamDataService,
+    protected nameService: DSONameService,
+    private zone: NgZone,
+    protected authService: AuthService,
+    protected http: HttpClient
+  ) {
   }
 
   /**
@@ -140,14 +142,13 @@ export class ProcessDetailComponent implements OnInit {
         })
       );
     });
-     this.outputLogFileUrl$.pipe(take(1),
+    this.outputLogFileUrl$.pipe(take(1),
       switchMap((url: string) => {
         return this.getTextFile(url);
       }),
-      finalize(() => this.zone.run(() => this.retrievingOutputLogs$.next(false)))
-    ).subscribe((logs: string) => {
-       this.outputLogs$.next(logs);
-     });
+      finalize(() => this.zone.run(() => this.retrievingOutputLogs$.next(false)))).subscribe((logs: string) => {
+      this.outputLogs$.next(logs);
+    });
   }
 
   getTextFile(filename: string): Observable<string> {

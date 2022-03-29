@@ -15,10 +15,12 @@ import { AuthService } from '../core/auth/auth.service';
  * Guard for preventing unauthorized access to certain {@link Item} pages requiring administrator rights
  */
 export class ItemPageAdministratorGuard extends DsoPageSingleFeatureGuard<Item> {
-  constructor(protected resolver: ItemPageResolver,
-              protected authorizationService: AuthorizationDataService,
-              protected router: Router,
-              protected authService: AuthService) {
+  constructor(
+    protected resolver: ItemPageResolver,
+    protected authorizationService: AuthorizationDataService,
+    protected router: Router,
+    protected authService: AuthService
+  ) {
     super(resolver, authorizationService, router, authService);
   }
 

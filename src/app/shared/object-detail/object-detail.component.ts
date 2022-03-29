@@ -99,9 +99,9 @@ export class ObjectDetailComponent {
     pagination: PaginationComponentOptions,
     sort: SortOptions
   }> = new EventEmitter<{
-    pagination: PaginationComponentOptions,
-    sort: SortOptions
-  }>();
+      pagination: PaginationComponentOptions,
+      sort: SortOptions
+    }>();
 
   /**
    * An event fired when the page is changed.

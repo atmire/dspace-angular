@@ -89,13 +89,12 @@ export class ObjectCacheService {
     const cacheEntry$ = this.getByHref(href);
     const altLinks$ = cacheEntry$.pipe(map((entry: ObjectCacheEntry) => entry.alternativeLinks), take(1));
     const childLinks$ = cacheEntry$.pipe(map((entry: ObjectCacheEntry) => {
-        return Object
-          .entries(entry.data._links)
-          .filter(([key, value]: [string, HALLink]) => key !== 'self')
-          .map(([key, value]: [string, HALLink]) => value.href);
-      }),
-      take(1)
-    );
+      return Object
+        .entries(entry.data._links)
+        .filter(([key, value]: [string, HALLink]) => key !== 'self')
+        .map(([key, value]: [string, HALLink]) => value.href);
+    }),
+    take(1));
     this.removeLinksFromAlternativeLinkIndex(altLinks$);
     this.removeLinksFromAlternativeLinkIndex(childLinks$);
 
@@ -103,9 +102,8 @@ export class ObjectCacheService {
 
   private removeLinksFromAlternativeLinkIndex(links$: Observable<string[]>) {
     links$.subscribe((links: string[]) => links.forEach((link: string) => {
-        this.store.dispatch(new RemoveFromIndexBySubstringAction(IndexName.ALTERNATIVE_OBJECT_LINK, link));
-      }
-    ));
+      this.store.dispatch(new RemoveFromIndexBySubstringAction(IndexName.ALTERNATIVE_OBJECT_LINK, link));
+    }));
   }
 
   /**
@@ -117,11 +115,10 @@ export class ObjectCacheService {
    *    An observable of the requested object
    */
   getObjectByUUID<T extends CacheableObject>(uuid: string):
-    Observable<T> {
+  Observable<T> {
     return this.store.pipe(
       select(selfLinkFromUuidSelector(uuid)),
-      mergeMap((selfLink: string) => this.getObjectByHref<T>(selfLink)
-      )
+      mergeMap((selfLink: string) => this.getObjectByHref<T>(selfLink))
     );
   }
 
@@ -136,15 +133,14 @@ export class ObjectCacheService {
   getObjectByHref<T extends CacheableObject>(href: string): Observable<T> {
     return this.getByHref(href).pipe(
       map((entry: ObjectCacheEntry) => {
-          if (isNotEmpty(entry.patches)) {
-            const flatPatch: Operation[] = [].concat(...entry.patches.map((patch) => patch.operations));
-            const patchedData = applyPatch(entry.data, flatPatch, undefined, false).newDocument;
-            return Object.assign({}, entry, { data: patchedData });
-          } else {
-            return entry;
-          }
+        if (isNotEmpty(entry.patches)) {
+          const flatPatch: Operation[] = [].concat(...entry.patches.map((patch) => patch.operations));
+          const patchedData = applyPatch(entry.data, flatPatch, undefined, false).newDocument;
+          return Object.assign({}, entry, { data: patchedData });
+        } else {
+          return entry;
         }
-      ),
+      }),
       map((entry: ObjectCacheEntry) => {
         const type: GenericConstructor<T> = getClassForType((entry.data as any).type);
         if (typeof type !== 'function') {
@@ -197,7 +193,8 @@ export class ObjectCacheService {
   getRequestUUIDBySelfLink(selfLink: string): Observable<string> {
     return this.getByHref(selfLink).pipe(
       map((entry: ObjectCacheEntry) => entry.requestUUID),
-      distinctUntilChanged());
+      distinctUntilChanged()
+    );
   }
 
   /**

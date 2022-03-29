@@ -7,15 +7,15 @@ export interface BreadcrumbConfig<T> {
     /**
      * The service used to calculate the breadcrumb object
      */
-    provider: BreadcrumbsProviderService<T>;
+  provider: BreadcrumbsProviderService<T>;
 
     /**
      * The key that is used to calculate the breadcrumb display value
      */
-    key: T;
+  key: T;
 
     /**
      * The url of the breadcrumb
      */
-    url?: string;
+  url?: string;
 }

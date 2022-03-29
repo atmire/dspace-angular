@@ -28,7 +28,8 @@ export class MyDSpaceGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     return this.configurationService.getAvailableConfigurationTypes().pipe(
       first(),
-      map((configurationList) => this.validateConfigurationParam(route.queryParamMap.get('configuration'), configurationList)));
+      map((configurationList) => this.validateConfigurationParam(route.queryParamMap.get('configuration'), configurationList))
+    );
   }
 
   /**

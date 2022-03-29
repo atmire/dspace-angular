@@ -152,16 +152,14 @@ describe('EditRelationshipListComponent', () => {
           [relationships[0].uuid]: fieldUpdate1,
           [relationships[1].uuid]: fieldUpdate2
         })
-      }
-    );
+      });
 
     relationshipService = jasmine.createSpyObj('relationshipService',
       {
         getRelatedItemsByLabel: createSuccessfulRemoteDataObject$(createPaginatedList([author1, author2])),
         getItemRelationshipsByLabel: createSuccessfulRemoteDataObject$(createPaginatedList(relationships)),
         isLeftItem: observableOf(true),
-      }
-    );
+      });
 
     selectableListService = {};
 

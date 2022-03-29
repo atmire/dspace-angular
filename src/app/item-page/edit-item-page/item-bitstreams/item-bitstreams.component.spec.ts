@@ -100,8 +100,7 @@ describe('ItemBitstreamsComponent', () => {
         isReinstatable: observableOf(false),
         isValidPage: observableOf(true),
         getMoveOperations: observableOf(moveOperations)
-      }
-    );
+      });
     router = Object.assign(new RouterStub(), {
       url: url
     });
@@ -110,8 +109,7 @@ describe('ItemBitstreamsComponent', () => {
         info: infoNotification,
         warning: warningNotification,
         success: successNotification
-      }
-    );
+      });
     bitstreamService = jasmine.createSpyObj('bitstreamService', {
       delete: jasmine.createSpy('delete')
     });

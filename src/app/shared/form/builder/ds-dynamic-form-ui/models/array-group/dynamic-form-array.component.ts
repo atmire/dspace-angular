@@ -36,8 +36,9 @@ export class DsDynamicFormArrayComponent extends DynamicFormArrayComponent {
 
   /* eslint-enable @angular-eslint/no-output-rename */
 
-  constructor(protected layoutService: DynamicFormLayoutService,
-              protected validationService: DynamicFormValidationService,
+  constructor(
+    protected layoutService: DynamicFormLayoutService,
+    protected validationService: DynamicFormValidationService,
   ) {
     super(layoutService, validationService);
   }

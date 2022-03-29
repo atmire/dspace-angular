@@ -75,8 +75,7 @@ export class VirtualMetadataComponent implements OnInit {
               metadataField: key,
               metadataValue: metadata,
             };
-          })
-      )
+          }))
       .reduce((previous, current) => previous.concat(current), []);
   }
 

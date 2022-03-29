@@ -89,9 +89,11 @@ export class MetadataFieldFormComponent implements OnInit, OnDestroy {
    */
   @Output() submitForm: EventEmitter<any> = new EventEmitter();
 
-  constructor(public registryService: RegistryService,
-              private formBuilderService: FormBuilderService,
-              private translateService: TranslateService) {
+  constructor(
+    public registryService: RegistryService,
+    private formBuilderService: FormBuilderService,
+    private translateService: TranslateService
+  ) {
   }
 
   /**
@@ -126,10 +128,11 @@ export class MetadataFieldFormComponent implements OnInit, OnDestroy {
       });
       this.formModel = [
         new DynamicFormGroupModel(
-        {
-          id: 'metadatadatafieldgroup',
-          group:[this.element, this.qualifier, this.scopeNote]
-        })
+          {
+            id: 'metadatadatafieldgroup',
+            group:[this.element, this.qualifier, this.scopeNote]
+          }
+        )
       ];
       this.formGroup = this.formBuilderService.createFormGroup(this.formModel);
       this.registryService.getActiveMetadataField().subscribe((field) => {

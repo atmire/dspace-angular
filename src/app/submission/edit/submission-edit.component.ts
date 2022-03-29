@@ -95,14 +95,16 @@ export class SubmissionEditComponent implements OnDestroy, OnInit {
    * @param {TranslateService} translate
    * @param {SubmissionJsonPatchOperationsService} submissionJsonPatchOperationsService
    */
-  constructor(private changeDetectorRef: ChangeDetectorRef,
-              private notificationsService: NotificationsService,
-              private route: ActivatedRoute,
-              private router: Router,
-              private itemDataService: ItemDataService,
-              private submissionService: SubmissionService,
-              private translate: TranslateService,
-              private submissionJsonPatchOperationsService: SubmissionJsonPatchOperationsService) {
+  constructor(
+    private changeDetectorRef: ChangeDetectorRef,
+    private notificationsService: NotificationsService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private itemDataService: ItemDataService,
+    private submissionService: SubmissionService,
+    private translate: TranslateService,
+    private submissionJsonPatchOperationsService: SubmissionJsonPatchOperationsService
+  ) {
   }
 
   /**
@@ -141,8 +143,7 @@ export class SubmissionEditComponent implements OnDestroy, OnInit {
       this.itemLink$.pipe(
         isNotEmptyOperator(),
         switchMap((itemLink: string) =>
-          this.itemDataService.findByHref(itemLink)
-        ),
+          this.itemDataService.findByHref(itemLink)),
         getAllSucceededRemoteData(),
         // Multiple sources can update the item in quick succession.
         // We only want to rerender the form if the item is unchanged for some time

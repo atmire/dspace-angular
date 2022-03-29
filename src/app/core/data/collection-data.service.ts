@@ -76,7 +76,8 @@ export class CollectionDataService extends ComColDataService<Collection> {
     });
 
     return this.searchBy(searchHref, options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow).pipe(
-      filter((collections: RemoteData<PaginatedList<Collection>>) => !collections.isResponsePending));
+      filter((collections: RemoteData<PaginatedList<Collection>>) => !collections.isResponsePending)
+    );
   }
 
   /**
@@ -96,7 +97,8 @@ export class CollectionDataService extends ComColDataService<Collection> {
     entityType: string,
     options: FindListOptions = {},
     reRequestOnStale = true,
-    ...linksToFollow: FollowLinkConfig<Collection>[]): Observable<RemoteData<PaginatedList<Collection>>> {
+    ...linksToFollow: FollowLinkConfig<Collection>[]
+  ): Observable<RemoteData<PaginatedList<Collection>>> {
     const searchHref = 'findSubmitAuthorizedByEntityType';
     options = Object.assign({}, options, {
       searchParams: [
@@ -106,7 +108,8 @@ export class CollectionDataService extends ComColDataService<Collection> {
     });
 
     return this.searchBy(searchHref, options, true, reRequestOnStale, ...linksToFollow).pipe(
-      filter((collections: RemoteData<PaginatedList<Collection>>) => !collections.isResponsePending));
+      filter((collections: RemoteData<PaginatedList<Collection>>) => !collections.isResponsePending)
+    );
   }
 
   /**
@@ -130,7 +133,8 @@ export class CollectionDataService extends ComColDataService<Collection> {
     });
 
     return this.searchBy(searchHref, options, reRequestOnStale).pipe(
-      filter((collections: RemoteData<PaginatedList<Collection>>) => !collections.isResponsePending));
+      filter((collections: RemoteData<PaginatedList<Collection>>) => !collections.isResponsePending)
+    );
   }
   /**
    * Get all collections the user is authorized to submit to, by community and has the metadata
@@ -149,7 +153,8 @@ export class CollectionDataService extends ComColDataService<Collection> {
     entityType: string,
     options: FindListOptions = {},
     reRequestOnStale = true,
-    ...linksToFollow: FollowLinkConfig<Collection>[]): Observable<RemoteData<PaginatedList<Collection>>> {
+    ...linksToFollow: FollowLinkConfig<Collection>[]
+  ): Observable<RemoteData<PaginatedList<Collection>>> {
     const searchHref = 'findSubmitAuthorizedByCommunityAndEntityType';
     const searchParams = [
       new RequestParam('uuid', communityId),
@@ -161,7 +166,8 @@ export class CollectionDataService extends ComColDataService<Collection> {
     });
 
     return this.searchBy(searchHref, options, true, reRequestOnStale, ...linksToFollow).pipe(
-      filter((collections: RemoteData<PaginatedList<Collection>>) => !collections.isResponsePending));
+      filter((collections: RemoteData<PaginatedList<Collection>>) => !collections.isResponsePending)
+    );
   }
 
   /**

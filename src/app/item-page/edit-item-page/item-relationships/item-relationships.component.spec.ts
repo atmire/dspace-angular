@@ -45,8 +45,7 @@ const notificationsService = jasmine.createSpyObj('notificationsService',
     info: infoNotification,
     warning: warningNotification,
     success: successNotification
-  }
-);
+  });
 const router = new RouterStub();
 let relationshipTypeService;
 let routeStub;
@@ -165,8 +164,7 @@ describe('ItemRelationshipsComponent', () => {
         hasUpdates: observableOf(true),
         isReinstatable: observableOf(false), // should always return something --> its in ngOnInit
         isValidPage: observableOf(true)
-      }
-    );
+      });
 
     relationshipService = jasmine.createSpyObj('relationshipService',
       {
@@ -178,22 +176,19 @@ describe('ItemRelationshipsComponent', () => {
         getItemResolvedRelatedItemsAndRelationships: observableCombineLatest(observableOf([author1, author2]), observableOf([item, item]), observableOf(relationships)),
         getRelationshipsByRelatedItemIds: observableOf(relationships),
         getRelationshipTypeLabelsByItem: observableOf([relationshipType.leftwardType])
-      }
-    );
+      });
 
 
     relationshipTypeService = jasmine.createSpyObj('searchByEntityType',
       {
         searchByEntityType: observableOf(relationshipTypes)
-      }
-    );
+      });
 
     requestService = jasmine.createSpyObj('requestService',
       {
         removeByHrefSubstring: {},
         hasByHref$: observableOf(false)
-      }
-    );
+      });
 
     objectCache = jasmine.createSpyObj('objectCache', {
       remove: undefined
@@ -203,8 +198,7 @@ describe('ItemRelationshipsComponent', () => {
       {
         getEntityTypeByLabel: createSuccessfulRemoteDataObject$(entityType),
         getEntityTypeRelationships: createSuccessfulRemoteDataObject$(createPaginatedList([relationshipType])),
-      }
-    );
+      });
 
     scheduler = getTestScheduler();
     TestBed.configureTestingModule({

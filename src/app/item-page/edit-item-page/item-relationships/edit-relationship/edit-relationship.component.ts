@@ -95,8 +95,7 @@ export class EditRelationshipComponent implements OnChanges {
         this.rightItem$,
       ).pipe(
         map((items: Item[]) =>
-          items.find((item) => item.uuid !== this.editItem.uuid)
-        )
+          items.find((item) => item.uuid !== this.editItem.uuid))
       );
     } else {
       this.relatedItem$ = of(this.update.relatedItem);
@@ -114,8 +113,7 @@ export class EditRelationshipComponent implements OnChanges {
     ).pipe(
       map((items: Item[]) =>
         items.map((item) => this.objectUpdatesService
-          .isSelectedVirtualMetadata(this.url, this.relationship.id, item.uuid))
-      ),
+          .isSelectedVirtualMetadata(this.url, this.relationship.id, item.uuid))),
       switchMap((selection$) => observableCombineLatest(selection$)),
       map((selection: boolean[]) => {
         return Object.assign({},
@@ -123,13 +121,11 @@ export class EditRelationshipComponent implements OnChanges {
           {
             keepLeftVirtualMetadata: selection[0] === true,
             keepRightVirtualMetadata: selection[1] === true,
-          }
-        ) as DeleteRelationship;
+          }) as DeleteRelationship;
       }),
       take(1),
     ).subscribe((deleteRelationship: DeleteRelationship) =>
-      this.objectUpdatesService.saveRemoveFieldUpdate(this.url, deleteRelationship)
-    );
+      this.objectUpdatesService.saveRemoveFieldUpdate(this.url, deleteRelationship));
   }
 
   openVirtualMetadataModal(content: any) {

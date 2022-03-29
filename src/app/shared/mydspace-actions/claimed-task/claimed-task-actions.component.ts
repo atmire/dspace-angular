@@ -61,13 +61,15 @@ export class ClaimedTaskActionsComponent extends MyDSpaceActionsComponent<Claime
    * @param {RequestService} requestService
    * @param workflowActionService
    */
-  constructor(protected injector: Injector,
-              protected router: Router,
-              protected notificationsService: NotificationsService,
-              protected translate: TranslateService,
-              protected searchService: SearchService,
-              protected requestService: RequestService,
-              protected workflowActionService: WorkflowActionDataService) {
+  constructor(
+    protected injector: Injector,
+    protected router: Router,
+    protected notificationsService: NotificationsService,
+    protected translate: TranslateService,
+    protected searchService: SearchService,
+    protected requestService: RequestService,
+    protected workflowActionService: WorkflowActionDataService
+  ) {
     super(ClaimedTask.type, injector, router, notificationsService, translate, searchService, requestService);
   }
 
@@ -90,7 +92,8 @@ export class ClaimedTaskActionsComponent extends MyDSpaceActionsComponent<Claime
     this.workflowitem$ = (this.object.workflowitem as Observable<RemoteData<WorkflowItem>>).pipe(
       filter((rd: RemoteData<WorkflowItem>) => ((!rd.isRequestPending) && isNotUndefined(rd.payload))),
       map((rd: RemoteData<WorkflowItem>) => rd.payload),
-      take(1));
+      take(1)
+    );
   }
 
   /**

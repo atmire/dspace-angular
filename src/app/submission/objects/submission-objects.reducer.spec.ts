@@ -257,7 +257,8 @@ describe('submissionReducer test suite', () => {
       undefined,
       true,
       {},
-      null);
+      null
+    );
 
     newState = submissionObjectReducer(newState, action);
 

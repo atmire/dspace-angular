@@ -43,8 +43,10 @@ export class UserMenuComponent implements OnInit {
    */
   public profileRoute = getProfileModuleRoute();
 
-  constructor(private store: Store<AppState>,
-              private authService: AuthService) {
+  constructor(
+    private store: Store<AppState>,
+    private authService: AuthService
+  ) {
   }
 
   /**

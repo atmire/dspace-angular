@@ -20,8 +20,10 @@ export class BrowseBySwitcherComponent implements OnInit {
    */
   browseByComponent: Observable<any>;
 
-  public constructor(protected route: ActivatedRoute,
-                     @Inject(BROWSE_BY_COMPONENT_FACTORY) private getComponentByBrowseByType: (browseByType) => GenericConstructor<any>) {
+  public constructor(
+    protected route: ActivatedRoute,
+    @Inject(BROWSE_BY_COMPONENT_FACTORY) private getComponentByBrowseByType: (browseByType) => GenericConstructor<any>
+  ) {
   }
 
   /**

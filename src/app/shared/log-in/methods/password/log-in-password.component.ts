@@ -99,12 +99,12 @@ export class LogInPasswordComponent implements OnInit {
 
     // set error
     this.error = this.store.pipe(select(
-      getAuthenticationError),
-      map((error) => {
-        this.hasError = (isNotEmpty(error));
-        return error;
-      })
-    );
+      getAuthenticationError
+    ),
+    map((error) => {
+      this.hasError = (isNotEmpty(error));
+      return error;
+    }));
 
     // set error
     this.message = this.store.pipe(

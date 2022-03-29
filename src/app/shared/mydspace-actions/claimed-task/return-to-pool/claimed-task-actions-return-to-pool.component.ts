@@ -29,13 +29,15 @@ export class ClaimedTaskActionsReturnToPoolComponent extends ClaimedTaskActionsA
    */
   option = WORKFLOW_TASK_OPTION_RETURN_TO_POOL;
 
-  constructor(protected injector: Injector,
-              protected router: Router,
-              protected notificationsService: NotificationsService,
-              protected translate: TranslateService,
-              protected searchService: SearchService,
-              protected requestService: RequestService,
-              private poolTaskService: PoolTaskDataService) {
+  constructor(
+    protected injector: Injector,
+    protected router: Router,
+    protected notificationsService: NotificationsService,
+    protected translate: TranslateService,
+    protected searchService: SearchService,
+    protected requestService: RequestService,
+    private poolTaskService: PoolTaskDataService
+  ) {
     super(injector, router, notificationsService, translate, searchService, requestService);
   }
 

@@ -34,7 +34,8 @@ export class ChipsComponent implements OnChanges {
   constructor(
     private cdr: ChangeDetectorRef,
     private uploaderService: UploaderService,
-    private translate: TranslateService) {
+    private translate: TranslateService
+  ) {
 
     this.options = {
       animation: 300,
@@ -102,7 +103,7 @@ export class ChipsComponent implements OnChanges {
                   .subscribe((label) => {
                     textToDisplay.push(label + ': ' + chipsItem.item[field].otherInformation[otherField]);
                   });
-            });
+              });
           }
         } else {
           textToDisplay.push(chipsItem.item[field]);

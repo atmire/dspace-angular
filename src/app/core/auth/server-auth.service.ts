@@ -38,7 +38,8 @@ export class ServerAuthService extends AuthService {
         } else {
           throw (new Error('Not authenticated'));
         }
-      }));
+      })
+    );
   }
 
   /**

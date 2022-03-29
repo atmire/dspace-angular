@@ -69,7 +69,8 @@ describe('DeleteComColPageComponent', () => {
         delete: createNoContentRemoteDataObject$(),
         findByHref: jasmine.createSpy('findByHref'),
         refreshCache: jasmine.createSpy('refreshCache')
-      });
+      }
+    );
 
     routerStub = {
       navigate: (commands) => commands

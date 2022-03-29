@@ -35,15 +35,16 @@ export class OrgUnitSearchResultListSubmissionElementComponent extends SearchRes
   alternativeField = 'dc.title.alternative';
   useNameVariants = false;
 
-  constructor(protected truncatableService: TruncatableService,
-              private relationshipService: RelationshipService,
-              private notificationsService: NotificationsService,
-              private translateService: TranslateService,
-              private modalService: NgbModal,
-              private itemDataService: ItemDataService,
-              private bitstreamDataService: BitstreamDataService,
-              private selectableListService: SelectableListService,
-              protected dsoNameService: DSONameService
+  constructor(
+    protected truncatableService: TruncatableService,
+    private relationshipService: RelationshipService,
+    private notificationsService: NotificationsService,
+    private translateService: TranslateService,
+    private modalService: NgbModal,
+    private itemDataService: ItemDataService,
+    private bitstreamDataService: BitstreamDataService,
+    private selectableListService: SelectableListService,
+    protected dsoNameService: DSONameService
   ) {
     super(truncatableService, dsoNameService);
   }
@@ -61,9 +62,8 @@ export class OrgUnitSearchResultListSubmissionElementComponent extends SearchRes
       this.relationshipService.getNameVariant(this.listID, this.dso.uuid)
         .pipe(take(1))
         .subscribe((nameVariant: string) => {
-            this.selectedName = nameVariant || defaultValue;
-          }
-        );
+          this.selectedName = nameVariant || defaultValue;
+        });
     }
   }
 
@@ -98,9 +98,9 @@ export class OrgUnitSearchResultListSubmissionElementComponent extends SearchRes
           this.itemDataService.update(updatedItem).pipe(take(1)).subscribe();
         }).catch(() => {
         // user clicked cancel: use the name variant only for this relation, no further action required
-      }).finally(() => {
-        this.select(value);
-      });
+        }).finally(() => {
+          this.select(value);
+        });
     }
   }
 

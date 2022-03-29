@@ -103,7 +103,8 @@ export class LocaleService {
               languages.push(...this.setQuality(
                 [this.translate.currentLang],
                 LANG_ORIGIN.UI,
-                false));
+                false
+              ));
             }
             if (isNotEmpty(epersonLang)) {
               languages.push(...epersonLang);
@@ -112,8 +113,8 @@ export class LocaleService {
               languages.push(...this.setQuality(
                 Object.assign([], navigator.languages),
                 LANG_ORIGIN.BROWSER,
-                !isEmpty(this.translate.currentLang))
-              );
+                !isEmpty(this.translate.currentLang)
+              ));
             }
             return languages;
           })
@@ -176,11 +177,11 @@ export class LocaleService {
         divisor = 1;
     }
     languages.forEach( (lang) => {
-        let value = lang + ';q=';
-        let quality = (v - idx++) / v;
-        quality = ((languages.length > 10) ? quality.toFixed(2) : quality) as number;
-        value += quality / divisor;
-        langWithPrior.push(value);
+      let value = lang + ';q=';
+      let quality = (v - idx++) / v;
+      quality = ((languages.length > 10) ? quality.toFixed(2) : quality) as number;
+      value += quality / divisor;
+      langWithPrior.push(value);
     });
     return langWithPrior;
   }

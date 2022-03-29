@@ -58,7 +58,7 @@ import { AuthorizationDataService } from '../data/feature-authorization/authoriz
 // Action Types that do not break/prevent the user from an idle state
 const IDLE_TIMER_IGNORE_TYPES: string[]
   = [...Object.values(AuthActionTypes).filter((t: string) => t !== AuthActionTypes.UNSET_USER_AS_IDLE),
-  ...Object.values(RequestActionTypes), ...Object.values(NotificationsActionTypes)];
+    ...Object.values(RequestActionTypes), ...Object.values(NotificationsActionTypes)];
 
 @Injectable()
 export class AuthEffects {
@@ -88,7 +88,8 @@ export class AuthEffects {
     switchMap((action: AuthenticatedAction) => {
       return this.authService.authenticatedUser(action.payload).pipe(
         map((userHref: string) => new AuthenticatedSuccessAction((userHref !== null), action.payload, userHref)),
-        catchError((error) => observableOf(new AuthenticatedErrorAction(error))),);
+        catchError((error) => observableOf(new AuthenticatedErrorAction(error))),
+      );
     })
   ));
 
@@ -134,7 +135,8 @@ export class AuthEffects {
       }
       return user$.pipe(
         map((user: EPerson) => new RetrieveAuthenticatedEpersonSuccessAction(user.id)),
-        catchError((error) => observableOf(new RetrieveAuthenticatedEpersonErrorAction(error))));
+        catchError((error) => observableOf(new RetrieveAuthenticatedEpersonErrorAction(error)))
+      );
     })
   ));
 
@@ -144,8 +146,7 @@ export class AuthEffects {
         map((token: AuthTokenInfo) => new AuthenticatedAction(token)),
         catchError((error) => observableOf(new CheckAuthenticationTokenCookieAction()))
       );
-    })
-  ));
+    })));
 
   public checkTokenCookie$: Observable<Action> = createEffect(() => this.actions$.pipe(
     ofType(AuthActionTypes.CHECK_AUTHENTICATION_TOKEN_COOKIE),
@@ -181,8 +182,7 @@ export class AuthEffects {
         map((token: AuthTokenInfo) => new RefreshTokenSuccessAction(token)),
         catchError((error) => observableOf(new RefreshTokenErrorAction()))
       );
-    })
-  ));
+    })));
 
   // It means "reacts to this action but don't send another"
   public refreshTokenSuccess$: Observable<Action> = createEffect(() => this.actions$.pipe(
@@ -205,17 +205,17 @@ export class AuthEffects {
         tap(() => this.authService.removeToken()),
         tap(() => this.authService.resetAuthenticationError())
       );
-    })), { dispatch: false });
+    })
+  ), { dispatch: false });
 
   /**
    * When the store is rehydrated in the browser, invalidate all cache hits regarding the
    * authorizations endpoint, to be sure to have consistent responses after a login with external idp
    *
    */
-   invalidateAuthorizationsRequestCache$ = createEffect(() => this.actions$
+  invalidateAuthorizationsRequestCache$ = createEffect(() => this.actions$
     .pipe(ofType(StoreActionTypes.REHYDRATE),
-      tap(() => this.authorizationsService.invalidateAuthorizationsRequestCache())
-    ), { dispatch: false });
+      tap(() => this.authorizationsService.invalidateAuthorizationsRequestCache())), { dispatch: false });
 
   public logOut$: Observable<Action> = createEffect(() => this.actions$
     .pipe(
@@ -233,8 +233,7 @@ export class AuthEffects {
     .pipe(ofType(AuthActionTypes.LOG_OUT_SUCCESS),
       tap(() => this.authService.removeToken()),
       tap(() => this.authService.clearRedirectUrl()),
-      tap(() => this.authService.refreshAfterLogout())
-    ), { dispatch: false });
+      tap(() => this.authService.refreshAfterLogout())), { dispatch: false });
 
   public redirectToLoginTokenExpired$: Observable<Action> = createEffect(() => this.actions$
     .pipe(
@@ -267,8 +266,7 @@ export class AuthEffects {
     // in, and start a new timer
     switchMap(() =>
       // Start a timer outside of Angular's zone
-      timer(environment.auth.ui.timeUntilIdle, new LeaveZoneScheduler(this.zone, asyncScheduler))
-    ),
+      timer(environment.auth.ui.timeUntilIdle, new LeaveZoneScheduler(this.zone, asyncScheduler))),
     // Re-enter the zone to dispatch the action
     observeOn(new EnterZoneScheduler(this.zone, queueScheduler)),
     map(() => new SetUserAsIdleAction()),
@@ -282,10 +280,12 @@ export class AuthEffects {
    * @param {AuthService} authService
    * @param {Store} store
    */
-  constructor(private actions$: Actions,
-              private zone: NgZone,
-              private authorizationsService: AuthorizationDataService,
-              private authService: AuthService,
-              private store: Store<AppState>) {
+  constructor(
+    private actions$: Actions,
+    private zone: NgZone,
+    private authorizationsService: AuthorizationDataService,
+    private authService: AuthService,
+    private store: Store<AppState>
+  ) {
   }
 }

@@ -30,9 +30,10 @@ export class WorkflowItemSearchResultAdminWorkflowListElementComponent extends S
    */
   public item$: Observable<Item>;
 
-  constructor(private linkService: LinkService,
-              protected truncatableService: TruncatableService,
-              protected dsoNameService: DSONameService
+  constructor(
+    private linkService: LinkService,
+    protected truncatableService: TruncatableService,
+    protected dsoNameService: DSONameService
   ) {
     super(truncatableService, dsoNameService);
   }

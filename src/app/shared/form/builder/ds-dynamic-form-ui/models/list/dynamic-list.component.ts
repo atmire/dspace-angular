@@ -46,11 +46,12 @@ export class DsDynamicListComponent extends DynamicFormControlComponent implemen
   public items: ListItem[][] = [];
   protected optionsList: VocabularyEntry[];
 
-  constructor(private vocabularyService: VocabularyService,
-              private cdr: ChangeDetectorRef,
-              private formBuilderService: FormBuilderService,
-              protected layoutService: DynamicFormLayoutService,
-              protected validationService: DynamicFormValidationService
+  constructor(
+    private vocabularyService: VocabularyService,
+    private cdr: ChangeDetectorRef,
+    private formBuilderService: FormBuilderService,
+    protected layoutService: DynamicFormLayoutService,
+    protected validationService: DynamicFormValidationService
   ) {
     super(layoutService, validationService);
   }
@@ -125,7 +126,8 @@ export class DsDynamicListComponent extends DynamicFormControlComponent implemen
           const value = option.authority || option.value;
           const checked: boolean = isNotEmpty(findKey(
             this.model.value,
-            (v) => v.value === option.value));
+            (v) => v.value === option.value
+          ));
 
           const item: ListItem = {
             id: value,

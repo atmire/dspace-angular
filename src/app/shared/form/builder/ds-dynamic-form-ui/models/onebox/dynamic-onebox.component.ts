@@ -66,11 +66,12 @@ export class DsDynamicOneboxComponent extends DsDynamicVocabularyComponent imple
   private isHierarchicalVocabulary$: Observable<boolean>;
   private subs: Subscription[] = [];
 
-  constructor(protected vocabularyService: VocabularyService,
-              protected cdr: ChangeDetectorRef,
-              protected layoutService: DynamicFormLayoutService,
-              protected modalService: NgbModal,
-              protected validationService: DynamicFormValidationService
+  constructor(
+    protected vocabularyService: VocabularyService,
+    protected cdr: ChangeDetectorRef,
+    protected layoutService: DynamicFormLayoutService,
+    protected modalService: NgbModal,
+    protected validationService: DynamicFormValidationService
   ) {
     super(vocabularyService, layoutService, validationService);
   }
@@ -100,7 +101,8 @@ export class DsDynamicOneboxComponent extends DsDynamicVocabularyComponent imple
             term,
             false,
             this.model.vocabularyOptions,
-            this.pageInfo).pipe(
+            this.pageInfo
+          ).pipe(
             getFirstSucceededRemoteDataPayload(),
             tap(() => this.searchFailed = false),
             catchError(() => {
@@ -109,7 +111,8 @@ export class DsDynamicOneboxComponent extends DsDynamicVocabularyComponent imple
                 new PageInfo(),
                 []
               ));
-            }));
+            })
+          );
         }
       }),
       map((list: PaginatedList<VocabularyEntry>) => list.page),
@@ -136,7 +139,8 @@ export class DsDynamicOneboxComponent extends DsDynamicVocabularyComponent imple
     );
 
     this.subs.push(this.group.get(this.model.id).valueChanges.pipe(
-      filter((value) => this.currentValue !== value))
+      filter((value) => this.currentValue !== value)
+    )
       .subscribe((value) => {
         this.setCurrentValue(this.model.value);
       }));

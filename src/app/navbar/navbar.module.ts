@@ -24,26 +24,26 @@ const ENTRY_COMPONENTS = [
 ];
 
 @NgModule({
-    imports: [
-        CommonModule,
-        SharedModule,
-        MenuModule,
-        FormsModule,
-        EffectsModule.forFeature(effects),
-        CoreModule.forRoot()
-    ],
-    declarations: [
-        NavbarComponent,
-        ThemedNavbarComponent,
-        NavbarSectionComponent,
-        ExpandableNavbarSectionComponent
-    ],
-    providers: [],
-    exports: [
-        ThemedNavbarComponent,
-        NavbarSectionComponent,
-        ExpandableNavbarSectionComponent
-    ]
+  imports: [
+    CommonModule,
+    SharedModule,
+    MenuModule,
+    FormsModule,
+    EffectsModule.forFeature(effects),
+    CoreModule.forRoot()
+  ],
+  declarations: [
+    NavbarComponent,
+    ThemedNavbarComponent,
+    NavbarSectionComponent,
+    ExpandableNavbarSectionComponent
+  ],
+  providers: [],
+  exports: [
+    ThemedNavbarComponent,
+    NavbarSectionComponent,
+    ExpandableNavbarSectionComponent
+  ]
 })
 
 /**

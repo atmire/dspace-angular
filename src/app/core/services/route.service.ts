@@ -149,7 +149,8 @@ export class RouteService {
         } else {
           return paramMap;
         }
-      }));
+      })
+    );
   }
 
   public saveRouting(): void {

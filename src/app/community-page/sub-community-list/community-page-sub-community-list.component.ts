@@ -45,8 +45,9 @@ export class CommunityPageSubCommunityListComponent implements OnInit {
    */
   subCommunitiesRDObs: BehaviorSubject<RemoteData<PaginatedList<Community>>> = new BehaviorSubject<RemoteData<PaginatedList<Community>>>({} as any);
 
-  constructor(private cds: CommunityDataService,
-              private paginationService: PaginationService
+  constructor(
+    private cds: CommunityDataService,
+    private paginationService: PaginationService
   ) {
   }
 

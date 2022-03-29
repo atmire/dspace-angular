@@ -172,8 +172,10 @@ export class SubmissionRequest extends GetRequest {
  * Class representing a submission HTTP DELETE request object
  */
 export class SubmissionDeleteRequest extends DeleteRequest {
-  constructor(public uuid: string,
-              public href: string) {
+  constructor(
+    public uuid: string,
+    public href: string
+  ) {
     super(uuid, href);
   }
 
@@ -186,9 +188,11 @@ export class SubmissionDeleteRequest extends DeleteRequest {
  * Class representing a submission HTTP PATCH request object
  */
 export class SubmissionPatchRequest extends PatchRequest {
-  constructor(public uuid: string,
-              public href: string,
-              public body?: any) {
+  constructor(
+    public uuid: string,
+    public href: string,
+    public body?: any
+  ) {
     super(uuid, href, body);
   }
 
@@ -201,10 +205,12 @@ export class SubmissionPatchRequest extends PatchRequest {
  * Class representing a submission HTTP POST request object
  */
 export class SubmissionPostRequest extends PostRequest {
-  constructor(public uuid: string,
-              public href: string,
-              public body?: any,
-              public options?: HttpOptions) {
+  constructor(
+    public uuid: string,
+    public href: string,
+    public body?: any,
+    public options?: HttpOptions
+  ) {
     super(uuid, href, body, options);
   }
 

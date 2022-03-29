@@ -74,7 +74,8 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
     private searchService: SearchService,
     private filterService: SearchFilterService,
     private router: Router,
-    @Inject(SEARCH_CONFIG_SERVICE) private searchConfigService: SearchConfigurationService) {
+    @Inject(SEARCH_CONFIG_SERVICE) private searchConfigService: SearchConfigurationService
+  ) {
   }
 
   ngOnInit(): void {

@@ -55,7 +55,8 @@ export class ClaimedTaskDataService extends TasksService<ClaimedTask> {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DSOChangeAnalyzer<ClaimedTask>) {
+    protected comparator: DSOChangeAnalyzer<ClaimedTask>
+  ) {
     super();
   }
 

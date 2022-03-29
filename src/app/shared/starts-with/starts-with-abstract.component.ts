@@ -29,10 +29,10 @@ export abstract class StartsWithAbstractComponent implements OnInit, OnDestroy {
   subs: Subscription[] = [];
 
   public constructor(@Inject('startsWithOptions') public startsWithOptions: any[],
-                     @Inject('paginationId') public paginationId: string,
-                     protected paginationService: PaginationService,
-                     protected route: ActivatedRoute,
-                     protected router: Router) {
+    @Inject('paginationId') public paginationId: string,
+    protected paginationService: PaginationService,
+    protected route: ActivatedRoute,
+    protected router: Router) {
   }
 
   ngOnInit(): void {

@@ -85,9 +85,13 @@ export class UploaderComponent {
     }
   }
 
-  constructor(private cdr: ChangeDetectorRef, private scrollToService: ScrollToService,
-    private uploaderService: UploaderService, private tokenExtractor: HttpXsrfTokenExtractor,
-    private cookieService: CookieService) {
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private scrollToService: ScrollToService,
+    private uploaderService: UploaderService,
+    private tokenExtractor: HttpXsrfTokenExtractor,
+    private cookieService: CookieService
+  ) {
   }
 
   /**

@@ -83,15 +83,13 @@ describe('CollectionSourceComponent', () => {
         hasUpdates: observableOf(true),
         isReinstatable: observableOf(false),
         isValidPage: observableOf(true)
-      }
-    );
+      });
     notificationsService = jasmine.createSpyObj('notificationsService',
       {
         info: infoNotification,
         warning: warningNotification,
         success: successNotification
-      }
-    );
+      });
     location = jasmine.createSpyObj('location', ['back']);
     formService = Object.assign({
       createFormGroup: (fModel: DynamicFormControlModel[]) => {

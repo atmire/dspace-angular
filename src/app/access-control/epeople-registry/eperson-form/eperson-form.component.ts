@@ -247,14 +247,16 @@ export class EPersonFormComponent implements OnInit, OnDestroy {
           label: canLogIn,
           name: 'canLogIn',
           value: (this.epersonInitial != null ? this.epersonInitial.canLogIn : true)
-        });
+        }
+      );
       this.requireCertificate = new DynamicCheckboxModel(
         {
           id: 'requireCertificate',
           label: requireCertificate,
           name: 'requireCertificate',
           value: (this.epersonInitial != null ? this.epersonInitial.requireCertificate : false)
-        });
+        }
+      );
       this.formModel = [
         this.firstName,
         this.lastName,
@@ -493,15 +495,14 @@ export class EPersonFormComponent implements OnInit, OnDestroy {
     if (hasValue(this.epersonInitial.email)) {
       this.epersonRegistrationService.registerEmail(this.epersonInitial.email).pipe(getFirstCompletedRemoteData())
         .subscribe((response: RemoteData<Registration>) => {
-            if (response.hasSucceeded) {
-              this.notificationsService.success(this.translateService.get('admin.access-control.epeople.actions.reset'),
-                this.translateService.get('forgot-email.form.success.content', {email: this.epersonInitial.email}));
-            } else {
-              this.notificationsService.error(this.translateService.get('forgot-email.form.error.head'),
-                this.translateService.get('forgot-email.form.error.content', {email: this.epersonInitial.email}));
-            }
+          if (response.hasSucceeded) {
+            this.notificationsService.success(this.translateService.get('admin.access-control.epeople.actions.reset'),
+              this.translateService.get('forgot-email.form.success.content', {email: this.epersonInitial.email}));
+          } else {
+            this.notificationsService.error(this.translateService.get('forgot-email.form.error.head'),
+              this.translateService.get('forgot-email.form.error.content', {email: this.epersonInitial.email}));
           }
-        );
+        });
     }
   }
 

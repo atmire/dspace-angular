@@ -151,8 +151,8 @@ describe('SubmissionSectionUploadComponent test suite', () => {
       resourcePolicyService.findByHref.and.returnValue(createSuccessfulRemoteDataObject$(mockDefaultAccessCondition));
 
       uploadsConfigService.findByHref.and.returnValue(createSuccessfulRemoteDataObject$(
-        buildPaginatedList(new PageInfo(), [mockUploadConfigResponse as any]))
-      );
+        buildPaginatedList(new PageInfo(), [mockUploadConfigResponse as any])
+      ));
 
       groupService.findById.and.returnValues(
         createSuccessfulRemoteDataObject$(Object.assign(new Group(), mockGroup)),

@@ -22,10 +22,11 @@ import { DSONameService } from '../../../../../core/breadcrumbs/dso-name.service
  * a sidebar search modal
  */
 export class PersonSidebarSearchListElementComponent extends SidebarSearchListElementComponent<ItemSearchResult, Item> {
-  constructor(protected truncatableService: TruncatableService,
-              protected linkService: LinkService,
-              protected translateService: TranslateService,
-              protected dsoNameService: DSONameService
+  constructor(
+    protected truncatableService: TruncatableService,
+    protected linkService: LinkService,
+    protected translateService: TranslateService,
+    protected dsoNameService: DSONameService
   ) {
     super(truncatableService, linkService, dsoNameService);
   }

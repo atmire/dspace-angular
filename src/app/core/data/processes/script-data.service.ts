@@ -36,7 +36,8 @@ export class ScriptDataService extends DataService<Script> {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DefaultChangeAnalyzer<Script>) {
+    protected comparator: DefaultChangeAnalyzer<Script>
+  ) {
     super();
   }
 

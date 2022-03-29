@@ -77,8 +77,7 @@ describe('LookupRelationService', () => {
 
     it('should set the searchConfig to contain a fixedFilter and configuration', () => {
       expect(service.searchConfig).toEqual(Object.assign(new PaginatedSearchOptions({}), optionsWithQuery,
-        { fixedFilter: relationship.filter, configuration: relationship.searchConfiguration }
-      ));
+        { fixedFilter: relationship.filter, configuration: relationship.searchConfiguration }));
     });
   });
 

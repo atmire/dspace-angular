@@ -46,8 +46,10 @@ export class ValidationSuggestionsComponent extends InputSuggestionsComponent im
    * The possibility to edit metadata
    */
   @Input() disable;
-  constructor(private metadataFieldValidator: MetadataFieldValidator,
-              private objectUpdatesService: ObjectUpdatesService) {
+  constructor(
+    private metadataFieldValidator: MetadataFieldValidator,
+    private objectUpdatesService: ObjectUpdatesService
+  ) {
     super();
   }
 

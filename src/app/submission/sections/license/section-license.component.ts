@@ -103,17 +103,19 @@ export class SubmissionSectionLicenseComponent extends SectionModelComponent {
    * @param {SectionDataObject} injectedSectionData
    * @param {string} injectedSubmissionId
    */
-  constructor(protected changeDetectorRef: ChangeDetectorRef,
-              protected collectionDataService: CollectionDataService,
-              protected formBuilderService: FormBuilderService,
-              protected formOperationsService: SectionFormOperationsService,
-              protected formService: FormService,
-              protected operationsBuilder: JsonPatchOperationsBuilder,
-              protected sectionService: SectionsService,
-              protected submissionService: SubmissionService,
-              @Inject('collectionIdProvider') public injectedCollectionId: string,
-              @Inject('sectionDataProvider') public injectedSectionData: SectionDataObject,
-              @Inject('submissionIdProvider') public injectedSubmissionId: string) {
+  constructor(
+    protected changeDetectorRef: ChangeDetectorRef,
+    protected collectionDataService: CollectionDataService,
+    protected formBuilderService: FormBuilderService,
+    protected formOperationsService: SectionFormOperationsService,
+    protected formService: FormService,
+    protected operationsBuilder: JsonPatchOperationsBuilder,
+    protected sectionService: SectionsService,
+    protected submissionService: SubmissionService,
+    @Inject('collectionIdProvider') public injectedCollectionId: string,
+    @Inject('sectionDataProvider') public injectedSectionData: SectionDataObject,
+    @Inject('submissionIdProvider') public injectedSubmissionId: string
+  ) {
     super(injectedCollectionId, injectedSectionData, injectedSubmissionId);
   }
 
@@ -134,23 +136,27 @@ export class SubmissionSectionLicenseComponent extends SectionModelComponent {
       mergeMap((collectionData: RemoteData<Collection>) => (collectionData.payload as any).license),
       find((licenseData: RemoteData<License>) => isNotUndefined((licenseData.payload))),
       map((licenseData: RemoteData<License>) => licenseData.payload.text),
-      startWith(''));
+      startWith('')
+    );
 
     this.subs.push(
       // Disable checkbox whether it's in workflow or item scope
       this.sectionService.isSectionReadOnly(
         this.submissionId,
         this.sectionData.id,
-        this.submissionService.getSubmissionScope()).pipe(
+        this.submissionService.getSubmissionScope()
+      ).pipe(
         take(1),
-        filter((isReadOnly) => isReadOnly))
+        filter((isReadOnly) => isReadOnly)
+      )
         .subscribe(() => {
           model.disabled = true;
         }),
 
       this.sectionService.getSectionErrors(this.submissionId, this.sectionData.id).pipe(
         filter((errors) => isNotEmpty(errors)),
-        distinctUntilChanged())
+        distinctUntilChanged()
+      )
         .subscribe((errors) => {
           // parse errors
           const newErrors = errors.map((error) => {
@@ -190,7 +196,8 @@ export class SubmissionSectionLicenseComponent extends SectionModelComponent {
     const model = this.formBuilderService.findById('granted', this.formModel);
     return (model as DynamicCheckboxModel).valueChanges.pipe(
       map((value) => value === true),
-      startWith((model as DynamicCheckboxModel).value));
+      startWith((model as DynamicCheckboxModel).value)
+    );
   }
 
   /**

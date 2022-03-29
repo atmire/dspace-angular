@@ -16,13 +16,15 @@ import { RequestService } from '../../core/data/request.service';
  * Component representing a page to send back a workflow item to the submitter
  */
 export class WorkflowItemSendBackComponent extends WorkflowItemActionPageComponent {
-  constructor(protected route: ActivatedRoute,
-              protected workflowItemService: WorkflowItemDataService,
-              protected router: Router,
-              protected routeService: RouteService,
-              protected notificationsService: NotificationsService,
-              protected translationService: TranslateService,
-              protected requestService: RequestService) {
+  constructor(
+    protected route: ActivatedRoute,
+    protected workflowItemService: WorkflowItemDataService,
+    protected router: Router,
+    protected routeService: RouteService,
+    protected notificationsService: NotificationsService,
+    protected translationService: TranslateService,
+    protected requestService: RequestService
+  ) {
     super(route, workflowItemService, router, routeService, notificationsService, translationService);
   }
 

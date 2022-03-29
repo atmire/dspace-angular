@@ -16,10 +16,12 @@ import { DsoPageSomeFeatureGuard } from '../../core/data/feature-authorization/f
  * the status page
  */
 export class ItemPageStatusGuard extends DsoPageSomeFeatureGuard<Item> {
-  constructor(protected resolver: ItemPageResolver,
-              protected authorizationService: AuthorizationDataService,
-              protected router: Router,
-              protected authService: AuthService) {
+  constructor(
+    protected resolver: ItemPageResolver,
+    protected authorizationService: AuthorizationDataService,
+    protected router: Router,
+    protected authService: AuthService
+  ) {
     super(resolver, authorizationService, router, authService);
   }
 

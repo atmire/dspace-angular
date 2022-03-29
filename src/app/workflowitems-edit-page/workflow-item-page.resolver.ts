@@ -26,8 +26,7 @@ export class WorkflowItemPageResolver implements Resolve<RemoteData<WorkflowItem
     return this.workflowItemService.findById(route.params.id,
       true,
       false,
-      followLink('item'),
-    ).pipe(
+      followLink('item'),).pipe(
       getFirstCompletedRemoteData(),
     );
   }

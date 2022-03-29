@@ -41,14 +41,16 @@ export class ClaimedTaskActionsRejectComponent extends ClaimedTaskActionsAbstrac
    */
   public modalRef: NgbModalRef;
 
-  constructor(protected injector: Injector,
-              protected router: Router,
-              protected notificationsService: NotificationsService,
-              protected translate: TranslateService,
-              protected searchService: SearchService,
-              protected requestService: RequestService,
-              private formBuilder: FormBuilder,
-              private modalService: NgbModal) {
+  constructor(
+    protected injector: Injector,
+    protected router: Router,
+    protected notificationsService: NotificationsService,
+    protected translate: TranslateService,
+    protected searchService: SearchService,
+    protected requestService: RequestService,
+    private formBuilder: FormBuilder,
+    private modalService: NgbModal
+  ) {
     super(injector, router, notificationsService, translate, searchService, requestService);
   }
 

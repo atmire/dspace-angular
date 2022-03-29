@@ -131,10 +131,12 @@ const isValid = (entry: RequestEntry): boolean => {
 export class RequestService {
   private requestsOnTheirWayToTheStore: string[] = [];
 
-  constructor(private objectCache: ObjectCacheService,
-              private uuidService: UUIDService,
-              private store: Store<CoreState>,
-              private indexStore: Store<MetaIndexState>) {
+  constructor(
+    private objectCache: ObjectCacheService,
+    private uuidService: UUIDService,
+    private store: Store<CoreState>,
+    private indexStore: Store<MetaIndexState>
+  ) {
   }
 
   generateRequestId(): string {
@@ -159,7 +161,8 @@ export class RequestService {
     // then check the store
     let isPending = false;
     this.getByHref(request.href).pipe(
-      take(1))
+      take(1)
+    )
       .subscribe((re: RequestEntry) => {
         isPending = (hasValue(re) && isLoading(re.state));
       });
@@ -187,13 +190,12 @@ export class RequestService {
       return source.pipe(map((entry: RequestEntry) => {
           // Headers break after being retrieved from the store (because of lazy initialization)
           // Combining them with a new object fixes this issue
-          if (hasValue(entry) && hasValue(entry.request) && hasValue(entry.request.options) && hasValue(entry.request.options.headers)) {
-            entry = cloneDeep(entry);
-            entry.request.options.headers = Object.assign(new HttpHeaders(), entry.request.options.headers);
-          }
-          return entry;
-        })
-      );
+        if (hasValue(entry) && hasValue(entry.request) && hasValue(entry.request.options) && hasValue(entry.request.options.headers)) {
+          entry = cloneDeep(entry);
+          entry.request.options.headers = Object.assign(new HttpHeaders(), entry.request.options.headers);
+        }
+        return entry;
+      }));
     };
   }
 

@@ -24,8 +24,10 @@ export class ImpersonateNavbarComponent implements OnInit {
    */
   isImpersonating: boolean;
 
-  constructor(private store: Store<AppState>,
-              private authService: AuthService) {
+  constructor(
+    private store: Store<AppState>,
+    private authService: AuthService
+  ) {
   }
 
   ngOnInit(): void {

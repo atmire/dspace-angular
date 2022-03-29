@@ -16,8 +16,7 @@ import { ResolvedAction } from '../core/resolving/resolver.actions';
 export const ITEM_PAGE_LINKS_TO_FOLLOW: FollowLinkConfig<Item>[] = [
   followLink('owningCollection', {},
     followLink('parentCommunity', {},
-      followLink('parentCommunity'))
-  ),
+      followLink('parentCommunity'))),
   followLink('relationships'),
   followLink('version', {}, followLink('versionhistory')),
   followLink('thumbnail')
@@ -46,8 +45,7 @@ export class ItemResolver implements Resolve<RemoteData<Item>> {
     const itemRD$ = this.itemService.findById(route.params.id,
       true,
       false,
-      ...ITEM_PAGE_LINKS_TO_FOLLOW
-    ).pipe(
+      ...ITEM_PAGE_LINKS_TO_FOLLOW).pipe(
       getFirstCompletedRemoteData(),
     );
 

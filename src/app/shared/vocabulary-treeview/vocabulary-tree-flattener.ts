@@ -40,13 +40,13 @@ import { take } from 'rxjs/operators';
 export class VocabularyTreeFlattener<T, F> {
 
   constructor(public transformFunction: (node: T, level: number) => F,
-              public getLevel: (node: F) => number,
-              public isExpandable: (node: F) => boolean,
-              public getChildren: (node: T) =>
-                Observable<T[]> | T[] | undefined | null) {}
+    public getLevel: (node: F) => number,
+    public isExpandable: (node: F) => boolean,
+    public getChildren: (node: T) =>
+    Observable<T[]> | T[] | undefined | null) {}
 
   _flattenNode(node: T, level: number,
-               resultNodes: F[], parentMap: boolean[]): F[] {
+    resultNodes: F[], parentMap: boolean[]): F[] {
     const flatNode = this.transformFunction(node, level);
     resultNodes.push(flatNode);
 
@@ -66,7 +66,7 @@ export class VocabularyTreeFlattener<T, F> {
   }
 
   _flattenChildren(children: T[], level: number,
-                   resultNodes: F[], parentMap: boolean[]): void {
+    resultNodes: F[], parentMap: boolean[]): void {
     children.forEach((child, index) => {
       const childParentMap: boolean[] = parentMap.slice();
       childParentMap.push(index !== children.length - 1);

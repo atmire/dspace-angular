@@ -103,10 +103,12 @@ export class ProfilePageMetadataFormComponent implements OnInit {
    */
   activeLangs: LangConfig[];
 
-  constructor(protected formBuilderService: FormBuilderService,
-              protected translate: TranslateService,
-              protected epersonService: EPersonDataService,
-              protected notificationsService: NotificationsService) {
+  constructor(
+    protected formBuilderService: FormBuilderService,
+    protected translate: TranslateService,
+    protected epersonService: EPersonDataService,
+    protected notificationsService: NotificationsService
+  ) {
   }
 
   ngOnInit(): void {

@@ -50,8 +50,9 @@ export class DsDatePickerComponent extends DynamicFormControlComponent implement
   disabledMonth = true;
   disabledDay = true;
 
-  constructor(protected layoutService: DynamicFormLayoutService,
-              protected validationService: DynamicFormValidationService
+  constructor(
+    protected layoutService: DynamicFormLayoutService,
+    protected validationService: DynamicFormValidationService
   ) {
     super(layoutService, validationService);
   }

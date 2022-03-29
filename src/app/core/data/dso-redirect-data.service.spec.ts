@@ -193,9 +193,7 @@ describe('DsoRedirectDataService', () => {
           {},
           followLink('itemtemplate',
             {},
-            followLink('relationships')
-          )
-        )
+            followLink('relationships')))
       );
       expect(result).toEqual(expected);
     });

@@ -53,8 +53,7 @@ describe('ItemVersionsNoticeComponent', () => {
   latestVersion.item = createSuccessfulRemoteDataObject$(latestItem);
 
   const versionHistoryServiceSpy = jasmine.createSpyObj('versionHistoryService',
-    ['getVersions', 'getLatestVersionFromHistory$', 'isLatest$', ]
-  );
+    ['getVersions', 'getLatestVersionFromHistory$', 'isLatest$', ]);
 
   beforeEach(waitForAsync(() => {
 

@@ -15,10 +15,12 @@ import { AuthService } from '../core/auth/auth.service';
  * Guard for preventing unauthorized access to certain {@link Community} pages requiring administrator rights
  */
 export class CommunityPageAdministratorGuard extends DsoPageSingleFeatureGuard<Community> {
-  constructor(protected resolver: CommunityPageResolver,
-              protected authorizationService: AuthorizationDataService,
-              protected router: Router,
-              protected authService: AuthService) {
+  constructor(
+    protected resolver: CommunityPageResolver,
+    protected authorizationService: AuthorizationDataService,
+    protected router: Router,
+    protected authService: AuthService
+  ) {
     super(resolver, authorizationService, router, authService);
   }
 

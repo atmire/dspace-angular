@@ -479,7 +479,8 @@ describe('SubmissionService test suite', () => {
         submissionDefinition,
         {},
         new Item(),
-        null);
+        null
+      );
 
       expect((service as any).store.dispatch).toHaveBeenCalledWith(expected);
     });

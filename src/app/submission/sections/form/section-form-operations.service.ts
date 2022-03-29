@@ -40,7 +40,8 @@ export class SectionFormOperationsService {
    */
   constructor(
     private formBuilder: FormBuilderService,
-    private operationsBuilder: JsonPatchOperationsBuilder) {
+    private operationsBuilder: JsonPatchOperationsBuilder
+  ) {
   }
 
   /**
@@ -56,9 +57,9 @@ export class SectionFormOperationsService {
    *    representing if field value related to the specified operation has stored value
    */
   public dispatchOperationsFromEvent(pathCombiner: JsonPatchOperationPathCombiner,
-                                     event: DynamicFormControlEvent,
-                                     previousValue: FormFieldPreviousValueObject,
-                                     hasStoredValue: boolean): void {
+    event: DynamicFormControlEvent,
+    previousValue: FormFieldPreviousValueObject,
+    hasStoredValue: boolean): void {
     switch (event.type) {
       case 'remove':
         this.dispatchOperationsFromRemoveEvent(pathCombiner, event, previousValue);
@@ -295,8 +296,8 @@ export class SectionFormOperationsService {
    *    the [[FormFieldPreviousValueObject]] for the specified operation
    */
   protected dispatchOperationsFromRemoveEvent(pathCombiner: JsonPatchOperationPathCombiner,
-                                              event: DynamicFormControlEvent,
-                                              previousValue: FormFieldPreviousValueObject): void {
+    event: DynamicFormControlEvent,
+    previousValue: FormFieldPreviousValueObject): void {
 
     const path = this.getFieldPathFromEvent(event);
     const value = this.getFieldValueFromChangeEvent(event);
@@ -336,11 +337,13 @@ export class SectionFormOperationsService {
           // for some reason
           this.operationsBuilder.add(
             pathCombiner.getPath([path]),
-            [value], false);
+            [value], false
+          );
         } else {
           this.operationsBuilder.add(
             pathCombiner.getPath([path, '-']),
-            value, false);
+            value, false
+          );
         }
       }
     }
@@ -359,11 +362,11 @@ export class SectionFormOperationsService {
    *    representing if field value related to the specified operation has stored value
    */
   protected dispatchOperationsFromChangeEvent(pathCombiner: JsonPatchOperationPathCombiner,
-                                              event: DynamicFormControlEvent,
-                                              previousValue: FormFieldPreviousValueObject,
-                                              hasStoredValue: boolean): void {
+    event: DynamicFormControlEvent,
+    previousValue: FormFieldPreviousValueObject,
+    hasStoredValue: boolean): void {
 
-   if (event.context && event.context instanceof DynamicFormArrayGroupModel) {
+    if (event.context && event.context instanceof DynamicFormArrayGroupModel) {
       // Model is a DynamicRowArrayModel
       this.handleArrayGroupPatch(pathCombiner, event, (event as any).context.context, previousValue);
       return;
@@ -384,14 +387,16 @@ export class SectionFormOperationsService {
       // Model has as value an array, so dispatch an add operation with entire block of values
       this.operationsBuilder.add(
         pathCombiner.getPath(segmentedPath),
-        value, true);
+        value, true
+      );
     } else if (previousValue.isPathEqual(this.formBuilder.getPath(event.model)) || (hasStoredValue && isNotEmpty(previousValue.value)) ) {
       // Here model has a previous value changed or stored in the server
       if (hasValue(event.$event) && hasValue(event.$event.previousIndex)) {
         if (event.$event.previousIndex < 0) {
           this.operationsBuilder.add(
             pathCombiner.getPath(segmentedPath),
-            value, true);
+            value, true
+          );
         } else {
           const moveTo = pathCombiner.getPath(path);
           const moveFrom = pathCombiner.getPath(segmentedPath + '/' + event.$event.previousIndex);
@@ -413,7 +418,8 @@ export class SectionFormOperationsService {
         // New value is not equal from the previous one, so dispatch a replace operation
         this.operationsBuilder.replace(
           pathCombiner.getPath(path),
-          value);
+          value
+        );
       }
       previousValue.delete();
     } else if (value.hasValue()) {
@@ -423,13 +429,15 @@ export class SectionFormOperationsService {
         // so dispatch an add operation that initialize the values of a specific metadata
         this.operationsBuilder.add(
           pathCombiner.getPath(segmentedPath),
-          value, true);
+          value, true
+        );
       } else {
         // Model is part of an array model but is not the first item,
         // so dispatch an add operation that add a value to an existent metadata
         this.operationsBuilder.add(
           pathCombiner.getPath(path),
-          value);
+          value
+        );
       }
     }
   }
@@ -447,9 +455,9 @@ export class SectionFormOperationsService {
    *    the [[FormFieldPreviousValueObject]] for the specified operation
    */
   protected dispatchOperationsFromMap(valueMap: Map<string, any>,
-                                      pathCombiner: JsonPatchOperationPathCombiner,
-                                      event: DynamicFormControlEvent,
-                                      previousValue: FormFieldPreviousValueObject): void {
+    pathCombiner: JsonPatchOperationPathCombiner,
+    event: DynamicFormControlEvent,
+    previousValue: FormFieldPreviousValueObject): void {
     const currentValueMap = valueMap;
     if (event.type === 'remove') {
       const path = this.getQualdropItemPathFromEvent(event);
@@ -492,8 +500,8 @@ export class SectionFormOperationsService {
    *    the [[FormFieldPreviousValueObject]] for the specified operation
    */
   private dispatchOperationsFromMoveEvent(pathCombiner: JsonPatchOperationPathCombiner,
-                                          event: DynamicFormControlEvent,
-                                          previousValue: FormFieldPreviousValueObject) {
+    event: DynamicFormControlEvent,
+    previousValue: FormFieldPreviousValueObject) {
 
     return this.handleArrayGroupPatch(pathCombiner, event.$event, (event as any).$event.arrayModel, previousValue);
   }
@@ -511,9 +519,9 @@ export class SectionFormOperationsService {
    *    the [[FormFieldPreviousValueObject]] for the specified operation
    */
   private handleArrayGroupPatch(pathCombiner: JsonPatchOperationPathCombiner,
-                                event,
-                                model: DynamicRowArrayModel,
-                                previousValue: FormFieldPreviousValueObject) {
+    event,
+    model: DynamicRowArrayModel,
+    previousValue: FormFieldPreviousValueObject) {
 
     const arrayValue = this.formBuilder.getValueFromModel([model]);
     const segmentedPath = this.getFieldPathSegmentedFromChangeEvent(event);

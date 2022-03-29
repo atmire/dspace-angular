@@ -34,9 +34,11 @@ export class LookupRelationService {
     pageSize: 1
   });
 
-  constructor(protected externalSourceService: ExternalSourceService,
-              protected searchService: SearchService,
-              protected requestService: RequestService) {
+  constructor(
+    protected externalSourceService: ExternalSourceService,
+    protected searchService: SearchService,
+    protected requestService: RequestService
+  ) {
   }
 
   /**
@@ -47,8 +49,7 @@ export class LookupRelationService {
    */
   getLocalResults(relationship: RelationshipOptions, searchOptions: PaginatedSearchOptions, setSearchConfig = true): Observable<RemoteData<PaginatedList<SearchResult<Item>>>> {
     const newConfig = Object.assign(new PaginatedSearchOptions({}), searchOptions,
-      { fixedFilter: relationship.filter, configuration: relationship.searchConfiguration }
-    );
+      { fixedFilter: relationship.filter, configuration: relationship.searchConfiguration });
     if (setSearchConfig) {
       this.searchConfig = newConfig;
     }

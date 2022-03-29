@@ -120,7 +120,8 @@ describe('jsonPatchOperationsReducer test suite', () => {
         testJsonPatchResourceType,
         testJsonPatchResourceId,
         testJsonPatchResourcePath,
-        testJsonPatchResourceValue);
+        testJsonPatchResourceValue
+      );
       const newState = jsonPatchOperationsReducer(undefined, action);
 
       expect(newState).toEqual(testState);
@@ -130,7 +131,8 @@ describe('jsonPatchOperationsReducer test suite', () => {
       const action = new NewPatchRemoveOperationAction(
         testJsonPatchResourceType,
         testJsonPatchResourceId,
-        testJsonPatchResourcePath);
+        testJsonPatchResourcePath
+      );
       const newState = jsonPatchOperationsReducer(testState, action);
 
       expect(newState).toEqual(anotherTestState);
@@ -142,7 +144,8 @@ describe('jsonPatchOperationsReducer test suite', () => {
       const action = new StartTransactionPatchOperationsAction(
         testJsonPatchResourceType,
         testJsonPatchResourceId,
-        startTimestamp);
+        startTimestamp
+      );
       const newState = jsonPatchOperationsReducer(testState, action);
 
       expect(newState[testJsonPatchResourceType].transactionStartTime).toEqual(startTimestamp);
@@ -154,7 +157,8 @@ describe('jsonPatchOperationsReducer test suite', () => {
     it('should set \'commitPending\' to false ', () => {
       const action = new CommitPatchOperationsAction(
         testJsonPatchResourceType,
-        testJsonPatchResourceId);
+        testJsonPatchResourceId
+      );
       initState = Object.assign({}, testState, {
         [testJsonPatchResourceType]: Object.assign({}, testState[testJsonPatchResourceType], {
           transactionStartTime: startTimestamp,
@@ -172,7 +176,8 @@ describe('jsonPatchOperationsReducer test suite', () => {
     it('should set \'transactionStartTime\' to null and \'commitPending\' to false ', () => {
       const action = new RollbacktPatchOperationsAction(
         testJsonPatchResourceType,
-        testJsonPatchResourceId);
+        testJsonPatchResourceId
+      );
       initState = Object.assign({}, testState, {
         [testJsonPatchResourceType]: Object.assign({}, testState[testJsonPatchResourceType], {
           transactionStartTime: startTimestamp,
@@ -191,7 +196,8 @@ describe('jsonPatchOperationsReducer test suite', () => {
     it('should flush only committed operations', () => {
       const action = new FlushPatchOperationsAction(
         testJsonPatchResourceType,
-        testJsonPatchResourceId);
+        testJsonPatchResourceId
+      );
       initState = Object.assign({}, testState, {
         [testJsonPatchResourceType]: Object.assign({}, testState[testJsonPatchResourceType], {
           children: {
@@ -286,7 +292,8 @@ describe('jsonPatchOperationsReducer test suite', () => {
     it('should flush committed operations for specified resource id', () => {
       const action = new FlushPatchOperationsAction(
         testJsonPatchResourceType,
-        testJsonPatchResourceId);
+        testJsonPatchResourceId
+      );
       const newState = jsonPatchOperationsReducer(initState, action);
       const expectedBody: any = [
         {

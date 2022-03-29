@@ -107,19 +107,22 @@ describe('SectionsService test suite', () => {
         formId,
         'dc.contributor.author',
         0,
-        'error.validation.required');
+        'error.validation.required'
+      );
 
       expect(formService.addError).toHaveBeenCalledWith(
         formId,
         'dc.title',
         0,
-        'error.validation.required');
+        'error.validation.required'
+      );
 
       expect(formService.addError).toHaveBeenCalledWith(
         formId,
         'dc.date.issued',
         0,
-        'error.validation.required');
+        'error.validation.required'
+      );
     });
 
     it('should dispatch a new FormRemoveErrorAction for each section\'s error that no longer exists', () => {
@@ -133,17 +136,20 @@ describe('SectionsService test suite', () => {
         formId,
         'dc.contributor.author',
         0,
-        'error.validation.required');
+        'error.validation.required'
+      );
 
       expect(formService.addError).toHaveBeenCalledWith(
         formId,
         'dc.title',
         0,
-        'error.validation.required');
+        'error.validation.required'
+      );
       expect(formService.removeError).toHaveBeenCalledWith(
         formId,
         'dc.date.issued',
-        0);
+        0
+      );
     });
   });
 

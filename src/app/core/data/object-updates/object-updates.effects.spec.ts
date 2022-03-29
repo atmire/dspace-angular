@@ -83,11 +83,11 @@ describe('ObjectUpdatesEffects', () => {
         it('should return a RemoveObjectUpdatesAction', () => {
           actions = hot('a|', { a: new DiscardObjectUpdatesAction(testURL, infoNotification) });
           updatesEffects.removeAfterDiscardOrReinstateOnUndo$.pipe(
-            filter(((action) => hasValue(action))))
+            filter(((action) => hasValue(action)))
+          )
             .subscribe((t) => {
-                expect(t).toEqual(removeAction);
-              }
-            )
+              expect(t).toEqual(removeAction);
+            })
           ;
         });
       });
@@ -101,9 +101,8 @@ describe('ObjectUpdatesEffects', () => {
           actions = hot('a', { a: new DiscardObjectUpdatesAction(testURL, infoNotification) });
           actions = hot('b', { b: new ReinstateObjectUpdatesAction(testURL) });
           updatesEffects.removeAfterDiscardOrReinstateOnUndo$.subscribe((t) => {
-              expect(t).toEqual(new NoOpAction());
-            }
-          );
+            expect(t).toEqual(new NoOpAction());
+          });
         });
       });
 
@@ -117,8 +116,7 @@ describe('ObjectUpdatesEffects', () => {
           actions = hot('b', { b: new RemoveFieldUpdateAction(testURL, testUUID) });
 
           updatesEffects.removeAfterDiscardOrReinstateOnUndo$.subscribe((t) =>
-            expect(t).toEqual(new RemoveObjectUpdatesAction(testURL))
-          );
+            expect(t).toEqual(new RemoveObjectUpdatesAction(testURL)));
         });
       });
     });

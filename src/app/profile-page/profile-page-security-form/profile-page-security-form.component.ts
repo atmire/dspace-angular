@@ -61,10 +61,12 @@ export class ProfilePageSecurityFormComponent implements OnInit {
   FORM_PREFIX: string;
   private subs: Subscription[] = [];
 
-  constructor(protected formService: DynamicFormService,
-              protected translate: TranslateService,
-              protected epersonService: EPersonDataService,
-              protected notificationsService: NotificationsService) {
+  constructor(
+    protected formService: DynamicFormService,
+    protected translate: TranslateService,
+    protected epersonService: EPersonDataService,
+    protected notificationsService: NotificationsService
+  ) {
   }
 
   ngOnInit(): void {
@@ -89,8 +91,8 @@ export class ProfilePageSecurityFormComponent implements OnInit {
         } else {
           return false;
         }
-      })).subscribe((status) => this.isInvalid.emit(status))
-    );
+      })
+    ).subscribe((status) => this.isInvalid.emit(status)));
 
     this.subs.push(this.formGroup.valueChanges.pipe(
       debounceTime(300),

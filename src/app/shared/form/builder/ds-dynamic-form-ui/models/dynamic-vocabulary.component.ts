@@ -34,9 +34,10 @@ export abstract class DsDynamicVocabularyComponent extends DynamicFormControlCom
 
   public abstract pageInfo: PageInfo;
 
-  protected constructor(protected vocabularyService: VocabularyService,
-                        protected layoutService: DynamicFormLayoutService,
-                        protected validationService: DynamicFormValidationService
+  protected constructor(
+    protected vocabularyService: VocabularyService,
+    protected layoutService: DynamicFormLayoutService,
+    protected validationService: DynamicFormValidationService
   ) {
     super(layoutService, validationService);
   }

@@ -18,7 +18,8 @@ export class ApiService {
       catchError((err) => {
         console.log('Error: ', err);
         return observableThrowError(err);
-      }));
+      })
+    );
   }
 
 }

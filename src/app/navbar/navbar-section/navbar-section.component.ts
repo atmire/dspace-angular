@@ -21,9 +21,8 @@ export class NavbarSectionComponent extends MenuSectionComponent implements OnIn
   menuID = MenuID.PUBLIC;
 
   constructor(@Inject('sectionDataProvider') menuSection,
-              protected menuService: MenuService,
-              protected injector: Injector
-  ) {
+    protected menuService: MenuService,
+    protected injector: Injector) {
     super(menuSection, menuService, injector);
   }
 

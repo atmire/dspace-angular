@@ -120,9 +120,11 @@ export class FormatFormComponent implements OnInit {
     }, this.arrayElementLayout),
   ];
 
-  constructor(private dynamicFormService: DynamicFormService,
-              private translateService: TranslateService,
-              private router: Router) {
+  constructor(
+    private dynamicFormService: DynamicFormService,
+    private translateService: TranslateService,
+    private router: Router
+  ) {
 
   }
 
@@ -153,7 +155,8 @@ export class FormatFormComponent implements OnInit {
             (fieldModel as DynamicInputModel).value = this.bitstreamFormat[fieldModel.name];
           }
         }
-      });
+      }
+    );
   }
 
   /**
@@ -181,7 +184,8 @@ export class FormatFormComponent implements OnInit {
         } else {
           updatedBitstreamFormat[fieldModel.name] = (fieldModel as DynamicInputModel).value;
         }
-      });
+      }
+    );
     this.updatedFormat.emit(updatedBitstreamFormat);
   }
 

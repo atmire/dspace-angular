@@ -112,11 +112,12 @@ export abstract class AbstractPaginatedDragAndDropListComponent<T extends DSpace
    */
   subs: Subscription[] = [];
 
-  protected constructor(protected objectUpdatesService: ObjectUpdatesService,
-                        protected elRef: ElementRef,
-                        protected objectValuesPipe: ObjectValuesPipe,
-                        protected paginationService: PaginationService
-                        ) {
+  protected constructor(
+    protected objectUpdatesService: ObjectUpdatesService,
+    protected elRef: ElementRef,
+    protected objectValuesPipe: ObjectValuesPipe,
+    protected paginationService: PaginationService
+  ) {
   }
 
   /**

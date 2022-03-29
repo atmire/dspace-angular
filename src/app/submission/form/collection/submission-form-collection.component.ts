@@ -115,12 +115,14 @@ export class SubmissionFormCollectionComponent implements OnChanges, OnInit {
    * @param {SubmissionService} submissionService
    * @param {SectionsService} sectionsService
    */
-  constructor(protected cdr: ChangeDetectorRef,
-              private collectionDataService: CollectionDataService,
-              private operationsBuilder: JsonPatchOperationsBuilder,
-              private operationsService: SubmissionJsonPatchOperationsService,
-              private submissionService: SubmissionService,
-              private sectionsService: SectionsService) {
+  constructor(
+    protected cdr: ChangeDetectorRef,
+    private collectionDataService: CollectionDataService,
+    private operationsBuilder: JsonPatchOperationsBuilder,
+    private operationsService: SubmissionJsonPatchOperationsService,
+    private submissionService: SubmissionService,
+    private sectionsService: SectionsService
+  ) {
   }
 
   /**
@@ -166,22 +168,22 @@ export class SubmissionFormCollectionComponent implements OnChanges, OnInit {
       this.submissionService.getSubmissionObjectLinkName(),
       this.submissionId,
       'sections',
-      'collection').pipe(
-        mergeMap((submissionObject: SubmissionObject[]) => {
+      'collection'
+    ).pipe(
+      mergeMap((submissionObject: SubmissionObject[]) => {
           // retrieve the full submission object with embeds
-          return this.submissionService.retrieveSubmission(submissionObject[0].id).pipe(
-            getFirstSucceededRemoteDataPayload()
-          );
-        })
-      ).subscribe((submissionObject: SubmissionObject) => {
-        this.selectedCollectionId = event.collection.id;
-        this.selectedCollectionName$ = observableOf(event.collection.name);
-        this.collectionChange.emit(submissionObject);
-        this.submissionService.changeSubmissionCollection(this.submissionId, event.collection.id);
-        this.processingChange$.next(false);
-        this.cdr.detectChanges();
+        return this.submissionService.retrieveSubmission(submissionObject[0].id).pipe(
+          getFirstSucceededRemoteDataPayload()
+        );
       })
-    );
+    ).subscribe((submissionObject: SubmissionObject) => {
+      this.selectedCollectionId = event.collection.id;
+      this.selectedCollectionName$ = observableOf(event.collection.name);
+      this.collectionChange.emit(submissionObject);
+      this.submissionService.changeSubmissionCollection(this.submissionId, event.collection.id);
+      this.processingChange$.next(false);
+      this.cdr.detectChanges();
+    }));
   }
 
   /**

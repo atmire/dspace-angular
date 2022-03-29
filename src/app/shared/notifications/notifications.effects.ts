@@ -26,7 +26,9 @@ export class NotificationsEffects {
    * @param {Actions} actions$
    * @param {Store} store
    */
-  constructor(private actions$: Actions,
-              private store: Store<AppState>) {
+  constructor(
+    private actions$: Actions,
+    private store: Store<AppState>
+  ) {
   }
 }

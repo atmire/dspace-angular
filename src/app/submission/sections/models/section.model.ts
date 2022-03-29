@@ -106,7 +106,8 @@ export abstract class SectionModelComponent implements OnDestroy, OnInit, Sectio
   protected updateSectionStatus(): void {
     this.sectionStatusSub = this.getSectionStatus().pipe(
       filter((sectionStatus: boolean) => isNotUndefined(sectionStatus)),
-      startWith(true))
+      startWith(true)
+    )
       .subscribe((sectionStatus: boolean) => {
         this.sectionService.setSectionStatus(this.submissionId, this.sectionData.id, sectionStatus);
       });

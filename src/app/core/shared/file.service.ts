@@ -25,8 +25,7 @@ export class FileService {
    */
   retrieveFileDownloadLink(url: string): Observable<string> {
     return this.authService.getShortlivedToken().pipe(take(1), map((token) =>
-      hasValue(token) ? new URLCombiner(url, `?authentication-token=${token}`).toString() : url
-    ));
+      hasValue(token) ? new URLCombiner(url, `?authentication-token=${token}`).toString() : url));
   }
   /**
    * Derives file name from the http response

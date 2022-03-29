@@ -303,8 +303,7 @@ function resetResponseTimestamps(storeState: RequestState, action: ResetResponse
           timeCompleted: action.payload
         }),
         lastUpdated: action.payload
-      }
-    );
+      });
   });
   return newState;
 }

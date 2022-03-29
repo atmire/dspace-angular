@@ -254,7 +254,8 @@ export class SubmissionSectionUploadFileEditComponent implements OnInit {
         if (accessCondition.hasStartDate) {
           const startDateModel = this.formBuilderService.findById(
             'startDate',
-            (model.parent as DynamicFormArrayGroupModel).group) as DynamicDateControlModel;
+            (model.parent as DynamicFormArrayGroupModel).group
+          ) as DynamicDateControlModel;
 
           const min = new Date(accessCondition.maxStartDate);
           startDateModel.max = {
@@ -266,7 +267,8 @@ export class SubmissionSectionUploadFileEditComponent implements OnInit {
         if (accessCondition.hasEndDate) {
           const endDateModel = this.formBuilderService.findById(
             'endDate',
-            (model.parent as DynamicFormArrayGroupModel).group) as DynamicDateControlModel;
+            (model.parent as DynamicFormArrayGroupModel).group
+          ) as DynamicDateControlModel;
 
           const max = new Date(accessCondition.maxEndDate);
           endDateModel.max = {
@@ -452,7 +454,8 @@ export class SubmissionSectionUploadFileEditComponent implements OnInit {
           this.submissionService.getSubmissionObjectLinkName(),
           this.submissionId,
           this.pathCombiner.rootElement,
-          this.pathCombiner.subRootElement);
+          this.pathCombiner.subRootElement
+        );
       })
     ).subscribe((result: SubmissionObject[]) => {
       if (result[0].sections[this.sectionId]) {
@@ -460,8 +463,8 @@ export class SubmissionSectionUploadFileEditComponent implements OnInit {
         Object.keys(uploadSection.files)
           .filter((key) => uploadSection.files[key].uuid === this.fileId)
           .forEach((key) => this.uploadService.updateFileData(
-            this.submissionId, this.sectionId, this.fileId, uploadSection.files[key])
-          );
+            this.submissionId, this.sectionId, this.fileId, uploadSection.files[key]
+          ));
       }
       this.isSaving = false;
       this.activeModal.close();

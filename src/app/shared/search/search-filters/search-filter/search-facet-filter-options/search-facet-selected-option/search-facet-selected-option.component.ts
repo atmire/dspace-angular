@@ -56,11 +56,12 @@ export class SearchFacetSelectedOptionComponent implements OnInit, OnDestroy {
    */
   searchLink: string;
 
-  constructor(protected searchService: SearchService,
-              protected filterService: SearchFilterService,
-              protected searchConfigService: SearchConfigurationService,
-              protected router: Router,
-              protected paginationService: PaginationService
+  constructor(
+    protected searchService: SearchService,
+    protected filterService: SearchFilterService,
+    protected searchConfigService: SearchConfigurationService,
+    protected router: Router,
+    protected paginationService: PaginationService
   ) {
   }
 

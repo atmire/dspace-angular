@@ -166,10 +166,10 @@ export class FormClearErrorsAction implements Action {
  * so that reducers can easily compose action types
  */
 export type FormAction = FormInitAction
-  | FormChangeAction
-  | FormAddTouchedAction
-  | FormRemoveAction
-  | FormStatusChangeAction
-  | FormAddError
-  | FormClearErrorsAction
-  | FormRemoveErrorAction;
+| FormChangeAction
+| FormAddTouchedAction
+| FormRemoveAction
+| FormStatusChangeAction
+| FormAddError
+| FormClearErrorsAction
+| FormRemoveErrorAction;

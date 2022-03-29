@@ -121,8 +121,7 @@ describe('ItemDeleteComponent', () => {
       {
         getEntityTypeByLabel: createSuccessfulRemoteDataObject$(itemType),
         getEntityTypeRelationships: createSuccessfulRemoteDataObject$(createPaginatedList(types)),
-      }
-    );
+      });
 
     objectUpdatesServiceStub = {
       initialize: () => {
@@ -134,14 +133,12 @@ describe('ItemDeleteComponent', () => {
     relationshipService = jasmine.createSpyObj('relationshipService',
       {
         getItemRelationshipsArray: observableOf(relationships),
-      }
-    );
+      });
 
     linkService = jasmine.createSpyObj('linkService',
       {
         resolveLinks: relationships[0],
-      }
-    );
+      });
 
     notificationsServiceStub = new NotificationsServiceStub();
 
@@ -210,8 +207,7 @@ describe('ItemDeleteComponent', () => {
         (comp as any).entityTypeService = jasmine.createSpyObj('entityTypeService',
           {
             getEntityTypeByLabel: EMPTY,
-          }
-        );
+          });
       });
 
       it('should call delete function from the ItemDataService', () => {

@@ -34,8 +34,10 @@ export class ItemSelectComponent extends ObjectSelectComponent<Item> {
     [itemId: string]: string
   }>;
 
-  constructor(protected objectSelectService: ObjectSelectService,
-              protected authorizationService: AuthorizationDataService ) {
+  constructor(
+    protected objectSelectService: ObjectSelectService,
+    protected authorizationService: AuthorizationDataService
+  ) {
     super(objectSelectService, authorizationService);
   }
 

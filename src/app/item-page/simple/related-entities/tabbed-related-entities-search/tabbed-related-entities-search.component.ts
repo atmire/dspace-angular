@@ -46,8 +46,10 @@ export class TabbedRelatedEntitiesSearchComponent implements OnInit {
    */
   activeTab$: Observable<string>;
 
-  constructor(private route: ActivatedRoute,
-              private router: Router) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
   }
 
   /**

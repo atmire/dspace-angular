@@ -22,12 +22,14 @@ import { PaginationServiceStub } from '../testing/pagination-service.stub';
 })
 class MockAbstractPaginatedDragAndDropListComponent extends AbstractPaginatedDragAndDropListComponent<DSpaceObject> {
 
-  constructor(protected objectUpdatesService: ObjectUpdatesService,
-              protected elRef: ElementRef,
-              protected objectValuesPipe: ObjectValuesPipe,
-              protected mockUrl: string,
-              protected paginationService: PaginationService,
-  protected mockObjectsRD$: Observable<RemoteData<PaginatedList<DSpaceObject>>>) {
+  constructor(
+    protected objectUpdatesService: ObjectUpdatesService,
+    protected elRef: ElementRef,
+    protected objectValuesPipe: ObjectValuesPipe,
+    protected mockUrl: string,
+    protected paginationService: PaginationService,
+    protected mockObjectsRD$: Observable<RemoteData<PaginatedList<DSpaceObject>>>
+  ) {
     super(objectUpdatesService, elRef, objectValuesPipe, paginationService);
   }
 

@@ -41,7 +41,8 @@ export class WorkflowItemDataService extends DataService<WorkflowItem> {
     protected requestService: RequestService,
     protected rdbService: RemoteDataBuildService,
     protected objectCache: ObjectCacheService,
-    protected store: Store<CoreState>) {
+    protected store: Store<CoreState>
+  ) {
     super();
   }
 

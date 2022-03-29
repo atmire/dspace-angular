@@ -58,8 +58,7 @@ export class ClaimedDeclinedSearchResultListElementComponent extends SearchResul
       followLink('workflowitem',
         { useCachedVersionIfAvailable: false },
         followLink('item'),
-        followLink('submitter')
-      ),
+        followLink('submitter')),
       followLink('action'));
     this.workflowitemRD$ = this.dso.workflowitem as Observable<RemoteData<WorkflowItem>>;
   }

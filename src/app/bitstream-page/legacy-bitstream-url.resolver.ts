@@ -27,22 +27,22 @@ export class LegacyBitstreamUrlResolver implements Resolve<RemoteData<Bitstream>
    * current route, or an error if something went wrong
    */
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
-    Observable<RemoteData<Bitstream>> {
-      const prefix = route.params.prefix;
-      const suffix = route.params.suffix;
-      const filename = route.params.filename;
+  Observable<RemoteData<Bitstream>> {
+    const prefix = route.params.prefix;
+    const suffix = route.params.suffix;
+    const filename = route.params.filename;
 
-      let sequenceId = route.params.sequence_id;
-      if (hasNoValue(sequenceId)) {
-        sequenceId = route.queryParams.sequenceId;
-      }
+    let sequenceId = route.params.sequence_id;
+    if (hasNoValue(sequenceId)) {
+      sequenceId = route.queryParams.sequenceId;
+    }
 
-      return this.bitstreamDataService.findByItemHandle(
-        `${prefix}/${suffix}`,
-        sequenceId,
-        filename,
-      ).pipe(
-        getFirstCompletedRemoteData()
-      );
+    return this.bitstreamDataService.findByItemHandle(
+      `${prefix}/${suffix}`,
+      sequenceId,
+      filename,
+    ).pipe(
+      getFirstCompletedRemoteData()
+    );
   }
 }

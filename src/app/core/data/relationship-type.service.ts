@@ -41,16 +41,18 @@ const checkSide = (typeRd: RemoteData<ItemType>, label: string): boolean =>
 export class RelationshipTypeService extends DataService<RelationshipType> {
   protected linkPath = 'relationshiptypes';
 
-  constructor(protected itemService: ItemDataService,
-              protected requestService: RequestService,
-              protected rdbService: RemoteDataBuildService,
-              protected store: Store<CoreState>,
-              protected halService: HALEndpointService,
-              protected objectCache: ObjectCacheService,
-              protected notificationsService: NotificationsService,
-              protected http: HttpClient,
-              protected comparator: DefaultChangeAnalyzer<RelationshipType>,
-              protected appStore: Store<AppState>) {
+  constructor(
+    protected itemService: ItemDataService,
+    protected requestService: RequestService,
+    protected rdbService: RemoteDataBuildService,
+    protected store: Store<CoreState>,
+    protected halService: HALEndpointService,
+    protected objectCache: ObjectCacheService,
+    protected notificationsService: NotificationsService,
+    protected http: HttpClient,
+    protected comparator: DefaultChangeAnalyzer<RelationshipType>,
+    protected appStore: Store<AppState>
+  ) {
     super();
   }
 
@@ -143,7 +145,8 @@ export class RelationshipTypeService extends DataService<RelationshipType> {
             fieldValue: 100
           },
         ]
-      }, useCachedVersionIfAvailable,reRequestOnStale,...linksToFollow).pipe(
+      }, useCachedVersionIfAvailable,reRequestOnStale,...linksToFollow
+    ).pipe(
       getFirstSucceededRemoteData(),
       getRemoteDataPayload(),
     ) as Observable<PaginatedList<RelationshipType>>;

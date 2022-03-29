@@ -78,15 +78,17 @@ export class SearchRangeFilterComponent extends SearchFacetFilterComponent imple
    */
   keyboardControl: boolean;
 
-  constructor(protected searchService: SearchService,
-              protected filterService: SearchFilterService,
-              protected router: Router,
-              protected rdbs: RemoteDataBuildService,
-              @Inject(SEARCH_CONFIG_SERVICE) public searchConfigService: SearchConfigurationService,
-              @Inject(IN_PLACE_SEARCH) public inPlaceSearch: boolean,
-              @Inject(FILTER_CONFIG) public filterConfig: SearchFilterConfig,
-              @Inject(PLATFORM_ID) private platformId: any,
-              private route: RouteService) {
+  constructor(
+    protected searchService: SearchService,
+    protected filterService: SearchFilterService,
+    protected router: Router,
+    protected rdbs: RemoteDataBuildService,
+    @Inject(SEARCH_CONFIG_SERVICE) public searchConfigService: SearchConfigurationService,
+    @Inject(IN_PLACE_SEARCH) public inPlaceSearch: boolean,
+    @Inject(FILTER_CONFIG) public filterConfig: SearchFilterConfig,
+    @Inject(PLATFORM_ID) private platformId: any,
+    private route: RouteService
+  ) {
     super(searchService, filterService, rdbs, router, searchConfigService, inPlaceSearch, filterConfig);
 
   }

@@ -120,15 +120,15 @@ export class ListableObjectComponentLoaderComponent implements OnInit, OnChanges
    * The list of input and output names for the dynamic component
    */
   protected inAndOutputNames: string[] = [
-      'object',
-      'index',
-      'linkType',
-      'listID',
-      'showLabel',
-      'context',
-      'viewMode',
-      'value',
-    ];
+    'object',
+    'index',
+    'linkType',
+    'listID',
+    'showLabel',
+    'context',
+    'viewMode',
+    'value',
+  ];
 
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
@@ -175,7 +175,8 @@ export class ListableObjectComponentLoaderComponent implements OnInit, OnChanges
       undefined,
       [
         [this.badges.nativeElement],
-      ]);
+      ]
+    );
 
     this.connectInputsAndOutputs();
 
@@ -209,8 +210,8 @@ export class ListableObjectComponentLoaderComponent implements OnInit, OnChanges
    * @returns {GenericConstructor<Component>}
    */
   getComponent(renderTypes: (string | GenericConstructor<ListableObject>)[],
-               viewMode: ViewMode,
-               context: Context): GenericConstructor<Component> {
+    viewMode: ViewMode,
+    context: Context): GenericConstructor<Component> {
     return getListableObjectComponent(renderTypes, viewMode, context, this.themeService.getThemeName());
   }
 

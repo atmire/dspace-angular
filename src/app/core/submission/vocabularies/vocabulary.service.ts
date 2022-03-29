@@ -50,7 +50,8 @@ class VocabularyDataServiceImpl extends DataService<Vocabulary> {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: ChangeAnalyzer<Vocabulary>) {
+    protected comparator: ChangeAnalyzer<Vocabulary>
+  ) {
     super();
   }
 
@@ -71,7 +72,8 @@ class VocabularyEntryDetailDataServiceImpl extends DataService<VocabularyEntryDe
     protected notificationsService: NotificationsService,
     protected hrefOnlyDataService: HrefOnlyDataService,
     protected http: HttpClient,
-    protected comparator: ChangeAnalyzer<VocabularyEntryDetail>) {
+    protected comparator: ChangeAnalyzer<VocabularyEntryDetail>
+  ) {
     super();
   }
 
@@ -96,7 +98,8 @@ export class VocabularyService {
     protected hrefOnlyDataService: HrefOnlyDataService,
     protected http: HttpClient,
     protected comparatorVocabulary: DefaultChangeAnalyzer<Vocabulary>,
-    protected comparatorEntry: DefaultChangeAnalyzer<VocabularyEntryDetail>) {
+    protected comparatorEntry: DefaultChangeAnalyzer<VocabularyEntryDetail>
+  ) {
     this.vocabularyDataService = new VocabularyDataServiceImpl(requestService, rdbService, null, objectCache, halService, notificationsService, http, comparatorVocabulary);
     this.vocabularyEntryDetailDataService = new VocabularyEntryDetailDataServiceImpl(requestService, rdbService, null, objectCache, halService, notificationsService, hrefOnlyDataService, http, comparatorEntry);
   }

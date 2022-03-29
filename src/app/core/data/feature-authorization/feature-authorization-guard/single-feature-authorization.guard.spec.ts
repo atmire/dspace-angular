@@ -10,12 +10,14 @@ import { AuthService } from '../../../auth/auth.service';
  * Provide the return values of the overwritten getters as constructor arguments
  */
 class SingleFeatureAuthorizationGuardImpl extends SingleFeatureAuthorizationGuard {
-  constructor(protected authorizationService: AuthorizationDataService,
-              protected router: Router,
-              protected authService: AuthService,
-              protected featureId: FeatureID,
-              protected objectUrl: string,
-              protected ePersonUuid: string) {
+  constructor(
+    protected authorizationService: AuthorizationDataService,
+    protected router: Router,
+    protected authService: AuthService,
+    protected featureId: FeatureID,
+    protected objectUrl: string,
+    protected ePersonUuid: string
+  ) {
     super(authorizationService, router, authService);
   }
 

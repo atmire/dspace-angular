@@ -59,7 +59,8 @@ class DataServiceImpl extends DataService<any> {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DSOChangeAnalyzer<any>) {
+    protected comparator: DSOChangeAnalyzer<any>
+  ) {
     super();
   }
 
@@ -115,16 +116,17 @@ export class SearchService implements OnDestroy {
    */
   private searchDataService: DataServiceImpl;
 
-  constructor(private router: Router,
-              private routeService: RouteService,
-              protected requestService: RequestService,
-              private rdb: RemoteDataBuildService,
-              private linkService: LinkService,
-              private halService: HALEndpointService,
-              private communityService: CommunityDataService,
-              private dspaceObjectService: DSpaceObjectDataService,
-              private paginationService: PaginationService,
-              private searchConfigurationService: SearchConfigurationService
+  constructor(
+    private router: Router,
+    private routeService: RouteService,
+    protected requestService: RequestService,
+    private rdb: RemoteDataBuildService,
+    private linkService: LinkService,
+    private halService: HALEndpointService,
+    private communityService: CommunityDataService,
+    private dspaceObjectService: DSpaceObjectDataService,
+    private paginationService: PaginationService,
+    private searchConfigurationService: SearchConfigurationService
   ) {
     this.searchDataService = new DataServiceImpl(
       undefined,
@@ -262,8 +264,7 @@ export class SearchService implements OnDestroy {
                   indexableObject
                 }) as SearchResult<T>;
               }),
-            )
-          );
+            ));
 
           // Swap the original page in the remoteData with the new one, now that the results have the
           // correct types, and all indexableObjects are directly attached.

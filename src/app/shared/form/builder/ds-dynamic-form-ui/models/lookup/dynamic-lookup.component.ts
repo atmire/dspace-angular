@@ -46,10 +46,11 @@ export class DsDynamicLookupComponent extends DsDynamicVocabularyComponent imple
 
   protected subs: Subscription[] = [];
 
-  constructor(protected vocabularyService: VocabularyService,
-              private cdr: ChangeDetectorRef,
-              protected layoutService: DynamicFormLayoutService,
-              protected validationService: DynamicFormValidationService
+  constructor(
+    protected vocabularyService: VocabularyService,
+    private cdr: ChangeDetectorRef,
+    protected layoutService: DynamicFormLayoutService,
+    protected validationService: DynamicFormValidationService
   ) {
     super(vocabularyService, layoutService, validationService);
   }
@@ -228,9 +229,9 @@ export class DsDynamicLookupComponent extends DsDynamicVocabularyComponent imple
         observableOf(buildPaginatedList(
           new PageInfo(),
           []
-        ))
-      ),
-      distinctUntilChanged())
+        ))),
+      distinctUntilChanged()
+    )
       .subscribe((list: PaginatedList<VocabularyEntry>) => {
         this.optionsList = list.page;
         this.updatePageInfo(

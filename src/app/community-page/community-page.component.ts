@@ -69,7 +69,8 @@ export class CommunityPageComponent implements OnInit {
     this.logoRD$ = this.communityRD$.pipe(
       map((rd: RemoteData<Community>) => rd.payload),
       filter((community: Community) => hasValue(community)),
-      mergeMap((community: Community) => community.logo));
+      mergeMap((community: Community) => community.logo)
+    );
     this.communityPageRoute$ = this.communityRD$.pipe(
       getAllSucceededRemoteDataPayload(),
       map((community) => getCommunityPageRoute(community.id))

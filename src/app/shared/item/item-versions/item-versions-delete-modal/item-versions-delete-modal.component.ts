@@ -11,7 +11,8 @@ export class ItemVersionsDeleteModalComponent {
   versionNumber: number;
 
   constructor(
-    protected activeModal: NgbActiveModal,) {
+    protected activeModal: NgbActiveModal,
+  ) {
   }
 
   onModalClose() {

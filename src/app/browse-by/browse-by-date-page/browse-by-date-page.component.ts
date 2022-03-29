@@ -38,12 +38,14 @@ export class BrowseByDatePageComponent extends BrowseByMetadataPageComponent {
    */
   defaultMetadataKeys = ['dc.date.issued'];
 
-  public constructor(protected route: ActivatedRoute,
-                     protected browseService: BrowseService,
-                     protected dsoService: DSpaceObjectDataService,
-                     protected router: Router,
-                     protected paginationService: PaginationService,
-                     protected cdRef: ChangeDetectorRef) {
+  public constructor(
+    protected route: ActivatedRoute,
+    protected browseService: BrowseService,
+    protected dsoService: DSpaceObjectDataService,
+    protected router: Router,
+    protected paginationService: PaginationService,
+    protected cdRef: ChangeDetectorRef
+  ) {
     super(route, browseService, dsoService, paginationService, router);
   }
 
@@ -67,7 +69,8 @@ export class BrowseByDatePageComponent extends BrowseByMetadataPageComponent {
         this.updatePageWithItems(searchOptions, this.value, undefined);
         this.updateParent(params.scope);
         this.updateStartsWithOptions(this.browseId, metadataKeys, params.scope);
-      }));
+      })
+    );
   }
 
   /**

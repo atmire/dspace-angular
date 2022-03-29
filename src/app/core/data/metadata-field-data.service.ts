@@ -40,7 +40,8 @@ export class MetadataFieldDataService extends DataService<MetadataField> {
     protected objectCache: ObjectCacheService,
     protected comparator: DefaultChangeAnalyzer<MetadataField>,
     protected http: HttpClient,
-    protected notificationsService: NotificationsService) {
+    protected notificationsService: NotificationsService
+  ) {
     super();
   }
 

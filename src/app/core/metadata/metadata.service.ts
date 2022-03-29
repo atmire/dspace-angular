@@ -95,7 +95,8 @@ export class MetadataService {
       map((route: ActivatedRoute) => {
         route = this.getCurrentRoute(route);
         return { params: route.params, data: route.data };
-      })).subscribe((routeInfo: any) => {
+      })
+    ).subscribe((routeInfo: any) => {
       this.processRouteChange(routeInfo);
     });
   }
@@ -309,8 +310,7 @@ export class MetadataService {
             }),
             // return the bundle as well so we can use it again if there's no primary bitstream
             map((bitstream: Bitstream) => [bundle, bitstream])
-          )
-        ),
+          )),
         switchMap(([bundle, primaryBitstream]: [Bundle, Bitstream]) => {
           if (hasValue(primaryBitstream)) {
             // If there was a primary bitstream, emit its link

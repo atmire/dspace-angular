@@ -30,6 +30,7 @@ export class LocaleInterceptor implements HttpInterceptor {
           });
           // Pass on the new request instead of the original request.
           return next.handle(newReq);
-        }));
+        })
+      );
   }
 }

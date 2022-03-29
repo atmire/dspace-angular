@@ -149,13 +149,15 @@ export class ExternalSourceEntryImportModalComponent implements OnInit {
    */
   modalRef: NgbModalRef;
 
-  constructor(public modal: NgbActiveModal,
-              public lookupRelationService: LookupRelationService,
-              private modalService: NgbModal,
-              private selectService: SelectableListService,
-              private itemService: ItemDataService,
-              private notificationsService: NotificationsService,
-              private translateService: TranslateService) {
+  constructor(
+    public modal: NgbActiveModal,
+    public lookupRelationService: LookupRelationService,
+    private modalService: NgbModal,
+    private selectService: SelectableListService,
+    private itemService: ItemDataService,
+    private notificationsService: NotificationsService,
+    private translateService: TranslateService
+  ) {
   }
 
   ngOnInit(): void {

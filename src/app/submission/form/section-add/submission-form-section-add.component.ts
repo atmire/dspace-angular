@@ -49,9 +49,11 @@ export class SubmissionFormSectionAddComponent implements OnInit {
    * @param {SubmissionService} submissionService
    * @param {HostWindowService} windowService
    */
-  constructor(private sectionService: SectionsService,
-              private submissionService: SubmissionService,
-              public windowService: HostWindowService) {
+  constructor(
+    private sectionService: SectionsService,
+    private submissionService: SubmissionService,
+    public windowService: HostWindowService
+  ) {
   }
 
   /**

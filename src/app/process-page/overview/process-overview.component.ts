@@ -46,9 +46,11 @@ export class ProcessOverviewComponent implements OnInit {
    */
   dateFormat = 'yyyy-MM-dd HH:mm:ss';
 
-  constructor(protected processService: ProcessDataService,
-              protected paginationService: PaginationService,
-              protected ePersonService: EPersonDataService) {
+  constructor(
+    protected processService: ProcessDataService,
+    protected paginationService: PaginationService,
+    protected ePersonService: EPersonDataService
+  ) {
   }
 
   ngOnInit(): void {

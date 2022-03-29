@@ -35,7 +35,8 @@ export class VersionDataService extends DataService<Version> {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DefaultChangeAnalyzer<Version>) {
+    protected comparator: DefaultChangeAnalyzer<Version>
+  ) {
     super();
   }
 

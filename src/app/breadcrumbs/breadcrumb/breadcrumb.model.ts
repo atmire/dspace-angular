@@ -10,6 +10,7 @@ export class Breadcrumb {
     /**
      * The optional url of the breadcrumb
      */
-    public url?: string) {
+    public url?: string
+  ) {
   }
 }

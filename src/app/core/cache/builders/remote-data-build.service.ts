@@ -31,9 +31,11 @@ import { getResourceTypeValueFor } from '../object-cache.reducer';
 
 @Injectable()
 export class RemoteDataBuildService {
-  constructor(protected objectCache: ObjectCacheService,
-              protected linkService: LinkService,
-              protected requestService: RequestService) {
+  constructor(
+    protected objectCache: ObjectCacheService,
+    protected linkService: LinkService,
+    protected requestService: RequestService
+  ) {
   }
 
   /**
@@ -153,8 +155,7 @@ export class RemoteDataBuildService {
           paginatedList.page = page
             .map((obj: any) => this.plainObjectToInstance<T>(obj))
             .map((obj: any) =>
-              this.linkService.resolveLinks(obj, ...pageLink.linksToFollow)
-            );
+              this.linkService.resolveLinks(obj, ...pageLink.linksToFollow));
           if (isNotEmpty(otherLinks)) {
             return this.linkService.resolveLinks(paginatedList, ...otherLinks);
           }
@@ -165,8 +166,7 @@ export class RemoteDataBuildService {
         paginatedList.page = paginatedList.page
           .map((obj: any) => this.plainObjectToInstance<T>(obj))
           .map((obj: any) =>
-            this.linkService.resolveLinks(obj, ...pageLink.linksToFollow)
-          );
+            this.linkService.resolveLinks(obj, ...pageLink.linksToFollow));
         if (isNotEmpty(otherLinks)) {
           return observableOf(this.linkService.resolveLinks(paginatedList, ...otherLinks));
         }
@@ -240,8 +240,7 @@ export class RemoteDataBuildService {
       filter(([entry,payload]: [RequestEntry, T]) =>
         hasValue(entry) &&
         // filter out cases where the state is successful, but the payload isn't yet set
-        !(hasSucceeded(entry.state) && isUndefined(payload))
-      ),
+        !(hasSucceeded(entry.state) && isUndefined(payload))),
       map(([entry, payload]: [RequestEntry, T]) => {
         let response = entry.response;
         if (hasNoValue(response)) {
@@ -350,6 +349,7 @@ export class RemoteDataBuildService {
           payload,
           statusCode
         );
-      }));
+      })
+    );
   }
 }

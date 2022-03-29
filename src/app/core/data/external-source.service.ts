@@ -35,7 +35,8 @@ export class ExternalSourceService extends DataService<ExternalSource> {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DefaultChangeAnalyzer<ExternalSource>) {
+    protected comparator: DefaultChangeAnalyzer<ExternalSource>
+  ) {
     super();
   }
 

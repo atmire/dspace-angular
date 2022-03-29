@@ -115,7 +115,7 @@ describe('MiradorViewerComponent with multiple images', () => {
       set: {
         providers: [
           { provide: MiradorViewerService, useValue: viewerService }
-          ]
+        ]
       }
     }).compileComponents();
   }));

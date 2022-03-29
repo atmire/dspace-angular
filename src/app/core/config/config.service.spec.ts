@@ -19,7 +19,8 @@ class TestService extends ConfigService {
   constructor(
     protected requestService: RequestService,
     protected rdbService: RemoteDataBuildService,
-    protected halService: HALEndpointService) {
+    protected halService: HALEndpointService
+  ) {
     super(requestService, rdbService, null, null, halService, null, null, null, BROWSE);
   }
 }

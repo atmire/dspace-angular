@@ -15,10 +15,12 @@ export class Chips {
 
   private _items: ChipsItem[];
 
-  constructor(items: any[] = [],
-              displayField: string = 'display',
-              displayObj?: string,
-              iconsConfig?: MetadataIconConfig[]) {
+  constructor(
+    items: any[] = [],
+    displayField: string = 'display',
+    displayObj?: string,
+    iconsConfig?: MetadataIconConfig[]
+  ) {
 
     this.displayField = displayField;
     this.displayObj = displayObj;

@@ -225,8 +225,7 @@ export class BrowseService {
         .find((def: BrowseDefinition) => {
           const matchingKeys = def.metadataKeys.find((key: string) => searchKeyArray.indexOf(key) >= 0);
           return isNotEmpty(matchingKeys);
-        })
-      ),
+        })),
       map((def: BrowseDefinition) => {
         if (isEmpty(def) || isEmpty(def._links) || isEmpty(def._links[linkPath])) {
           throw new Error(`A browse endpoint for ${linkPath} on ${metadataKey} isn't configured`);

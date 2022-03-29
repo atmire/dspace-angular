@@ -20,12 +20,14 @@ export class Notification implements INotification {
   public options: INotificationOptions;
   public html: boolean;
 
-  constructor(id: string,
-              type: NotificationType,
-              title?: Observable<string> | string,
-              content?: Observable<string> | string,
-              options?: NotificationOptions,
-              html?: boolean) {
+  constructor(
+    id: string,
+    type: NotificationType,
+    title?: Observable<string> | string,
+    content?: Observable<string> | string,
+    options?: NotificationOptions,
+    html?: boolean
+  ) {
 
     this.id = id;
     this.type = type;

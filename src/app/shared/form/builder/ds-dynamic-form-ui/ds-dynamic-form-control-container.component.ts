@@ -279,8 +279,7 @@ export class DsDynamicFormControlContainerComponent extends DynamicFormControlCo
               true,
               followLink('leftItem'),
               followLink('rightItem'),
-              followLink('relationshipType')
-            );
+              followLink('relationshipType'));
 
             relationshipsRD$.pipe(
               getFirstSucceededRemoteDataPayload(),
@@ -316,7 +315,8 @@ export class DsDynamicFormControlContainerComponent extends DynamicFormControlCo
         const relationship$ = this.relationshipService.findById(this.value.virtualValue, true, true, followLink('leftItem'), followLink('rightItem'), followLink('relationshipType'))
           .pipe(
             getAllSucceededRemoteData(),
-            getRemoteDataPayload());
+            getRemoteDataPayload()
+          );
         this.relationshipValue$ = observableCombineLatest([this.item$.pipe(take(1)), relationship$]).pipe(
           switchMap(([item, relationship]: [Item, Relationship]) =>
             relationship.leftItem.pipe(
@@ -325,8 +325,7 @@ export class DsDynamicFormControlContainerComponent extends DynamicFormControlCo
               map((leftItem: Item) => {
                 return new ReorderableRelationship(relationship, leftItem.uuid !== item.uuid, this.relationshipService, this.store, this.model.submissionId);
               }),
-            )
-          ),
+            )),
           startWith(undefined)
         );
       }

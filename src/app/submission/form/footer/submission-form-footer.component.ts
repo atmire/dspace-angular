@@ -61,9 +61,11 @@ export class SubmissionFormFooterComponent implements OnChanges {
    * @param {SubmissionRestService} restService
    * @param {SubmissionService} submissionService
    */
-  constructor(private modalService: NgbModal,
-              private restService: SubmissionRestService,
-              private submissionService: SubmissionService) {
+  constructor(
+    private modalService: NgbModal,
+    private restService: SubmissionRestService,
+    private submissionService: SubmissionService
+  ) {
   }
 
   /**

@@ -60,7 +60,8 @@ describe('ChipsItem model test suite', () => {
         label: 'A',
         value: 'a'
       },
-      'label');
+      'label'
+    );
 
     expect(item.display).toBe('A');
   });
@@ -71,7 +72,8 @@ describe('ChipsItem model test suite', () => {
         toDisplay: new FormFieldMetadataValueObject('a', null, 'a'),
         otherProperty: 'other'
       },
-      'value', 'toDisplay');
+      'value', 'toDisplay'
+    );
 
     expect(item.display).toBe('a');
   });

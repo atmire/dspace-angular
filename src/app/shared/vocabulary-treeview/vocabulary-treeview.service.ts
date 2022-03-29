@@ -113,7 +113,7 @@ export class VocabularyTreeviewService {
         .subscribe((hierarchy: string[]) => {
           this.initValueHierarchy = hierarchy;
           this.retrieveTopNodes(pageInfo, []);
-      });
+        });
     } else {
       this.retrieveTopNodes(pageInfo, []);
     }
@@ -198,8 +198,7 @@ export class VocabularyTreeviewService {
       mergeMap((entry: VocabularyEntry) =>
         this.vocabularyService.findEntryDetailById(entry.otherInformation.id, this.vocabularyName).pipe(
           getFirstSucceededRemoteDataPayload()
-        )
-      ),
+        )),
       mergeMap((entry: VocabularyEntryDetail) => this.getNodeHierarchy(entry)),
       scan((acc: TreeviewNode[], value: TreeviewNode) => {
         if (isEmpty(value) || findIndex(acc, (node) => node.item.otherInformation.id === value.item.otherInformation.id) !== -1) {
@@ -249,7 +248,8 @@ export class VocabularyTreeviewService {
       pageInfo,
       null,
       isSearchNode,
-      isInInitValueHierarchy);
+      isInInitValueHierarchy
+    );
 
     if (toStore) {
       this.nodeMap.set(entryId, result);

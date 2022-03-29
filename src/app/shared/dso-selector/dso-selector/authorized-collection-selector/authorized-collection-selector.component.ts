@@ -66,7 +66,8 @@ export class AuthorizedCollectionSelectorComponent extends DSOSelectorComponent 
         .getAuthorizedCollectionByEntityType(
           query,
           this.entityType,
-          findOptions);
+          findOptions
+        );
     } else {
       searchListService$ = this.collectionDataService
         .getAuthorizedCollection(query, findOptions, true, false, followLink('parentCommunity'));

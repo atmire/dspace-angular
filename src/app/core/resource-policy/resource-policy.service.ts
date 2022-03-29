@@ -44,7 +44,8 @@ class DataServiceImpl extends DataService<ResourcePolicy> {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: ChangeAnalyzer<ResourcePolicy>) {
+    protected comparator: ChangeAnalyzer<ResourcePolicy>
+  ) {
     super();
   }
 
@@ -68,7 +69,8 @@ export class ResourcePolicyService {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DefaultChangeAnalyzer<ResourcePolicy>) {
+    protected comparator: DefaultChangeAnalyzer<ResourcePolicy>
+  ) {
     this.dataService = new DataServiceImpl(requestService, rdbService, null, objectCache, halService, notificationsService, http, comparator);
   }
 

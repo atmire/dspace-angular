@@ -292,6 +292,7 @@ export class AuthInterceptor implements HttpInterceptor {
         }
         // Return error response as is.
         return observableThrowError(error);
-      })) as any;
+      })
+    ) as any;
   }
 }

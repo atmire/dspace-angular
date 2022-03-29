@@ -18,7 +18,7 @@ export class LinkMenuItemComponent implements OnInit {
   item: LinkMenuItemModel;
   hasLink: boolean;
   constructor(
-    @Inject('itemModelProvider') item: LinkMenuItemModel,
+  @Inject('itemModelProvider') item: LinkMenuItemModel,
     private router: Router,
   ) {
     this.item = item;

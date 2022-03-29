@@ -16,9 +16,11 @@ import { Location } from '@angular/common';
  * The reason this is a guard and not a resolver, is because it has to run before the EndUserAgreementCookieGuard
  */
 export class RegistrationGuard implements CanActivate {
-  constructor(private epersonRegistrationService: EpersonRegistrationService,
-              private router: Router,
-              private authService: AuthService) {
+  constructor(
+    private epersonRegistrationService: EpersonRegistrationService,
+    private router: Router,
+    private authService: AuthService
+  ) {
   }
 
   /**

@@ -24,12 +24,14 @@ export abstract class WorkflowItemActionPageComponent implements OnInit {
   public wfi$: Observable<WorkflowItem>;
   public item$: Observable<Item>;
 
-  constructor(protected route: ActivatedRoute,
-              protected workflowItemService: WorkflowItemDataService,
-              protected router: Router,
-              protected routeService: RouteService,
-              protected notificationsService: NotificationsService,
-              protected translationService: TranslateService) {
+  constructor(
+    protected route: ActivatedRoute,
+    protected workflowItemService: WorkflowItemDataService,
+    protected router: Router,
+    protected routeService: RouteService,
+    protected notificationsService: NotificationsService,
+    protected translationService: TranslateService
+  ) {
   }
 
   /**
@@ -69,12 +71,11 @@ export abstract class WorkflowItemActionPageComponent implements OnInit {
   previousPage() {
     this.routeService.getPreviousUrl().pipe(take(1))
       .subscribe((url) => {
-          if (isEmpty(url)) {
-            url = '/mydspace';
-          }
-          this.router.navigateByUrl(url);
+        if (isEmpty(url)) {
+          url = '/mydspace';
         }
-      );
+        this.router.navigateByUrl(url);
+      });
   }
 
   /**

@@ -101,15 +101,17 @@ export class CollectionItemMapperComponent implements OnInit {
    */
   performedSearch = false;
 
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              @Inject(SEARCH_CONFIG_SERVICE) private searchConfigService: SearchConfigurationService,
-              private searchService: SearchService,
-              private notificationsService: NotificationsService,
-              private itemDataService: ItemDataService,
-              private collectionDataService: CollectionDataService,
-              private translateService: TranslateService,
-              private dsoNameService: DSONameService) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    @Inject(SEARCH_CONFIG_SERVICE) private searchConfigService: SearchConfigurationService,
+    private searchService: SearchService,
+    private notificationsService: NotificationsService,
+    private itemDataService: ItemDataService,
+    private collectionDataService: CollectionDataService,
+    private translateService: TranslateService,
+    private dsoNameService: DSONameService
+  ) {
   }
 
   ngOnInit(): void {
@@ -176,18 +178,16 @@ export class CollectionItemMapperComponent implements OnInit {
       map((collectionRD: RemoteData<Collection>) => collectionRD.payload),
       switchMap((collection: Collection) =>
         observableCombineLatest(ids.map((id: string) => {
-            if (remove) {
-              return this.itemDataService.removeMappingFromCollection(id, collection.id).pipe(
-                getFirstCompletedRemoteData()
-              );
-            } else {
-              return this.itemDataService.mapToCollection(id, collection._links.self.href).pipe(
-                getFirstCompletedRemoteData()
-              );
-            }
+          if (remove) {
+            return this.itemDataService.removeMappingFromCollection(id, collection.id).pipe(
+              getFirstCompletedRemoteData()
+            );
+          } else {
+            return this.itemDataService.mapToCollection(id, collection._links.self.href).pipe(
+              getFirstCompletedRemoteData()
+            );
           }
-        ))
-      )
+        })))
     );
 
     this.showNotifications(responses$, remove);

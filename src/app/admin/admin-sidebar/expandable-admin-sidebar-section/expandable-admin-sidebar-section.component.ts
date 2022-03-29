@@ -51,7 +51,7 @@ export class ExpandableAdminSidebarSectionComponent extends AdminSidebarSectionC
   expanded: Observable<boolean>;
 
   constructor(
-    @Inject('sectionDataProvider') menuSection,
+  @Inject('sectionDataProvider') menuSection,
     protected menuService: MenuService,
     private variableService: CSSVariableService,
     protected injector: Injector,

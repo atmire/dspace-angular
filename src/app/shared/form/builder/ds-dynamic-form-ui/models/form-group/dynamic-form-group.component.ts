@@ -31,8 +31,10 @@ export class DsDynamicFormGroupComponent extends DynamicFormControlComponent {
   @Output('ngbEvent') customEvent: EventEmitter<DynamicFormControlCustomEvent> = new EventEmitter();
   /* eslint-enable @angular-eslint/no-output-rename */
 
-  constructor(protected layoutService: DynamicFormLayoutService,
-              protected validationService: DynamicFormValidationService) {
+  constructor(
+    protected layoutService: DynamicFormLayoutService,
+    protected validationService: DynamicFormValidationService
+  ) {
 
     super(layoutService, validationService);
   }

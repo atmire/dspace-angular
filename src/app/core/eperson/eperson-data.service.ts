@@ -288,7 +288,8 @@ export class EPersonDataService extends DataService<EPerson> {
   public createEPersonForToken(eperson: EPerson, token: string): Observable<RemoteData<EPerson>> {
     const requestId = this.requestService.generateRequestId();
     const hrefObs = this.getBrowseEndpoint().pipe(
-      map((href: string) => `${href}?token=${token}`));
+      map((href: string) => `${href}?token=${token}`)
+    );
     hrefObs.pipe(
       find((href: string) => hasValue(href)),
     ).subscribe((href: string) => {
@@ -313,7 +314,8 @@ export class EPersonDataService extends DataService<EPerson> {
 
     const hrefObs = this.halService.getEndpoint(this.linkPath).pipe(
       map((endpoint: string) => this.getIDHref(endpoint, uuid)),
-      map((href: string) => `${href}?token=${token}`));
+      map((href: string) => `${href}?token=${token}`)
+    );
 
     hrefObs.pipe(
       find((href: string) => hasValue(href)),

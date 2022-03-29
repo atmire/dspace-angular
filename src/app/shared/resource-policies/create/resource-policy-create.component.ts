@@ -53,7 +53,8 @@ export class ResourcePolicyCreateComponent implements OnInit {
     private resourcePolicyService: ResourcePolicyService,
     private route: ActivatedRoute,
     private router: Router,
-    private translate: TranslateService) {
+    private translate: TranslateService
+  ) {
   }
 
   /**

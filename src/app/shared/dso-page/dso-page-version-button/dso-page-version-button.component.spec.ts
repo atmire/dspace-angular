@@ -23,8 +23,7 @@ describe('DsoPageVersionButtonComponent', () => {
   const authorizationServiceSpy = jasmine.createSpyObj('authorizationService', ['isAuthorized']);
 
   const versionHistoryServiceSpy = jasmine.createSpyObj('versionHistoryService',
-    ['getVersions', 'getLatestVersionFromHistory$', 'isLatest$', 'hasDraftVersion$']
-  );
+    ['getVersions', 'getLatestVersionFromHistory$', 'isLatest$', 'hasDraftVersion$']);
 
   beforeEach(waitForAsync(() => {
     dso = Object.assign(new Item(), {

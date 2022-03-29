@@ -33,7 +33,8 @@ export class SubmissionRestService {
   constructor(
     protected rdbService: RemoteDataBuildService,
     protected requestService: RequestService,
-    protected halService: HALEndpointService) {
+    protected halService: HALEndpointService
+  ) {
   }
 
   /**
@@ -96,7 +97,8 @@ export class SubmissionRestService {
       map((endpointURL: string) => new SubmissionDeleteRequest(requestId, endpointURL)),
       tap((request: DeleteRequest) => this.requestService.send(request)),
       mergeMap(() => this.fetchRequest(requestId)),
-      distinctUntilChanged());
+      distinctUntilChanged()
+    );
   }
 
   /**
@@ -120,7 +122,8 @@ export class SubmissionRestService {
         this.requestService.send(request);
       }),
       mergeMap(() => this.fetchRequest(requestId)),
-      distinctUntilChanged());
+      distinctUntilChanged()
+    );
   }
 
   /**
@@ -148,7 +151,8 @@ export class SubmissionRestService {
       map((endpointURL: string) => new SubmissionPostRequest(requestId, endpointURL, body, options)),
       tap((request: PostRequest) => this.requestService.send(request)),
       mergeMap(() => this.fetchRequest(requestId)),
-      distinctUntilChanged());
+      distinctUntilChanged()
+    );
   }
 
   /**
@@ -172,7 +176,8 @@ export class SubmissionRestService {
       map((endpointURL: string) => new SubmissionPatchRequest(requestId, endpointURL, body)),
       tap((request: PostRequest) => this.requestService.send(request)),
       mergeMap(() => this.fetchRequest(requestId)),
-      distinctUntilChanged());
+      distinctUntilChanged()
+    );
   }
 
 }

@@ -64,10 +64,8 @@ export class ScriptsSelectComponent implements OnInit, OnDestroy {
             .pipe(
               take(1),
               map((scripts) =>
-                scripts.find((script) => script.id === id)
-              )
-            )
-        )
+                scripts.find((script) => script.id === id))
+            ))
       ).subscribe((script: Script) => {
         this._selectedScript = script;
         this.select.emit(script);
@@ -89,13 +87,12 @@ export class ScriptsSelectComponent implements OnInit, OnDestroy {
     this.router.navigate([],
       {
         queryParams: { [SCRIPT_QUERY_PARAMETER]: value },
-      }
-    );
+      });
   }
 
   @Input()
   set script(value: Script) {
-     this._selectedScript = value;
+    this._selectedScript = value;
   }
 
   ngOnDestroy(): void {

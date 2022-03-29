@@ -205,12 +205,12 @@ export class PaginationComponent implements OnDestroy, OnInit {
     } else {
       sortOptions = new SortOptions(this.defaultSortField, this.defaultsortDirection);
     }
-      this.sortDirection$ = this.paginationService.getCurrentSort(this.id, sortOptions).pipe(
-        map((currentSort) => currentSort.direction)
-      );
-      this.sortField$ = this.paginationService.getCurrentSort(this.id, sortOptions).pipe(
-        map((currentSort) => currentSort.field)
-      );
+    this.sortDirection$ = this.paginationService.getCurrentSort(this.id, sortOptions).pipe(
+      map((currentSort) => currentSort.direction)
+    );
+    this.sortField$ = this.paginationService.getCurrentSort(this.id, sortOptions).pipe(
+      map((currentSort) => currentSort.field)
+    );
   }
 
   /**
@@ -223,9 +223,11 @@ export class PaginationComponent implements OnDestroy, OnInit {
    * @param hostWindowService
    *    the HostWindowService singleton.
    */
-  constructor(private cdRef: ChangeDetectorRef,
-              private paginationService: PaginationService,
-              public hostWindowService: HostWindowService) {
+  constructor(
+    private cdRef: ChangeDetectorRef,
+    private paginationService: PaginationService,
+    public hostWindowService: HostWindowService
+  ) {
   }
 
   /**

@@ -15,10 +15,12 @@ export class GroupPageGuard extends SomeFeatureAuthorizationGuard {
 
   protected groupsEndpoint = 'groups';
 
-  constructor(protected halEndpointService: HALEndpointService,
-              protected authorizationService: AuthorizationDataService,
-              protected router: Router,
-              protected authService: AuthService) {
+  constructor(
+    protected halEndpointService: HALEndpointService,
+    protected authorizationService: AuthorizationDataService,
+    protected router: Router,
+    protected authService: AuthService
+  ) {
     super(authorizationService, router, authService);
   }
 

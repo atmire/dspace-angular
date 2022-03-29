@@ -53,8 +53,10 @@ export class MyDSpaceNewExternalDropdownComponent implements OnInit, OnDestroy {
    * @param {EntityTypeService} entityTypeService
    * @param {Router} router
    */
-  constructor(private entityTypeService: EntityTypeService,
-              private router: Router) { }
+  constructor(
+    private entityTypeService: EntityTypeService,
+    private router: Router
+  ) { }
 
   /**
    * Initialize entity type list

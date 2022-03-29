@@ -24,7 +24,7 @@ import { ParsedResponse } from '../cache/response.models';
 @Injectable()
 export class RequestEffects {
 
-   execute = createEffect(() => this.actions$.pipe(
+  execute = createEffect(() => this.actions$.pipe(
     ofType(RequestActionTypes.EXECUTE),
     mergeMap((action: RequestExecuteAction) => {
       return this.requestService.getByUUID(action.payload).pipe(
@@ -63,10 +63,9 @@ export class RequestEffects {
    * This assumes that the server cached everything a negligible
    * time ago, and will likely need to be revisited later
    */
-   fixTimestampsOnRehydrate = createEffect(() => this.actions$
+  fixTimestampsOnRehydrate = createEffect(() => this.actions$
     .pipe(ofType(StoreActionTypes.REHYDRATE),
-      map(() => new ResetResponseTimestampsAction(new Date().getTime()))
-    ));
+      map(() => new ResetResponseTimestampsAction(new Date().getTime()))));
 
   constructor(
     private actions$: Actions,

@@ -22,8 +22,7 @@ export class ThemeEffects {
           return new SetThemeAction(BASE_THEME_NAME);
         }
       })
-    )
-  );
+    ));
 
   constructor(
     private actions$: Actions,

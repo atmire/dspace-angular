@@ -31,9 +31,11 @@ export class IdleModalComponent implements OnInit {
   @Output()
   response: Subject<boolean> = new Subject();
 
-  constructor(private activeModal: NgbActiveModal,
-              private authService: AuthService,
-              private store: Store<AppState>) {
+  constructor(
+    private activeModal: NgbActiveModal,
+    private authService: AuthService,
+    private store: Store<AppState>
+  ) {
     this.timeToExpire = (environment.auth.ui.timeUntilIdle + environment.auth.ui.idleGracePeriod) / 1000 / 60; // ms => min
   }
 

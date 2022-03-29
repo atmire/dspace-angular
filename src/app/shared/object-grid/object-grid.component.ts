@@ -102,9 +102,9 @@ export class ObjectGridComponent implements OnInit {
     pagination: PaginationComponentOptions,
     sort: SortOptions
   }> = new EventEmitter<{
-    pagination: PaginationComponentOptions,
-    sort: SortOptions
-  }>();
+      pagination: PaginationComponentOptions,
+      sort: SortOptions
+    }>();
 
   /**
    * An event fired when the page is changed.
@@ -166,7 +166,8 @@ export class ObjectGridComponent implements OnInit {
 
     this.columns$ = observableCombineLatest(
       nbColumns$,
-      this._objects$).pipe(map(([nbColumns, objects]) => {
+      this._objects$
+    ).pipe(map(([nbColumns, objects]) => {
       if (hasValue(objects) && hasValue(objects.payload) && hasValue(objects.payload.page)) {
         const page = objects.payload.page;
 

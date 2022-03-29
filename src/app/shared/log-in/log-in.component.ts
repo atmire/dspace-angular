@@ -55,9 +55,11 @@ export class LogInComponent implements OnInit {
    */
   canRegister$: Observable<boolean>;
 
-  constructor(private store: Store<CoreState>,
-              private authService: AuthService,
-              private authorizationService: AuthorizationDataService) {
+  constructor(
+    private store: Store<CoreState>,
+    private authService: AuthService,
+    private authorizationService: AuthorizationDataService
+  ) {
   }
 
   ngOnInit(): void {

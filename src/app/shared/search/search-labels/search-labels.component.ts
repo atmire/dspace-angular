@@ -31,7 +31,8 @@ export class SearchLabelsComponent {
    */
   constructor(
     protected router: Router,
-    @Inject(SEARCH_CONFIG_SERVICE) public searchConfigService: SearchConfigurationService) {
+    @Inject(SEARCH_CONFIG_SERVICE) public searchConfigService: SearchConfigurationService
+  ) {
     this.appliedFilters = this.searchConfigService.getCurrentFrontendFilters().pipe(
       map((params) => {
         const labels = {};

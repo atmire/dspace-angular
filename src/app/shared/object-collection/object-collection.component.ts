@@ -152,7 +152,8 @@ export class ObjectCollectionComponent implements OnInit {
   constructor(
     private cdRef: ChangeDetectorRef,
     private route: ActivatedRoute,
-    private router: Router) {
+    private router: Router
+  ) {
   }
 
   /**

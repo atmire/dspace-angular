@@ -291,7 +291,8 @@ export abstract class DataService<T extends CacheableObject> implements UpdateDa
    */
   getIDHrefObs(resourceID: string, ...linksToFollow: FollowLinkConfig<T>[]): Observable<string> {
     return this.getEndpoint().pipe(
-      map((endpoint: string) => this.getIDHref(endpoint, resourceID, ...linksToFollow)));
+      map((endpoint: string) => this.getIDHref(endpoint, resourceID, ...linksToFollow))
+    );
   }
 
   /**
@@ -443,7 +444,8 @@ export abstract class DataService<T extends CacheableObject> implements UpdateDa
   protected getSearchEndpoint(searchMethod: string): Observable<string> {
     return this.halService.getEndpoint(this.linkPath).pipe(
       filter((href: string) => isNotEmpty(href)),
-      map((href: string) => `${href}/search/${searchMethod}`));
+      map((href: string) => `${href}/search/${searchMethod}`)
+    );
   }
 
   /**
@@ -475,7 +477,8 @@ export abstract class DataService<T extends CacheableObject> implements UpdateDa
     const requestId = this.requestService.generateRequestId();
 
     const hrefObs = this.halService.getEndpoint(this.linkPath).pipe(
-      map((endpoint: string) => this.getIDHref(endpoint, object.uuid)));
+      map((endpoint: string) => this.getIDHref(endpoint, object.uuid))
+    );
 
     hrefObs.pipe(
       find((href: string) => hasValue(href)),
@@ -495,7 +498,8 @@ export abstract class DataService<T extends CacheableObject> implements UpdateDa
     return oldVersion$.pipe(
       getFirstSucceededRemoteData(),
       getRemoteDataPayload(),
-      map((oldVersion: T) => this.comparator.diff(oldVersion, object)));
+      map((oldVersion: T) => this.comparator.diff(oldVersion, object))
+    );
   }
 
   /**
@@ -526,12 +530,11 @@ export abstract class DataService<T extends CacheableObject> implements UpdateDa
     return this.createPatchFromCache(object)
       .pipe(
         mergeMap((operations: Operation[]) => {
-            if (isNotEmpty(operations)) {
-              this.objectCache.addPatch(object._links.self.href, operations);
-            }
-            return this.findByHref(object._links.self.href, true, true);
+          if (isNotEmpty(operations)) {
+            this.objectCache.addPatch(object._links.self.href, operations);
           }
-        )
+          return this.findByHref(object._links.self.href, true, true);
+        })
       );
   }
 
@@ -608,8 +611,7 @@ export abstract class DataService<T extends CacheableObject> implements UpdateDa
       copyVirtualMetadata.forEach((id) =>
         href += (href.includes('?') ? '&' : '?')
           + 'copyVirtualMetadata='
-          + id
-      );
+          + id);
     }
 
     const request = new DeleteRequest(requestId, href);

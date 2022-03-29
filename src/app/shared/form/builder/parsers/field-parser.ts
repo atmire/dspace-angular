@@ -305,7 +305,8 @@ export abstract class FieldParser {
     controlModel.errorMessages = Object.assign(
       {},
       controlModel.errorMessages,
-      { pattern: 'error.validation.pattern' });
+      { pattern: 'error.validation.pattern' }
+    );
   }
 
   protected markAsRequired(controlModel) {
@@ -314,7 +315,8 @@ export abstract class FieldParser {
     controlModel.errorMessages = Object.assign(
       {},
       controlModel.errorMessages,
-      { required: this.configData.mandatoryMessage });
+      { required: this.configData.mandatoryMessage }
+    );
   }
 
   protected setLabel(controlModel, label = true, labelEmpty = false) {

@@ -37,7 +37,8 @@ export class DsoRedirectDataService extends DataService<any> {
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
     protected comparator: DSOChangeAnalyzer<any>,
-    private router: Router) {
+    private router: Router
+  ) {
     super();
   }
 
@@ -52,8 +53,8 @@ export class DsoRedirectDataService extends DataService<any> {
   getIDHref(endpoint, resourceID, ...linksToFollow: FollowLinkConfig<any>[]): string {
     // Supporting both identifier (pid) and uuid (dso) endpoints
     return this.buildHrefFromFindOptions( endpoint.replace(/\{\?id\}/, `?id=${resourceID}`)
-        .replace(/\{\?uuid\}/, `?uuid=${resourceID}`),
-      {}, [], ...linksToFollow);
+      .replace(/\{\?uuid\}/, `?uuid=${resourceID}`),
+    {}, [], ...linksToFollow);
   }
 
   findByIdAndIDType(id: string, identifierType = IdentifierType.UUID): Observable<RemoteData<DSpaceObject>> {

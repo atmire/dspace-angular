@@ -10,8 +10,10 @@ import { Router } from '@angular/router';
 @Injectable()
 export class EndUserAgreementCurrentUserGuard extends AbstractEndUserAgreementGuard {
 
-  constructor(protected endUserAgreementService: EndUserAgreementService,
-              protected router: Router) {
+  constructor(
+    protected endUserAgreementService: EndUserAgreementService,
+    protected router: Router
+  ) {
     super(router);
   }
 

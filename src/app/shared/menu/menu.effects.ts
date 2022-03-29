@@ -29,9 +29,11 @@ export class MenuEffects {
       })
     ), { dispatch: false });
 
-  constructor(private actions$: Actions,
+  constructor(
+    private actions$: Actions,
     private menuService: MenuService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute
+  ) {
   }
 
   /**

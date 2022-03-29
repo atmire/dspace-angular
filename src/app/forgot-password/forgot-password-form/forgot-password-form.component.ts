@@ -40,12 +40,13 @@ export class ForgotPasswordFormComponent {
    */
   NOTIFICATIONS_PREFIX = 'forgot-password.form.notification';
 
-  constructor(private ePersonDataService: EPersonDataService,
-              private translateService: TranslateService,
-              private notificationsService: NotificationsService,
-              private store: Store<CoreState>,
-              private router: Router,
-              private route: ActivatedRoute,
+  constructor(
+    private ePersonDataService: EPersonDataService,
+    private translateService: TranslateService,
+    private notificationsService: NotificationsService,
+    private store: Store<CoreState>,
+    private router: Router,
+    private route: ActivatedRoute,
   ) {
   }
 

@@ -102,8 +102,8 @@ export class MetadataRepresentationListComponent extends AbstractIncrementalList
                     }
                   }),
                   map((item: Item) => Object.assign(new ItemMetadataRepresentation(metadatum), item))
-                )
-              ));
+                ))
+            );
           } else {
             return observableOf(Object.assign(new MetadatumRepresentation(this.itemType), metadatum));
           }

@@ -44,11 +44,13 @@ export class MetadataRegistryComponent {
    */
   needsUpdate$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 
-  constructor(private registryService: RegistryService,
-              private notificationsService: NotificationsService,
-              private router: Router,
-              private paginationService: PaginationService,
-              private translateService: TranslateService) {
+  constructor(
+    private registryService: RegistryService,
+    private notificationsService: NotificationsService,
+    private router: Router,
+    private paginationService: PaginationService,
+    private translateService: TranslateService
+  ) {
     this.updateSchemas();
   }
 

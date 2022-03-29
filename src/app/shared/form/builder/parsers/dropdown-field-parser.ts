@@ -19,7 +19,7 @@ import { ParserOptions } from './parser-options';
 export class DropdownFieldParser extends FieldParser {
 
   constructor(
-    @Inject(SUBMISSION_ID) submissionId: string,
+  @Inject(SUBMISSION_ID) submissionId: string,
     @Inject(CONFIG_DATA) configData: FormFieldModel,
     @Inject(INIT_FORM_VALUES) initFormValues,
     @Inject(PARSER_OPTIONS) parserOptions: ParserOptions

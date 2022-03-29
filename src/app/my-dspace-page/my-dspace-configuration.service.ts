@@ -66,10 +66,12 @@ export class MyDSpaceConfigurationService extends SearchConfigurationService {
    * @param {PaginationService} paginationService
    * @param {ActivatedRoute} route
    */
-  constructor(protected roleService: RoleService,
-              protected routeService: RouteService,
-              protected paginationService: PaginationService,
-              protected route: ActivatedRoute) {
+  constructor(
+    protected roleService: RoleService,
+    protected routeService: RouteService,
+    protected paginationService: PaginationService,
+    protected route: ActivatedRoute
+  ) {
 
     super(routeService, paginationService, route);
 
@@ -100,7 +102,8 @@ export class MyDSpaceConfigurationService extends SearchConfigurationService {
           availableConf.push(MyDSpaceConfigurationValueType.Workflow);
         }
         return availableConf;
-      }));
+      })
+    );
   }
 
   /**

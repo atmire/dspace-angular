@@ -41,7 +41,8 @@ export class DebounceDirective implements OnInit, OnDestroy {
     this.model.valueChanges.pipe(
       takeUntil(this.subject),
       debounceTime(this.dsDebounce),
-      distinctUntilChanged())
+      distinctUntilChanged()
+    )
       .subscribe((modelValue) => {
         if (this.model.dirty) {
           this.onDebounce.emit(modelValue);

@@ -30,11 +30,13 @@ export class MetadataImportPageComponent {
    */
   fileObject: File;
 
-  public constructor(private location: Location,
-                     protected translate: TranslateService,
-                     protected notificationsService: NotificationsService,
-                     private scriptDataService: ScriptDataService,
-                     private router: Router) {
+  public constructor(
+    private location: Location,
+    protected translate: TranslateService,
+    protected notificationsService: NotificationsService,
+    private scriptDataService: ScriptDataService,
+    private router: Router
+  ) {
   }
 
   /**

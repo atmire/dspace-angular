@@ -79,8 +79,7 @@ export abstract class StatisticsPageComponent<T extends DSpaceObject> implements
       switchMap((scope) =>
         combineLatest(
           this.types.map((type) => this.usageReportService.getStatistic(scope.id, type))
-        ),
-      ),
+        ),),
     );
   }
 

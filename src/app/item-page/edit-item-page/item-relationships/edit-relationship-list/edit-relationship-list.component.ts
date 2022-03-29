@@ -276,15 +276,15 @@ export class EditRelationshipListComponent implements OnInit, OnDestroy {
         const relatedItem = searchResult.indexableObject;
         subscriptions.push(this.relationshipService.getNameVariant(this.listId, relatedItem.uuid).pipe(
           map((nameVariant) => {
-          const update = {
-            uuid: this.relationshipType.id + '-' + searchResult.indexableObject.uuid,
-            nameVariant,
-            type: this.relationshipType,
-            relatedItem,
-          } as RelationshipIdentifiable;
-          this.objectUpdatesService.saveAddFieldUpdate(this.url, update);
-          return update;
-        })
+            const update = {
+              uuid: this.relationshipType.id + '-' + searchResult.indexableObject.uuid,
+              nameVariant,
+              type: this.relationshipType,
+              relatedItem,
+            } as RelationshipIdentifiable;
+            this.objectUpdatesService.saveAddFieldUpdate(this.url, update);
+            return update;
+          })
         ));
       });
 
@@ -353,21 +353,21 @@ export class EditRelationshipListComponent implements OnInit, OnDestroy {
         let apiCall;
         if (isLeft) {
           apiCall = this.relationshipService.searchByItemsAndType( this.relationshipType.id, this.item.uuid, this.relationshipType.leftwardType ,[relatedItem.id] ).pipe(
-                      getFirstSucceededRemoteData(),
-                      getRemoteDataPayload(),
-                    );
+            getFirstSucceededRemoteData(),
+            getRemoteDataPayload(),
+          );
         } else {
           apiCall = this.relationshipService.searchByItemsAndType( this.relationshipType.id, this.item.uuid, this.relationshipType.rightwardType ,[relatedItem.id] ).pipe(
-                      getFirstSucceededRemoteData(),
-                      getRemoteDataPayload(),
-                    );
+            getFirstSucceededRemoteData(),
+            getRemoteDataPayload(),
+          );
         }
 
         return apiCall.pipe(
           map( (res: PaginatedList<Relationship>) => res.page[0])
         );
-      }
-    ));
+      })
+    );
   }
 
 
@@ -381,8 +381,7 @@ export class EditRelationshipListComponent implements OnInit, OnDestroy {
       take(1),
       map((updates) => Object.values(updates)
         .map((update) => update.field as RelationshipIdentifiable)
-        .filter((field) => field.relationship)
-      ),
+        .filter((field) => field.relationship)),
       mergeMap((identifiables) =>
         observableCombineLatest(
           identifiables.map((identifiable) => this.getRelatedItem(identifiable.relationship))
@@ -390,12 +389,10 @@ export class EditRelationshipListComponent implements OnInit, OnDestroy {
           defaultIfEmpty([]),
           map((relatedItems) => {
             return identifiables.filter( (identifiable, index) => {
-                return relatedItems[index].uuid === relatedItem.uuid;
+              return relatedItems[index].uuid === relatedItem.uuid;
             });
-          }
-          ),
-        )
-      )
+          }),
+        ))
     );
   }
 
@@ -528,8 +525,7 @@ export class EditRelationshipListComponent implements OnInit, OnDestroy {
               // emit an array containing both the relationship and whether it's the left item,
               // as we'll need both
               map((isLeftItem: boolean) => [relationship, isLeftItem])
-            )
-          ),
+            )),
           map(([relationship, isLeftItem]: [Relationship, boolean]) => {
             // turn it into a RelationshipIdentifiable, an
             const nameVariant =
@@ -545,7 +541,7 @@ export class EditRelationshipListComponent implements OnInit, OnDestroy {
           toArray(),
           // if the pipe above completes without emitting anything, emit an empty array instead
           defaultIfEmpty([])
-      )),
+        )),
       switchMap((nextFields: RelationshipIdentifiable[]) => {
         // Get a list that contains the unsaved changes for the page, as well as the page of
         // RelationshipIdentifiables, as a single list of FieldUpdates

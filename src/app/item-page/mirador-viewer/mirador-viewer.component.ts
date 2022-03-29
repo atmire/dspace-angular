@@ -52,11 +52,13 @@ export class MiradorViewerComponent implements OnInit {
 
   viewerMessage = 'Sorry, the Mirador viewer is not currently available in development mode.';
 
-  constructor(private sanitizer: DomSanitizer,
-              private viewerService: MiradorViewerService,
-              private bitstreamDataService: BitstreamDataService,
-              private hostWindowService: HostWindowService,
-              @Inject(PLATFORM_ID) private platformId: any) {
+  constructor(
+    private sanitizer: DomSanitizer,
+    private viewerService: MiradorViewerService,
+    private bitstreamDataService: BitstreamDataService,
+    private hostWindowService: HostWindowService,
+    @Inject(PLATFORM_ID) private platformId: any
+  ) {
   }
 
   /**
@@ -102,10 +104,10 @@ export class MiradorViewerComponent implements OnInit {
       // menu by hiding it for smaller viewports. This will not be
       // responsive to resizing.
       this.hostWindowService.widthCategory
-          .pipe(take(1))
-          .subscribe((category: WidthCategory) => {
-            this.notMobile = !(category === WidthCategory.XS || category === WidthCategory.SM);
-          });
+        .pipe(take(1))
+        .subscribe((category: WidthCategory) => {
+          this.notMobile = !(category === WidthCategory.XS || category === WidthCategory.SM);
+        });
 
       // We need to set the multi property to true if the
       // item is searchable or when the ORIGINAL bundle contains more

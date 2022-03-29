@@ -93,9 +93,11 @@ export class SectionsDirective implements OnDestroy, OnInit {
    * @param {SubmissionService} submissionService
    * @param {SectionsService} sectionService
    */
-  constructor(private changeDetectorRef: ChangeDetectorRef,
-              private submissionService: SubmissionService,
-              private sectionService: SectionsService) {
+  constructor(
+    private changeDetectorRef: ChangeDetectorRef,
+    private submissionService: SubmissionService,
+    private sectionService: SectionsService
+  ) {
   }
 
   /**
@@ -108,7 +110,8 @@ export class SectionsDirective implements OnDestroy, OnInit {
           this.resetErrors();
         }
         return valid;
-      }));
+      })
+    );
 
     this.subs.push(
       this.sectionService.getShownSectionErrors(this.submissionId, this.sectionId, this.sectionType)

@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { WorkflowItem } from '../../../core/submission/models/workflowitem.model';
 import {
-    getWorkflowItemSendBackRoute,
-    getWorkflowItemDeleteRoute
+  getWorkflowItemSendBackRoute,
+  getWorkflowItemDeleteRoute
 } from '../../../workflowitems-edit-page/workflowitems-edit-page-routing-paths';
 
 @Component({

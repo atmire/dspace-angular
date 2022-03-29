@@ -37,7 +37,8 @@ describe('Notifications reducer', () => {
     options = new NotificationOptions(
       0,
       true,
-      NotificationAnimationsType.Rotate);
+      NotificationAnimationsType.Rotate
+    );
     notification1 = new Notification(uniqueId(), NotificationType.Success, 'title1', 'content1', options, null);
     notification2 = new Notification(uniqueId(), NotificationType.Info, 'title2', 'content2', options, null);
     notification3 = new Notification(uniqueId(), NotificationType.Warning, 'title3', 'content3', options, null);
@@ -111,7 +112,8 @@ describe('Notifications reducer', () => {
       const optionsWithTimeout = new NotificationOptions(
         1000,
         true,
-        NotificationAnimationsType.Rotate);
+        NotificationAnimationsType.Rotate
+      );
       // Timeout 1000ms
       const notification = new Notification(uniqueId(), NotificationType.Success, 'title', 'content', optionsWithTimeout, null);
       const state = notificationsReducer(undefined, new NewNotificationAction(notification));

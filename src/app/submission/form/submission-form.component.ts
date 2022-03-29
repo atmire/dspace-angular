@@ -120,7 +120,8 @@ export class SubmissionFormComponent implements OnChanges, OnDestroy {
     private changeDetectorRef: ChangeDetectorRef,
     private halService: HALEndpointService,
     private submissionService: SubmissionService,
-    private sectionsService: SectionsService) {
+    private sectionsService: SectionsService
+  ) {
     this.isActive = true;
   }
 
@@ -143,7 +144,8 @@ export class SubmissionFormComponent implements OnChanges, OnDestroy {
           } else {
             return observableOf([]);
           }
-        }));
+        })
+      );
       this.uploadEnabled$ = this.sectionsService.isSectionTypeAvailable(this.submissionId, SectionsType.Upload);
 
       // check if is submission loading
@@ -151,13 +153,15 @@ export class SubmissionFormComponent implements OnChanges, OnDestroy {
         filter(() => this.isActive),
         map((submission: SubmissionObjectEntry) => submission.isLoading),
         map((isLoading: boolean) => isLoading),
-        distinctUntilChanged());
+        distinctUntilChanged()
+      );
 
       // init submission state
       this.subs.push(
         this.halService.getEndpoint(this.submissionService.getSubmissionObjectLinkName()).pipe(
           filter((href: string) => isNotEmpty(href)),
-          distinctUntilChanged())
+          distinctUntilChanged()
+        )
           .subscribe((endpointURL) => {
             this.uploadFilesOptions.authToken = this.authService.buildAuthHeader();
             this.uploadFilesOptions.url = endpointURL.concat(`/${this.submissionId}`);
@@ -169,7 +173,8 @@ export class SubmissionFormComponent implements OnChanges, OnDestroy {
               this.submissionDefinition,
               this.sections,
               this.item,
-              this.submissionErrors);
+              this.submissionErrors
+            );
             this.changeDetectorRef.detectChanges();
           })
       );
@@ -211,7 +216,8 @@ export class SubmissionFormComponent implements OnChanges, OnDestroy {
         submissionObject._links.self.href,
         this.submissionDefinition,
         this.sections,
-        this.item);
+        this.item
+      );
     } else {
       this.changeDetectorRef.detectChanges();
     }
@@ -230,6 +236,7 @@ export class SubmissionFormComponent implements OnChanges, OnDestroy {
   protected getSectionsList(): Observable<any> {
     return this.submissionService.getSubmissionSections(this.submissionId).pipe(
       filter((sections: SectionDataObject[]) => isNotEmpty(sections)),
-      map((sections: SectionDataObject[]) => sections));
+      map((sections: SectionDataObject[]) => sections)
+    );
   }
 }

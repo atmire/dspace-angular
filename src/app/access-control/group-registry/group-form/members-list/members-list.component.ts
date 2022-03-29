@@ -94,13 +94,15 @@ export class MembersListComponent implements OnInit, OnDestroy {
   paginationSub: Subscription;
 
 
-  constructor(private groupDataService: GroupDataService,
-              public ePersonDataService: EPersonDataService,
-              private translateService: TranslateService,
-              private notificationsService: NotificationsService,
-              private formBuilder: FormBuilder,
-              private paginationService: PaginationService,
-              private router: Router) {
+  constructor(
+    private groupDataService: GroupDataService,
+    public ePersonDataService: EPersonDataService,
+    private translateService: TranslateService,
+    private notificationsService: NotificationsService,
+    private formBuilder: FormBuilder,
+    private paginationService: PaginationService,
+    private router: Router
+  ) {
     this.currentSearchQuery = '';
     this.currentSearchScope = 'metadata';
   }
@@ -130,37 +132,38 @@ export class MembersListComponent implements OnInit, OnDestroy {
       this.paginationService.getCurrentPagination(this.config.id, this.config).pipe(
         switchMap((currentPagination) => {
           return this.ePersonDataService.findAllByHref(this.groupBeingEdited._links.epersons.href, {
-              currentPage: currentPagination.currentPage,
-              elementsPerPage: currentPagination.pageSize
-            }
-          );
+            currentPage: currentPagination.currentPage,
+            elementsPerPage: currentPagination.pageSize
+          });
         }),
-      getAllCompletedRemoteData(),
-      map((rd: RemoteData<any>) => {
-        if (rd.hasFailed) {
-          this.notificationsService.error(this.translateService.get(this.messagePrefix + '.notification.failure', {cause: rd.errorMessage}));
-        } else {
-          return rd;
-        }
-      }),
-      switchMap((epersonListRD: RemoteData<PaginatedList<EPerson>>) => {
-        const dtos$ = observableCombineLatest(...epersonListRD.payload.page.map((member: EPerson) => {
-          const dto$: Observable<EpersonDtoModel> = observableCombineLatest(
-            this.isMemberOfGroup(member), (isMember: ObservedValueOf<Observable<boolean>>) => {
-              const epersonDtoModel: EpersonDtoModel = new EpersonDtoModel();
-              epersonDtoModel.eperson = member;
-              epersonDtoModel.memberOfGroup = isMember;
-              return epersonDtoModel;
-            });
-          return dto$;
+        getAllCompletedRemoteData(),
+        map((rd: RemoteData<any>) => {
+          if (rd.hasFailed) {
+            this.notificationsService.error(this.translateService.get(this.messagePrefix + '.notification.failure', {cause: rd.errorMessage}));
+          } else {
+            return rd;
+          }
+        }),
+        switchMap((epersonListRD: RemoteData<PaginatedList<EPerson>>) => {
+          const dtos$ = observableCombineLatest(...epersonListRD.payload.page.map((member: EPerson) => {
+            const dto$: Observable<EpersonDtoModel> = observableCombineLatest(
+              this.isMemberOfGroup(member), (isMember: ObservedValueOf<Observable<boolean>>) => {
+                const epersonDtoModel: EpersonDtoModel = new EpersonDtoModel();
+                epersonDtoModel.eperson = member;
+                epersonDtoModel.memberOfGroup = isMember;
+                return epersonDtoModel;
+              }
+            );
+            return dto$;
+          }));
+          return dtos$.pipe(map((dtos: EpersonDtoModel[]) => {
+            return buildPaginatedList(epersonListRD.payload.pageInfo, dtos);
+          }));
+        })
+      )
+        .subscribe((paginatedListOfDTOs: PaginatedList<EpersonDtoModel>) => {
+          this.ePeopleMembersOfGroupDtos.next(paginatedListOfDTOs);
         }));
-        return dtos$.pipe(map((dtos: EpersonDtoModel[]) => {
-          return buildPaginatedList(epersonListRD.payload.pageInfo, dtos);
-        }));
-      }))
-      .subscribe((paginatedListOfDTOs: PaginatedList<EpersonDtoModel>) => {
-        this.ePeopleMembersOfGroupDtos.next(paginatedListOfDTOs);
-      }));
   }
 
   /**
@@ -179,7 +182,8 @@ export class MembersListComponent implements OnInit, OnDestroy {
               getFirstSucceededRemoteData(),
               getRemoteDataPayload(),
               map((listEPeopleInGroup: PaginatedList<EPerson>) => listEPeopleInGroup.page.filter((ePersonInList: EPerson) => ePersonInList.id === possibleMember.id)),
-              map((epeople: EPerson[]) => epeople.length > 0));
+              map((epeople: EPerson[]) => epeople.length > 0)
+            );
         } else {
           return observableOf(false);
         }
@@ -281,13 +285,15 @@ export class MembersListComponent implements OnInit, OnDestroy {
                 epersonDtoModel.eperson = member;
                 epersonDtoModel.memberOfGroup = isMember;
                 return epersonDtoModel;
-              });
+              }
+            );
             return dto$;
           }));
           return dtos$.pipe(map((dtos: EpersonDtoModel[]) => {
             return buildPaginatedList(epersonListRD.payload.pageInfo, dtos);
           }));
-        }))
+        })
+      )
         .subscribe((paginatedListOfDTOs: PaginatedList<EpersonDtoModel>) => {
           this.ePeopleSearchDtos.next(paginatedListOfDTOs);
         }));

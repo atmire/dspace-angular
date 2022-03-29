@@ -93,16 +93,17 @@ export class ItemDeleteComponent
    */
   private subs: Subscription[] = [];
 
-  constructor(protected route: ActivatedRoute,
-              protected router: Router,
-              protected notificationsService: NotificationsService,
-              protected itemDataService: ItemDataService,
-              protected translateService: TranslateService,
-              protected modalService: NgbModal,
-              protected objectUpdatesService: ObjectUpdatesService,
-              protected relationshipService: RelationshipService,
-              protected entityTypeService: EntityTypeService,
-              protected linkService: LinkService,
+  constructor(
+    protected route: ActivatedRoute,
+    protected router: Router,
+    protected notificationsService: NotificationsService,
+    protected itemDataService: ItemDataService,
+    protected translateService: TranslateService,
+    protected modalService: NgbModal,
+    protected objectUpdatesService: ObjectUpdatesService,
+    protected relationshipService: RelationshipService,
+    protected entityTypeService: EntityTypeService,
+    protected linkService: LinkService,
   ) {
     super(
       route,
@@ -143,8 +144,7 @@ export class ItemDeleteComponent
                 } else {
                   return includedTypes;
                 }
-              }, [])
-            ),
+              }, [])),
           );
         })
       ).subscribe((types: RelationshipType[]) => this.types$.next(types)));
@@ -153,8 +153,7 @@ export class ItemDeleteComponent
     this.subs.push(this.types$.pipe(
       take(1),
     ).subscribe((types) =>
-      this.objectUpdatesService.initialize(this.url, types, this.item.lastModified)
-    ));
+      this.objectUpdatesService.initialize(this.url, types, this.item.lastModified)));
   }
 
   /**
@@ -194,8 +193,7 @@ export class ItemDeleteComponent
       switchMap((relationships) =>
         this.isLeftItem(relationships[0]).pipe(
           map((isLeftItem) => isLeftItem ? relationshipType.leftwardType : relationshipType.rightwardType),
-        )
-      ),
+        )),
     );
   }
 
@@ -218,8 +216,7 @@ export class ItemDeleteComponent
               map((types) => relationships.filter(
                 (relationship, index) => relationshipType.id === types[index].id
               )),
-            )
-          ),
+            )),
         )
       );
     }
@@ -289,8 +286,7 @@ export class ItemDeleteComponent
                     metadataValue: metadata,
                   };
                 }))
-              .reduce((previous, current) => previous.concat(current))
-          ),
+              .reduce((previous, current) => previous.concat(current))),
         )
       );
     }
@@ -344,11 +340,9 @@ export class ItemDeleteComponent
             (type, index) => selection[index]
           )),
           map((selectedTypes) => selectedTypes.map((type) => type.id)),
-        )
-      ),
+        )),
       switchMap((types) =>
-        this.itemDataService.delete(this.item.id, types).pipe(getFirstCompletedRemoteData())
-      )
+        this.itemDataService.delete(this.item.id, types).pipe(getFirstCompletedRemoteData()))
     ).subscribe(
       (rd: RemoteData<NoContent>) => {
         this.notify(rd.hasSucceeded);

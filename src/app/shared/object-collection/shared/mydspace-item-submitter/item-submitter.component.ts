@@ -36,6 +36,7 @@ export class ItemSubmitterComponent implements OnInit {
       filter((rd: RemoteData<WorkflowItem>) => (rd.hasSucceeded && isNotUndefined(rd.payload))),
       mergeMap((rd: RemoteData<WorkflowItem>) => rd.payload.submitter as Observable<RemoteData<EPerson>>),
       find((rd: RemoteData<EPerson>) => rd.hasSucceeded && isNotEmpty(rd.payload)),
-      map((rd: RemoteData<EPerson>) => rd.payload));
+      map((rd: RemoteData<EPerson>) => rd.payload)
+    );
   }
 }

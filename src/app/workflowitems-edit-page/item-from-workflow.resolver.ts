@@ -32,8 +32,7 @@ export class ItemFromWorkflowResolver implements Resolve<RemoteData<Item>> {
     const itemRD$ = this.workflowItemService.findById(route.params.id,
       true,
       false,
-      followLink('item'),
-    ).pipe(
+      followLink('item'),).pipe(
       getFirstCompletedRemoteData(),
       switchMap((wfiRD: RemoteData<WorkflowItem>) => wfiRD.payload.item as Observable<RemoteData<Item>>),
       getFirstCompletedRemoteData()

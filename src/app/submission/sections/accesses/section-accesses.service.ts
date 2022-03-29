@@ -37,6 +37,7 @@ export class SectionAccessesService {
 
     return this.store.select(submissionSectionDataFromIdSelector(submissionId, sectionId)).pipe(
       filter((state) => isNotUndefined(state)),
-      distinctUntilChanged());
+      distinctUntilChanged()
+    );
   }
 }

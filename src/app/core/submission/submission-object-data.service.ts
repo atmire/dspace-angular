@@ -37,7 +37,8 @@ export class SubmissionObjectDataService {
     const dataService: DataService<SubmissionObject> = this.submissionService.getSubmissionScope() === SubmissionScopeType.WorkspaceItem ? this.workspaceitemDataService : this.workflowItemDataService;
 
     return this.halService.getEndpoint(dataService.getLinkPath()).pipe(
-      map((endpoint: string) => dataService.getIDHref(endpoint, encodeURIComponent(id))));
+      map((endpoint: string) => dataService.getIDHref(endpoint, encodeURIComponent(id)))
+    );
   }
 
   /**

@@ -58,7 +58,8 @@ export class ProcessFormComponent implements OnInit {
     private notificationsService: NotificationsService,
     private translationService: TranslateService,
     private requestService: RequestService,
-    private router: Router) {
+    private router: Router
+  ) {
   }
 
   ngOnInit(): void {
@@ -78,12 +79,11 @@ export class ProcessFormComponent implements OnInit {
     }
 
     const stringParameters: ProcessParameter[] = this.parameters.map((parameter: ProcessParameter) => {
-        return {
-          name: parameter.name,
-          value: this.checkValue(parameter)
-        };
-      }
-    );
+      return {
+        name: parameter.name,
+        value: this.checkValue(parameter)
+      };
+    });
     this.scriptService.invoke(this.selectedScript.id, stringParameters, this.files)
       .pipe(getFirstCompletedRemoteData())
       .subscribe((rd: RemoteData<Process>) => {

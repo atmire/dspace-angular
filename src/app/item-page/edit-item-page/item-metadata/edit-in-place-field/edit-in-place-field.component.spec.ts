@@ -78,8 +78,7 @@ describe('EditInPlaceFieldComponent', () => {
         removeSingleFieldUpdate: {},
         isEditable: observableOf(false), // should always return something --> its in ngOnInit
         isValid: observableOf(true) // should always return something --> its in ngOnInit
-      }
-    );
+      });
 
     TestBed.configureTestingModule({
       imports: [FormsModule, TranslateModule.forRoot()],
@@ -474,7 +473,7 @@ describe('EditInPlaceFieldComponent', () => {
       it('can edit metadata field', () => {
         const disabledMetadataField = fixture.debugElement.query(By.css('ds-validation-suggestions'))
           .componentInstance.disable;
-       expect(disabledMetadataField).toBe(false);
+        expect(disabledMetadataField).toBe(false);
       });
     });
     describe('when the fieldUpdate\'s changeType is currently REMOVE', () => {

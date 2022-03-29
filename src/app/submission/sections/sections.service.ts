@@ -59,12 +59,14 @@ export class SectionsService {
    * @param {Store<SubmissionState>} store
    * @param {TranslateService} translate
    */
-  constructor(private formService: FormService,
-              private notificationsService: NotificationsService,
-              private scrollToService: ScrollToService,
-              private submissionService: SubmissionService,
-              private store: Store<SubmissionState>,
-              private translate: TranslateService) {
+  constructor(
+    private formService: FormService,
+    private notificationsService: NotificationsService,
+    private scrollToService: ScrollToService,
+    private submissionService: SubmissionService,
+    private store: Store<SubmissionState>,
+    private translate: TranslateService
+  ) {
   }
 
   /**
@@ -87,7 +89,8 @@ export class SectionsService {
     sectionId: string,
     formId: string,
     currentErrors: SubmissionSectionError[],
-    prevErrors: SubmissionSectionError[] = []) {
+    prevErrors: SubmissionSectionError[] = []
+  ) {
     // Remove previous error list if the current is empty
     if (isEmpty(currentErrors)) {
       this.store.dispatch(new RemoveSectionErrorsAction(submissionId, sectionId));
@@ -218,7 +221,8 @@ export class SectionsService {
    */
   public getSectionErrors(submissionId: string, sectionId: string): Observable<SubmissionSectionError[]> {
     return this.store.select(submissionSectionErrorsFromIdSelector(submissionId, sectionId)).pipe(
-      distinctUntilChanged());
+      distinctUntilChanged()
+    );
   }
 
   /**
@@ -233,7 +237,8 @@ export class SectionsService {
    */
   public getSectionServerErrors(submissionId: string, sectionId: string): Observable<SubmissionSectionError[]> {
     return this.store.select(submissionSectionServerErrorsFromIdSelector(submissionId, sectionId)).pipe(
-      distinctUntilChanged());
+      distinctUntilChanged()
+    );
   }
 
   /**
@@ -262,7 +267,7 @@ export class SectionsService {
         }
       }),
       distinctUntilChanged()
-      );
+    );
   }
 
   /**
@@ -279,7 +284,8 @@ export class SectionsService {
     return this.store.select(submissionSectionFromIdSelector(submissionId, sectionId)).pipe(
       filter((sectionObj) => hasValue(sectionObj)),
       map((sectionObj: SubmissionSectionObject) => sectionObj.isValid),
-      distinctUntilChanged());
+      distinctUntilChanged()
+    );
   }
 
   /**
@@ -295,7 +301,8 @@ export class SectionsService {
   public isSectionActive(submissionId: string, sectionId: string): Observable<boolean> {
     return this.submissionService.getActiveSectionId(submissionId).pipe(
       map((activeSectionId: string) => sectionId === activeSectionId),
-      distinctUntilChanged());
+      distinctUntilChanged()
+    );
   }
 
   /**
@@ -312,7 +319,8 @@ export class SectionsService {
     return this.store.select(submissionSectionFromIdSelector(submissionId, sectionId)).pipe(
       filter((sectionObj) => hasValue(sectionObj)),
       map((sectionObj: SubmissionSectionObject) => sectionObj.enabled),
-      distinctUntilChanged());
+      distinctUntilChanged()
+    );
   }
 
   /**
@@ -335,7 +343,8 @@ export class SectionsService {
           && sectionObj.visibility.other === 'READONLY'
           && submissionScope !== SubmissionScopeType.WorkspaceItem;
       }),
-      distinctUntilChanged());
+      distinctUntilChanged()
+    );
   }
 
   /**
@@ -354,7 +363,8 @@ export class SectionsService {
       map((submissionState: SubmissionObjectEntry) => {
         return isNotUndefined(submissionState.sections) && isNotUndefined(submissionState.sections[sectionId]);
       }),
-      distinctUntilChanged());
+      distinctUntilChanged()
+    );
   }
 
   /**
@@ -373,7 +383,8 @@ export class SectionsService {
       map((submissionState: SubmissionObjectEntry) => {
         return isNotUndefined(submissionState.sections) && isNotUndefined(findKey(submissionState.sections, {sectionType: sectionType}));
       }),
-      distinctUntilChanged());
+      distinctUntilChanged()
+    );
   }
 
   /**
@@ -389,7 +400,8 @@ export class SectionsService {
         return isNotUndefined(submissionState.sections) && isNotUndefined(submissionState.sections[sectionId])
           && submissionState.sections[sectionId].sectionType === sectionType;
       }),
-      distinctUntilChanged());
+      distinctUntilChanged()
+    );
   }
 
   /**
@@ -454,7 +466,8 @@ export class SectionsService {
 
       combineLatest(isAvailable$, isEnabled$).pipe(
         take(1),
-        filter(([available, enabled]: [boolean, boolean]) => available))
+        filter(([available, enabled]: [boolean, boolean]) => available)
+      )
         .subscribe(([available, enabled]: [boolean, boolean]) => {
           this.store.dispatch(new UpdateSectionDataAction(submissionId, sectionId, data, errorsToShow, serverValidationErrors, metadata));
         });

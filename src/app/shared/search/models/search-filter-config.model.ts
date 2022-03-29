@@ -10,71 +10,71 @@ import { SEARCH_FILTER_CONFIG } from './types/search-filter-config.resource-type
  * The configuration for a search filter
  */
 @typedObject
-  export class SearchFilterConfig implements CacheableObject {
-    static type = SEARCH_FILTER_CONFIG;
+export class SearchFilterConfig implements CacheableObject {
+  static type = SEARCH_FILTER_CONFIG;
 
     /**
      * The object type,
      * hardcoded because rest doesn't set one.
      */
-    @excludeFromEquals
+  @excludeFromEquals
     type = SEARCH_FILTER_CONFIG;
 
     /**
      * The name of this filter
      */
-    @autoserialize
+  @autoserialize
     name: string;
 
     /**
      * The FilterType of this filter
      */
-    @autoserializeAs(String, 'facetType')
+  @autoserializeAs(String, 'facetType')
     filterType: FilterType;
 
     /**
      * True if the filter has facets
      */
-    @autoserialize
+  @autoserialize
     hasFacets: boolean;
 
     /**
      * @type {number} The page size used for this facet
      */
-    @autoserializeAs(String, 'facetLimit')
+  @autoserializeAs(String, 'facetLimit')
     pageSize = 5;
 
     /**
      * Defines if the item facet is collapsed by default or not on the search page
      */
-    @autoserialize
+  @autoserialize
     isOpenByDefault: boolean;
 
     /**
      * Minimum value possible for this facet in the repository
      */
-    @autoserialize
+  @autoserialize
     maxValue: string;
 
     /**
      * Maximum value possible for this facet in the repository
      */
-    @autoserialize
+  @autoserialize
     minValue: string;
 
     /**
      * The {@link HALLink}s for this SearchFilterConfig
      */
-    @deserialize
+  @deserialize
     _links: {
-      self: HALLink;
-    };
+    self: HALLink;
+  };
 
     /**
      * Name of this configuration that can be used in a url
      * @returns Parameter name
      */
-    get paramName(): string {
-      return 'f.' + this.name;
-    }
+  get paramName(): string {
+    return 'f.' + this.name;
   }
+}

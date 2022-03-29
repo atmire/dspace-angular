@@ -73,10 +73,12 @@ export class NotificationComponent implements OnInit, OnDestroy {
   private diff: any;
   public animate: string;
 
-  constructor(private notificationService: NotificationsService,
-              private domSanitizer: DomSanitizer,
-              private cdr: ChangeDetectorRef,
-              private zone: NgZone) {
+  constructor(
+    private notificationService: NotificationsService,
+    private domSanitizer: DomSanitizer,
+    private cdr: ChangeDetectorRef,
+    private zone: NgZone
+  ) {
   }
 
   ngOnInit(): void {

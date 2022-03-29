@@ -54,7 +54,8 @@ export class PoolTaskDataService extends TasksService<PoolTask> {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DSOChangeAnalyzer<PoolTask>) {
+    protected comparator: DSOChangeAnalyzer<PoolTask>
+  ) {
     super();
   }
 

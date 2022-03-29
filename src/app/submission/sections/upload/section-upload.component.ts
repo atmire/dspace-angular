@@ -130,16 +130,18 @@ export class SubmissionSectionUploadComponent extends SectionModelComponent {
    * @param {SectionDataObject} injectedSectionData
    * @param {string} injectedSubmissionId
    */
-  constructor(private bitstreamService: SectionUploadService,
-              private changeDetectorRef: ChangeDetectorRef,
-              private collectionDataService: CollectionDataService,
-              private groupService: GroupDataService,
-              private resourcePolicyService: ResourcePolicyService,
-              protected sectionService: SectionsService,
-              private submissionService: SubmissionService,
-              private uploadsConfigService: SubmissionUploadsConfigService,
-              @Inject('sectionDataProvider') public injectedSectionData: SectionDataObject,
-              @Inject('submissionIdProvider') public injectedSubmissionId: string) {
+  constructor(
+    private bitstreamService: SectionUploadService,
+    private changeDetectorRef: ChangeDetectorRef,
+    private collectionDataService: CollectionDataService,
+    private groupService: GroupDataService,
+    private resourcePolicyService: ResourcePolicyService,
+    protected sectionService: SectionsService,
+    private submissionService: SubmissionService,
+    private uploadsConfigService: SubmissionUploadsConfigService,
+    @Inject('sectionDataProvider') public injectedSectionData: SectionDataObject,
+    @Inject('submissionIdProvider') public injectedSubmissionId: string
+  ) {
     super(undefined, injectedSectionData, injectedSubmissionId);
   }
 
@@ -149,7 +151,8 @@ export class SubmissionSectionUploadComponent extends SectionModelComponent {
   onSectionInit() {
     const config$ = this.uploadsConfigService.findByHref(this.sectionData.config, true, false, followLink('metadata')).pipe(
       getFirstSucceededRemoteData(),
-      map((config) => config.payload));
+      map((config) => config.payload)
+    );
 
     // retrieve configuration for the bitstream's metadata form
     this.configMetadataForm$ = config$.pipe(
@@ -157,8 +160,8 @@ export class SubmissionSectionUploadComponent extends SectionModelComponent {
         config.metadata.pipe(
           getFirstSucceededRemoteData(),
           map((remoteData: RemoteData<SubmissionFormsModel>) => remoteData.payload)
-        )
-      ));
+        ))
+    );
 
     this.subs.push(
       this.submissionService.getSubmissionObject(this.submissionId).pipe(
@@ -198,23 +201,23 @@ export class SubmissionSectionUploadComponent extends SectionModelComponent {
         filter(([configMetadataForm, fileList]: [SubmissionFormsModel, any[]]) => {
           return isNotEmpty(configMetadataForm) && isNotUndefined(fileList);
         }),
-        distinctUntilChanged())
+        distinctUntilChanged()
+      )
         .subscribe(([configMetadataForm, fileList]: [SubmissionFormsModel, any[]]) => {
-            this.fileList = [];
-            this.fileIndexes = [];
-            this.fileNames = [];
-            this.changeDetectorRef.detectChanges();
-            if (isNotUndefined(fileList) && fileList.length > 0) {
-              fileList.forEach((file) => {
-                this.fileList.push(file);
-                this.fileIndexes.push(file.uuid);
-                this.fileNames.push(this.getFileName(configMetadataForm, file));
-              });
-            }
-
-            this.changeDetectorRef.detectChanges();
+          this.fileList = [];
+          this.fileIndexes = [];
+          this.fileNames = [];
+          this.changeDetectorRef.detectChanges();
+          if (isNotUndefined(fileList) && fileList.length > 0) {
+            fileList.forEach((file) => {
+              this.fileList.push(file);
+              this.fileIndexes.push(file.uuid);
+              this.fileNames.push(this.getFileName(configMetadataForm, file));
+            });
           }
-        )
+
+          this.changeDetectorRef.detectChanges();
+        })
     );
   }
 

@@ -136,7 +136,8 @@ export class MenuComponent implements OnInit, OnDestroy {
             } else {
               return section;
             }
-          }));
+          })
+        );
       })
     );
   }
@@ -216,8 +217,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     return this.menuService.hasSubSections(this.menuID, section.id).pipe(
       map((expandable: boolean) => {
         return getComponentForMenu(this.menuID, expandable);
-      }
-      ),
+      }),
     );
   }
 

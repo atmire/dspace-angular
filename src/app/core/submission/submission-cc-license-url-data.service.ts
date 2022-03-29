@@ -57,7 +57,8 @@ export class SubmissionCcLicenseUrlDataService extends DataService<SubmissionCcL
                 fieldName: `answer_${field.id}`,
                 fieldValue: options.get(field).id,
               };
-            }),
+            }
+          ),
         ]
       }
     ).pipe(
@@ -71,6 +72,7 @@ export class SubmissionCcLicenseUrlDataService extends DataService<SubmissionCcL
   protected getSearchEndpoint(searchMethod: string): Observable<string> {
     return this.halService.getEndpoint(`${this.linkPath}`).pipe(
       filter((href: string) => isNotEmpty(href)),
-      map((href: string) => `${href}/${searchMethod}`));
+      map((href: string) => `${href}/${searchMethod}`)
+    );
   }
 }

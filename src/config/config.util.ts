@@ -43,8 +43,7 @@ const getDefaultThemeConfig = (): ThemeConfig => {
   return environment.themes.find((themeConfig: any) =>
     hasNoValue(themeConfig.regex) &&
     hasNoValue(themeConfig.handle) &&
-    hasNoValue(themeConfig.uuid)
-  );
+    hasNoValue(themeConfig.uuid));
 };
 
 export {

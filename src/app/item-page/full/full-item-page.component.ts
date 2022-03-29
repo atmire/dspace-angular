@@ -42,11 +42,13 @@ export class FullItemPageComponent extends ItemPageComponent implements OnInit, 
 
   subs = [];
 
-  constructor(protected route: ActivatedRoute,
-              router: Router,
-              items: ItemDataService,
-              authService: AuthService,
-              private _location: Location) {
+  constructor(
+    protected route: ActivatedRoute,
+    router: Router,
+    items: ItemDataService,
+    authService: AuthService,
+    private _location: Location
+  ) {
     super(route, router, items, authService);
   }
 
@@ -56,12 +58,12 @@ export class FullItemPageComponent extends ItemPageComponent implements OnInit, 
     this.metadata$ = this.itemRD$.pipe(
       map((rd: RemoteData<Item>) => rd.payload),
       filter((item: Item) => hasValue(item)),
-      map((item: Item) => item.metadata),);
+      map((item: Item) => item.metadata),
+    );
 
     this.subs.push(this.route.data.subscribe((data: Data) => {
-        this.fromWfi = hasValue(data.wfi);
-      })
-    );
+      this.fromWfi = hasValue(data.wfi);
+    }));
   }
 
   /**

@@ -37,10 +37,10 @@ describe('SectionFormOperationsService test suite', () => {
   let serviceAsAny: any;
 
   const jsonPatchOpBuilder: any = jasmine.createSpyObj('jsonPatchOpBuilder', {
-      add: jasmine.createSpy('add'),
-      replace: jasmine.createSpy('replace'),
-      remove: jasmine.createSpy('remove'),
-    });
+    add: jasmine.createSpy('add'),
+    replace: jasmine.createSpy('replace'),
+    remove: jasmine.createSpy('remove'),
+  });
   const pathCombiner = new JsonPatchOperationPathCombiner('sections', 'test');
 
   const dynamicFormControlChangeEvent: DynamicFormControlEvent = {
@@ -381,8 +381,7 @@ describe('SectionFormOperationsService test suite', () => {
       });
       expectedValue = [
         Object.assign(new VocabularyEntry(), mockInputWithLanguageAndAuthorityArrayModel.value[0],
-        { language: mockInputWithLanguageAndAuthorityArrayModel.language }
-        )
+          { language: mockInputWithLanguageAndAuthorityArrayModel.language })
       ];
 
       expect(service.getFieldValueFromChangeEvent(event)).toEqual(expectedValue);
@@ -570,7 +569,8 @@ describe('SectionFormOperationsService test suite', () => {
 
       expect(jsonPatchOpBuilder.replace).toHaveBeenCalledWith(
         pathCombiner.getPath('path/0'),
-        new FormFieldMetadataValueObject('test'));
+        new FormFieldMetadataValueObject('test')
+      );
     });
 
     it('should dispatch a json-path remove operation when has a stored value', () => {
@@ -625,7 +625,8 @@ describe('SectionFormOperationsService test suite', () => {
 
       expect(jsonPatchOpBuilder.replace).toHaveBeenCalledWith(
         pathCombiner.getPath('path/0'),
-        new FormFieldMetadataValueObject('test'));
+        new FormFieldMetadataValueObject('test')
+      );
     });
 
     it('should dispatch a json-path add operation when has a stored value but previous value is empty', () => {
@@ -651,7 +652,8 @@ describe('SectionFormOperationsService test suite', () => {
       expect(jsonPatchOpBuilder.add).toHaveBeenCalledWith(
         pathCombiner.getPath('path'),
         new FormFieldMetadataValueObject('test'),
-        true);
+        true
+      );
     });
 
     it('should dispatch a json-path add operation when has a value and field index is zero or undefined', () => {
@@ -677,7 +679,8 @@ describe('SectionFormOperationsService test suite', () => {
       expect(jsonPatchOpBuilder.add).toHaveBeenCalledWith(
         pathCombiner.getPath('path'),
         new FormFieldMetadataValueObject('test'),
-        true);
+        true
+      );
 
       spyIndex.and.returnValue(undefined);
       spyPath.and.returnValue('path');
@@ -686,7 +689,8 @@ describe('SectionFormOperationsService test suite', () => {
       expect(jsonPatchOpBuilder.add).toHaveBeenCalledWith(
         pathCombiner.getPath('path'),
         new FormFieldMetadataValueObject('test'),
-        true);
+        true
+      );
     });
 
     it('should dispatch a json-path add operation when has a value', () => {

@@ -54,7 +54,8 @@ describe('WorkflowItemAdminWorkflowListElementComponent', () => {
           { provide: DSONameService, useClass: DSONameServiceMock }
         ],
         schemas: [NO_ERRORS_SCHEMA]
-      })
+      }
+    )
       .compileComponents();
   }));
 

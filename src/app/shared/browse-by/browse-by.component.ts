@@ -104,8 +104,9 @@ export class BrowseByComponent implements OnInit {
    */
   public sortDirections = SortDirection;
 
-  public constructor(private injector: Injector,
-                     protected paginationService: PaginationService,
+  public constructor(
+    private injector: Injector,
+    protected paginationService: PaginationService,
   ) {
 
   }

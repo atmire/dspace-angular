@@ -36,5 +36,4 @@ const parent = Object.assign(new Collection(), {
 });
 
 describe('JournalSidebarSearchListElementComponent',
-  createSidebarSearchListElementTests(JournalSidebarSearchListElementComponent, object, parent, 'parent title', 'title', '1234, 5678')
-);
+  createSidebarSearchListElementTests(JournalSidebarSearchListElementComponent, object, parent, 'parent title', 'title', '1234, 5678'));

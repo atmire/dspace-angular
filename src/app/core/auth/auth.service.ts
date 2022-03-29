@@ -75,18 +75,17 @@ export class AuthService {
   private tokenRefreshTimer;
 
   constructor(@Inject(REQUEST) protected req: any,
-              @Inject(NativeWindowService) protected _window: NativeWindowRef,
-              @Optional() @Inject(RESPONSE) private response: any,
-              protected authRequestService: AuthRequestService,
-              protected epersonService: EPersonDataService,
-              protected router: Router,
-              protected routeService: RouteService,
-              protected storage: CookieService,
-              protected store: Store<AppState>,
-              protected hardRedirectService: HardRedirectService,
-              private notificationService: NotificationsService,
-              private translateService: TranslateService
-  ) {
+    @Inject(NativeWindowService) protected _window: NativeWindowRef,
+    @Optional() @Inject(RESPONSE) private response: any,
+    protected authRequestService: AuthRequestService,
+    protected epersonService: EPersonDataService,
+    protected router: Router,
+    protected routeService: RouteService,
+    protected storage: CookieService,
+    protected store: Store<AppState>,
+    protected hardRedirectService: HardRedirectService,
+    private notificationService: NotificationsService,
+    private translateService: TranslateService) {
     this.store.pipe(
       select(isAuthenticated),
       startWith(false)
@@ -114,7 +113,8 @@ export class AuthService {
         } else {
           throw (new Error('Invalid email or password'));
         }
-      }));
+      })
+    );
 
   }
 
@@ -168,7 +168,8 @@ export class AuthService {
         } else {
           throw (new Error('Not authenticated'));
         }
-      }));
+      })
+    );
   }
 
   /**
@@ -251,7 +252,8 @@ export class AuthService {
         } else {
           throw (new Error('Not authenticated'));
         }
-      }));
+      })
+    );
   }
 
   /**
@@ -290,7 +292,8 @@ export class AuthService {
         } else {
           throw (new Error('auth.errors.invalid-user'));
         }
-      }));
+      })
+    );
   }
 
   /**
@@ -499,7 +502,8 @@ export class AuthService {
    */
   setRedirectUrlIfNotSet(newRedirectUrl: string) {
     this.getRedirectUrl().pipe(
-      take(1))
+      take(1)
+    )
       .subscribe((currentRedirectUrl) => {
         if (hasNoValue(currentRedirectUrl)) {
           this.setRedirectUrl(newRedirectUrl);

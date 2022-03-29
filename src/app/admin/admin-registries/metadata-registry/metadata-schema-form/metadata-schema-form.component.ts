@@ -82,30 +82,31 @@ export class MetadataSchemaFormComponent implements OnInit, OnDestroy {
       this.translateService.get(`${this.messagePrefix}.namespace`)
     ).subscribe(([name, namespace]) => {
       this.name = new DynamicInputModel({
-          id: 'name',
-          label: name,
-          name: 'name',
-          validators: {
-            required: null,
-            pattern: '^[^ ,_]{1,32}$'
-          },
-          required: true,
-        });
+        id: 'name',
+        label: name,
+        name: 'name',
+        validators: {
+          required: null,
+          pattern: '^[^ ,_]{1,32}$'
+        },
+        required: true,
+      });
       this.namespace = new DynamicInputModel({
-          id: 'namespace',
-          label: namespace,
-          name: 'namespace',
-          validators: {
-            required: null,
-          },
-          required: true,
-        });
+        id: 'namespace',
+        label: namespace,
+        name: 'namespace',
+        validators: {
+          required: null,
+        },
+        required: true,
+      });
       this.formModel = [
         new DynamicFormGroupModel(
           {
             id: 'metadatadataschemagroup',
             group:[this.namespace, this.name]
-          })
+          }
+        )
       ];
       this.formGroup = this.formBuilderService.createFormGroup(this.formModel);
       this.registryService.getActiveMetadataSchema().subscribe((schema) => {

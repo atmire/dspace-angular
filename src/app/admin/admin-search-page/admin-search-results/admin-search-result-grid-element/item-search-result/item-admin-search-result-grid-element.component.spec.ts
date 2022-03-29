@@ -57,7 +57,8 @@ describe('ItemAdminSearchResultGridElementComponent', () => {
           { provide: ThemeService, useValue: mockThemeService },
         ],
         schemas: [NO_ERRORS_SCHEMA]
-      })
+      }
+    )
       .compileComponents();
   }));
 

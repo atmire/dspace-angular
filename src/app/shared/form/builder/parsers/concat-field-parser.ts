@@ -26,13 +26,14 @@ import {
 export class ConcatFieldParser extends FieldParser {
 
   constructor(
-    @Inject(SUBMISSION_ID) submissionId: string,
+  @Inject(SUBMISSION_ID) submissionId: string,
     @Inject(CONFIG_DATA) configData: FormFieldModel,
     @Inject(INIT_FORM_VALUES) initFormValues,
     @Inject(PARSER_OPTIONS) parserOptions: ParserOptions,
     protected separator: string,
     protected firstPlaceholder: string = null,
-    protected secondPlaceholder: string = null) {
+    protected secondPlaceholder: string = null
+  ) {
     super(submissionId, configData, initFormValues, parserOptions);
 
     this.separator = separator;

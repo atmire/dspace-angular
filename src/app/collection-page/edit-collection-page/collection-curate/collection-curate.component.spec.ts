@@ -58,8 +58,7 @@ describe('CollectionCurateComponent', () => {
     });
     it('should contain the collection information provided in the route', () => {
       comp.dsoRD$.subscribe((value) => {
-        expect(value.payload.handle
-        ).toEqual('123456789/1');
+        expect(value.payload.handle).toEqual('123456789/1');
       });
       comp.collectionName$.subscribe((value) => {
         expect(value).toEqual('Collection Name');

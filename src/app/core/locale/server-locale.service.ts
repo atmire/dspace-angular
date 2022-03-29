@@ -32,7 +32,8 @@ export class ServerLocaleService extends LocaleService {
                 languages.push(...this.setQuality(
                   [ePersonLang],
                   LANG_ORIGIN.EPERSON,
-                  !isEmpty(this.translate.currentLang)));
+                  !isEmpty(this.translate.currentLang)
+                ));
               }
               return languages;
             })
@@ -45,7 +46,8 @@ export class ServerLocaleService extends LocaleService {
               languages.push(...this.setQuality(
                 [this.translate.currentLang],
                 LANG_ORIGIN.UI,
-                false));
+                false
+              ));
             }
             if (isNotEmpty(epersonLang)) {
               languages.push(...epersonLang);

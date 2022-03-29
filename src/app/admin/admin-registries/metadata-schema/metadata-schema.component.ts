@@ -57,12 +57,14 @@ export class MetadataSchemaComponent implements OnInit {
    */
   needsUpdate$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 
-  constructor(private registryService: RegistryService,
-              private route: ActivatedRoute,
-              private notificationsService: NotificationsService,
-              private router: Router,
-              private paginationService: PaginationService,
-              private translateService: TranslateService) {
+  constructor(
+    private registryService: RegistryService,
+    private route: ActivatedRoute,
+    private notificationsService: NotificationsService,
+    private router: Router,
+    private paginationService: PaginationService,
+    private translateService: TranslateService
+  ) {
 
   }
 

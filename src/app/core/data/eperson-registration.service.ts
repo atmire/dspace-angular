@@ -47,7 +47,8 @@ export class EpersonRegistrationService {
   getTokenSearchEndpoint(token: string): Observable<string> {
     return this.halService.getEndpoint(this.linkPath).pipe(
       filter((href: string) => isNotEmpty(href)),
-      map((href: string) => `${href}${this.searchByTokenPath}${token}`));
+      map((href: string) => `${href}${this.searchByTokenPath}${token}`)
+    );
   }
 
   /**

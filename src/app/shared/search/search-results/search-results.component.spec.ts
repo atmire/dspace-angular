@@ -229,6 +229,5 @@ export const objects = [
           }
         ]
       }
-    }
-  )
+    })
 ];

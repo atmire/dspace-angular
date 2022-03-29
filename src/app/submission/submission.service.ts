@@ -77,15 +77,17 @@ export class SubmissionService {
    * @param {RequestService} requestService
    * @param {SubmissionJsonPatchOperationsService} jsonPatchOperationService
    */
-  constructor(protected notificationsService: NotificationsService,
-              protected restService: SubmissionRestService,
-              protected router: Router,
-              protected routeService: RouteService,
-              protected store: Store<SubmissionState>,
-              protected translate: TranslateService,
-              protected searchService: SearchService,
-              protected requestService: RequestService,
-              protected jsonPatchOperationService: SubmissionJsonPatchOperationsService) {
+  constructor(
+    protected notificationsService: NotificationsService,
+    protected restService: SubmissionRestService,
+    protected router: Router,
+    protected routeService: RouteService,
+    protected store: Store<SubmissionState>,
+    protected translate: TranslateService,
+    protected searchService: SearchService,
+    protected requestService: RequestService,
+    protected jsonPatchOperationService: SubmissionJsonPatchOperationsService
+  ) {
   }
 
   /**
@@ -111,7 +113,8 @@ export class SubmissionService {
   createSubmission(collectionId?: string): Observable<SubmissionObject> {
     return this.restService.postToEndpoint(this.workspaceLinkPath, {}, null, null, collectionId).pipe(
       map((workspaceitem: SubmissionObject[]) => workspaceitem[0] as SubmissionObject),
-      catchError(() => observableOf({} as SubmissionObject)));
+      catchError(() => observableOf({} as SubmissionObject))
+    );
   }
 
   /**
@@ -183,7 +186,8 @@ export class SubmissionService {
     submissionDefinition: SubmissionDefinitionsModel,
     sections: WorkspaceitemSectionsObject,
     item: Item,
-    errors: SubmissionError) {
+    errors: SubmissionError
+  ) {
     this.store.dispatch(new InitSubmissionFormAction(collectionId, submissionId, selfUrl, submissionDefinition, sections, item, errors));
   }
 
@@ -255,7 +259,8 @@ export class SubmissionService {
    */
   getActiveSectionId(submissionId: string): Observable<string> {
     return this.getSubmissionObject(submissionId).pipe(
-      map((submission: SubmissionObjectEntry) => submission.activeSection));
+      map((submission: SubmissionObjectEntry) => submission.activeSection)
+    );
   }
 
   /**
@@ -268,7 +273,8 @@ export class SubmissionService {
    */
   getSubmissionObject(submissionId: string): Observable<SubmissionObjectEntry> {
     return this.store.select(submissionObjectFromIdSelector(submissionId)).pipe(
-      filter((submission: SubmissionObjectEntry) => isNotUndefined(submission)));
+      filter((submission: SubmissionObjectEntry) => isNotUndefined(submission))
+    );
   }
 
   /**
@@ -302,7 +308,8 @@ export class SubmissionService {
         return availableSections;
       }),
       startWith([]),
-      distinctUntilChanged());
+      distinctUntilChanged()
+    );
   }
 
   /**
@@ -331,7 +338,8 @@ export class SubmissionService {
         return disabledSections;
       }),
       startWith([]),
-      distinctUntilChanged());
+      distinctUntilChanged()
+    );
   }
 
   /**
@@ -400,7 +408,8 @@ export class SubmissionService {
         return !isEmpty(sections) && isEmpty(states);
       }),
       distinctUntilChanged(),
-      startWith(false));
+      startWith(false)
+    );
   }
 
   /**
@@ -415,7 +424,8 @@ export class SubmissionService {
     return this.getSubmissionObject(submissionId).pipe(
       map((state: SubmissionObjectEntry) => state.savePending),
       distinctUntilChanged(),
-      startWith(false));
+      startWith(false)
+    );
   }
 
   /**
@@ -430,7 +440,8 @@ export class SubmissionService {
     return this.getSubmissionObject(submissionId).pipe(
       map((state: SubmissionObjectEntry) => state.depositPending),
       distinctUntilChanged(),
-      startWith(false));
+      startWith(false)
+    );
   }
 
   /**
@@ -468,7 +479,8 @@ export class SubmissionService {
   isSubmissionLoading(submissionId: string): Observable<boolean> {
     return this.getSubmissionObject(submissionId).pipe(
       map((submission: SubmissionObjectEntry) => submission.isLoading),
-      distinctUntilChanged());
+      distinctUntilChanged()
+    );
   }
 
   /**
@@ -505,7 +517,9 @@ export class SubmissionService {
             } else {
               this.router.navigateByUrl(previousUrl);
             }
-        })))
+          })
+        )
+      )
     ).subscribe();
   }
 
@@ -551,7 +565,8 @@ export class SubmissionService {
     return this.restService.getDataById(this.getSubmissionObjectLinkName(), submissionId).pipe(
       find((submissionObjects: SubmissionObject[]) => isNotUndefined(submissionObjects)),
       map((submissionObjects: SubmissionObject[]) => createSuccessfulRemoteDataObject(
-        submissionObjects[0])),
+        submissionObjects[0]
+      )),
       catchError((errorResponse: ErrorResponse) => {
         return createFailedRemoteDataObject$<SubmissionObject>(errorResponse.errorMessage, errorResponse.statusCode);
       })

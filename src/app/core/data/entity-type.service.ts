@@ -28,15 +28,17 @@ export class EntityTypeService extends DataService<ItemType> {
 
   protected linkPath = 'entitytypes';
 
-  constructor(protected requestService: RequestService,
-              protected rdbService: RemoteDataBuildService,
-              protected store: Store<CoreState>,
-              protected halService: HALEndpointService,
-              protected objectCache: ObjectCacheService,
-              protected notificationsService: NotificationsService,
-              protected relationshipTypeService: RelationshipTypeService,
-              protected http: HttpClient,
-              protected comparator: DefaultChangeAnalyzer<ItemType>) {
+  constructor(
+    protected requestService: RequestService,
+    protected rdbService: RemoteDataBuildService,
+    protected store: Store<CoreState>,
+    protected halService: HALEndpointService,
+    protected objectCache: ObjectCacheService,
+    protected notificationsService: NotificationsService,
+    protected relationshipTypeService: RelationshipTypeService,
+    protected http: HttpClient,
+    protected comparator: DefaultChangeAnalyzer<ItemType>
+  ) {
     super();
   }
 
@@ -77,7 +79,8 @@ export class EntityTypeService extends DataService<ItemType> {
     const searchHref = 'findAllByAuthorizedCollection';
 
     return this.searchBy(searchHref, options).pipe(
-      filter((type: RemoteData<PaginatedList<ItemType>>) => !type.isResponsePending));
+      filter((type: RemoteData<PaginatedList<ItemType>>) => !type.isResponsePending)
+    );
   }
 
   /**
@@ -111,7 +114,8 @@ export class EntityTypeService extends DataService<ItemType> {
     const searchHref = 'findAllByAuthorizedExternalSource';
 
     return this.searchBy(searchHref, options).pipe(
-      filter((type: RemoteData<PaginatedList<ItemType>>) => !type.isResponsePending));
+      filter((type: RemoteData<PaginatedList<ItemType>>) => !type.isResponsePending)
+    );
   }
 
   /**

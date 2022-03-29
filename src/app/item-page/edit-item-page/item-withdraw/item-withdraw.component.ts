@@ -22,11 +22,13 @@ export class ItemWithdrawComponent extends AbstractSimpleItemActionComponent {
   protected messageKey = 'withdraw';
   protected predicate = (rd: RemoteData<Item>) => rd.payload.isWithdrawn;
 
-  constructor(protected route: ActivatedRoute,
-              protected router: Router,
-              protected notificationsService: NotificationsService,
-              protected itemDataService: ItemDataService,
-              protected translateService: TranslateService) {
+  constructor(
+    protected route: ActivatedRoute,
+    protected router: Router,
+    protected notificationsService: NotificationsService,
+    protected itemDataService: ItemDataService,
+    protected translateService: TranslateService
+  ) {
     super(route, router, notificationsService, itemDataService, translateService);
   }
 

@@ -61,8 +61,7 @@ import { ThemedFullItemPageComponent } from '../item-page/full/themed-full-item-
             data: { title: 'workflow-item.send-back.title', breadcrumbKey: 'workflow-item.edit' }
           }
         ]
-      }]
-    )
+      }])
   ],
   providers: [WorkflowItemPageResolver, ItemFromWorkflowResolver]
 })

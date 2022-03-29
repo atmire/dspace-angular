@@ -57,8 +57,10 @@ function virtualMetadataSourceSelector(url: string, source: string): MemoizedSel
  */
 @Injectable()
 export class ObjectUpdatesService {
-  constructor(private store: Store<CoreState>,
-              private injector: Injector) {
+  constructor(
+    private store: Store<CoreState>,
+    private injector: Injector
+  ) {
   }
 
   /**
@@ -139,16 +141,17 @@ export class ObjectUpdatesService {
     return objectUpdates.pipe(
       hasValueOperator(),
       map((objectEntry) => {
-      const fieldUpdates: FieldUpdates = {};
-      for (const object of initialFields) {
-        let fieldUpdate = objectEntry.fieldUpdates[object.uuid];
-        if (isEmpty(fieldUpdate)) {
-          fieldUpdate = { field: object, changeType: undefined };
+        const fieldUpdates: FieldUpdates = {};
+        for (const object of initialFields) {
+          let fieldUpdate = objectEntry.fieldUpdates[object.uuid];
+          if (isEmpty(fieldUpdate)) {
+            fieldUpdate = { field: object, changeType: undefined };
+          }
+          fieldUpdates[object.uuid] = fieldUpdate;
         }
-        fieldUpdates[object.uuid] = fieldUpdate;
-      }
-      return fieldUpdates;
-    }));
+        return fieldUpdates;
+      })
+    );
   }
 
   /**
@@ -234,7 +237,7 @@ export class ObjectUpdatesService {
       .pipe(
         select(virtualMetadataSourceSelector(url, relationship)),
         map((virtualMetadataSource) => virtualMetadataSource && virtualMetadataSource[item]),
-    );
+      );
   }
 
   /**

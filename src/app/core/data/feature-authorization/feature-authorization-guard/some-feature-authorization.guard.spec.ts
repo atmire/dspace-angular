@@ -10,12 +10,14 @@ import { SomeFeatureAuthorizationGuard } from './some-feature-authorization.guar
  * Provide the return values of the overwritten getters as constructor arguments
  */
 class SomeFeatureAuthorizationGuardImpl extends SomeFeatureAuthorizationGuard {
-  constructor(protected authorizationService: AuthorizationDataService,
-              protected router: Router,
-              protected authService: AuthService,
-              protected featureIds: FeatureID[],
-              protected objectUrl: string,
-              protected ePersonUuid: string) {
+  constructor(
+    protected authorizationService: AuthorizationDataService,
+    protected router: Router,
+    protected authService: AuthService,
+    protected featureIds: FeatureID[],
+    protected objectUrl: string,
+    protected ePersonUuid: string
+  ) {
     super(authorizationService, router, authService);
   }
 

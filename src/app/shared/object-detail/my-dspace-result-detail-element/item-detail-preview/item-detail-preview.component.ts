@@ -61,9 +61,11 @@ export class ItemDetailPreviewComponent {
    * @param {HALEndpointService} halService
    * @param {BitstreamDataService} bitstreamDataService
    */
-  constructor(private fileService: FileService,
-              private halService: HALEndpointService,
-              private bitstreamDataService: BitstreamDataService) {
+  constructor(
+    private fileService: FileService,
+    private halService: HALEndpointService,
+    private bitstreamDataService: BitstreamDataService
+  ) {
   }
 
   /**
@@ -71,7 +73,8 @@ export class ItemDetailPreviewComponent {
    */
   public downloadBitstreamFile(uuid: string) {
     this.halService.getEndpoint('bitstreams').pipe(
-      first())
+      first()
+    )
       .subscribe((url) => {
         const fileUrl = `${url}/${uuid}/content`;
         this.fileService.retrieveFileDownloadLink(fileUrl);
