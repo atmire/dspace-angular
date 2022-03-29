@@ -4,7 +4,7 @@ import {
   combineLatest as observableCombineLatest,
   Observable,
   of as observableOf,
-  zip as observableZip
+  zip as observableZip,
 } from 'rxjs';
 import { RelationshipService } from '../../../core/data/relationship.service';
 import { MetadataValue } from '../../../core/shared/metadata.models';
@@ -20,7 +20,7 @@ import { AbstractIncrementalListComponent } from '../abstract-incremental-list/a
 
 @Component({
   selector: 'ds-metadata-representation-list',
-  templateUrl: './metadata-representation-list.component.html'
+  templateUrl: './metadata-representation-list.component.html',
 })
 /**
  * This component is used for displaying metadata
@@ -28,7 +28,9 @@ import { AbstractIncrementalListComponent } from '../abstract-incremental-list/a
  * It expects an itemType to resolve the metadata to a an item
  * It expects a label to put on top of the list
  */
-export class MetadataRepresentationListComponent extends AbstractIncrementalListComponent<Observable<MetadataRepresentation[]>> {
+export class MetadataRepresentationListComponent extends AbstractIncrementalListComponent<
+  Observable<MetadataRepresentation[]>
+> {
   /**
    * The parent of the list of related items to display
    */
@@ -70,7 +72,9 @@ export class MetadataRepresentationListComponent extends AbstractIncrementalList
    * @param page  The page to fetch
    */
   getPage(page: number): Observable<MetadataRepresentation[]> {
-    const metadata = this.parentItem.findMetadataSortedByPlace(this.metadataFields);
+    const metadata = this.parentItem.findMetadataSortedByPlace(
+      this.metadataFields
+    );
     this.total = metadata.length;
     return this.resolveMetadataRepresentations(metadata, page);
   }
@@ -80,32 +84,71 @@ export class MetadataRepresentationListComponent extends AbstractIncrementalList
    * @param metadata  The list of all metadata values
    * @param page      The page to return representations for
    */
-  resolveMetadataRepresentations(metadata: MetadataValue[], page: number): Observable<MetadataRepresentation[]> {
+  resolveMetadataRepresentations(
+    metadata: MetadataValue[],
+    page: number
+  ): Observable<MetadataRepresentation[]> {
     return observableZip(
       ...metadata
-        .slice((this.objects.length * this.incrementBy), (this.objects.length * this.incrementBy) + this.incrementBy)
+        .slice(
+          this.objects.length * this.incrementBy,
+          this.objects.length * this.incrementBy + this.incrementBy
+        )
         .map((metadatum: any) => Object.assign(new MetadataValue(), metadatum))
         .map((metadatum: MetadataValue) => {
           if (metadatum.isVirtual) {
-            return this.relationshipService.findById(metadatum.virtualValue, true, false, followLink('leftItem'), followLink('rightItem')).pipe(
-              getFirstSucceededRemoteData(),
-              switchMap((relRD: RemoteData<Relationship>) =>
-                observableCombineLatest(relRD.payload.leftItem, relRD.payload.rightItem).pipe(
-                  filter(([leftItem, rightItem]) => leftItem.hasCompleted && rightItem.hasCompleted),
-                  map(([leftItem, rightItem]) => {
-                    if (!leftItem.hasSucceeded || !rightItem.hasSucceeded) {
-                      return observableOf(Object.assign(new MetadatumRepresentation(this.itemType), metadatum));
-                    } else if (rightItem.hasSucceeded && leftItem.payload.id === this.parentItem.id) {
-                      return rightItem.payload;
-                    } else if (rightItem.payload.id === this.parentItem.id) {
-                      return leftItem.payload;
-                    }
-                  }),
-                  map((item: Item) => Object.assign(new ItemMetadataRepresentation(metadatum), item))
+            return this.relationshipService
+              .findById(
+                metadatum.virtualValue,
+                true,
+                false,
+                followLink('leftItem'),
+                followLink('rightItem')
+              )
+              .pipe(
+                getFirstSucceededRemoteData(),
+                switchMap((relRD: RemoteData<Relationship>) =>
+                  observableCombineLatest(
+                    relRD.payload.leftItem,
+                    relRD.payload.rightItem
+                  ).pipe(
+                    filter(
+                      ([leftItem, rightItem]) =>
+                        leftItem.hasCompleted && rightItem.hasCompleted
+                    ),
+                    map(([leftItem, rightItem]) => {
+                      if (!leftItem.hasSucceeded || !rightItem.hasSucceeded) {
+                        return observableOf(
+                          Object.assign(
+                            new MetadatumRepresentation(this.itemType),
+                            metadatum
+                          )
+                        );
+                      } else if (
+                        rightItem.hasSucceeded &&
+                        leftItem.payload.id === this.parentItem.id
+                      ) {
+                        return rightItem.payload;
+                      } else if (rightItem.payload.id === this.parentItem.id) {
+                        return leftItem.payload;
+                      }
+                    }),
+                    map((item: Item) =>
+                      Object.assign(
+                        new ItemMetadataRepresentation(metadatum),
+                        item
+                      )
+                    )
+                  )
                 )
-              ));
+              );
           } else {
-            return observableOf(Object.assign(new MetadatumRepresentation(this.itemType), metadatum));
+            return observableOf(
+              Object.assign(
+                new MetadatumRepresentation(this.itemType),
+                metadatum
+              )
+            );
           }
         })
     );

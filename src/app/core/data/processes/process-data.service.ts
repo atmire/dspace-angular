@@ -33,7 +33,8 @@ export class ProcessDataService extends DataService<Process> {
     protected notificationsService: NotificationsService,
     protected bitstreamDataService: BitstreamDataService,
     protected http: HttpClient,
-    protected comparator: DefaultChangeAnalyzer<Process>) {
+    protected comparator: DefaultChangeAnalyzer<Process>
+  ) {
     super();
   }
 
@@ -43,7 +44,9 @@ export class ProcessDataService extends DataService<Process> {
    */
   getFilesEndpoint(processId: string): Observable<string> {
     return this.getBrowseEndpoint().pipe(
-      switchMap((href) => this.halService.getEndpoint('files', `${href}/${processId}`))
+      switchMap((href) =>
+        this.halService.getEndpoint('files', `${href}/${processId}`)
+      )
     );
   }
 
@@ -51,7 +54,9 @@ export class ProcessDataService extends DataService<Process> {
    * Get a process' output files
    * @param processId The ID of the process
    */
-  getFiles(processId: string): Observable<RemoteData<PaginatedList<Bitstream>>> {
+  getFiles(
+    processId: string
+  ): Observable<RemoteData<PaginatedList<Bitstream>>> {
     const href$ = this.getFilesEndpoint(processId);
     return this.bitstreamDataService.findAllByHref(href$);
   }

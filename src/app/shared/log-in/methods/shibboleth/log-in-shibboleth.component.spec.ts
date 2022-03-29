@@ -21,9 +21,7 @@ import { ActivatedRouteStub } from '../../../testing/active-router.stub';
 import { NativeWindowMockFactory } from '../../../mocks/mock-native-window-ref';
 import { HardRedirectService } from '../../../../core/services/hard-redirect.service';
 
-
 describe('LogInShibbolethComponent', () => {
-
   let component: LogInShibbolethComponent;
   let fixture: ComponentFixture<LogInShibbolethComponent>;
   let page: Page;
@@ -42,7 +40,7 @@ describe('LogInShibbolethComponent', () => {
 
     hardRedirectService = jasmine.createSpyObj('hardRedirectService', {
       getCurrentRoute: {},
-      redirect: {}
+      redirect: {},
     });
 
     initialState = {
@@ -52,9 +50,9 @@ describe('LogInShibbolethComponent', () => {
           loaded: false,
           blocking: false,
           loading: false,
-          authMethods: []
-        }
-      }
+          authMethods: [],
+        },
+      },
     };
   });
 
@@ -63,14 +61,15 @@ describe('LogInShibbolethComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({ auth: authReducer }, storeModuleConfig),
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
       ],
-      declarations: [
-        LogInShibbolethComponent
-      ],
+      declarations: [LogInShibbolethComponent],
       providers: [
         { provide: AuthService, useClass: AuthServiceStub },
-        { provide: 'authMethodProvider', useValue: new AuthMethod(AuthMethodType.Shibboleth, location) },
+        {
+          provide: 'authMethodProvider',
+          useValue: new AuthMethod(AuthMethodType.Shibboleth, location),
+        },
         { provide: 'isStandalonePage', useValue: true },
         { provide: NativeWindowService, useFactory: NativeWindowMockFactory },
         { provide: Router, useValue: new RouterStub() },
@@ -78,12 +77,8 @@ describe('LogInShibbolethComponent', () => {
         { provide: HardRedirectService, useValue: hardRedirectService },
         provideMockStore({ initialState }),
       ],
-      schemas: [
-        CUSTOM_ELEMENTS_SCHEMA
-      ]
-    })
-      .compileComponents();
-
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -96,8 +91,11 @@ describe('LogInShibbolethComponent', () => {
 
     // create page
     page = new Page(component, fixture);
-    setHrefSpy = spyOnProperty(componentAsAny._window.nativeWindow.location, 'href', 'set').and.callThrough();
-
+    setHrefSpy = spyOnProperty(
+      componentAsAny._window.nativeWindow.location,
+      'href',
+      'set'
+    ).and.callThrough();
   });
 
   it('should set the properly a new redirectUrl', () => {
@@ -112,7 +110,6 @@ describe('LogInShibbolethComponent', () => {
     component.redirectToShibboleth();
 
     expect(setHrefSpy).toHaveBeenCalledWith(currentUrl);
-
   });
 
   it('should not set a new redirectUrl', () => {
@@ -127,9 +124,7 @@ describe('LogInShibbolethComponent', () => {
     component.redirectToShibboleth();
 
     expect(setHrefSpy).toHaveBeenCalledWith(currentUrl);
-
   });
-
 });
 
 /**
@@ -138,12 +133,14 @@ describe('LogInShibbolethComponent', () => {
  * @class Page
  */
 class Page {
-
   public emailInput: HTMLInputElement;
   public navigateSpy: jasmine.Spy;
   public passwordInput: HTMLInputElement;
 
-  constructor(private component: LogInShibbolethComponent, private fixture: ComponentFixture<LogInShibbolethComponent>) {
+  constructor(
+    private component: LogInShibbolethComponent,
+    private fixture: ComponentFixture<LogInShibbolethComponent>
+  ) {
     // use injector to get services
     const injector = fixture.debugElement.injector;
     const store = injector.get(Store);
@@ -151,5 +148,4 @@ class Page {
     // add spies
     this.navigateSpy = spyOn(store, 'dispatch');
   }
-
 }

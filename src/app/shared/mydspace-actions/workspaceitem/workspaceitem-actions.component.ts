@@ -23,8 +23,10 @@ import { NoContent } from '../../../core/shared/NoContent.model';
   styleUrls: ['./workspaceitem-actions.component.scss'],
   templateUrl: './workspaceitem-actions.component.html',
 })
-export class WorkspaceitemActionsComponent extends MyDSpaceActionsComponent<WorkspaceItem, WorkspaceitemDataService> {
-
+export class WorkspaceitemActionsComponent extends MyDSpaceActionsComponent<
+  WorkspaceItem,
+  WorkspaceitemDataService
+> {
   /**
    * The workspaceitem object
    */
@@ -47,33 +49,42 @@ export class WorkspaceitemActionsComponent extends MyDSpaceActionsComponent<Work
    * @param {SearchService} searchService
    * @param {RequestService} requestService
    */
-  constructor(protected injector: Injector,
-              protected router: Router,
-              protected modalService: NgbModal,
-              protected notificationsService: NotificationsService,
-              protected translate: TranslateService,
-              protected searchService: SearchService,
-              protected requestService: RequestService) {
-    super(WorkspaceItem.type, injector, router, notificationsService, translate, searchService, requestService);
+  constructor(
+    protected injector: Injector,
+    protected router: Router,
+    protected modalService: NgbModal,
+    protected notificationsService: NotificationsService,
+    protected translate: TranslateService,
+    protected searchService: SearchService,
+    protected requestService: RequestService
+  ) {
+    super(
+      WorkspaceItem.type,
+      injector,
+      router,
+      notificationsService,
+      translate,
+      searchService,
+      requestService
+    );
   }
 
   /**
    * Delete the target workspaceitem object
    */
   public confirmDiscard(content) {
-    this.modalService.open(content).result.then(
-      (result) => {
-        if (result === 'ok') {
-          this.processingDelete$.next(true);
-          this.objectDataService.delete(this.object.id)
-            .pipe(getFirstCompletedRemoteData())
-            .subscribe((response: RemoteData<NoContent>) => {
-              this.processingDelete$.next(false);
-              this.handleActionResponse(response.hasSucceeded);
-            });
-        }
+    this.modalService.open(content).result.then((result) => {
+      if (result === 'ok') {
+        this.processingDelete$.next(true);
+        this.objectDataService
+          .delete(this.object.id)
+          .pipe(getFirstCompletedRemoteData())
+          .subscribe((response: RemoteData<NoContent>) => {
+            this.processingDelete$.next(false);
+            this.handleActionResponse(response.hasSucceeded);
+          });
       }
-    );
+    });
   }
 
   /**
@@ -84,5 +95,4 @@ export class WorkspaceitemActionsComponent extends MyDSpaceActionsComponent<Work
   initObjects(object: WorkspaceItem) {
     this.object = object;
   }
-
 }

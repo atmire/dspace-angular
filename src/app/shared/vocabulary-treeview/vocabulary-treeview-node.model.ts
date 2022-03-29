@@ -16,13 +16,14 @@ export class TreeviewNode {
     return this.childrenChange.value;
   }
 
-  constructor(public item: VocabularyEntryDetail,
-              public hasChildren = false,
-              public pageInfo: PageInfo = new PageInfo(),
-              public loadMoreParentItem: VocabularyEntryDetail | null = null,
-              public isSearchNode = false,
-              public isInInitValueHierarchy = false) {
-  }
+  constructor(
+    public item: VocabularyEntryDetail,
+    public hasChildren = false,
+    public pageInfo: PageInfo = new PageInfo(),
+    public loadMoreParentItem: VocabularyEntryDetail | null = null,
+    public isSearchNode = false,
+    public isInInitValueHierarchy = false
+  ) {}
 
   updatePageInfo(pageInfo: PageInfo) {
     this.pageInfo = pageInfo;
@@ -31,14 +32,14 @@ export class TreeviewNode {
 
 /** Flat node with expandable and level information */
 export class TreeviewFlatNode {
-  constructor(public item: VocabularyEntryDetail,
-              public level = 1,
-              public expandable = false,
-              public childrenLoaded = false,
-              public pageInfo: PageInfo = new PageInfo(),
-              public loadMoreParentItem: VocabularyEntryDetail | null = null,
-              public isSearchNode = false,
-              public isInInitValueHierarchy = false) {
-  }
+  constructor(
+    public item: VocabularyEntryDetail,
+    public level = 1,
+    public expandable = false,
+    public childrenLoaded = false,
+    public pageInfo: PageInfo = new PageInfo(),
+    public loadMoreParentItem: VocabularyEntryDetail | null = null,
+    public isSearchNode = false,
+    public isInInitValueHierarchy = false
+  ) {}
 }
-

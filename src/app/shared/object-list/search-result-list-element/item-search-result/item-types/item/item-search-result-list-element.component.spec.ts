@@ -8,57 +8,63 @@ import { TruncatePipe } from '../../../../../utils/truncate.pipe';
 import { TruncatableService } from '../../../../../truncatable/truncatable.service';
 import { ItemSearchResult } from '../../../../../object-collection/shared/item-search-result.model';
 import { DSONameService } from '../../../../../../core/breadcrumbs/dso-name.service';
-import { DSONameServiceMock, UNDEFINED_NAME } from '../../../../../mocks/dso-name.service.mock';
+import {
+  DSONameServiceMock,
+  UNDEFINED_NAME,
+} from '../../../../../mocks/dso-name.service.mock';
 
 let publicationListElementComponent: ItemSearchResultListElementComponent;
 let fixture: ComponentFixture<ItemSearchResultListElementComponent>;
 
-const mockItemWithMetadata: ItemSearchResult = Object.assign(new ItemSearchResult(), {
-  indexableObject:
-    Object.assign(new Item(), {
+const mockItemWithMetadata: ItemSearchResult = Object.assign(
+  new ItemSearchResult(),
+  {
+    indexableObject: Object.assign(new Item(), {
       bundles: observableOf({}),
       metadata: {
         'dc.title': [
           {
             language: 'en_US',
-            value: 'This is just another title'
-          }
+            value: 'This is just another title',
+          },
         ],
         'dc.contributor.author': [
           {
             language: 'en_US',
-            value: 'Smith, Donald'
-          }
+            value: 'Smith, Donald',
+          },
         ],
         'dc.publisher': [
           {
             language: 'en_US',
-            value: 'a publisher'
-          }
+            value: 'a publisher',
+          },
         ],
         'dc.date.issued': [
           {
             language: 'en_US',
-            value: '2015-06-26'
-          }
+            value: '2015-06-26',
+          },
         ],
         'dc.description.abstract': [
           {
             language: 'en_US',
-            value: 'This is the abstract'
-          }
-        ]
-      }
-    })
-});
-const mockItemWithoutMetadata: ItemSearchResult = Object.assign(new ItemSearchResult(), {
-  indexableObject:
-    Object.assign(new Item(), {
+            value: 'This is the abstract',
+          },
+        ],
+      },
+    }),
+  }
+);
+const mockItemWithoutMetadata: ItemSearchResult = Object.assign(
+  new ItemSearchResult(),
+  {
+    indexableObject: Object.assign(new Item(), {
       bundles: observableOf({}),
-      metadata: {}
-    })
-});
-
+      metadata: {},
+    }),
+  }
+);
 
 describe('ItemListElementComponent', () => {
   beforeEach(waitForAsync(() => {
@@ -66,19 +72,20 @@ describe('ItemListElementComponent', () => {
       declarations: [ItemSearchResultListElementComponent, TruncatePipe],
       providers: [
         { provide: TruncatableService, useValue: {} },
-        { provide: DSONameService, useClass: DSONameServiceMock }
+        { provide: DSONameService, useClass: DSONameServiceMock },
       ],
 
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(ItemSearchResultListElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(ItemSearchResultListElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
     fixture = TestBed.createComponent(ItemSearchResultListElementComponent);
     publicationListElementComponent = fixture.componentInstance;
-
   }));
 
   describe('When the item has an author', () => {
@@ -88,7 +95,9 @@ describe('ItemListElementComponent', () => {
     });
 
     it('should show the author paragraph', () => {
-      const itemAuthorField = fixture.debugElement.query(By.css('span.item-list-authors'));
+      const itemAuthorField = fixture.debugElement.query(
+        By.css('span.item-list-authors')
+      );
       expect(itemAuthorField).not.toBeNull();
     });
   });
@@ -100,7 +109,9 @@ describe('ItemListElementComponent', () => {
     });
 
     it('should not show the author paragraph', () => {
-      const itemAuthorField = fixture.debugElement.query(By.css('span.item-list-authors'));
+      const itemAuthorField = fixture.debugElement.query(
+        By.css('span.item-list-authors')
+      );
       expect(itemAuthorField).toBeNull();
     });
   });
@@ -112,7 +123,9 @@ describe('ItemListElementComponent', () => {
     });
 
     it('should show the publisher span', () => {
-      const publisherField = fixture.debugElement.query(By.css('span.item-list-publisher'));
+      const publisherField = fixture.debugElement.query(
+        By.css('span.item-list-publisher')
+      );
       expect(publisherField).not.toBeNull();
     });
   });
@@ -124,7 +137,9 @@ describe('ItemListElementComponent', () => {
     });
 
     it('should not show the publisher span', () => {
-      const publisherField = fixture.debugElement.query(By.css('span.item-list-publisher'));
+      const publisherField = fixture.debugElement.query(
+        By.css('span.item-list-publisher')
+      );
       expect(publisherField).toBeNull();
     });
   });
@@ -136,7 +151,9 @@ describe('ItemListElementComponent', () => {
     });
 
     it('should show the issuedate span', () => {
-      const dateField = fixture.debugElement.query(By.css('span.item-list-date'));
+      const dateField = fixture.debugElement.query(
+        By.css('span.item-list-date')
+      );
       expect(dateField).not.toBeNull();
     });
   });
@@ -148,7 +165,9 @@ describe('ItemListElementComponent', () => {
     });
 
     it('should not show the issuedate span', () => {
-      const dateField = fixture.debugElement.query(By.css('span.item-list-date'));
+      const dateField = fixture.debugElement.query(
+        By.css('span.item-list-date')
+      );
       expect(dateField).toBeNull();
     });
   });
@@ -160,7 +179,9 @@ describe('ItemListElementComponent', () => {
     });
 
     it('should show the abstract span', () => {
-      const abstractField = fixture.debugElement.query(By.css('div.item-list-abstract'));
+      const abstractField = fixture.debugElement.query(
+        By.css('div.item-list-abstract')
+      );
       expect(abstractField).not.toBeNull();
     });
   });
@@ -172,7 +193,9 @@ describe('ItemListElementComponent', () => {
     });
 
     it('should not show the abstract span', () => {
-      const abstractField = fixture.debugElement.query(By.css('div.item-list-abstract'));
+      const abstractField = fixture.debugElement.query(
+        By.css('div.item-list-abstract')
+      );
       expect(abstractField).toBeNull();
     });
   });
@@ -185,7 +208,9 @@ describe('ItemListElementComponent', () => {
 
     it('should show the fallback untitled translation', () => {
       const titleField = fixture.debugElement.query(By.css('.item-list-title'));
-      expect(titleField.nativeElement.textContent.trim()).toEqual(UNDEFINED_NAME);
+      expect(titleField.nativeElement.textContent.trim()).toEqual(
+        UNDEFINED_NAME
+      );
     });
   });
 });

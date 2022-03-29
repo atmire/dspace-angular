@@ -6,7 +6,10 @@ import { authReducer } from '../core/auth/auth.reducer';
 import { storeModuleConfig } from '../app.reducer';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateLoaderMock } from '../shared/mocks/translate-loader.mock';
-import { NativeWindowRef, NativeWindowService } from '../core/services/window.service';
+import {
+  NativeWindowRef,
+  NativeWindowService,
+} from '../core/services/window.service';
 import { MetadataService } from '../core/metadata/metadata.service';
 import { MetadataServiceMock } from '../shared/mocks/metadata-service.mock';
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
@@ -42,28 +45,37 @@ describe('RootComponent', () => {
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
-            useClass: TranslateLoaderMock
-          }
+            useClass: TranslateLoaderMock,
+          },
         }),
       ],
       declarations: [RootComponent], // declare the test component
       providers: [
         { provide: NativeWindowService, useValue: new NativeWindowRef() },
         { provide: MetadataService, useValue: new MetadataServiceMock() },
-        { provide: Angulartics2GoogleAnalytics, useValue: new AngularticsProviderMock() },
-        { provide: Angulartics2DSpace, useValue: new AngularticsProviderMock() },
+        {
+          provide: Angulartics2GoogleAnalytics,
+          useValue: new AngularticsProviderMock(),
+        },
+        {
+          provide: Angulartics2DSpace,
+          useValue: new AngularticsProviderMock(),
+        },
         { provide: AuthService, useValue: new AuthServiceMock() },
         { provide: Router, useValue: new RouterMock() },
         { provide: ActivatedRoute, useValue: new MockActivatedRoute() },
         { provide: MenuService, useValue: new MenuServiceStub() },
         { provide: CSSVariableService, useClass: CSSVariableServiceStub },
-        { provide: HostWindowService, useValue: new HostWindowServiceStub(800) },
+        {
+          provide: HostWindowService,
+          useValue: new HostWindowServiceStub(800),
+        },
         { provide: LocaleService, useValue: {} },
         provideMockStore({ core: { auth: { loading: false } } } as any),
         RootComponent,
-        RouteService
+        RouteService,
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
   });
 

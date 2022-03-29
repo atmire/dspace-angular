@@ -9,10 +9,9 @@ import { Component, Input } from '@angular/core';
 @Component({
   selector: 'ds-comcol-page-content',
   styleUrls: ['./comcol-page-content.component.scss'],
-  templateUrl: './comcol-page-content.component.html'
+  templateUrl: './comcol-page-content.component.html',
 })
 export class ComcolPageContentComponent {
-
   // Optional title
   @Input() title: string;
 
@@ -21,5 +20,4 @@ export class ComcolPageContentComponent {
 
   // flag whether the content contains html syntax or not
   @Input() hasInnerHtml: boolean;
-
 }

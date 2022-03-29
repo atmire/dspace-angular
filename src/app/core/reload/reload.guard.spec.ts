@@ -13,15 +13,15 @@ describe('ReloadGuard', () => {
   describe('canActivate', () => {
     let route;
 
-    describe('when the route\'s query params contain a redirect url', () => {
+    describe("when the route's query params contain a redirect url", () => {
       let redirectUrl;
 
       beforeEach(() => {
         redirectUrl = '/redirect/url?param=extra';
         route = {
           queryParams: {
-            redirect: redirectUrl
-          }
+            redirect: redirectUrl,
+          },
         };
       });
 
@@ -31,10 +31,10 @@ describe('ReloadGuard', () => {
       });
     });
 
-    describe('when the route\'s query params doesn\'t contain a redirect url', () => {
+    describe("when the route's query params doesn't contain a redirect url", () => {
       beforeEach(() => {
         route = {
-          queryParams: {}
+          queryParams: {},
         };
       });
 

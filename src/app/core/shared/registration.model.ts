@@ -25,5 +25,4 @@ export class Registration implements UnCacheableObject {
    * The token linked to the registration
    */
   token: string;
-
 }

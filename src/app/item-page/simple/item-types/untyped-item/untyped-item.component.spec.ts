@@ -28,7 +28,8 @@ import { GenericItemPageFieldComponent } from '../../field-components/specific-f
 import {
   createRelationshipsObservable,
   iiifEnabled,
-  iiifSearchEnabled, mockRouteService
+  iiifSearchEnabled,
+  mockRouteService,
 } from '../shared/item.component.spec';
 import { UntypedItemComponent } from './untyped-item.component';
 import { RouteService } from '../../../../core/services/route.service';
@@ -40,7 +41,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { WorkspaceitemDataService } from '../../../../core/submission/workspaceitem-data.service';
 import { SearchService } from '../../../../core/shared/search/search.service';
 import { ItemVersionsSharedService } from '../../../../shared/item/item-versions/item-versions-shared.service';
-
 
 const iiifEnabledMap: MetadataMap = {
   'dspace.iiif.enabled': [iiifEnabled],
@@ -57,7 +57,7 @@ function getItem(metadata: MetadataMap) {
   return Object.assign(new Item(), {
     bundles: createSuccessfulRemoteDataObject$(createPaginatedList([])),
     metadata: metadata,
-    relationships: createRelationshipsObservable()
+    relationships: createRelationshipsObservable(),
   });
 }
 
@@ -69,19 +69,23 @@ describe('UntypedItemComponent', () => {
     const mockBitstreamDataService = {
       getThumbnailFor(item: Item): Observable<RemoteData<Bitstream>> {
         return createSuccessfulRemoteDataObject$(new Bitstream());
-      }
+      },
     };
     TestBed.configureTestingModule({
       imports: [
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
-            useClass: TranslateLoaderMock
-          }
+            useClass: TranslateLoaderMock,
+          },
         }),
         RouterTestingModule,
       ],
-      declarations: [UntypedItemComponent, GenericItemPageFieldComponent, TruncatePipe ],
+      declarations: [
+        UntypedItemComponent,
+        GenericItemPageFieldComponent,
+        TruncatePipe,
+      ],
       providers: [
         { provide: ItemDataService, useValue: {} },
         { provide: TruncatableService, useValue: {} },
@@ -103,12 +107,14 @@ describe('UntypedItemComponent', () => {
         { provide: SearchService, useValue: {} },
         { provide: ItemDataService, useValue: {} },
         { provide: ItemVersionsSharedService, useValue: {} },
-        { provide: RouteService, useValue: mockRouteService }
+        { provide: RouteService, useValue: mockRouteService },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(UntypedItemComponent, {
-      set: {changeDetection: ChangeDetectionStrategy.Default}
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(UntypedItemComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   describe('default view', () => {
@@ -120,32 +126,44 @@ describe('UntypedItemComponent', () => {
     }));
 
     it('should contain a component to display the date', () => {
-      const fields = fixture.debugElement.queryAll(By.css('ds-item-page-date-field'));
+      const fields = fixture.debugElement.queryAll(
+        By.css('ds-item-page-date-field')
+      );
       expect(fields.length).toBeGreaterThanOrEqual(1);
     });
 
     it('should not contain a metadata only author field', () => {
-      const fields = fixture.debugElement.queryAll(By.css('ds-item-page-author-field'));
+      const fields = fixture.debugElement.queryAll(
+        By.css('ds-item-page-author-field')
+      );
       expect(fields.length).toBe(0);
     });
 
     it('should contain a mixed metadata and relationship field for authors', () => {
-      const fields = fixture.debugElement.queryAll(By.css('.ds-item-page-mixed-author-field'));
+      const fields = fixture.debugElement.queryAll(
+        By.css('.ds-item-page-mixed-author-field')
+      );
       expect(fields.length).toBe(1);
     });
 
     it('should contain a component to display the abstract', () => {
-      const fields = fixture.debugElement.queryAll(By.css('ds-item-page-abstract-field'));
+      const fields = fixture.debugElement.queryAll(
+        By.css('ds-item-page-abstract-field')
+      );
       expect(fields.length).toBeGreaterThanOrEqual(1);
     });
 
     it('should contain a component to display the uri', () => {
-      const fields = fixture.debugElement.queryAll(By.css('ds-item-page-uri-field'));
+      const fields = fixture.debugElement.queryAll(
+        By.css('ds-item-page-uri-field')
+      );
       expect(fields.length).toBeGreaterThanOrEqual(1);
     });
 
     it('should contain a component to display the collections', () => {
-      const fields = fixture.debugElement.queryAll(By.css('ds-item-page-collections'));
+      const fields = fixture.debugElement.queryAll(
+        By.css('ds-item-page-collections')
+      );
       expect(fields.length).toBeGreaterThanOrEqual(1);
     });
 
@@ -155,9 +173,7 @@ describe('UntypedItemComponent', () => {
     });
   });
 
-
   describe('with IIIF viewer', () => {
-
     beforeEach(waitForAsync(() => {
       fixture = TestBed.createComponent(UntypedItemComponent);
       comp = fixture.componentInstance;
@@ -169,13 +185,13 @@ describe('UntypedItemComponent', () => {
       const fields = fixture.debugElement.queryAll(By.css('ds-mirador-viewer'));
       expect(fields.length).toBeGreaterThanOrEqual(1);
     });
-
   });
 
   describe('with IIIF viewer and search', () => {
-
     beforeEach(waitForAsync(() => {
-      mockRouteService.getPreviousUrl.and.returnValue(of(['/search?q=bird&motivation=painting','/item']));
+      mockRouteService.getPreviousUrl.and.returnValue(
+        of(['/search?q=bird&motivation=painting', '/item'])
+      );
       fixture = TestBed.createComponent(UntypedItemComponent);
       comp = fixture.componentInstance;
       comp.object = getItem(iiifEnabledWithSearchMap);
@@ -190,7 +206,5 @@ describe('UntypedItemComponent', () => {
     it('should call the RouteService getHistory method', () => {
       expect(mockRouteService.getPreviousUrl).toHaveBeenCalled();
     });
-
   });
-
 });

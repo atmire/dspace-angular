@@ -30,18 +30,12 @@ const ENTRY_COMPONENTS = [
   WorkflowItemSearchResultDetailElementComponent,
   ClaimedTaskSearchResultDetailElementComponent,
   PoolSearchResultDetailElementComponent,
-  ItemSearchResultListElementSubmissionComponent
+  ItemSearchResultListElementSubmissionComponent,
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    SharedModule,
-    MyDspacePageRoutingModule,
-  ],
-  declarations: [
-    ...ENTRY_COMPONENTS
-  ]
+  imports: [CommonModule, SharedModule, MyDspacePageRoutingModule],
+  declarations: [...ENTRY_COMPONENTS],
 })
 
 /**
@@ -55,7 +49,7 @@ export class MyDspaceSearchModule {
   static withEntryComponents() {
     return {
       ngModule: MyDspaceSearchModule,
-      providers: ENTRY_COMPONENTS.map((component) => ({provide: component}))
+      providers: ENTRY_COMPONENTS.map((component) => ({ provide: component })),
     };
   }
 }

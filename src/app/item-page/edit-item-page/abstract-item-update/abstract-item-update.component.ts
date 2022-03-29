@@ -1,9 +1,13 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import {
   FieldUpdate,
-  FieldUpdates
+  FieldUpdates,
 } from '../../../core/data/object-updates/object-updates.reducer';
-import { combineLatest as observableCombineLatest, Observable, Subscription } from 'rxjs';
+import {
+  combineLatest as observableCombineLatest,
+  Observable,
+  Subscription,
+} from 'rxjs';
 import { Item } from '../../../core/shared/item.model';
 import { ItemDataService } from '../../../core/data/item-data.service';
 import { ObjectUpdatesService } from '../../../core/data/object-updates/object-updates.service';
@@ -21,12 +25,15 @@ import { ITEM_PAGE_LINKS_TO_FOLLOW } from '../../item.resolver';
 
 @Component({
   selector: 'ds-abstract-item-update',
-  template: ''
+  template: '',
 })
 /**
  * Abstract component for managing object updates of an item
  */
-export class AbstractItemUpdateComponent extends AbstractTrackableComponent implements OnInit, OnDestroy {
+export class AbstractItemUpdateComponent
+  extends AbstractTrackableComponent
+  implements OnInit, OnDestroy
+{
   /**
    * The item to display the edit page for
    */
@@ -67,19 +74,31 @@ export class AbstractItemUpdateComponent extends AbstractTrackableComponent impl
       this.setItem(this.item);
     } else {
       // The item wasn't provided through an input, retrieve it from the route instead.
-      this.itemUpdateSubscription = observableCombineLatest([this.route.data, this.route.parent.data]).pipe(
-        map(([data, parentData]: [Data, Data]) => Object.assign({}, data, parentData)),
-        map((data: any) => data.dso),
-        tap((rd: RemoteData<Item>) => {
-          this.item = rd.payload;
-        }),
-        switchMap((rd: RemoteData<Item>) => {
-          return this.itemService.findByHref(rd.payload._links.self.href, true, true, ...ITEM_PAGE_LINKS_TO_FOLLOW);
-        }),
-        getAllSucceededRemoteData()
-      ).subscribe((rd: RemoteData<Item>) => {
-        this.setItem(rd.payload);
-      });
+      this.itemUpdateSubscription = observableCombineLatest([
+        this.route.data,
+        this.route.parent.data,
+      ])
+        .pipe(
+          map(([data, parentData]: [Data, Data]) =>
+            Object.assign({}, data, parentData)
+          ),
+          map((data: any) => data.dso),
+          tap((rd: RemoteData<Item>) => {
+            this.item = rd.payload;
+          }),
+          switchMap((rd: RemoteData<Item>) => {
+            return this.itemService.findByHref(
+              rd.payload._links.self.href,
+              true,
+              true,
+              ...ITEM_PAGE_LINKS_TO_FOLLOW
+            );
+          }),
+          getAllSucceededRemoteData()
+        )
+        .subscribe((rd: RemoteData<Item>) => {
+          this.setItem(rd.payload);
+        });
     }
 
     this.discardTimeOut = environment.item.edit.undoTimeout;
@@ -87,13 +106,15 @@ export class AbstractItemUpdateComponent extends AbstractTrackableComponent impl
     if (this.url.indexOf('?') > 0) {
       this.url = this.url.substr(0, this.url.indexOf('?'));
     }
-    this.hasChanges().pipe(first()).subscribe((hasChanges) => {
-      if (!hasChanges) {
-        this.initializeOriginalFields();
-      } else {
-        this.checkLastModified();
-      }
-    });
+    this.hasChanges()
+      .pipe(first())
+      .subscribe((hasChanges) => {
+        if (!hasChanges) {
+          this.initializeOriginalFields();
+        } else {
+          this.checkLastModified();
+        }
+      });
 
     this.initializeNotificationsPrefix();
     this.initializeUpdates();
@@ -172,13 +193,17 @@ export class AbstractItemUpdateComponent extends AbstractTrackableComponent impl
    */
   private checkLastModified() {
     const currentVersion = this.item.lastModified;
-    this.objectUpdatesService.getLastModified(this.url).pipe(first()).subscribe(
-      (updateVersion: Date) => {
+    this.objectUpdatesService
+      .getLastModified(this.url)
+      .pipe(first())
+      .subscribe((updateVersion: Date) => {
         if (updateVersion.getDate() !== currentVersion.getDate()) {
-          this.notificationsService.warning(this.getNotificationTitle('outdated'), this.getNotificationContent('outdated'));
+          this.notificationsService.warning(
+            this.getNotificationTitle('outdated'),
+            this.getNotificationContent('outdated')
+          );
           this.initializeOriginalFields();
         }
-      }
-    );
+      });
   }
 }

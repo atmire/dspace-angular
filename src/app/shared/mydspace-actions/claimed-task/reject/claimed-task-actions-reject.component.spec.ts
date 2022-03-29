@@ -1,4 +1,8 @@
-import { ChangeDetectionStrategy, Injector, NO_ERRORS_SCHEMA } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Injector,
+  NO_ERRORS_SCHEMA,
+} from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
@@ -35,14 +39,23 @@ const requestService = getMockRequestService();
 const object = Object.assign(new ClaimedTask(), { id: 'claimed-task-1' });
 
 const claimedTaskService = jasmine.createSpyObj('claimedTaskService', {
-  submitTask: of(new ProcessTaskResponse(true))
+  submitTask: of(new ProcessTaskResponse(true)),
 });
 
 let mockPoolTaskDataService: PoolTaskDataService;
 
 describe('ClaimedTaskActionsRejectComponent', () => {
   beforeEach(waitForAsync(() => {
-    mockPoolTaskDataService = new PoolTaskDataService(null, null, null, null, null, null, null, null);
+    mockPoolTaskDataService = new PoolTaskDataService(
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    );
     TestBed.configureTestingModule({
       imports: [
         NgbModule,
@@ -50,15 +63,18 @@ describe('ClaimedTaskActionsRejectComponent', () => {
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
-            useClass: TranslateLoaderMock
-          }
-        })
+            useClass: TranslateLoaderMock,
+          },
+        }),
       ],
       declarations: [ClaimedTaskActionsRejectComponent],
       providers: [
         { provide: ClaimedTaskDataService, useValue: claimedTaskService },
         Injector,
-        { provide: NotificationsService, useValue: new NotificationsServiceStub() },
+        {
+          provide: NotificationsService,
+          useValue: new NotificationsServiceStub(),
+        },
         { provide: Router, useValue: new RouterStub() },
         { provide: SearchService, useValue: searchService },
         { provide: RequestService, useValue: requestService },
@@ -66,10 +82,12 @@ describe('ClaimedTaskActionsRejectComponent', () => {
         FormBuilder,
         NgbModal,
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(ClaimedTaskActionsRejectComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(ClaimedTaskActionsRejectComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
     fixture = TestBed.createComponent(ClaimedTaskActionsRejectComponent);
     component = fixture.componentInstance;
     formBuilder = TestBed.inject(FormBuilder);
@@ -122,7 +140,7 @@ describe('ClaimedTaskActionsRejectComponent', () => {
 
       expectedBody = {
         [component.option]: 'true',
-        reason: null
+        reason: null,
       };
 
       const btn = fixture.debugElement.query(By.css('.btn-danger'));
@@ -131,7 +149,7 @@ describe('ClaimedTaskActionsRejectComponent', () => {
 
       expect(component.modalRef).toBeDefined();
 
-      const form = ((document as any).querySelector('form'));
+      const form = (document as any).querySelector('form');
       form.dispatchEvent(new Event('ngSubmit'));
       fixture.detectChanges();
     });
@@ -139,31 +157,33 @@ describe('ClaimedTaskActionsRejectComponent', () => {
     it('should start the action execution', () => {
       expect(component.startActionExecution).toHaveBeenCalled();
     });
-
   });
 
   describe('actionExecution', () => {
-
     let expectedBody;
 
     beforeEach(() => {
-      spyOn((component.rejectForm as any), 'get').and.returnValue({value: 'required'});
+      spyOn(component.rejectForm as any, 'get').and.returnValue({
+        value: 'required',
+      });
       expectedBody = {
         [component.option]: 'true',
-        reason: 'required'
+        reason: 'required',
       };
     });
 
-    it('should call claimedTaskService\'s submitTask with the proper reason', (done) => {
+    it("should call claimedTaskService's submitTask with the proper reason", (done) => {
       component.actionExecution().subscribe(() => {
-        expect(claimedTaskService.submitTask).toHaveBeenCalledWith(object.id, expectedBody);
+        expect(claimedTaskService.submitTask).toHaveBeenCalledWith(
+          object.id,
+          expectedBody
+        );
         done();
       });
     });
   });
 
   describe('reloadObjectExecution', () => {
-
     it('should return the component object itself', (done) => {
       component.reloadObjectExecution().subscribe((val) => {
         expect(val).toEqual(component.object);
@@ -173,11 +193,11 @@ describe('ClaimedTaskActionsRejectComponent', () => {
   });
 
   describe('convertReloadedObject', () => {
-
     it('should return a ClaimedDeclinedTaskSearchResult instance', () => {
       const reloadedObject = component.convertReloadedObject(component.object);
-      expect(reloadedObject instanceof ClaimedDeclinedTaskSearchResult).toEqual(true);
+      expect(reloadedObject instanceof ClaimedDeclinedTaskSearchResult).toEqual(
+        true
+      );
     });
   });
-
 });

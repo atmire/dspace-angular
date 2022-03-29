@@ -14,6 +14,4 @@ import { listableObjectComponent } from '../../../../shared/object-collection/sh
   templateUrl: './publication.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PublicationComponent extends ItemComponent {
-
-}
+export class PublicationComponent extends ItemComponent {}

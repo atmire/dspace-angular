@@ -68,8 +68,9 @@ export class SearchFilterComponent implements OnInit {
   constructor(
     private filterService: SearchFilterService,
     private searchService: SearchService,
-    @Inject(SEARCH_CONFIG_SERVICE) private searchConfigService: SearchConfigurationService,
-    private sequenceService: SequenceService,
+    @Inject(SEARCH_CONFIG_SERVICE)
+    private searchConfigService: SearchConfigurationService,
+    private sequenceService: SequenceService
   ) {
     this.sequenceId = this.sequenceService.next();
   }
@@ -166,15 +167,19 @@ export class SearchFilterComponent implements OnInit {
         } else {
           return this.searchConfigService.searchOptions.pipe(
             switchMap((options) => {
-                return this.searchService.getFacetValuesFor(this.filter, 1, options).pipe(
+              return this.searchService
+                .getFacetValuesFor(this.filter, 1, options)
+                .pipe(
                   filter((RD) => !RD.isLoading),
                   map((valuesRD) => {
                     return valuesRD.payload?.totalElements > 0;
-                  }),);
-              }
-            ));
+                  })
+                );
+            })
+          );
         }
       }),
-      startWith(true));
+      startWith(true)
+    );
   }
 }

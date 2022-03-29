@@ -16,11 +16,12 @@ export class ThemedCommunityPageComponent extends ThemedComponent<CommunityPageC
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../themes/${themeName}/app/community-page/community-page.component`);
+    return import(
+      `../../themes/${themeName}/app/community-page/community-page.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {
     return import(`./community-page.component`);
   }
-
 }

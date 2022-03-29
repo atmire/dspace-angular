@@ -1,6 +1,15 @@
 // Load the implementations that should be tested
-import { ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ComponentFixture, inject, TestBed, waitForAsync, } from '@angular/core/testing';
+import {
+  ChangeDetectorRef,
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+} from '@angular/core';
+import {
+  ComponentFixture,
+  inject,
+  TestBed,
+  waitForAsync,
+} from '@angular/core/testing';
 
 import { ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
 
@@ -16,34 +25,28 @@ import { CookieServiceMock } from '../mocks/cookie.service.mock';
 import { HttpXsrfTokenExtractorMock } from '../mocks/http-xsrf-token-extractor.mock';
 
 describe('Chips component', () => {
-
   let testComp: TestComponent;
   let testFixture: ComponentFixture<TestComponent>;
   let html;
 
   // waitForAsync beforeEach
   beforeEach(waitForAsync(() => {
-
     TestBed.configureTestingModule({
-      imports: [
-        FileUploadModule,
-        TranslateModule.forRoot()
-      ],
-      declarations: [
-        UploaderComponent,
-        TestComponent,
-      ], // declare the test component
+      imports: [FileUploadModule, TranslateModule.forRoot()],
+      declarations: [UploaderComponent, TestComponent], // declare the test component
       providers: [
         ChangeDetectorRef,
         ScrollToService,
         UploaderComponent,
         UploaderService,
-        { provide: HttpXsrfTokenExtractor, useValue: new HttpXsrfTokenExtractorMock('mock-token') },
+        {
+          provide: HttpXsrfTokenExtractor,
+          useValue: new HttpXsrfTokenExtractorMock('mock-token'),
+        },
         { provide: CookieService, useValue: new CookieServiceMock() },
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     });
-
   }));
 
   // synchronous beforeEach
@@ -53,36 +56,41 @@ describe('Chips component', () => {
                    [uploadFilesOptions]="uploadFilesOptions"
                    (onCompleteItem)="onCompleteItem($event)"></ds-uploader>`;
 
-    testFixture = createTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
+    testFixture = createTestComponent(
+      html,
+      TestComponent
+    ) as ComponentFixture<TestComponent>;
     testComp = testFixture.componentInstance;
   });
 
-  it('should create Uploader Component', inject([UploaderComponent], (app: UploaderComponent) => {
-
-    expect(app).toBeDefined();
-  }));
-
+  it('should create Uploader Component', inject(
+    [UploaderComponent],
+    (app: UploaderComponent) => {
+      expect(app).toBeDefined();
+    }
+  ));
 });
 
 // declare a test component
 @Component({
   selector: 'ds-test-cmp',
-  template: ``
+  template: ``,
 })
 class TestComponent {
-  public uploadFilesOptions: UploaderOptions = Object.assign(new UploaderOptions(), {
-    url: 'http://test',
-    authToken: null,
-    disableMultipart: false,
-    itemAlias: null
-  });
+  public uploadFilesOptions: UploaderOptions = Object.assign(
+    new UploaderOptions(),
+    {
+      url: 'http://test',
+      authToken: null,
+      disableMultipart: false,
+      itemAlias: null,
+    }
+  );
 
   /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
-  public onBeforeUpload = () => {
-  };
+  public onBeforeUpload = () => {};
 
-  onCompleteItem(event) {
-  }
+  onCompleteItem(event) {}
 
   /* eslint-enable no-empty, @typescript-eslint/no-empty-function */
 }

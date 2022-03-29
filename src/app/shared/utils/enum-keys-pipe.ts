@@ -5,7 +5,6 @@ import { Pipe, PipeTransform } from '@angular/core';
  * Pipe for parsing all values of an enumeration to an array of key-value pairs
  */
 export class EnumKeysPipe implements PipeTransform {
-
   /**
    * @param value An enumeration
    * @returns {any} Array with all keys and values of the input enumeration

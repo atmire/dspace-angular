@@ -30,5 +30,4 @@ export class Feedback extends DSpaceObject {
   _links: {
     self: HALLink;
   };
-
 }

@@ -7,7 +7,7 @@ import { HostWindowActionTypes } from '../shared/host-window.actions';
 import {
   CollapseMenuAction,
   ExpandMenuPreviewAction,
-  MenuActionTypes
+  MenuActionTypes,
 } from '../shared/menu/menu.actions';
 import { MenuID } from '../shared/menu/initial-menus-state';
 import { MenuService } from '../shared/menu/menu.service';
@@ -21,27 +21,29 @@ export class NavbarEffects {
    * Effect that collapses the public menu on window resize
    * @type {Observable<CollapseMenuAction>}
    */
-   resize$ = createEffect(() => this.actions$
-    .pipe(
+  resize$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(HostWindowActionTypes.RESIZE),
       map(() => new CollapseMenuAction(this.menuID))
-    ));
+    )
+  );
 
   /**
    * Effect that collapses the public menu on reroute
    * @type {Observable<CollapseMenuAction>}
    */
-   routeChange$ = createEffect(() => this.actions$
-    .pipe(
+  routeChange$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(fromRouter.ROUTER_NAVIGATION),
       map(() => new CollapseMenuAction(this.menuID))
-    ));
+    )
+  );
   /**
    * Effect that collapses the public menu when the admin sidebar opens
    * @type {Observable<CollapseMenuAction>}
    */
-   openAdminSidebar$ = createEffect(() => this.actions$
-    .pipe(
+  openAdminSidebar$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(MenuActionTypes.EXPAND_MENU_PREVIEW),
       switchMap((action: ExpandMenuPreviewAction) => {
         return this.menuService.getMenu(action.menuID).pipe(
@@ -53,11 +55,10 @@ export class NavbarEffects {
               }
             }
             return new NoOpAction();
-          }));
+          })
+        );
       })
-    ));
-  constructor(private actions$: Actions, private menuService: MenuService) {
-
-  }
-
+    )
+  );
+  constructor(private actions$: Actions, private menuService: MenuService) {}
 }

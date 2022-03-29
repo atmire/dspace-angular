@@ -1,4 +1,9 @@
-import { ComponentFixture, fakeAsync, TestBed, waitForAsync } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  waitForAsync,
+} from '@angular/core/testing';
 import { ItemDataService } from '../../core/data/item-data.service';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateLoaderMock } from '../../shared/mocks/translate-loader.mock';
@@ -14,7 +19,10 @@ import { Item } from '../../core/shared/item.model';
 import { of as observableOf } from 'rxjs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
-import { createSuccessfulRemoteDataObject, createSuccessfulRemoteDataObject$ } from '../../shared/remote-data.utils';
+import {
+  createSuccessfulRemoteDataObject,
+  createSuccessfulRemoteDataObject$,
+} from '../../shared/remote-data.utils';
 import { AuthService } from '../../core/auth/auth.service';
 import { createPaginatedList } from '../../shared/testing/utils.test';
 
@@ -24,16 +32,15 @@ const mockItem: Item = Object.assign(new Item(), {
     'dc.title': [
       {
         language: 'en_US',
-        value: 'test item'
-      }
-    ]
-  }
+        value: 'test item',
+      },
+    ],
+  },
 });
 
 const metadataServiceStub = {
   /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
-  processRemoteData: () => {
-  }
+  processRemoteData: () => {},
   /* eslint-enable no-empty, @typescript-eslint/no-empty-function */
 };
 
@@ -45,12 +52,10 @@ describe('FullItemPageComponent', () => {
   let routeStub: ActivatedRouteStub;
   let routeData;
 
-
-
   beforeEach(waitForAsync(() => {
     authService = jasmine.createSpyObj('authService', {
       isAuthenticated: observableOf(true),
-      setRedirectUrl: {}
+      setRedirectUrl: {},
     });
 
     routeData = {
@@ -58,16 +63,20 @@ describe('FullItemPageComponent', () => {
     };
 
     routeStub = Object.assign(new ActivatedRouteStub(), {
-      data: observableOf(routeData)
+      data: observableOf(routeData),
     });
 
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot({
-        loader: {
-          provide: TranslateLoader,
-          useClass: TranslateLoaderMock
-        }
-      }), RouterTestingModule.withRoutes([]), BrowserAnimationsModule],
+      imports: [
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useClass: TranslateLoaderMock,
+          },
+        }),
+        RouterTestingModule.withRoutes([]),
+        BrowserAnimationsModule,
+      ],
       declarations: [FullItemPageComponent, TruncatePipe, VarDirective],
       providers: [
         { provide: ActivatedRoute, useValue: routeStub },
@@ -76,10 +85,12 @@ describe('FullItemPageComponent', () => {
         { provide: AuthService, useValue: authService },
       ],
 
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(FullItemPageComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(FullItemPageComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -88,7 +99,7 @@ describe('FullItemPageComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should display the item\'s metadata', () => {
+  it("should display the item's metadata", () => {
     const table = fixture.debugElement.query(By.css('table'));
     for (const metadatum of mockItem.allMetadata([])) {
       expect(table.nativeElement.innerHTML).toContain(metadatum.value);
@@ -97,17 +108,21 @@ describe('FullItemPageComponent', () => {
 
   it('should show simple view button when not originated from workflow item', () => {
     expect(comp.fromWfi).toBe(false);
-    const simpleViewBtn = fixture.debugElement.query(By.css('.simple-view-link'));
+    const simpleViewBtn = fixture.debugElement.query(
+      By.css('.simple-view-link')
+    );
     expect(simpleViewBtn).toBeTruthy();
   });
 
   it('should not show simple view button when originated from workflow', fakeAsync(() => {
-    routeData.wfi = createSuccessfulRemoteDataObject$({ id: 'wfiId'});
+    routeData.wfi = createSuccessfulRemoteDataObject$({ id: 'wfiId' });
     comp.ngOnInit();
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       expect(comp.fromWfi).toBe(true);
-      const simpleViewBtn = fixture.debugElement.query(By.css('.simple-view-link'));
+      const simpleViewBtn = fixture.debugElement.query(
+        By.css('.simple-view-link')
+      );
       expect(simpleViewBtn).toBeFalsy();
     });
   }));

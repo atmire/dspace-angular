@@ -22,7 +22,7 @@ import { getFirstSucceededRemoteDataPayload } from '../../core/shared/operators'
 @Component({
   selector: 'ds-search-form',
   styleUrls: ['./search-form.component.scss'],
-  templateUrl: './search-form.component.html'
+  templateUrl: './search-form.component.html',
 })
 
 /**
@@ -45,7 +45,8 @@ export class SearchFormComponent implements OnInit {
   @Input()
   scope = '';
 
-  selectedScope: BehaviorSubject<DSpaceObject> = new BehaviorSubject<DSpaceObject>(undefined);
+  selectedScope: BehaviorSubject<DSpaceObject> =
+    new BehaviorSubject<DSpaceObject>(undefined);
 
   @Input() currentUrl: string;
 
@@ -74,21 +75,23 @@ export class SearchFormComponent implements OnInit {
    */
   @Output() submitSearch = new EventEmitter<any>();
 
-  constructor(private router: Router,
-              private searchService: SearchService,
-              private paginationService: PaginationService,
-              private searchConfig: SearchConfigurationService,
-              private modalService: NgbModal,
-              private dsoService: DSpaceObjectDataService
-  ) {
-  }
+  constructor(
+    private router: Router,
+    private searchService: SearchService,
+    private paginationService: PaginationService,
+    private searchConfig: SearchConfigurationService,
+    private modalService: NgbModal,
+    private dsoService: DSpaceObjectDataService
+  ) {}
 
   /**
    * Retrieve the scope object from the URL so we can show its name
    */
   ngOnInit(): void {
     if (isNotEmpty(this.scope)) {
-      this.dsoService.findById(this.scope).pipe(getFirstSucceededRemoteDataPayload())
+      this.dsoService
+        .findById(this.scope)
+        .pipe(getFirstSucceededRemoteDataPayload())
         .subscribe((scope: DSpaceObject) => this.selectedScope.next(scope));
     }
   }
@@ -119,7 +122,7 @@ export class SearchFormComponent implements OnInit {
 
     this.router.navigate(this.getSearchLinkParts(), {
       queryParams: queryParams,
-      queryParamsHandling: 'merge'
+      queryParamsHandling: 'merge',
     });
   }
 
@@ -155,9 +158,11 @@ export class SearchFormComponent implements OnInit {
    */
   openScopeModal() {
     const ref = this.modalService.open(ScopeSelectorModalComponent);
-    ref.componentInstance.scopeChange.pipe(take(1)).subscribe((scope: DSpaceObject) => {
-      this.selectedScope.next(scope);
-      this.onScopeChange(scope);
-    });
+    ref.componentInstance.scopeChange
+      .pipe(take(1))
+      .subscribe((scope: DSpaceObject) => {
+        this.selectedScope.next(scope);
+        this.onScopeChange(scope);
+      });
   }
 }

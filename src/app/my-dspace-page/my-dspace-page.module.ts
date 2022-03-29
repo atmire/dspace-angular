@@ -21,7 +21,7 @@ const DECLARATIONS = [
   MyDSpaceNewSubmissionComponent,
   CollectionSelectorComponent,
   MyDSpaceNewSubmissionDropdownComponent,
-  MyDSpaceNewExternalDropdownComponent
+  MyDSpaceNewExternalDropdownComponent,
 ];
 
 @NgModule({
@@ -30,19 +30,14 @@ const DECLARATIONS = [
     SharedModule,
     SearchModule,
     MyDspacePageRoutingModule,
-    MyDspaceSearchModule.withEntryComponents()
+    MyDspaceSearchModule.withEntryComponents(),
   ],
   declarations: DECLARATIONS,
-  providers: [
-    MyDSpaceGuard,
-    MyDSpaceConfigurationService
-  ],
+  providers: [MyDSpaceGuard, MyDSpaceConfigurationService],
   exports: DECLARATIONS,
 })
 
 /**
  * This module handles all components that are necessary for the mydspace page
  */
-export class MyDSpacePageModule {
-
-}
+export class MyDSpacePageModule {}

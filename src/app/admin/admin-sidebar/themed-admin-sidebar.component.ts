@@ -16,7 +16,9 @@ export class ThemedAdminSidebarComponent extends ThemedComponent<AdminSidebarCom
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../themes/${themeName}/app/admin/admin-sidebar/admin-sidebar.component`);
+    return import(
+      `../../../themes/${themeName}/app/admin/admin-sidebar/admin-sidebar.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

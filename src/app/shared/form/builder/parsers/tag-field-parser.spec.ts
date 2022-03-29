@@ -12,13 +12,13 @@ describe('TagFieldParser test suite', () => {
   const parserOptions: ParserOptions = {
     readOnly: false,
     submissionScope: 'testScopeUUID',
-    collectionUUID: null
+    collectionUUID: null,
   };
 
   beforeEach(() => {
     field = {
       input: {
-        type: 'tag'
+        type: 'tag',
       },
       label: 'Keywords',
       mandatory: 'false',
@@ -28,22 +28,31 @@ describe('TagFieldParser test suite', () => {
         {
           metadata: 'subject',
           controlledVocabulary: 'JOURNALAuthority',
-          closed: false
-        }
+          closed: false,
+        },
       ],
-      languageCodes: []
+      languageCodes: [],
     } as FormFieldModel;
-
   });
 
   it('should init parser properly', () => {
-    const parser = new TagFieldParser(submissionId, field, initFormValues, parserOptions);
+    const parser = new TagFieldParser(
+      submissionId,
+      field,
+      initFormValues,
+      parserOptions
+    );
 
     expect(parser instanceof TagFieldParser).toBe(true);
   });
 
   it('should return a DynamicTagModel object when repeatable option is false', () => {
-    const parser = new TagFieldParser(submissionId, field, initFormValues, parserOptions);
+    const parser = new TagFieldParser(
+      submissionId,
+      field,
+      initFormValues,
+      parserOptions
+    );
 
     const fieldModel = parser.parse();
 
@@ -58,11 +67,15 @@ describe('TagFieldParser test suite', () => {
       ],
     };
 
-    const parser = new TagFieldParser(submissionId, field, initFormValues, parserOptions);
+    const parser = new TagFieldParser(
+      submissionId,
+      field,
+      initFormValues,
+      parserOptions
+    );
 
     const fieldModel = parser.parse();
 
     expect(fieldModel.value).toEqual(initFormValues.subject);
   });
-
 });

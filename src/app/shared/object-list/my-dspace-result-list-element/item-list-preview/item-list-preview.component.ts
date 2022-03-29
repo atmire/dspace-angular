@@ -12,10 +12,9 @@ import { SearchResult } from '../../../search/models/search-result.model';
   selector: 'ds-item-list-preview',
   styleUrls: ['item-list-preview.component.scss'],
   templateUrl: 'item-list-preview.component.html',
-  animations: [fadeInOut]
+  animations: [fadeInOut],
 })
 export class ItemListPreviewComponent {
-
   /**
    * The item to display
    */
@@ -35,5 +34,4 @@ export class ItemListPreviewComponent {
    * A boolean representing if to show submitter information
    */
   @Input() showSubmitter = false;
-
 }

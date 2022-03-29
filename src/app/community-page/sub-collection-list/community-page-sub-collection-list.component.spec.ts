@@ -19,7 +19,10 @@ import { HostWindowService } from '../../shared/host-window.service';
 import { HostWindowServiceStub } from '../../shared/testing/host-window-service.stub';
 import { SelectableListService } from '../../shared/object-list/selectable-list/selectable-list.service';
 import { PaginationComponentOptions } from '../../shared/pagination/pagination-component-options.model';
-import { SortDirection, SortOptions } from '../../core/cache/models/sort-options.model';
+import {
+  SortDirection,
+  SortOptions,
+} from '../../core/cache/models/sort-options.model';
 import { of as observableOf } from 'rxjs';
 import { PaginationService } from '../../core/pagination/pagination.service';
 import { getMockThemeService } from '../../shared/mocks/theme-service.mock';
@@ -33,71 +36,56 @@ describe('CommunityPageSubCollectionList Component', () => {
   let themeService;
   let subCollList = [];
 
-  const collections = [Object.assign(new Community(), {
-    id: '123456789-1',
-    metadata: {
-      'dc.title': [
-        { language: 'en_US', value: 'Collection 1' }
-      ]
-    }
-  }),
+  const collections = [
+    Object.assign(new Community(), {
+      id: '123456789-1',
+      metadata: {
+        'dc.title': [{ language: 'en_US', value: 'Collection 1' }],
+      },
+    }),
     Object.assign(new Community(), {
       id: '123456789-2',
       metadata: {
-        'dc.title': [
-          { language: 'en_US', value: 'Collection 2' }
-        ]
-      }
+        'dc.title': [{ language: 'en_US', value: 'Collection 2' }],
+      },
     }),
     Object.assign(new Community(), {
       id: '123456789-3',
       metadata: {
-        'dc.title': [
-          { language: 'en_US', value: 'Collection 3' }
-        ]
-      }
+        'dc.title': [{ language: 'en_US', value: 'Collection 3' }],
+      },
     }),
     Object.assign(new Community(), {
       id: '123456789-4',
       metadata: {
-        'dc.title': [
-          { language: 'en_US', value: 'Collection 4' }
-        ]
-      }
+        'dc.title': [{ language: 'en_US', value: 'Collection 4' }],
+      },
     }),
     Object.assign(new Community(), {
       id: '123456789-5',
       metadata: {
-        'dc.title': [
-          { language: 'en_US', value: 'Collection 5' }
-        ]
-      }
+        'dc.title': [{ language: 'en_US', value: 'Collection 5' }],
+      },
     }),
     Object.assign(new Community(), {
       id: '123456789-6',
       metadata: {
-        'dc.title': [
-          { language: 'en_US', value: 'Collection 6' }
-        ]
-      }
+        'dc.title': [{ language: 'en_US', value: 'Collection 6' }],
+      },
     }),
     Object.assign(new Community(), {
       id: '123456789-7',
       metadata: {
-        'dc.title': [
-          { language: 'en_US', value: 'Collection 7' }
-        ]
-      }
-    })
+        'dc.title': [{ language: 'en_US', value: 'Collection 7' }],
+      },
+    }),
   ];
 
   const mockCommunity = Object.assign(new Community(), {
     id: '123456789',
     metadata: {
-      'dc.title': [
-        { language: 'en_US', value: 'Test title' }
-      ]
-    }
+      'dc.title': [{ language: 'en_US', value: 'Test title' }],
+    },
   });
 
   collectionDataServiceStub = {
@@ -109,13 +97,17 @@ describe('CommunityPageSubCollectionList Component', () => {
       }
       elementsPerPage = 5;
       const startPageIndex = (currentPage - 1) * elementsPerPage;
-      let endPageIndex = (currentPage * elementsPerPage);
+      let endPageIndex = currentPage * elementsPerPage;
       if (endPageIndex > subCollList.length) {
         endPageIndex = subCollList.length;
       }
-      return createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), subCollList.slice(startPageIndex, endPageIndex)));
-
-    }
+      return createSuccessfulRemoteDataObject$(
+        buildPaginatedList(
+          new PageInfo(),
+          subCollList.slice(startPageIndex, endPageIndex)
+        )
+      );
+    },
   };
 
   const paginationService = new PaginationServiceStub();
@@ -129,7 +121,7 @@ describe('CommunityPageSubCollectionList Component', () => {
         SharedModule,
         RouterTestingModule.withRoutes([]),
         NgbModule,
-        NoopAnimationsModule
+        NoopAnimationsModule,
       ],
       declarations: [CommunityPageSubCollectionListComponent],
       providers: [
@@ -139,7 +131,7 @@ describe('CommunityPageSubCollectionList Component', () => {
         { provide: SelectableListService, useValue: {} },
         { provide: ThemeService, useValue: themeService },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 

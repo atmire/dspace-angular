@@ -1,4 +1,4 @@
-input[type="text"] {
+input[type='text'] {
   margin-top: calc(-0.5 * var(--bs-font-size-base));
 
   &:focus {
@@ -26,4 +26,3 @@ a.submit-icon {
     color: var(--bs-link-color);
   }
 }
-

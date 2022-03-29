@@ -1,5 +1,10 @@
 import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, inject, TestBed, waitForAsync } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  inject,
+  TestBed,
+  waitForAsync,
+} from '@angular/core/testing';
 import { Router } from '@angular/router';
 
 import { TranslateModule } from '@ngx-translate/core';
@@ -27,11 +32,15 @@ const externalEntry = Object.assign(new ExternalSourceEntry(), {
   metadata: {
     'dc.identifier.uri': [
       {
-        value: 'https://orcid.org/0001-0001-0001-0001'
-      }
-    ]
+        value: 'https://orcid.org/0001-0001-0001-0001',
+      },
+    ],
   },
-  _links: { self: { href: 'http://test-rest.com/server/api/integration/externalSources/orcidV2/entryValues/0000-0003-4851-8004' } }
+  _links: {
+    self: {
+      href: 'http://test-rest.com/server/api/integration/externalSources/orcidV2/entryValues/0000-0003-4851-8004',
+    },
+  },
 });
 
 describe('SubmissionImportExternalPreviewComponent test suite', () => {
@@ -43,27 +52,26 @@ describe('SubmissionImportExternalPreviewComponent test suite', () => {
   const ngbActiveModal = jasmine.createSpyObj('modal', ['close', 'dismiss']);
   const ngbModal = jasmine.createSpyObj('modal', ['open']);
 
-
   beforeEach(waitForAsync(() => {
     scheduler = getTestScheduler();
     TestBed.configureTestingModule({
-      imports: [
-        TranslateModule.forRoot()
-      ],
-      declarations: [
-        SubmissionImportExternalPreviewComponent,
-        TestComponent
-      ],
+      imports: [TranslateModule.forRoot()],
+      declarations: [SubmissionImportExternalPreviewComponent, TestComponent],
       providers: [
         { provide: Router, useValue: new RouterStub() },
         { provide: SubmissionService, useValue: new SubmissionServiceStub() },
-        { provide: NotificationsService, useValue: new NotificationsServiceStub() },
+        {
+          provide: NotificationsService,
+          useValue: new NotificationsServiceStub(),
+        },
         { provide: NgbModal, useValue: ngbModal },
         { provide: NgbActiveModal, useValue: ngbActiveModal },
-        SubmissionImportExternalPreviewComponent
+        SubmissionImportExternalPreviewComponent,
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents().then();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .compileComponents()
+      .then();
   }));
 
   // First test to check the correct component creation
@@ -75,7 +83,10 @@ describe('SubmissionImportExternalPreviewComponent test suite', () => {
     beforeEach(() => {
       const html = `
         <ds-submission-import-external-preview [externalSourceEntry]="externalSourceEntry"></ds-submission-import-external-preview>`;
-      testFixture = createTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
+      testFixture = createTestComponent(
+        html,
+        TestComponent
+      ) as ComponentFixture<TestComponent>;
       testComp = testFixture.componentInstance;
     });
 
@@ -83,14 +94,19 @@ describe('SubmissionImportExternalPreviewComponent test suite', () => {
       testFixture.destroy();
     });
 
-    it('should create SubmissionImportExternalPreviewComponent', inject([SubmissionImportExternalPreviewComponent], (app: SubmissionImportExternalPreviewComponent) => {
-      expect(app).toBeDefined();
-    }));
+    it('should create SubmissionImportExternalPreviewComponent', inject(
+      [SubmissionImportExternalPreviewComponent],
+      (app: SubmissionImportExternalPreviewComponent) => {
+        expect(app).toBeDefined();
+      }
+    ));
   });
 
   describe('', () => {
     beforeEach(() => {
-      fixture = TestBed.createComponent(SubmissionImportExternalPreviewComponent);
+      fixture = TestBed.createComponent(
+        SubmissionImportExternalPreviewComponent
+      );
       comp = fixture.componentInstance;
       compAsAny = comp;
       submissionServiceStub = TestBed.inject(SubmissionService as any);
@@ -105,14 +121,20 @@ describe('SubmissionImportExternalPreviewComponent test suite', () => {
     it('Should init component properly', () => {
       comp.externalSourceEntry = externalEntry;
       const expected = [
-        { key: 'dc.identifier.uri', value: Metadata.first(comp.externalSourceEntry.metadata, 'dc.identifier.uri') }
+        {
+          key: 'dc.identifier.uri',
+          value: Metadata.first(
+            comp.externalSourceEntry.metadata,
+            'dc.identifier.uri'
+          ),
+        },
       ];
       fixture.detectChanges();
 
       expect(comp.metadataList).toEqual(expected);
     });
 
-    it('Should close the modal calling \'activeModal.dismiss\'', () => {
+    it("Should close the modal calling 'activeModal.dismiss'", () => {
       comp.modalRef = jasmine.createSpyObj('modal', ['close', 'dismiss']);
       comp.closeMetadataModal();
 
@@ -126,34 +148,46 @@ describe('SubmissionImportExternalPreviewComponent test suite', () => {
             id: 'dummy',
             uuid: 'dummy',
             name: 'dummy',
-          }
+          },
         ],
         collection: {
           id: 'ce64f48e-2c9b-411a-ac36-ee429c0e6a88',
           uuid: 'ce64f48e-2c9b-411a-ac36-ee429c0e6a88',
           name: 'Collection 1',
-        }
+        },
       };
       const submissionObjects = [
-        { id: 'jk11k13o-9v4z-632i-sr88-wq071n0h1d47' }
+        { id: 'jk11k13o-9v4z-632i-sr88-wq071n0h1d47' },
       ];
       comp.externalSourceEntry = externalEntry;
       ngbModal.open.and.returnValue({
         componentInstance: { selectedEvent: observableOf(emittedEvent) },
         close: () => {
           return;
-        }
+        },
       });
       spyOn(comp, 'closeMetadataModal');
-      submissionServiceStub.createSubmissionFromExternalSource.and.returnValue(observableOf(submissionObjects));
+      submissionServiceStub.createSubmissionFromExternalSource.and.returnValue(
+        observableOf(submissionObjects)
+      );
       spyOn(compAsAny.router, 'navigateByUrl');
       scheduler.schedule(() => comp.import());
       scheduler.flush();
 
-      expect(compAsAny.modalService.open).toHaveBeenCalledWith(SubmissionImportExternalCollectionComponent, { size: 'lg' });
+      expect(compAsAny.modalService.open).toHaveBeenCalledWith(
+        SubmissionImportExternalCollectionComponent,
+        { size: 'lg' }
+      );
       expect(comp.closeMetadataModal).toHaveBeenCalled();
-      expect(compAsAny.submissionService.createSubmissionFromExternalSource).toHaveBeenCalledWith(externalEntry._links.self.href, emittedEvent.collection.id);
-      expect(compAsAny.router.navigateByUrl).toHaveBeenCalledWith('/workspaceitems/' + submissionObjects[0].id + '/edit');
+      expect(
+        compAsAny.submissionService.createSubmissionFromExternalSource
+      ).toHaveBeenCalledWith(
+        externalEntry._links.self.href,
+        emittedEvent.collection.id
+      );
+      expect(compAsAny.router.navigateByUrl).toHaveBeenCalledWith(
+        '/workspaceitems/' + submissionObjects[0].id + '/edit'
+      );
       done();
     });
   });
@@ -162,9 +196,8 @@ describe('SubmissionImportExternalPreviewComponent test suite', () => {
 // declare a test component
 @Component({
   selector: 'ds-test-cmp',
-  template: ``
+  template: ``,
 })
 class TestComponent {
-
   externalSourceEntry = externalEntry;
 }

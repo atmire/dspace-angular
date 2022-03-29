@@ -1,6 +1,6 @@
 :host ::ng-deep {
   // For proper scoping, do not include the .css file suffix here
-  @import "../../form.component";
+  @import '../../form.component';
 }
 
 :host {

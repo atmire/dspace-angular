@@ -1,5 +1,5 @@
 .dropdown-toggle::after {
-  display:none
+  display: none;
 }
 
 :host ::ng-deep .dropdown-menu {
@@ -23,5 +23,6 @@ div {
 }
 
 .lookup-item {
-  border-bottom: var(--bs-dropdown-border-width) solid var(--bs-dropdown-border-color);
+  border-bottom: var(--bs-dropdown-border-width) solid
+    var(--bs-dropdown-border-color);
 }

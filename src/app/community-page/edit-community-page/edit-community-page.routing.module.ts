@@ -21,7 +21,7 @@ import { CommunityAdministratorGuard } from '../../core/data/feature-authorizati
       {
         path: '',
         resolve: {
-          breadcrumb: I18nBreadcrumbResolver
+          breadcrumb: I18nBreadcrumbResolver,
         },
         data: { breadcrumbKey: 'community.edit' },
         component: EditCommunityPageComponent,
@@ -30,7 +30,7 @@ import { CommunityAdministratorGuard } from '../../core/data/feature-authorizati
           {
             path: '',
             redirectTo: 'metadata',
-            pathMatch: 'full'
+            pathMatch: 'full',
           },
           {
             path: 'metadata',
@@ -38,18 +38,24 @@ import { CommunityAdministratorGuard } from '../../core/data/feature-authorizati
             data: {
               title: 'community.edit.tabs.metadata.title',
               hideReturnButton: true,
-              showBreadcrumbs: true
-            }
+              showBreadcrumbs: true,
+            },
           },
           {
             path: 'roles',
             component: CommunityRolesComponent,
-            data: { title: 'community.edit.tabs.roles.title', showBreadcrumbs: true }
+            data: {
+              title: 'community.edit.tabs.roles.title',
+              showBreadcrumbs: true,
+            },
           },
           {
             path: 'curate',
             component: CommunityCurateComponent,
-            data: { title: 'community.edit.tabs.curate.title', showBreadcrumbs: true }
+            data: {
+              title: 'community.edit.tabs.curate.title',
+              showBreadcrumbs: true,
+            },
           },
           /*{
             path: 'authorizations',
@@ -63,35 +69,34 @@ import { CommunityAdministratorGuard } from '../../core/data/feature-authorizati
               {
                 path: 'create',
                 resolve: {
-                  resourcePolicyTarget: ResourcePolicyTargetResolver
+                  resourcePolicyTarget: ResourcePolicyTargetResolver,
                 },
                 component: ResourcePolicyCreateComponent,
-                data: { title: 'resource-policies.create.page.title' }
+                data: { title: 'resource-policies.create.page.title' },
               },
               {
                 path: 'edit',
                 resolve: {
-                  resourcePolicy: ResourcePolicyResolver
+                  resourcePolicy: ResourcePolicyResolver,
                 },
                 component: ResourcePolicyEditComponent,
-                data: { title: 'resource-policies.edit.page.title' }
+                data: { title: 'resource-policies.edit.page.title' },
               },
               {
                 path: '',
                 component: CommunityAuthorizationsComponent,
-                data: { title: 'community.edit.tabs.authorizations.title', showBreadcrumbs: true, hideReturnButton: true }
-              }
-            ]
-          }
-        ]
-      }
-    ])
+                data: {
+                  title: 'community.edit.tabs.authorizations.title',
+                  showBreadcrumbs: true,
+                  hideReturnButton: true,
+                },
+              },
+            ],
+          },
+        ],
+      },
+    ]),
   ],
-  providers: [
-    ResourcePolicyResolver,
-    ResourcePolicyTargetResolver
-  ]
+  providers: [ResourcePolicyResolver, ResourcePolicyTargetResolver],
 })
-export class EditCommunityPageRoutingModule {
-
-}
+export class EditCommunityPageRoutingModule {}

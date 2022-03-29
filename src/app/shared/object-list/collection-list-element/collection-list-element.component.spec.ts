@@ -12,35 +12,43 @@ const mockCollectionWithAbstract: Collection = Object.assign(new Collection(), {
     'dc.description.abstract': [
       {
         language: 'en_US',
-        value: 'Short description'
-      }
-    ]
-  }
+        value: 'Short description',
+      },
+    ],
+  },
 });
 
-const mockCollectionWithoutAbstract: Collection = Object.assign(new Collection(), {
-  metadata: {
-    'dc.title': [
-      {
-        language: 'en_US',
-        value: 'Test title'
-      }
-    ]
+const mockCollectionWithoutAbstract: Collection = Object.assign(
+  new Collection(),
+  {
+    metadata: {
+      'dc.title': [
+        {
+          language: 'en_US',
+          value: 'Test title',
+        },
+      ],
+    },
   }
-});
+);
 
 describe('CollectionListElementComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [CollectionListElementComponent],
       providers: [
-        { provide: 'objectElementProvider', useValue: (mockCollectionWithAbstract) }
+        {
+          provide: 'objectElementProvider',
+          useValue: mockCollectionWithAbstract,
+        },
       ],
 
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(CollectionListElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(CollectionListElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -55,7 +63,9 @@ describe('CollectionListElementComponent', () => {
     });
 
     it('should show the description paragraph', () => {
-      const collectionAbstractField = fixture.debugElement.query(By.css('div.abstract-text'));
+      const collectionAbstractField = fixture.debugElement.query(
+        By.css('div.abstract-text')
+      );
       expect(collectionAbstractField).not.toBeNull();
     });
   });
@@ -67,7 +77,9 @@ describe('CollectionListElementComponent', () => {
     });
 
     it('should not show the description paragraph', () => {
-      const collectionAbstractField = fixture.debugElement.query(By.css('div.abstract-text'));
+      const collectionAbstractField = fixture.debugElement.query(
+        By.css('div.abstract-text')
+      );
       expect(collectionAbstractField).toBeNull();
     });
   });

@@ -12,10 +12,9 @@ import { AuthService } from '../../core/auth/auth.service';
 @Component({
   selector: 'ds-item-statistics-page',
   templateUrl: '../statistics-page/statistics-page.component.html',
-  styleUrls: ['./item-statistics-page.component.scss']
+  styleUrls: ['./item-statistics-page.component.scss'],
 })
 export class ItemStatisticsPageComponent extends StatisticsPageComponent<Item> {
-
   /**
    * The report types to show on this statistics page.
    */
@@ -34,12 +33,6 @@ export class ItemStatisticsPageComponent extends StatisticsPageComponent<Item> {
     protected nameService: DSONameService,
     protected authService: AuthService
   ) {
-    super(
-      route,
-      router,
-      usageReportService,
-      nameService,
-      authService,
-    );
+    super(route, router, usageReportService, nameService, authService);
   }
 }

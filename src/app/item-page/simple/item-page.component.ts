@@ -9,7 +9,10 @@ import { RemoteData } from '../../core/data/remote-data';
 import { Item } from '../../core/shared/item.model';
 
 import { fadeInOut } from '../../shared/animations/fade';
-import { getAllSucceededRemoteDataPayload, redirectOn4xx } from '../../core/shared/operators';
+import {
+  getAllSucceededRemoteDataPayload,
+  redirectOn4xx,
+} from '../../core/shared/operators';
 import { ViewMode } from '../../core/shared/view-mode.model';
 import { AuthService } from '../../core/auth/auth.service';
 import { getItemPageRoute } from '../item-page-routing-paths';
@@ -24,10 +27,9 @@ import { getItemPageRoute } from '../item-page-routing-paths';
   styleUrls: ['./item-page.component.scss'],
   templateUrl: './item-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: [fadeInOut]
+  animations: [fadeInOut],
 })
 export class ItemPageComponent implements OnInit {
-
   /**
    * The item's id
    */
@@ -52,8 +54,8 @@ export class ItemPageComponent implements OnInit {
     protected route: ActivatedRoute,
     private router: Router,
     private items: ItemDataService,
-    private authService: AuthService,
-  ) { }
+    private authService: AuthService
+  ) {}
 
   /**
    * Initialize instance variables

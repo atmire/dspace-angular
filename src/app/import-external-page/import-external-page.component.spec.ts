@@ -8,10 +8,9 @@ describe('ImportExternalPageComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ImportExternalPageComponent ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
-    .compileComponents();
+      declarations: [ImportExternalPageComponent],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

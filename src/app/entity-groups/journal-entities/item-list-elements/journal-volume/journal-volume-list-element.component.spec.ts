@@ -13,22 +13,22 @@ const mockItem: Item = Object.assign(new Item(), {
     'dc.title': [
       {
         language: 'en_US',
-        value: 'This is just another title'
-      }
+        value: 'This is just another title',
+      },
     ],
     'journal.title': [
       {
         language: 'en_US',
-        value: 'This is just another journal title'
-      }
+        value: 'This is just another journal title',
+      },
     ],
     'publicationvolume.volumeNumber': [
       {
         language: 'en_US',
-        value: '1234'
-      }
-    ]
-  }
+        value: '1234',
+      },
+    ],
+  },
 });
 
 describe('JournalVolumeListElementComponent', () => {
@@ -45,10 +45,12 @@ describe('JournalVolumeListElementComponent', () => {
       providers: [
         { provide: TruncatableService, useValue: truncatableServiceStub },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(JournalVolumeListElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(JournalVolumeListElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -63,7 +65,9 @@ describe('JournalVolumeListElementComponent', () => {
     });
 
     it(`should contain a JournalVolumeListElementComponent`, () => {
-      const journalVolumeListElement = fixture.debugElement.query(By.css(`ds-journal-volume-search-result-list-element`));
+      const journalVolumeListElement = fixture.debugElement.query(
+        By.css(`ds-journal-volume-search-result-list-element`)
+      );
       expect(journalVolumeListElement).not.toBeNull();
     });
   });

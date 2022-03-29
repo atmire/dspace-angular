@@ -5,7 +5,8 @@ import { CommunityListPageComponent as BaseComponent } from '../../../../app/com
   selector: 'ds-community-list-page',
   // styleUrls: ['./community-list-page.component.scss'],
   // templateUrl: './community-list-page.component.html'
-  templateUrl: '../../../../app/community-list-page/community-list-page.component.html'
+  templateUrl:
+    '../../../../app/community-list-page/community-list-page.component.html',
 })
 
 /**
@@ -13,4 +14,3 @@ import { CommunityListPageComponent as BaseComponent } from '../../../../app/com
  * navigated to with community-list.page.routing.module
  */
 export class CommunityListPageComponent extends BaseComponent {}
-

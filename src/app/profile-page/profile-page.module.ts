@@ -9,23 +9,13 @@ import { ThemedProfilePageComponent } from './themed-profile-page.component';
 import { FormModule } from '../shared/form/form.module';
 
 @NgModule({
-  imports: [
-    ProfilePageRoutingModule,
-    CommonModule,
-    SharedModule,
-    FormModule
-  ],
-  exports: [
-    ProfilePageSecurityFormComponent,
-    ProfilePageMetadataFormComponent
-  ],
+  imports: [ProfilePageRoutingModule, CommonModule, SharedModule, FormModule],
+  exports: [ProfilePageSecurityFormComponent, ProfilePageMetadataFormComponent],
   declarations: [
     ProfilePageComponent,
     ThemedProfilePageComponent,
     ProfilePageMetadataFormComponent,
-    ProfilePageSecurityFormComponent
-  ]
+    ProfilePageSecurityFormComponent,
+  ],
 })
-export class ProfilePageModule {
-
-}
+export class ProfilePageModule {}

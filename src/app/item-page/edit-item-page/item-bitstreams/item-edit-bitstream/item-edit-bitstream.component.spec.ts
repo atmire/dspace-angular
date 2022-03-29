@@ -18,22 +18,22 @@ const columnSizes = new ResponsiveTableSizes([
   new ResponsiveColumnSizes(2, 2, 3, 4, 4),
   new ResponsiveColumnSizes(2, 3, 3, 3, 3),
   new ResponsiveColumnSizes(2, 2, 2, 2, 2),
-  new ResponsiveColumnSizes(6, 5, 4, 3, 3)
+  new ResponsiveColumnSizes(6, 5, 4, 3, 3),
 ]);
 
 const format = Object.assign(new BitstreamFormat(), {
-  shortDescription: 'PDF'
+  shortDescription: 'PDF',
 });
 const bitstream = Object.assign(new Bitstream(), {
   uuid: 'bitstreamUUID',
   name: 'Fake Bitstream',
   bundleName: 'ORIGINAL',
   description: 'Description',
-  format: createSuccessfulRemoteDataObject$(format)
+  format: createSuccessfulRemoteDataObject$(format),
 });
 const fieldUpdate = {
   field: bitstream,
-  changeType: undefined
+  changeType: undefined,
 };
 const date = new Date();
 const url = 'thisUrl';
@@ -42,36 +42,33 @@ let objectUpdatesService: ObjectUpdatesService;
 
 describe('ItemEditBitstreamComponent', () => {
   beforeEach(waitForAsync(() => {
-    objectUpdatesService = jasmine.createSpyObj('objectUpdatesService',
-      {
-        getFieldUpdates: observableOf({
-          [bitstream.uuid]: fieldUpdate,
-        }),
-        getFieldUpdatesExclusive: observableOf({
-          [bitstream.uuid]: fieldUpdate,
-        }),
-        saveRemoveFieldUpdate: {},
-        removeSingleFieldUpdate: {},
-        saveAddFieldUpdate: {},
-        discardFieldUpdates: {},
-        reinstateFieldUpdates: observableOf(true),
-        initialize: {},
-        getUpdatedFields: observableOf([bitstream]),
-        getLastModified: observableOf(date),
-        hasUpdates: observableOf(true),
-        isReinstatable: observableOf(false),
-        isValidPage: observableOf(true)
-      }
-    );
+    objectUpdatesService = jasmine.createSpyObj('objectUpdatesService', {
+      getFieldUpdates: observableOf({
+        [bitstream.uuid]: fieldUpdate,
+      }),
+      getFieldUpdatesExclusive: observableOf({
+        [bitstream.uuid]: fieldUpdate,
+      }),
+      saveRemoveFieldUpdate: {},
+      removeSingleFieldUpdate: {},
+      saveAddFieldUpdate: {},
+      discardFieldUpdates: {},
+      reinstateFieldUpdates: observableOf(true),
+      initialize: {},
+      getUpdatedFields: observableOf([bitstream]),
+      getLastModified: observableOf(date),
+      hasUpdates: observableOf(true),
+      isReinstatable: observableOf(false),
+      isValidPage: observableOf(true),
+    });
 
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
       declarations: [ItemEditBitstreamComponent, VarDirective],
       providers: [
-        { provide: ObjectUpdatesService, useValue: objectUpdatesService }
-      ], schemas: [
-        NO_ERRORS_SCHEMA
-      ]
+        { provide: ObjectUpdatesService, useValue: objectUpdatesService },
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -91,7 +88,10 @@ describe('ItemEditBitstreamComponent', () => {
     });
 
     it('should call saveRemoveFieldUpdate on objectUpdatesService', () => {
-      expect(objectUpdatesService.saveRemoveFieldUpdate).toHaveBeenCalledWith(url, bitstream);
+      expect(objectUpdatesService.saveRemoveFieldUpdate).toHaveBeenCalledWith(
+        url,
+        bitstream
+      );
     });
   });
 
@@ -101,7 +101,10 @@ describe('ItemEditBitstreamComponent', () => {
     });
 
     it('should call removeSingleFieldUpdate on objectUpdatesService', () => {
-      expect(objectUpdatesService.removeSingleFieldUpdate).toHaveBeenCalledWith(url, bitstream.uuid);
+      expect(objectUpdatesService.removeSingleFieldUpdate).toHaveBeenCalledWith(
+        url,
+        bitstream.uuid
+      );
     });
   });
 

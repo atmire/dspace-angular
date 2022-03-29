@@ -1,5 +1,8 @@
 import { TOKENITEM } from '../../core/auth/models/auth-token-info.model';
-import { IMPERSONATING_COOKIE, REDIRECT_COOKIE } from '../../core/auth/auth.service';
+import {
+  IMPERSONATING_COOKIE,
+  REDIRECT_COOKIE,
+} from '../../core/auth/auth.service';
 import { LANG_COOKIE } from '../../core/locale/locale.service';
 
 /**
@@ -57,60 +60,51 @@ export const klaroConfiguration: any = {
       app: {
         optOut: {
           description: 'cookies.consent.app.opt-out.description',
-          title: 'cookies.consent.app.opt-out.title'
+          title: 'cookies.consent.app.opt-out.title',
         },
         purpose: 'cookies.consent.app.purpose',
         purposes: 'cookies.consent.app.purposes',
         required: {
           description: 'cookies.consent.app.required.description',
-          title: 'cookies.consent.app.required.title'
-        }
+          title: 'cookies.consent.app.required.title',
+        },
       },
       close: 'cookies.consent.close',
       decline: 'cookies.consent.decline',
       changeDescription: 'cookies.consent.update',
       consentNotice: {
         description: 'cookies.consent.content-notice.description',
-        learnMore: 'cookies.consent.content-notice.learnMore'
+        learnMore: 'cookies.consent.content-notice.learnMore',
       },
       consentModal: {
         description: 'cookies.consent.content-modal.description',
         privacyPolicy: {
           name: 'cookies.consent.content-modal.privacy-policy.name',
-          text: 'cookies.consent.content-modal.privacy-policy.text'
+          text: 'cookies.consent.content-modal.privacy-policy.text',
         },
-        title: 'cookies.consent.content-modal.title'
+        title: 'cookies.consent.content-modal.title',
       },
-      purposes: {}
-    }
+      purposes: {},
+    },
   },
   services: [
     {
       name: 'authentication',
       purposes: ['functional'],
       required: true,
-      cookies: [
-        TOKENITEM,
-        IMPERSONATING_COOKIE,
-        REDIRECT_COOKIE
-      ]
+      cookies: [TOKENITEM, IMPERSONATING_COOKIE, REDIRECT_COOKIE],
     },
     {
       name: 'preferences',
       purposes: ['functional'],
       required: true,
-      cookies: [
-        LANG_COOKIE
-      ]
+      cookies: [LANG_COOKIE],
     },
     {
       name: 'acknowledgement',
       purposes: ['functional'],
       required: true,
-      cookies: [
-        [/^klaro-.+$/],
-        HAS_AGREED_END_USER
-      ]
+      cookies: [[/^klaro-.+$/], HAS_AGREED_END_USER],
     },
     {
       name: 'google-analytics',

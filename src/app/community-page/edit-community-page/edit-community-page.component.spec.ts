@@ -15,36 +15,41 @@ describe('EditCommunityPageComponent', () => {
 
   const routeStub = {
     data: observableOf({
-      dso: { payload: {} }
+      dso: { payload: {} },
     }),
     routeConfig: {
       children: [
         {
           path: 'mockUrl',
           data: {
-            hideReturnButton: false
-          }
-        }
-      ]
+            hideReturnButton: false,
+          },
+        },
+      ],
     },
     snapshot: {
       firstChild: {
         routeConfig: {
-          path: 'mockUrl'
-        }
-      }
-    }
+          path: 'mockUrl',
+        },
+      },
+    },
   };
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), SharedModule, CommonModule, RouterTestingModule],
+      imports: [
+        TranslateModule.forRoot(),
+        SharedModule,
+        CommonModule,
+        RouterTestingModule,
+      ],
       declarations: [EditCommunityPageComponent],
       providers: [
         { provide: CommunityDataService, useValue: {} },
         { provide: ActivatedRoute, useValue: routeStub },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 

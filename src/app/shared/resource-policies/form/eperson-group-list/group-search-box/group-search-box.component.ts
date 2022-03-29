@@ -13,7 +13,6 @@ import { SearchEvent } from '../eperson-group-list.component';
   templateUrl: './group-search-box.component.html',
 })
 export class GroupSearchBoxComponent {
-
   labelPrefix = 'admin.access-control.groups.';
 
   /**
@@ -33,18 +32,18 @@ export class GroupSearchBoxComponent {
   @Output() search: EventEmitter<SearchEvent> = new EventEmitter<SearchEvent>();
 
   constructor(private formBuilder: FormBuilder) {
-    this.searchForm = this.formBuilder.group(({
+    this.searchForm = this.formBuilder.group({
       query: '',
-    }));
+    });
   }
 
   /**
    * Reset the search form
    */
   reset() {
-    this.searchForm = this.formBuilder.group(({
+    this.searchForm = this.formBuilder.group({
       query: '',
-    }));
+    });
   }
 
   /**
@@ -54,7 +53,7 @@ export class GroupSearchBoxComponent {
   submit(data: any) {
     const event: SearchEvent = {
       scope: '',
-      query: data.query
+      query: data.query,
     };
     this.search.emit(event);
   }

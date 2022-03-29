@@ -32,9 +32,8 @@ export class SubmissionDefinitionModel extends ConfigObject {
    */
   @deserialize
   _links: {
-    self: HALLink,
-    collections: HALLink,
-    sections: HALLink
+    self: HALLink;
+    collections: HALLink;
+    sections: HALLink;
   };
-
 }

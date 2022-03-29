@@ -4,13 +4,9 @@ import { DSpaceBrowserTransferState } from './dspace-browser-transfer-state.serv
 import { DSpaceTransferState } from './dspace-transfer-state.service';
 
 @NgModule({
-  imports: [
-    BrowserTransferStateModule
-  ],
+  imports: [BrowserTransferStateModule],
   providers: [
-    { provide: DSpaceTransferState, useClass: DSpaceBrowserTransferState }
-  ]
+    { provide: DSpaceTransferState, useClass: DSpaceBrowserTransferState },
+  ],
 })
-export class DSpaceBrowserTransferStateModule {
-
-}
+export class DSpaceBrowserTransferStateModule {}

@@ -5,7 +5,6 @@ import { Injectable } from '@angular/core';
  */
 @Injectable()
 export abstract class HardRedirectService {
-
   /**
    * Perform a hard redirect to a given location.
    *

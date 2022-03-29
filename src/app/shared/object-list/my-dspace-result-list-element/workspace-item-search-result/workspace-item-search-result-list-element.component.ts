@@ -22,13 +22,17 @@ import { DSONameService } from '../../../../core/breadcrumbs/dso-name.service';
  */
 @Component({
   selector: 'ds-workspace-item-search-result-list-element',
-  styleUrls: ['../../search-result-list-element/search-result-list-element.component.scss', './workspace-item-search-result-list-element.component.scss'],
+  styleUrls: [
+    '../../search-result-list-element/search-result-list-element.component.scss',
+    './workspace-item-search-result-list-element.component.scss',
+  ],
   templateUrl: './workspace-item-search-result-list-element.component.html',
 })
-
 @listableObjectComponent(WorkspaceItemSearchResult, ViewMode.ListElement)
-export class WorkspaceItemSearchResultListElementComponent extends SearchResultListElementComponent<WorkspaceItemSearchResult, WorkspaceItem> {
-
+export class WorkspaceItemSearchResultListElementComponent extends SearchResultListElementComponent<
+  WorkspaceItemSearchResult,
+  WorkspaceItem
+> {
   /**
    * The item object that belonging to the result object
    */
@@ -61,7 +65,9 @@ export class WorkspaceItemSearchResultListElementComponent extends SearchResultL
    */
   initItem(item$: Observable<RemoteData<Item>>) {
     this.item$ = item$.pipe(
-      find((rd: RemoteData<Item>) => rd.hasSucceeded && isNotUndefined(rd.payload)),
+      find(
+        (rd: RemoteData<Item>) => rd.hasSucceeded && isNotUndefined(rd.payload)
+      ),
       map((rd: RemoteData<Item>) => rd.payload)
     );
   }

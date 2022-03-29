@@ -14,12 +14,15 @@ export class RestResponse {
     public isSuccessful: boolean,
     public statusCode: number,
     public statusText: string
-  ) {
-  }
+  ) {}
 }
 
 export class ParsedResponse extends RestResponse {
-  constructor(statusCode: number, public link?: HALLink, public unCacheableObject?: UnCacheableObject) {
+  constructor(
+    statusCode: number,
+    public link?: HALLink,
+    public unCacheableObject?: UnCacheableObject
+  ) {
     super(true, statusCode, `${statusCode}`);
   }
 }
@@ -36,7 +39,7 @@ export class DSOSuccessResponse extends RestResponse {
 }
 
 export class EndpointMap {
-  [linkPath: string]: HALLink
+  [linkPath: string]: HALLink;
 }
 
 export class EndpointMapSuccessResponse extends RestResponse {

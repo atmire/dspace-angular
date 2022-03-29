@@ -1,4 +1,10 @@
-import { ActivatedRoute, convertToParamMap, NavigationEnd, Params, Router } from '@angular/router';
+import {
+  ActivatedRoute,
+  convertToParamMap,
+  NavigationEnd,
+  Params,
+  Router,
+} from '@angular/router';
 import { TestBed, waitForAsync } from '@angular/core/testing';
 
 import { of as observableOf } from 'rxjs';
@@ -26,7 +32,7 @@ describe('RouteService', () => {
 
   const store: any = jasmine.createSpyObj('store', {
     dispatch: jasmine.createSpy('dispatch'),
-    select: jasmine.createSpy('select')
+    select: jasmine.createSpy('select'),
   });
 
   const router = new RouterMock();
@@ -43,17 +49,21 @@ describe('RouteService', () => {
           useValue: {
             queryParams: observableOf(paramObject),
             params: observableOf(paramObject),
-            queryParamMap: observableOf(convertToParamMap(paramObject))
+            queryParamMap: observableOf(convertToParamMap(paramObject)),
           },
         },
         { provide: Router, useValue: router },
         { provide: Store, useValue: store },
-      ]
+      ],
     });
   }));
 
   beforeEach(() => {
-    service = new RouteService(TestBed.inject(ActivatedRoute), TestBed.inject(Router), TestBed.inject(Store));
+    service = new RouteService(
+      TestBed.inject(ActivatedRoute),
+      TestBed.inject(Router),
+      TestBed.inject(Store)
+    );
     serviceAsAny = service;
   });
 
@@ -72,19 +82,25 @@ describe('RouteService', () => {
 
   describe('hasQueryParamWithValue', () => {
     it('should return true when the parameter name exists and contains the specified value', () => {
-      service.hasQueryParamWithValue(paramName2, paramValue2a).subscribe((status) => {
-        expect(status).toBeTruthy();
-      });
+      service
+        .hasQueryParamWithValue(paramName2, paramValue2a)
+        .subscribe((status) => {
+          expect(status).toBeTruthy();
+        });
     });
     it('should return false when the parameter name exists and does not contain the specified value', () => {
-      service.hasQueryParamWithValue(paramName1, nonExistingParamValue).subscribe((status) => {
-        expect(status).toBeFalsy();
-      });
+      service
+        .hasQueryParamWithValue(paramName1, nonExistingParamValue)
+        .subscribe((status) => {
+          expect(status).toBeFalsy();
+        });
     });
     it('should return false when the parameter name does not exists', () => {
-      service.hasQueryParamWithValue(nonExistingParamName, nonExistingParamValue).subscribe((status) => {
-        expect(status).toBeFalsy();
-      });
+      service
+        .hasQueryParamWithValue(nonExistingParamName, nonExistingParamValue)
+        .subscribe((status) => {
+          expect(status).toBeFalsy();
+        });
     });
   });
 
@@ -96,9 +112,11 @@ describe('RouteService', () => {
     });
 
     it('should return an empty array when the parameter does not exists', () => {
-      service.getQueryParameterValues(nonExistingParamName).subscribe((params) => {
-        expect(params).toEqual([]);
-      });
+      service
+        .getQueryParameterValues(nonExistingParamName)
+        .subscribe((params) => {
+          expect(params).toEqual([]);
+        });
     });
   });
 
@@ -116,27 +134,32 @@ describe('RouteService', () => {
     });
 
     it('should return undefined when the parameter exists', () => {
-      service.getQueryParameterValue(nonExistingParamName).subscribe((params) => {
-        expect(params).toBeNull();
-      });
+      service
+        .getQueryParameterValue(nonExistingParamName)
+        .subscribe((params) => {
+          expect(params).toBeNull();
+        });
     });
   });
 
   describe('saveRouting', () => {
-
     it('should dispatch AddUrlToHistoryAction on NavigationEnd event', () => {
       scheduler = getTestScheduler();
 
       serviceAsAny.router.events = hot('a-b', {
         a: new NavigationEnd(0, 'url', 'url'),
-        b: new NavigationEnd(1, 'newurl', 'newurl')
+        b: new NavigationEnd(1, 'newurl', 'newurl'),
       });
 
       scheduler.schedule(() => service.saveRouting());
       scheduler.flush();
 
-      expect(serviceAsAny.store.dispatch).toHaveBeenCalledWith(new AddUrlToHistoryAction('url'));
-      expect(serviceAsAny.store.dispatch).toHaveBeenCalledWith(new AddUrlToHistoryAction('newurl'));
+      expect(serviceAsAny.store.dispatch).toHaveBeenCalledWith(
+        new AddUrlToHistoryAction('url')
+      );
+      expect(serviceAsAny.store.dispatch).toHaveBeenCalledWith(
+        new AddUrlToHistoryAction('newurl')
+      );
     });
   });
 
@@ -144,8 +167,8 @@ describe('RouteService', () => {
     it('should dispatch AddUrlToHistoryAction on NavigationEnd event', () => {
       serviceAsAny.store = observableOf({
         core: {
-          history: ['url', 'newurl']
-        }
+          history: ['url', 'newurl'],
+        },
       });
 
       service.getHistory().subscribe((history) => {
@@ -158,8 +181,8 @@ describe('RouteService', () => {
     it('should return an observable with the current url', () => {
       serviceAsAny.store = observableOf({
         core: {
-          history: ['url', 'newurl']
-        }
+          history: ['url', 'newurl'],
+        },
       });
 
       service.getCurrentUrl().subscribe((history) => {
@@ -172,8 +195,8 @@ describe('RouteService', () => {
     it('should return an observable with the previous url', () => {
       serviceAsAny.store = observableOf({
         core: {
-          history: ['url', 'newurl']
-        }
+          history: ['url', 'newurl'],
+        },
       });
 
       service.getPreviousUrl().subscribe((history) => {

@@ -10,7 +10,9 @@ export function rendersWorkflowTaskOption(option: string) {
     if (hasNoValue(map.get(option))) {
       map.set(option, component);
     } else {
-      throw new Error(`There can't be more than one component to render ClaimedTaskActions for option "${option}"`);
+      throw new Error(
+        `There can't be more than one component to render ClaimedTaskActions for option "${option}"`
+      );
     }
   };
 }

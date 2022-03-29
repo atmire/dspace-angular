@@ -33,7 +33,8 @@ export class MetadataSchemaDataService extends DataService<MetadataSchema> {
     protected objectCache: ObjectCacheService,
     protected comparator: DefaultChangeAnalyzer<MetadataSchema>,
     protected http: HttpClient,
-    protected notificationsService: NotificationsService) {
+    protected notificationsService: NotificationsService
+  ) {
     super();
   }
 
@@ -45,7 +46,9 @@ export class MetadataSchemaDataService extends DataService<MetadataSchema> {
    *  - On update, a PutRequest is used
    * @param schema    The MetadataSchema to create or update
    */
-  createOrUpdateMetadataSchema(schema: MetadataSchema): Observable<RemoteData<MetadataSchema>> {
+  createOrUpdateMetadataSchema(
+    schema: MetadataSchema
+  ): Observable<RemoteData<MetadataSchema>> {
     const isUpdate = hasValue(schema.id);
 
     if (isUpdate) {
@@ -64,5 +67,4 @@ export class MetadataSchemaDataService extends DataService<MetadataSchema> {
       tap((href: string) => this.requestService.removeByHrefSubstring(href))
     );
   }
-
 }

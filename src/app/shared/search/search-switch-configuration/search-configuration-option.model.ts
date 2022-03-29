@@ -4,7 +4,6 @@
 import { Context } from '../../../core/shared/context.model';
 
 export interface SearchConfigurationOption {
-
   /**
    * The select option value
    */

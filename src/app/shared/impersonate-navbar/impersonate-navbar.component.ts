@@ -7,7 +7,7 @@ import { isAuthenticated } from '../../core/auth/selectors';
 
 @Component({
   selector: 'ds-impersonate-navbar',
-  templateUrl: 'impersonate-navbar.component.html'
+  templateUrl: 'impersonate-navbar.component.html',
 })
 /**
  * Navbar component for actions to take concerning impersonating users
@@ -24,9 +24,10 @@ export class ImpersonateNavbarComponent implements OnInit {
    */
   isImpersonating: boolean;
 
-  constructor(private store: Store<AppState>,
-              private authService: AuthService) {
-  }
+  constructor(
+    private store: Store<AppState>,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.isAuthenticated$ = this.store.pipe(select(isAuthenticated));

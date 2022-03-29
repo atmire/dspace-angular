@@ -6,7 +6,10 @@ import { SearchService } from '../../../core/shared/search/search.service';
 import { DSpaceObjectType } from '../../../core/shared/dspace-object-type.model';
 import { ItemSearchResult } from '../../object-collection/shared/item-search-result.model';
 import { Item } from '../../../core/shared/item.model';
-import { createFailedRemoteDataObject$, createSuccessfulRemoteDataObject$ } from '../../remote-data.utils';
+import {
+  createFailedRemoteDataObject$,
+  createSuccessfulRemoteDataObject$,
+} from '../../remote-data.utils';
 import { PaginatedSearchOptions } from '../../search/models/paginated-search-options.model';
 import { hasValue } from '../../empty.util';
 import { createPaginatedList } from '../../testing/utils.test';
@@ -35,14 +38,23 @@ describe('DSOSelectorComponent', () => {
 
   const searchService = {
     search: (options: PaginatedSearchOptions) => {
-      if (hasValue(options.query) && options.query.startsWith('search.resourceid')) {
-        return createSuccessfulRemoteDataObject$(createPaginatedList([searchResult]));
+      if (
+        hasValue(options.query) &&
+        options.query.startsWith('search.resourceid')
+      ) {
+        return createSuccessfulRemoteDataObject$(
+          createPaginatedList([searchResult])
+        );
       } else if (options.pagination.currentPage === 1) {
-        return createSuccessfulRemoteDataObject$(createPaginatedList(firstPageResults));
+        return createSuccessfulRemoteDataObject$(
+          createPaginatedList(firstPageResults)
+        );
       } else {
-        return createSuccessfulRemoteDataObject$(createPaginatedList(nextPageResults));
+        return createSuccessfulRemoteDataObject$(
+          createPaginatedList(nextPageResults)
+        );
       }
-    }
+    },
   };
 
   function createSearchResult(name: string): ItemSearchResult {
@@ -52,18 +64,20 @@ describe('DSOSelectorComponent', () => {
         metadata: {
           'dc.title': [
             {
-              value: `test result - ${name}`
-            }
-          ]
-        }
-      })
+              value: `test result - ${name}`,
+            },
+          ],
+        },
+      }),
     });
   }
 
   let notificationsService: NotificationsService;
 
   beforeEach(waitForAsync(() => {
-    notificationsService = jasmine.createSpyObj('notificationsService', ['error']);
+    notificationsService = jasmine.createSpyObj('notificationsService', [
+      'error',
+    ]);
 
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
@@ -72,9 +86,8 @@ describe('DSOSelectorComponent', () => {
         { provide: SearchService, useValue: searchService },
         { provide: NotificationsService, useValue: notificationsService },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
-
   }));
 
   beforeEach(() => {
@@ -113,7 +126,11 @@ describe('DSOSelectorComponent', () => {
 
       it('should contain a combination of the current DSO, as well as first and second page results', (done) => {
         component.listEntries$.subscribe((listEntries) => {
-          expect(listEntries).toEqual([searchResult, ...firstPageResults, ...nextPageResults]);
+          expect(listEntries).toEqual([
+            searchResult,
+            ...firstPageResults,
+            ...nextPageResults,
+          ]);
           done();
         });
       });
@@ -122,7 +139,9 @@ describe('DSOSelectorComponent', () => {
 
   describe('when search returns an error', () => {
     beforeEach(() => {
-      spyOn(searchService, 'search').and.returnValue(createFailedRemoteDataObject$());
+      spyOn(searchService, 'search').and.returnValue(
+        createFailedRemoteDataObject$()
+      );
       component.ngOnInit();
     });
 

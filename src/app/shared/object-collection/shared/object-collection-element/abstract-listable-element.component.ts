@@ -10,7 +10,6 @@ import { DSpaceObject } from '../../../../core/shared/dspace-object.model';
   template: ``,
 })
 export class AbstractListableElementComponent<T extends ListableObject> {
-
   /**
    * The object to render in this list element
    */

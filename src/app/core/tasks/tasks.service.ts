@@ -1,7 +1,14 @@
 import { HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
-import { distinctUntilChanged, filter, find, map, mergeMap, tap } from 'rxjs/operators';
+import {
+  distinctUntilChanged,
+  filter,
+  find,
+  map,
+  mergeMap,
+  tap,
+} from 'rxjs/operators';
 
 import { DataService } from '../data/data.service';
 import {
@@ -9,12 +16,15 @@ import {
   FindListOptions,
   PostRequest,
   TaskDeleteRequest,
-  TaskPostRequest
+  TaskPostRequest,
 } from '../data/request.models';
 import { hasValue, isNotEmpty } from '../../shared/empty.util';
 import { HttpOptions } from '../dspace-rest/dspace-rest.service';
 import { ProcessTaskResponse } from './models/process-task-response';
-import { getAllCompletedRemoteData, getFirstCompletedRemoteData } from '../shared/operators';
+import {
+  getAllCompletedRemoteData,
+  getFirstCompletedRemoteData,
+} from '../shared/operators';
 import { CacheableObject } from '../cache/object-cache.reducer';
 import { RemoteData } from '../data/remote-data';
 import { FollowLinkConfig } from '../../shared/utils/follow-link-config.model';
@@ -22,8 +32,9 @@ import { FollowLinkConfig } from '../../shared/utils/follow-link-config.model';
 /**
  * An abstract class that provides methods to handle task requests.
  */
-export abstract class TasksService<T extends CacheableObject> extends DataService<T> {
-
+export abstract class TasksService<
+  T extends CacheableObject
+> extends DataService<T> {
   /**
    * Create the HREF for a specific submission object based on its identifier
    *
@@ -50,16 +61,27 @@ export abstract class TasksService<T extends CacheableObject> extends DataServic
    * @return Observable<SubmitDataResponseDefinitionObject>
    *     server response
    */
-  public postToEndpoint(linkPath: string, body: any, scopeId?: string, options?: HttpOptions): Observable<ProcessTaskResponse> {
+  public postToEndpoint(
+    linkPath: string,
+    body: any,
+    scopeId?: string,
+    options?: HttpOptions
+  ): Observable<ProcessTaskResponse> {
     const requestId = this.requestService.generateRequestId();
     return this.halService.getEndpoint(linkPath).pipe(
       filter((href: string) => isNotEmpty(href)),
-      map((endpointURL: string) => this.getEndpointByIDHref(endpointURL, scopeId)),
+      map((endpointURL: string) =>
+        this.getEndpointByIDHref(endpointURL, scopeId)
+      ),
       distinctUntilChanged(),
-      map((endpointURL: string) => new TaskPostRequest(requestId, endpointURL, body, options)),
+      map(
+        (endpointURL: string) =>
+          new TaskPostRequest(requestId, endpointURL, body, options)
+      ),
       tap((request: PostRequest) => this.requestService.send(request)),
       mergeMap((request: PostRequest) => this.fetchRequest(requestId)),
-      distinctUntilChanged());
+      distinctUntilChanged()
+    );
   }
 
   /**
@@ -74,13 +96,21 @@ export abstract class TasksService<T extends CacheableObject> extends DataServic
    * @return Observable<SubmitDataResponseDefinitionObject>
    *     server response
    */
-  public deleteById(linkPath: string, scopeId: string, options?: HttpOptions): Observable<ProcessTaskResponse> {
+  public deleteById(
+    linkPath: string,
+    scopeId: string,
+    options?: HttpOptions
+  ): Observable<ProcessTaskResponse> {
     const requestId = this.requestService.generateRequestId();
     return this.getEndpointById(scopeId, linkPath).pipe(
-      map((endpointURL: string) => new TaskDeleteRequest(requestId, endpointURL, null, options)),
+      map(
+        (endpointURL: string) =>
+          new TaskDeleteRequest(requestId, endpointURL, null, options)
+      ),
       tap((request: DeleteRequest) => this.requestService.send(request)),
       mergeMap((request: DeleteRequest) => this.fetchRequest(requestId)),
-      distinctUntilChanged());
+      distinctUntilChanged()
+    );
   }
 
   /**
@@ -88,11 +118,17 @@ export abstract class TasksService<T extends CacheableObject> extends DataServic
    * @param linkPath
    * @param scopeId
    */
-  public getEndpointById(scopeId: string, linkPath?: string): Observable<string> {
+  public getEndpointById(
+    scopeId: string,
+    linkPath?: string
+  ): Observable<string> {
     return this.halService.getEndpoint(linkPath || this.linkPath).pipe(
       filter((href: string) => isNotEmpty(href)),
       distinctUntilChanged(),
-      map((endpointURL: string) => this.getEndpointByIDHref(endpointURL, scopeId)));
+      map((endpointURL: string) =>
+        this.getEndpointByIDHref(endpointURL, scopeId)
+      )
+    );
   }
 
   /**
@@ -104,13 +140,23 @@ export abstract class TasksService<T extends CacheableObject> extends DataServic
    * @param linksToFollow
    *   links to follow
    */
-  public searchTask(searchMethod: string, options: FindListOptions = {}, ...linksToFollow: FollowLinkConfig<T>[]): Observable<RemoteData<T>> {
-    const hrefObs = this.getSearchByHref(searchMethod, options, ...linksToFollow);
+  public searchTask(
+    searchMethod: string,
+    options: FindListOptions = {},
+    ...linksToFollow: FollowLinkConfig<T>[]
+  ): Observable<RemoteData<T>> {
+    const hrefObs = this.getSearchByHref(
+      searchMethod,
+      options,
+      ...linksToFollow
+    );
     return hrefObs.pipe(
       find((href: string) => hasValue(href)),
-      mergeMap((href) => this.findByHref(href, false, true).pipe(
-        getAllCompletedRemoteData(),
-        tap(() => this.requestService.setStaleByHrefSubstring(href)))
+      mergeMap((href) =>
+        this.findByHref(href, false, true).pipe(
+          getAllCompletedRemoteData(),
+          tap(() => this.requestService.setStaleByHrefSubstring(href))
+        )
       )
     );
   }
@@ -128,7 +174,11 @@ export abstract class TasksService<T extends CacheableObject> extends DataServic
       getFirstCompletedRemoteData(),
       map((response: RemoteData<any>) => {
         if (response.hasFailed) {
-          return new ProcessTaskResponse(false, response.statusCode, response.errorMessage);
+          return new ProcessTaskResponse(
+            false,
+            response.statusCode,
+            response.errorMessage
+          );
         } else {
           return new ProcessTaskResponse(true, response.statusCode);
         }
@@ -142,7 +192,10 @@ export abstract class TasksService<T extends CacheableObject> extends DataServic
   protected makeHttpOptions() {
     const options: HttpOptions = Object.create({});
     let headers = new HttpHeaders();
-    headers = headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    headers = headers.append(
+      'Content-Type',
+      'application/x-www-form-urlencoded'
+    );
     options.headers = headers;
     return options;
   }

@@ -24,33 +24,39 @@ describe('ItemStatusComponent', () => {
     handle: 'fake/handle',
     lastModified: '2018',
     _links: {
-      self: { href: 'test-item-selflink' }
-    }
+      self: { href: 'test-item-selflink' },
+    },
   });
 
   const itemPageUrl = `/items/${mockItem.uuid}`;
 
   const routeStub = {
     parent: {
-      data: observableOf({ dso: createSuccessfulRemoteDataObject(mockItem) })
-    }
+      data: observableOf({ dso: createSuccessfulRemoteDataObject(mockItem) }),
+    },
   };
 
   let authorizationService: AuthorizationDataService;
 
   beforeEach(waitForAsync(() => {
     authorizationService = jasmine.createSpyObj('authorizationService', {
-      isAuthorized: observableOf(true)
+      isAuthorized: observableOf(true),
     });
 
     TestBed.configureTestingModule({
-      imports: [CommonModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), NgbModule],
+      imports: [
+        CommonModule,
+        RouterTestingModule.withRoutes([]),
+        TranslateModule.forRoot(),
+        NgbModule,
+      ],
       declarations: [ItemStatusComponent],
       providers: [
         { provide: ActivatedRoute, useValue: routeStub },
         { provide: HostWindowService, useValue: new HostWindowServiceStub(0) },
         { provide: AuthorizationDataService, useValue: authorizationService },
-      ], schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -60,25 +66,31 @@ describe('ItemStatusComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should display the item\'s internal id', () => {
-    const statusId: HTMLElement = fixture.debugElement.query(By.css('.status-data#status-id')).nativeElement;
+  it("should display the item's internal id", () => {
+    const statusId: HTMLElement = fixture.debugElement.query(
+      By.css('.status-data#status-id')
+    ).nativeElement;
     expect(statusId.textContent).toContain(mockItem.id);
   });
 
-  it('should display the item\'s handle', () => {
-    const statusHandle: HTMLElement = fixture.debugElement.query(By.css('.status-data#status-handle')).nativeElement;
+  it("should display the item's handle", () => {
+    const statusHandle: HTMLElement = fixture.debugElement.query(
+      By.css('.status-data#status-handle')
+    ).nativeElement;
     expect(statusHandle.textContent).toContain(mockItem.handle);
   });
 
-  it('should display the item\'s last modified date', () => {
-    const statusLastModified: HTMLElement = fixture.debugElement.query(By.css('.status-data#status-lastModified')).nativeElement;
+  it("should display the item's last modified date", () => {
+    const statusLastModified: HTMLElement = fixture.debugElement.query(
+      By.css('.status-data#status-lastModified')
+    ).nativeElement;
     expect(statusLastModified.textContent).toContain(mockItem.lastModified);
   });
 
-  it('should display the item\'s page url', () => {
-    const statusItemPage: HTMLElement = fixture.debugElement.query(By.css('.status-data#status-itemPage')).nativeElement;
+  it("should display the item's page url", () => {
+    const statusItemPage: HTMLElement = fixture.debugElement.query(
+      By.css('.status-data#status-itemPage')
+    ).nativeElement;
     expect(statusItemPage.textContent).toContain(itemPageUrl);
   });
-
-})
-;
+});

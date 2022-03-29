@@ -10,32 +10,34 @@ import { NavigationExtras, Router } from '@angular/router';
 import { SearchConfigurationServiceStub } from '../../testing/search-configuration-service.stub';
 import { RouterStub } from '../../testing/router.stub';
 import { SearchService } from '../../../core/shared/search/search.service';
-import { MYDSPACE_ROUTE, SEARCH_CONFIG_SERVICE } from '../../../my-dspace-page/my-dspace-page.component';
+import {
+  MYDSPACE_ROUTE,
+  SEARCH_CONFIG_SERVICE,
+} from '../../../my-dspace-page/my-dspace-page.component';
 import { MyDSpaceConfigurationValueType } from '../../../my-dspace-page/my-dspace-configuration-value-type';
 import { TranslateLoaderMock } from '../../mocks/translate-loader.mock';
 import { Context } from '../../../core/shared/context.model';
 
 describe('SearchSwitchConfigurationComponent', () => {
-
   let comp: SearchSwitchConfigurationComponent;
   let fixture: ComponentFixture<SearchSwitchConfigurationComponent>;
   let searchConfService: SearchConfigurationServiceStub;
   let select: any;
 
   const searchServiceStub = jasmine.createSpyObj('SearchService', {
-    getSearchLink: jasmine.createSpy('getSearchLink')
+    getSearchLink: jasmine.createSpy('getSearchLink'),
   });
 
   const configurationList = [
     {
       value: MyDSpaceConfigurationValueType.Workspace,
       label: 'workspace',
-      context: Context.Workspace
+      context: Context.Workspace,
     },
     {
       value: MyDSpaceConfigurationValueType.Workflow,
       label: 'workflow',
-      context: Context.Workflow
+      context: Context.Workflow,
     },
   ];
   beforeEach(waitForAsync(() => {
@@ -44,17 +46,20 @@ describe('SearchSwitchConfigurationComponent', () => {
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
-            useClass: TranslateLoaderMock
-          }
-        })
+            useClass: TranslateLoaderMock,
+          },
+        }),
       ],
       declarations: [SearchSwitchConfigurationComponent],
       providers: [
         { provide: Router, useValue: new RouterStub() },
         { provide: SearchService, useValue: searchServiceStub },
-        { provide: SEARCH_CONFIG_SERVICE, useValue: new SearchConfigurationServiceStub() },
+        {
+          provide: SEARCH_CONFIG_SERVICE,
+          useValue: new SearchConfigurationServiceStub(),
+        },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -63,13 +68,14 @@ describe('SearchSwitchConfigurationComponent', () => {
     comp = fixture.componentInstance;
     searchConfService = TestBed.inject(SEARCH_CONFIG_SERVICE as any);
 
-    spyOn(searchConfService, 'getCurrentConfiguration').and.returnValue(observableOf(MyDSpaceConfigurationValueType.Workspace));
+    spyOn(searchConfService, 'getCurrentConfiguration').and.returnValue(
+      observableOf(MyDSpaceConfigurationValueType.Workspace)
+    );
 
     comp.configurationList = configurationList;
 
     // SearchSwitchConfigurationComponent test instance
     fixture.detectChanges();
-
   });
 
   it('should init the current configuration name', () => {
@@ -89,16 +95,15 @@ describe('SearchSwitchConfigurationComponent', () => {
       spyOn(comp, 'onSelect');
       select = fixture.debugElement.query(By.css('select'));
       const selectEl = select.nativeElement;
-      selectEl.value = selectEl.options[1].value;  // <-- select a new value
+      selectEl.value = selectEl.options[1].value; // <-- select a new value
       selectEl.dispatchEvent(new Event('change'));
       fixture.detectChanges();
       expect(comp.onSelect).toHaveBeenCalled();
     });
-
   });
 
   it('should navigate to the route when selecting an option', () => {
-    spyOn((comp as any), 'getSearchLinkParts').and.returnValue([MYDSPACE_ROUTE]);
+    spyOn(comp as any, 'getSearchLinkParts').and.returnValue([MYDSPACE_ROUTE]);
     spyOn((comp as any).changeConfiguration, 'emit');
     comp.selectedOption = configurationList[1];
     const navigationExtras: NavigationExtras = {
@@ -109,7 +114,10 @@ describe('SearchSwitchConfigurationComponent', () => {
 
     comp.onSelect();
 
-    expect((comp as any).router.navigate).toHaveBeenCalledWith([MYDSPACE_ROUTE], navigationExtras);
+    expect((comp as any).router.navigate).toHaveBeenCalledWith(
+      [MYDSPACE_ROUTE],
+      navigationExtras
+    );
     expect((comp as any).changeConfiguration.emit).toHaveBeenCalled();
   });
 });

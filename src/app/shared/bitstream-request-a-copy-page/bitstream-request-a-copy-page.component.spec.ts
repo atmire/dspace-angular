@@ -6,7 +6,7 @@ import { AuthorizationDataService } from '../../core/data/feature-authorization/
 import {
   createFailedRemoteDataObject$,
   createSuccessfulRemoteDataObject,
-  createSuccessfulRemoteDataObject$
+  createSuccessfulRemoteDataObject$,
 } from '../remote-data.utils';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -25,7 +25,6 @@ import { EPerson } from '../../core/eperson/models/eperson.model';
 import { ItemRequest } from '../../core/shared/item-request.model';
 import { Location } from '@angular/common';
 import { BitstreamDataService } from '../../core/data/bitstream-data.service';
-
 
 describe('BitstreamRequestACopyPageComponent', () => {
   let component: BitstreamRequestACopyPageComponent;
@@ -48,51 +47,49 @@ describe('BitstreamRequestACopyPageComponent', () => {
     eperson = Object.assign(new EPerson(), {
       email: 'test@mail.org',
       metadata: {
-        'eperson.firstname': [{value: 'Test'}],
-        'eperson.lastname': [{value: 'User'}],
-      }
+        'eperson.firstname': [{ value: 'Test' }],
+        'eperson.lastname': [{ value: 'User' }],
+      },
     });
     authService = jasmine.createSpyObj('authService', {
       isAuthenticated: observableOf(false),
-      getAuthenticatedUserFromStore: observableOf(eperson)
+      getAuthenticatedUserFromStore: observableOf(eperson),
     });
     authorizationService = jasmine.createSpyObj('authorizationSerivice', {
-      isAuthorized: observableOf(true)
+      isAuthorized: observableOf(true),
     });
 
     itemRequestDataService = jasmine.createSpyObj('itemRequestDataService', {
-      requestACopy: createSuccessfulRemoteDataObject$({})
+      requestACopy: createSuccessfulRemoteDataObject$({}),
     });
 
     location = jasmine.createSpyObj('location', {
-      back: {}
+      back: {},
     });
 
     notificationsService = new NotificationsServiceStub();
 
-    item = Object.assign(new Item(), {uuid: 'item-uuid'});
+    item = Object.assign(new Item(), { uuid: 'item-uuid' });
 
     bitstream = Object.assign(new Bitstream(), {
       uuid: 'bitstreamUuid',
       _links: {
-        content: {href: 'bitstream-content-link'},
-        self: {href: 'bitstream-self-link'},
-      }
+        content: { href: 'bitstream-content-link' },
+        self: { href: 'bitstream-self-link' },
+      },
     });
 
     activatedRoute = {
       data: observableOf({
-        dso: createSuccessfulRemoteDataObject(
-          item
-        )
+        dso: createSuccessfulRemoteDataObject(item),
       }),
       queryParams: observableOf({
-        bitstream : bitstream.uuid
-      })
+        bitstream: bitstream.uuid,
+      }),
     };
 
     bitstreamDataService = jasmine.createSpyObj('bitstreamDataService', {
-      findById: createSuccessfulRemoteDataObject$(bitstream)
+      findById: createSuccessfulRemoteDataObject$(bitstream),
     });
 
     router = new RouterStub();
@@ -100,21 +97,25 @@ describe('BitstreamRequestACopyPageComponent', () => {
 
   function initTestbed() {
     TestBed.configureTestingModule({
-      imports: [CommonModule, TranslateModule.forRoot(), FormsModule, ReactiveFormsModule],
+      imports: [
+        CommonModule,
+        TranslateModule.forRoot(),
+        FormsModule,
+        ReactiveFormsModule,
+      ],
       declarations: [BitstreamRequestACopyPageComponent],
       providers: [
-        {provide: Location, useValue: location},
-        {provide: ActivatedRoute, useValue: activatedRoute},
-        {provide: Router, useValue: router},
-        {provide: AuthorizationDataService, useValue: authorizationService},
-        {provide: AuthService, useValue: authService},
-        {provide: ItemRequestDataService, useValue: itemRequestDataService},
-        {provide: NotificationsService, useValue: notificationsService},
-        {provide: DSONameService, useValue: new DSONameServiceMock()},
-        {provide: BitstreamDataService, useValue: bitstreamDataService},
-      ]
-    })
-      .compileComponents();
+        { provide: Location, useValue: location },
+        { provide: ActivatedRoute, useValue: activatedRoute },
+        { provide: Router, useValue: router },
+        { provide: AuthorizationDataService, useValue: authorizationService },
+        { provide: AuthService, useValue: authService },
+        { provide: ItemRequestDataService, useValue: itemRequestDataService },
+        { provide: NotificationsService, useValue: notificationsService },
+        { provide: DSONameService, useValue: new DSONameServiceMock() },
+        { provide: BitstreamDataService, useValue: bitstreamDataService },
+      ],
+    }).compileComponents();
   }
 
   describe('init', () => {
@@ -154,7 +155,9 @@ describe('BitstreamRequestACopyPageComponent', () => {
     describe('when the user is logged in', () => {
       beforeEach(waitForAsync(() => {
         init();
-        (authService.isAuthenticated as jasmine.Spy).and.returnValue(observableOf(true));
+        (authService.isAuthenticated as jasmine.Spy).and.returnValue(
+          observableOf(true)
+        );
         initTestbed();
       }));
       beforeEach(() => {
@@ -175,12 +178,9 @@ describe('BitstreamRequestACopyPageComponent', () => {
         init();
         activatedRoute = {
           data: observableOf({
-            dso: createSuccessfulRemoteDataObject(
-              item
-            )
+            dso: createSuccessfulRemoteDataObject(item),
           }),
-          queryParams: observableOf({
-          })
+          queryParams: observableOf({}),
         };
         initTestbed();
       }));
@@ -195,15 +195,18 @@ describe('BitstreamRequestACopyPageComponent', () => {
         expect(component.allfiles.value).toEqual('true');
         expect(component.message.value).toEqual('');
 
-        const allFilesFalse = fixture.debugElement.query(By.css('#allfiles-false')).nativeElement;
+        const allFilesFalse = fixture.debugElement.query(
+          By.css('#allfiles-false')
+        ).nativeElement;
         expect(allFilesFalse.getAttribute('disabled')).toBeTruthy();
-
       });
     });
     describe('when the user has authorization to download the file', () => {
       beforeEach(waitForAsync(() => {
         init();
-        (authService.isAuthenticated as jasmine.Spy).and.returnValue(observableOf(true));
+        (authService.isAuthenticated as jasmine.Spy).and.returnValue(
+          observableOf(true)
+        );
         initTestbed();
       }));
       beforeEach(() => {
@@ -212,8 +215,12 @@ describe('BitstreamRequestACopyPageComponent', () => {
         fixture.detectChanges();
       });
       it('should show an alert indicating the user can download the file', () => {
-        const alert = fixture.debugElement.query(By.css('.alert')).nativeElement;
-        expect(alert.innerHTML).toContain('bitstream-request-a-copy.alert.canDownload');
+        const alert = fixture.debugElement.query(
+          By.css('.alert')
+        ).nativeElement;
+        expect(alert.innerHTML).toContain(
+          'bitstream-request-a-copy.alert.canDownload'
+        );
       });
     });
   });
@@ -236,17 +243,18 @@ describe('BitstreamRequestACopyPageComponent', () => {
         component.message.patchValue('I would like to request a copy');
 
         component.onSubmit();
-        const itemRequest = Object.assign(new ItemRequest(),
-          {
-            itemId: item.uuid,
-            bitstreamId: bitstream.uuid,
-            allfiles: 'false',
-            requestEmail: 'user@name.org',
-            requestName: 'User Name',
-            requestMessage: 'I would like to request a copy'
-          });
+        const itemRequest = Object.assign(new ItemRequest(), {
+          itemId: item.uuid,
+          bitstreamId: bitstream.uuid,
+          allfiles: 'false',
+          requestEmail: 'user@name.org',
+          requestName: 'User Name',
+          requestMessage: 'I would like to request a copy',
+        });
 
-        expect(itemRequestDataService.requestACopy).toHaveBeenCalledWith(itemRequest);
+        expect(itemRequestDataService.requestACopy).toHaveBeenCalledWith(
+          itemRequest
+        );
         expect(notificationsService.success).toHaveBeenCalled();
         expect(location.back).toHaveBeenCalled();
       });
@@ -255,7 +263,9 @@ describe('BitstreamRequestACopyPageComponent', () => {
     describe('onFail', () => {
       beforeEach(waitForAsync(() => {
         init();
-        (itemRequestDataService.requestACopy as jasmine.Spy).and.returnValue(createFailedRemoteDataObject$());
+        (itemRequestDataService.requestACopy as jasmine.Spy).and.returnValue(
+          createFailedRemoteDataObject$()
+        );
         initTestbed();
       }));
       beforeEach(() => {
@@ -270,17 +280,18 @@ describe('BitstreamRequestACopyPageComponent', () => {
         component.message.patchValue('I would like to request a copy');
 
         component.onSubmit();
-        const itemRequest = Object.assign(new ItemRequest(),
-          {
-            itemId: item.uuid,
-            bitstreamId: bitstream.uuid,
-            allfiles: 'false',
-            requestEmail: 'user@name.org',
-            requestName: 'User Name',
-            requestMessage: 'I would like to request a copy'
-          });
+        const itemRequest = Object.assign(new ItemRequest(), {
+          itemId: item.uuid,
+          bitstreamId: bitstream.uuid,
+          allfiles: 'false',
+          requestEmail: 'user@name.org',
+          requestName: 'User Name',
+          requestMessage: 'I would like to request a copy',
+        });
 
-        expect(itemRequestDataService.requestACopy).toHaveBeenCalledWith(itemRequest);
+        expect(itemRequestDataService.requestACopy).toHaveBeenCalledWith(
+          itemRequest
+        );
         expect(notificationsService.error).toHaveBeenCalled();
         expect(location.back).not.toHaveBeenCalled();
       });

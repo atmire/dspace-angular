@@ -6,21 +6,32 @@ import { ResourceType } from '../../shared/resource-type';
 import {
   CacheableObject,
   TypedObject,
-  getResourceTypeValueFor
+  getResourceTypeValueFor,
 } from '../object-cache.reducer';
 import { InjectionToken } from '@angular/core';
 
-export const DATA_SERVICE_FACTORY = new InjectionToken<(resourceType: ResourceType) => GenericConstructor<any>>('getDataServiceFor', {
+export const DATA_SERVICE_FACTORY = new InjectionToken<
+  (resourceType: ResourceType) => GenericConstructor<any>
+>('getDataServiceFor', {
   providedIn: 'root',
-  factory: () => getDataServiceFor
+  factory: () => getDataServiceFor,
 });
-export const LINK_DEFINITION_FACTORY = new InjectionToken<<T extends HALResource>(source: GenericConstructor<T>, linkName: keyof T['_links']) => LinkDefinition<T>>('getLinkDefinition', {
+export const LINK_DEFINITION_FACTORY = new InjectionToken<
+  <T extends HALResource>(
+    source: GenericConstructor<T>,
+    linkName: keyof T['_links']
+  ) => LinkDefinition<T>
+>('getLinkDefinition', {
   providedIn: 'root',
-  factory: () => getLinkDefinition
+  factory: () => getLinkDefinition,
 });
-export const LINK_DEFINITION_MAP_FACTORY = new InjectionToken<<T extends HALResource>(source: GenericConstructor<T>) => Map<keyof T['_links'], LinkDefinition<T>>>('getLinkDefinitions', {
+export const LINK_DEFINITION_MAP_FACTORY = new InjectionToken<
+  <T extends HALResource>(
+    source: GenericConstructor<T>
+  ) => Map<keyof T['_links'], LinkDefinition<T>>
+>('getLinkDefinitions', {
   providedIn: 'root',
-  factory: () => getLinkDefinitions
+  factory: () => getLinkDefinitions,
 });
 
 const resolvedLinkKey = Symbol('resolvedLink');
@@ -58,12 +69,16 @@ export function getClassForType(type: string | ResourceType) {
 export function dataService(resourceType: ResourceType): any {
   return (target: any) => {
     if (hasNoValue(resourceType)) {
-      throw new Error(`Invalid @dataService annotation on ${target}, resourceType needs to be defined`);
+      throw new Error(
+        `Invalid @dataService annotation on ${target}, resourceType needs to be defined`
+      );
     }
     const existingDataservice = dataServiceMap.get(resourceType.value);
 
     if (hasValue(existingDataservice)) {
-      throw new Error(`Multiple dataservices for ${resourceType.value}: ${existingDataservice} and ${target}`);
+      throw new Error(
+        `Multiple dataservices for ${resourceType.value}: ${existingDataservice} and ${target}`
+      );
     }
 
     dataServiceMap.set(resourceType.value, target);
@@ -75,7 +90,9 @@ export function dataService(resourceType: ResourceType): any {
  *
  * @param resourceType the resource type you want the matching dataservice for
  */
-export function getDataServiceFor<T extends CacheableObject>(resourceType: ResourceType) {
+export function getDataServiceFor<T extends CacheableObject>(
+  resourceType: ResourceType
+) {
   return dataServiceMap.get(resourceType.value);
 }
 
@@ -105,8 +122,8 @@ export class LinkDefinition<T extends HALResource> {
 export const link = <T extends HALResource>(
   resourceType: ResourceType,
   isList = false,
-  linkName?: keyof T['_links'],
-  ) => {
+  linkName?: keyof T['_links']
+) => {
   return (target: T, propertyName: string) => {
     let targetMap = linkMap.get(target.constructor);
 
@@ -122,7 +139,7 @@ export const link = <T extends HALResource>(
       resourceType,
       isList,
       linkName,
-      propertyName
+      propertyName,
     });
 
     linkMap.set(target.constructor, targetMap);
@@ -133,7 +150,9 @@ export const link = <T extends HALResource>(
  * Returns all LinkDefinitions for a model class
  * @param source
  */
-export const getLinkDefinitions = <T extends HALResource>(source: GenericConstructor<T>): Map<keyof T['_links'], LinkDefinition<T>> => {
+export const getLinkDefinitions = <T extends HALResource>(
+  source: GenericConstructor<T>
+): Map<keyof T['_links'], LinkDefinition<T>> => {
   return linkMap.get(source);
 };
 
@@ -143,7 +162,10 @@ export const getLinkDefinitions = <T extends HALResource>(source: GenericConstru
  * @param source the model class
  * @param linkName the name of the link
  */
-export const getLinkDefinition = <T extends HALResource>(source: GenericConstructor<T>, linkName: keyof T['_links']): LinkDefinition<T> => {
+export const getLinkDefinition = <T extends HALResource>(
+  source: GenericConstructor<T>,
+  linkName: keyof T['_links']
+): LinkDefinition<T> => {
   const sourceMap = linkMap.get(source);
   if (hasValue(sourceMap)) {
     return sourceMap.get(linkName);
@@ -160,8 +182,10 @@ export const getLinkDefinition = <T extends HALResource>(source: GenericConstruc
  */
 export function inheritLinkAnnotations(parent: any): any {
   return (child: any) => {
-    const parentMap: Map<string, LinkDefinition<any>> = linkMap.get(parent) || new Map();
-    const childMap: Map<string, LinkDefinition<any>> = linkMap.get(child) || new Map();
+    const parentMap: Map<string, LinkDefinition<any>> = linkMap.get(parent) ||
+    new Map();
+    const childMap: Map<string, LinkDefinition<any>> = linkMap.get(child) ||
+    new Map();
 
     parentMap.forEach((value, key) => {
       if (!childMap.has(key)) {

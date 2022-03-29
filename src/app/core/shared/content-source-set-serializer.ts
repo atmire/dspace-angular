@@ -4,7 +4,6 @@ import { isEmpty } from '../../shared/empty.util';
  * Serializer to create convert the 'all' value supported by the server to an empty string and vice versa.
  */
 export class ContentSourceSetSerializer {
-
   /**
    * Method to serialize a setId
    * @param {string} setId

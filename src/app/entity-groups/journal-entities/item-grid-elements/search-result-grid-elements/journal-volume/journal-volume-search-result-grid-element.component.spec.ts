@@ -9,41 +9,53 @@ import { getEntityGridElementTestComponent } from '../../../../../shared/object-
 const mockItemWithMetadata: ItemSearchResult = new ItemSearchResult();
 mockItemWithMetadata.hitHighlights = {};
 mockItemWithMetadata.indexableObject = Object.assign(new Item(), {
-  bundles: createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), [])),
+  bundles: createSuccessfulRemoteDataObject$(
+    buildPaginatedList(new PageInfo(), [])
+  ),
   metadata: {
     'dc.title': [
       {
         language: 'en_US',
-        value: 'This is just another title'
-      }
+        value: 'This is just another title',
+      },
     ],
     'creativework.datePublished': [
       {
         language: null,
-        value: '2015-06-26'
-      }
+        value: '2015-06-26',
+      },
     ],
     'dc.description': [
       {
         language: 'en_US',
-        value: 'A description for the journal volume'
-      }
-    ]
-  }
+        value: 'A description for the journal volume',
+      },
+    ],
+  },
 });
 
 const mockItemWithoutMetadata: ItemSearchResult = new ItemSearchResult();
 mockItemWithoutMetadata.hitHighlights = {};
 mockItemWithoutMetadata.indexableObject = Object.assign(new Item(), {
-  bundles: createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), [])),
+  bundles: createSuccessfulRemoteDataObject$(
+    buildPaginatedList(new PageInfo(), [])
+  ),
   metadata: {
     'dc.title': [
       {
         language: 'en_US',
-        value: 'This is just another title'
-      }
-    ]
-  }
+        value: 'This is just another title',
+      },
+    ],
+  },
 });
 
-describe('JournalVolumeSearchResultGridElementComponent', getEntityGridElementTestComponent(JournalVolumeSearchResultGridElementComponent, mockItemWithMetadata, mockItemWithoutMetadata, ['date', 'description']));
+describe(
+  'JournalVolumeSearchResultGridElementComponent',
+  getEntityGridElementTestComponent(
+    JournalVolumeSearchResultGridElementComponent,
+    mockItemWithMetadata,
+    mockItemWithoutMetadata,
+    ['date', 'description']
+  )
+);

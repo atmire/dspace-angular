@@ -6,5 +6,5 @@ import { SubmissionUploadModel } from './config-submission-upload.model';
 @typedObject
 @inheritSerialization(SubmissionUploadModel)
 export class SubmissionUploadsModel extends SubmissionUploadModel {
-  static type =  SUBMISSION_UPLOADS_TYPE;
+  static type = SUBMISSION_UPLOADS_TYPE;
 }

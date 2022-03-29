@@ -1,10 +1,21 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { of as observableOf, Subscription } from 'rxjs';
 import { catchError, distinctUntilChanged } from 'rxjs/operators';
 import { NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
-import { DynamicFormLayoutService, DynamicFormValidationService } from '@ng-dynamic-forms/core';
+import {
+  DynamicFormLayoutService,
+  DynamicFormValidationService,
+} from '@ng-dynamic-forms/core';
 
 import { VocabularyService } from '../../../../../../core/submission/vocabularies/vocabulary.service';
 import { hasValue, isEmpty, isNotEmpty } from '../../../../../empty.util';
@@ -15,7 +26,7 @@ import { DynamicLookupNameModel } from './dynamic-lookup-name.model';
 import { ConfidenceType } from '../../../../../../core/shared/confidence-type';
 import {
   PaginatedList,
-  buildPaginatedList
+  buildPaginatedList,
 } from '../../../../../../core/data/paginated-list.model';
 import { getFirstSucceededRemoteDataPayload } from '../../../../../../core/shared/operators';
 import { DsDynamicVocabularyComponent } from '../dynamic-vocabulary.component';
@@ -26,10 +37,12 @@ import { DsDynamicVocabularyComponent } from '../dynamic-vocabulary.component';
 @Component({
   selector: 'ds-dynamic-lookup',
   styleUrls: ['./dynamic-lookup.component.scss'],
-  templateUrl: './dynamic-lookup.component.html'
+  templateUrl: './dynamic-lookup.component.html',
 })
-export class DsDynamicLookupComponent extends DsDynamicVocabularyComponent implements OnDestroy, OnInit {
-
+export class DsDynamicLookupComponent
+  extends DsDynamicVocabularyComponent
+  implements OnDestroy, OnInit
+{
   @Input() group: FormGroup;
   @Input() model: any;
 
@@ -46,10 +59,11 @@ export class DsDynamicLookupComponent extends DsDynamicVocabularyComponent imple
 
   protected subs: Subscription[] = [];
 
-  constructor(protected vocabularyService: VocabularyService,
-              private cdr: ChangeDetectorRef,
-              protected layoutService: DynamicFormLayoutService,
-              protected validationService: DynamicFormValidationService
+  constructor(
+    protected vocabularyService: VocabularyService,
+    private cdr: ChangeDetectorRef,
+    protected layoutService: DynamicFormLayoutService,
+    protected validationService: DynamicFormValidationService
   ) {
     super(vocabularyService, layoutService, validationService);
   }
@@ -69,23 +83,26 @@ export class DsDynamicLookupComponent extends DsDynamicVocabularyComponent imple
       this.setCurrentValue(this.model.value, true);
     }
 
-    this.subs.push(this.model.valueChanges
-      .subscribe((value) => {
+    this.subs.push(
+      this.model.valueChanges.subscribe((value) => {
         if (isEmpty(value)) {
           this.resetFields();
         } else if (!this.editMode) {
           this.setCurrentValue(this.model.value);
         }
-      }));
+      })
+    );
   }
 
   /**
    * Check if model value has an authority
    */
   public hasAuthorityValue() {
-    return hasValue(this.model.value)
-      && typeof this.model.value === 'object'
-      && this.model.value.hasAuthority();
+    return (
+      hasValue(this.model.value) &&
+      typeof this.model.value === 'object' &&
+      this.model.value.hasAuthority()
+    );
   }
 
   /**
@@ -115,14 +132,18 @@ export class DsDynamicLookupComponent extends DsDynamicVocabularyComponent imple
    * Check if input is disabled
    */
   public isInputDisabled() {
-    return (this.model.vocabularyOptions.closed && this.hasAuthorityValue() && !this.editMode);
+    return (
+      this.model.vocabularyOptions.closed &&
+      this.hasAuthorityValue() &&
+      !this.editMode
+    );
   }
 
   /**
    * Check if model is instanceof DynamicLookupNameModel
    */
   public isLookupName() {
-    return (this.model instanceof DynamicLookupNameModel);
+    return this.model instanceof DynamicLookupNameModel;
   }
 
   /**
@@ -140,7 +161,9 @@ export class DsDynamicLookupComponent extends DsDynamicVocabularyComponent imple
     event.preventDefault();
     if (!this.model.vocabularyOptions.closed) {
       if (isNotEmpty(this.getCurrentValue())) {
-        const currentValue = new FormFieldMetadataValueObject(this.getCurrentValue());
+        const currentValue = new FormFieldMetadataValueObject(
+          this.getCurrentValue()
+        );
         if (!this.editMode) {
           this.updateModel(currentValue);
         }
@@ -154,7 +177,10 @@ export class DsDynamicLookupComponent extends DsDynamicVocabularyComponent imple
    * Load more result entries
    */
   public onScroll() {
-    if (!this.loading && this.pageInfo.currentPage <= this.pageInfo.totalPages) {
+    if (
+      !this.loading &&
+      this.pageInfo.currentPage <= this.pageInfo.totalPages
+    ) {
       this.updatePageInfo(
         this.pageInfo.elementsPerPage,
         this.pageInfo.currentPage + 1,
@@ -199,7 +225,7 @@ export class DsDynamicLookupComponent extends DsDynamicVocabularyComponent imple
     if (isNotEmpty(this.getCurrentValue())) {
       const newValue = Object.assign(new VocabularyEntry(), this.model.value, {
         display: this.getCurrentValue(),
-        value: this.getCurrentValue()
+        value: this.getCurrentValue(),
       });
       this.updateModel(newValue);
     } else {
@@ -217,31 +243,33 @@ export class DsDynamicLookupComponent extends DsDynamicVocabularyComponent imple
     this.updatePageInfo(this.model.maxOptions, 1);
     this.loading = true;
 
-    this.subs.push(this.vocabularyService.getVocabularyEntriesByValue(
-      this.getCurrentValue(),
-      false,
-      this.model.vocabularyOptions,
-      this.pageInfo
-    ).pipe(
-      getFirstSucceededRemoteDataPayload(),
-      catchError(() =>
-        observableOf(buildPaginatedList(
-          new PageInfo(),
-          []
-        ))
-      ),
-      distinctUntilChanged())
-      .subscribe((list: PaginatedList<VocabularyEntry>) => {
-        this.optionsList = list.page;
-        this.updatePageInfo(
-          list.pageInfo.elementsPerPage,
-          list.pageInfo.currentPage,
-          list.pageInfo.totalElements,
-          list.pageInfo.totalPages
-        );
-        this.loading = false;
-        this.cdr.detectChanges();
-      }));
+    this.subs.push(
+      this.vocabularyService
+        .getVocabularyEntriesByValue(
+          this.getCurrentValue(),
+          false,
+          this.model.vocabularyOptions,
+          this.pageInfo
+        )
+        .pipe(
+          getFirstSucceededRemoteDataPayload(),
+          catchError(() =>
+            observableOf(buildPaginatedList(new PageInfo(), []))
+          ),
+          distinctUntilChanged()
+        )
+        .subscribe((list: PaginatedList<VocabularyEntry>) => {
+          this.optionsList = list.page;
+          this.updatePageInfo(
+            list.pageInfo.elementsPerPage,
+            list.pageInfo.currentPage,
+            list.pageInfo.totalElements,
+            list.pageInfo.totalPages
+          );
+          this.loading = false;
+          this.cdr.detectChanges();
+        })
+    );
   }
 
   /**
@@ -254,7 +282,10 @@ export class DsDynamicLookupComponent extends DsDynamicVocabularyComponent imple
   /**
    * Callback functions for whenClickOnConfidenceNotAccepted event
    */
-  public whenClickOnConfidenceNotAccepted(sdRef: NgbDropdown, confidence: ConfidenceType) {
+  public whenClickOnConfidenceNotAccepted(
+    sdRef: NgbDropdown,
+    confidence: ConfidenceType
+  ) {
     if (!this.model.readOnly) {
       sdRef.open();
       this.search();
@@ -274,10 +305,15 @@ export class DsDynamicLookupComponent extends DsDynamicVocabularyComponent imple
    */
   public setCurrentValue(value: any, init = false) {
     if (init) {
-      this.getInitValueFromModel()
-        .subscribe((formValue: FormFieldMetadataValueObject) => this.setDisplayInputValue(formValue.display));
+      this.getInitValueFromModel().subscribe(
+        (formValue: FormFieldMetadataValueObject) =>
+          this.setDisplayInputValue(formValue.display)
+      );
     } else if (hasValue(value)) {
-      if (value instanceof FormFieldMetadataValueObject || value instanceof VocabularyEntry) {
+      if (
+        value instanceof FormFieldMetadataValueObject ||
+        value instanceof VocabularyEntry
+      ) {
         this.setDisplayInputValue(value.display);
       }
     }
@@ -286,7 +322,9 @@ export class DsDynamicLookupComponent extends DsDynamicVocabularyComponent imple
   protected setDisplayInputValue(displayValue: string) {
     if (hasValue(displayValue)) {
       if (this.isLookupName()) {
-        const values = displayValue.split((this.model as DynamicLookupNameModel).separator);
+        const values = displayValue.split(
+          (this.model as DynamicLookupNameModel).separator
+        );
 
         this.firstInputValue = (values[0] || '').trim();
         this.secondInputValue = (values[1] || '').trim();
@@ -311,7 +349,10 @@ export class DsDynamicLookupComponent extends DsDynamicVocabularyComponent imple
       if (isNotEmpty(this.secondInputValue)) {
         result = isEmpty(result)
           ? this.secondInputValue
-          : this.firstInputValue + (this.model as DynamicLookupNameModel).separator + ' ' + this.secondInputValue;
+          : this.firstInputValue +
+            (this.model as DynamicLookupNameModel).separator +
+            ' ' +
+            this.secondInputValue;
       }
     }
     return result;
@@ -334,5 +375,4 @@ export class DsDynamicLookupComponent extends DsDynamicVocabularyComponent imple
     this.optionsList = null;
     this.pageInfo = null;
   }
-
 }

@@ -8,7 +8,6 @@ import { SUBMISSION_CC_LICENSE } from './submission-cc-licence.resource-type';
 @typedObject
 @inheritSerialization(HALResource)
 export class SubmissionCcLicence extends HALResource {
-
   static type = SUBMISSION_CC_LICENSE;
 
   /**

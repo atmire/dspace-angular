@@ -1,5 +1,11 @@
 import { Component, EventEmitter, NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, fakeAsync, inject, TestBed, waitForAsync } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  fakeAsync,
+  inject,
+  TestBed,
+  waitForAsync,
+} from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { createTestComponent } from '../../../shared/testing/utils.test';
 import { SubmissionImportExternalCollectionComponent } from './submission-import-external-collection.component';
@@ -12,21 +18,18 @@ describe('SubmissionImportExternalCollectionComponent test suite', () => {
   let compAsAny: any;
   let fixture: ComponentFixture<SubmissionImportExternalCollectionComponent>;
 
-  beforeEach(waitForAsync (() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        TranslateModule.forRoot(),
-      ],
+      imports: [TranslateModule.forRoot()],
       declarations: [
         SubmissionImportExternalCollectionComponent,
         TestComponent,
       ],
-      providers: [
-        NgbActiveModal,
-        SubmissionImportExternalCollectionComponent
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents().then();
+      providers: [NgbActiveModal, SubmissionImportExternalCollectionComponent],
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .compileComponents()
+      .then();
   }));
 
   // First test to check the correct component creation
@@ -38,7 +41,10 @@ describe('SubmissionImportExternalCollectionComponent test suite', () => {
     beforeEach(() => {
       const html = `
         <ds-submission-import-external-collection></ds-submission-import-external-collection>`;
-      testFixture = createTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
+      testFixture = createTestComponent(
+        html,
+        TestComponent
+      ) as ComponentFixture<TestComponent>;
       testComp = testFixture.componentInstance;
     });
 
@@ -46,14 +52,19 @@ describe('SubmissionImportExternalCollectionComponent test suite', () => {
       testFixture.destroy();
     });
 
-    it('should create SubmissionImportExternalCollectionComponent', inject([SubmissionImportExternalCollectionComponent], (app: SubmissionImportExternalCollectionComponent) => {
-      expect(app).toBeDefined();
-    }));
+    it('should create SubmissionImportExternalCollectionComponent', inject(
+      [SubmissionImportExternalCollectionComponent],
+      (app: SubmissionImportExternalCollectionComponent) => {
+        expect(app).toBeDefined();
+      }
+    ));
   });
 
   describe('', () => {
     beforeEach(() => {
-      fixture = TestBed.createComponent(SubmissionImportExternalCollectionComponent);
+      fixture = TestBed.createComponent(
+        SubmissionImportExternalCollectionComponent
+      );
       comp = fixture.componentInstance;
       compAsAny = comp;
     });
@@ -64,14 +75,14 @@ describe('SubmissionImportExternalCollectionComponent test suite', () => {
       compAsAny = null;
     });
 
-    it('The variable \'selectedEvent\' should be assigned', () => {
+    it("The variable 'selectedEvent' should be assigned", () => {
       const event = new EventEmitter<CollectionListEntry>();
       comp.selectObject(event);
 
       expect(comp.selectedEvent).toEqual(event);
     });
 
-    it('The variable \'selectedEvent\' should be assigned', () => {
+    it("The variable 'selectedEvent' should be assigned", () => {
       spyOn(compAsAny.activeModal, 'dismiss');
       comp.closeCollectionModal();
 
@@ -94,7 +105,6 @@ describe('SubmissionImportExternalCollectionComponent test suite', () => {
 
       comp.searchComplete();
       expect(comp.loading).toBe(false);
-
     });
 
     it('should emit theOnlySelectable', () => {
@@ -107,24 +117,22 @@ describe('SubmissionImportExternalCollectionComponent test suite', () => {
     });
 
     it('dropdown should be invisible when the component is loading', fakeAsync(() => {
-
       spyOn(comp, 'isLoading').and.returnValue(true);
       fixture.detectChanges();
 
       fixture.whenStable().then(() => {
-        const dropdownMenu = fixture.debugElement.query(By.css('ds-collection-dropdown')).nativeElement;
+        const dropdownMenu = fixture.debugElement.query(
+          By.css('ds-collection-dropdown')
+        ).nativeElement;
         expect(dropdownMenu.classList).toContain('d-none');
       });
     }));
-
   });
 });
 
 // declare a test component
 @Component({
   selector: 'ds-test-cmp',
-  template: ``
+  template: ``,
 })
-class TestComponent {
-
-}
+class TestComponent {}

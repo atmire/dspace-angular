@@ -1,7 +1,13 @@
-import { Directive, ElementRef, Output, EventEmitter, HostListener } from '@angular/core';
+import {
+  Directive,
+  ElementRef,
+  Output,
+  EventEmitter,
+  HostListener,
+} from '@angular/core';
 
 @Directive({
-  selector: '[dsClickOutside]'
+  selector: '[dsClickOutside]',
 })
 /**
  * Directive to detect when the users clicks outside of the element the directive was put on
@@ -13,8 +19,7 @@ export class ClickOutsideDirective {
   @Output()
   public dsClickOutside = new EventEmitter();
 
-  constructor(private _elementRef: ElementRef) {
-  }
+  constructor(private _elementRef: ElementRef) {}
 
   @HostListener('document:click')
   public onClick() {

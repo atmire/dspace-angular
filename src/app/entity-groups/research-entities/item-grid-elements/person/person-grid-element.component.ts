@@ -13,5 +13,4 @@ import { Item } from '../../../../core/shared/item.model';
 /**
  * The component for displaying a grid element for an item of the type Person
  */
-export class PersonGridElementComponent extends AbstractListableElementComponent<Item> {
-}
+export class PersonGridElementComponent extends AbstractListableElementComponent<Item> {}

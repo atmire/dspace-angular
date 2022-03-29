@@ -1,6 +1,10 @@
 import { ClaimedTaskActionsLoaderComponent } from './claimed-task-actions-loader.component';
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ChangeDetectionStrategy, Injector, NO_ERRORS_SCHEMA } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Injector,
+  NO_ERRORS_SCHEMA,
+} from '@angular/core';
 import { ClaimedTaskActionsDirective } from './claimed-task-actions.directive';
 import { ClaimedTask } from '../../../../core/tasks/models/claimed-task-object.model';
 import { TranslateModule } from '@ngx-translate/core';
@@ -30,23 +34,32 @@ describe('ClaimedTaskActionsLoaderComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
-      declarations: [ClaimedTaskActionsLoaderComponent, ClaimedTaskActionsEditMetadataComponent, ClaimedTaskActionsDirective],
+      declarations: [
+        ClaimedTaskActionsLoaderComponent,
+        ClaimedTaskActionsEditMetadataComponent,
+        ClaimedTaskActionsDirective,
+      ],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
         { provide: ClaimedTaskDataService, useValue: {} },
         { provide: Injector, useValue: {} },
-        { provide: NotificationsService, useValue: new NotificationsServiceStub() },
+        {
+          provide: NotificationsService,
+          useValue: new NotificationsServiceStub(),
+        },
         { provide: Router, useValue: new RouterStub() },
         { provide: SearchService, useValue: searchService },
         { provide: RequestService, useValue: requestService },
-        { provide: PoolTaskDataService, useValue: {} }
-      ]
-    }).overrideComponent(ClaimedTaskActionsLoaderComponent, {
-      set: {
-        changeDetection: ChangeDetectionStrategy.Default,
-        entryComponents: [ClaimedTaskActionsEditMetadataComponent]
-      }
-    }).compileComponents();
+        { provide: PoolTaskDataService, useValue: {} },
+      ],
+    })
+      .overrideComponent(ClaimedTaskActionsLoaderComponent, {
+        set: {
+          changeDetection: ChangeDetectionStrategy.Default,
+          entryComponents: [ClaimedTaskActionsEditMetadataComponent],
+        },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -54,14 +67,18 @@ describe('ClaimedTaskActionsLoaderComponent', () => {
     comp = fixture.componentInstance;
     comp.object = object;
     comp.option = option;
-    spyOn(comp, 'getComponentByWorkflowTaskOption').and.returnValue(ClaimedTaskActionsEditMetadataComponent);
+    spyOn(comp, 'getComponentByWorkflowTaskOption').and.returnValue(
+      ClaimedTaskActionsEditMetadataComponent
+    );
 
     fixture.detectChanges();
   }));
 
   describe('When the component is rendered', () => {
     it('should call the getComponentByWorkflowTaskOption function with the right option', () => {
-      expect(comp.getComponentByWorkflowTaskOption).toHaveBeenCalledWith(option);
+      expect(comp.getComponentByWorkflowTaskOption).toHaveBeenCalledWith(
+        option
+      );
     });
   });
 });

@@ -118,7 +118,11 @@ const initialFieldState = { editable: false, isNew: false, isValid: true };
 /**
  * Initial state for a newly added field
  */
-const initialNewFieldState = { editable: true, isNew: true, isValid: undefined };
+const initialNewFieldState = {
+  editable: true,
+  isNew: true,
+  isValid: undefined,
+};
 
 // Object.create(null) ensures the object has no default js properties (e.g. `__proto__`)
 const initialState = Object.create(null);
@@ -128,7 +132,10 @@ const initialState = Object.create(null);
  * @param state The current state
  * @param action The action to perform on the current state
  */
-export function objectUpdatesReducer(state = initialState, action: ObjectUpdatesAction): ObjectUpdatesState {
+export function objectUpdatesReducer(
+  state = initialState,
+  action: ObjectUpdatesAction
+): ObjectUpdatesState {
   switch (action.type) {
     case ObjectUpdatesActionTypes.INITIALIZE_FIELDS: {
       return initializeFieldsUpdate(state, action as InitializeFieldsAction);
@@ -137,13 +144,19 @@ export function objectUpdatesReducer(state = initialState, action: ObjectUpdates
       return addFieldUpdate(state, action as AddFieldUpdateAction);
     }
     case ObjectUpdatesActionTypes.SELECT_VIRTUAL_METADATA: {
-      return selectVirtualMetadata(state, action as SelectVirtualMetadataAction);
+      return selectVirtualMetadata(
+        state,
+        action as SelectVirtualMetadataAction
+      );
     }
     case ObjectUpdatesActionTypes.DISCARD: {
       return discardObjectUpdates(state, action as DiscardObjectUpdatesAction);
     }
     case ObjectUpdatesActionTypes.REINSTATE: {
-      return reinstateObjectUpdates(state, action as ReinstateObjectUpdatesAction);
+      return reinstateObjectUpdates(
+        state,
+        action as ReinstateObjectUpdatesAction
+      );
     }
     case ObjectUpdatesActionTypes.REMOVE: {
       return removeObjectUpdates(state, action as RemoveObjectUpdatesAction);
@@ -155,7 +168,10 @@ export function objectUpdatesReducer(state = initialState, action: ObjectUpdates
       return removeFieldUpdate(state, action as RemoveFieldUpdateAction);
     }
     case ObjectUpdatesActionTypes.SET_EDITABLE_FIELD: {
-      return setEditableFieldUpdate(state, action as SetEditableFieldUpdateAction);
+      return setEditableFieldUpdate(
+        state,
+        action as SetEditableFieldUpdateAction
+      );
     }
     case ObjectUpdatesActionTypes.SET_VALID_FIELD: {
       return setValidFieldUpdate(state, action as SetValidFieldUpdateAction);
@@ -175,7 +191,8 @@ function initializeFieldsUpdate(state: any, action: InitializeFieldsAction) {
   const url: string = action.payload.url;
   const fields: Identifiable[] = action.payload.fields;
   const lastModifiedServer: Date = action.payload.lastModified;
-  const patchOperationService: GenericConstructor<PatchOperationService> = action.payload.patchOperationService;
+  const patchOperationService: GenericConstructor<PatchOperationService> =
+    action.payload.patchOperationService;
   const fieldStates = createInitialFieldStates(fields);
   const newPageState = Object.assign(
     {},
@@ -198,11 +215,15 @@ function addFieldUpdate(state: any, action: AddFieldUpdateAction) {
   const url: string = action.payload.url;
   const field: Identifiable = action.payload.field;
   const changeType: FieldChangeType = action.payload.changeType;
-  const pageState: ObjectUpdatesEntry = state[url] || {fieldUpdates: {}};
+  const pageState: ObjectUpdatesEntry = state[url] || { fieldUpdates: {} };
 
   let states = pageState.fieldStates;
   if (changeType === FieldChangeType.ADD) {
-    states = Object.assign({}, { [field.uuid]: initialNewFieldState }, pageState.fieldStates);
+    states = Object.assign(
+      {},
+      { [field.uuid]: initialNewFieldState },
+      pageState.fieldStates
+    );
   }
 
   let fieldUpdate: any = pageState.fieldUpdates[field.uuid] || {};
@@ -210,11 +231,16 @@ function addFieldUpdate(state: any, action: AddFieldUpdateAction) {
 
   fieldUpdate = Object.assign({}, { field, changeType: newChangeType });
 
-  const fieldUpdates = Object.assign({}, pageState.fieldUpdates, { [field.uuid]: fieldUpdate });
+  const fieldUpdates = Object.assign({}, pageState.fieldUpdates, {
+    [field.uuid]: fieldUpdate,
+  });
 
-  const newPageState = Object.assign({}, pageState,
+  const newPageState = Object.assign(
+    {},
+    pageState,
     { fieldStates: states },
-    { fieldUpdates: fieldUpdates });
+    { fieldUpdates: fieldUpdates }
+  );
   return Object.assign({}, state, { [url]: newPageState });
 }
 
@@ -223,8 +249,10 @@ function addFieldUpdate(state: any, action: AddFieldUpdateAction) {
  * @param state The current state
  * @param action The action to perform on the current state
  */
-function selectVirtualMetadata(state: any, action: SelectVirtualMetadataAction) {
-
+function selectVirtualMetadata(
+  state: any,
+  action: SelectVirtualMetadataAction
+) {
   const url: string = action.payload.url;
   const source: string = action.payload.source;
   const uuid: string = action.payload.uuid;
@@ -237,7 +265,7 @@ function selectVirtualMetadata(state: any, action: SelectVirtualMetadataAction) 
     pageState.virtualMetadataSources[source],
     {
       [uuid]: select,
-    },
+    }
   );
 
   const virtualMetadataSources = Object.assign(
@@ -245,22 +273,16 @@ function selectVirtualMetadata(state: any, action: SelectVirtualMetadataAction) 
     pageState.virtualMetadataSources,
     {
       [source]: virtualMetadataSource,
-    },
-  );
-
-  const newPageState = Object.assign(
-    {},
-    pageState,
-    {virtualMetadataSources: virtualMetadataSources},
-  );
-
-  return Object.assign(
-    {},
-    state,
-    {
-      [url]: newPageState,
     }
   );
+
+  const newPageState = Object.assign({}, pageState, {
+    virtualMetadataSources: virtualMetadataSources,
+  });
+
+  return Object.assign({}, state, {
+    [url]: newPageState,
+  });
 }
 
 /**
@@ -271,9 +293,11 @@ function selectVirtualMetadata(state: any, action: SelectVirtualMetadataAction) 
 function discardObjectUpdates(state: any, action: DiscardObjectUpdatesAction) {
   if (action.payload.discardAll) {
     let newState = Object.assign({}, state);
-    Object.keys(state).filter((path: string) => !path.endsWith(OBJECT_UPDATES_TRASH_PATH)).forEach((path: string) => {
-      newState = discardObjectUpdatesFor(path, newState);
-    });
+    Object.keys(state)
+      .filter((path: string) => !path.endsWith(OBJECT_UPDATES_TRASH_PATH))
+      .forEach((path: string) => {
+        newState = discardObjectUpdatesFor(path, newState);
+      });
     return newState;
   } else {
     const url: string = action.payload.url;
@@ -293,15 +317,23 @@ function discardObjectUpdatesFor(url: string, state: any) {
     const fieldState: FieldState = pageState.fieldStates[uuid];
     if (!fieldState.isNew) {
       /* After discarding we don't want the reset fields to stay editable or invalid */
-      newFieldStates[uuid] = Object.assign({}, fieldState, { editable: false, isValid: true });
+      newFieldStates[uuid] = Object.assign({}, fieldState, {
+        editable: false,
+        isValid: true,
+      });
     }
   });
 
   const discardedPageState = Object.assign({}, pageState, {
     fieldUpdates: {},
-    fieldStates: newFieldStates
+    fieldStates: newFieldStates,
   });
-  return Object.assign({}, state, { [url]: discardedPageState }, { [url + OBJECT_UPDATES_TRASH_PATH]: pageState });
+  return Object.assign(
+    {},
+    state,
+    { [url]: discardedPageState },
+    { [url + OBJECT_UPDATES_TRASH_PATH]: pageState }
+  );
 }
 
 /**
@@ -309,7 +341,10 @@ function discardObjectUpdatesFor(url: string, state: any) {
  * @param state The current state
  * @param action The action to perform on the current state
  */
-function reinstateObjectUpdates(state: any, action: ReinstateObjectUpdatesAction) {
+function reinstateObjectUpdates(
+  state: any,
+  action: ReinstateObjectUpdatesAction
+) {
   const url: string = action.payload.url;
   const trashState = state[url + OBJECT_UPDATES_TRASH_PATH];
 
@@ -345,9 +380,11 @@ function removeObjectUpdatesByURL(state: any, url: string) {
  */
 function removeAllObjectUpdates(state: any) {
   const newState = Object.assign({}, state);
-  Object.keys(state).filter((path: string) => path.endsWith(OBJECT_UPDATES_TRASH_PATH)).forEach((path: string) => {
-    delete newState[path];
-  });
+  Object.keys(state)
+    .filter((path: string) => path.endsWith(OBJECT_UPDATES_TRASH_PATH))
+    .forEach((path: string) => {
+      delete newState[path];
+    });
   return newState;
 }
 
@@ -361,23 +398,32 @@ function removeFieldUpdate(state: any, action: RemoveFieldUpdateAction) {
   const uuid: string = action.payload.uuid;
   let newPageState: ObjectUpdatesEntry = state[url];
   if (hasValue(newPageState)) {
-    const newUpdates: FieldUpdates = Object.assign({}, newPageState.fieldUpdates);
+    const newUpdates: FieldUpdates = Object.assign(
+      {},
+      newPageState.fieldUpdates
+    );
     if (hasValue(newUpdates[uuid])) {
       delete newUpdates[uuid];
     }
-    const newFieldStates: FieldStates = Object.assign({}, newPageState.fieldStates);
+    const newFieldStates: FieldStates = Object.assign(
+      {},
+      newPageState.fieldStates
+    );
     if (hasValue(newFieldStates[uuid])) {
       /* When resetting, make field not editable */
       if (newFieldStates[uuid].isNew) {
         /* If this field was added, just throw it away */
         delete newFieldStates[uuid];
       } else {
-        newFieldStates[uuid] = Object.assign({}, newFieldStates[uuid], { editable: false, isValid: true });
+        newFieldStates[uuid] = Object.assign({}, newFieldStates[uuid], {
+          editable: false,
+          isValid: true,
+        });
       }
     }
     newPageState = Object.assign({}, state[url], {
       fieldUpdates: newUpdates,
-      fieldStates: newFieldStates
+      fieldStates: newFieldStates,
     });
   }
   return Object.assign({}, state, { [url]: newPageState });
@@ -389,7 +435,10 @@ function removeFieldUpdate(state: any, action: RemoveFieldUpdateAction) {
  * @param oldType The current type
  * @param newType The new type that should possibly override the new type
  */
-function determineChangeType(oldType: FieldChangeType, newType: FieldChangeType): FieldChangeType {
+function determineChangeType(
+  oldType: FieldChangeType,
+  newType: FieldChangeType
+): FieldChangeType {
   if (hasNoValue(newType)) {
     return oldType;
   }
@@ -404,7 +453,10 @@ function determineChangeType(oldType: FieldChangeType, newType: FieldChangeType)
  * @param state The current state
  * @param action The action to perform on the current state
  */
-function setEditableFieldUpdate(state: any, action: SetEditableFieldUpdateAction) {
+function setEditableFieldUpdate(
+  state: any,
+  action: SetEditableFieldUpdateAction
+) {
   const url: string = action.payload.url;
   const uuid: string = action.payload.uuid;
   const editable: boolean = action.payload.editable;
@@ -414,9 +466,13 @@ function setEditableFieldUpdate(state: any, action: SetEditableFieldUpdateAction
   const fieldState = pageState.fieldStates[uuid];
   const newFieldState = Object.assign({}, fieldState, { editable });
 
-  const newFieldStates = Object.assign({}, pageState.fieldStates, { [uuid]: newFieldState });
+  const newFieldStates = Object.assign({}, pageState.fieldStates, {
+    [uuid]: newFieldState,
+  });
 
-  const newPageState = Object.assign({}, pageState, { fieldStates: newFieldStates });
+  const newPageState = Object.assign({}, pageState, {
+    fieldStates: newFieldStates,
+  });
 
   return Object.assign({}, state, { [url]: newPageState });
 }
@@ -436,9 +492,13 @@ function setValidFieldUpdate(state: any, action: SetValidFieldUpdateAction) {
   const fieldState = pageState.fieldStates[uuid];
   const newFieldState = Object.assign({}, fieldState, { isValid });
 
-  const newFieldStates = Object.assign({}, pageState.fieldStates, { [uuid]: newFieldState });
+  const newFieldStates = Object.assign({}, pageState.fieldStates, {
+    [uuid]: newFieldState,
+  });
 
-  const newPageState = Object.assign({}, pageState, { fieldStates: newFieldStates });
+  const newPageState = Object.assign({}, pageState, {
+    fieldStates: newFieldStates,
+  });
 
   return Object.assign({}, state, { [url]: newPageState });
 }
@@ -450,6 +510,6 @@ function setValidFieldUpdate(state: any, action: SetValidFieldUpdateAction) {
 function createInitialFieldStates(fields: Identifiable[]) {
   const uuids = fields.map((field: Identifiable) => field.uuid);
   const fieldStates = {};
-  uuids.forEach((uuid: string) => fieldStates[uuid] = initialFieldState);
+  uuids.forEach((uuid: string) => (fieldStates[uuid] = initialFieldState));
   return fieldStates;
 }

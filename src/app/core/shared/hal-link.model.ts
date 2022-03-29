@@ -2,7 +2,6 @@
  * A single link in the _links section of a {@link HALResource}
  */
 export class HALLink {
-
   /**
    * The url of the {@link HALLink}'s target
    */

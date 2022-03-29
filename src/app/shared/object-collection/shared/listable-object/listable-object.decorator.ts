@@ -14,9 +14,11 @@ export const DEFAULT_THEME = '*';
 /**
  * Factory to allow us to inject getThemeConfigFor so we can mock it in tests
  */
-export const GET_THEME_CONFIG_FOR_FACTORY = new InjectionToken<(str) => ThemeConfig>('getThemeConfigFor', {
+export const GET_THEME_CONFIG_FOR_FACTORY = new InjectionToken<
+  (str) => ThemeConfig
+>('getThemeConfigFor', {
   providedIn: 'root',
-  factory: () => getThemeConfigFor
+  factory: () => getThemeConfigFor,
 });
 
 const map = new Map();
@@ -28,7 +30,12 @@ const map = new Map();
  * @param context The optional context the component represents
  * @param theme The optional theme for the component
  */
-export function listableObjectComponent(objectType: string | GenericConstructor<ListableObject>, viewMode: ViewMode, context: Context = DEFAULT_CONTEXT, theme = DEFAULT_THEME) {
+export function listableObjectComponent(
+  objectType: string | GenericConstructor<ListableObject>,
+  viewMode: ViewMode,
+  context: Context = DEFAULT_CONTEXT,
+  theme = DEFAULT_THEME
+) {
   return function decorator(component: any) {
     if (hasNoValue(objectType)) {
       return;
@@ -53,7 +60,12 @@ export function listableObjectComponent(objectType: string | GenericConstructor<
  * @param context The context that should match the components
  * @param theme The theme that should match the components
  */
-export function getListableObjectComponent(types: (string | GenericConstructor<ListableObject>)[], viewMode: ViewMode, context: Context = DEFAULT_CONTEXT, theme: string = DEFAULT_THEME) {
+export function getListableObjectComponent(
+  types: (string | GenericConstructor<ListableObject>)[],
+  viewMode: ViewMode,
+  context: Context = DEFAULT_CONTEXT,
+  theme: string = DEFAULT_THEME
+) {
   let bestMatch;
   let bestMatchValue = 0;
   for (const type of types) {
@@ -72,19 +84,28 @@ export function getListableObjectComponent(types: (string | GenericConstructor<L
             bestMatch = contextMap.get(DEFAULT_THEME);
           }
         }
-        if (bestMatchValue < 2 &&
+        if (
+          bestMatchValue < 2 &&
           hasValue(typeModeMap.get(DEFAULT_CONTEXT)) &&
-          hasValue(typeModeMap.get(DEFAULT_CONTEXT).get(DEFAULT_THEME))) {
+          hasValue(typeModeMap.get(DEFAULT_CONTEXT).get(DEFAULT_THEME))
+        ) {
           bestMatchValue = 2;
           bestMatch = typeModeMap.get(DEFAULT_CONTEXT).get(DEFAULT_THEME);
         }
       }
-      if (bestMatchValue < 1 &&
+      if (
+        bestMatchValue < 1 &&
         hasValue(typeMap.get(DEFAULT_VIEW_MODE)) &&
         hasValue(typeMap.get(DEFAULT_VIEW_MODE).get(DEFAULT_CONTEXT)) &&
-        hasValue(typeMap.get(DEFAULT_VIEW_MODE).get(DEFAULT_CONTEXT).get(DEFAULT_THEME))) {
+        hasValue(
+          typeMap.get(DEFAULT_VIEW_MODE).get(DEFAULT_CONTEXT).get(DEFAULT_THEME)
+        )
+      ) {
         bestMatchValue = 1;
-        bestMatch = typeMap.get(DEFAULT_VIEW_MODE).get(DEFAULT_CONTEXT).get(DEFAULT_THEME);
+        bestMatch = typeMap
+          .get(DEFAULT_VIEW_MODE)
+          .get(DEFAULT_CONTEXT)
+          .get(DEFAULT_THEME);
       }
     }
   }
@@ -95,7 +116,7 @@ export function getListableObjectComponent(types: (string | GenericConstructor<L
  * Searches for a ThemeConfig by its name;
  */
 export const getThemeConfigFor = (themeName: string): ThemeConfig => {
-  return environment.themes.find(theme => theme.name === themeName);
+  return environment.themes.find((theme) => theme.name === themeName);
 };
 
 /**
@@ -105,7 +126,11 @@ export const getThemeConfigFor = (themeName: string): ThemeConfig => {
  * @param themeName The name of the theme to check
  * @param checkedThemeNames The list of theme names that are already checked
  */
-export const resolveTheme = (contextMap: Map<any, any>, themeName: string, checkedThemeNames: string[] = []): any => {
+export const resolveTheme = (
+  contextMap: Map<any, any>,
+  themeName: string,
+  checkedThemeNames: string[] = []
+): any => {
   const match = contextMap.get(themeName);
   if (hasValue(match)) {
     return match;
@@ -115,7 +140,10 @@ export const resolveTheme = (contextMap: Map<any, any>, themeName: string, check
       const nextTheme = cfg.extends;
       const nextCheckedThemeNames = [...checkedThemeNames, themeName];
       if (checkedThemeNames.includes(nextTheme)) {
-        throw new Error('Theme extension cycle detected: ' + [...nextCheckedThemeNames, nextTheme].join(' -> '));
+        throw new Error(
+          'Theme extension cycle detected: ' +
+            [...nextCheckedThemeNames, nextTheme].join(' -> ')
+        );
       } else {
         return resolveTheme(contextMap, nextTheme, nextCheckedThemeNames);
       }

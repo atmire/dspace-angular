@@ -12,11 +12,10 @@ import { ContentSourceResponseParsingService } from './content-source-response-p
 import { DspaceRestResponseParsingService } from './dspace-rest-response-parsing.service';
 import { environment } from '../../../environments/environment';
 
-
 // uuid and handle requests have separate endpoints
 export enum IdentifierType {
   UUID = 'uuid',
-  HANDLE = 'handle'
+  HANDLE = 'handle',
 }
 
 export abstract class RestRequest {
@@ -28,7 +27,7 @@ export abstract class RestRequest {
     public href: string,
     public method: RestRequestMethod = RestRequestMethod.GET,
     public body?: any,
-    public options?: HttpOptions,
+    public options?: HttpOptions
   ) {
     this.responseMsToLive = environment.cache.msToLive.default;
   }
@@ -70,7 +69,7 @@ export class MultipartPostRequest extends RestRequest {
     public href: string,
     public body?: any,
     public options?: HttpOptions
-  )  {
+  ) {
     super(uuid, href, RestRequestMethod.POST, body);
   }
 }
@@ -140,11 +139,7 @@ export class FindListOptions {
 }
 
 export class FindListRequest extends GetRequest {
-  constructor(
-    uuid: string,
-    href: string,
-    public body?: FindListOptions,
-  ) {
+  constructor(uuid: string, href: string, public body?: FindListOptions) {
     super(uuid, href);
   }
 }
@@ -172,8 +167,7 @@ export class SubmissionRequest extends GetRequest {
  * Class representing a submission HTTP DELETE request object
  */
 export class SubmissionDeleteRequest extends DeleteRequest {
-  constructor(public uuid: string,
-              public href: string) {
+  constructor(public uuid: string, public href: string) {
     super(uuid, href);
   }
 
@@ -186,9 +180,7 @@ export class SubmissionDeleteRequest extends DeleteRequest {
  * Class representing a submission HTTP PATCH request object
  */
 export class SubmissionPatchRequest extends PatchRequest {
-  constructor(public uuid: string,
-              public href: string,
-              public body?: any) {
+  constructor(public uuid: string, public href: string, public body?: any) {
     super(uuid, href, body);
   }
 
@@ -201,10 +193,12 @@ export class SubmissionPatchRequest extends PatchRequest {
  * Class representing a submission HTTP POST request object
  */
 export class SubmissionPostRequest extends PostRequest {
-  constructor(public uuid: string,
-              public href: string,
-              public body?: any,
-              public options?: HttpOptions) {
+  constructor(
+    public uuid: string,
+    public href: string,
+    public body?: any,
+    public options?: HttpOptions
+  ) {
     super(uuid, href, body, options);
   }
 
@@ -214,7 +208,12 @@ export class SubmissionPostRequest extends PostRequest {
 }
 
 export class CreateRequest extends PostRequest {
-  constructor(uuid: string, href: string, public body?: any, public options?: HttpOptions) {
+  constructor(
+    uuid: string,
+    href: string,
+    public body?: any,
+    public options?: HttpOptions
+  ) {
     super(uuid, href, body, options);
   }
 }
@@ -230,7 +229,12 @@ export class ContentSourceRequest extends GetRequest {
 }
 
 export class UpdateContentSourceRequest extends PutRequest {
-  constructor(uuid: string, href: string, public body?: any, public options?: HttpOptions) {
+  constructor(
+    uuid: string,
+    href: string,
+    public body?: any,
+    public options?: HttpOptions
+  ) {
     super(uuid, href, body, options);
   }
 
@@ -243,17 +247,18 @@ export class UpdateContentSourceRequest extends PutRequest {
  * Request to delete an object based on its identifier
  */
 export class DeleteByIDRequest extends DeleteRequest {
-  constructor(
-    uuid: string,
-    href: string,
-    public resourceID: string
-  ) {
+  constructor(uuid: string, href: string, public resourceID: string) {
     super(uuid, href);
   }
 }
 
 export class TaskPostRequest extends PostRequest {
-  constructor(uuid: string, href: string, public body?: any, public options?: HttpOptions) {
+  constructor(
+    uuid: string,
+    href: string,
+    public body?: any,
+    public options?: HttpOptions
+  ) {
     super(uuid, href, body, options);
   }
 
@@ -263,7 +268,12 @@ export class TaskPostRequest extends PostRequest {
 }
 
 export class TaskDeleteRequest extends DeleteRequest {
-  constructor(uuid: string, href: string, public body?: any, public options?: HttpOptions) {
+  constructor(
+    uuid: string,
+    href: string,
+    public body?: any,
+    public options?: HttpOptions
+  ) {
     super(uuid, href, body, options);
   }
 

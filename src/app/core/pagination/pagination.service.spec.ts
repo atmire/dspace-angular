@@ -5,7 +5,6 @@ import { PaginationComponentOptions } from '../../shared/pagination/pagination-c
 import { SortDirection, SortOptions } from '../cache/models/sort-options.model';
 import { FindListOptions } from '../data/request.models';
 
-
 describe('PaginationService', () => {
   let service: PaginationService;
   let router;
@@ -33,40 +32,50 @@ describe('PaginationService', () => {
           value = 'score';
         }
         return observableOf(value);
-      }
+      },
     };
 
     service = new PaginationService(routeService, router);
   });
 
-
   describe('getCurrentPagination', () => {
     it('should retrieve the current pagination info from the routerService', () => {
-      service.getCurrentPagination('test-id', defaultPagination).subscribe((currentPagination) => {
-        expect(currentPagination).toEqual(Object.assign(new PaginationComponentOptions(), {
-          currentPage: 5,
-          pageSize: 10
-        }));
-      });
+      service
+        .getCurrentPagination('test-id', defaultPagination)
+        .subscribe((currentPagination) => {
+          expect(currentPagination).toEqual(
+            Object.assign(new PaginationComponentOptions(), {
+              currentPage: 5,
+              pageSize: 10,
+            })
+          );
+        });
     });
   });
   describe('getCurrentSort', () => {
     it('should retrieve the current sort info from the routerService', () => {
-      service.getCurrentSort('test-id', defaultSort).subscribe((currentSort) => {
-        expect(currentSort).toEqual(Object.assign(new SortOptions('score', SortDirection.ASC )));
-      });
+      service
+        .getCurrentSort('test-id', defaultSort)
+        .subscribe((currentSort) => {
+          expect(currentSort).toEqual(
+            Object.assign(new SortOptions('score', SortDirection.ASC))
+          );
+        });
     });
   });
   describe('getFindListOptions', () => {
     it('should retrieve the current findListOptions info from the routerService', () => {
-      service.getFindListOptions('test-id', defaultFindListOptions).subscribe((findListOptions) => {
-        expect(findListOptions).toEqual(Object.assign(new FindListOptions(),
-          {
-            sort: new SortOptions('score', SortDirection.ASC ),
-            currentPage: 5,
-            elementsPerPage: 10
-          }));
-      });
+      service
+        .getFindListOptions('test-id', defaultFindListOptions)
+        .subscribe((findListOptions) => {
+          expect(findListOptions).toEqual(
+            Object.assign(new FindListOptions(), {
+              sort: new SortOptions('score', SortDirection.ASC),
+              currentPage: 5,
+              elementsPerPage: 10,
+            })
+          );
+        });
     });
   });
   describe('resetPage', () => {
@@ -74,13 +83,18 @@ describe('PaginationService', () => {
       spyOn(service, 'updateRoute');
       service.resetPage('test');
 
-      expect(service.updateRoute).toHaveBeenCalledWith('test', {page: 1});
+      expect(service.updateRoute).toHaveBeenCalledWith('test', { page: 1 });
     });
   });
 
   describe('updateRoute', () => {
     it('should update the route with the provided page params', () => {
-      service.updateRoute('test', {page: 2, pageSize: 5, sortField: 'title', sortDirection: SortDirection.DESC});
+      service.updateRoute('test', {
+        page: 2,
+        pageSize: 5,
+        sortField: 'title',
+        sortDirection: SortDirection.DESC,
+      });
 
       const navigateParams = {};
       navigateParams[`test.page`] = `2`;
@@ -88,10 +102,13 @@ describe('PaginationService', () => {
       navigateParams[`test.sf`] = `title`;
       navigateParams[`test.sd`] = `DESC`;
 
-      expect(router.navigate).toHaveBeenCalledWith([], {queryParams: navigateParams, queryParamsHandling: 'merge'});
+      expect(router.navigate).toHaveBeenCalledWith([], {
+        queryParams: navigateParams,
+        queryParamsHandling: 'merge',
+      });
     });
     it('should update the route with the provided page params while keeping the existing non provided ones', () => {
-      service.updateRoute('test', {page: 2});
+      service.updateRoute('test', { page: 2 });
 
       const navigateParams = {};
       navigateParams[`test.page`] = `2`;
@@ -99,12 +116,20 @@ describe('PaginationService', () => {
       navigateParams[`test.sf`] = `score`;
       navigateParams[`test.sd`] = `ASC`;
 
-      expect(router.navigate).toHaveBeenCalledWith([], {queryParams: navigateParams, queryParamsHandling: 'merge'});
+      expect(router.navigate).toHaveBeenCalledWith([], {
+        queryParams: navigateParams,
+        queryParamsHandling: 'merge',
+      });
     });
   });
   describe('updateRouteWithUrl', () => {
     it('should update the route with the provided page params and url', () => {
-      service.updateRouteWithUrl('test', ['someUrl'], {page: 2, pageSize: 5, sortField: 'title', sortDirection: SortDirection.DESC});
+      service.updateRouteWithUrl('test', ['someUrl'], {
+        page: 2,
+        pageSize: 5,
+        sortField: 'title',
+        sortDirection: SortDirection.DESC,
+      });
 
       const navigateParams = {};
       navigateParams[`test.page`] = `2`;
@@ -112,10 +137,13 @@ describe('PaginationService', () => {
       navigateParams[`test.sf`] = `title`;
       navigateParams[`test.sd`] = `DESC`;
 
-      expect(router.navigate).toHaveBeenCalledWith(['someUrl'], {queryParams: navigateParams, queryParamsHandling: 'merge'});
+      expect(router.navigate).toHaveBeenCalledWith(['someUrl'], {
+        queryParams: navigateParams,
+        queryParamsHandling: 'merge',
+      });
     });
     it('should update the route with the provided page params and url while keeping the existing non provided ones', () => {
-      service.updateRouteWithUrl('test',['someUrl'], {page: 2});
+      service.updateRouteWithUrl('test', ['someUrl'], { page: 2 });
 
       const navigateParams = {};
       navigateParams[`test.page`] = `2`;
@@ -123,9 +151,11 @@ describe('PaginationService', () => {
       navigateParams[`test.sf`] = `score`;
       navigateParams[`test.sd`] = `ASC`;
 
-      expect(router.navigate).toHaveBeenCalledWith(['someUrl'], {queryParams: navigateParams, queryParamsHandling: 'merge'});
+      expect(router.navigate).toHaveBeenCalledWith(['someUrl'], {
+        queryParams: navigateParams,
+        queryParamsHandling: 'merge',
+      });
     });
-
   });
   describe('clearPagination', () => {
     it('should clear the pagination next time the updateRoute/updateRouteWithUrl method is called', () => {
@@ -137,7 +167,6 @@ describe('PaginationService', () => {
       resetParams[`test.sf`] = null;
       resetParams[`test.sd`] = null;
 
-
       const navigateParams = {};
       navigateParams[`another-id.page`] = `5`;
       navigateParams[`another-id.rpp`] = `10`;
@@ -146,7 +175,10 @@ describe('PaginationService', () => {
 
       service.updateRoute('another-id', {});
 
-      expect(router.navigate).toHaveBeenCalledWith([], {queryParams: Object.assign({}, resetParams, navigateParams), queryParamsHandling: 'merge'});
+      expect(router.navigate).toHaveBeenCalledWith([], {
+        queryParams: Object.assign({}, resetParams, navigateParams),
+        queryParamsHandling: 'merge',
+      });
     });
   });
   describe('getPageParam', () => {

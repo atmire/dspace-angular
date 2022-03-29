@@ -15,17 +15,21 @@ const mockValue = 'test value';
 describe('ItemPageAbstractFieldComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot({
-        loader: {
-          provide: TranslateLoader,
-          useClass: TranslateLoaderMock
-        }
-      })],
+      imports: [
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useClass: TranslateLoaderMock,
+          },
+        }),
+      ],
       declarations: [ItemPageAbstractFieldComponent, MetadataValuesComponent],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(ItemPageAbstractFieldComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(ItemPageAbstractFieldComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {

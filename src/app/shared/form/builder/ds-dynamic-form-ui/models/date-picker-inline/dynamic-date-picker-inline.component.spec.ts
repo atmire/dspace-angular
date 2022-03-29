@@ -1,14 +1,22 @@
-import { ComponentFixture, inject, TestBed, waitForAsync } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  inject,
+  TestBed,
+  waitForAsync,
+} from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
-import { DynamicDatePickerModel, DynamicFormsCoreModule, DynamicFormService } from '@ng-dynamic-forms/core';
+import {
+  DynamicDatePickerModel,
+  DynamicFormsCoreModule,
+  DynamicFormService,
+} from '@ng-dynamic-forms/core';
 import { DsDatePickerInlineComponent } from './dynamic-date-picker-inline.component';
 
 describe('DsDatePickerInlineComponent test suite', () => {
-
   const testModel = new DynamicDatePickerModel({ id: 'datepicker' });
   const formModel = [testModel];
   let formGroup: FormGroup;
@@ -18,28 +26,25 @@ describe('DsDatePickerInlineComponent test suite', () => {
   let testElement: DebugElement;
 
   beforeEach(waitForAsync(() => {
-
     TestBed.configureTestingModule({
-
       imports: [
         ReactiveFormsModule,
         NoopAnimationsModule,
         NgbDatepickerModule,
-        DynamicFormsCoreModule.forRoot()
+        DynamicFormsCoreModule.forRoot(),
       ],
-      declarations: [DsDatePickerInlineComponent]
+      declarations: [DsDatePickerInlineComponent],
+    })
+      .compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(DsDatePickerInlineComponent);
 
-    }).compileComponents().then(() => {
-
-      fixture = TestBed.createComponent(DsDatePickerInlineComponent);
-
-      component = fixture.componentInstance;
-      debugElement = fixture.debugElement;
-    });
+        component = fixture.componentInstance;
+        debugElement = fixture.debugElement;
+      });
   }));
 
   beforeEach(inject([DynamicFormService], (service: DynamicFormService) => {
-
     formGroup = service.createFormGroup(formModel);
 
     component.group = formGroup;
@@ -51,7 +56,6 @@ describe('DsDatePickerInlineComponent test suite', () => {
   }));
 
   it('should initialize correctly', () => {
-
     expect(component.bindId).toBe(true);
     expect(component.control instanceof FormControl).toBe(true);
     expect(component.group instanceof FormGroup).toBe(true);
@@ -72,12 +76,10 @@ describe('DsDatePickerInlineComponent test suite', () => {
   });
 
   it('should have an input element', () => {
-
     expect(testElement instanceof DebugElement).toBe(true);
   });
 
   it('should emit blur event', () => {
-
     spyOn(component.blur, 'emit');
 
     component.onBlur(null);
@@ -86,7 +88,6 @@ describe('DsDatePickerInlineComponent test suite', () => {
   });
 
   it('should emit change event', () => {
-
     spyOn(component.change, 'emit');
 
     component.onChange(null);
@@ -95,7 +96,6 @@ describe('DsDatePickerInlineComponent test suite', () => {
   });
 
   it('should emit focus event', () => {
-
     spyOn(component.focus, 'emit');
 
     component.onFocus(null);

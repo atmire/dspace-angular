@@ -14,16 +14,15 @@ describe('ObjectGridComponent', () => {
     { seven: 7 },
     { eight: 8 },
     { nine: 9 },
-    { ten: 10 }
+    { ten: 10 },
   ];
   const mockRD = {
     payload: {
-      page: testObjects
-    }
+      page: testObjects,
+    },
   } as any;
 
   describe('the number of columns', () => {
-
     it('should be 3 for xl screens', () => {
       const hostWindowService = {
         widthCategory: hot('a', { a: WidthCategory.XL }),
@@ -36,9 +35,7 @@ describe('ObjectGridComponent', () => {
 
       const expected = cold('c', { c: 3 });
 
-      const result = comp.columns$.pipe(
-        map((columns) => columns.length)
-      );
+      const result = comp.columns$.pipe(map((columns) => columns.length));
 
       expect(result).toBeObservable(expected);
     });
@@ -55,9 +52,7 @@ describe('ObjectGridComponent', () => {
 
       const expected = cold('c', { c: 3 });
 
-      const result = comp.columns$.pipe(
-        map((columns) => columns.length)
-      );
+      const result = comp.columns$.pipe(map((columns) => columns.length));
 
       expect(result).toBeObservable(expected);
     });
@@ -74,9 +69,7 @@ describe('ObjectGridComponent', () => {
 
       const expected = cold('c', { c: 2 });
 
-      const result = comp.columns$.pipe(
-        map((columns) => columns.length)
-      );
+      const result = comp.columns$.pipe(map((columns) => columns.length));
 
       expect(result).toBeObservable(expected);
     });
@@ -93,9 +86,7 @@ describe('ObjectGridComponent', () => {
 
       const expected = cold('c', { c: 2 });
 
-      const result = comp.columns$.pipe(
-        map((columns) => columns.length)
-      );
+      const result = comp.columns$.pipe(map((columns) => columns.length));
 
       expect(result).toBeObservable(expected);
     });
@@ -112,13 +103,10 @@ describe('ObjectGridComponent', () => {
 
       const expected = cold('c', { c: 1 });
 
-      const result = comp.columns$.pipe(
-        map((columns) => columns.length)
-      );
+      const result = comp.columns$.pipe(map((columns) => columns.length));
 
       expect(result).toBeObservable(expected);
     });
-
   });
 
   describe('The ordering of the content', () => {
@@ -136,8 +124,8 @@ describe('ObjectGridComponent', () => {
         c: [
           [testObjects[0], testObjects[3], testObjects[6], testObjects[9]],
           [testObjects[1], testObjects[4], testObjects[7]],
-          [testObjects[2], testObjects[5], testObjects[8]]
-        ]
+          [testObjects[2], testObjects[5], testObjects[8]],
+        ],
       });
 
       const result = comp.columns$;
@@ -159,8 +147,8 @@ describe('ObjectGridComponent', () => {
         c: [
           [testObjects[0], testObjects[3], testObjects[6], testObjects[9]],
           [testObjects[1], testObjects[4], testObjects[7]],
-          [testObjects[2], testObjects[5], testObjects[8]]
-        ]
+          [testObjects[2], testObjects[5], testObjects[8]],
+        ],
       });
 
       const result = comp.columns$;
@@ -180,9 +168,21 @@ describe('ObjectGridComponent', () => {
 
       const expected = cold('c', {
         c: [
-          [testObjects[0], testObjects[2], testObjects[4], testObjects[6], testObjects[8]],
-          [testObjects[1], testObjects[3], testObjects[5], testObjects[7], testObjects[9]],
-        ]
+          [
+            testObjects[0],
+            testObjects[2],
+            testObjects[4],
+            testObjects[6],
+            testObjects[8],
+          ],
+          [
+            testObjects[1],
+            testObjects[3],
+            testObjects[5],
+            testObjects[7],
+            testObjects[9],
+          ],
+        ],
       });
 
       const result = comp.columns$;
@@ -202,9 +202,21 @@ describe('ObjectGridComponent', () => {
 
       const expected = cold('c', {
         c: [
-          [testObjects[0], testObjects[2], testObjects[4], testObjects[6], testObjects[8]],
-          [testObjects[1], testObjects[3], testObjects[5], testObjects[7], testObjects[9]],
-        ]
+          [
+            testObjects[0],
+            testObjects[2],
+            testObjects[4],
+            testObjects[6],
+            testObjects[8],
+          ],
+          [
+            testObjects[1],
+            testObjects[3],
+            testObjects[5],
+            testObjects[7],
+            testObjects[9],
+          ],
+        ],
       });
 
       const result = comp.columns$;

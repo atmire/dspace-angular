@@ -75,5 +75,4 @@ export class TaskObject extends DSpaceObject implements CacheableObject {
    */
   @link(WORKFLOW_ACTION, false, 'action')
   action: Observable<RemoteData<WorkflowAction>>;
-
 }

@@ -8,7 +8,10 @@ import { HostWindowService } from '../host-window.service';
 import { map } from 'rxjs/operators';
 
 const sidebarStateSelector = (state: AppState) => state.sidebar;
-const sidebarCollapsedSelector = createSelector(sidebarStateSelector, (sidebar: SidebarState) => sidebar.sidebarCollapsed);
+const sidebarCollapsedSelector = createSelector(
+  sidebarStateSelector,
+  (sidebar: SidebarState) => sidebar.sidebarCollapsed
+);
 
 /**
  * Service that performs all actions that have to do with the sidebar
@@ -25,7 +28,10 @@ export class SidebarService {
    */
   private isCollapsedInStore: Observable<boolean>;
 
-  constructor(private store: Store<AppState>, private windowService: HostWindowService) {
+  constructor(
+    private store: Store<AppState>,
+    private windowService: HostWindowService
+  ) {
     this.isXsOrSm$ = this.windowService.isXsOrSm();
     this.isCollapsedInStore = this.store.pipe(select(sidebarCollapsedSelector));
   }
@@ -38,9 +44,7 @@ export class SidebarService {
     return observableCombineLatest(
       this.isXsOrSm$,
       this.isCollapsedInStore
-    ).pipe(
-      map(([mobile, store]) => mobile ? store : true)
-    );
+    ).pipe(map(([mobile, store]) => (mobile ? store : true)));
   }
 
   /**

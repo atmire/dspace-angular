@@ -1,5 +1,11 @@
 import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
-import { waitForAsync, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import {
+  waitForAsync,
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+} from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { of as observableOf } from 'rxjs';
@@ -32,33 +38,37 @@ const item = Object.assign(new Item(), {
     'dc.title': [
       {
         language: 'en_US',
-        value: 'This is just another title'
-      }
+        value: 'This is just another title',
+      },
     ],
     'dc.type': [
       {
         language: null,
-        value: 'Article'
-      }
+        value: 'Article',
+      },
     ],
     'dc.contributor.author': [
       {
         language: 'en_US',
-        value: 'Smith, Donald'
-      }
+        value: 'Smith, Donald',
+      },
     ],
     'dc.date.issued': [
       {
         language: null,
-        value: '2015-06-26'
-      }
-    ]
-  }
+        value: '2015-06-26',
+      },
+    ],
+  },
 });
 const rdItem = createSuccessfulRemoteDataObject(item);
-const workflowitem = Object.assign(new WorkflowItem(), { item: observableOf(rdItem) });
+const workflowitem = Object.assign(new WorkflowItem(), {
+  item: observableOf(rdItem),
+});
 const rdWorkflowitem = createSuccessfulRemoteDataObject(workflowitem);
-mockResultObject.indexableObject = Object.assign(new PoolTask(), { workflowitem: observableOf(rdWorkflowitem) });
+mockResultObject.indexableObject = Object.assign(new PoolTask(), {
+  workflowitem: observableOf(rdWorkflowitem),
+});
 const linkService = getMockLinkService();
 
 describe('PoolSearchResultDetailElementComponent', () => {
@@ -67,15 +77,17 @@ describe('PoolSearchResultDetailElementComponent', () => {
       imports: [NoopAnimationsModule],
       declarations: [PoolSearchResultDetailElementComponent, VarDirective],
       providers: [
-        { provide: 'objectElementProvider', useValue: (mockResultObject) },
-        { provide: 'indexElementProvider', useValue: (compIndex) },
+        { provide: 'objectElementProvider', useValue: mockResultObject },
+        { provide: 'indexElementProvider', useValue: compIndex },
         { provide: LinkService, useValue: linkService },
         { provide: DSONameService, useClass: DSONameServiceMock },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(PoolSearchResultDetailElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(PoolSearchResultDetailElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -106,12 +118,15 @@ describe('PoolSearchResultDetailElementComponent', () => {
 
   it('should forward pool-task-actions processCompleted event to the reloadedObject event emitter', fakeAsync(() => {
     spyOn(component.reloadedObject, 'emit').and.callThrough();
-    const actionPayload: any = { reloadedObject: {}};
-    const actionsComponents = fixture.debugElement.query(By.css('ds-pool-task-actions'));
+    const actionPayload: any = { reloadedObject: {} };
+    const actionsComponents = fixture.debugElement.query(
+      By.css('ds-pool-task-actions')
+    );
     actionsComponents.triggerEventHandler('processCompleted', actionPayload);
     tick();
 
-    expect(component.reloadedObject.emit).toHaveBeenCalledWith(actionPayload.reloadedObject);
-
+    expect(component.reloadedObject.emit).toHaveBeenCalledWith(
+      actionPayload.reloadedObject
+    );
   }));
 });

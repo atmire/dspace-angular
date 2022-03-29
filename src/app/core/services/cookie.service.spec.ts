@@ -7,10 +7,7 @@ describe(CookieService.name, () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      providers: [
-        CookieService,
-        { provide: REQUEST, useValue: {} }
-      ]
+      providers: [CookieService, { provide: REQUEST, useValue: {} }],
     });
   }));
 

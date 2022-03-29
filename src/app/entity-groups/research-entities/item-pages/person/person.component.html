@@ -1,72 +1,104 @@
 <div class="d-flex flex-row">
   <h2 class="item-page-title-field mr-auto">
-    {{'person.page.titleprefix' | translate}}<ds-metadata-values [mdValues]="[object?.firstMetadata('person.familyName'), object?.firstMetadata('person.givenName')]" [separator]="', '"></ds-metadata-values>
+    {{ 'person.page.titleprefix' | translate
+    }}<ds-metadata-values
+      [mdValues]="[
+        object?.firstMetadata('person.familyName'),
+        object?.firstMetadata('person.givenName')
+      ]"
+      [separator]="', '"
+    ></ds-metadata-values>
   </h2>
   <div class="pl-2">
-    <ds-dso-page-edit-button [pageRoute]="itemPageRoute" [dso]="object" [tooltipMsg]="'person.page.edit'"></ds-dso-page-edit-button>
+    <ds-dso-page-edit-button
+      [pageRoute]="itemPageRoute"
+      [dso]="object"
+      [tooltipMsg]="'person.page.edit'"
+    ></ds-dso-page-edit-button>
   </div>
 </div>
 <div class="row">
   <div class="col-xs-12 col-md-4">
     <ds-metadata-field-wrapper [hideIfNoTextContent]="false">
-      <ds-thumbnail [thumbnail]="object?.thumbnail | async"
-                    [defaultImage]="'assets/images/person-placeholder.svg'"
-                    [alt]="'thumbnail.person.alt'"
-                    [placeholder]="'thumbnail.person.placeholder'">
+      <ds-thumbnail
+        [thumbnail]="object?.thumbnail | async"
+        [defaultImage]="'assets/images/person-placeholder.svg'"
+        [alt]="'thumbnail.person.alt'"
+        [placeholder]="'thumbnail.person.placeholder'"
+      >
       </ds-thumbnail>
     </ds-metadata-field-wrapper>
-    <ds-generic-item-page-field [item]="object"
+    <ds-generic-item-page-field
+      [item]="object"
       [fields]="['person.email']"
-      [label]="'person.page.email'">
+      [label]="'person.page.email'"
+    >
     </ds-generic-item-page-field>
     <!--<ds-generic-item-page-field [item]="object"-->
-      <!--[fields]="['person.identifier.orcid']"-->
-      <!--[label]="'person.page.orcid'">-->
+    <!--[fields]="['person.identifier.orcid']"-->
+    <!--[label]="'person.page.orcid'">-->
     <!--</ds-generic-item-page-field>-->
-    <ds-generic-item-page-field [item]="object"
+    <ds-generic-item-page-field
+      [item]="object"
       [fields]="['person.birthDate']"
-      [label]="'person.page.birthdate'">
+      [label]="'person.page.birthdate'"
+    >
     </ds-generic-item-page-field>
     <!--<ds-generic-item-page-field [item]="object"-->
-      <!--[fields]="['person.identifier.staffid']"-->
-      <!--[label]="'person.page.staffid'">-->
+    <!--[fields]="['person.identifier.staffid']"-->
+    <!--[label]="'person.page.staffid'">-->
     <!--</ds-generic-item-page-field>-->
   </div>
   <div class="col-xs-12 col-md-6">
     <ds-related-items
       [parentItem]="object"
       [relationType]="'isProjectOfPerson'"
-      [label]="'relationships.isProjectOf' | translate">
+      [label]="'relationships.isProjectOf' | translate"
+    >
     </ds-related-items>
     <ds-related-items
       [parentItem]="object"
       [relationType]="'isOrgUnitOfPerson'"
-      [label]="'relationships.isOrgUnitOf' | translate">
+      [label]="'relationships.isOrgUnitOf' | translate"
+    >
     </ds-related-items>
-    <ds-generic-item-page-field [item]="object"
+    <ds-generic-item-page-field
+      [item]="object"
       [fields]="['person.jobTitle']"
-      [label]="'person.page.jobtitle'">
+      [label]="'person.page.jobtitle'"
+    >
     </ds-generic-item-page-field>
-    <ds-generic-item-page-field [item]="object"
+    <ds-generic-item-page-field
+      [item]="object"
       [fields]="['person.familyName']"
-      [label]="'person.page.lastname'">
+      [label]="'person.page.lastname'"
+    >
     </ds-generic-item-page-field>
-    <ds-generic-item-page-field [item]="object"
+    <ds-generic-item-page-field
+      [item]="object"
       [fields]="['person.givenName']"
-      [label]="'person.page.firstname'">
+      [label]="'person.page.firstname'"
+    >
     </ds-generic-item-page-field>
     <div>
-      <a class="btn btn-outline-primary" [routerLink]="[itemPageRoute + '/full']">
-        {{"item.page.link.full" | translate}}
+      <a
+        class="btn btn-outline-primary"
+        [routerLink]="[itemPageRoute + '/full']"
+      >
+        {{ 'item.page.link.full' | translate }}
       </a>
     </div>
   </div>
   <div class="mt-5 w-100">
-    <ds-tabbed-related-entities-search  [item]="object"
-                                        [relationTypes]="[{
-                                          label: 'isAuthorOfPublication',
-                                          filter: 'isAuthorOfPublication'
-                                        }]">
+    <ds-tabbed-related-entities-search
+      [item]="object"
+      [relationTypes]="[
+        {
+          label: 'isAuthorOfPublication',
+          filter: 'isAuthorOfPublication'
+        }
+      ]"
+    >
     </ds-tabbed-related-entities-search>
   </div>
 </div>

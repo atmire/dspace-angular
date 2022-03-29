@@ -1,16 +1,36 @@
 // Load the implementations that should be tested
-import { ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ComponentFixture, inject, TestBed, waitForAsync, } from '@angular/core/testing';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  ChangeDetectorRef,
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+} from '@angular/core';
+import {
+  ComponentFixture,
+  inject,
+  TestBed,
+  waitForAsync,
+} from '@angular/core/testing';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { Store, StoreModule } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { DynamicFormLayoutService, DynamicFormValidationService } from '@ng-dynamic-forms/core';
+import {
+  DynamicFormLayoutService,
+  DynamicFormValidationService,
+} from '@ng-dynamic-forms/core';
 
 import { DsDynamicRelationGroupComponent } from './dynamic-relation-group.components';
-import { DynamicRelationGroupModel, DynamicRelationGroupModelConfig } from './dynamic-relation-group.model';
+import {
+  DynamicRelationGroupModel,
+  DynamicRelationGroupModelConfig,
+} from './dynamic-relation-group.model';
 import { SubmissionFormsModel } from '../../../../../../core/config/models/config-submission-forms.model';
 import { FormFieldModel } from '../../../models/form-field.model';
 import { FormBuilderService } from '../../../form-builder.service';
@@ -36,36 +56,47 @@ function init() {
   FORM_GROUP_TEST_MODEL_CONFIG = {
     disabled: false,
     errorMessages: { required: 'You must specify at least one author.' },
-    formConfiguration: [{
-      fields: [{
-        hints: 'Enter the name of the author.',
-        input: { type: 'onebox' },
-        label: 'Author',
-        languageCodes: [],
-        mandatory: 'true',
-        mandatoryMessage: 'Required field!',
-        repeatable: false,
-        selectableMetadata: [{
-          controlledVocabulary: 'RPAuthority',
-          closed: false,
-          metadata: 'dc.contributor.author'
-        }],
-      } as FormFieldModel]
-    } as FormRowModel, {
-      fields: [{
-        hints: 'Enter the affiliation of the author.',
-        input: { type: 'onebox' },
-        label: 'Affiliation',
-        languageCodes: [],
-        mandatory: 'false',
-        repeatable: false,
-        selectableMetadata: [{
-          controlledVocabulary: 'OUAuthority',
-          closed: false,
-          metadata: 'local.contributor.affiliation'
-        }]
-      } as FormFieldModel]
-    } as FormRowModel],
+    formConfiguration: [
+      {
+        fields: [
+          {
+            hints: 'Enter the name of the author.',
+            input: { type: 'onebox' },
+            label: 'Author',
+            languageCodes: [],
+            mandatory: 'true',
+            mandatoryMessage: 'Required field!',
+            repeatable: false,
+            selectableMetadata: [
+              {
+                controlledVocabulary: 'RPAuthority',
+                closed: false,
+                metadata: 'dc.contributor.author',
+              },
+            ],
+          } as FormFieldModel,
+        ],
+      } as FormRowModel,
+      {
+        fields: [
+          {
+            hints: 'Enter the affiliation of the author.',
+            input: { type: 'onebox' },
+            label: 'Affiliation',
+            languageCodes: [],
+            mandatory: 'false',
+            repeatable: false,
+            selectableMetadata: [
+              {
+                controlledVocabulary: 'OUAuthority',
+                closed: false,
+                metadata: 'local.contributor.affiliation',
+              },
+            ],
+          } as FormFieldModel,
+        ],
+      } as FormRowModel,
+    ],
     submissionId,
     id: 'dc_contributor_author',
     label: 'Authors',
@@ -80,13 +111,12 @@ function init() {
     validators: { required: null },
     repeatable: false,
     metadataFields: [],
-    hasSelectableMetadata: false
+    hasSelectableMetadata: false,
   } as DynamicRelationGroupModelConfig;
 
   FORM_GROUP_TEST_GROUP = new FormGroup({
     dc_contributor_author: new FormControl(),
   });
-
 }
 
 describe('DsDynamicRelationGroupComponent test suite', () => {
@@ -113,7 +143,7 @@ describe('DsDynamicRelationGroupComponent test suite', () => {
         ReactiveFormsModule,
         NgbModule,
         StoreModule.forRoot({}, storeModuleConfig),
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
       ],
       declarations: [
         FormComponent,
@@ -129,11 +159,10 @@ describe('DsDynamicRelationGroupComponent test suite', () => {
         FormComponent,
         FormService,
         { provide: VocabularyService, useValue: new VocabularyServiceStub() },
-        { provide: Store, useClass: StoreMock }
+        { provide: Store, useClass: StoreMock },
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     });
-
   }));
 
   describe('', () => {
@@ -146,7 +175,10 @@ describe('DsDynamicRelationGroupComponent test suite', () => {
                             (change)="onValueChange($event)"
                             (focus)="onFocus($event)"></ds-dynamic-relation-group>`;
 
-      testFixture = createTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
+      testFixture = createTestComponent(
+        html,
+        TestComponent
+      ) as ComponentFixture<TestComponent>;
       testComp = testFixture.componentInstance;
     });
 
@@ -155,25 +187,42 @@ describe('DsDynamicRelationGroupComponent test suite', () => {
       testComp = null;
     });
 
-    it('should create DsDynamicRelationGroupComponent', inject([DsDynamicRelationGroupComponent], (app: DsDynamicRelationGroupComponent) => {
-
-      expect(app).toBeDefined();
-    }));
+    it('should create DsDynamicRelationGroupComponent', inject(
+      [DsDynamicRelationGroupComponent],
+      (app: DsDynamicRelationGroupComponent) => {
+        expect(app).toBeDefined();
+      }
+    ));
   });
 
   describe('when init model value is empty', () => {
     beforeEach(inject([FormBuilderService], (service: FormBuilderService) => {
-
       groupFixture = TestBed.createComponent(DsDynamicRelationGroupComponent);
       groupComp = groupFixture.componentInstance; // FormComponent test instance
       groupComp.formId = 'testForm';
       groupComp.group = FORM_GROUP_TEST_GROUP;
-      groupComp.model = new DynamicRelationGroupModel(FORM_GROUP_TEST_MODEL_CONFIG);
+      groupComp.model = new DynamicRelationGroupModel(
+        FORM_GROUP_TEST_MODEL_CONFIG
+      );
       groupFixture.detectChanges();
-      control1 = service.getFormControlById('dc_contributor_author', (groupComp as any).formRef.formGroup, groupComp.formModel) as FormControl;
-      model1 = service.findById('dc_contributor_author', groupComp.formModel) as DsDynamicInputModel;
-      control2 = service.getFormControlById('local_contributor_affiliation', (groupComp as any).formRef.formGroup, groupComp.formModel) as FormControl;
-      model2 = service.findById('local_contributor_affiliation', groupComp.formModel) as DsDynamicInputModel;
+      control1 = service.getFormControlById(
+        'dc_contributor_author',
+        (groupComp as any).formRef.formGroup,
+        groupComp.formModel
+      ) as FormControl;
+      model1 = service.findById(
+        'dc_contributor_author',
+        groupComp.formModel
+      ) as DsDynamicInputModel;
+      control2 = service.getFormControlById(
+        'local_contributor_affiliation',
+        (groupComp as any).formRef.formGroup,
+        groupComp.formModel
+      ) as FormControl;
+      model2 = service.findById(
+        'local_contributor_affiliation',
+        groupComp.formModel
+      ) as DsDynamicInputModel;
 
       // spyOn(store, 'dispatch');
     }));
@@ -183,29 +232,50 @@ describe('DsDynamicRelationGroupComponent test suite', () => {
       groupComp = null;
     });
 
-    it('should init component properly', inject([FormBuilderService], (service: FormBuilderService) => {
-      const formConfig = { rows: groupComp.model.formConfiguration } as SubmissionFormsModel;
-      const formModel = service.modelFromConfiguration(submissionId, formConfig, groupComp.model.scopeUUID, {}, groupComp.model.submissionScope, groupComp.model.readOnly);
-      const chips = new Chips([], 'value', 'dc.contributor.author');
-      groupComp.formCollapsed.subscribe((value) => {
-        expect(value).toEqual(false);
-      });
-      expect(groupComp.formModel.length).toEqual(formModel.length);
-      expect(groupComp.chips.getChipsItems()).toEqual(chips.getChipsItems());
-    }));
+    it('should init component properly', inject(
+      [FormBuilderService],
+      (service: FormBuilderService) => {
+        const formConfig = {
+          rows: groupComp.model.formConfiguration,
+        } as SubmissionFormsModel;
+        const formModel = service.modelFromConfiguration(
+          submissionId,
+          formConfig,
+          groupComp.model.scopeUUID,
+          {},
+          groupComp.model.submissionScope,
+          groupComp.model.readOnly
+        );
+        const chips = new Chips([], 'value', 'dc.contributor.author');
+        groupComp.formCollapsed.subscribe((value) => {
+          expect(value).toEqual(false);
+        });
+        expect(groupComp.formModel.length).toEqual(formModel.length);
+        expect(groupComp.chips.getChipsItems()).toEqual(chips.getChipsItems());
+      }
+    ));
 
     it('should save a new chips item', () => {
       control1.setValue('test author');
       (model1 as any).value = new FormFieldMetadataValueObject('test author');
       control2.setValue('test affiliation');
-      (model2 as any).value = new FormFieldMetadataValueObject('test affiliation');
-      modelValue = [{
-        'dc.contributor.author': new FormFieldMetadataValueObject('test author'),
-        'local.contributor.affiliation': new FormFieldMetadataValueObject('test affiliation')
-      }];
+      (model2 as any).value = new FormFieldMetadataValueObject(
+        'test affiliation'
+      );
+      modelValue = [
+        {
+          'dc.contributor.author': new FormFieldMetadataValueObject(
+            'test author'
+          ),
+          'local.contributor.affiliation': new FormFieldMetadataValueObject(
+            'test affiliation'
+          ),
+        },
+      ];
       groupFixture.detectChanges();
 
-      const buttons = groupFixture.debugElement.nativeElement.querySelectorAll('button');
+      const buttons =
+        groupFixture.debugElement.nativeElement.querySelectorAll('button');
       const btnEl = buttons[0];
       btnEl.click();
 
@@ -219,11 +289,14 @@ describe('DsDynamicRelationGroupComponent test suite', () => {
       control1.setValue('test author');
       (model1 as any).value = new FormFieldMetadataValueObject('test author');
       control2.setValue('test affiliation');
-      (model2 as any).value = new FormFieldMetadataValueObject('test affiliation');
+      (model2 as any).value = new FormFieldMetadataValueObject(
+        'test affiliation'
+      );
 
       groupFixture.detectChanges();
 
-      const buttons = groupFixture.debugElement.nativeElement.querySelectorAll('button');
+      const buttons =
+        groupFixture.debugElement.nativeElement.querySelectorAll('button');
       const btnEl = buttons[2];
       btnEl.click();
 
@@ -237,19 +310,25 @@ describe('DsDynamicRelationGroupComponent test suite', () => {
 
   describe('when init model value is not empty', () => {
     beforeEach(() => {
-
       groupFixture = TestBed.createComponent(DsDynamicRelationGroupComponent);
       groupComp = groupFixture.componentInstance; // FormComponent test instance
       groupComp.formId = 'testForm';
       groupComp.group = FORM_GROUP_TEST_GROUP;
-      groupComp.model = new DynamicRelationGroupModel(FORM_GROUP_TEST_MODEL_CONFIG);
-      modelValue = [{
-        'dc.contributor.author': new FormFieldMetadataValueObject('test author'),
-        'local.contributor.affiliation': new FormFieldMetadataValueObject('test affiliation')
-      }];
+      groupComp.model = new DynamicRelationGroupModel(
+        FORM_GROUP_TEST_MODEL_CONFIG
+      );
+      modelValue = [
+        {
+          'dc.contributor.author': new FormFieldMetadataValueObject(
+            'test author'
+          ),
+          'local.contributor.affiliation': new FormFieldMetadataValueObject(
+            'test affiliation'
+          ),
+        },
+      ];
       groupComp.model.value = modelValue;
       groupFixture.detectChanges();
-
     });
 
     afterEach(() => {
@@ -257,50 +336,82 @@ describe('DsDynamicRelationGroupComponent test suite', () => {
       groupComp = null;
     });
 
-    it('should init component properly', inject([FormBuilderService], (service: FormBuilderService) => {
-      const formConfig = { rows: groupComp.model.formConfiguration } as SubmissionFormsModel;
-      const formModel = service.modelFromConfiguration(submissionId, formConfig, groupComp.model.scopeUUID, {}, groupComp.model.submissionScope, groupComp.model.readOnly);
-      const chips = new Chips(modelValue, 'value', 'dc.contributor.author');
-      groupComp.formCollapsed.subscribe((value) => {
-        expect(value).toEqual(true);
-      });
-      expect(groupComp.formModel.length).toEqual(formModel.length);
-      expect(groupComp.chips.getChipsItems()).toEqual(chips.getChipsItems());
-    }));
+    it('should init component properly', inject(
+      [FormBuilderService],
+      (service: FormBuilderService) => {
+        const formConfig = {
+          rows: groupComp.model.formConfiguration,
+        } as SubmissionFormsModel;
+        const formModel = service.modelFromConfiguration(
+          submissionId,
+          formConfig,
+          groupComp.model.scopeUUID,
+          {},
+          groupComp.model.submissionScope,
+          groupComp.model.readOnly
+        );
+        const chips = new Chips(modelValue, 'value', 'dc.contributor.author');
+        groupComp.formCollapsed.subscribe((value) => {
+          expect(value).toEqual(true);
+        });
+        expect(groupComp.formModel.length).toEqual(formModel.length);
+        expect(groupComp.chips.getChipsItems()).toEqual(chips.getChipsItems());
+      }
+    ));
 
-    it('should modify existing chips item', inject([FormBuilderService], (service: FormBuilderService) => {
-      groupComp.onChipSelected(0);
-      groupFixture.detectChanges();
+    it('should modify existing chips item', inject(
+      [FormBuilderService],
+      (service: FormBuilderService) => {
+        groupComp.onChipSelected(0);
+        groupFixture.detectChanges();
 
-      control1 = service.getFormControlById('dc_contributor_author', (groupComp as any).formRef.formGroup, groupComp.formModel) as FormControl;
-      model1 = service.findById('dc_contributor_author', groupComp.formModel) as DsDynamicInputModel;
+        control1 = service.getFormControlById(
+          'dc_contributor_author',
+          (groupComp as any).formRef.formGroup,
+          groupComp.formModel
+        ) as FormControl;
+        model1 = service.findById(
+          'dc_contributor_author',
+          groupComp.formModel
+        ) as DsDynamicInputModel;
 
-      control1.setValue('test author modify');
-      (model1 as any).value = new FormFieldMetadataValueObject('test author modify');
+        control1.setValue('test author modify');
+        (model1 as any).value = new FormFieldMetadataValueObject(
+          'test author modify'
+        );
 
-      modelValue = [{
-        'dc.contributor.author': new FormFieldMetadataValueObject('test author modify'),
-        'local.contributor.affiliation': new FormFieldMetadataValueObject('test affiliation')
-      }];
-      groupFixture.detectChanges();
+        modelValue = [
+          {
+            'dc.contributor.author': new FormFieldMetadataValueObject(
+              'test author modify'
+            ),
+            'local.contributor.affiliation': new FormFieldMetadataValueObject(
+              'test affiliation'
+            ),
+          },
+        ];
+        groupFixture.detectChanges();
 
-      const buttons = groupFixture.debugElement.nativeElement.querySelectorAll('button');
-      const btnEl = buttons[0];
-      btnEl.click();
+        const buttons =
+          groupFixture.debugElement.nativeElement.querySelectorAll('button');
+        const btnEl = buttons[0];
+        btnEl.click();
 
-      groupFixture.detectChanges();
+        groupFixture.detectChanges();
 
-      expect(groupComp.chips.getChipsItems()).toEqual(modelValue);
-      groupComp.formCollapsed.subscribe((value) => {
-        expect(value).toEqual(true);
-      });
-    }));
+        expect(groupComp.chips.getChipsItems()).toEqual(modelValue);
+        groupComp.formCollapsed.subscribe((value) => {
+          expect(value).toEqual(true);
+        });
+      }
+    ));
 
     it('should delete existing chips item', () => {
       groupComp.onChipSelected(0);
       groupFixture.detectChanges();
 
-      const buttons = groupFixture.debugElement.nativeElement.querySelectorAll('button');
+      const buttons =
+        groupFixture.debugElement.nativeElement.querySelectorAll('button');
       const btnEl = buttons[1];
       btnEl.click();
 
@@ -315,10 +426,9 @@ describe('DsDynamicRelationGroupComponent test suite', () => {
 // declare a test component
 @Component({
   selector: 'ds-test-cmp',
-  template: ``
+  template: ``,
 })
 class TestComponent {
-
   group = FORM_GROUP_TEST_GROUP;
 
   groupModelConfig = FORM_GROUP_TEST_MODEL_CONFIG;
@@ -326,5 +436,4 @@ class TestComponent {
   model = new DynamicRelationGroupModel(this.groupModelConfig);
 
   showErrorMessages = false;
-
 }

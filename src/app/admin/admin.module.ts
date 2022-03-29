@@ -16,7 +16,6 @@ const ENTRY_COMPONENTS = [
   ExpandableAdminSidebarSectionComponent,
 ];
 
-
 @NgModule({
   imports: [
     AdminRoutingModule,
@@ -24,12 +23,9 @@ const ENTRY_COMPONENTS = [
     AccessControlModule,
     AdminSearchModule.withEntryComponents(),
     AdminWorkflowModuleModule.withEntryComponents(),
-    SharedModule
+    SharedModule,
   ],
-  declarations: [
-    AdminCurationTasksComponent,
-    MetadataImportPageComponent
-  ]
+  declarations: [AdminCurationTasksComponent, MetadataImportPageComponent],
 })
 export class AdminModule {
   /**
@@ -39,7 +35,7 @@ export class AdminModule {
   static withEntryComponents() {
     return {
       ngModule: AdminModule,
-      providers: ENTRY_COMPONENTS.map((component) => ({provide: component}))
+      providers: ENTRY_COMPONENTS.map((component) => ({ provide: component })),
     };
   }
 }

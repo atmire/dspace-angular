@@ -42,7 +42,7 @@ export class JsonPatchOperationPathCombiner extends URLCombiner {
    * @return {JsonPatchOperationPathObject}
    *      The combined path object
    */
-  public getPath(fragment?: string|string[]): JsonPatchOperationPathObject {
+  public getPath(fragment?: string | string[]): JsonPatchOperationPathObject {
     if (isNotUndefined(fragment) && Array.isArray(fragment)) {
       fragment = fragment.join('/');
     }
@@ -52,6 +52,10 @@ export class JsonPatchOperationPathCombiner extends URLCombiner {
       path += '/' + fragment;
     }
 
-    return {rootElement: this._rootElement, subRootElement: this._subRootElement, path: path};
+    return {
+      rootElement: this._rootElement,
+      subRootElement: this._subRootElement,
+      path: path,
+    };
   }
 }

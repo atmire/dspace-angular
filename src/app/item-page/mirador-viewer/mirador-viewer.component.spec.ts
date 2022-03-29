@@ -13,12 +13,11 @@ import { of as observableOf } from 'rxjs';
 import { MiradorViewerService } from './mirador-viewer.service';
 import { HostWindowService } from '../../shared/host-window.service';
 
-
 function getItem(metadata: MetadataMap) {
   return Object.assign(new Item(), {
     bundles: createSuccessfulRemoteDataObject$(createPaginatedList([])),
     metadata: metadata,
-    relationships: createRelationshipsObservable()
+    relationships: createRelationshipsObservable(),
   });
 }
 
@@ -32,30 +31,37 @@ const mockHostWindowService = {
 describe('MiradorViewerComponent with search', () => {
   let comp: MiradorViewerComponent;
   let fixture: ComponentFixture<MiradorViewerComponent>;
-  const viewerService = jasmine.createSpyObj('MiradorViewerService', ['showEmbeddedViewer', 'getImageCount']);
+  const viewerService = jasmine.createSpyObj('MiradorViewerService', [
+    'showEmbeddedViewer',
+    'getImageCount',
+  ]);
 
   beforeEach(waitForAsync(() => {
     viewerService.showEmbeddedViewer.and.returnValue(true);
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot({
-        loader: {
-          provide: TranslateLoader,
-          useClass: TranslateLoaderMock
-        }
-      })],
+      imports: [
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useClass: TranslateLoaderMock,
+          },
+        }),
+      ],
       declarations: [MiradorViewerComponent],
       providers: [
         { provide: BitstreamDataService, useValue: {} },
-        { provide: HostWindowService, useValue: mockHostWindowService }
+        { provide: HostWindowService, useValue: mockHostWindowService },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(MiradorViewerComponent, {
-      set: {
-        providers: [
-          { provide: MiradorViewerService, useValue: viewerService }
-        ]
-      }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(MiradorViewerComponent, {
+        set: {
+          providers: [
+            { provide: MiradorViewerService, useValue: viewerService },
+          ],
+        },
+      })
+      .compileComponents();
   }));
   describe('searchable item', () => {
     beforeEach(waitForAsync(() => {
@@ -66,58 +72,63 @@ describe('MiradorViewerComponent with search', () => {
       fixture.detectChanges();
     }));
 
-    it('should set multi property to true', (() => {
+    it('should set multi property to true', () => {
       expect(comp.multi).toBe(true);
-    }));
+    });
 
-    it('should set url "multi" param to true', (() => {
-      const value = fixture.debugElement
-        .nativeElement.querySelector('#mirador-viewer').src;
+    it('should set url "multi" param to true', () => {
+      const value =
+        fixture.debugElement.nativeElement.querySelector('#mirador-viewer').src;
       expect(value).toContain('multi=true');
-    }));
+    });
 
-    it('should set url "searchable" param to true', (() => {
-      const value = fixture.debugElement
-        .nativeElement.querySelector('#mirador-viewer').src;
+    it('should set url "searchable" param to true', () => {
+      const value =
+        fixture.debugElement.nativeElement.querySelector('#mirador-viewer').src;
       expect(value).toContain('searchable=true');
-    }));
+    });
 
     it('should not call mirador service image count', () => {
       expect(viewerService.getImageCount).not.toHaveBeenCalled();
     });
-
   });
 });
 
 describe('MiradorViewerComponent with multiple images', () => {
-
   let comp: MiradorViewerComponent;
   let fixture: ComponentFixture<MiradorViewerComponent>;
-  const viewerService = jasmine.createSpyObj('MiradorViewerService', ['showEmbeddedViewer', 'getImageCount']);
+  const viewerService = jasmine.createSpyObj('MiradorViewerService', [
+    'showEmbeddedViewer',
+    'getImageCount',
+  ]);
 
   beforeEach(waitForAsync(() => {
     viewerService.showEmbeddedViewer.and.returnValue(true);
     viewerService.getImageCount.and.returnValue(observableOf(2));
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot({
-        loader: {
-          provide: TranslateLoader,
-          useClass: TranslateLoaderMock
-        }
-      })],
+      imports: [
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useClass: TranslateLoaderMock,
+          },
+        }),
+      ],
       declarations: [MiradorViewerComponent],
       providers: [
         { provide: BitstreamDataService, useValue: {} },
-        { provide: HostWindowService, useValue: mockHostWindowService  }
+        { provide: HostWindowService, useValue: mockHostWindowService },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(MiradorViewerComponent, {
-      set: {
-        providers: [
-          { provide: MiradorViewerService, useValue: viewerService }
-          ]
-      }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(MiradorViewerComponent, {
+        set: {
+          providers: [
+            { provide: MiradorViewerService, useValue: viewerService },
+          ],
+        },
+      })
+      .compileComponents();
   }));
 
   describe('non-searchable item with multiple images', () => {
@@ -129,54 +140,59 @@ describe('MiradorViewerComponent with multiple images', () => {
       fixture.detectChanges();
     }));
 
-    it('should set url "multi" param to true', (() => {
-      const value = fixture.debugElement
-        .nativeElement.querySelector('#mirador-viewer').src;
+    it('should set url "multi" param to true', () => {
+      const value =
+        fixture.debugElement.nativeElement.querySelector('#mirador-viewer').src;
       expect(value).toContain('multi=true');
-    }));
+    });
 
     it('should call mirador service image count', () => {
       expect(viewerService.getImageCount).toHaveBeenCalled();
     });
 
-    it('should omit "searchable" param from url', (() => {
-      const value = fixture.debugElement
-        .nativeElement.querySelector('#mirador-viewer').src;
+    it('should omit "searchable" param from url', () => {
+      const value =
+        fixture.debugElement.nativeElement.querySelector('#mirador-viewer').src;
       expect(value).not.toContain('searchable=true');
-    }));
-
+    });
   });
 });
-
 
 describe('MiradorViewerComponent with a single image', () => {
   let comp: MiradorViewerComponent;
   let fixture: ComponentFixture<MiradorViewerComponent>;
-  const viewerService = jasmine.createSpyObj('MiradorViewerService', ['showEmbeddedViewer', 'getImageCount']);
+  const viewerService = jasmine.createSpyObj('MiradorViewerService', [
+    'showEmbeddedViewer',
+    'getImageCount',
+  ]);
 
   beforeEach(waitForAsync(() => {
     viewerService.showEmbeddedViewer.and.returnValue(true);
     viewerService.getImageCount.and.returnValue(observableOf(1));
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot({
-        loader: {
-          provide: TranslateLoader,
-          useClass: TranslateLoaderMock
-        }
-      })],
+      imports: [
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useClass: TranslateLoaderMock,
+          },
+        }),
+      ],
       declarations: [MiradorViewerComponent],
       providers: [
         { provide: BitstreamDataService, useValue: {} },
-        { provide: HostWindowService, useValue: mockHostWindowService }
+        { provide: HostWindowService, useValue: mockHostWindowService },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(MiradorViewerComponent, {
-      set: {
-        providers: [
-          { provide: MiradorViewerService, useValue: viewerService }
-        ]
-      }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(MiradorViewerComponent, {
+        set: {
+          providers: [
+            { provide: MiradorViewerService, useValue: viewerService },
+          ],
+        },
+      })
+      .compileComponents();
   }));
 
   describe('single image viewer', () => {
@@ -187,48 +203,51 @@ describe('MiradorViewerComponent with a single image', () => {
       fixture.detectChanges();
     }));
 
-    it('should  omit "multi" param', (() => {
-      const value = fixture.debugElement
-        .nativeElement.querySelector('#mirador-viewer').src;
+    it('should  omit "multi" param', () => {
+      const value =
+        fixture.debugElement.nativeElement.querySelector('#mirador-viewer').src;
       expect(value).not.toContain('multi=false');
-    }));
+    });
 
     it('should call mirador service image count', () => {
       expect(viewerService.getImageCount).toHaveBeenCalled();
     });
-
   });
-
 });
 
 describe('MiradorViewerComponent in development mode', () => {
   let comp: MiradorViewerComponent;
   let fixture: ComponentFixture<MiradorViewerComponent>;
-  const viewerService = jasmine.createSpyObj('MiradorViewerService', ['showEmbeddedViewer', 'getImageCount']);
+  const viewerService = jasmine.createSpyObj('MiradorViewerService', [
+    'showEmbeddedViewer',
+    'getImageCount',
+  ]);
 
   beforeEach(waitForAsync(() => {
     viewerService.showEmbeddedViewer.and.returnValue(false);
     viewerService.getImageCount.and.returnValue(observableOf(1));
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot({
-        loader: {
-          provide: TranslateLoader,
-          useClass: TranslateLoaderMock
-        }
-      })],
-      declarations: [MiradorViewerComponent],
-      providers: [
-        { provide: BitstreamDataService, useValue: {} }
+      imports: [
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useClass: TranslateLoaderMock,
+          },
+        }),
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(MiradorViewerComponent, {
-      set: {
-        providers: [
-          { provide: MiradorViewerService, useValue: viewerService },
-          { provide: HostWindowService, useValue: mockHostWindowService  }
-        ]
-      }
-    }).compileComponents();
+      declarations: [MiradorViewerComponent],
+      providers: [{ provide: BitstreamDataService, useValue: {} }],
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(MiradorViewerComponent, {
+        set: {
+          providers: [
+            { provide: MiradorViewerService, useValue: viewerService },
+            { provide: HostWindowService, useValue: mockHostWindowService },
+          ],
+        },
+      })
+      .compileComponents();
   }));
 
   describe('embedded viewer', () => {
@@ -239,17 +258,16 @@ describe('MiradorViewerComponent in development mode', () => {
       fixture.detectChanges();
     }));
 
-    it('should not embed the viewer', (() => {
-      const value = fixture.debugElement
-        .nativeElement.querySelector('#mirador-viewer');
+    it('should not embed the viewer', () => {
+      const value =
+        fixture.debugElement.nativeElement.querySelector('#mirador-viewer');
       expect(value).toBeNull();
-    }));
+    });
 
-    it('should show message', (() => {
-      const value = fixture.debugElement
-        .nativeElement.querySelector('#viewer-message');
+    it('should show message', () => {
+      const value =
+        fixture.debugElement.nativeElement.querySelector('#viewer-message');
       expect(value).toBeDefined();
-    }));
-
+    });
   });
 });

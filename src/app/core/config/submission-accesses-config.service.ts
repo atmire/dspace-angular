@@ -33,10 +33,30 @@ export class SubmissionAccessesConfigService extends ConfigService {
     protected http: HttpClient,
     protected comparator: DefaultChangeAnalyzer<SubmissionAccessesModel>
   ) {
-    super(requestService, rdbService, null, objectCache, halService, notificationsService, http, comparator, 'submissionaccessoptions');
+    super(
+      requestService,
+      rdbService,
+      null,
+      objectCache,
+      halService,
+      notificationsService,
+      http,
+      comparator,
+      'submissionaccessoptions'
+    );
   }
 
-  findByHref(href: string, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow): Observable<RemoteData<SubmissionAccessesModel>> {
-    return super.findByHref(href, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow as FollowLinkConfig<ConfigObject>[]) as Observable<RemoteData<SubmissionAccessesModel>>;
+  findByHref(
+    href: string,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow
+  ): Observable<RemoteData<SubmissionAccessesModel>> {
+    return super.findByHref(
+      href,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...(linksToFollow as FollowLinkConfig<ConfigObject>[])
+    ) as Observable<RemoteData<SubmissionAccessesModel>>;
   }
 }

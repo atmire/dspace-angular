@@ -6,7 +6,7 @@ import {
   SearchFilterIncrementPageAction,
   SearchFilterInitializeAction,
   SearchFilterResetPageAction,
-  SearchFilterToggleAction
+  SearchFilterToggleAction,
 } from './search-filter.actions';
 import { filterReducer } from './search-filter.reducer';
 
@@ -22,7 +22,6 @@ class NullAction extends SearchFilterCollapseAction {
 }
 
 describe('filterReducer', () => {
-
   it('should return the current state when no valid actions have been made', () => {
     const state = { author: { filterCollapsed: true, page: 1 } };
     const action = new NullAction();

@@ -7,8 +7,7 @@ export class IDToUUIDSerializer {
   /**
    * @param {string} prefix To prepend the original ID with
    */
-  constructor(private prefix: string) {
-  }
+  constructor(private prefix: string) {}
 
   /**
    * Method to serialize a UUID
@@ -30,6 +29,5 @@ export class IDToUUIDSerializer {
     } else {
       return id;
     }
-
   }
 }

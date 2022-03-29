@@ -5,7 +5,7 @@ export enum MetadataRepresentationType {
   None = 'none',
   Item = 'item',
   AuthorityControlled = 'authority_controlled',
-  PlainText = 'plain_text'
+  PlainText = 'plain_text',
 }
 
 /**

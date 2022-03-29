@@ -5,7 +5,7 @@ import {
   Input,
   OnDestroy,
   OnInit,
-  ViewEncapsulation
+  ViewEncapsulation,
 } from '@angular/core';
 
 import { select, Store } from '@ngrx/store';
@@ -24,17 +24,17 @@ import { INotificationBoardOptions } from '../../../../config/notifications-conf
   encapsulation: ViewEncapsulation.None,
   templateUrl: './notifications-board.component.html',
   styleUrls: ['./notifications-board.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NotificationsBoardComponent implements OnInit, OnDestroy {
-
   @Input()
   set options(opt: INotificationBoardOptions) {
     this.attachChanges(opt);
   }
 
   public notifications: INotification[] = [];
-  public position: ['top' | 'bottom' | 'middle', 'right' | 'left' | 'center'] = ['bottom', 'right'];
+  public position: ['top' | 'bottom' | 'middle', 'right' | 'left' | 'center'] =
+    ['bottom', 'right'];
 
   // Received values
   private maxStack = 8;
@@ -42,20 +42,31 @@ export class NotificationsBoardComponent implements OnInit, OnDestroy {
 
   // Sent values
   public rtl = false;
-  public animate: 'fade' | 'fromTop' | 'fromRight' | 'fromBottom' | 'fromLeft' | 'rotate' | 'scale' = 'fromRight';
+  public animate:
+    | 'fade'
+    | 'fromTop'
+    | 'fromRight'
+    | 'fromBottom'
+    | 'fromLeft'
+    | 'rotate'
+    | 'scale' = 'fromRight';
 
   /**
    * Whether to pause the dismiss countdown of all notifications on the board
    */
-  public isPaused$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public isPaused$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
 
-  constructor(private service: NotificationsService,
-              private store: Store<AppState>,
-              private cdr: ChangeDetectorRef) {
-  }
+  constructor(
+    private service: NotificationsService,
+    private store: Store<AppState>,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
-    this.sub = this.store.pipe(select(notificationsStateSelector))
+    this.sub = this.store
+      .pipe(select(notificationsStateSelector))
       .subscribe((state: NotificationsState) => {
         if (state.length === 0) {
           this.notifications = [];
@@ -69,8 +80,9 @@ export class NotificationsBoardComponent implements OnInit, OnDestroy {
           // Remove
           const delElem = difference(this.notifications, state);
           delElem.forEach((notification) => {
-            this.notifications = this.notifications.filter((item: INotification) => item.id !== notification.id);
-
+            this.notifications = this.notifications.filter(
+              (item: INotification) => item.id !== notification.id
+            );
           });
         }
         this.cdr.detectChanges();
@@ -119,11 +131,20 @@ export class NotificationsBoardComponent implements OnInit, OnDestroy {
   }
 
   private checkStandard(checker: INotification, item: INotification): boolean {
-    return checker.type === item.type && checker.title === item.title && checker.content === item.content;
+    return (
+      checker.type === item.type &&
+      checker.title === item.title &&
+      checker.content === item.content
+    );
   }
 
   private checkHtml(checker: INotification, item: INotification): boolean {
-    return checker.html ? checker.type === item.type && checker.title === item.title && checker.content === item.content && checker.html === item.html : false;
+    return checker.html
+      ? checker.type === item.type &&
+          checker.title === item.title &&
+          checker.content === item.content &&
+          checker.html === item.html
+      : false;
   }
 
   // Attach all the changes received in the options object

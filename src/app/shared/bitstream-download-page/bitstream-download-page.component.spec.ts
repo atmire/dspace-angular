@@ -28,33 +28,31 @@ describe('BitstreamDownloadPageComponent', () => {
   function init() {
     authService = jasmine.createSpyObj('authService', {
       isAuthenticated: observableOf(true),
-      setRedirectUrl: {}
+      setRedirectUrl: {},
     });
     authorizationService = jasmine.createSpyObj('authorizationSerivice', {
-      isAuthorized: observableOf(true)
+      isAuthorized: observableOf(true),
     });
 
     fileService = jasmine.createSpyObj('fileService', {
-      retrieveFileDownloadLink: observableOf('content-url-with-headers')
+      retrieveFileDownloadLink: observableOf('content-url-with-headers'),
     });
 
     hardRedirectService = jasmine.createSpyObj('fileService', {
-      redirect: {}
+      redirect: {},
     });
     bitstream = Object.assign(new Bitstream(), {
       uuid: 'bitstreamUuid',
       _links: {
-        content: {href: 'bitstream-content-link'},
-        self: {href: 'bitstream-self-link'},
-      }
+        content: { href: 'bitstream-content-link' },
+        self: { href: 'bitstream-self-link' },
+      },
     });
 
     activatedRoute = {
       data: observableOf({
-        bitstream: createSuccessfulRemoteDataObject(
-          bitstream
-        )
-      })
+        bitstream: createSuccessfulRemoteDataObject(bitstream),
+      }),
     };
 
     router = jasmine.createSpyObj('router', ['navigateByUrl']);
@@ -65,15 +63,14 @@ describe('BitstreamDownloadPageComponent', () => {
       imports: [CommonModule, TranslateModule.forRoot()],
       declarations: [BitstreamDownloadPageComponent],
       providers: [
-        {provide: ActivatedRoute, useValue: activatedRoute},
-        {provide: Router, useValue: router},
-        {provide: AuthorizationDataService, useValue: authorizationService},
-        {provide: AuthService, useValue: authService},
-        {provide: FileService, useValue: fileService},
-        {provide: HardRedirectService, useValue: hardRedirectService},
-      ]
-    })
-      .compileComponents();
+        { provide: ActivatedRoute, useValue: activatedRoute },
+        { provide: Router, useValue: router },
+        { provide: AuthorizationDataService, useValue: authorizationService },
+        { provide: AuthService, useValue: authService },
+        { provide: FileService, useValue: fileService },
+        { provide: HardRedirectService, useValue: hardRedirectService },
+      ],
+    }).compileComponents();
   }
 
   describe('init', () => {
@@ -95,7 +92,9 @@ describe('BitstreamDownloadPageComponent', () => {
     describe('when the user is authorized and not logged in', () => {
       beforeEach(waitForAsync(() => {
         init();
-        (authService.isAuthenticated as jasmine.Spy).and.returnValue(observableOf(false));
+        (authService.isAuthenticated as jasmine.Spy).and.returnValue(
+          observableOf(false)
+        );
 
         initTestbed();
       }));
@@ -105,7 +104,9 @@ describe('BitstreamDownloadPageComponent', () => {
         fixture.detectChanges();
       });
       it('should redirect to the content link', () => {
-        expect(hardRedirectService.redirect).toHaveBeenCalledWith('bitstream-content-link');
+        expect(hardRedirectService.redirect).toHaveBeenCalledWith(
+          'bitstream-content-link'
+        );
       });
     });
     describe('when the user is authorized and logged in', () => {
@@ -119,13 +120,17 @@ describe('BitstreamDownloadPageComponent', () => {
         fixture.detectChanges();
       });
       it('should redirect to an updated content link', () => {
-        expect(hardRedirectService.redirect).toHaveBeenCalledWith('content-url-with-headers');
+        expect(hardRedirectService.redirect).toHaveBeenCalledWith(
+          'content-url-with-headers'
+        );
       });
     });
     describe('when the user is not authorized and logged in', () => {
       beforeEach(waitForAsync(() => {
         init();
-        (authorizationService.isAuthorized as jasmine.Spy).and.returnValue(observableOf(false));
+        (authorizationService.isAuthorized as jasmine.Spy).and.returnValue(
+          observableOf(false)
+        );
         initTestbed();
       }));
       beforeEach(() => {
@@ -134,14 +139,20 @@ describe('BitstreamDownloadPageComponent', () => {
         fixture.detectChanges();
       });
       it('should navigate to the forbidden route', () => {
-        expect(router.navigateByUrl).toHaveBeenCalledWith(getForbiddenRoute(), {skipLocationChange: true});
+        expect(router.navigateByUrl).toHaveBeenCalledWith(getForbiddenRoute(), {
+          skipLocationChange: true,
+        });
       });
     });
     describe('when the user is not authorized and not logged in', () => {
       beforeEach(waitForAsync(() => {
         init();
-        (authService.isAuthenticated as jasmine.Spy).and.returnValue(observableOf(false));
-        (authorizationService.isAuthorized as jasmine.Spy).and.returnValue(observableOf(false));
+        (authService.isAuthenticated as jasmine.Spy).and.returnValue(
+          observableOf(false)
+        );
+        (authorizationService.isAuthorized as jasmine.Spy).and.returnValue(
+          observableOf(false)
+        );
         initTestbed();
       }));
       beforeEach(() => {

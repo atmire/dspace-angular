@@ -16,11 +16,12 @@ export class ThemedCollectionPageComponent extends ThemedComponent<CollectionPag
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../themes/${themeName}/app/collection-page/collection-page.component`);
+    return import(
+      `../../themes/${themeName}/app/collection-page/collection-page.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {
     return import(`./collection-page.component`);
   }
-
 }

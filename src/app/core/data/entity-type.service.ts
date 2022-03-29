@@ -17,7 +17,10 @@ import { RemoteData } from './remote-data';
 import { RelationshipType } from '../shared/item-relationships/relationship-type.model';
 import { PaginatedList } from './paginated-list.model';
 import { ItemType } from '../shared/item-relationships/item-type.model';
-import { getFirstSucceededRemoteData, getRemoteDataPayload } from '../shared/operators';
+import {
+  getFirstSucceededRemoteData,
+  getRemoteDataPayload,
+} from '../shared/operators';
 import { RelationshipTypeService } from './relationship-type.service';
 
 /**
@@ -25,18 +28,19 @@ import { RelationshipTypeService } from './relationship-type.service';
  */
 @Injectable()
 export class EntityTypeService extends DataService<ItemType> {
-
   protected linkPath = 'entitytypes';
 
-  constructor(protected requestService: RequestService,
-              protected rdbService: RemoteDataBuildService,
-              protected store: Store<CoreState>,
-              protected halService: HALEndpointService,
-              protected objectCache: ObjectCacheService,
-              protected notificationsService: NotificationsService,
-              protected relationshipTypeService: RelationshipTypeService,
-              protected http: HttpClient,
-              protected comparator: DefaultChangeAnalyzer<ItemType>) {
+  constructor(
+    protected requestService: RequestService,
+    protected rdbService: RemoteDataBuildService,
+    protected store: Store<CoreState>,
+    protected halService: HALEndpointService,
+    protected objectCache: ObjectCacheService,
+    protected notificationsService: NotificationsService,
+    protected relationshipTypeService: RelationshipTypeService,
+    protected http: HttpClient,
+    protected comparator: DefaultChangeAnalyzer<ItemType>
+  ) {
     super();
   }
 
@@ -49,9 +53,16 @@ export class EntityTypeService extends DataService<ItemType> {
    * @param entityTypeId
    */
   getRelationshipTypesEndpoint(entityTypeId: string): Observable<string> {
-    return this.halService.getEndpoint(this.linkPath).pipe(
-      switchMap((href) => this.halService.getEndpoint('relationshiptypes', `${href}/${entityTypeId}`))
-    );
+    return this.halService
+      .getEndpoint(this.linkPath)
+      .pipe(
+        switchMap((href) =>
+          this.halService.getEndpoint(
+            'relationshiptypes',
+            `${href}/${entityTypeId}`
+          )
+        )
+      );
   }
 
   /**
@@ -59,12 +70,14 @@ export class EntityTypeService extends DataService<ItemType> {
    * @param relationshipType  the relationship type for which to check whether the given entity type is the left type
    * @param itemType  the entity type for which to check whether it is the left type of the given relationship type
    */
-  isLeftType(relationshipType: RelationshipType, itemType: ItemType): Observable<boolean> {
-
+  isLeftType(
+    relationshipType: RelationshipType,
+    itemType: ItemType
+  ): Observable<boolean> {
     return relationshipType.leftType.pipe(
       getFirstSucceededRemoteData(),
       getRemoteDataPayload(),
-      map((leftType) => leftType.uuid === itemType.uuid),
+      map((leftType) => leftType.uuid === itemType.uuid)
     );
   }
 
@@ -73,11 +86,16 @@ export class EntityTypeService extends DataService<ItemType> {
    *
    * @param {FindListOptions} options
    */
-  getAllAuthorizedRelationshipType(options: FindListOptions = {}): Observable<RemoteData<PaginatedList<ItemType>>> {
+  getAllAuthorizedRelationshipType(
+    options: FindListOptions = {}
+  ): Observable<RemoteData<PaginatedList<ItemType>>> {
     const searchHref = 'findAllByAuthorizedCollection';
 
     return this.searchBy(searchHref, options).pipe(
-      filter((type: RemoteData<PaginatedList<ItemType>>) => !type.isResponsePending));
+      filter(
+        (type: RemoteData<PaginatedList<ItemType>>) => !type.isResponsePending
+      )
+    );
   }
 
   /**
@@ -86,13 +104,13 @@ export class EntityTypeService extends DataService<ItemType> {
   hasMoreThanOneAuthorized(): Observable<boolean> {
     const findListOptions: FindListOptions = {
       elementsPerPage: 2,
-      currentPage: 1
+      currentPage: 1,
     };
     return this.getAllAuthorizedRelationshipType(findListOptions).pipe(
       map((result: RemoteData<PaginatedList<ItemType>>) => {
         let output: boolean;
         if (result.payload) {
-          output = ( result.payload.page.length > 1 );
+          output = result.payload.page.length > 1;
         } else {
           output = false;
         }
@@ -107,11 +125,16 @@ export class EntityTypeService extends DataService<ItemType> {
    *
    * @param {FindListOptions} options
    */
-  getAllAuthorizedRelationshipTypeImport(options: FindListOptions = {}): Observable<RemoteData<PaginatedList<ItemType>>> {
+  getAllAuthorizedRelationshipTypeImport(
+    options: FindListOptions = {}
+  ): Observable<RemoteData<PaginatedList<ItemType>>> {
     const searchHref = 'findAllByAuthorizedExternalSource';
 
     return this.searchBy(searchHref, options).pipe(
-      filter((type: RemoteData<PaginatedList<ItemType>>) => !type.isResponsePending));
+      filter(
+        (type: RemoteData<PaginatedList<ItemType>>) => !type.isResponsePending
+      )
+    );
   }
 
   /**
@@ -120,13 +143,13 @@ export class EntityTypeService extends DataService<ItemType> {
   hasMoreThanOneAuthorizedImport(): Observable<boolean> {
     const findListOptions: FindListOptions = {
       elementsPerPage: 2,
-      currentPage: 1
+      currentPage: 1,
     };
     return this.getAllAuthorizedRelationshipTypeImport(findListOptions).pipe(
       map((result: RemoteData<PaginatedList<ItemType>>) => {
         let output: boolean;
         if (result.payload) {
-          output = ( result.payload.page.length > 1 );
+          output = result.payload.page.length > 1;
         } else {
           output = false;
         }
@@ -145,9 +168,20 @@ export class EntityTypeService extends DataService<ItemType> {
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  getEntityTypeRelationships(entityTypeId: string, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<RelationshipType>[]): Observable<RemoteData<PaginatedList<RelationshipType>>> {
+  getEntityTypeRelationships(
+    entityTypeId: string,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<RelationshipType>[]
+  ): Observable<RemoteData<PaginatedList<RelationshipType>>> {
     const href$ = this.getRelationshipTypesEndpoint(entityTypeId);
-    return this.relationshipTypeService.findAllByHref(href$, undefined, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+    return this.relationshipTypeService.findAllByHref(
+      href$,
+      undefined,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow
+    );
   }
 
   /**
@@ -158,7 +192,8 @@ export class EntityTypeService extends DataService<ItemType> {
     return this.halService.getEndpoint(this.linkPath).pipe(
       take(1),
       switchMap((endPoint: string) =>
-        this.findByHref(endPoint + '/label/' + label))
+        this.findByHref(endPoint + '/label/' + label)
+      )
     );
   }
 }

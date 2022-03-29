@@ -16,7 +16,9 @@ export class ThemedBreadcrumbsComponent extends ThemedComponent<BreadcrumbsCompo
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../themes/${themeName}/app/breadcrumbs/breadcrumbs.component`);
+    return import(
+      `../../themes/${themeName}/app/breadcrumbs/breadcrumbs.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

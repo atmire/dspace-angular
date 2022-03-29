@@ -10,11 +10,18 @@ import { controlContainerFactory } from '../../../process-form.component';
   selector: 'ds-boolean-value-input',
   templateUrl: './boolean-value-input.component.html',
   styleUrls: ['./boolean-value-input.component.scss'],
-  viewProviders: [ { provide: ControlContainer,
-    useFactory: controlContainerFactory,
-    deps: [[new Optional(), NgForm]] } ]
+  viewProviders: [
+    {
+      provide: ControlContainer,
+      useFactory: controlContainerFactory,
+      deps: [[new Optional(), NgForm]],
+    },
+  ],
 })
-export class BooleanValueInputComponent extends ValueInputComponent<boolean> implements OnInit {
+export class BooleanValueInputComponent
+  extends ValueInputComponent<boolean>
+  implements OnInit
+{
   ngOnInit() {
     this.updateValue.emit(true);
   }

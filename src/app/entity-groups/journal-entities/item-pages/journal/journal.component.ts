@@ -7,10 +7,9 @@ import { listableObjectComponent } from '../../../../shared/object-collection/sh
 @Component({
   selector: 'ds-journal',
   styleUrls: ['./journal.component.scss'],
-  templateUrl: './journal.component.html'
+  templateUrl: './journal.component.html',
 })
 /**
  * The component for displaying metadata and relations of an item of the type Journal
  */
-export class JournalComponent extends ItemComponent {
-}
+export class JournalComponent extends ItemComponent {}

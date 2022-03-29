@@ -1,5 +1,5 @@
 .modal-footer {
-    justify-content: space-between;
+  justify-content: space-between;
 }
 
 /* Render child-modals slightly smaller than this modal to avoid complete overlap */
@@ -9,14 +9,14 @@
     margin: 5%;
   }
 
-  .spinner-border{
+  .spinner-border {
     vertical-align: middle;
   }
 }
 
-.buttons-container{
+.buttons-container {
   display: flex;
-  .close-button{
+  .close-button {
     margin-right: 5px;
   }
 }

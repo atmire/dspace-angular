@@ -5,7 +5,6 @@ import { ResourceType } from '../../shared/resource-type';
 import { excludeFromEquals } from '../../utilities/equals.decorators';
 
 export abstract class ConfigObject implements CacheableObject {
-
   /**
    * The name for this configuration
    */
@@ -30,7 +29,7 @@ export abstract class ConfigObject implements CacheableObject {
    */
   @deserialize
   _links: {
-    self: HALLink,
-    [name: string]: HALLink
+    self: HALLink;
+    [name: string]: HALLink;
   };
 }

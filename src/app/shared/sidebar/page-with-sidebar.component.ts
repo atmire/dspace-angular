@@ -39,16 +39,16 @@ export class PageWithSidebarComponent implements OnInit {
 
   sidebarClasses: Observable<string>;
 
-  constructor(protected sidebarService: SidebarService,
-              protected windowService: HostWindowService,
-  ) {
-  }
+  constructor(
+    protected sidebarService: SidebarService,
+    protected windowService: HostWindowService
+  ) {}
 
   ngOnInit(): void {
     this.isXsOrSm$ = this.windowService.isXsOrSm();
     this.isSidebarCollapsed$ = this.isSidebarCollapsed();
     this.sidebarClasses = this.isSidebarCollapsed$.pipe(
-      map((isCollapsed) => isCollapsed ? '' : 'active')
+      map((isCollapsed) => (isCollapsed ? '' : 'active'))
     );
   }
 
@@ -73,5 +73,4 @@ export class PageWithSidebarComponent implements OnInit {
   public openSidebar(): void {
     this.sidebarService.expand();
   }
-
 }

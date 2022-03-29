@@ -8,7 +8,9 @@ export interface RouterStateUrl {
 }
 
 @Injectable()
-export class DSpaceRouterStateSerializer implements RouterStateSerializer<RouterStateUrl> {
+export class DSpaceRouterStateSerializer
+  implements RouterStateSerializer<RouterStateUrl>
+{
   serialize(routerState: RouterStateSnapshot): RouterStateUrl {
     const { url } = routerState;
     const queryParams = routerState.root.queryParams;

@@ -8,10 +8,9 @@ import { ViewMode } from '../../../../core/shared/view-mode.model';
 @Component({
   selector: 'ds-project-list-element',
   styleUrls: ['./project-list-element.component.scss'],
-  templateUrl: './project-list-element.component.html'
+  templateUrl: './project-list-element.component.html',
 })
 /**
  * The component for displaying a list element for an item of the type Project
  */
-export class ProjectListElementComponent extends AbstractListableElementComponent<Item> {
-}
+export class ProjectListElementComponent extends AbstractListableElementComponent<Item> {}

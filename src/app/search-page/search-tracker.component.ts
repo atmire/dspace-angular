@@ -25,39 +25,58 @@ import { getFirstSucceededRemoteData } from '../core/shared/operators';
   providers: [
     {
       provide: SEARCH_CONFIG_SERVICE,
-      useClass: SearchConfigurationService
-    }
-  ]
+      useClass: SearchConfigurationService,
+    },
+  ],
 })
 export class SearchTrackerComponent extends SearchComponent implements OnInit {
-
   constructor(
     protected service: SearchService,
     protected sidebarService: SidebarService,
     protected windowService: HostWindowService,
-    @Inject(SEARCH_CONFIG_SERVICE) public searchConfigService: SearchConfigurationService,
+    @Inject(SEARCH_CONFIG_SERVICE)
+    public searchConfigService: SearchConfigurationService,
     protected routeService: RouteService,
     public angulartics2: Angulartics2,
     protected router: Router
   ) {
-    super(service, sidebarService, windowService, searchConfigService, routeService, router);
+    super(
+      service,
+      sidebarService,
+      windowService,
+      searchConfigService,
+      routeService,
+      router
+    );
   }
 
   ngOnInit(): void {
     // super.ngOnInit();
-    this.getSearchOptions().pipe(
-      switchMap((options: PaginatedSearchOptions) =>
-        this.service.searchEntries(options).pipe(
-          getFirstSucceededRemoteData(),
-          map((rd: RemoteData<SearchObjects<DSpaceObject>>) => ({
-            config: options,
-            searchQueryResponse: rd.payload
-          }))
-        )),
-    ).subscribe(({ config, searchQueryResponse }) => {
-        const filters: { filter: string, operator: string, value: string, label: string; }[] = [];
+    this.getSearchOptions()
+      .pipe(
+        switchMap((options: PaginatedSearchOptions) =>
+          this.service.searchEntries(options).pipe(
+            getFirstSucceededRemoteData(),
+            map((rd: RemoteData<SearchObjects<DSpaceObject>>) => ({
+              config: options,
+              searchQueryResponse: rd.payload,
+            }))
+          )
+        )
+      )
+      .subscribe(({ config, searchQueryResponse }) => {
+        const filters: {
+          filter: string;
+          operator: string;
+          value: string;
+          label: string;
+        }[] = [];
         const appliedFilters = searchQueryResponse.appliedFilters || [];
-        for (let i = 0, filtersLength = appliedFilters.length; i < filtersLength; i++) {
+        for (
+          let i = 0, filtersLength = appliedFilters.length;
+          i < filtersLength;
+          i++
+        ) {
           const appliedFilter = appliedFilters[i];
           filters.push(appliedFilter);
         }
@@ -73,7 +92,7 @@ export class SearchTrackerComponent extends SearchComponent implements OnInit {
             },
             sort: {
               by: config.sort.field,
-              order: config.sort.direction
+              order: config.sort.direction,
             },
             filters: filters,
           },

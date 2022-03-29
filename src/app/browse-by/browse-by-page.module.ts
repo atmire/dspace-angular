@@ -6,16 +6,7 @@ import { BrowseService } from '../core/browse/browse.service';
 import { BrowseByGuard } from './browse-by-guard';
 
 @NgModule({
-  imports: [
-    BrowseByRoutingModule,
-    BrowseByModule.withEntryComponents()
-  ],
-  providers: [
-    ItemDataService,
-    BrowseService,
-    BrowseByGuard
-  ]
+  imports: [BrowseByRoutingModule, BrowseByModule.withEntryComponents()],
+  providers: [ItemDataService, BrowseService, BrowseByGuard],
 })
-export class BrowseByPageModule {
-
-}
+export class BrowseByPageModule {}

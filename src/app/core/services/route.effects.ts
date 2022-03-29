@@ -11,18 +11,21 @@ export class RouteEffects {
    * Effect that resets the route state on reroute
    * @type {Observable<ResetRouteStateAction>}
    */
-   routeChange$ = createEffect(() => this.actions$
-    .pipe(
+  routeChange$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(RouterActionTypes.ROUTE_UPDATE),
-      map(() => new ResetRouteStateAction()),
-    ));
+      map(() => new ResetRouteStateAction())
+    )
+  );
 
-   afterResetChange$ = createEffect(() => this.actions$
-    .pipe(
-      ofType(RouteActionTypes.RESET),
-      tap(() => this.service.setCurrentRouteInfo()),
-    ), {dispatch: false });
+  afterResetChange$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(RouteActionTypes.RESET),
+        tap(() => this.service.setCurrentRouteInfo())
+      ),
+    { dispatch: false }
+  );
 
-  constructor(private actions$: Actions, private service: RouteService) {
-  }
+  constructor(private actions$: Actions, private service: RouteService) {}
 }

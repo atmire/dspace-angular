@@ -1,10 +1,12 @@
 {
-  "collections": [{
+  "collections": [
+    {
       "_links": {
         "self": {
           "href": "/collections/5179"
         },
-        "items": [{
+        "items": [
+          {
             "href": "/items/8871"
           },
           {
@@ -20,7 +22,8 @@
       "type": "collection",
       "name": "A Test Collection",
       "handle": "123456789/5179",
-      "metadata": [{
+      "metadata": [
+        {
           "key": "dc.rights",
           "value": "<p>© 2005-2016 JOHN DOE SOME RIGHTS RESERVED</p>",
           "language": null
@@ -47,7 +50,8 @@
         "self": {
           "href": "/collections/6547"
         },
-        "items": [{
+        "items": [
+          {
             "href": "/items/8871"
           },
           {
@@ -60,7 +64,8 @@
       "type": "collection",
       "name": "Another Test Collection",
       "handle": "123456789/6547",
-      "metadata": [{
+      "metadata": [
+        {
           "key": "dc.rights",
           "value": "<p>© 2005-2016 JOHN DOE SOME RIGHTS RESERVED</p>",
           "language": null

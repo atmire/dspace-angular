@@ -9,10 +9,9 @@ import { Item } from '../../../../../core/shared/item.model';
 @Component({
   selector: 'ds-item-list-element',
   styleUrls: ['./item-list-element.component.scss'],
-  templateUrl: './item-list-element.component.html'
+  templateUrl: './item-list-element.component.html',
 })
 /**
  * The component for displaying a list element for an item of the type Publication
  */
-export class ItemListElementComponent extends AbstractListableElementComponent<Item> {
-}
+export class ItemListElementComponent extends AbstractListableElementComponent<Item> {}

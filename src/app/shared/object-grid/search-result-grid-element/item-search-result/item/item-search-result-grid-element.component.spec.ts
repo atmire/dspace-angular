@@ -29,50 +29,62 @@ import { ItemSearchResultGridElementComponent } from './item-search-result-grid-
 const mockItemWithMetadata: ItemSearchResult = new ItemSearchResult();
 mockItemWithMetadata.hitHighlights = {};
 mockItemWithMetadata.indexableObject = Object.assign(new Item(), {
-  bundles: createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), [])),
+  bundles: createSuccessfulRemoteDataObject$(
+    buildPaginatedList(new PageInfo(), [])
+  ),
   metadata: {
     'dc.title': [
       {
         language: 'en_US',
-        value: 'This is just another title'
-      }
+        value: 'This is just another title',
+      },
     ],
     'dc.contributor.author': [
       {
         language: 'en_US',
-        value: 'Smith, Donald'
-      }
+        value: 'Smith, Donald',
+      },
     ],
     'dc.date.issued': [
       {
         language: null,
-        value: '2015-06-26'
-      }
+        value: '2015-06-26',
+      },
     ],
     'dc.description.abstract': [
       {
         language: 'en_US',
-        value: 'This is an abstract'
-      }
-    ]
-  }
+        value: 'This is an abstract',
+      },
+    ],
+  },
 });
 
 const mockItemWithoutMetadata: ItemSearchResult = new ItemSearchResult();
 mockItemWithoutMetadata.hitHighlights = {};
 mockItemWithoutMetadata.indexableObject = Object.assign(new Item(), {
-  bundles: createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), [])),
+  bundles: createSuccessfulRemoteDataObject$(
+    buildPaginatedList(new PageInfo(), [])
+  ),
   metadata: {
     'dc.title': [
       {
         language: 'en_US',
-        value: 'This is just another title'
-      }
-    ]
-  }
+        value: 'This is just another title',
+      },
+    ],
+  },
 });
 
-describe('ItemGridElementComponent', getEntityGridElementTestComponent(ItemSearchResultGridElementComponent, mockItemWithMetadata, mockItemWithoutMetadata, ['authors', 'date', 'abstract']));
+describe(
+  'ItemGridElementComponent',
+  getEntityGridElementTestComponent(
+    ItemSearchResultGridElementComponent,
+    mockItemWithMetadata,
+    mockItemWithoutMetadata,
+    ['authors', 'date', 'abstract']
+  )
+);
 
 /**
  * Create test cases for a grid component of an entity.
@@ -83,7 +95,12 @@ describe('ItemGridElementComponent', getEntityGridElementTestComponent(ItemSearc
  *                                      For example: If one of the fields to check is labeled "authors", the html template should contain at least one element with class ".item-authors" that's
  *                                      present when the author metadata is available.
  */
-export function getEntityGridElementTestComponent(component, searchResultWithMetadata: ItemSearchResult, searchResultWithoutMetadata: ItemSearchResult, fieldsToCheck: string[]) {
+export function getEntityGridElementTestComponent(
+  component,
+  searchResultWithMetadata: ItemSearchResult,
+  searchResultWithoutMetadata: ItemSearchResult,
+  fieldsToCheck: string[]
+) {
   return () => {
     let comp;
     let fixture;
@@ -95,15 +112,12 @@ export function getEntityGridElementTestComponent(component, searchResultWithMet
     const mockBitstreamDataService = {
       getThumbnailFor(item: Item): Observable<RemoteData<Bitstream>> {
         return createSuccessfulRemoteDataObject$(new Bitstream());
-      }
+      },
     };
 
     beforeEach(waitForAsync(() => {
       TestBed.configureTestingModule({
-        imports: [
-          NoopAnimationsModule,
-          TranslateModule.forRoot()
-        ],
+        imports: [NoopAnimationsModule, TranslateModule.forRoot()],
         declarations: [component, TruncatePipe],
         providers: [
           { provide: TruncatableService, useValue: truncatableServiceStub },
@@ -119,10 +133,12 @@ export function getEntityGridElementTestComponent(component, searchResultWithMet
           { provide: DefaultChangeAnalyzer, useValue: {} },
           { provide: BitstreamDataService, useValue: mockBitstreamDataService },
         ],
-        schemas: [NO_ERRORS_SCHEMA]
-      }).overrideComponent(component, {
-        set: { changeDetection: ChangeDetectionStrategy.Default }
-      }).compileComponents();
+        schemas: [NO_ERRORS_SCHEMA],
+      })
+        .overrideComponent(component, {
+          set: { changeDetection: ChangeDetectionStrategy.Default },
+        })
+        .compileComponents();
     }));
 
     beforeEach(waitForAsync(() => {
@@ -138,7 +154,9 @@ export function getEntityGridElementTestComponent(component, searchResultWithMet
         });
 
         it(`should show the "${field}" field`, () => {
-          const itemAuthorField = fixture.debugElement.query(By.css(`.item-${field}`));
+          const itemAuthorField = fixture.debugElement.query(
+            By.css(`.item-${field}`)
+          );
           expect(itemAuthorField).not.toBeNull();
         });
       });
@@ -150,7 +168,9 @@ export function getEntityGridElementTestComponent(component, searchResultWithMet
         });
 
         it(`should not show the "${field}" field`, () => {
-          const itemAuthorField = fixture.debugElement.query(By.css(`.item-${field}`));
+          const itemAuthorField = fixture.debugElement.query(
+            By.css(`.item-${field}`)
+          );
           expect(itemAuthorField).toBeNull();
         });
       });

@@ -28,7 +28,8 @@ import { GenericItemPageFieldComponent } from '../../field-components/specific-f
 import {
   createRelationshipsObservable,
   iiifEnabled,
-  iiifSearchEnabled, mockRouteService
+  iiifSearchEnabled,
+  mockRouteService,
 } from '../shared/item.component.spec';
 import { PublicationComponent } from './publication.component';
 import { createPaginatedList } from '../../../../shared/testing/utils.test';
@@ -49,7 +50,7 @@ function getItem(metadata: MetadataMap) {
   return Object.assign(new Item(), {
     bundles: createSuccessfulRemoteDataObject$(createPaginatedList([])),
     metadata: metadata,
-    relationships: createRelationshipsObservable()
+    relationships: createRelationshipsObservable(),
   });
 }
 
@@ -61,16 +62,22 @@ describe('PublicationComponent', () => {
     const mockBitstreamDataService = {
       getThumbnailFor(item: Item): Observable<RemoteData<Bitstream>> {
         return createSuccessfulRemoteDataObject$(new Bitstream());
-      }
+      },
     };
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot({
-        loader: {
-          provide: TranslateLoader,
-          useClass: TranslateLoaderMock
-        }
-      })],
-      declarations: [PublicationComponent, GenericItemPageFieldComponent, TruncatePipe],
+      imports: [
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useClass: TranslateLoaderMock,
+          },
+        }),
+      ],
+      declarations: [
+        PublicationComponent,
+        GenericItemPageFieldComponent,
+        TruncatePipe,
+      ],
       providers: [
         { provide: ItemDataService, useValue: {} },
         { provide: TruncatableService, useValue: {} },
@@ -86,13 +93,15 @@ describe('PublicationComponent', () => {
         { provide: DSOChangeAnalyzer, useValue: {} },
         { provide: DefaultChangeAnalyzer, useValue: {} },
         { provide: BitstreamDataService, useValue: mockBitstreamDataService },
-        { provide: RouteService, useValue: mockRouteService }
+        { provide: RouteService, useValue: mockRouteService },
       ],
 
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(PublicationComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(PublicationComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   describe('default view', () => {
@@ -104,38 +113,49 @@ describe('PublicationComponent', () => {
     }));
 
     it('should contain a component to display the date', () => {
-      const fields = fixture.debugElement.queryAll(By.css('ds-item-page-date-field'));
+      const fields = fixture.debugElement.queryAll(
+        By.css('ds-item-page-date-field')
+      );
       expect(fields.length).toBeGreaterThanOrEqual(1);
     });
 
     it('should not contain a metadata only author field', () => {
-      const fields = fixture.debugElement.queryAll(By.css('ds-item-page-author-field'));
+      const fields = fixture.debugElement.queryAll(
+        By.css('ds-item-page-author-field')
+      );
       expect(fields.length).toBe(0);
     });
 
     it('should contain a mixed metadata and relationship field for authors', () => {
-      const fields = fixture.debugElement.queryAll(By.css('.ds-item-page-mixed-author-field'));
+      const fields = fixture.debugElement.queryAll(
+        By.css('.ds-item-page-mixed-author-field')
+      );
       expect(fields.length).toBe(1);
     });
 
     it('should contain a component to display the abstract', () => {
-      const fields = fixture.debugElement.queryAll(By.css('ds-item-page-abstract-field'));
+      const fields = fixture.debugElement.queryAll(
+        By.css('ds-item-page-abstract-field')
+      );
       expect(fields.length).toBeGreaterThanOrEqual(1);
     });
 
     it('should contain a component to display the uri', () => {
-      const fields = fixture.debugElement.queryAll(By.css('ds-item-page-uri-field'));
+      const fields = fixture.debugElement.queryAll(
+        By.css('ds-item-page-uri-field')
+      );
       expect(fields.length).toBeGreaterThanOrEqual(1);
     });
 
     it('should contain a component to display the collections', () => {
-      const fields = fixture.debugElement.queryAll(By.css('ds-item-page-collections'));
+      const fields = fixture.debugElement.queryAll(
+        By.css('ds-item-page-collections')
+      );
       expect(fields.length).toBeGreaterThanOrEqual(1);
     });
   });
 
   describe('with IIIF viewer', () => {
-
     beforeEach(waitForAsync(() => {
       fixture = TestBed.createComponent(PublicationComponent);
       comp = fixture.componentInstance;
@@ -147,13 +167,13 @@ describe('PublicationComponent', () => {
       const fields = fixture.debugElement.queryAll(By.css('ds-mirador-viewer'));
       expect(fields.length).toBeGreaterThanOrEqual(1);
     });
-
   });
 
   describe('with IIIF viewer and search', () => {
-
     beforeEach(waitForAsync(() => {
-      mockRouteService.getPreviousUrl.and.returnValue(of(['/search?q=bird&motivation=painting','/item']));
+      mockRouteService.getPreviousUrl.and.returnValue(
+        of(['/search?q=bird&motivation=painting', '/item'])
+      );
       fixture = TestBed.createComponent(PublicationComponent);
       comp = fixture.componentInstance;
       comp.object = getItem(iiifEnabledWithSearchMap);
@@ -168,8 +188,5 @@ describe('PublicationComponent', () => {
     it('should call the RouteService getHistory method', () => {
       expect(mockRouteService.getPreviousUrl).toHaveBeenCalled();
     });
-
   });
-
 });
-

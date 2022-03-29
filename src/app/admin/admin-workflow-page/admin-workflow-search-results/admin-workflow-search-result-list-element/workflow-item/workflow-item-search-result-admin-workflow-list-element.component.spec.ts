@@ -40,27 +40,27 @@ describe('WorkflowItemAdminWorkflowListElementComponent', () => {
 
   beforeEach(waitForAsync(() => {
     init();
-    TestBed.configureTestingModule(
-      {
-        declarations: [WorkflowItemSearchResultAdminWorkflowListElementComponent],
-        imports: [
-          NoopAnimationsModule,
-          TranslateModule.forRoot(),
-          RouterTestingModule.withRoutes([]),
-        ],
-        providers: [
-          { provide: TruncatableService, useValue: mockTruncatableService },
-          { provide: LinkService, useValue: linkService },
-          { provide: DSONameService, useClass: DSONameServiceMock }
-        ],
-        schemas: [NO_ERRORS_SCHEMA]
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [WorkflowItemSearchResultAdminWorkflowListElementComponent],
+      imports: [
+        NoopAnimationsModule,
+        TranslateModule.forRoot(),
+        RouterTestingModule.withRoutes([]),
+      ],
+      providers: [
+        { provide: TruncatableService, useValue: mockTruncatableService },
+        { provide: LinkService, useValue: linkService },
+        { provide: DSONameService, useClass: DSONameServiceMock },
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
     linkService.resolveLink.and.callFake((a) => a);
-    fixture = TestBed.createComponent(WorkflowItemSearchResultAdminWorkflowListElementComponent);
+    fixture = TestBed.createComponent(
+      WorkflowItemSearchResultAdminWorkflowListElementComponent
+    );
     component = fixture.componentInstance;
     component.object = object;
     component.linkTypes = CollectionElementLinkType;
@@ -74,6 +74,9 @@ describe('WorkflowItemAdminWorkflowListElementComponent', () => {
   });
 
   it('should retrieve the item using the link service', () => {
-    expect(linkService.resolveLink).toHaveBeenCalledWith(wfi, followLink('item'));
+    expect(linkService.resolveLink).toHaveBeenCalledWith(
+      wfi,
+      followLink('item')
+    );
   });
 });

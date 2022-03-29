@@ -1,9 +1,9 @@
-  /* eslint-disable max-classes-per-file */
+/* eslint-disable max-classes-per-file */
 import {
   DEFAULT_ENTITY_TYPE,
   DEFAULT_REPRESENTATION_TYPE,
   getMetadataRepresentationComponent,
-  metadataRepresentationComponent
+  metadataRepresentationComponent,
 } from './metadata-representation.decorator';
 import { MetadataRepresentationType } from '../../core/shared/metadata-representation/metadata-representation.model';
 import { Context } from '../../core/shared/context.model';
@@ -21,26 +21,19 @@ describe('MetadataRepresentation decorator function', () => {
   const typeUnthemed = 'TestTypeUnthemed';
   let prefix;
 
-  class Test1PlainText {
-  }
+  class Test1PlainText {}
 
-  class Test1Authority {
-  }
+  class Test1Authority {}
 
-  class Test2Item {
-  }
+  class Test2Item {}
 
-  class Test2ItemSubmission {
-  }
+  class Test2ItemSubmission {}
 
-  class Test3ItemSubmission {
-  }
+  class Test3ItemSubmission {}
 
-  class TestAncestorComponent {
-  }
+  class TestAncestorComponent {}
 
-  class TestUnthemedComponent {
-  }
+  class TestUnthemedComponent {}
 
   /* eslint-enable max-classes-per-file */
 
@@ -50,17 +43,43 @@ describe('MetadataRepresentation decorator function', () => {
   });
 
   function init(key) {
-    metadataRepresentationComponent(key + type1, MetadataRepresentationType.PlainText)(Test1PlainText);
-    metadataRepresentationComponent(key + type1, MetadataRepresentationType.AuthorityControlled)(Test1Authority);
+    metadataRepresentationComponent(
+      key + type1,
+      MetadataRepresentationType.PlainText
+    )(Test1PlainText);
+    metadataRepresentationComponent(
+      key + type1,
+      MetadataRepresentationType.AuthorityControlled
+    )(Test1Authority);
 
-    metadataRepresentationComponent(key + type2, MetadataRepresentationType.Item)(Test2Item);
-    metadataRepresentationComponent(key + type2, MetadataRepresentationType.Item, Context.Workspace)(Test2ItemSubmission);
+    metadataRepresentationComponent(
+      key + type2,
+      MetadataRepresentationType.Item
+    )(Test2Item);
+    metadataRepresentationComponent(
+      key + type2,
+      MetadataRepresentationType.Item,
+      Context.Workspace
+    )(Test2ItemSubmission);
 
-    metadataRepresentationComponent(key + type3, MetadataRepresentationType.Item, Context.Workspace)(Test3ItemSubmission);
+    metadataRepresentationComponent(
+      key + type3,
+      MetadataRepresentationType.Item,
+      Context.Workspace
+    )(Test3ItemSubmission);
 
     // Register a metadata representation in the 'ancestor' theme
-    metadataRepresentationComponent(key + typeAncestor, MetadataRepresentationType.Item, Context.Any, 'ancestor')(TestAncestorComponent);
-    metadataRepresentationComponent(key + typeUnthemed, MetadataRepresentationType.Item, Context.Any)(TestUnthemedComponent);
+    metadataRepresentationComponent(
+      key + typeAncestor,
+      MetadataRepresentationType.Item,
+      Context.Any,
+      'ancestor'
+    )(TestAncestorComponent);
+    metadataRepresentationComponent(
+      key + typeUnthemed,
+      MetadataRepresentationType.Item,
+      Context.Any
+    )(TestUnthemedComponent);
 
     ogEnvironmentThemes = environment.themes;
   }
@@ -69,29 +88,46 @@ describe('MetadataRepresentation decorator function', () => {
     environment.themes = ogEnvironmentThemes;
   });
 
-  describe('If there\'s an exact match', () => {
+  describe("If there's an exact match", () => {
     it('should return the matching class', () => {
-      const component = getMetadataRepresentationComponent(prefix + type3, MetadataRepresentationType.Item, Context.Workspace);
+      const component = getMetadataRepresentationComponent(
+        prefix + type3,
+        MetadataRepresentationType.Item,
+        Context.Workspace
+      );
       expect(component).toEqual(Test3ItemSubmission);
     });
   });
 
-  describe('If there isn\'nt an exact match', () => {
+  describe("If there isn'nt an exact match", () => {
     describe('If there is a match for the entity type and representation type', () => {
       it('should return the class with the matching entity type and representation type and default context', () => {
-        const component = getMetadataRepresentationComponent(prefix + type1, MetadataRepresentationType.AuthorityControlled, Context.Workspace);
+        const component = getMetadataRepresentationComponent(
+          prefix + type1,
+          MetadataRepresentationType.AuthorityControlled,
+          Context.Workspace
+        );
         expect(component).toEqual(Test1Authority);
       });
     });
-    describe('If there isn\'t a match for the representation type', () => {
+    describe("If there isn't a match for the representation type", () => {
       it('should return the class with the matching entity type and the default representation type and default context', () => {
-        const component = getMetadataRepresentationComponent(prefix + type1, MetadataRepresentationType.Item);
+        const component = getMetadataRepresentationComponent(
+          prefix + type1,
+          MetadataRepresentationType.Item
+        );
         expect(component).toEqual(Test1PlainText);
       });
-      describe('If there isn\'t a match for the entity type', () => {
+      describe("If there isn't a match for the entity type", () => {
         it('should return the class with the default entity type and the default representation type and default context', () => {
-          const defaultComponent = getMetadataRepresentationComponent(DEFAULT_ENTITY_TYPE, DEFAULT_REPRESENTATION_TYPE);
-          const component = getMetadataRepresentationComponent(prefix + type4, MetadataRepresentationType.AuthorityControlled);
+          const defaultComponent = getMetadataRepresentationComponent(
+            DEFAULT_ENTITY_TYPE,
+            DEFAULT_REPRESENTATION_TYPE
+          );
+          const component = getMetadataRepresentationComponent(
+            prefix + type4,
+            MetadataRepresentationType.AuthorityControlled
+          );
           expect(component).toEqual(defaultComponent);
         });
       });
@@ -105,26 +141,36 @@ describe('MetadataRepresentation decorator function', () => {
       beforeEach(() => {
         environment.themes = [
           {
-            name: 'requested',        // Doesn't match any entityType
+            name: 'requested', // Doesn't match any entityType
             extends: 'intermediate',
           },
           {
-            name: 'intermediate',     // Doesn't match any entityType
+            name: 'intermediate', // Doesn't match any entityType
             extends: 'ancestor',
           },
           {
-            name: 'ancestor',         // Matches typeAncestor, but not typeUnthemed
-          }
+            name: 'ancestor', // Matches typeAncestor, but not typeUnthemed
+          },
         ];
       });
 
       it('should return component from the first ancestor theme that matches its entityType', () => {
-        const component = getMetadataRepresentationComponent(prefix + typeAncestor, MetadataRepresentationType.Item, Context.Any, 'requested');
+        const component = getMetadataRepresentationComponent(
+          prefix + typeAncestor,
+          MetadataRepresentationType.Item,
+          Context.Any,
+          'requested'
+        );
         expect(component).toEqual(TestAncestorComponent);
       });
 
       it('should return default component if none of the ancestor themes match its entityType', () => {
-        const component = getMetadataRepresentationComponent(prefix + typeUnthemed, MetadataRepresentationType.Item, Context.Any, 'requested');
+        const component = getMetadataRepresentationComponent(
+          prefix + typeUnthemed,
+          MetadataRepresentationType.Item,
+          Context.Any,
+          'requested'
+        );
         expect(component).toEqual(TestUnthemedComponent);
       });
     });
@@ -141,7 +187,12 @@ describe('MetadataRepresentation decorator function', () => {
 
       it('should throw an error', () => {
         expect(() => {
-          getMetadataRepresentationComponent(prefix + typeAncestor, MetadataRepresentationType.Item, Context.Any, 'extension-cycle');
+          getMetadataRepresentationComponent(
+            prefix + typeAncestor,
+            MetadataRepresentationType.Item,
+            Context.Any,
+            'extension-cycle'
+          );
         }).toThrowError(
           'Theme extension cycle detected: extension-cycle -> broken1 -> broken2 -> broken3 -> broken1'
         );

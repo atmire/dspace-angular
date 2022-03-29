@@ -16,7 +16,11 @@ describe('BreadcrumbsComponent', () => {
   let fixture: ComponentFixture<BreadcrumbsComponent>;
   let breadcrumbsServiceMock: BreadcrumbsService;
 
-  const expectBreadcrumb = (listItem: DebugElement, text: string, url: string) => {
+  const expectBreadcrumb = (
+    listItem: DebugElement,
+    text: string,
+    url: string
+  ) => {
     const anchor = listItem.query(By.css('a'));
 
     if (url == null) {
@@ -40,17 +44,14 @@ describe('BreadcrumbsComponent', () => {
     } as BreadcrumbsService;
 
     TestBed.configureTestingModule({
-      declarations: [
-        BreadcrumbsComponent,
-        VarDirective,
-      ],
+      declarations: [BreadcrumbsComponent, VarDirective],
       imports: [
         RouterTestingModule.withRoutes([]),
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
             useClass: TranslateLoaderMock,
-          }
+          },
         }),
       ],
       providers: [
@@ -68,11 +69,16 @@ describe('BreadcrumbsComponent', () => {
   });
 
   it('should render the breadcrumbs', () => {
-    const breadcrumbs = fixture.debugElement.queryAll(By.css('.breadcrumb-item'));
+    const breadcrumbs = fixture.debugElement.queryAll(
+      By.css('.breadcrumb-item')
+    );
     expect(breadcrumbs.length).toBe(3);
     expectBreadcrumb(breadcrumbs[0], 'home.breadcrumbs', '/');
     expectBreadcrumb(breadcrumbs[1], 'bc 1', '/example.com');
-    expectBreadcrumb(breadcrumbs[2].query(By.css('.text-truncate')), 'bc 2', null);
+    expectBreadcrumb(
+      breadcrumbs[2].query(By.css('.text-truncate')),
+      'bc 2',
+      null
+    );
   });
-
 });

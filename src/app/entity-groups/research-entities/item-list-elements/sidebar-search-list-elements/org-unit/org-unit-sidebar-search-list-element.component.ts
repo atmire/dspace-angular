@@ -6,17 +6,29 @@ import { Component } from '@angular/core';
 import { SidebarSearchListElementComponent } from '../../../../../shared/object-list/sidebar-search-list-element/sidebar-search-list-element.component';
 import { Item } from '../../../../../core/shared/item.model';
 
-@listableObjectComponent('OrgUnitSearchResult', ViewMode.ListElement, Context.SideBarSearchModal)
-@listableObjectComponent('OrgUnitSearchResult', ViewMode.ListElement, Context.SideBarSearchModalCurrent)
+@listableObjectComponent(
+  'OrgUnitSearchResult',
+  ViewMode.ListElement,
+  Context.SideBarSearchModal
+)
+@listableObjectComponent(
+  'OrgUnitSearchResult',
+  ViewMode.ListElement,
+  Context.SideBarSearchModalCurrent
+)
 @Component({
   selector: 'ds-org-unit-sidebar-search-list-element',
-  templateUrl: '../../../../../shared/object-list/sidebar-search-list-element/sidebar-search-list-element.component.html'
+  templateUrl:
+    '../../../../../shared/object-list/sidebar-search-list-element/sidebar-search-list-element.component.html',
 })
 /**
  * Component displaying a list element for a {@link ItemSearchResult} of type "OrgUnit" within the context of
  * a sidebar search modal
  */
-export class OrgUnitSidebarSearchListElementComponent extends SidebarSearchListElementComponent<ItemSearchResult, Item> {
+export class OrgUnitSidebarSearchListElementComponent extends SidebarSearchListElementComponent<
+  ItemSearchResult,
+  Item
+> {
   /**
    * Get the title of the Org Unit by returning its legal name
    */

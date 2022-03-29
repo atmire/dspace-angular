@@ -19,10 +19,8 @@ describe('EmailRequestCopyComponent', () => {
     TestBed.configureTestingModule({
       declarations: [EmailRequestCopyComponent, VarDirective],
       imports: [TranslateModule.forRoot(), RouterTestingModule.withRoutes([])],
-      providers: [
-        { provide: Location, useValue: location },
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
+      providers: [{ provide: Location, useValue: location }],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -42,6 +40,8 @@ describe('EmailRequestCopyComponent', () => {
     component.subject = 'test-subject';
     component.message = 'test-message';
     component.submit();
-    expect(component.send.emit).toHaveBeenCalledWith(new RequestCopyEmail('test-subject', 'test-message'));
+    expect(component.send.emit).toHaveBeenCalledWith(
+      new RequestCopyEmail('test-subject', 'test-message')
+    );
   });
 });

@@ -24,7 +24,7 @@ const components = [
   ThemedCollectionStatisticsPageComponent,
   ThemedCommunityStatisticsPageComponent,
   ThemedItemStatisticsPageComponent,
-  ThemedSiteStatisticsPageComponent
+  ThemedSiteStatisticsPageComponent,
 ];
 
 @NgModule({
@@ -32,17 +32,14 @@ const components = [
     CommonModule,
     SharedModule,
     CoreModule.forRoot(),
-    StatisticsModule.forRoot()
+    StatisticsModule.forRoot(),
   ],
   declarations: components,
-  providers: [
-    UsageReportService,
-  ],
-  exports: components
+  providers: [UsageReportService],
+  exports: components,
 })
 
 /**
  * This module handles all components and pipes that are necessary for the search page
  */
-export class StatisticsPageModule {
-}
+export class StatisticsPageModule {}

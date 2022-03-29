@@ -28,9 +28,8 @@ describe('FeedbackDataService', () => {
   const feedbackPayload = Object.assign(new Feedback(), {
     email: 'test@email.com',
     message: 'message',
-    page: '/home'
+    page: '/home',
   });
-
 
   function initTestService(): FeedbackDataService {
     bundleLink = '/items/0fdc0cd7-ff8c-433d-b33c-9b56108abc07/bundles';
@@ -38,7 +37,7 @@ describe('FeedbackDataService', () => {
     bundleHALLink.href = bundleLink;
     item = new Item();
     item._links = {
-      bundles: bundleHALLink
+      bundles: bundleHALLink,
     };
     requestService = getMockRequestService();
     halService = new HALEndpointServiceStub('url') as any;
@@ -47,13 +46,12 @@ describe('FeedbackDataService', () => {
     http = {} as HttpClient;
     comparator = new DSOChangeAnalyzer() as any;
     objectCache = {
-
       addPatch: () => {
         /* empty */
       },
       getObjectBySelfLink: () => {
         /* empty */
-      }
+      },
     } as any;
     store = {} as Store<CoreState>;
     return new FeedbackDataService(
@@ -64,15 +62,13 @@ describe('FeedbackDataService', () => {
       halService,
       notificationsService,
       http,
-      comparator,
+      comparator
     );
   }
-
 
   beforeEach(() => {
     service = initTestService();
   });
-
 
   describe('getFeedback', () => {
     beforeEach(() => {
@@ -84,5 +80,4 @@ describe('FeedbackDataService', () => {
       expect(service.getFeedback).toHaveBeenCalledWith('3');
     });
   });
-
 });

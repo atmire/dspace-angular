@@ -15,13 +15,12 @@ import { ConfigurationSearchPageComponent as BaseComponent } from '../../../../a
   providers: [
     {
       provide: SEARCH_CONFIG_SERVICE,
-      useClass: SearchConfigurationService
-    }
-  ]
+      useClass: SearchConfigurationService,
+    },
+  ],
 })
 
 /**
  * This component renders a search page using a configuration as input.
  */
 export class ConfigurationSearchPageComponent extends BaseComponent {}
-

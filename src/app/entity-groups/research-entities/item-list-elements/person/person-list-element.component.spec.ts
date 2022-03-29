@@ -13,16 +13,16 @@ const mockItem: Item = Object.assign(new Item(), {
     'dc.title': [
       {
         language: 'en_US',
-        value: 'This is just another title'
-      }
+        value: 'This is just another title',
+      },
     ],
     'person.jobTitle': [
       {
         language: 'en_US',
-        value: 'Developer'
-      }
-    ]
-  }
+        value: 'Developer',
+      },
+    ],
+  },
 });
 
 describe('PersonListElementComponent', () => {
@@ -39,10 +39,12 @@ describe('PersonListElementComponent', () => {
       providers: [
         { provide: TruncatableService, useValue: truncatableServiceStub },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(PersonListElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(PersonListElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -57,7 +59,9 @@ describe('PersonListElementComponent', () => {
     });
 
     it(`should contain a PersonListElementComponent`, () => {
-      const personListElement = fixture.debugElement.query(By.css(`ds-person-search-result-list-element`));
+      const personListElement = fixture.debugElement.query(
+        By.css(`ds-person-search-result-list-element`)
+      );
       expect(personListElement).not.toBeNull();
     });
   });

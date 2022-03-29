@@ -4,7 +4,7 @@ import {
   CanActivate,
   Router,
   RouterStateSnapshot,
-  UrlTree
+  UrlTree,
 } from '@angular/router';
 
 import { Observable } from 'rxjs';
@@ -21,18 +21,24 @@ import { AuthService, LOGIN_ROUTE } from './auth.service';
  */
 @Injectable()
 export class AuthenticatedGuard implements CanActivate {
-
   /**
    * @constructor
    */
-  constructor(private authService: AuthService, private router: Router, private store: Store<CoreState>) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private store: Store<CoreState>
+  ) {}
 
   /**
    * True when user is authenticated
    * UrlTree with redirect to login page when user isn't authenticated
    * @method canActivate
    */
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> {
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<boolean | UrlTree> {
     const url = state.url;
     return this.handleAuth(url);
   }
@@ -42,7 +48,10 @@ export class AuthenticatedGuard implements CanActivate {
    * UrlTree with redirect to login page when user isn't authenticated
    * @method canActivateChild
    */
-  canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> {
+  canActivateChild(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<boolean | UrlTree> {
     return this.canActivate(route, state);
   }
 

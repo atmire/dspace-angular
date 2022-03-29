@@ -9,47 +9,59 @@ import { getEntityGridElementTestComponent } from '../../../../../shared/object-
 const mockItemWithMetadata: ItemSearchResult = new ItemSearchResult();
 mockItemWithMetadata.hitHighlights = {};
 mockItemWithMetadata.indexableObject = Object.assign(new Item(), {
-  bundles: createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), [])),
+  bundles: createSuccessfulRemoteDataObject$(
+    buildPaginatedList(new PageInfo(), [])
+  ),
   metadata: {
     'dc.title': [
       {
         language: 'en_US',
-        value: 'This is just another title'
-      }
+        value: 'This is just another title',
+      },
     ],
     'organization.foundingDate': [
       {
         language: null,
-        value: '2015-06-26'
-      }
+        value: '2015-06-26',
+      },
     ],
     'organization.address.addressCountry': [
       {
         language: 'en_US',
-        value: 'Belgium'
-      }
+        value: 'Belgium',
+      },
     ],
     'organization.address.addressLocality': [
       {
         language: 'en_US',
-        value: 'Brussels'
-      }
-    ]
-  }
+        value: 'Brussels',
+      },
+    ],
+  },
 });
 
 const mockItemWithoutMetadata: ItemSearchResult = new ItemSearchResult();
 mockItemWithoutMetadata.hitHighlights = {};
 mockItemWithoutMetadata.indexableObject = Object.assign(new Item(), {
-  bundles: createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), [])),
+  bundles: createSuccessfulRemoteDataObject$(
+    buildPaginatedList(new PageInfo(), [])
+  ),
   metadata: {
     'dc.title': [
       {
         language: 'en_US',
-        value: 'This is just another title'
-      }
-    ]
-  }
+        value: 'This is just another title',
+      },
+    ],
+  },
 });
 
-describe('OrgUnitSearchResultGridElementComponent', getEntityGridElementTestComponent(OrgUnitSearchResultGridElementComponent, mockItemWithMetadata, mockItemWithoutMetadata, ['date', 'country', 'city']));
+describe(
+  'OrgUnitSearchResultGridElementComponent',
+  getEntityGridElementTestComponent(
+    OrgUnitSearchResultGridElementComponent,
+    mockItemWithMetadata,
+    mockItemWithoutMetadata,
+    ['date', 'country', 'city']
+  )
+);

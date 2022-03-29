@@ -50,5 +50,4 @@ export class SubmissionSectionModel extends ConfigObject {
     self: HALLink;
     config: HALLink;
   };
-
 }

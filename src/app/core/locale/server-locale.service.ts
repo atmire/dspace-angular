@@ -6,7 +6,6 @@ import { isEmpty, isNotEmpty } from '../../shared/empty.util';
 
 @Injectable()
 export class ServerLocaleService extends LocaleService {
-
   /**
    * Get the languages list of the user in Accept-Language format
    *
@@ -15,7 +14,7 @@ export class ServerLocaleService extends LocaleService {
   getLanguageCodeList(): Observable<string[]> {
     const obs$ = combineLatest([
       this.authService.isAuthenticated(),
-      this.authService.isAuthenticationLoaded()
+      this.authService.isAuthenticationLoaded(),
     ]);
 
     return obs$.pipe(
@@ -27,12 +26,17 @@ export class ServerLocaleService extends LocaleService {
             take(1),
             map((eperson) => {
               const languages: string[] = [];
-              const ePersonLang = eperson.firstMetadataValue(this.EPERSON_LANG_METADATA);
+              const ePersonLang = eperson.firstMetadataValue(
+                this.EPERSON_LANG_METADATA
+              );
               if (ePersonLang) {
-                languages.push(...this.setQuality(
-                  [ePersonLang],
-                  LANG_ORIGIN.EPERSON,
-                  !isEmpty(this.translate.currentLang)));
+                languages.push(
+                  ...this.setQuality(
+                    [ePersonLang],
+                    LANG_ORIGIN.EPERSON,
+                    !isEmpty(this.translate.currentLang)
+                  )
+                );
               }
               return languages;
             })
@@ -42,10 +46,13 @@ export class ServerLocaleService extends LocaleService {
           map((epersonLang: string[]) => {
             const languages: string[] = [];
             if (this.translate.currentLang) {
-              languages.push(...this.setQuality(
-                [this.translate.currentLang],
-                LANG_ORIGIN.UI,
-                false));
+              languages.push(
+                ...this.setQuality(
+                  [this.translate.currentLang],
+                  LANG_ORIGIN.UI,
+                  false
+                )
+              );
             }
             if (isNotEmpty(epersonLang)) {
               languages.push(...epersonLang);
@@ -56,5 +63,4 @@ export class ServerLocaleService extends LocaleService {
       })
     );
   }
-
 }

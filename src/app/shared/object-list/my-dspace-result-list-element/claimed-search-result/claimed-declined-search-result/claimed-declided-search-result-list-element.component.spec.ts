@@ -21,7 +21,8 @@ import { DSONameServiceMock } from '../../../../mocks/dso-name.service.mock';
 let component: ClaimedDeclinedSearchResultListElementComponent;
 let fixture: ComponentFixture<ClaimedDeclinedSearchResultListElementComponent>;
 
-const mockResultObject: ClaimedDeclinedTaskSearchResult = new ClaimedDeclinedTaskSearchResult();
+const mockResultObject: ClaimedDeclinedTaskSearchResult =
+  new ClaimedDeclinedTaskSearchResult();
 mockResultObject.hitHighlights = {};
 
 const item = Object.assign(new Item(), {
@@ -30,53 +31,64 @@ const item = Object.assign(new Item(), {
     'dc.title': [
       {
         language: 'en_US',
-        value: 'This is just another title'
-      }
+        value: 'This is just another title',
+      },
     ],
     'dc.type': [
       {
         language: null,
-        value: 'Article'
-      }
+        value: 'Article',
+      },
     ],
     'dc.contributor.author': [
       {
         language: 'en_US',
-        value: 'Smith, Donald'
-      }
+        value: 'Smith, Donald',
+      },
     ],
     'dc.date.issued': [
       {
         language: null,
-        value: '2015-06-26'
-      }
-    ]
-  }
+        value: '2015-06-26',
+      },
+    ],
+  },
 });
 const rdItem = createSuccessfulRemoteDataObject(item);
-const workflowitem = Object.assign(new WorkflowItem(), { item: observableOf(rdItem) });
+const workflowitem = Object.assign(new WorkflowItem(), {
+  item: observableOf(rdItem),
+});
 const rdWorkflowitem = createSuccessfulRemoteDataObject(workflowitem);
-mockResultObject.indexableObject = Object.assign(new ClaimedTask(), { workflowitem: observableOf(rdWorkflowitem) });
+mockResultObject.indexableObject = Object.assign(new ClaimedTask(), {
+  workflowitem: observableOf(rdWorkflowitem),
+});
 const linkService = getMockLinkService();
 
 describe('ClaimedDeclinedSearchResultListElementComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [NoopAnimationsModule],
-      declarations: [ClaimedDeclinedSearchResultListElementComponent, VarDirective],
+      declarations: [
+        ClaimedDeclinedSearchResultListElementComponent,
+        VarDirective,
+      ],
       providers: [
         { provide: TruncatableService, useValue: {} },
         { provide: LinkService, useValue: linkService },
-        { provide: DSONameService, useClass: DSONameServiceMock }
+        { provide: DSONameService, useClass: DSONameServiceMock },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(ClaimedDeclinedSearchResultListElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(ClaimedDeclinedSearchResultListElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
-    fixture = TestBed.createComponent(ClaimedDeclinedSearchResultListElementComponent);
+    fixture = TestBed.createComponent(
+      ClaimedDeclinedSearchResultListElementComponent
+    );
     component = fixture.componentInstance;
   }));
 
@@ -100,5 +112,4 @@ describe('ClaimedDeclinedSearchResultListElementComponent', () => {
   it('should have properly status', () => {
     expect(component.status).toEqual(MyDspaceItemStatusType.DECLINED);
   });
-
 });

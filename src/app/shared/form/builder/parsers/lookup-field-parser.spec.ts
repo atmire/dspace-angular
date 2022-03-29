@@ -12,38 +12,48 @@ describe('LookupFieldParser test suite', () => {
   const parserOptions: ParserOptions = {
     readOnly: false,
     submissionScope: 'testScopeUUID',
-    collectionUUID: null
+    collectionUUID: null,
   };
 
   beforeEach(() => {
     field = {
       input: {
-        type: 'lookup'
+        type: 'lookup',
       },
       label: 'Journal',
       mandatory: 'false',
       repeatable: false,
-      hints: 'Enter the name of the journal where the item has been published, if any.',
+      hints:
+        'Enter the name of the journal where the item has been published, if any.',
       selectableMetadata: [
         {
           metadata: 'journal',
           controlledVocabulary: 'JOURNALAuthority',
-          closed: false
-        }
+          closed: false,
+        },
       ],
-      languageCodes: []
+      languageCodes: [],
     } as FormFieldModel;
-
   });
 
   it('should init parser properly', () => {
-    const parser = new LookupFieldParser(submissionId, field, initFormValues, parserOptions);
+    const parser = new LookupFieldParser(
+      submissionId,
+      field,
+      initFormValues,
+      parserOptions
+    );
 
     expect(parser instanceof LookupFieldParser).toBe(true);
   });
 
   it('should return a DynamicLookupModel object when repeatable option is false', () => {
-    const parser = new LookupFieldParser(submissionId, field, initFormValues, parserOptions);
+    const parser = new LookupFieldParser(
+      submissionId,
+      field,
+      initFormValues,
+      parserOptions
+    );
 
     const fieldModel = parser.parse();
 
@@ -56,11 +66,15 @@ describe('LookupFieldParser test suite', () => {
     };
     const expectedValue = new FormFieldMetadataValueObject('test journal');
 
-    const parser = new LookupFieldParser(submissionId, field, initFormValues, parserOptions);
+    const parser = new LookupFieldParser(
+      submissionId,
+      field,
+      initFormValues,
+      parserOptions
+    );
 
     const fieldModel = parser.parse();
 
     expect(fieldModel.value).toEqual(expectedValue);
   });
-
 });

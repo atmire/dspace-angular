@@ -6,9 +6,7 @@ import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class ApiService {
-  constructor(public _http: HttpClient) {
-
-  }
+  constructor(public _http: HttpClient) {}
 
   /**
    * whatever domain/feature method name
@@ -18,7 +16,7 @@ export class ApiService {
       catchError((err) => {
         console.log('Error: ', err);
         return observableThrowError(err);
-      }));
+      })
+    );
   }
-
 }

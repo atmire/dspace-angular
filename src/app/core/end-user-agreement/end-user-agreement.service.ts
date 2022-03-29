@@ -15,18 +15,20 @@ export const END_USER_AGREEMENT_METADATA_FIELD = 'dspace.agreements.end-user';
  */
 @Injectable()
 export class EndUserAgreementService {
-
-  constructor(protected cookie: CookieService,
-              protected authService: AuthService,
-              protected ePersonService: EPersonDataService) {
-  }
+  constructor(
+    protected cookie: CookieService,
+    protected authService: AuthService,
+    protected ePersonService: EPersonDataService
+  ) {}
 
   /**
    * Whether or not either the cookie was accepted or the current user has accepted the End User Agreement
    * @param acceptedWhenAnonymous Whether or not the user agreement should be considered accepted if the user is
    *                              currently not authenticated (anonymous)
    */
-  hasCurrentUserOrCookieAcceptedAgreement(acceptedWhenAnonymous: boolean): Observable<boolean> {
+  hasCurrentUserOrCookieAcceptedAgreement(
+    acceptedWhenAnonymous: boolean
+  ): Observable<boolean> {
     if (this.isCookieAccepted()) {
       return observableOf(true);
     } else {
@@ -39,13 +41,23 @@ export class EndUserAgreementService {
    * @param acceptedWhenAnonymous Whether or not the user agreement should be considered accepted if the user is
    *                              currently not authenticated (anonymous)
    */
-  hasCurrentUserAcceptedAgreement(acceptedWhenAnonymous: boolean): Observable<boolean> {
+  hasCurrentUserAcceptedAgreement(
+    acceptedWhenAnonymous: boolean
+  ): Observable<boolean> {
     return this.authService.isAuthenticated().pipe(
       switchMap((authenticated) => {
         if (authenticated) {
-          return this.authService.getAuthenticatedUserFromStore().pipe(
-            map((user) => hasValue(user) && user.hasMetadata(END_USER_AGREEMENT_METADATA_FIELD) && user.firstMetadata(END_USER_AGREEMENT_METADATA_FIELD).value === 'true')
-          );
+          return this.authService
+            .getAuthenticatedUserFromStore()
+            .pipe(
+              map(
+                (user) =>
+                  hasValue(user) &&
+                  user.hasMetadata(END_USER_AGREEMENT_METADATA_FIELD) &&
+                  user.firstMetadata(END_USER_AGREEMENT_METADATA_FIELD)
+                    .value === 'true'
+              )
+            );
         } else {
           return observableOf(acceptedWhenAnonymous);
         }
@@ -69,9 +81,17 @@ export class EndUserAgreementService {
               const newValue = { value: String(accepted) };
               let operation;
               if (user.hasMetadata(END_USER_AGREEMENT_METADATA_FIELD)) {
-                operation = { op: 'replace', path: `/metadata/${END_USER_AGREEMENT_METADATA_FIELD}/0`, value: newValue };
+                operation = {
+                  op: 'replace',
+                  path: `/metadata/${END_USER_AGREEMENT_METADATA_FIELD}/0`,
+                  value: newValue,
+                };
               } else {
-                operation = { op: 'add', path: `/metadata/${END_USER_AGREEMENT_METADATA_FIELD}`, value: [ newValue ] };
+                operation = {
+                  op: 'add',
+                  path: `/metadata/${END_USER_AGREEMENT_METADATA_FIELD}`,
+                  value: [newValue],
+                };
               }
               return this.ePersonService.patch(user, [operation]);
             }),
@@ -108,5 +128,4 @@ export class EndUserAgreementService {
   removeCookieAccepted() {
     this.cookie.remove(END_USER_AGREEMENT_COOKIE);
   }
-
 }

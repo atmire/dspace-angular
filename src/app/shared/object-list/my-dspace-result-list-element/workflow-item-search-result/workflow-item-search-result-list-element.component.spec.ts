@@ -1,5 +1,11 @@
 import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
-import { waitForAsync, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import {
+  waitForAsync,
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+} from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { of as observableOf } from 'rxjs';
@@ -22,7 +28,8 @@ import { DSONameServiceMock } from '../../../mocks/dso-name.service.mock';
 let component: WorkflowItemSearchResultListElementComponent;
 let fixture: ComponentFixture<WorkflowItemSearchResultListElementComponent>;
 
-const mockResultObject: WorkflowItemSearchResult = new WorkflowItemSearchResult();
+const mockResultObject: WorkflowItemSearchResult =
+  new WorkflowItemSearchResult();
 mockResultObject.hitHighlights = {};
 
 const item = Object.assign(new Item(), {
@@ -31,31 +38,33 @@ const item = Object.assign(new Item(), {
     'dc.title': [
       {
         language: 'en_US',
-        value: 'This is just another title'
-      }
+        value: 'This is just another title',
+      },
     ],
     'dc.type': [
       {
         language: null,
-        value: 'Article'
-      }
+        value: 'Article',
+      },
     ],
     'dc.contributor.author': [
       {
         language: 'en_US',
-        value: 'Smith, Donald'
-      }
+        value: 'Smith, Donald',
+      },
     ],
     'dc.date.issued': [
       {
         language: null,
-        value: '2015-06-26'
-      }
-    ]
-  }
+        value: '2015-06-26',
+      },
+    ],
+  },
 });
 const rd = createSuccessfulRemoteDataObject(item);
-mockResultObject.indexableObject = Object.assign(new WorkflowItem(), { item: observableOf(rd) });
+mockResultObject.indexableObject = Object.assign(new WorkflowItem(), {
+  item: observableOf(rd),
+});
 
 let linkService;
 
@@ -69,16 +78,20 @@ describe('WorkflowItemSearchResultListElementComponent', () => {
         { provide: TruncatableService, useValue: {} },
         { provide: ItemDataService, useValue: {} },
         { provide: LinkService, useValue: linkService },
-        { provide: DSONameService, useClass: DSONameServiceMock }
+        { provide: DSONameService, useClass: DSONameServiceMock },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(WorkflowItemSearchResultListElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(WorkflowItemSearchResultListElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
-    fixture = TestBed.createComponent(WorkflowItemSearchResultListElementComponent);
+    fixture = TestBed.createComponent(
+      WorkflowItemSearchResultListElementComponent
+    );
     component = fixture.componentInstance;
   }));
 
@@ -101,13 +114,16 @@ describe('WorkflowItemSearchResultListElementComponent', () => {
 
   it('should forward workflowitem-actions processCompleted event to the reloadedObject event emitter', fakeAsync(() => {
     spyOn(component.reloadedObject, 'emit').and.callThrough();
-    const actionPayload: any = { reloadedObject: {}};
+    const actionPayload: any = { reloadedObject: {} };
 
-    const actionsComponent = fixture.debugElement.query(By.css('ds-workflowitem-actions'));
+    const actionsComponent = fixture.debugElement.query(
+      By.css('ds-workflowitem-actions')
+    );
     actionsComponent.triggerEventHandler('processCompleted', actionPayload);
     tick();
 
-    expect(component.reloadedObject.emit).toHaveBeenCalledWith(actionPayload.reloadedObject);
-
+    expect(component.reloadedObject.emit).toHaveBeenCalledWith(
+      actionPayload.reloadedObject
+    );
   }));
 });

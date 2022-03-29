@@ -11,14 +11,12 @@ export function getMockFormBuilderService(): FormBuilderService {
     findById: {},
     getPath: ['test', 'path'],
     getId: 'path',
-    clearAllModelsValue : {},
+    clearAllModelsValue: {},
     insertFormArrayGroup: {},
     isQualdrop: false,
     isQualdropGroup: false,
     isModelInCustomGroup: true,
     isRelationGroup: true,
-    hasArrayGroupValue: true
-
+    hasArrayGroupValue: true,
   });
-
 }

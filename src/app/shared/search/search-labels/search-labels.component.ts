@@ -31,16 +31,23 @@ export class SearchLabelsComponent {
    */
   constructor(
     protected router: Router,
-    @Inject(SEARCH_CONFIG_SERVICE) public searchConfigService: SearchConfigurationService) {
-    this.appliedFilters = this.searchConfigService.getCurrentFrontendFilters().pipe(
-      map((params) => {
-        const labels = {};
-        Object.keys(params)
-          .forEach((key) => {
-            labels[key] = [...params[key].map((value) => stripOperatorFromFilterValue(value))];
+    @Inject(SEARCH_CONFIG_SERVICE)
+    public searchConfigService: SearchConfigurationService
+  ) {
+    this.appliedFilters = this.searchConfigService
+      .getCurrentFrontendFilters()
+      .pipe(
+        map((params) => {
+          const labels = {};
+          Object.keys(params).forEach((key) => {
+            labels[key] = [
+              ...params[key].map((value) =>
+                stripOperatorFromFilterValue(value)
+              ),
+            ];
           });
-        return labels;
-      })
-    );
+          return labels;
+        })
+      );
   }
 }

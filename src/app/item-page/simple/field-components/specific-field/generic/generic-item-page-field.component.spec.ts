@@ -17,17 +17,21 @@ const mockFields = [mockField];
 describe('GenericItemPageFieldComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot({
-        loader: {
-          provide: TranslateLoader,
-          useClass: TranslateLoaderMock
-        }
-      })],
+      imports: [
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useClass: TranslateLoaderMock,
+          },
+        }),
+      ],
       declarations: [GenericItemPageFieldComponent, MetadataValuesComponent],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(GenericItemPageFieldComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(GenericItemPageFieldComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {

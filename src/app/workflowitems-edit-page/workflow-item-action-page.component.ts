@@ -9,7 +9,10 @@ import { WorkflowItemDataService } from '../core/submission/workflowitem-data.se
 import { RouteService } from '../core/services/route.service';
 import { NotificationsService } from '../shared/notifications/notifications.service';
 import { RemoteData } from '../core/data/remote-data';
-import { getAllSucceededRemoteData, getRemoteDataPayload } from '../core/shared/operators';
+import {
+  getAllSucceededRemoteData,
+  getRemoteDataPayload,
+} from '../core/shared/operators';
 import { isEmpty } from '../shared/empty.util';
 
 /**
@@ -17,49 +20,70 @@ import { isEmpty } from '../shared/empty.util';
  */
 @Component({
   selector: 'ds-workflowitem-action-page',
-  template: ''
+  template: '',
 })
 export abstract class WorkflowItemActionPageComponent implements OnInit {
   public type;
   public wfi$: Observable<WorkflowItem>;
   public item$: Observable<Item>;
 
-  constructor(protected route: ActivatedRoute,
-              protected workflowItemService: WorkflowItemDataService,
-              protected router: Router,
-              protected routeService: RouteService,
-              protected notificationsService: NotificationsService,
-              protected translationService: TranslateService) {
-  }
+  constructor(
+    protected route: ActivatedRoute,
+    protected workflowItemService: WorkflowItemDataService,
+    protected router: Router,
+    protected routeService: RouteService,
+    protected notificationsService: NotificationsService,
+    protected translationService: TranslateService
+  ) {}
 
   /**
    * Sets up the type, workflow item and its item object
    */
   ngOnInit() {
     this.type = this.getType();
-    this.wfi$ = this.route.data.pipe(map((data: Data) => data.wfi as RemoteData<WorkflowItem>), getRemoteDataPayload());
-    this.item$ = this.wfi$.pipe(switchMap((wfi: WorkflowItem) => (wfi.item as Observable<RemoteData<Item>>).pipe(getAllSucceededRemoteData(), getRemoteDataPayload())));
+    this.wfi$ = this.route.data.pipe(
+      map((data: Data) => data.wfi as RemoteData<WorkflowItem>),
+      getRemoteDataPayload()
+    );
+    this.item$ = this.wfi$.pipe(
+      switchMap((wfi: WorkflowItem) =>
+        (wfi.item as Observable<RemoteData<Item>>).pipe(
+          getAllSucceededRemoteData(),
+          getRemoteDataPayload()
+        )
+      )
+    );
   }
 
   /**
    * Performs the action and shows a notification based on the outcome of the action
    */
   performAction() {
-    this.wfi$.pipe(
-      take(1),
-      switchMap((wfi: WorkflowItem) => this.sendRequest(wfi.id))
-    ).subscribe((successful: boolean) => {
-      if (successful) {
-        const title = this.translationService.get('workflow-item.' + this.type + '.notification.success.title');
-        const content = this.translationService.get('workflow-item.' + this.type + '.notification.success.content');
-        this.notificationsService.success(title, content);
-      } else {
-        const title = this.translationService.get('workflow-item.' + this.type + '.notification.error.title');
-        const content = this.translationService.get('workflow-item.' + this.type + '.notification.error.content');
-        this.notificationsService.error(title, content);
-      }
-      this.previousPage();
-    });
+    this.wfi$
+      .pipe(
+        take(1),
+        switchMap((wfi: WorkflowItem) => this.sendRequest(wfi.id))
+      )
+      .subscribe((successful: boolean) => {
+        if (successful) {
+          const title = this.translationService.get(
+            'workflow-item.' + this.type + '.notification.success.title'
+          );
+          const content = this.translationService.get(
+            'workflow-item.' + this.type + '.notification.success.content'
+          );
+          this.notificationsService.success(title, content);
+        } else {
+          const title = this.translationService.get(
+            'workflow-item.' + this.type + '.notification.error.title'
+          );
+          const content = this.translationService.get(
+            'workflow-item.' + this.type + '.notification.error.content'
+          );
+          this.notificationsService.error(title, content);
+        }
+        this.previousPage();
+      });
   }
 
   /**
@@ -67,14 +91,15 @@ export abstract class WorkflowItemActionPageComponent implements OnInit {
    * If there's not previous url, it continues to the mydspace page instead
    */
   previousPage() {
-    this.routeService.getPreviousUrl().pipe(take(1))
+    this.routeService
+      .getPreviousUrl()
+      .pipe(take(1))
       .subscribe((url) => {
-          if (isEmpty(url)) {
-            url = '/mydspace';
-          }
-          this.router.navigateByUrl(url);
+        if (isEmpty(url)) {
+          url = '/mydspace';
         }
-      );
+        this.router.navigateByUrl(url);
+      });
   }
 
   /**

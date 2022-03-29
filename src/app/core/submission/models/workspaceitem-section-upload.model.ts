@@ -4,7 +4,6 @@ import { WorkspaceitemSectionUploadFileObject } from './workspaceitem-section-up
  * An interface to represent submission's upload section data.
  */
 export interface WorkspaceitemSectionUploadObject {
-
   /**
    * A list of [[WorkspaceitemSectionUploadFileObject]]
    */

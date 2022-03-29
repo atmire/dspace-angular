@@ -14,8 +14,8 @@ export class MyDSpaceResponseParsingService extends DspaceRestResponseParsingSer
     // fallback for unexpected empty response
     const emptyPayload = {
       _embedded: {
-        objects: []
-      }
+        objects: [],
+      },
     };
     const payload = data.payload._embedded.searchResult || emptyPayload;
     const hitHighlights: MetadataMap[] = payload._embedded.objects
@@ -26,7 +26,7 @@ export class MyDSpaceResponseParsingService extends DspaceRestResponseParsingSer
           for (const key of Object.keys(hhObject)) {
             const value: MetadataValue = Object.assign(new MetadataValue(), {
               value: hhObject[key].join('...'),
-              language: null
+              language: null,
             });
             mdMap[key] = [value];
           }
@@ -43,21 +43,33 @@ export class MyDSpaceResponseParsingService extends DspaceRestResponseParsingSer
 
     const objects = payload._embedded.objects
       .filter((object) => hasValue(object._embedded))
-      .map((object, index) => Object.assign({}, object, {
-        indexableObject: dsoSelfLinks[index],
-        hitHighlights: hitHighlights[index],
-        _embedded: this.filterEmbeddedObjects(object)
-      }));
+      .map((object, index) =>
+        Object.assign({}, object, {
+          indexableObject: dsoSelfLinks[index],
+          hitHighlights: hitHighlights[index],
+          _embedded: this.filterEmbeddedObjects(object),
+        })
+      );
     payload.objects = objects;
-    const deserialized: any = new DSpaceSerializer(SearchObjects).deserialize(payload);
+    const deserialized: any = new DSpaceSerializer(SearchObjects).deserialize(
+      payload
+    );
     deserialized.pageInfo = this.processPageInfo(payload);
     this.addToObjectCache(deserialized, request, data);
     return new ParsedResponse(data.statusCode, deserialized._links.self);
   }
 
   protected filterEmbeddedObjects(object) {
-    const allowedEmbeddedKeys = ['submitter', 'item', 'workspaceitem', 'workflowitem'];
-    if (object._embedded.indexableObject && object._embedded.indexableObject._embedded) {
+    const allowedEmbeddedKeys = [
+      'submitter',
+      'item',
+      'workspaceitem',
+      'workflowitem',
+    ];
+    if (
+      object._embedded.indexableObject &&
+      object._embedded.indexableObject._embedded
+    ) {
       return Object.assign({}, object._embedded, {
         indexableObject: Object.assign({}, object._embedded.indexableObject, {
           _embedded: Object.keys(object._embedded.indexableObject._embedded)
@@ -65,12 +77,11 @@ export class MyDSpaceResponseParsingService extends DspaceRestResponseParsingSer
             .reduce((obj, key) => {
               obj[key] = object._embedded.indexableObject._embedded[key];
               return obj;
-            }, {})
-        })
+            }, {}),
+        }),
       });
     } else {
       return object;
     }
-
   }
 }

@@ -14,10 +14,10 @@ const mockCommunityWithAbstract: Community = Object.assign(new Community(), {
     'dc.description.abstract': [
       {
         language: 'en_US',
-        value: 'Short description'
-      }
-    ]
-  }
+        value: 'Short description',
+      },
+    ],
+  },
 });
 
 const mockCommunityWithoutAbstract: Community = Object.assign(new Community(), {
@@ -25,32 +25,35 @@ const mockCommunityWithoutAbstract: Community = Object.assign(new Community(), {
     'dc.title': [
       {
         language: 'en_US',
-        value: 'Test title'
-      }
-    ]
-  }
+        value: 'Test title',
+      },
+    ],
+  },
 });
 
 const linkService = jasmine.createSpyObj('linkService', {
-  resolveLink: mockCommunityWithAbstract
+  resolveLink: mockCommunityWithAbstract,
 });
 
 describe('CommunityGridElementComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        TranslateModule.forRoot()
-      ],
+      imports: [TranslateModule.forRoot()],
       declarations: [CommunityGridElementComponent],
       providers: [
-        { provide: 'objectElementProvider', useValue: (mockCommunityWithAbstract) },
-        { provide: LinkService, useValue: linkService }
+        {
+          provide: 'objectElementProvider',
+          useValue: mockCommunityWithAbstract,
+        },
+        { provide: LinkService, useValue: linkService },
       ],
 
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(CommunityGridElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(CommunityGridElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -65,7 +68,9 @@ describe('CommunityGridElementComponent', () => {
     });
 
     it('should show the description paragraph', () => {
-      const communityAbstractField = fixture.debugElement.query(By.css('p.card-text'));
+      const communityAbstractField = fixture.debugElement.query(
+        By.css('p.card-text')
+      );
       expect(communityAbstractField).not.toBeNull();
     });
   });
@@ -77,7 +82,9 @@ describe('CommunityGridElementComponent', () => {
     });
 
     it('should not show the description paragraph', () => {
-      const communityAbstractField = fixture.debugElement.query(By.css('p.card-text'));
+      const communityAbstractField = fixture.debugElement.query(
+        By.css('p.card-text')
+      );
       expect(communityAbstractField).toBeNull();
     });
   });

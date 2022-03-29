@@ -17,15 +17,23 @@ describe('DeleteCommunityPageComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), SharedModule, CommonModule, RouterTestingModule],
+      imports: [
+        TranslateModule.forRoot(),
+        SharedModule,
+        CommonModule,
+        RouterTestingModule,
+      ],
       declarations: [DeleteCommunityPageComponent],
       providers: [
         { provide: CommunityDataService, useValue: {} },
-        { provide: ActivatedRoute, useValue: { data: observableOf({ dso: { payload: {} } }) } },
+        {
+          provide: ActivatedRoute,
+          useValue: { data: observableOf({ dso: { payload: {} } }) },
+        },
         { provide: NotificationsService, useValue: {} },
-        { provide: RequestService, useValue: {}}
+        { provide: RequestService, useValue: {} },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 

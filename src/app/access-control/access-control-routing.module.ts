@@ -16,44 +16,54 @@ import { SiteAdministratorGuard } from '../core/data/feature-authorization/featu
         path: 'epeople',
         component: EPeopleRegistryComponent,
         resolve: {
-          breadcrumb: I18nBreadcrumbResolver
+          breadcrumb: I18nBreadcrumbResolver,
         },
-        data: { title: 'admin.access-control.epeople.title', breadcrumbKey: 'admin.access-control.epeople' },
-        canActivate: [SiteAdministratorGuard]
+        data: {
+          title: 'admin.access-control.epeople.title',
+          breadcrumbKey: 'admin.access-control.epeople',
+        },
+        canActivate: [SiteAdministratorGuard],
       },
       {
         path: GROUP_EDIT_PATH,
         component: GroupsRegistryComponent,
         resolve: {
-          breadcrumb: I18nBreadcrumbResolver
+          breadcrumb: I18nBreadcrumbResolver,
         },
-        data: { title: 'admin.access-control.groups.title', breadcrumbKey: 'admin.access-control.groups' },
-        canActivate: [GroupAdministratorGuard]
+        data: {
+          title: 'admin.access-control.groups.title',
+          breadcrumbKey: 'admin.access-control.groups',
+        },
+        canActivate: [GroupAdministratorGuard],
       },
       {
         path: `${GROUP_EDIT_PATH}/newGroup`,
         component: GroupFormComponent,
         resolve: {
-          breadcrumb: I18nBreadcrumbResolver
+          breadcrumb: I18nBreadcrumbResolver,
         },
-        data: { title: 'admin.access-control.groups.title.addGroup', breadcrumbKey: 'admin.access-control.groups.addGroup' },
-        canActivate: [GroupAdministratorGuard]
+        data: {
+          title: 'admin.access-control.groups.title.addGroup',
+          breadcrumbKey: 'admin.access-control.groups.addGroup',
+        },
+        canActivate: [GroupAdministratorGuard],
       },
       {
         path: `${GROUP_EDIT_PATH}/:groupId`,
         component: GroupFormComponent,
         resolve: {
-          breadcrumb: I18nBreadcrumbResolver
+          breadcrumb: I18nBreadcrumbResolver,
         },
-        data: { title: 'admin.access-control.groups.title.singleGroup', breadcrumbKey: 'admin.access-control.groups.singleGroup' },
-        canActivate: [GroupPageGuard]
-      }
-    ])
-  ]
+        data: {
+          title: 'admin.access-control.groups.title.singleGroup',
+          breadcrumbKey: 'admin.access-control.groups.singleGroup',
+        },
+        canActivate: [GroupPageGuard],
+      },
+    ]),
+  ],
 })
 /**
  * Routing module for the AccessControl section of the admin sidebar
  */
-export class AccessControlRoutingModule {
-
-}
+export class AccessControlRoutingModule {}

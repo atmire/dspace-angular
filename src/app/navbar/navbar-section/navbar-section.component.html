@@ -1,3 +1,8 @@
 <div class="nav-item navbar-section">
-  <ng-container *ngComponentOutlet="(sectionMap$ | async).get(section.id).component; injector: (sectionMap$ | async).get(section.id).injector;"></ng-container>
+  <ng-container
+    *ngComponentOutlet="
+      (sectionMap$ | async).get(section.id).component;
+      injector: (sectionMap$ | async).get(section.id).injector
+    "
+  ></ng-container>
 </div>

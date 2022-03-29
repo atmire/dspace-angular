@@ -5,11 +5,14 @@ import { FieldChangeType } from '../../../../core/data/object-updates/object-upd
 import {
   DeleteRelationship,
   FieldUpdate,
-  RelationshipIdentifiable
+  RelationshipIdentifiable,
 } from '../../../../core/data/object-updates/object-updates.reducer';
 import { ObjectUpdatesService } from '../../../../core/data/object-updates/object-updates.service';
 import { Item } from '../../../../core/shared/item.model';
-import { getFirstSucceededRemoteData, getRemoteDataPayload } from '../../../../core/shared/operators';
+import {
+  getFirstSucceededRemoteData,
+  getRemoteDataPayload,
+} from '../../../../core/shared/operators';
 import { ViewMode } from '../../../../core/shared/view-mode.model';
 import { hasValue, isNotEmpty } from '../../../../shared/empty.util';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
@@ -71,15 +74,17 @@ export class EditRelationshipComponent implements OnChanges {
 
   constructor(
     private objectUpdatesService: ObjectUpdatesService,
-    private modalService: NgbModal,
-  ) {
-  }
+    private modalService: NgbModal
+  ) {}
 
   /**
    * Sets the current relationship based on the fieldUpdate input field
    */
   ngOnChanges(): void {
-    if (this.relationship && (!!this.relationship.leftItem || !!this.relationship.rightItem)) {
+    if (
+      this.relationship &&
+      (!!this.relationship.leftItem || !!this.relationship.rightItem)
+    ) {
       this.leftItem$ = this.relationship.leftItem.pipe(
         getFirstSucceededRemoteData(),
         getRemoteDataPayload(),
@@ -92,7 +97,7 @@ export class EditRelationshipComponent implements OnChanges {
       );
       this.relatedItem$ = observableCombineLatest(
         this.leftItem$,
-        this.rightItem$,
+        this.rightItem$
       ).pipe(
         map((items: Item[]) =>
           items.find((item) => item.uuid !== this.editItem.uuid)
@@ -108,28 +113,32 @@ export class EditRelationshipComponent implements OnChanges {
    */
   remove(): void {
     this.closeVirtualMetadataModal();
-    observableCombineLatest(
-      this.leftItem$,
-      this.rightItem$,
-    ).pipe(
-      map((items: Item[]) =>
-        items.map((item) => this.objectUpdatesService
-          .isSelectedVirtualMetadata(this.url, this.relationship.id, item.uuid))
-      ),
-      switchMap((selection$) => observableCombineLatest(selection$)),
-      map((selection: boolean[]) => {
-        return Object.assign({},
-          this.fieldUpdate.field,
-          {
+    observableCombineLatest(this.leftItem$, this.rightItem$)
+      .pipe(
+        map((items: Item[]) =>
+          items.map((item) =>
+            this.objectUpdatesService.isSelectedVirtualMetadata(
+              this.url,
+              this.relationship.id,
+              item.uuid
+            )
+          )
+        ),
+        switchMap((selection$) => observableCombineLatest(selection$)),
+        map((selection: boolean[]) => {
+          return Object.assign({}, this.fieldUpdate.field, {
             keepLeftVirtualMetadata: selection[0] === true,
             keepRightVirtualMetadata: selection[1] === true,
-          }
-        ) as DeleteRelationship;
-      }),
-      take(1),
-    ).subscribe((deleteRelationship: DeleteRelationship) =>
-      this.objectUpdatesService.saveRemoveFieldUpdate(this.url, deleteRelationship)
-    );
+          }) as DeleteRelationship;
+        }),
+        take(1)
+      )
+      .subscribe((deleteRelationship: DeleteRelationship) =>
+        this.objectUpdatesService.saveRemoveFieldUpdate(
+          this.url,
+          deleteRelationship
+        )
+      );
   }
 
   openVirtualMetadataModal(content: any) {
@@ -144,15 +153,20 @@ export class EditRelationshipComponent implements OnChanges {
    * Cancels the current update for this field in the object updates service
    */
   undo(): void {
-    this.objectUpdatesService.removeSingleFieldUpdate(this.url, this.fieldUpdate.field.uuid);
+    this.objectUpdatesService.removeSingleFieldUpdate(
+      this.url,
+      this.fieldUpdate.field.uuid
+    );
   }
 
   /**
    * Check if a user should be allowed to remove this field
    */
   canRemove(): boolean {
-    return this.fieldUpdate.changeType !== FieldChangeType.REMOVE
-      && this.fieldUpdate.changeType !== FieldChangeType.ADD;
+    return (
+      this.fieldUpdate.changeType !== FieldChangeType.REMOVE &&
+      this.fieldUpdate.changeType !== FieldChangeType.ADD
+    );
   }
 
   /**

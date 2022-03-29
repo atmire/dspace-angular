@@ -12,13 +12,13 @@ describe('LookupNameFieldParser test suite', () => {
   const parserOptions: ParserOptions = {
     readOnly: false,
     submissionScope: 'testScopeUUID',
-    collectionUUID: null
+    collectionUUID: null,
   };
 
   beforeEach(() => {
     field = {
       input: {
-        type: 'lookup-name'
+        type: 'lookup-name',
       },
       label: 'Author',
       mandatory: 'false',
@@ -28,22 +28,31 @@ describe('LookupNameFieldParser test suite', () => {
         {
           metadata: 'author',
           controlledVocabulary: 'RPAuthority',
-          closed: false
-        }
+          closed: false,
+        },
       ],
-      languageCodes: []
+      languageCodes: [],
     } as FormFieldModel;
-
   });
 
   it('should init parser properly', () => {
-    const parser = new LookupNameFieldParser(submissionId, field, initFormValues, parserOptions);
+    const parser = new LookupNameFieldParser(
+      submissionId,
+      field,
+      initFormValues,
+      parserOptions
+    );
 
     expect(parser instanceof LookupNameFieldParser).toBe(true);
   });
 
   it('should return a DynamicLookupNameModel object when repeatable option is false', () => {
-    const parser = new LookupNameFieldParser(submissionId, field, initFormValues, parserOptions);
+    const parser = new LookupNameFieldParser(
+      submissionId,
+      field,
+      initFormValues,
+      parserOptions
+    );
 
     const fieldModel = parser.parse();
 
@@ -56,11 +65,15 @@ describe('LookupNameFieldParser test suite', () => {
     };
     const expectedValue = new FormFieldMetadataValueObject('test author');
 
-    const parser = new LookupNameFieldParser(submissionId, field, initFormValues, parserOptions);
+    const parser = new LookupNameFieldParser(
+      submissionId,
+      field,
+      initFormValues,
+      parserOptions
+    );
 
     const fieldModel = parser.parse();
 
     expect(fieldModel.value).toEqual(expectedValue);
   });
-
 });

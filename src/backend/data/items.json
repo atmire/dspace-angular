@@ -1,19 +1,23 @@
 {
-  "items": [{
+  "items": [
+    {
       "_links": {
         "self": {
           "href": "/items/8871"
         },
-        "parents": [{
+        "parents": [
+          {
             "href": "/collections/5179"
           },
           {
             "href": "/collections/6547"
           }
         ],
-        "bundles": [{
-          "href": "/bundles/2355"
-        }]
+        "bundles": [
+          {
+            "href": "/bundles/2355"
+          }
+        ]
       },
       "id": "8871",
       "uuid": "21539b1d-9ef1-4eda-9c77-49565b5bfb78",
@@ -23,7 +27,8 @@
       "lastModified": "2016-10-14 10:41:12.886",
       "isArchived": true,
       "isWithdrawn": false,
-      "metadata": [{
+      "metadata": [
+        {
           "key": "dc.contributor.author",
           "value": "Antelman, Kristin",
           "language": "en"
@@ -85,108 +90,123 @@
         }
       ],
       "_embedded": {
-        "parents": [{
-          "_links": {
-            "self": {
-              "href": "/collections/6547"
-            },
-            "items": [{
-                "href": "/items/8871"
+        "parents": [
+          {
+            "_links": {
+              "self": {
+                "href": "/collections/6547"
               },
-              {
-                "href": "/items/9978"
-              }
-            ]
-          },
-          "id": "6547",
-          "uuid": "598ce822-c357-46f3-ab70-63724d02d6ad",
-          "type": "collection",
-          "name": "Another Test Collection",
-          "handle": "123456789/6547",
-          "metadata": [{
-              "key": "dc.rights",
-              "value": "<p>© 2005-2016 JOHN DOE SOME RIGHTS RESERVED</p>",
-              "language": null
-            },
-            {
-              "key": "dc.description",
-              "value": "<p class='lead'>Another introductory text dolor sit amet, consectetur adipiscing elit. Duis laoreet lorem erat, eget auctor est ultrices quis. Nullam ac tincidunt quam. In nec nisl odio. In egestas aliquam tincidunt.</p>\r\n<p>Integer vitae diam id dolor pharetra dignissim in sed enim. Vivamus pulvinar tristique sem a iaculis. Aenean ultricies dui vel facilisis laoreet. Integer porta erat eu ultrices rhoncus. Sed condimentum malesuada ex sit amet ullamcorper. Morbi a ipsum dolor. Vivamus interdum eget lacus ut fermentum.</p>",
-              "language": null
-            },
-            {
-              "key": "dc.description.abstract",
-              "value": "Another collection for testing purposes",
-              "language": null
-            },
-            {
-              "key": "dc.description.tableofcontents",
-              "value": "<p>Some more news sed condimentum malesuada ex sit amet ullamcorper. Morbi a ipsum dolor. Vivamus interdum eget lacus ut fermentum. Donec sed ultricies erat, nec sollicitudin mauris. Duis varius nulla quis quam vulputate, at hendrerit turpis rutrum. Integer nec facilisis sapien. Fusce fringilla malesuada lectus id pulvinar. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae</p>",
-              "language": null
-            }
-          ]
-        }],
-        "bundles": [{
-          "_links": {
-            "self": {
-              "href": "/bundles/2355"
-            },
-            "items": [{
-              "href": "/items/8871"
-            }],
-            "bitstreams": [{
-              "href": "/bitstreams/3678"
-            }],
-            "primaryBitstream": {
-              "href": "/bitstreams/3678"
-            }
-          },
-          "id": "2355",
-          "uuid": "35e0606d-5e18-4f9c-aa61-74fc751cc3f9",
-          "type": "bundle",
-          "name": "ORIGINAL",
-          "metadata": [{
-            "key": "dc.title",
-            "value": "ORIGINAL",
-            "language": "en"
-          }],
-          "_embedded": {
-            "bitstreams": [{
-              "_links": {
-                "self": {
-                  "href": "/bitstreams/3678"
-                },
-                "bundle": {
-                  "href": "/bundles/35e0606d-5e18-4f9c-aa61-74fc751cc3f9"
-                },
-                "retrieve": {
-                  "href": "/bitstreams/43c57c2b-206f-4645-8c8f-5f10c84b09fa/retrieve"
-                }
-              },
-              "id": "3678",
-              "uuid": "43c57c2b-206f-4645-8c8f-5f10c84b09fa",
-              "type": "bitstream",
-              "name": "do_open_access_CRL.pdf",
-              "size": 636626,
-              "checksum": {
-                "value": "063dfbbbac873aa3fca479b878eccff3",
-                "algorithm": "MD5"
-              },
-              "metadata": [{
-                  "key": "dc.title",
-                  "value": "do_open_access_CRL.pdf",
-                  "language": null
+              "items": [
+                {
+                  "href": "/items/8871"
                 },
                 {
-                  "key": "dc.description",
-                  "value": "Conference Paper",
-                  "language": "en"
+                  "href": "/items/9978"
+                }
+              ]
+            },
+            "id": "6547",
+            "uuid": "598ce822-c357-46f3-ab70-63724d02d6ad",
+            "type": "collection",
+            "name": "Another Test Collection",
+            "handle": "123456789/6547",
+            "metadata": [
+              {
+                "key": "dc.rights",
+                "value": "<p>© 2005-2016 JOHN DOE SOME RIGHTS RESERVED</p>",
+                "language": null
+              },
+              {
+                "key": "dc.description",
+                "value": "<p class='lead'>Another introductory text dolor sit amet, consectetur adipiscing elit. Duis laoreet lorem erat, eget auctor est ultrices quis. Nullam ac tincidunt quam. In nec nisl odio. In egestas aliquam tincidunt.</p>\r\n<p>Integer vitae diam id dolor pharetra dignissim in sed enim. Vivamus pulvinar tristique sem a iaculis. Aenean ultricies dui vel facilisis laoreet. Integer porta erat eu ultrices rhoncus. Sed condimentum malesuada ex sit amet ullamcorper. Morbi a ipsum dolor. Vivamus interdum eget lacus ut fermentum.</p>",
+                "language": null
+              },
+              {
+                "key": "dc.description.abstract",
+                "value": "Another collection for testing purposes",
+                "language": null
+              },
+              {
+                "key": "dc.description.tableofcontents",
+                "value": "<p>Some more news sed condimentum malesuada ex sit amet ullamcorper. Morbi a ipsum dolor. Vivamus interdum eget lacus ut fermentum. Donec sed ultricies erat, nec sollicitudin mauris. Duis varius nulla quis quam vulputate, at hendrerit turpis rutrum. Integer nec facilisis sapien. Fusce fringilla malesuada lectus id pulvinar. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae</p>",
+                "language": null
+              }
+            ]
+          }
+        ],
+        "bundles": [
+          {
+            "_links": {
+              "self": {
+                "href": "/bundles/2355"
+              },
+              "items": [
+                {
+                  "href": "/items/8871"
                 }
               ],
-              "format": "Adobe PDF",
-              "mimetype": "application/pdf"
-            }]
+              "bitstreams": [
+                {
+                  "href": "/bitstreams/3678"
+                }
+              ],
+              "primaryBitstream": {
+                "href": "/bitstreams/3678"
+              }
+            },
+            "id": "2355",
+            "uuid": "35e0606d-5e18-4f9c-aa61-74fc751cc3f9",
+            "type": "bundle",
+            "name": "ORIGINAL",
+            "metadata": [
+              {
+                "key": "dc.title",
+                "value": "ORIGINAL",
+                "language": "en"
+              }
+            ],
+            "_embedded": {
+              "bitstreams": [
+                {
+                  "_links": {
+                    "self": {
+                      "href": "/bitstreams/3678"
+                    },
+                    "bundle": {
+                      "href": "/bundles/35e0606d-5e18-4f9c-aa61-74fc751cc3f9"
+                    },
+                    "retrieve": {
+                      "href": "/bitstreams/43c57c2b-206f-4645-8c8f-5f10c84b09fa/retrieve"
+                    }
+                  },
+                  "id": "3678",
+                  "uuid": "43c57c2b-206f-4645-8c8f-5f10c84b09fa",
+                  "type": "bitstream",
+                  "name": "do_open_access_CRL.pdf",
+                  "size": 636626,
+                  "checksum": {
+                    "value": "063dfbbbac873aa3fca479b878eccff3",
+                    "algorithm": "MD5"
+                  },
+                  "metadata": [
+                    {
+                      "key": "dc.title",
+                      "value": "do_open_access_CRL.pdf",
+                      "language": null
+                    },
+                    {
+                      "key": "dc.description",
+                      "value": "Conference Paper",
+                      "language": "en"
+                    }
+                  ],
+                  "format": "Adobe PDF",
+                  "mimetype": "application/pdf"
+                }
+              ]
+            }
           }
-        }]
+        ]
       }
     },
     {
@@ -194,16 +214,19 @@
         "self": {
           "href": "/items/9978"
         },
-        "parents": [{
+        "parents": [
+          {
             "href": "/collections/5179"
           },
           {
             "href": "/collections/6547"
           }
         ],
-        "bundles": [{
-          "href": "/bundles/2355"
-        }]
+        "bundles": [
+          {
+            "href": "/bundles/2355"
+          }
+        ]
       },
       "id": "9978",
       "uuid": "be8325f7-243b-49f4-8a4b-df2b793ff3b5",
@@ -213,7 +236,8 @@
       "lastModified": "2016-05-27 03:00:20.063",
       "isArchived": true,
       "isWithdrawn": false,
-      "metadata": [{
+      "metadata": [
+        {
           "key": "dc.contributor.author",
           "value": "John Doe",
           "language": "en"
@@ -255,12 +279,14 @@
         }
       ],
       "_embedded": {
-        "parents": [{
+        "parents": [
+          {
             "_links": {
               "self": {
                 "href": "/collections/5179"
               },
-              "items": [{
+              "items": [
+                {
                   "href": "/items/8871"
                 },
                 {
@@ -276,7 +302,8 @@
             "type": "collection",
             "name": "A Test Collection",
             "handle": "123456789/5179",
-            "metadata": [{
+            "metadata": [
+              {
                 "key": "dc.rights",
                 "value": "<p>© 2005-2016 JOHN DOE SOME RIGHTS RESERVED</p>",
                 "language": null
@@ -303,7 +330,8 @@
               "self": {
                 "href": "/collections/6547"
               },
-              "items": [{
+              "items": [
+                {
                   "href": "/items/8871"
                 },
                 {
@@ -316,7 +344,8 @@
             "type": "collection",
             "name": "Another Test Collection",
             "handle": "123456789/6547",
-            "metadata": [{
+            "metadata": [
+              {
                 "key": "dc.rights",
                 "value": "<p>© 2005-2016 JOHN DOE SOME RIGHTS RESERVED</p>",
                 "language": null

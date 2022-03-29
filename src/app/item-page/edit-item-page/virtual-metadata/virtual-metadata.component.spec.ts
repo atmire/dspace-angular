@@ -9,7 +9,6 @@ import { ObjectUpdatesService } from '../../../core/data/object-updates/object-u
 import { VarDirective } from '../../../shared/utils/var.directive';
 
 describe('VirtualMetadataComponent', () => {
-
   let comp: VirtualMetadataComponent;
   let fixture: ComponentFixture<VirtualMetadataComponent>;
   let de: DebugElement;
@@ -23,7 +22,6 @@ describe('VirtualMetadataComponent', () => {
   let relationshipId;
 
   beforeEach(() => {
-
     relationshipId = 'relationship id';
 
     item = Object.assign(new Item(), {
@@ -46,9 +44,8 @@ describe('VirtualMetadataComponent', () => {
       declarations: [VirtualMetadataComponent, VarDirective],
       providers: [
         { provide: ObjectUpdatesService, useValue: objectUpdatesService },
-      ], schemas: [
-        NO_ERRORS_SCHEMA
-      ]
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
 
     fixture = TestBed.createComponent(VirtualMetadataComponent);
@@ -65,7 +62,6 @@ describe('VirtualMetadataComponent', () => {
 
   describe('when clicking the save button', () => {
     it('should emit a save event', () => {
-
       spyOn(comp.save, 'emit');
       fixture.debugElement
         .query(By.css('button.save'))
@@ -76,7 +72,6 @@ describe('VirtualMetadataComponent', () => {
 
   describe('when clicking the close button', () => {
     it('should emit a close event', () => {
-
       spyOn(comp.close, 'emit');
       fixture.debugElement
         .query(By.css('button.close'))
@@ -87,16 +82,12 @@ describe('VirtualMetadataComponent', () => {
 
   describe('when selecting an item', () => {
     it('should call the updates service setSelectedVirtualMetadata method', () => {
-
       fixture.debugElement
         .query(By.css('div.item'))
         .triggerEventHandler('click', null);
-      expect(objectUpdatesService.setSelectedVirtualMetadata).toHaveBeenCalledWith(
-        url,
-        relationshipId,
-        item.uuid,
-        true
-      );
+      expect(
+        objectUpdatesService.setSelectedVirtualMetadata
+      ).toHaveBeenCalledWith(url, relationshipId, item.uuid, true);
     });
   });
 });

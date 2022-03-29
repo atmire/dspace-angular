@@ -5,7 +5,7 @@ import { getTestBed } from '@angular/core/testing';
 import { MockStore } from '@ngrx/store/testing';
 import {
   BrowserDynamicTestingModule,
-  platformBrowserDynamicTesting
+  platformBrowserDynamicTesting,
 } from '@angular/platform-browser-dynamic/testing';
 
 declare const require: any;

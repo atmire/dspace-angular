@@ -11,13 +11,14 @@ import { PageInternalServerErrorComponent } from './page-internal-server-error.c
   templateUrl: '../shared/theme-support/themed.component.html',
 })
 export class ThemedPageInternalServerErrorComponent extends ThemedComponent<PageInternalServerErrorComponent> {
-
   protected getComponentName(): string {
     return 'PageInternalServerErrorComponent';
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../themes/${themeName}/app/page-internal-server-error/page-internal-server-error.component`);
+    return import(
+      `../../themes/${themeName}/app/page-internal-server-error/page-internal-server-error.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

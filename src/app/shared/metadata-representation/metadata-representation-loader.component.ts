@@ -1,7 +1,14 @@
-import { Component, ComponentFactoryResolver, Inject, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ComponentFactoryResolver,
+  Inject,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import {
   MetadataRepresentation,
-  MetadataRepresentationType
+  MetadataRepresentationType,
 } from '../../core/shared/metadata-representation/metadata-representation.model';
 import { METADATA_REPRESENTATION_COMPONENT_FACTORY } from './metadata-representation.decorator';
 import { Context } from '../../core/shared/context.model';
@@ -14,7 +21,7 @@ import { ThemeService } from '../theme-support/theme.service';
 @Component({
   selector: 'ds-metadata-representation-loader',
   // styleUrls: ['./metadata-representation-loader.component.scss'],
-  templateUrl: './metadata-representation-loader.component.html'
+  templateUrl: './metadata-representation-loader.component.html',
 })
 /**
  * Component for determining what component to use depending on the item's entity type (dspace.entity.type), its metadata representation and, optionally, its context
@@ -44,26 +51,36 @@ export class MetadataRepresentationLoaderComponent implements OnInit {
   /**
    * Directive to determine where the dynamic child component is located
    */
-  @ViewChild(MetadataRepresentationDirective, {static: true}) mdRepDirective: MetadataRepresentationDirective;
+  @ViewChild(MetadataRepresentationDirective, { static: true })
+  mdRepDirective: MetadataRepresentationDirective;
 
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
     private themeService: ThemeService,
-    @Inject(METADATA_REPRESENTATION_COMPONENT_FACTORY) private getMetadataRepresentationComponent: (entityType: string, mdRepresentationType: MetadataRepresentationType, context: Context, theme: string) => GenericConstructor<any>,
-  ) {
-  }
+    @Inject(METADATA_REPRESENTATION_COMPONENT_FACTORY)
+    private getMetadataRepresentationComponent: (
+      entityType: string,
+      mdRepresentationType: MetadataRepresentationType,
+      context: Context,
+      theme: string
+    ) => GenericConstructor<any>
+  ) {}
 
   /**
    * Set up the dynamic child component
    */
   ngOnInit(): void {
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.getComponent());
+    const componentFactory =
+      this.componentFactoryResolver.resolveComponentFactory(
+        this.getComponent()
+      );
 
     const viewContainerRef = this.mdRepDirective.viewContainerRef;
     viewContainerRef.clear();
 
     const componentRef = viewContainerRef.createComponent(componentFactory);
-    this.componentRefInstance = componentRef.instance as MetadataRepresentationListElementComponent;
+    this.componentRefInstance =
+      componentRef.instance as MetadataRepresentationListElementComponent;
     this.componentRefInstance.metadataRepresentation = this.mdRepresentation;
   }
 
@@ -72,6 +89,11 @@ export class MetadataRepresentationLoaderComponent implements OnInit {
    * @returns {string}
    */
   private getComponent(): GenericConstructor<MetadataRepresentationListElementComponent> {
-    return this.getMetadataRepresentationComponent(this.mdRepresentation.itemType, this.mdRepresentation.representationType, this.context, this.themeService.getThemeName());
+    return this.getMetadataRepresentationComponent(
+      this.mdRepresentation.itemType,
+      this.mdRepresentation.representationType,
+      this.context,
+      this.themeService.getThemeName()
+    );
   }
 }

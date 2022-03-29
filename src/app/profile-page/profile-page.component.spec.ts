@@ -37,7 +37,7 @@ describe('ProfilePageComponent', () => {
     user = Object.assign(new EPerson(), {
       id: 'userId',
       groups: createSuccessfulRemoteDataObject$(createPaginatedList([])),
-      _links: {self: {href: 'test.com/uuid/1234567654321'}}
+      _links: { self: { href: 'test.com/uuid/1234567654321' } },
     });
     initialState = {
       core: {
@@ -48,22 +48,24 @@ describe('ProfilePageComponent', () => {
           loading: false,
           authToken: new AuthTokenInfo('test_token'),
           userId: user.id,
-          authMethods: []
-        }
-      }
+          authMethods: [],
+        },
+      },
     };
 
     authService = jasmine.createSpyObj('authService', {
-      getAuthenticatedUserFromStore: observableOf(user)
+      getAuthenticatedUserFromStore: observableOf(user),
     });
     epersonService = jasmine.createSpyObj('epersonService', {
       findById: createSuccessfulRemoteDataObject$(user),
-      patch: observableOf(Object.assign(new RestResponse(true, 200, 'Success')))
+      patch: observableOf(
+        Object.assign(new RestResponse(true, 200, 'Success'))
+      ),
     });
     notificationsService = jasmine.createSpyObj('notificationsService', {
       success: {},
       error: {},
-      warning: {}
+      warning: {},
     });
   }
 
@@ -74,16 +76,21 @@ describe('ProfilePageComponent', () => {
       imports: [
         StoreModule.forRoot({ auth: authReducer }, storeModuleConfig),
         TranslateModule.forRoot(),
-        RouterTestingModule.withRoutes([])
+        RouterTestingModule.withRoutes([]),
       ],
       providers: [
         { provide: EPersonDataService, useValue: epersonService },
         { provide: NotificationsService, useValue: notificationsService },
         { provide: AuthService, useValue: authService },
-        { provide: AuthorizationDataService, useValue: jasmine.createSpyObj('authorizationService', { isAuthorized: canChangePassword }) },
+        {
+          provide: AuthorizationDataService,
+          useValue: jasmine.createSpyObj('authorizationService', {
+            isAuthorized: canChangePassword,
+          }),
+        },
         provideMockStore({ initialState }),
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -97,7 +104,7 @@ describe('ProfilePageComponent', () => {
     describe('when the metadata form returns false and the security form returns true', () => {
       beforeEach(() => {
         component.metadataForm = jasmine.createSpyObj('metadataForm', {
-          updateProfile: false
+          updateProfile: false,
         });
         spyOn(component, 'updateSecurity').and.returnValue(true);
         component.updateProfile();
@@ -111,7 +118,7 @@ describe('ProfilePageComponent', () => {
     describe('when the metadata form returns true and the security form returns false', () => {
       beforeEach(() => {
         component.metadataForm = jasmine.createSpyObj('metadataForm', {
-          updateProfile: true
+          updateProfile: true,
         });
         component.updateProfile();
       });
@@ -124,7 +131,7 @@ describe('ProfilePageComponent', () => {
     describe('when the metadata form returns true and the security form returns true', () => {
       beforeEach(() => {
         component.metadataForm = jasmine.createSpyObj('metadataForm', {
-          updateProfile: true
+          updateProfile: true,
         });
         component.updateProfile();
       });
@@ -137,7 +144,7 @@ describe('ProfilePageComponent', () => {
     describe('when the metadata form returns false and the security form returns false', () => {
       beforeEach(() => {
         component.metadataForm = jasmine.createSpyObj('metadataForm', {
-          updateProfile: false
+          updateProfile: false,
         });
         component.updateProfile();
       });
@@ -211,12 +218,16 @@ describe('ProfilePageComponent', () => {
       });
 
       it('should contain true', () => {
-        getTestScheduler().expectObservable(component.canChangePassword$).toBe('(a)', { a: true });
+        getTestScheduler()
+          .expectObservable(component.canChangePassword$)
+          .toBe('(a)', { a: true });
       });
 
       it('should show the security section on the page', () => {
         fixture.detectChanges();
-        expect(fixture.debugElement.query(By.css('.security-section'))).not.toBeNull();
+        expect(
+          fixture.debugElement.query(By.css('.security-section'))
+        ).not.toBeNull();
       });
     });
 
@@ -226,12 +237,16 @@ describe('ProfilePageComponent', () => {
       });
 
       it('should contain false', () => {
-        getTestScheduler().expectObservable(component.canChangePassword$).toBe('(a)', { a: false });
+        getTestScheduler()
+          .expectObservable(component.canChangePassword$)
+          .toBe('(a)', { a: false });
       });
 
       it('should not show the security section on the page', () => {
         fixture.detectChanges();
-        expect(fixture.debugElement.query(By.css('.security-section'))).toBeNull();
+        expect(
+          fixture.debugElement.query(By.css('.security-section'))
+        ).toBeNull();
       });
     });
   });

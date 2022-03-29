@@ -8,8 +8,16 @@ import { isNotEmpty } from '../empty.util';
  * @param facetValue
  * @param searchFilterConfig
  */
-export function getFacetValueForType(facetValue: FacetValue, searchFilterConfig: SearchFilterConfig): string {
-  const regex = new RegExp(`[?|&]${escapeRegExp(searchFilterConfig.paramName)}=(${escapeRegExp(facetValue.value)}[^&]*)`, 'g');
+export function getFacetValueForType(
+  facetValue: FacetValue,
+  searchFilterConfig: SearchFilterConfig
+): string {
+  const regex = new RegExp(
+    `[?|&]${escapeRegExp(searchFilterConfig.paramName)}=(${escapeRegExp(
+      facetValue.value
+    )}[^&]*)`,
+    'g'
+  );
   if (isNotEmpty(facetValue._links)) {
     const values = regex.exec(facetValue._links.search.href);
     if (isNotEmpty(values)) {

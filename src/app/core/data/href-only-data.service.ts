@@ -33,7 +33,8 @@ class DataServiceImpl extends DataService<any> {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DefaultChangeAnalyzer<any>) {
+    protected comparator: DefaultChangeAnalyzer<any>
+  ) {
     super();
   }
 }
@@ -46,7 +47,7 @@ class DataServiceImpl extends DataService<any> {
  * an @dataService annotation can be added for any number of these resource types
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 @dataService(VOCABULARY_ENTRY)
 @dataService(ITEM_TYPE)
@@ -62,8 +63,18 @@ export class HrefOnlyDataService {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DefaultChangeAnalyzer<any>) {
-    this.dataService = new DataServiceImpl(requestService, rdbService, store, objectCache, halService, notificationsService, http, comparator);
+    protected comparator: DefaultChangeAnalyzer<any>
+  ) {
+    this.dataService = new DataServiceImpl(
+      requestService,
+      rdbService,
+      store,
+      objectCache,
+      halService,
+      notificationsService,
+      http,
+      comparator
+    );
   }
 
   /**
@@ -77,8 +88,18 @@ export class HrefOnlyDataService {
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  findByHref<T extends CacheableObject>(href: string | Observable<string>, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<T>[]): Observable<RemoteData<T>> {
-    return this.dataService.findByHref(href, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  findByHref<T extends CacheableObject>(
+    href: string | Observable<string>,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<T>[]
+  ): Observable<RemoteData<T>> {
+    return this.dataService.findByHref(
+      href,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow
+    );
   }
 
   /**
@@ -93,7 +114,19 @@ export class HrefOnlyDataService {
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  findAllByHref<T extends CacheableObject>(href: string | Observable<string>, findListOptions: FindListOptions = {}, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<T>[]): Observable<RemoteData<PaginatedList<T>>> {
-    return this.dataService.findAllByHref(href, findListOptions, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  findAllByHref<T extends CacheableObject>(
+    href: string | Observable<string>,
+    findListOptions: FindListOptions = {},
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<T>[]
+  ): Observable<RemoteData<PaginatedList<T>>> {
+    return this.dataService.findAllByHref(
+      href,
+      findListOptions,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow
+    );
   }
 }

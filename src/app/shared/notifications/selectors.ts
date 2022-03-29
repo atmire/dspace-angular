@@ -6,4 +6,5 @@
  */
 import { AppState } from '../../app.reducer';
 
-export const notificationsStateSelector = (state: AppState) => state.notifications;
+export const notificationsStateSelector = (state: AppState) =>
+  state.notifications;

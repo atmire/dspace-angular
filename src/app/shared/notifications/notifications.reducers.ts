@@ -1,13 +1,15 @@
-import { NotificationsActions, NotificationsActionTypes, RemoveNotificationAction } from './notifications.actions';
+import {
+  NotificationsActions,
+  NotificationsActionTypes,
+  RemoveNotificationAction,
+} from './notifications.actions';
 import { INotification } from './models/notification.model';
 
 /**
  * The notification state.
  */
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface NotificationsState extends Array<INotification> {
-
-}
+export interface NotificationsState extends Array<INotification> {}
 
 /**
  * The initial state.
@@ -20,8 +22,10 @@ const initialState: NotificationsState = [];
  * @param {State} state Current state
  * @param {NotificationsActions} action Incoming action
  */
-export function notificationsReducer(state: any = initialState, action: NotificationsActions): NotificationsState {
-
+export function notificationsReducer(
+  state: any = initialState,
+  action: NotificationsActions
+): NotificationsState {
   switch (action.type) {
     case NotificationsActionTypes.NEW_NOTIFICATION:
       return [...state, action.payload];
@@ -37,6 +41,9 @@ export function notificationsReducer(state: any = initialState, action: Notifica
   }
 }
 
-const removeNotification = (state: NotificationsState, action: RemoveNotificationAction): NotificationsState => {
+const removeNotification = (
+  state: NotificationsState,
+  action: RemoveNotificationAction
+): NotificationsState => {
   return state.filter((item: INotification) => item.id !== action.payload);
 };

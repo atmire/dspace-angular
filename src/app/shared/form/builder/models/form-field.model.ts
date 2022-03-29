@@ -33,7 +33,6 @@ export interface SelectableMetadata {
  * A class representing a specific input-form field
  */
 export class FormFieldModel {
-
   /**
    * The hints for this metadata field to display on form
    */

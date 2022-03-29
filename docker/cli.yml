@@ -12,11 +12,11 @@
 # https://github.com/DSpace/DSpace/blob/main/docker-compose-cli.yml
 #
 # Therefore, it should be kept in sync with that file
-version: "3.7"
+version: '3.7'
 
 services:
   dspace-cli:
-    image: "${DOCKER_OWNER:-dspace}/dspace-cli:${DSPACE_VER:-dspace-7_x}"
+    image: '${DOCKER_OWNER:-dspace}/dspace-cli:${DSPACE_VER:-dspace-7_x}'
     container_name: dspace-cli
     environment:
       # Below syntax may look odd, but it is how to override dspace.cfg settings via env variables.
@@ -30,7 +30,7 @@ services:
       # solr.server: Ensure we are using the 'dspacesolr' image for Solr
       solr__P__server: http://dspacesolr:8983/solr
     volumes:
-    - "assetstore:/dspace/assetstore"
+      - 'assetstore:/dspace/assetstore'
     entrypoint: /dspace/bin/dspace
     command: help
     networks:

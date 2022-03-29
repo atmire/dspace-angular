@@ -27,8 +27,10 @@ import { getWorkflowItemViewRoute } from '../../../workflowitems-edit-page/workf
   styleUrls: ['./claimed-task-actions.component.scss'],
   templateUrl: './claimed-task-actions.component.html',
 })
-export class ClaimedTaskActionsComponent extends MyDSpaceActionsComponent<ClaimedTask, ClaimedTaskDataService> implements OnInit {
-
+export class ClaimedTaskActionsComponent
+  extends MyDSpaceActionsComponent<ClaimedTask, ClaimedTaskDataService>
+  implements OnInit
+{
   /**
    * The ClaimedTask object
    */
@@ -61,14 +63,24 @@ export class ClaimedTaskActionsComponent extends MyDSpaceActionsComponent<Claime
    * @param {RequestService} requestService
    * @param workflowActionService
    */
-  constructor(protected injector: Injector,
-              protected router: Router,
-              protected notificationsService: NotificationsService,
-              protected translate: TranslateService,
-              protected searchService: SearchService,
-              protected requestService: RequestService,
-              protected workflowActionService: WorkflowActionDataService) {
-    super(ClaimedTask.type, injector, router, notificationsService, translate, searchService, requestService);
+  constructor(
+    protected injector: Injector,
+    protected router: Router,
+    protected notificationsService: NotificationsService,
+    protected translate: TranslateService,
+    protected searchService: SearchService,
+    protected requestService: RequestService,
+    protected workflowActionService: WorkflowActionDataService
+  ) {
+    super(
+      ClaimedTask.type,
+      injector,
+      router,
+      notificationsService,
+      translate,
+      searchService,
+      requestService
+    );
   }
 
   /**
@@ -87,10 +99,16 @@ export class ClaimedTaskActionsComponent extends MyDSpaceActionsComponent<Claime
   initObjects(object: ClaimedTask) {
     this.object = object;
 
-    this.workflowitem$ = (this.object.workflowitem as Observable<RemoteData<WorkflowItem>>).pipe(
-      filter((rd: RemoteData<WorkflowItem>) => ((!rd.isRequestPending) && isNotUndefined(rd.payload))),
+    this.workflowitem$ = (
+      this.object.workflowitem as Observable<RemoteData<WorkflowItem>>
+    ).pipe(
+      filter(
+        (rd: RemoteData<WorkflowItem>) =>
+          !rd.isRequestPending && isNotUndefined(rd.payload)
+      ),
       map((rd: RemoteData<WorkflowItem>) => rd.payload),
-      take(1));
+      take(1)
+    );
   }
 
   /**
@@ -116,5 +134,4 @@ export class ClaimedTaskActionsComponent extends MyDSpaceActionsComponent<Claime
   getWorkflowItemViewRoute(workflowitem: WorkflowItem): string {
     return getWorkflowItemViewRoute(workflowitem?.id);
   }
-
 }

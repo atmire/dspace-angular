@@ -1,8 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { buildPaginatedList, PaginatedList } from '../../core/data/paginated-list.model';
+import {
+  buildPaginatedList,
+  PaginatedList,
+} from '../../core/data/paginated-list.model';
 import { PageInfo } from '../../core/shared/page-info.model';
 import { Observable, of as observableOf } from 'rxjs';
-import { RequestEntry, RequestEntryState } from '../../core/data/request.reducer';
+import {
+  RequestEntry,
+  RequestEntryState,
+} from '../../core/data/request.reducer';
 import { UnCacheableObject } from '../../core/shared/uncacheable-object.model';
 
 /**
@@ -26,9 +32,12 @@ export const hasClass = (element: any, className: string): boolean => {
  * @param type
  *    the type of the component to instantiate
  */
-export const createTestComponent = <T>(html: string, type: new (...args: any[]) => T ): ComponentFixture<T> => {
+export const createTestComponent = <T>(
+  html: string,
+  type: new (...args: any[]) => T
+): ComponentFixture<T> => {
   TestBed.overrideComponent(type, {
-    set: { template: html }
+    set: { template: html },
   });
   const fixture = TestBed.createComponent(type);
 
@@ -50,7 +59,7 @@ export function spyOnOperator(obj: any, prop: string): any {
     configurable: true,
     enumerable: true,
     value: oldProp,
-    writable: true
+    writable: true,
   });
 
   return spyOn(obj, prop);
@@ -81,7 +90,11 @@ export function spyOnExported<T>(target: T, prop: keyof T): jasmine.Spy {
  * @param statusCode
  * @param errorMessage
  */
-export function createRequestEntry$(unCacheableObject?: UnCacheableObject, statusCode = 200, errorMessage?: string): Observable<RequestEntry> {
+export function createRequestEntry$(
+  unCacheableObject?: UnCacheableObject,
+  statusCode = 200,
+  errorMessage?: string
+): Observable<RequestEntry> {
   return observableOf({
     request: undefined,
     state: RequestEntryState.Success,
@@ -89,9 +102,9 @@ export function createRequestEntry$(unCacheableObject?: UnCacheableObject, statu
       timeCompleted: new Date().getTime(),
       statusCode,
       errorMessage,
-      unCacheableObject
+      unCacheableObject,
     },
-    lastUpdated: new Date().getTime()
+    lastUpdated: new Date().getTime(),
   });
 }
 
@@ -104,6 +117,9 @@ export function createRequestEntry$(unCacheableObject?: UnCacheableObject, statu
  * @param spyMethod     The method that got spied on
  * @param argumentIndex The index of the argument, only necessary if the spy method contains more than one parameter
  */
-export function getFirstUsedArgumentOfSpyMethod(spyMethod: jasmine.Spy, argumentIndex: number = 0): any {
+export function getFirstUsedArgumentOfSpyMethod(
+  spyMethod: jasmine.Spy,
+  argumentIndex: number = 0
+): any {
   return spyMethod.calls.argsFor(0)[argumentIndex];
 }

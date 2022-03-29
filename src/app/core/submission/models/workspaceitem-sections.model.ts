@@ -15,8 +15,8 @@ export class WorkspaceitemSectionsObject {
 /**
  * Export a type alias of all sections
  */
-export type WorkspaceitemSectionDataType
-  = WorkspaceitemSectionUploadObject
+export type WorkspaceitemSectionDataType =
+  | WorkspaceitemSectionUploadObject
   | WorkspaceitemSectionFormObject
   | WorkspaceitemSectionLicenseObject
   | WorkspaceitemSectionCcLicenseObject

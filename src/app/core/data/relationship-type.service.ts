@@ -15,7 +15,11 @@ import { HALEndpointService } from '../shared/hal-endpoint.service';
 import { ItemType } from '../shared/item-relationships/item-type.model';
 import { RelationshipType } from '../shared/item-relationships/relationship-type.model';
 import { RELATIONSHIP_TYPE } from '../shared/item-relationships/relationship-type.resource-type';
-import { getFirstSucceededRemoteData, getFirstCompletedRemoteData, getRemoteDataPayload } from '../shared/operators';
+import {
+  getFirstSucceededRemoteData,
+  getFirstCompletedRemoteData,
+  getRemoteDataPayload,
+} from '../shared/operators';
 import { DataService } from './data.service';
 import { DefaultChangeAnalyzer } from './default-change-analyzer.service';
 import { ItemDataService } from './item-data.service';
@@ -41,16 +45,18 @@ const checkSide = (typeRd: RemoteData<ItemType>, label: string): boolean =>
 export class RelationshipTypeService extends DataService<RelationshipType> {
   protected linkPath = 'relationshiptypes';
 
-  constructor(protected itemService: ItemDataService,
-              protected requestService: RequestService,
-              protected rdbService: RemoteDataBuildService,
-              protected store: Store<CoreState>,
-              protected halService: HALEndpointService,
-              protected objectCache: ObjectCacheService,
-              protected notificationsService: NotificationsService,
-              protected http: HttpClient,
-              protected comparator: DefaultChangeAnalyzer<RelationshipType>,
-              protected appStore: Store<AppState>) {
+  constructor(
+    protected itemService: ItemDataService,
+    protected requestService: RequestService,
+    protected rdbService: RemoteDataBuildService,
+    protected store: Store<CoreState>,
+    protected halService: HALEndpointService,
+    protected objectCache: ObjectCacheService,
+    protected notificationsService: NotificationsService,
+    protected http: HttpClient,
+    protected comparator: DefaultChangeAnalyzer<RelationshipType>,
+    protected appStore: Store<AppState>
+  ) {
     super();
   }
 
@@ -65,36 +71,56 @@ export class RelationshipTypeService extends DataService<RelationshipType> {
    * @param firstItemType         The type of one of the sides of the relationship e.g. Publication
    * @param secondItemType        The type of the other side of the relationship e.g. Author
    */
-  getRelationshipTypeByLabelAndTypes(relationshipTypeLabel: string, firstItemType: string, secondItemType: string): Observable<RelationshipType> {
+  getRelationshipTypeByLabelAndTypes(
+    relationshipTypeLabel: string,
+    firstItemType: string,
+    secondItemType: string
+  ): Observable<RelationshipType> {
     // Retrieve all relationship types from the server in a single page
-    return this.findAll({ currentPage: 1, elementsPerPage: 9999 }, true, true, followLink('leftType'), followLink('rightType'))
-      .pipe(
-        getFirstSucceededRemoteData(),
-        // Emit each type in the page array separately
-        switchMap((typeListRD: RemoteData<PaginatedList<RelationshipType>>) => typeListRD.payload.page),
-        // Check each type individually, to see if it matches the provided types
-        mergeMap((relationshipType: RelationshipType) => {
-          if (relationshipType.leftwardType === relationshipTypeLabel) {
-            return this.checkType(relationshipType, firstItemType, secondItemType);
-          } else if (relationshipType.rightwardType === relationshipTypeLabel) {
-            return this.checkType(relationshipType, secondItemType, firstItemType);
-          } else {
-            return [null];
-          }
-        }),
-        // Wait for all types to be checked and emit once, with the results combined back into an
-        // array
-        toArray(),
-        // Look for a match in the array and emit it if found, or null if one isn't found
-        map((types: RelationshipType[]) => {
-          const match = types.find((type: RelationshipType) => hasValue(type));
-          if (hasValue(match)) {
-            return match;
-          } else {
-            return null;
-          }
-        })
-      );
+    return this.findAll(
+      { currentPage: 1, elementsPerPage: 9999 },
+      true,
+      true,
+      followLink('leftType'),
+      followLink('rightType')
+    ).pipe(
+      getFirstSucceededRemoteData(),
+      // Emit each type in the page array separately
+      switchMap(
+        (typeListRD: RemoteData<PaginatedList<RelationshipType>>) =>
+          typeListRD.payload.page
+      ),
+      // Check each type individually, to see if it matches the provided types
+      mergeMap((relationshipType: RelationshipType) => {
+        if (relationshipType.leftwardType === relationshipTypeLabel) {
+          return this.checkType(
+            relationshipType,
+            firstItemType,
+            secondItemType
+          );
+        } else if (relationshipType.rightwardType === relationshipTypeLabel) {
+          return this.checkType(
+            relationshipType,
+            secondItemType,
+            firstItemType
+          );
+        } else {
+          return [null];
+        }
+      }),
+      // Wait for all types to be checked and emit once, with the results combined back into an
+      // array
+      toArray(),
+      // Look for a match in the array and emit it if found, or null if one isn't found
+      map((types: RelationshipType[]) => {
+        const match = types.find((type: RelationshipType) => hasValue(type));
+        if (hasValue(match)) {
+          return match;
+        } else {
+          return null;
+        }
+      })
+    );
   }
 
   /**
@@ -106,19 +132,30 @@ export class RelationshipTypeService extends DataService<RelationshipType> {
    * @param rightItemType   The item type that should be on the right side
    * @private
    */
-  private checkType(type: RelationshipType, leftItemType: string, rightItemType: string): Observable<RelationshipType> {
+  private checkType(
+    type: RelationshipType,
+    leftItemType: string,
+    rightItemType: string
+  ): Observable<RelationshipType> {
     return observableCombineLatest([
       type.leftType.pipe(getFirstCompletedRemoteData()),
-      type.rightType.pipe(getFirstCompletedRemoteData())
+      type.rightType.pipe(getFirstCompletedRemoteData()),
     ]).pipe(
-      map(([leftTypeRD, rightTypeRD]: [RemoteData<ItemType>, RemoteData<ItemType>]) => {
-        if (checkSide(leftTypeRD, leftItemType) && checkSide(rightTypeRD, rightItemType)
-        ) {
-          return type;
-        } else {
-          return null;
+      map(
+        ([leftTypeRD, rightTypeRD]: [
+          RemoteData<ItemType>,
+          RemoteData<ItemType>
+        ]) => {
+          if (
+            checkSide(leftTypeRD, leftItemType) &&
+            checkSide(rightTypeRD, rightItemType)
+          ) {
+            return type;
+          } else {
+            return null;
+          }
         }
-      })
+      )
     );
   }
 
@@ -128,26 +165,31 @@ export class RelationshipTypeService extends DataService<RelationshipType> {
    *
    * @param type            The RelationshipType to check
    */
-  searchByEntityType(type: string,useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<RelationshipType>[]): Observable<PaginatedList<RelationshipType>> {
-
+  searchByEntityType(
+    type: string,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<RelationshipType>[]
+  ): Observable<PaginatedList<RelationshipType>> {
     return this.searchBy(
       'byEntityType',
       {
         searchParams: [
           {
             fieldName: 'type',
-            fieldValue: type
+            fieldValue: type,
           },
           {
             fieldName: 'size',
-            fieldValue: 100
+            fieldValue: 100,
           },
-        ]
-      }, useCachedVersionIfAvailable,reRequestOnStale,...linksToFollow).pipe(
-      getFirstSucceededRemoteData(),
-      getRemoteDataPayload(),
-    ) as Observable<PaginatedList<RelationshipType>>;
+        ],
+      },
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow
+    ).pipe(getFirstSucceededRemoteData(), getRemoteDataPayload()) as Observable<
+      PaginatedList<RelationshipType>
+    >;
   }
-
-
 }

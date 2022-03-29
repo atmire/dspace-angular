@@ -4,7 +4,10 @@
  * @param {string} itemUUID       Item UUID
  * @returns {string}              Query
  */
-export function getQueryByRelations(relationType: string, itemUUID: string): string {
+export function getQueryByRelations(
+  relationType: string,
+  itemUUID: string
+): string {
   return `query=relation.${relationType}:"${itemUUID}"`;
 }
 
@@ -13,6 +16,9 @@ export function getQueryByRelations(relationType: string, itemUUID: string): str
  * @param relationType    The type of relation e.g. 'isAuthorOfPublication'
  * @param itemUUID        The item's UUID
  */
-export function getFilterByRelation(relationType: string, itemUUID: string): string {
+export function getFilterByRelation(
+  relationType: string,
+  itemUUID: string
+): string {
   return `f.${relationType}=${itemUUID},equals`;
 }

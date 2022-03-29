@@ -5,14 +5,13 @@ import { ItemPageFieldComponent } from '../item-page-field.component';
 
 @Component({
   selector: 'ds-item-page-uri-field',
-  templateUrl: './item-page-uri-field.component.html'
+  templateUrl: './item-page-uri-field.component.html',
 })
 /**
  * This component can be used to represent any uri on a simple item page.
  * It expects 4 parameters: The item, a separator, the metadata keys and an i18n key
  */
 export class ItemPageUriFieldComponent extends ItemPageFieldComponent {
-
   /**
    * The item to display metadata for
    */
@@ -33,5 +32,4 @@ export class ItemPageUriFieldComponent extends ItemPageFieldComponent {
    * Label i18n key for the rendered metadata
    */
   @Input() label: string;
-
 }

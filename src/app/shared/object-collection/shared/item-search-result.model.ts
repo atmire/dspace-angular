@@ -8,7 +8,6 @@ import { searchResultFor } from '../../search/search-result-element-decorator';
 @searchResultFor(Item)
 @inheritEquatable(SearchResult)
 export class ItemSearchResult extends SearchResult<Item> {
-
   /**
    * Method that returns as which type of object this object should be rendered
    */

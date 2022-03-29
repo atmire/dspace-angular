@@ -15,14 +15,17 @@ import { DSONameService } from '../../../core/breadcrumbs/dso-name.service';
 
 @Component({
   selector: 'ds-sidebar-search-list-element',
-  templateUrl: './sidebar-search-list-element.component.html'
+  templateUrl: './sidebar-search-list-element.component.html',
 })
 /**
  * Component displaying a list element for a {@link SearchResult} in the sidebar search modal
  * It displays the name of the parent, title and description of the object. All of which are customizable in the child
  * component by overriding the relevant methods of this component
  */
-export class SidebarSearchListElementComponent<T extends SearchResult<K>, K extends DSpaceObject> extends SearchResultListElementComponent<T, K> {
+export class SidebarSearchListElementComponent<
+  T extends SearchResult<K>,
+  K extends DSpaceObject
+> extends SearchResultListElementComponent<T, K> {
   /**
    * Observable for the title of the parent object (displayed above the object's title)
    */
@@ -38,9 +41,10 @@ export class SidebarSearchListElementComponent<T extends SearchResult<K>, K exte
    */
   description: string;
 
-  public constructor(protected truncatableService: TruncatableService,
-                     protected linkService: LinkService,
-                     protected dsoNameService: DSONameService
+  public constructor(
+    protected truncatableService: TruncatableService,
+    protected linkService: LinkService,
+    protected dsoNameService: DSONameService
   ) {
     super(truncatableService, dsoNameService);
   }
@@ -71,7 +75,9 @@ export class SidebarSearchListElementComponent<T extends SearchResult<K>, K exte
   getParentTitle(): Observable<string> {
     return this.getParent().pipe(
       map((parentRD: RemoteData<DSpaceObject>) => {
-        return hasValue(parentRD) && hasValue(parentRD.payload) ? parentRD.payload.firstMetadataValue('dc.title') : undefined;
+        return hasValue(parentRD) && hasValue(parentRD.payload)
+          ? parentRD.payload.firstMetadataValue('dc.title')
+          : undefined;
       })
     );
   }
@@ -82,9 +88,14 @@ export class SidebarSearchListElementComponent<T extends SearchResult<K>, K exte
   getParent(): Observable<RemoteData<DSpaceObject>> {
     if (typeof (this.dso as any).getParentLinkKey === 'function') {
       const propertyName = (this.dso as any).getParentLinkKey();
-      return this.linkService.resolveLink(this.dso, followLink(propertyName))[propertyName].pipe(
-        find((parentRD: RemoteData<ChildHALResource & DSpaceObject>) => parentRD.hasSucceeded || parentRD.statusCode === 204)
-      );
+      return this.linkService
+        .resolveLink(this.dso, followLink(propertyName))
+        [propertyName].pipe(
+          find(
+            (parentRD: RemoteData<ChildHALResource & DSpaceObject>) =>
+              parentRD.hasSucceeded || parentRD.statusCode === 204
+          )
+        );
     }
     return observableOf(undefined);
   }
@@ -104,7 +115,11 @@ export class SidebarSearchListElementComponent<T extends SearchResult<K>, K exte
   getDescription(): string {
     const publisher = this.firstMetadataValue('dc.publisher');
     const date = this.firstMetadataValue('dc.date.issued');
-    const authors = this.allMetadataValues(['dc.contributor.author', 'dc.creator', 'dc.contributor.*']);
+    const authors = this.allMetadataValues([
+      'dc.contributor.author',
+      'dc.creator',
+      'dc.contributor.*',
+    ]);
     let description = '';
     if (isNotEmpty(publisher) || isNotEmpty(date)) {
       description += '(';
@@ -124,7 +139,7 @@ export class SidebarSearchListElementComponent<T extends SearchResult<K>, K exte
     if (isNotEmpty(authors)) {
       authors.forEach((author, i) => {
         description += author;
-        if (i < (authors.length - 1)) {
+        if (i < authors.length - 1) {
           description += '; ';
         }
       });

@@ -25,7 +25,7 @@ describe('ImpersonateNavbarComponent', () => {
   beforeEach(waitForAsync(() => {
     authService = jasmine.createSpyObj('authService', {
       isImpersonating: false,
-      stopImpersonatingAndRefresh: {}
+      stopImpersonatingAndRefresh: {},
     });
     initialState = {
       core: {
@@ -36,9 +36,9 @@ describe('ImpersonateNavbarComponent', () => {
           loading: false,
           authToken: new AuthTokenInfo('test_token'),
           userId: EPersonMock.id,
-          authMethods: []
-        }
-      }
+          authMethods: [],
+        },
+      },
     };
 
     TestBed.configureTestingModule({
@@ -52,7 +52,7 @@ describe('ImpersonateNavbarComponent', () => {
         { provide: AuthService, useValue: authService },
         provideMockStore({ initialState }),
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -74,7 +74,7 @@ describe('ImpersonateNavbarComponent', () => {
       expect(button).not.toBeNull();
     });
 
-    it('should call authService\'s stopImpersonatingAndRefresh upon clicking the button', () => {
+    it("should call authService's stopImpersonatingAndRefresh upon clicking the button", () => {
       const button = fixture.debugElement.query(By.css('button')).nativeElement;
       button.click();
       expect(authService.stopImpersonatingAndRefresh).toHaveBeenCalled();

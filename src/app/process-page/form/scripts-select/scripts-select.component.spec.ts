@@ -1,4 +1,10 @@
-import { waitForAsync, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import {
+  waitForAsync,
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+} from '@angular/core/testing';
 
 import { FormsModule } from '@angular/forms';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -24,11 +30,11 @@ describe('ScriptsSelectComponent', () => {
   function init() {
     script1 = new Script();
     script2 = new Script();
-    scriptService = jasmine.createSpyObj('scriptService',
-      {
-        findAll: createSuccessfulRemoteDataObject$(buildPaginatedList(undefined, [script1, script2]))
-      }
-    );
+    scriptService = jasmine.createSpyObj('scriptService', {
+      findAll: createSuccessfulRemoteDataObject$(
+        buildPaginatedList(undefined, [script1, script2])
+      ),
+    });
   }
 
   beforeEach(waitForAsync(() => {
@@ -39,18 +45,18 @@ describe('ScriptsSelectComponent', () => {
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
-            useClass: TranslateLoaderMock
-          }
-        })],
+            useClass: TranslateLoaderMock,
+          },
+        }),
+      ],
       declarations: [ScriptsSelectComponent],
       providers: [
         { provide: ScriptDataService, useValue: scriptService },
         { provide: Router, useClass: RouterStub },
         { provide: ActivatedRoute, useValue: new ActivatedRouteStub() },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
-      .compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -65,7 +71,9 @@ describe('ScriptsSelectComponent', () => {
   });
 
   it('should not show a validation error if the input field was left untouched but left empty', () => {
-    const validationError = fixture.debugElement.query(By.css('.validation-error'));
+    const validationError = fixture.debugElement.query(
+      By.css('.validation-error')
+    );
     expect(validationError).toBeFalsy();
   });
 
@@ -79,7 +87,9 @@ describe('ScriptsSelectComponent', () => {
 
     fixture.detectChanges();
 
-    const validationError = fixture.debugElement.query(By.css('.validation-error'));
+    const validationError = fixture.debugElement.query(
+      By.css('.validation-error')
+    );
     expect(validationError).toBeTruthy();
   }));
 
@@ -93,7 +103,9 @@ describe('ScriptsSelectComponent', () => {
 
     fixture.detectChanges();
 
-    const validationError = fixture.debugElement.query(By.css('.validation-error'));
+    const validationError = fixture.debugElement.query(
+      By.css('.validation-error')
+    );
     expect(validationError).toBeFalsy();
   }));
 });

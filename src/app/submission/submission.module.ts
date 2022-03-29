@@ -50,7 +50,7 @@ const ENTRY_COMPONENTS = [
   SubmissionSectionLicenseComponent,
   SubmissionSectionCcLicensesComponent,
   SubmissionSectionAccessesComponent,
-  SubmissionSectionUploadFileEditComponent
+  SubmissionSectionUploadFileEditComponent,
 ];
 
 const DECLARATIONS = [
@@ -82,13 +82,17 @@ const DECLARATIONS = [
     CommonModule,
     CoreModule.forRoot(),
     SharedModule,
-    StoreModule.forFeature('submission', submissionReducers, storeModuleConfig as StoreConfig<SubmissionState, Action>),
+    StoreModule.forFeature(
+      'submission',
+      submissionReducers,
+      storeModuleConfig as StoreConfig<SubmissionState, Action>
+    ),
     EffectsModule.forFeature(submissionEffects),
     JournalEntitiesModule.withEntryComponents(),
     ResearchEntitiesModule.withEntryComponents(),
     FormModule,
     NgbAccordionModule,
-    NgbModalModule
+    NgbModalModule,
   ],
   declarations: DECLARATIONS,
   exports: DECLARATIONS,
@@ -97,8 +101,8 @@ const DECLARATIONS = [
     SectionsService,
     SubmissionUploadsConfigService,
     SubmissionAccessesConfigService,
-    SectionAccessesService
-  ]
+    SectionAccessesService,
+  ],
 })
 
 /**
@@ -112,7 +116,7 @@ export class SubmissionModule {
   static withEntryComponents() {
     return {
       ngModule: SubmissionModule,
-      providers: ENTRY_COMPONENTS.map((component) => ({ provide: component }))
+      providers: ENTRY_COMPONENTS.map((component) => ({ provide: component })),
     };
   }
 }

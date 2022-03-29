@@ -2,7 +2,7 @@ import {
   DynamicCheckboxModel,
   DynamicCheckboxModelConfig,
   DynamicFormControlLayout,
-  serializable
+  serializable,
 } from '@ng-dynamic-forms/core';
 
 export const DYNAMIC_FORM_CONTROL_TYPE_CUSTOM_SWITCH = 'CUSTOM_SWITCH';
@@ -12,9 +12,13 @@ export const DYNAMIC_FORM_CONTROL_TYPE_CUSTOM_SWITCH = 'CUSTOM_SWITCH';
  * Functions like a checkbox, but displays a switch instead
  */
 export class DynamicCustomSwitchModel extends DynamicCheckboxModel {
-  @serializable() readonly type: string = DYNAMIC_FORM_CONTROL_TYPE_CUSTOM_SWITCH;
+  @serializable() readonly type: string =
+    DYNAMIC_FORM_CONTROL_TYPE_CUSTOM_SWITCH;
 
-  constructor(config: DynamicCheckboxModelConfig, layout?: DynamicFormControlLayout) {
+  constructor(
+    config: DynamicCheckboxModelConfig,
+    layout?: DynamicFormControlLayout
+  ) {
     super(config, layout);
   }
 }

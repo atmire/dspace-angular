@@ -1,12 +1,22 @@
 import { StoreModule } from '@ngrx/store';
-import { fakeAsync, flush, TestBed, tick, waitForAsync } from '@angular/core/testing';
+import {
+  fakeAsync,
+  flush,
+  TestBed,
+  tick,
+  waitForAsync,
+} from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpHeaders } from '@angular/common/http';
 
 import { of as observableOf, throwError as observableThrowError } from 'rxjs';
 import { TestScheduler } from 'rxjs/testing';
-import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
-import { cold, getTestScheduler, hot, } from 'jasmine-marbles';
+import {
+  TranslateLoader,
+  TranslateModule,
+  TranslateService,
+} from '@ngx-translate/core';
+import { cold, getTestScheduler, hot } from 'jasmine-marbles';
 
 import { RouterMock } from '../shared/mocks/router.mock';
 import { SubmissionService } from './submission.service';
@@ -17,7 +27,10 @@ import { SubmissionRestServiceStub } from '../shared/testing/submission-rest-ser
 import { MockActivatedRoute } from '../shared/mocks/active-router.mock';
 import { HttpOptions } from '../core/dspace-rest/dspace-rest.service';
 import { SubmissionScopeType } from '../core/submission/submission-scope-type';
-import { mockSubmissionDefinition, mockSubmissionRestResponse } from '../shared/mocks/submission.mock';
+import {
+  mockSubmissionDefinition,
+  mockSubmissionRestResponse,
+} from '../shared/mocks/submission.mock';
 import { NotificationsService } from '../shared/notifications/notifications.service';
 import { TranslateLoaderMock } from '../shared/mocks/translate-loader.mock';
 import {
@@ -30,9 +43,9 @@ import {
   SaveForLaterSubmissionFormAction,
   SaveSubmissionFormAction,
   SaveSubmissionSectionFormAction,
-  SetActiveSectionAction
+  SetActiveSectionAction,
 } from './objects/submission-objects.actions';
-import { createFailedRemoteDataObject, } from '../shared/remote-data.utils';
+import { createFailedRemoteDataObject } from '../shared/remote-data.utils';
 import { getMockSearchService } from '../shared/mocks/search-service.mock';
 import { getMockRequestService } from '../shared/mocks/request.service.mock';
 import { RequestService } from '../core/data/request.service';
@@ -52,7 +65,8 @@ describe('SubmissionService test suite', () => {
       826: {
         collection: '43fe1f8c-09a6-4fcf-9c78-5d4fed8f2c8f',
         definition: 'traditional',
-        selfUrl: 'https://rest.api/dspace-spring-rest/api/submission/workspaceitems/826',
+        selfUrl:
+          'https://rest.api/dspace-spring-rest/api/submission/workspaceitems/826',
         activeSection: 'keyinformation',
         sections: {
           extraction: {
@@ -61,7 +75,7 @@ describe('SubmissionService test suite', () => {
             sectionType: 'utils',
             visibility: {
               main: 'HIDDEN',
-              other: 'HIDDEN'
+              other: 'HIDDEN',
             },
             collapsed: false,
             enabled: true,
@@ -69,7 +83,7 @@ describe('SubmissionService test suite', () => {
             errorsToShow: [],
             serverValidationErrors: [],
             isLoading: false,
-            isValid: false
+            isValid: false,
           },
           collection: {
             config: '',
@@ -77,7 +91,7 @@ describe('SubmissionService test suite', () => {
             sectionType: 'collection',
             visibility: {
               main: 'HIDDEN',
-              other: 'HIDDEN'
+              other: 'HIDDEN',
             },
             collapsed: false,
             enabled: true,
@@ -85,11 +99,12 @@ describe('SubmissionService test suite', () => {
             errorsToShow: [],
             serverValidationErrors: [],
             isLoading: false,
-            isValid: false
+            isValid: false,
           },
           keyinformation: {
             header: 'submit.progressbar.describe.keyinformation',
-            config: 'https://rest.api/dspace-spring-rest/api/config/submissionforms/keyinformation',
+            config:
+              'https://rest.api/dspace-spring-rest/api/config/submissionforms/keyinformation',
             mandatory: true,
             sectionType: 'submission-form',
             collapsed: false,
@@ -98,11 +113,12 @@ describe('SubmissionService test suite', () => {
             errorsToShow: [],
             serverValidationErrors: [],
             isLoading: false,
-            isValid: false
+            isValid: false,
           },
           indexing: {
             header: 'submit.progressbar.describe.indexing',
-            config: 'https://rest.api/dspace-spring-rest/api/config/submissionforms/indexing',
+            config:
+              'https://rest.api/dspace-spring-rest/api/config/submissionforms/indexing',
             mandatory: false,
             sectionType: 'submission-form',
             collapsed: false,
@@ -111,11 +127,12 @@ describe('SubmissionService test suite', () => {
             errorsToShow: [],
             serverValidationErrors: [],
             isLoading: false,
-            isValid: false
+            isValid: false,
           },
           publicationchannel: {
             header: 'submit.progressbar.describe.publicationchannel',
-            config: 'https://rest.api/dspace-spring-rest/api/config/submissionforms/publicationchannel',
+            config:
+              'https://rest.api/dspace-spring-rest/api/config/submissionforms/publicationchannel',
             mandatory: true,
             sectionType: 'submission-form',
             collapsed: false,
@@ -124,11 +141,12 @@ describe('SubmissionService test suite', () => {
             errorsToShow: [],
             serverValidationErrors: [],
             isLoading: false,
-            isValid: true
+            isValid: true,
           },
           acknowledgement: {
             header: 'submit.progressbar.describe.acknowledgement',
-            config: 'https://rest.api/dspace-spring-rest/api/config/submissionforms/acknowledgement',
+            config:
+              'https://rest.api/dspace-spring-rest/api/config/submissionforms/acknowledgement',
             mandatory: false,
             sectionType: 'submission-form',
             collapsed: false,
@@ -137,11 +155,12 @@ describe('SubmissionService test suite', () => {
             errorsToShow: [],
             serverValidationErrors: [],
             isLoading: false,
-            isValid: false
+            isValid: false,
           },
           identifiers: {
             header: 'submit.progressbar.describe.identifiers',
-            config: 'https://rest.api/dspace-spring-rest/api/config/submissionforms/identifiers',
+            config:
+              'https://rest.api/dspace-spring-rest/api/config/submissionforms/identifiers',
             mandatory: false,
             sectionType: 'submission-form',
             collapsed: false,
@@ -150,11 +169,12 @@ describe('SubmissionService test suite', () => {
             errorsToShow: [],
             serverValidationErrors: [],
             isLoading: false,
-            isValid: false
+            isValid: false,
           },
           references: {
             header: 'submit.progressbar.describe.references',
-            config: 'https://rest.api/dspace-spring-rest/api/config/submissionforms/references',
+            config:
+              'https://rest.api/dspace-spring-rest/api/config/submissionforms/references',
             mandatory: false,
             sectionType: 'submission-form',
             collapsed: false,
@@ -163,11 +183,12 @@ describe('SubmissionService test suite', () => {
             errorsToShow: [],
             serverValidationErrors: [],
             isLoading: false,
-            isValid: false
+            isValid: false,
           },
           upload: {
             header: 'submit.progressbar.upload',
-            config: 'https://rest.api/dspace-spring-rest/api/config/submissionuploads/upload',
+            config:
+              'https://rest.api/dspace-spring-rest/api/config/submissionuploads/upload',
             mandatory: true,
             sectionType: 'upload',
             collapsed: false,
@@ -176,7 +197,7 @@ describe('SubmissionService test suite', () => {
             errorsToShow: [],
             serverValidationErrors: [],
             isLoading: false,
-            isValid: false
+            isValid: false,
           },
           license: {
             header: 'submit.progressbar.license',
@@ -185,7 +206,7 @@ describe('SubmissionService test suite', () => {
             sectionType: 'license',
             visibility: {
               main: null,
-              other: 'READONLY'
+              other: 'READONLY',
             },
             collapsed: false,
             enabled: true,
@@ -193,21 +214,22 @@ describe('SubmissionService test suite', () => {
             errorsToShow: [],
             serverValidationErrors: [],
             isLoading: false,
-            isValid: false
-          }
+            isValid: false,
+          },
         },
         isLoading: false,
         savePending: false,
-        depositPending: false
-      }
-    }
+        depositPending: false,
+      },
+    },
   };
   const validSubState = {
     objects: {
       826: {
         collection: '43fe1f8c-09a6-4fcf-9c78-5d4fed8f2c8f',
         definition: 'traditional',
-        selfUrl: 'https://rest.api/dspace-spring-rest/api/submission/workspaceitems/826',
+        selfUrl:
+          'https://rest.api/dspace-spring-rest/api/submission/workspaceitems/826',
         activeSection: 'keyinformation',
         sections: {
           extraction: {
@@ -216,7 +238,7 @@ describe('SubmissionService test suite', () => {
             sectionType: 'utils',
             visibility: {
               main: 'HIDDEN',
-              other: 'HIDDEN'
+              other: 'HIDDEN',
             },
             collapsed: false,
             enabled: true,
@@ -224,7 +246,7 @@ describe('SubmissionService test suite', () => {
             errorsToShow: [],
             serverValidationErrors: [],
             isLoading: false,
-            isValid: false
+            isValid: false,
           },
           collection: {
             config: '',
@@ -232,7 +254,7 @@ describe('SubmissionService test suite', () => {
             sectionType: 'collection',
             visibility: {
               main: 'HIDDEN',
-              other: 'HIDDEN'
+              other: 'HIDDEN',
             },
             collapsed: false,
             enabled: true,
@@ -240,11 +262,12 @@ describe('SubmissionService test suite', () => {
             errorsToShow: [],
             serverValidationErrors: [],
             isLoading: false,
-            isValid: false
+            isValid: false,
           },
           keyinformation: {
             header: 'submit.progressbar.describe.keyinformation',
-            config: 'https://rest.api/dspace-spring-rest/api/config/submissionforms/keyinformation',
+            config:
+              'https://rest.api/dspace-spring-rest/api/config/submissionforms/keyinformation',
             mandatory: true,
             sectionType: 'submission-form',
             collapsed: false,
@@ -253,11 +276,12 @@ describe('SubmissionService test suite', () => {
             errorsToShow: [],
             serverValidationErrors: [],
             isLoading: false,
-            isValid: true
+            isValid: true,
           },
           indexing: {
             header: 'submit.progressbar.describe.indexing',
-            config: 'https://rest.api/dspace-spring-rest/api/config/submissionforms/indexing',
+            config:
+              'https://rest.api/dspace-spring-rest/api/config/submissionforms/indexing',
             mandatory: false,
             sectionType: 'submission-form',
             collapsed: false,
@@ -266,11 +290,12 @@ describe('SubmissionService test suite', () => {
             errorsToShow: [],
             serverValidationErrors: [],
             isLoading: false,
-            isValid: false
+            isValid: false,
           },
           publicationchannel: {
             header: 'submit.progressbar.describe.publicationchannel',
-            config: 'https://rest.api/dspace-spring-rest/api/config/submissionforms/publicationchannel',
+            config:
+              'https://rest.api/dspace-spring-rest/api/config/submissionforms/publicationchannel',
             mandatory: true,
             sectionType: 'submission-form',
             collapsed: false,
@@ -279,11 +304,12 @@ describe('SubmissionService test suite', () => {
             errorsToShow: [],
             serverValidationErrors: [],
             isLoading: false,
-            isValid: true
+            isValid: true,
           },
           acknowledgement: {
             header: 'submit.progressbar.describe.acknowledgement',
-            config: 'https://rest.api/dspace-spring-rest/api/config/submissionforms/acknowledgement',
+            config:
+              'https://rest.api/dspace-spring-rest/api/config/submissionforms/acknowledgement',
             mandatory: false,
             sectionType: 'submission-form',
             collapsed: false,
@@ -292,11 +318,12 @@ describe('SubmissionService test suite', () => {
             errorsToShow: [],
             serverValidationErrors: [],
             isLoading: false,
-            isValid: false
+            isValid: false,
           },
           identifiers: {
             header: 'submit.progressbar.describe.identifiers',
-            config: 'https://rest.api/dspace-spring-rest/api/config/submissionforms/identifiers',
+            config:
+              'https://rest.api/dspace-spring-rest/api/config/submissionforms/identifiers',
             mandatory: false,
             sectionType: 'submission-form',
             collapsed: false,
@@ -305,11 +332,12 @@ describe('SubmissionService test suite', () => {
             errorsToShow: [],
             serverValidationErrors: [],
             isLoading: false,
-            isValid: false
+            isValid: false,
           },
           references: {
             header: 'submit.progressbar.describe.references',
-            config: 'https://rest.api/dspace-spring-rest/api/config/submissionforms/references',
+            config:
+              'https://rest.api/dspace-spring-rest/api/config/submissionforms/references',
             mandatory: false,
             sectionType: 'submission-form',
             collapsed: false,
@@ -318,11 +346,12 @@ describe('SubmissionService test suite', () => {
             errorsToShow: [],
             serverValidationErrors: [],
             isLoading: false,
-            isValid: false
+            isValid: false,
           },
           upload: {
             header: 'submit.progressbar.upload',
-            config: 'https://rest.api/dspace-spring-rest/api/config/submissionuploads/upload',
+            config:
+              'https://rest.api/dspace-spring-rest/api/config/submissionuploads/upload',
             mandatory: true,
             sectionType: 'upload',
             collapsed: false,
@@ -331,7 +360,7 @@ describe('SubmissionService test suite', () => {
             errorsToShow: [],
             serverValidationErrors: [],
             isLoading: false,
-            isValid: true
+            isValid: true,
           },
           license: {
             header: 'submit.progressbar.license',
@@ -340,7 +369,7 @@ describe('SubmissionService test suite', () => {
             sectionType: 'license',
             visibility: {
               main: null,
-              other: 'READONLY'
+              other: 'READONLY',
             },
             collapsed: false,
             enabled: true,
@@ -348,20 +377,22 @@ describe('SubmissionService test suite', () => {
             errorsToShow: [],
             serverValidationErrors: [],
             isLoading: false,
-            isValid: true
-          }
+            isValid: true,
+          },
         },
         isLoading: false,
         savePending: false,
-        depositPending: false
-      }
-    }
+        depositPending: false,
+      },
+    },
   };
   const restService = new SubmissionRestServiceStub();
   const router = new RouterMock();
-  const selfUrl = 'https://rest.api/dspace-spring-rest/api/submission/workspaceitems/826';
+  const selfUrl =
+    'https://rest.api/dspace-spring-rest/api/submission/workspaceitems/826';
   const submissionDefinition: any = mockSubmissionDefinition;
-  const submissionJsonPatchOperationsService = new SubmissionJsonPatchOperationsServiceStub();
+  const submissionJsonPatchOperationsService =
+    new SubmissionJsonPatchOperationsServiceStub();
 
   let scheduler: TestScheduler;
   let service: SubmissionService;
@@ -371,16 +402,15 @@ describe('SubmissionService test suite', () => {
   const requestServce = getMockRequestService();
 
   beforeEach(waitForAsync(() => {
-
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({ submissionReducers } as any, storeModuleConfig),
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
-            useClass: TranslateLoaderMock
-          }
-        })
+            useClass: TranslateLoaderMock,
+          },
+        }),
       ],
       providers: [
         { provide: Router, useValue: router },
@@ -388,12 +418,15 @@ describe('SubmissionService test suite', () => {
         { provide: ActivatedRoute, useValue: new MockActivatedRoute() },
         { provide: SearchService, useValue: searchService },
         { provide: RequestService, useValue: requestServce },
-        { provide: SubmissionJsonPatchOperationsService, useValue: submissionJsonPatchOperationsService },
+        {
+          provide: SubmissionJsonPatchOperationsService,
+          useValue: submissionJsonPatchOperationsService,
+        },
         NotificationsService,
         RouteService,
         SubmissionService,
-        TranslateService
-      ]
+        TranslateService,
+      ],
     }).compileComponents();
   }));
 
@@ -405,7 +438,10 @@ describe('SubmissionService test suite', () => {
   describe('changeSubmissionCollection', () => {
     it('should dispatch a new ChangeSubmissionCollectionAction', () => {
       service.changeSubmissionCollection(submissionId, collectionId);
-      const expected = new ChangeSubmissionCollectionAction(submissionId, collectionId);
+      const expected = new ChangeSubmissionCollectionAction(
+        submissionId,
+        collectionId
+      );
 
       expect((service as any).store.dispatch).toHaveBeenCalledWith(expected);
     });
@@ -416,14 +452,26 @@ describe('SubmissionService test suite', () => {
       service.createSubmission();
 
       expect((service as any).restService.postToEndpoint).toHaveBeenCalled();
-      expect((service as any).restService.postToEndpoint).toHaveBeenCalledWith('workspaceitems', {}, null, null, undefined);
+      expect((service as any).restService.postToEndpoint).toHaveBeenCalledWith(
+        'workspaceitems',
+        {},
+        null,
+        null,
+        undefined
+      );
     });
 
     it('should create a new submission with collection', () => {
       service.createSubmission(collectionId);
 
       expect((service as any).restService.postToEndpoint).toHaveBeenCalled();
-      expect((service as any).restService.postToEndpoint).toHaveBeenCalledWith('workspaceitems', {}, null, null, collectionId);
+      expect((service as any).restService.postToEndpoint).toHaveBeenCalledWith(
+        'workspaceitems',
+        {},
+        null,
+        null,
+        collectionId
+      );
     });
   });
 
@@ -436,7 +484,13 @@ describe('SubmissionService test suite', () => {
 
       service.createSubmissionFromExternalSource(selfUrl, collectionId);
 
-      expect((service as any).restService.postToEndpoint).toHaveBeenCalledWith('workspaceitems', selfUrl, null, options, collectionId);
+      expect((service as any).restService.postToEndpoint).toHaveBeenCalledWith(
+        'workspaceitems',
+        selfUrl,
+        null,
+        options,
+        collectionId
+      );
     });
   });
 
@@ -449,7 +503,12 @@ describe('SubmissionService test suite', () => {
 
       service.depositSubmission(selfUrl);
 
-      expect((service as any).restService.postToEndpoint).toHaveBeenCalledWith('workflowitems', selfUrl, null, options);
+      expect((service as any).restService.postToEndpoint).toHaveBeenCalledWith(
+        'workflowitems',
+        selfUrl,
+        null,
+        options
+      );
     });
   });
 
@@ -457,7 +516,9 @@ describe('SubmissionService test suite', () => {
     it('should discard submission', () => {
       service.discardSubmission('826');
 
-      expect((service as any).restService.deleteById).toHaveBeenCalledWith('826');
+      expect((service as any).restService.deleteById).toHaveBeenCalledWith(
+        '826'
+      );
     });
   });
 
@@ -479,7 +540,8 @@ describe('SubmissionService test suite', () => {
         submissionDefinition,
         {},
         new Item(),
-        null);
+        null
+      );
 
       expect((service as any).store.dispatch).toHaveBeenCalledWith(expected);
     });
@@ -487,7 +549,7 @@ describe('SubmissionService test suite', () => {
 
   describe('dispatchDeposit', () => {
     it('should dispatch a new SaveAndDepositSubmissionAction', () => {
-      service.dispatchDeposit(submissionId,);
+      service.dispatchDeposit(submissionId);
       const expected = new SaveAndDepositSubmissionAction(submissionId);
 
       expect((service as any).store.dispatch).toHaveBeenCalledWith(expected);
@@ -496,7 +558,7 @@ describe('SubmissionService test suite', () => {
 
   describe('dispatchDiscard', () => {
     it('should dispatch a new DiscardSubmissionAction', () => {
-      service.dispatchDiscard(submissionId,);
+      service.dispatchDiscard(submissionId);
       const expected = new DiscardSubmissionAction(submissionId);
 
       expect((service as any).store.dispatch).toHaveBeenCalledWith(expected);
@@ -521,7 +583,7 @@ describe('SubmissionService test suite', () => {
 
   describe('dispatchSaveForLater', () => {
     it('should dispatch a new SaveForLaterSubmissionFormAction', () => {
-      service.dispatchSaveForLater(submissionId,);
+      service.dispatchSaveForLater(submissionId);
       const expected = new SaveForLaterSubmissionFormAction(submissionId);
 
       expect((service as any).store.dispatch).toHaveBeenCalledWith(expected);
@@ -531,7 +593,10 @@ describe('SubmissionService test suite', () => {
   describe('dispatchSaveSection', () => {
     it('should dispatch a new SaveSubmissionSectionFormAction', () => {
       service.dispatchSaveSection(submissionId, sectionId);
-      const expected = new SaveSubmissionSectionFormAction(submissionId, sectionId);
+      const expected = new SaveSubmissionSectionFormAction(
+        submissionId,
+        sectionId
+      );
 
       expect((service as any).store.dispatch).toHaveBeenCalledWith(expected);
     });
@@ -539,9 +604,11 @@ describe('SubmissionService test suite', () => {
 
   describe('getSubmissionObject', () => {
     it('should return submission object state from the store', () => {
-      spyOn((service as any).store, 'select').and.returnValue(hot('a', {
-        a: subState.objects[826]
-      }));
+      spyOn((service as any).store, 'select').and.returnValue(
+        hot('a', {
+          a: subState.objects[826],
+        })
+      );
 
       const result = service.getSubmissionObject('826');
       const expected = cold('b', { b: subState.objects[826] });
@@ -552,110 +619,119 @@ describe('SubmissionService test suite', () => {
 
   describe('getActiveSectionId', () => {
     it('should return current active submission form section', () => {
-      spyOn((service as any).store, 'select').and.returnValue(hot('a', {
-        a: subState.objects[826]
-      }));
+      spyOn((service as any).store, 'select').and.returnValue(
+        hot('a', {
+          a: subState.objects[826],
+        })
+      );
 
       const result = service.getActiveSectionId('826');
       const expected = cold('b', { b: 'keyinformation' });
 
       expect(result).toBeObservable(expected);
-
     });
   });
 
   describe('getSubmissionSections', () => {
     it('should return submission form sections', () => {
-      spyOn((service as any).store, 'select').and.returnValue(hot('a|', {
-        a: subState.objects[826]
-      }));
+      spyOn((service as any).store, 'select').and.returnValue(
+        hot('a|', {
+          a: subState.objects[826],
+        })
+      );
 
       const result = service.getSubmissionSections('826');
       const expected = cold('(bc|)', {
         b: [],
-        c:
-          [
-            {
-              header: 'submit.progressbar.describe.keyinformation',
-              id: 'keyinformation',
-              config: 'https://rest.api/dspace-spring-rest/api/config/submissionforms/keyinformation',
-              mandatory: true,
-              sectionType: 'submission-form',
-              data: {},
-              errorsToShow: [],
-              serverValidationErrors: []
-            },
-            {
-              header: 'submit.progressbar.describe.indexing',
-              id: 'indexing',
-              config: 'https://rest.api/dspace-spring-rest/api/config/submissionforms/indexing',
-              mandatory: false,
-              sectionType: 'submission-form',
-              data: {},
-              errorsToShow: [],
-              serverValidationErrors: []
-            },
-            {
-              header: 'submit.progressbar.describe.publicationchannel',
-              id: 'publicationchannel',
-              config: 'https://rest.api/dspace-spring-rest/api/config/submissionforms/publicationchannel',
-              mandatory: true,
-              sectionType: 'submission-form',
-              data: {},
-              errorsToShow: [],
-              serverValidationErrors: []
-            },
-            {
-              header: 'submit.progressbar.describe.acknowledgement',
-              id: 'acknowledgement',
-              config: 'https://rest.api/dspace-spring-rest/api/config/submissionforms/acknowledgement',
-              mandatory: false,
-              sectionType: 'submission-form',
-              data: {},
-              errorsToShow: [],
-              serverValidationErrors: []
-            },
-            {
-              header: 'submit.progressbar.describe.identifiers',
-              id: 'identifiers',
-              config: 'https://rest.api/dspace-spring-rest/api/config/submissionforms/identifiers',
-              mandatory: false,
-              sectionType: 'submission-form',
-              data: {},
-              errorsToShow: [],
-              serverValidationErrors: []
-            },
-            {
-              header: 'submit.progressbar.describe.references',
-              id: 'references',
-              config: 'https://rest.api/dspace-spring-rest/api/config/submissionforms/references',
-              mandatory: false,
-              sectionType: 'submission-form',
-              data: {},
-              errorsToShow: [],
-              serverValidationErrors: []
-            },
-            {
-              header: 'submit.progressbar.upload',
-              id: 'upload',
-              config: 'https://rest.api/dspace-spring-rest/api/config/submissionuploads/upload',
-              mandatory: true,
-              sectionType: 'upload',
-              data: {},
-              errorsToShow: [],
-              serverValidationErrors: []
-            },
-            {
-              header: 'submit.progressbar.license',
-              id: 'license',
-              config: '',
-              mandatory: true,
-              sectionType: 'license',
-              data: {},
-              errorsToShow: [],
-              serverValidationErrors: []
-            }
-          ]
+        c: [
+          {
+            header: 'submit.progressbar.describe.keyinformation',
+            id: 'keyinformation',
+            config:
+              'https://rest.api/dspace-spring-rest/api/config/submissionforms/keyinformation',
+            mandatory: true,
+            sectionType: 'submission-form',
+            data: {},
+            errorsToShow: [],
+            serverValidationErrors: [],
+          },
+          {
+            header: 'submit.progressbar.describe.indexing',
+            id: 'indexing',
+            config:
+              'https://rest.api/dspace-spring-rest/api/config/submissionforms/indexing',
+            mandatory: false,
+            sectionType: 'submission-form',
+            data: {},
+            errorsToShow: [],
+            serverValidationErrors: [],
+          },
+          {
+            header: 'submit.progressbar.describe.publicationchannel',
+            id: 'publicationchannel',
+            config:
+              'https://rest.api/dspace-spring-rest/api/config/submissionforms/publicationchannel',
+            mandatory: true,
+            sectionType: 'submission-form',
+            data: {},
+            errorsToShow: [],
+            serverValidationErrors: [],
+          },
+          {
+            header: 'submit.progressbar.describe.acknowledgement',
+            id: 'acknowledgement',
+            config:
+              'https://rest.api/dspace-spring-rest/api/config/submissionforms/acknowledgement',
+            mandatory: false,
+            sectionType: 'submission-form',
+            data: {},
+            errorsToShow: [],
+            serverValidationErrors: [],
+          },
+          {
+            header: 'submit.progressbar.describe.identifiers',
+            id: 'identifiers',
+            config:
+              'https://rest.api/dspace-spring-rest/api/config/submissionforms/identifiers',
+            mandatory: false,
+            sectionType: 'submission-form',
+            data: {},
+            errorsToShow: [],
+            serverValidationErrors: [],
+          },
+          {
+            header: 'submit.progressbar.describe.references',
+            id: 'references',
+            config:
+              'https://rest.api/dspace-spring-rest/api/config/submissionforms/references',
+            mandatory: false,
+            sectionType: 'submission-form',
+            data: {},
+            errorsToShow: [],
+            serverValidationErrors: [],
+          },
+          {
+            header: 'submit.progressbar.upload',
+            id: 'upload',
+            config:
+              'https://rest.api/dspace-spring-rest/api/config/submissionuploads/upload',
+            mandatory: true,
+            sectionType: 'upload',
+            data: {},
+            errorsToShow: [],
+            serverValidationErrors: [],
+          },
+          {
+            header: 'submit.progressbar.license',
+            id: 'license',
+            config: '',
+            mandatory: true,
+            sectionType: 'license',
+            data: {},
+            errorsToShow: [],
+            serverValidationErrors: [],
+          },
+        ],
       });
 
       expect(result).toBeObservable(expected);
@@ -664,32 +740,33 @@ describe('SubmissionService test suite', () => {
 
   describe('getDisabledSectionsList', () => {
     it('should return list of submission disabled sections', () => {
-      spyOn((service as any).store, 'select').and.returnValue(hot('-a|', {
-        a: subState.objects[826]
-      }));
+      spyOn((service as any).store, 'select').and.returnValue(
+        hot('-a|', {
+          a: subState.objects[826],
+        })
+      );
 
       const result = service.getDisabledSectionsList('826');
       const expected = cold('bc|', {
         b: [],
-        c:
-          [
-            {
-              header: 'submit.progressbar.describe.indexing',
-              id: 'indexing',
-            },
-            {
-              header: 'submit.progressbar.describe.acknowledgement',
-              id: 'acknowledgement',
-            },
-            {
-              header: 'submit.progressbar.describe.identifiers',
-              id: 'identifiers',
-            },
-            {
-              header: 'submit.progressbar.describe.references',
-              id: 'references',
-            }
-          ]
+        c: [
+          {
+            header: 'submit.progressbar.describe.indexing',
+            id: 'indexing',
+          },
+          {
+            header: 'submit.progressbar.describe.acknowledgement',
+            id: 'acknowledgement',
+          },
+          {
+            header: 'submit.progressbar.describe.identifiers',
+            id: 'identifiers',
+          },
+          {
+            header: 'submit.progressbar.describe.references',
+            id: 'references',
+          },
+        ],
       });
 
       expect(result).toBeObservable(expected);
@@ -729,20 +806,21 @@ describe('SubmissionService test suite', () => {
       expected = SubmissionScopeType.WorkflowItem;
       router.setRoute('/workflowitems/826/edit');
       expect(service.getSubmissionScope()).toBe(expected);
-
     });
   });
 
   describe('getSubmissionStatus', () => {
     it('should return properly submission status', () => {
-      spyOn((service as any).store, 'select').and.returnValue(hot('-a-b', {
-        a: subState,
-        b: validSubState
-      }));
+      spyOn((service as any).store, 'select').and.returnValue(
+        hot('-a-b', {
+          a: subState,
+          b: validSubState,
+        })
+      );
       const result = service.getSubmissionStatus('826');
       const expected = cold('cc-d', {
         c: false,
-        d: true
+        d: true,
       });
 
       expect(result).toBeObservable(expected);
@@ -751,13 +829,15 @@ describe('SubmissionService test suite', () => {
 
   describe('getSubmissionSaveProcessingStatus', () => {
     it('should return submission save processing status', () => {
-      spyOn((service as any).store, 'select').and.returnValue(hot('-a', {
-        a: subState.objects[826]
-      }));
+      spyOn((service as any).store, 'select').and.returnValue(
+        hot('-a', {
+          a: subState.objects[826],
+        })
+      );
 
       const result = service.getSubmissionSaveProcessingStatus('826');
       const expected = cold('bb', {
-        b: false
+        b: false,
       });
 
       expect(result).toBeObservable(expected);
@@ -766,13 +846,15 @@ describe('SubmissionService test suite', () => {
 
   describe('getSubmissionDepositProcessingStatus', () => {
     it('should return submission deposit processing status', () => {
-      spyOn((service as any).store, 'select').and.returnValue(hot('-a', {
-        a: subState.objects[826]
-      }));
+      spyOn((service as any).store, 'select').and.returnValue(
+        hot('-a', {
+          a: subState.objects[826],
+        })
+      );
 
       const result = service.getSubmissionDepositProcessingStatus('826');
       const expected = cold('bb', {
-        b: false
+        b: false,
       });
 
       expect(result).toBeObservable(expected);
@@ -781,15 +863,17 @@ describe('SubmissionService test suite', () => {
 
   describe('hasUnsavedModification', () => {
     it('should call jsonPatchOperationService hasPendingOperation observable', () => {
-      (service as any).jsonPatchOperationService.hasPendingOperations = jasmine.createSpy('hasPendingOperations')
+      (service as any).jsonPatchOperationService.hasPendingOperations = jasmine
+        .createSpy('hasPendingOperations')
         .and.returnValue(observableOf(true));
 
       scheduler = getTestScheduler();
       scheduler.schedule(() => service.hasUnsavedModification());
       scheduler.flush();
 
-      expect((service as any).jsonPatchOperationService.hasPendingOperations).toHaveBeenCalledWith('sections');
-
+      expect(
+        (service as any).jsonPatchOperationService.hasPendingOperations
+      ).toHaveBeenCalledWith('sections');
     });
   });
 
@@ -802,7 +886,7 @@ describe('SubmissionService test suite', () => {
         sectionType: 'collection' as any,
         visibility: {
           main: 'HIDDEN',
-          other: 'HIDDEN'
+          other: 'HIDDEN',
         },
         collapsed: false,
         enabled: true,
@@ -810,13 +894,14 @@ describe('SubmissionService test suite', () => {
         errorsToShow: [],
         serverValidationErrors: [],
         isLoading: false,
-        isValid: false
+        isValid: false,
       };
       expect(service.isSectionHidden(section)).toBeTruthy();
 
       section = {
         header: 'submit.progressbar.describe.keyinformation',
-        config: 'https://rest.api/dspace-spring-rest/api/config/submissionforms/keyinformation',
+        config:
+          'https://rest.api/dspace-spring-rest/api/config/submissionforms/keyinformation',
         mandatory: true,
         sectionType: 'submission-form',
         collapsed: false,
@@ -825,7 +910,7 @@ describe('SubmissionService test suite', () => {
         errorsToShow: [],
         serverValidationErrors: [],
         isLoading: false,
-        isValid: false
+        isValid: false,
       };
       expect(service.isSectionHidden(section)).toBeFalsy();
     });
@@ -833,34 +918,47 @@ describe('SubmissionService test suite', () => {
 
   describe('isSubmissionLoading', () => {
     it('should return true/false when section is loading/not loading', () => {
-      const spy = spyOn(service, 'getSubmissionObject').and.returnValue(observableOf({ isLoading: true }));
+      const spy = spyOn(service, 'getSubmissionObject').and.returnValue(
+        observableOf({ isLoading: true })
+      );
 
       let expected = cold('(b|)', {
-        b: true
+        b: true,
       });
 
-      expect(service.isSubmissionLoading(submissionId)).toBeObservable(expected);
+      expect(service.isSubmissionLoading(submissionId)).toBeObservable(
+        expected
+      );
 
       spy.and.returnValue(observableOf({ isLoading: false }));
 
       expected = cold('(b|)', {
-        b: false
+        b: false,
       });
 
-      expect(service.isSubmissionLoading(submissionId)).toBeObservable(expected);
+      expect(service.isSubmissionLoading(submissionId)).toBeObservable(
+        expected
+      );
     });
   });
 
   describe('notifyNewSection', () => {
     it('should return true/false when section is loading/not loading', fakeAsync(() => {
-      spyOn((service as any).translate, 'get').and.returnValue(observableOf('test'));
+      spyOn((service as any).translate, 'get').and.returnValue(
+        observableOf('test')
+      );
 
       spyOn((service as any).notificationsService, 'info');
 
       service.notifyNewSection(submissionId, sectionId);
       flush();
 
-      expect((service as any).notificationsService.info).toHaveBeenCalledWith(null, 'submission.sections.general.metadata-extracted-new-section', null, true);
+      expect((service as any).notificationsService.info).toHaveBeenCalledWith(
+        null,
+        'submission.sections.general.metadata-extracted-new-section',
+        null,
+        true
+      );
     }));
   });
 
@@ -873,19 +971,25 @@ describe('SubmissionService test suite', () => {
       scheduler.schedule(() => service.redirectToMyDSpace());
       scheduler.flush();
 
-      expect((service as any).router.navigateByUrl).toHaveBeenCalledWith('/mydspace?configuration=workflow');
+      expect((service as any).router.navigateByUrl).toHaveBeenCalledWith(
+        '/mydspace?configuration=workflow'
+      );
 
       spy.and.returnValue(observableOf(''));
       scheduler.schedule(() => service.redirectToMyDSpace());
       scheduler.flush();
 
-      expect((service as any).router.navigate).toHaveBeenCalledWith(['/mydspace']);
+      expect((service as any).router.navigate).toHaveBeenCalledWith([
+        '/mydspace',
+      ]);
 
       spy.and.returnValue(observableOf('/home'));
       scheduler.schedule(() => service.redirectToMyDSpace());
       scheduler.flush();
 
-      expect((service as any).router.navigate).toHaveBeenCalledWith(['/mydspace']);
+      expect((service as any).router.navigate).toHaveBeenCalledWith([
+        '/mydspace',
+      ]);
     });
   });
 
@@ -907,8 +1011,7 @@ describe('SubmissionService test suite', () => {
         submissionDefinition,
         {},
         new Item()
-      )
-      ;
+      );
       const expected = new ResetSubmissionFormAction(
         collectionId,
         submissionId,
@@ -924,28 +1027,33 @@ describe('SubmissionService test suite', () => {
 
   describe('retrieveSubmission', () => {
     it('should retrieve submission from REST endpoint', () => {
-      (service as any).restService.getDataById.and.returnValue(hot('a|', {
-        a: mockSubmissionRestResponse
-      }));
+      (service as any).restService.getDataById.and.returnValue(
+        hot('a|', {
+          a: mockSubmissionRestResponse,
+        })
+      );
 
       const result = service.retrieveSubmission('826');
       const expected = cold('(b|)', {
-        b: jasmine.objectContaining({ payload: mockSubmissionRestResponse[0] })
+        b: jasmine.objectContaining({ payload: mockSubmissionRestResponse[0] }),
       });
 
       expect(result).toBeObservable(expected);
     });
 
     it('should catch error from REST endpoint', () => {
-      (service as any).restService.getDataById.and.callFake(
-        () => observableThrowError({
+      (service as any).restService.getDataById.and.callFake(() =>
+        observableThrowError({
           statusCode: 500,
           errorMessage: 'Internal Server Error',
         })
       );
 
       service.retrieveSubmission('826').subscribe((r) => {
-        const expectedRD = createFailedRemoteDataObject('Internal Server Error',500) as any;
+        const expectedRD = createFailedRemoteDataObject(
+          'Internal Server Error',
+          500
+        ) as any;
         expect(r.payload).toEqual(expectedRD.payload);
         expect(r.statusCode).toEqual(expectedRD.statusCode);
         expect(r.errorMessage).toEqual(expectedRD.errorMessage);
@@ -964,11 +1072,11 @@ describe('SubmissionService test suite', () => {
   });
 
   describe('startAutoSave', () => {
-
     let environmentAutoSaveTimerOriginalValue;
 
     beforeEach(() => {
-      environmentAutoSaveTimerOriginalValue = environment.submission.autosave.timer;
+      environmentAutoSaveTimerOriginalValue =
+        environment.submission.autosave.timer;
     });
 
     it('should start Auto Save', fakeAsync(() => {
@@ -996,9 +1104,9 @@ describe('SubmissionService test suite', () => {
     }));
 
     afterEach(() => {
-      environment.submission.autosave.timer = environmentAutoSaveTimerOriginalValue;
+      environment.submission.autosave.timer =
+        environmentAutoSaveTimerOriginalValue;
     });
-
   });
 
   describe('stopAutoSave', () => {

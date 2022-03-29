@@ -44,5 +44,4 @@ export class ConfigurationProperty implements CacheableObject {
    */
   @deserialize
   _links: { self: HALLink };
-
 }

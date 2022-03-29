@@ -1,4 +1,8 @@
-import { ChangeDetectionStrategy, Injector, NO_ERRORS_SCHEMA } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Injector,
+  NO_ERRORS_SCHEMA,
+} from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { Router } from '@angular/router';
 
@@ -36,31 +40,35 @@ const item = Object.assign(new Item(), {
     'dc.title': [
       {
         language: 'en_US',
-        value: 'This is just another title'
-      }
+        value: 'This is just another title',
+      },
     ],
     'dc.type': [
       {
         language: null,
-        value: 'Article'
-      }
+        value: 'Article',
+      },
     ],
     'dc.contributor.author': [
       {
         language: 'en_US',
-        value: 'Smith, Donald'
-      }
+        value: 'Smith, Donald',
+      },
     ],
     'dc.date.issued': [
       {
         language: null,
-        value: '2015-06-26'
-      }
-    ]
-  }
+        value: '2015-06-26',
+      },
+    ],
+  },
 });
 const rd = createSuccessfulRemoteDataObject(item);
-mockObject = Object.assign(new WorkflowItem(), { item: observableOf(rd), id: '1234', uuid: '1234' });
+mockObject = Object.assign(new WorkflowItem(), {
+  item: observableOf(rd),
+  id: '1234',
+  uuid: '1234',
+});
 
 describe('WorkflowitemActionsComponent', () => {
   beforeEach(waitForAsync(() => {
@@ -69,23 +77,28 @@ describe('WorkflowitemActionsComponent', () => {
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
-            useClass: TranslateLoaderMock
-          }
-        })
+            useClass: TranslateLoaderMock,
+          },
+        }),
       ],
       declarations: [WorkflowitemActionsComponent],
       providers: [
         { provide: Injector, useValue: {} },
         { provide: Router, useValue: new RouterStub() },
         { provide: WorkflowItemDataService, useValue: mockDataService },
-        { provide: NotificationsService, useValue: new NotificationsServiceStub() },
+        {
+          provide: NotificationsService,
+          useValue: new NotificationsServiceStub(),
+        },
         { provide: SearchService, useValue: searchService },
-        { provide: RequestService, useValue: requestServce }
+        { provide: RequestService, useValue: requestServce },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(WorkflowitemActionsComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(WorkflowitemActionsComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -104,5 +117,4 @@ describe('WorkflowitemActionsComponent', () => {
 
     expect(component.object).toEqual(mockObject);
   });
-
 });

@@ -7,7 +7,6 @@ import { TypedObject } from '../cache/object-cache.reducer';
  * NormalizedObjects
  */
 export interface ChangeAnalyzer<T extends TypedObject> {
-
   /**
    * Compare two objects and return their differences as a
    * JsonPatch Operation Array

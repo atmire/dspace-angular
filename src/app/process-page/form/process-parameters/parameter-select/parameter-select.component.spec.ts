@@ -14,20 +14,14 @@ describe('ParameterSelectComponent', () => {
 
   function init() {
     scriptParams = [
-      Object.assign(
-        new ScriptParameter(),
-        {
-          name: '-a',
-          type: ScriptParameterType.BOOLEAN
-        }
-      ),
-      Object.assign(
-        new ScriptParameter(),
-        {
-          name: '-f',
-          type: ScriptParameterType.FILE
-        }
-      ),
+      Object.assign(new ScriptParameter(), {
+        name: '-a',
+        type: ScriptParameterType.BOOLEAN,
+      }),
+      Object.assign(new ScriptParameter(), {
+        name: '-f',
+        type: ScriptParameterType.FILE,
+      }),
     ];
   }
   beforeEach(waitForAsync(() => {
@@ -35,9 +29,8 @@ describe('ParameterSelectComponent', () => {
     TestBed.configureTestingModule({
       imports: [FormsModule],
       declarations: [ParameterSelectComponent],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
-      .compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

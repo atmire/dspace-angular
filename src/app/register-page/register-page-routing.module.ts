@@ -12,24 +12,18 @@ import { RegistrationGuard } from './registration.guard';
       {
         path: '',
         component: RegisterEmailComponent,
-        data: {title: 'register-email.title'},
+        data: { title: 'register-email.title' },
       },
       {
         path: ':token',
         component: ThemedCreateProfileComponent,
-        canActivate: [
-          RegistrationGuard,
-          EndUserAgreementCookieGuard,
-        ],
-      }
-    ])
+        canActivate: [RegistrationGuard, EndUserAgreementCookieGuard],
+      },
+    ]),
   ],
-  providers: [
-    ItemPageResolver
-  ]
+  providers: [ItemPageResolver],
 })
 /**
  * Module related to the navigation to components used to register a new user
  */
-export class RegisterPageRoutingModule {
-}
+export class RegisterPageRoutingModule {}

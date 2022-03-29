@@ -6,7 +6,6 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RegisterEmailComponent } from './register-email.component';
 
 describe('RegisterEmailComponent', () => {
-
   let comp: RegisterEmailComponent;
   let fixture: ComponentFixture<RegisterEmailComponent>;
 
@@ -14,7 +13,7 @@ describe('RegisterEmailComponent', () => {
     TestBed.configureTestingModule({
       imports: [CommonModule, TranslateModule.forRoot(), ReactiveFormsModule],
       declarations: [RegisterEmailComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
   }));
   beforeEach(() => {

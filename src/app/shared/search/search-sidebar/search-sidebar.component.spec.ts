@@ -14,8 +14,7 @@ describe('SearchSidebarComponent', () => {
       imports: [TranslateModule.forRoot(), NgbCollapseModule],
       declarations: [SearchSidebarComponent],
       schemas: [NO_ERRORS_SCHEMA],
-    })
-      .compileComponents();  // compile template and css
+    }).compileComponents(); // compile template and css
   }));
 
   // synchronous beforeEach
@@ -23,14 +22,14 @@ describe('SearchSidebarComponent', () => {
     fixture = TestBed.createComponent(SearchSidebarComponent);
 
     comp = fixture.componentInstance;
-
   });
 
   describe('when the close sidebar button is clicked in mobile view', () => {
-
     beforeEach(() => {
       spyOn(comp.toggleSidebar, 'emit');
-      const closeSidebarButton = fixture.debugElement.query(By.css('button.close-sidebar'));
+      const closeSidebarButton = fixture.debugElement.query(
+        By.css('button.close-sidebar')
+      );
 
       closeSidebarButton.triggerEventHandler('click', null);
     });
@@ -38,6 +37,5 @@ describe('SearchSidebarComponent', () => {
     it('should emit a toggleSidebar event', () => {
       expect(comp.toggleSidebar.emit).toHaveBeenCalled();
     });
-
   });
 });

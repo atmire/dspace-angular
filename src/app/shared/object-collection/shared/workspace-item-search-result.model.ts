@@ -6,5 +6,4 @@ import { SearchResult } from '../../search/models/search-result.model';
  * Represents a search result object of a WorkspaceItem object
  */
 @searchResultFor(WorkspaceItem)
-export class WorkspaceItemSearchResult extends SearchResult<WorkspaceItem> {
-}
+export class WorkspaceItemSearchResult extends SearchResult<WorkspaceItem> {}

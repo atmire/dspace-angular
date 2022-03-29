@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, Inject, InjectionToken, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  InjectionToken,
+  OnInit,
+} from '@angular/core';
 
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
@@ -13,7 +19,8 @@ import { Context } from '../core/shared/context.model';
 import { RoleType } from '../core/roles/role-types';
 
 export const MYDSPACE_ROUTE = '/mydspace';
-export const SEARCH_CONFIG_SERVICE: InjectionToken<SearchConfigurationService> = new InjectionToken<SearchConfigurationService>('searchConfigurationService');
+export const SEARCH_CONFIG_SERVICE: InjectionToken<SearchConfigurationService> =
+  new InjectionToken<SearchConfigurationService>('searchConfigurationService');
 
 /**
  * This component represents the whole mydspace page
@@ -26,12 +33,11 @@ export const SEARCH_CONFIG_SERVICE: InjectionToken<SearchConfigurationService> =
   providers: [
     {
       provide: SEARCH_CONFIG_SERVICE,
-      useClass: MyDSpaceConfigurationService
-    }
-  ]
+      useClass: MyDSpaceConfigurationService,
+    },
+  ],
 })
 export class MyDSpacePageComponent implements OnInit {
-
   /**
    * The list of available configuration options
    */
@@ -57,9 +63,15 @@ export class MyDSpacePageComponent implements OnInit {
    */
   viewModeList = [ViewMode.ListElement, ViewMode.DetailedListElement];
 
-  constructor(private service: SearchService,
-              @Inject(SEARCH_CONFIG_SERVICE) public searchConfigService: MyDSpaceConfigurationService) {
-    this.service.setServiceOptions(MyDSpaceResponseParsingService, MyDSpaceRequest);
+  constructor(
+    private service: SearchService,
+    @Inject(SEARCH_CONFIG_SERVICE)
+    public searchConfigService: MyDSpaceConfigurationService
+  ) {
+    this.service.setServiceOptions(
+      MyDSpaceResponseParsingService,
+      MyDSpaceRequest
+    );
   }
 
   /**
@@ -75,13 +87,14 @@ export class MyDSpacePageComponent implements OnInit {
    * If something changes, update the current context
    */
   ngOnInit(): void {
-    this.configurationList$ = this.searchConfigService.getAvailableConfigurationOptions();
+    this.configurationList$ =
+      this.searchConfigService.getAvailableConfigurationOptions();
 
-    this.configurationList$.pipe(take(1)).subscribe((configurationList: SearchConfigurationOption[]) => {
-      this.configuration = configurationList[0].value;
-      this.context = configurationList[0].context;
-    });
-
+    this.configurationList$
+      .pipe(take(1))
+      .subscribe((configurationList: SearchConfigurationOption[]) => {
+        this.configuration = configurationList[0].value;
+        this.context = configurationList[0].context;
+      });
   }
-
 }

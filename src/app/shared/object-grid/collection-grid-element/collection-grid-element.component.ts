@@ -16,9 +16,7 @@ import { LinkService } from '../../../core/cache/builders/link.service';
   templateUrl: './collection-grid-element.component.html',
 })
 @listableObjectComponent(Collection, ViewMode.GridElement)
-export class CollectionGridElementComponent extends AbstractListableElementComponent<
-  Collection
-> {
+export class CollectionGridElementComponent extends AbstractListableElementComponent<Collection> {
   private _object: Collection;
 
   constructor(private linkService: LinkService) {

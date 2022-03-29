@@ -7,10 +7,9 @@ import { listableObjectComponent } from '../../../../shared/object-collection/sh
 @Component({
   selector: 'ds-project',
   styleUrls: ['./project.component.scss'],
-  templateUrl: './project.component.html'
+  templateUrl: './project.component.html',
 })
 /**
  * The component for displaying metadata and relations of an item of the type Project
  */
-export class ProjectComponent extends ItemComponent {
-}
+export class ProjectComponent extends ItemComponent {}

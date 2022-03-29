@@ -10,10 +10,13 @@ import { COLLECTION_PAGE_LINKS_TO_FOLLOW } from '../../collection-page/collectio
  * The class that resolves the BreadcrumbConfig object for a Collection
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CollectionBreadcrumbResolver extends DSOBreadcrumbResolver<Collection> {
-  constructor(protected breadcrumbService: DSOBreadcrumbsService, protected dataService: CollectionDataService) {
+  constructor(
+    protected breadcrumbService: DSOBreadcrumbsService,
+    protected dataService: CollectionDataService
+  ) {
     super(breadcrumbService, dataService);
   }
 

@@ -2,13 +2,16 @@
 import { HALLink } from '../../shared/hal-link.model';
 import { HALResource } from '../../shared/hal-resource.model';
 import { ResourceType } from '../../shared/resource-type';
-import { dataService, getDataServiceFor, getLinkDefinition, link, } from './build-decorators';
+import {
+  dataService,
+  getDataServiceFor,
+  getLinkDefinition,
+  link,
+} from './build-decorators';
 
-class TestService {
-}
+class TestService {}
 
-class AnotherTestService {
-}
+class AnotherTestService {}
 
 class TestHALResource implements HALResource {
   _links: {
@@ -26,7 +29,6 @@ describe('build decorators', () => {
     testType = new ResourceType('testType-' + new Date().getTime());
   });
   describe('@dataService/getDataServiceFor', () => {
-
     it('should register a resourcetype for a dataservice', () => {
       dataService(testType)(TestService);
       expect(getDataServiceFor(testType)).toBe(TestService);
@@ -48,7 +50,6 @@ describe('build decorators', () => {
         }).toThrow();
       });
     });
-
   });
 
   describe(`@link/getLinkDefinitions`, () => {

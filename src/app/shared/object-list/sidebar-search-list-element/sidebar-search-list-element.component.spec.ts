@@ -31,19 +31,23 @@ export function createSidebarSearchListElementTests(
     beforeEach(waitForAsync(() => {
       linkService = jasmine.createSpyObj('linkService', {
         resolveLink: Object.assign(new HALResource(), {
-          [object.indexableObject.getParentLinkKey()]: createSuccessfulRemoteDataObject$(parent)
-        })
+          [object.indexableObject.getParentLinkKey()]:
+            createSuccessfulRemoteDataObject$(parent),
+        }),
       });
       TestBed.configureTestingModule({
         declarations: [componentClass, VarDirective],
-        imports: [TranslateModule.forRoot(), RouterTestingModule.withRoutes([])],
+        imports: [
+          TranslateModule.forRoot(),
+          RouterTestingModule.withRoutes([]),
+        ],
         providers: [
           { provide: TruncatableService, useValue: {} },
           { provide: LinkService, useValue: linkService },
           { provide: DSONameService, useClass: DSONameServiceMock },
-          ...extraProviders
+          ...extraProviders,
         ],
-        schemas: [NO_ERRORS_SCHEMA]
+        schemas: [NO_ERRORS_SCHEMA],
       }).compileComponents();
     }));
 

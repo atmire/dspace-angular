@@ -1,5 +1,6 @@
-<ds-community-form [dso]="(dsoRD$ | async)?.payload"
-                   (submitForm)="onSubmit($event)"
-                   (back)="navigateToHomePage()"
-                   (finish)="navigateToHomePage()"></ds-community-form>
-
+<ds-community-form
+  [dso]="(dsoRD$ | async)?.payload"
+  (submitForm)="onSubmit($event)"
+  (back)="navigateToHomePage()"
+  (finish)="navigateToHomePage()"
+></ds-community-form>

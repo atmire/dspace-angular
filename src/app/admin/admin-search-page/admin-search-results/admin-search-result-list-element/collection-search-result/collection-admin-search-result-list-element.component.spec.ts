@@ -30,20 +30,20 @@ describe('CollectionAdminSearchResultListElementComponent', () => {
   beforeEach(waitForAsync(() => {
     init();
     TestBed.configureTestingModule({
-      imports: [
-        TranslateModule.forRoot(),
-        RouterTestingModule.withRoutes([])
-      ],
+      imports: [TranslateModule.forRoot(), RouterTestingModule.withRoutes([])],
       declarations: [CollectionAdminSearchResultListElementComponent],
-      providers: [{ provide: TruncatableService, useValue: {} },
-        { provide: DSONameService, useClass: DSONameServiceMock }],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
-      .compileComponents();
+      providers: [
+        { provide: TruncatableService, useValue: {} },
+        { provide: DSONameService, useClass: DSONameServiceMock },
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CollectionAdminSearchResultListElementComponent);
+    fixture = TestBed.createComponent(
+      CollectionAdminSearchResultListElementComponent
+    );
     component = fixture.componentInstance;
     component.object = searchResult;
     component.linkTypes = CollectionElementLinkType;

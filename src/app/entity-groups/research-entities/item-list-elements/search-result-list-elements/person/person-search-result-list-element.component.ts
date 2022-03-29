@@ -7,16 +7,17 @@ import { ItemSearchResultListElementComponent } from '../../../../../shared/obje
 @Component({
   selector: 'ds-person-search-result-list-element',
   styleUrls: ['./person-search-result-list-element.component.scss'],
-  templateUrl: './person-search-result-list-element.component.html'
+  templateUrl: './person-search-result-list-element.component.html',
 })
 /**
  * The component for displaying a list element for an item search result of the type Person
  */
 export class PersonSearchResultListElementComponent extends ItemSearchResultListElementComponent {
-
   get name() {
-    return this.value ?
-      this.value :
-      this.firstMetadataValue('person.familyName') + ', ' + this.firstMetadataValue('person.givenName');
+    return this.value
+      ? this.value
+      : this.firstMetadataValue('person.familyName') +
+          ', ' +
+          this.firstMetadataValue('person.givenName');
   }
 }

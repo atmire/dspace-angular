@@ -60,7 +60,9 @@ export class Collection extends DSpaceObject implements ChildHALResource {
    * Will be undefined unless the defaultAccessConditions {@link HALLink} has been resolved.
    */
   @link(RESOURCE_POLICY, true)
-  defaultAccessConditions?: Observable<RemoteData<PaginatedList<ResourcePolicy>>>;
+  defaultAccessConditions?: Observable<
+    RemoteData<PaginatedList<ResourcePolicy>>
+  >;
 
   /**
    * The Community that is a direct parent of this Collection

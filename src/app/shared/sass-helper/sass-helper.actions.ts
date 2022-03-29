@@ -16,12 +16,12 @@ export const CSSVariableActionTypes = {
 export class AddCSSVariableAction implements Action {
   type = CSSVariableActionTypes.ADD;
   payload: {
-    name: string,
-    value: string
+    name: string;
+    value: string;
   };
 
   constructor(name: string, value: string) {
-    this.payload = {name, value};
+    this.payload = { name, value };
   }
 }
 

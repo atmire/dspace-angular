@@ -12,27 +12,29 @@ import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 const mockItem = Object.assign(new Item(), {
-  bundles: createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), [])),
+  bundles: createSuccessfulRemoteDataObject$(
+    buildPaginatedList(new PageInfo(), [])
+  ),
   metadata: {
     'dc.title': [
       {
         language: 'en_US',
-        value: 'This is just another title'
-      }
+        value: 'This is just another title',
+      },
     ],
     'creativework.datePublished': [
       {
         language: null,
-        value: '2015-06-26'
-      }
+        value: '2015-06-26',
+      },
     ],
     'dc.description': [
       {
         language: 'en_US',
-        value: 'A description for the journal volume'
-      }
-    ]
-  }
+        value: 'A description for the journal volume',
+      },
+    ],
+  },
 });
 
 describe('JournalVolumeGridElementComponent', () => {
@@ -50,10 +52,12 @@ describe('JournalVolumeGridElementComponent', () => {
       providers: [
         { provide: TruncatableService, useValue: truncatableServiceStub },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(JournalVolumeGridElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(JournalVolumeGridElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -68,7 +72,9 @@ describe('JournalVolumeGridElementComponent', () => {
     });
 
     it(`should contain a JournalVolumeSearchResultGridElementComponent`, () => {
-      const journalVolumeGridElement = fixture.debugElement.query(By.css(`ds-journal-volume-search-result-grid-element`));
+      const journalVolumeGridElement = fixture.debugElement.query(
+        By.css(`ds-journal-volume-search-result-grid-element`)
+      );
       expect(journalVolumeGridElement).not.toBeNull();
     });
   });

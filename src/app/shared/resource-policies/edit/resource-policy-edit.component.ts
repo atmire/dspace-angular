@@ -16,10 +16,9 @@ import { getFirstCompletedRemoteData } from '../../../core/shared/operators';
 
 @Component({
   selector: 'ds-resource-policy-edit',
-  templateUrl: './resource-policy-edit.component.html'
+  templateUrl: './resource-policy-edit.component.html',
 })
 export class ResourcePolicyEditComponent implements OnInit {
-
   /**
    * The resource policy object to edit
    */
@@ -45,19 +44,23 @@ export class ResourcePolicyEditComponent implements OnInit {
     private resourcePolicyService: ResourcePolicyService,
     private route: ActivatedRoute,
     private router: Router,
-    private translate: TranslateService) {
-  }
+    private translate: TranslateService
+  ) {}
 
   /**
    * Initialize the component
    */
   ngOnInit(): void {
-    this.route.data.pipe(
-      map((data) => data),
-      take(1)
-    ).subscribe((data: any) => {
-      this.resourcePolicy = (data.resourcePolicy as RemoteData<ResourcePolicy>).payload;
-    });
+    this.route.data
+      .pipe(
+        map((data) => data),
+        take(1)
+      )
+      .subscribe((data: any) => {
+        this.resourcePolicy = (
+          data.resourcePolicy as RemoteData<ResourcePolicy>
+        ).payload;
+      });
   }
 
   /**
@@ -73,7 +76,9 @@ export class ResourcePolicyEditComponent implements OnInit {
    * Redirect to the authorizations page
    */
   redirectToAuthorizationsPage() {
-    this.router.navigate([`../../${ITEM_EDIT_AUTHORIZATIONS_PATH}`], { relativeTo: this.route });
+    this.router.navigate([`../../${ITEM_EDIT_AUTHORIZATIONS_PATH}`], {
+      relativeTo: this.route,
+    });
   }
 
   /**
@@ -86,18 +91,25 @@ export class ResourcePolicyEditComponent implements OnInit {
     const updatedObject = Object.assign({}, event.object, {
       id: this.resourcePolicy.id,
       type: RESOURCE_POLICY.value,
-      _links: this.resourcePolicy._links
+      _links: this.resourcePolicy._links,
     });
-    this.resourcePolicyService.update(updatedObject).pipe(
-      getFirstCompletedRemoteData(),
-    ).subscribe((responseRD: RemoteData<ResourcePolicy>) => {
-      this.processing$.next(false);
-      if (responseRD && responseRD.hasSucceeded) {
-        this.notificationsService.success(null, this.translate.get('resource-policies.edit.page.success.content'));
-        this.redirectToAuthorizationsPage();
-      } else {
-        this.notificationsService.error(null, this.translate.get('resource-policies.edit.page.failure.content'));
-      }
-    });
+    this.resourcePolicyService
+      .update(updatedObject)
+      .pipe(getFirstCompletedRemoteData())
+      .subscribe((responseRD: RemoteData<ResourcePolicy>) => {
+        this.processing$.next(false);
+        if (responseRD && responseRD.hasSucceeded) {
+          this.notificationsService.success(
+            null,
+            this.translate.get('resource-policies.edit.page.success.content')
+          );
+          this.redirectToAuthorizationsPage();
+        } else {
+          this.notificationsService.error(
+            null,
+            this.translate.get('resource-policies.edit.page.failure.content')
+          );
+        }
+      });
   }
 }

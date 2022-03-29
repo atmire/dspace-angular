@@ -16,11 +16,12 @@ export class ThemedForbiddenComponent extends ThemedComponent<ForbiddenComponent
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../themes/${themeName}/app/forbidden/forbidden.component`);
+    return import(
+      `../../themes/${themeName}/app/forbidden/forbidden.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {
     return import(`./forbidden.component`);
   }
-
 }

@@ -5,14 +5,17 @@ import { DynamicListCheckboxGroupModel } from '../ds-dynamic-form-ui/models/list
 import { DynamicListRadioGroupModel } from '../ds-dynamic-form-ui/models/list/dynamic-list-radio-group.model';
 
 export class ListFieldParser extends FieldParser {
-
-  public modelFactory(fieldValue?: FormFieldMetadataValueObject | any, label?: boolean): any {
+  public modelFactory(
+    fieldValue?: FormFieldMetadataValueObject | any,
+    label?: boolean
+  ): any {
     const listModelConfig = this.initModel(null, label);
     listModelConfig.repeatable = this.configData.repeatable;
 
-    if (this.configData.selectableMetadata[0].controlledVocabulary
-      && this.configData.selectableMetadata[0].controlledVocabulary.length > 0) {
-
+    if (
+      this.configData.selectableMetadata[0].controlledVocabulary &&
+      this.configData.selectableMetadata[0].controlledVocabulary.length > 0
+    ) {
       if (isNotEmpty(this.getInitGroupValues())) {
         listModelConfig.value = [];
         this.getInitGroupValues().forEach((value: any) => {
@@ -38,5 +41,4 @@ export class ListFieldParser extends FieldParser {
 
     return listModel;
   }
-
 }

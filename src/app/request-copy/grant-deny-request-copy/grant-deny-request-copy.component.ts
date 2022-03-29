@@ -6,11 +6,14 @@ import { Observable } from 'rxjs';
 import {
   getFirstCompletedRemoteData,
   getFirstSucceededRemoteDataPayload,
-  redirectOn4xx
+  redirectOn4xx,
 } from '../../core/shared/operators';
 import { RemoteData } from '../../core/data/remote-data';
 import { AuthService } from '../../core/auth/auth.service';
-import { getRequestCopyDenyRoute, getRequestCopyGrantRoute } from '../request-copy-routing-paths';
+import {
+  getRequestCopyDenyRoute,
+  getRequestCopyGrantRoute,
+} from '../request-copy-routing-paths';
 import { Item } from '../../core/shared/item.model';
 import { ItemDataService } from '../../core/data/item-data.service';
 import { DSONameService } from '../../core/breadcrumbs/dso-name.service';
@@ -19,7 +22,7 @@ import { getItemPageRoute } from '../../item-page/item-page-routing-paths';
 @Component({
   selector: 'ds-grant-deny-request-copy',
   styleUrls: ['./grant-deny-request-copy.component.scss'],
-  templateUrl: './grant-deny-request-copy.component.html'
+  templateUrl: './grant-deny-request-copy.component.html',
 })
 /**
  * Component for an author to decide to grant or deny an item request
@@ -60,38 +63,41 @@ export class GrantDenyRequestCopyComponent implements OnInit {
     private route: ActivatedRoute,
     private authService: AuthService,
     private itemDataService: ItemDataService,
-    private nameService: DSONameService,
-  ) {
-
-  }
+    private nameService: DSONameService
+  ) {}
 
   ngOnInit(): void {
     this.itemRequestRD$ = this.route.data.pipe(
       map((data) => data.request as RemoteData<ItemRequest>),
       getFirstCompletedRemoteData(),
-      redirectOn4xx(this.router, this.authService),
+      redirectOn4xx(this.router, this.authService)
     );
     this.itemRD$ = this.itemRequestRD$.pipe(
       getFirstSucceededRemoteDataPayload(),
-      switchMap((itemRequest: ItemRequest) => this.itemDataService.findById(itemRequest.itemId)),
+      switchMap((itemRequest: ItemRequest) =>
+        this.itemDataService.findById(itemRequest.itemId)
+      )
     );
     this.itemName$ = this.itemRD$.pipe(
       getFirstSucceededRemoteDataPayload(),
-      map((item) => this.nameService.getName(item)),
+      map((item) => this.nameService.getName(item))
     );
     this.itemUrl$ = this.itemRD$.pipe(
       getFirstSucceededRemoteDataPayload(),
-      map((item) => getItemPageRoute(item)),
+      map((item) => getItemPageRoute(item))
     );
 
     this.denyRoute$ = this.itemRequestRD$.pipe(
       getFirstSucceededRemoteDataPayload(),
-      map((itemRequest: ItemRequest) => getRequestCopyDenyRoute(itemRequest.token))
+      map((itemRequest: ItemRequest) =>
+        getRequestCopyDenyRoute(itemRequest.token)
+      )
     );
     this.grantRoute$ = this.itemRequestRD$.pipe(
       getFirstSucceededRemoteDataPayload(),
-      map((itemRequest: ItemRequest) => getRequestCopyGrantRoute(itemRequest.token))
+      map((itemRequest: ItemRequest) =>
+        getRequestCopyGrantRoute(itemRequest.token)
+      )
     );
   }
-
 }

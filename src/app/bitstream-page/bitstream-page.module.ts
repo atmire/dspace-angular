@@ -16,12 +16,8 @@ import { ResourcePoliciesModule } from '../shared/resource-policies/resource-pol
     SharedModule,
     BitstreamPageRoutingModule,
     FormModule,
-    ResourcePoliciesModule
+    ResourcePoliciesModule,
   ],
-  declarations: [
-    BitstreamAuthorizationsComponent,
-    EditBitstreamPageComponent
-  ]
+  declarations: [BitstreamAuthorizationsComponent, EditBitstreamPageComponent],
 })
-export class BitstreamPageModule {
-}
+export class BitstreamPageModule {}

@@ -7,9 +7,11 @@ import { CreateProfileComponent as BaseComponent } from '../../../../../app/regi
 @Component({
   selector: 'ds-create-profile',
   // styleUrls: ['./create-profile.component.scss'],
-  styleUrls: ['../../../../../app/register-page/create-profile/create-profile.component.scss'],
+  styleUrls: [
+    '../../../../../app/register-page/create-profile/create-profile.component.scss',
+  ],
   // templateUrl: './create-profile.component.html'
-  templateUrl: '../../../../../app/register-page/create-profile/create-profile.component.html'
+  templateUrl:
+    '../../../../../app/register-page/create-profile/create-profile.component.html',
 })
-export class CreateProfileComponent extends BaseComponent {
-}
+export class CreateProfileComponent extends BaseComponent {}

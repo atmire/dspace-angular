@@ -1,5 +1,9 @@
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { ChangeDetectionStrategy, DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  DebugElement,
+  NO_ERRORS_SCHEMA,
+} from '@angular/core';
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateLoaderMock } from '../../../shared/mocks/translate-loader.mock';
 import { By } from '@angular/platform-browser';
@@ -13,12 +17,12 @@ let fixture: ComponentFixture<MetadataUriValuesComponent>;
 const mockMetadata = [
   {
     language: 'en_US',
-    value: 'http://fakelink.org'
+    value: 'http://fakelink.org',
   },
   {
     language: 'en_US',
-    value: 'http://another.fakelink.org'
-  }
+    value: 'http://another.fakelink.org',
+  },
 ] as MetadataValue[];
 const mockSeperator = '<br/>';
 const mockLabel = 'fake.message';
@@ -27,17 +31,21 @@ const mockLinkText = 'fake link text';
 describe('MetadataUriValuesComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot({
-        loader: {
-          provide: TranslateLoader,
-          useClass: TranslateLoaderMock
-        }
-      })],
+      imports: [
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useClass: TranslateLoaderMock,
+          },
+        }),
+      ],
       declarations: [MetadataUriValuesComponent],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(MetadataUriValuesComponent, {
-      set: {changeDetection: ChangeDetectionStrategy.Default}
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(MetadataUriValuesComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -69,7 +77,6 @@ describe('MetadataUriValuesComponent', () => {
   });
 
   describe('when linktext is defined', () => {
-
     beforeEach(() => {
       comp.linktext = mockLinkText;
       fixture.detectChanges();
@@ -79,9 +86,7 @@ describe('MetadataUriValuesComponent', () => {
       const link = fixture.debugElement.query(By.css('a'));
       expect(link.nativeElement.textContent).toContain(mockLinkText);
     });
-
   });
-
 });
 
 function containsHref(links: DebugElement[], href: string): boolean {

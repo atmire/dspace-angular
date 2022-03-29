@@ -15,7 +15,7 @@ import { I18nBreadcrumbResolver } from '../core/breadcrumbs/i18n-breadcrumb.reso
 import {
   ITEMTEMPLATE_PATH,
   COLLECTION_EDIT_PATH,
-  COLLECTION_CREATE_PATH
+  COLLECTION_CREATE_PATH,
 } from './collection-page-routing-paths';
 import { CollectionPageAdministratorGuard } from './collection-page-administrator.guard';
 import { MenuItemType } from '../shared/menu/initial-menus-state';
@@ -28,21 +28,23 @@ import { ThemedCollectionPageComponent } from './themed-collection-page.componen
       {
         path: COLLECTION_CREATE_PATH,
         component: CreateCollectionPageComponent,
-        canActivate: [AuthenticatedGuard, CreateCollectionPageGuard]
+        canActivate: [AuthenticatedGuard, CreateCollectionPageGuard],
       },
       {
         path: ':id',
         resolve: {
           dso: CollectionPageResolver,
-          breadcrumb: CollectionBreadcrumbResolver
+          breadcrumb: CollectionBreadcrumbResolver,
         },
         runGuardsAndResolvers: 'always',
         children: [
           {
             path: COLLECTION_EDIT_PATH,
-            loadChildren: () => import('./edit-collection-page/edit-collection-page.module')
-              .then((m) => m.EditCollectionPageModule),
-            canActivate: [CollectionPageAdministratorGuard]
+            loadChildren: () =>
+              import('./edit-collection-page/edit-collection-page.module').then(
+                (m) => m.EditCollectionPageModule
+              ),
+            canActivate: [CollectionPageAdministratorGuard],
           },
           {
             path: 'delete',
@@ -56,32 +58,37 @@ import { ThemedCollectionPageComponent } from './themed-collection-page.componen
             canActivate: [AuthenticatedGuard],
             resolve: {
               item: ItemTemplatePageResolver,
-              breadcrumb: I18nBreadcrumbResolver
+              breadcrumb: I18nBreadcrumbResolver,
             },
-            data: { title: 'collection.edit.template.title', breadcrumbKey: 'collection.edit.template' }
+            data: {
+              title: 'collection.edit.template.title',
+              breadcrumbKey: 'collection.edit.template',
+            },
           },
           {
             path: '',
             component: ThemedCollectionPageComponent,
             pathMatch: 'full',
-          }
+          },
         ],
         data: {
           menu: {
-            public: [{
-              id: 'statistics_collection_:id',
-              active: true,
-              visible: true,
-              model: {
-                type: MenuItemType.LINK,
-                text: 'menu.section.statistics',
-                link: 'statistics/collections/:id/',
-              } as LinkMenuItemModel,
-            }],
+            public: [
+              {
+                id: 'statistics_collection_:id',
+                active: true,
+                visible: true,
+                model: {
+                  type: MenuItemType.LINK,
+                  text: 'menu.section.statistics',
+                  link: 'statistics/collections/:id/',
+                } as LinkMenuItemModel,
+              },
+            ],
           },
         },
       },
-    ])
+    ]),
   ],
   providers: [
     CollectionPageResolver,
@@ -90,9 +97,7 @@ import { ThemedCollectionPageComponent } from './themed-collection-page.componen
     DSOBreadcrumbsService,
     LinkService,
     CreateCollectionPageGuard,
-    CollectionPageAdministratorGuard
-  ]
+    CollectionPageAdministratorGuard,
+  ],
 })
-export class CollectionPageRoutingModule {
-
-}
+export class CollectionPageRoutingModule {}

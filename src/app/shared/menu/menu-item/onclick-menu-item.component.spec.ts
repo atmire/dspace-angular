@@ -13,18 +13,18 @@ describe('OnClickMenuItemComponent', () => {
   const func = () => {
     /* comment */
   };
-  const item = Object.assign(new OnClickMenuItemModel(), { text, function: func });
+  const item = Object.assign(new OnClickMenuItemModel(), {
+    text,
+    function: func,
+  });
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
       declarations: [OnClickMenuItemComponent],
-      providers: [
-        { provide: 'itemModelProvider', useValue: item },
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
-      .compileComponents();
+      providers: [{ provide: 'itemModelProvider', useValue: item }],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -40,12 +40,15 @@ describe('OnClickMenuItemComponent', () => {
   });
 
   it('should contain the text element', () => {
-    const textContent = debugElement.query(By.css('a')).nativeElement.textContent;
+    const textContent = debugElement.query(By.css('a')).nativeElement
+      .textContent;
     expect(textContent).toEqual(text);
   });
 
   it('should call the function on the item when clicked', () => {
-    debugElement.query(By.css('a.nav-link')).triggerEventHandler('click', new Event(('click')));
+    debugElement
+      .query(By.css('a.nav-link'))
+      .triggerEventHandler('click', new Event('click'));
     expect(item.function).toHaveBeenCalled();
   });
 });

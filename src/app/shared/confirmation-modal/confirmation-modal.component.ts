@@ -26,8 +26,7 @@ export class ConfirmationModalComponent {
   @Output()
   response: Subject<boolean> = new Subject();
 
-  constructor(protected activeModal: NgbActiveModal) {
-  }
+  constructor(protected activeModal: NgbActiveModal) {}
 
   /**
    * Confirm the action that led to the modal

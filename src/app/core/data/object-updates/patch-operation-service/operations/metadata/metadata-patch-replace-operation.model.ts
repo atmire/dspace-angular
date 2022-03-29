@@ -28,6 +28,10 @@ export class MetadataPatchReplaceOperation extends MetadataPatchOperation {
    * using the information provided.
    */
   toOperation(): Operation {
-    return { op: this.op as any, path: `/metadata/${this.field}/${this.place}`, value: this.value };
+    return {
+      op: this.op as any,
+      path: `/metadata/${this.field}/${this.place}`,
+      value: this.value,
+    };
   }
 }

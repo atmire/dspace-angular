@@ -3,7 +3,7 @@ import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
 import { ConfigurationDataService } from '../core/data/configuration-data.service';
 import {
   createFailedRemoteDataObject$,
-  createSuccessfulRemoteDataObject$
+  createSuccessfulRemoteDataObject$,
 } from '../shared/remote-data.utils';
 import { ConfigurationProperty } from '../core/shared/configuration-property.model';
 
@@ -19,13 +19,14 @@ describe('GoogleAnalyticsService', () => {
   let bodyElementSpy: HTMLBodyElement;
   let documentSpy: Document;
 
-  const createConfigSuccessSpy = (...values: string[]) => jasmine.createSpyObj('configurationDataService', {
-    findByPropertyName: createSuccessfulRemoteDataObject$({
-      ... new ConfigurationProperty(),
-      name: trackingIdProp,
-      values: values,
-    }),
-  });
+  const createConfigSuccessSpy = (...values: string[]) =>
+    jasmine.createSpyObj('configurationDataService', {
+      findByPropertyName: createSuccessfulRemoteDataObject$({
+        ...new ConfigurationProperty(),
+        name: trackingIdProp,
+        values: values,
+      }),
+    });
 
   beforeEach(() => {
     angularticsSpy = jasmine.createSpyObj('angulartics2GoogleAnalytics', [
@@ -35,8 +36,12 @@ describe('GoogleAnalyticsService', () => {
     configSpy = createConfigSuccessSpy(trackingIdTestValue);
 
     scriptElementMock = {
-      set innerHTML(newVal) { /* noop */ },
-      get innerHTML() { return innerHTMLTestValue; }
+      set innerHTML(newVal) {
+        /* noop */
+      },
+      get innerHTML() {
+        return innerHTMLTestValue;
+      },
     };
 
     innerHTMLSpy = spyOnProperty(scriptElementMock, 'innerHTML', 'set');
@@ -45,13 +50,21 @@ describe('GoogleAnalyticsService', () => {
       appendChild: scriptElementMock,
     });
 
-    documentSpy = jasmine.createSpyObj('document', {
-      createElement: scriptElementMock,
-    }, {
-      body: bodyElementSpy,
-    });
+    documentSpy = jasmine.createSpyObj(
+      'document',
+      {
+        createElement: scriptElementMock,
+      },
+      {
+        body: bodyElementSpy,
+      }
+    );
 
-    service = new GoogleAnalyticsService(angularticsSpy, configSpy, documentSpy);
+    service = new GoogleAnalyticsService(
+      angularticsSpy,
+      configSpy,
+      documentSpy
+    );
   });
 
   it('should be created', () => {
@@ -71,7 +84,11 @@ describe('GoogleAnalyticsService', () => {
           findByPropertyName: createFailedRemoteDataObject$(),
         });
 
-        service = new GoogleAnalyticsService(angularticsSpy, configSpy, documentSpy);
+        service = new GoogleAnalyticsService(
+          angularticsSpy,
+          configSpy,
+          documentSpy
+        );
       });
 
       it('should NOT add a script to the body', () => {
@@ -89,7 +106,11 @@ describe('GoogleAnalyticsService', () => {
       describe('when the tracking id is empty', () => {
         beforeEach(() => {
           configSpy = createConfigSuccessSpy();
-          service = new GoogleAnalyticsService(angularticsSpy, configSpy, documentSpy);
+          service = new GoogleAnalyticsService(
+            angularticsSpy,
+            configSpy,
+            documentSpy
+          );
         });
 
         it('should NOT add a script to the body', () => {
@@ -113,7 +134,9 @@ describe('GoogleAnalyticsService', () => {
           expect(documentSpy.createElement('script')).toBe(scriptElementMock);
 
           expect(innerHTMLSpy).toHaveBeenCalledTimes(1);
-          expect(innerHTMLSpy.calls.argsFor(0)[0]).toContain(trackingIdTestValue);
+          expect(innerHTMLSpy.calls.argsFor(0)[0]).toContain(
+            trackingIdTestValue
+          );
         });
 
         it('should add a script to the body', () => {

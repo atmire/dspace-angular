@@ -4,17 +4,22 @@ import { convertToParamMap, Params } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 
 export class ActivatedRouteStub {
-
   private _testParams?: any;
   private _testData?: any;
   // ActivatedRoute.params is Observable
   private subject?: BehaviorSubject<any> = new BehaviorSubject(this.testParams);
-  private dataSubject?: BehaviorSubject<any> = new BehaviorSubject(this.testData);
+  private dataSubject?: BehaviorSubject<any> = new BehaviorSubject(
+    this.testData
+  );
 
   params = this.subject.asObservable();
   queryParams = this.subject.asObservable();
-  paramMap = this.subject.asObservable().pipe(map((params: Params) => convertToParamMap(params)));
-  queryParamMap = this.subject.asObservable().pipe(map((params: Params) => convertToParamMap(params)));
+  paramMap = this.subject
+    .asObservable()
+    .pipe(map((params: Params) => convertToParamMap(params)));
+  queryParamMap = this.subject
+    .asObservable()
+    .pipe(map((params: Params) => convertToParamMap(params)));
   data = this.dataSubject.asObservable();
 
   constructor(params?: Params, data?: any) {
@@ -54,7 +59,7 @@ export class ActivatedRouteStub {
   get snapshot() {
     return {
       params: this.testParams,
-      queryParamMap: convertToParamMap(this.testParams)
+      queryParamMap: convertToParamMap(this.testParams),
     };
   }
 }

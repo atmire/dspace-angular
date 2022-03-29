@@ -1,7 +1,13 @@
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
-import { distinctUntilChanged, filter, map, mergeMap, tap } from 'rxjs/operators';
+import {
+  distinctUntilChanged,
+  filter,
+  map,
+  mergeMap,
+  tap,
+} from 'rxjs/operators';
 
 import { RequestService } from '../data/request.service';
 import { hasValue, isNotEmpty } from '../../shared/empty.util';
@@ -12,7 +18,7 @@ import {
   SubmissionDeleteRequest,
   SubmissionPatchRequest,
   SubmissionPostRequest,
-  SubmissionRequest
+  SubmissionRequest,
 } from '../data/request.models';
 import { SubmitDataResponseDefinitionObject } from '../shared/submit-data-response-definition.model';
 import { HttpOptions } from '../dspace-rest/dspace-rest.service';
@@ -33,8 +39,8 @@ export class SubmissionRestService {
   constructor(
     protected rdbService: RemoteDataBuildService,
     protected requestService: RequestService,
-    protected halService: HALEndpointService) {
-  }
+    protected halService: HALEndpointService
+  ) {}
 
   /**
    * Fetch a RestRequest
@@ -44,18 +50,24 @@ export class SubmissionRestService {
    * @return Observable<SubmitDataResponseDefinitionObject>
    *     server response
    */
-  protected fetchRequest(requestId: string): Observable<SubmitDataResponseDefinitionObject> {
-    return this.rdbService.buildFromRequestUUID<SubmissionResponse>(requestId).pipe(
-      getFirstCompletedRemoteData(),
-      map((response: RemoteData<SubmissionResponse>) => {
-        if (response.hasFailed) {
-          throw new Error(response.errorMessage);
-        } else {
-          return hasValue(response.payload) ? response.payload.dataDefinition : response.payload;
-        }
-      }),
-      distinctUntilChanged()
-    );
+  protected fetchRequest(
+    requestId: string
+  ): Observable<SubmitDataResponseDefinitionObject> {
+    return this.rdbService
+      .buildFromRequestUUID<SubmissionResponse>(requestId)
+      .pipe(
+        getFirstCompletedRemoteData(),
+        map((response: RemoteData<SubmissionResponse>) => {
+          if (response.hasFailed) {
+            throw new Error(response.errorMessage);
+          } else {
+            return hasValue(response.payload)
+              ? response.payload.dataDefinition
+              : response.payload;
+          }
+        }),
+        distinctUntilChanged()
+      );
   }
 
   /**
@@ -68,11 +80,20 @@ export class SubmissionRestService {
    * @param collectionId
    *    The owning collection for the object
    */
-  protected getEndpointByIDHref(endpoint, resourceID, collectionId?: string): string {
-    let url = isNotEmpty(resourceID) ? `${endpoint}/${resourceID}` : `${endpoint}`;
+  protected getEndpointByIDHref(
+    endpoint,
+    resourceID,
+    collectionId?: string
+  ): string {
+    let url = isNotEmpty(resourceID)
+      ? `${endpoint}/${resourceID}`
+      : `${endpoint}`;
     url = new URLCombiner(url, '?projection=full').toString();
     if (collectionId) {
-      url = new URLCombiner(url, `&owningCollection=${collectionId}`).toString();
+      url = new URLCombiner(
+        url,
+        `&owningCollection=${collectionId}`
+      ).toString();
     }
     return url;
   }
@@ -87,16 +108,25 @@ export class SubmissionRestService {
    * @return Observable<SubmitDataResponseDefinitionObject>
    *     server response
    */
-  public deleteById(scopeId: string, linkName?: string): Observable<SubmitDataResponseDefinitionObject> {
+  public deleteById(
+    scopeId: string,
+    linkName?: string
+  ): Observable<SubmitDataResponseDefinitionObject> {
     const requestId = this.requestService.generateRequestId();
     return this.halService.getEndpoint(linkName || this.linkPath).pipe(
       filter((href: string) => isNotEmpty(href)),
       distinctUntilChanged(),
-      map((endpointURL: string) => this.getEndpointByIDHref(endpointURL, scopeId)),
-      map((endpointURL: string) => new SubmissionDeleteRequest(requestId, endpointURL)),
+      map((endpointURL: string) =>
+        this.getEndpointByIDHref(endpointURL, scopeId)
+      ),
+      map(
+        (endpointURL: string) =>
+          new SubmissionDeleteRequest(requestId, endpointURL)
+      ),
       tap((request: DeleteRequest) => this.requestService.send(request)),
       mergeMap(() => this.fetchRequest(requestId)),
-      distinctUntilChanged());
+      distinctUntilChanged()
+    );
   }
 
   /**
@@ -109,18 +139,24 @@ export class SubmissionRestService {
    * @return Observable<SubmitDataResponseDefinitionObject>
    *     server response
    */
-  public getDataById(linkName: string, id: string): Observable<SubmitDataResponseDefinitionObject> {
+  public getDataById(
+    linkName: string,
+    id: string
+  ): Observable<SubmitDataResponseDefinitionObject> {
     const requestId = this.requestService.generateRequestId();
     return this.halService.getEndpoint(linkName).pipe(
       map((endpointURL: string) => this.getEndpointByIDHref(endpointURL, id)),
       filter((href: string) => isNotEmpty(href)),
       distinctUntilChanged(),
-      map((endpointURL: string) => new SubmissionRequest(requestId, endpointURL)),
+      map(
+        (endpointURL: string) => new SubmissionRequest(requestId, endpointURL)
+      ),
       tap((request: RestRequest) => {
         this.requestService.send(request);
       }),
       mergeMap(() => this.fetchRequest(requestId)),
-      distinctUntilChanged());
+      distinctUntilChanged()
+    );
   }
 
   /**
@@ -139,16 +175,28 @@ export class SubmissionRestService {
    * @param collectionId
    *    The owning collection id
    */
-  public postToEndpoint(linkName: string, body: any, scopeId?: string, options?: HttpOptions, collectionId?: string): Observable<SubmitDataResponseDefinitionObject> {
+  public postToEndpoint(
+    linkName: string,
+    body: any,
+    scopeId?: string,
+    options?: HttpOptions,
+    collectionId?: string
+  ): Observable<SubmitDataResponseDefinitionObject> {
     const requestId = this.requestService.generateRequestId();
     return this.halService.getEndpoint(linkName).pipe(
       filter((href: string) => isNotEmpty(href)),
-      map((endpointURL: string) => this.getEndpointByIDHref(endpointURL, scopeId, collectionId)),
+      map((endpointURL: string) =>
+        this.getEndpointByIDHref(endpointURL, scopeId, collectionId)
+      ),
       distinctUntilChanged(),
-      map((endpointURL: string) => new SubmissionPostRequest(requestId, endpointURL, body, options)),
+      map(
+        (endpointURL: string) =>
+          new SubmissionPostRequest(requestId, endpointURL, body, options)
+      ),
       tap((request: PostRequest) => this.requestService.send(request)),
       mergeMap(() => this.fetchRequest(requestId)),
-      distinctUntilChanged());
+      distinctUntilChanged()
+    );
   }
 
   /**
@@ -163,16 +211,25 @@ export class SubmissionRestService {
    * @return Observable<SubmitDataResponseDefinitionObject>
    *     server response
    */
-  public patchToEndpoint(linkName: string, body: any, scopeId?: string): Observable<SubmitDataResponseDefinitionObject> {
+  public patchToEndpoint(
+    linkName: string,
+    body: any,
+    scopeId?: string
+  ): Observable<SubmitDataResponseDefinitionObject> {
     const requestId = this.requestService.generateRequestId();
     return this.halService.getEndpoint(linkName).pipe(
       filter((href: string) => isNotEmpty(href)),
-      map((endpointURL: string) => this.getEndpointByIDHref(endpointURL, scopeId)),
+      map((endpointURL: string) =>
+        this.getEndpointByIDHref(endpointURL, scopeId)
+      ),
       distinctUntilChanged(),
-      map((endpointURL: string) => new SubmissionPatchRequest(requestId, endpointURL, body)),
+      map(
+        (endpointURL: string) =>
+          new SubmissionPatchRequest(requestId, endpointURL, body)
+      ),
       tap((request: PostRequest) => this.requestService.send(request)),
       mergeMap(() => this.fetchRequest(requestId)),
-      distinctUntilChanged());
+      distinctUntilChanged()
+    );
   }
-
 }

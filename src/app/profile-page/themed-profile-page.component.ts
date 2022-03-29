@@ -8,7 +8,7 @@ import { ProfilePageComponent } from './profile-page.component';
 @Component({
   selector: 'ds-themed-profile-page',
   styleUrls: [],
-  templateUrl: './../shared/theme-support/themed.component.html'
+  templateUrl: './../shared/theme-support/themed.component.html',
 })
 export class ThemedProfilePageComponent extends ThemedComponent<ProfilePageComponent> {
   protected getComponentName(): string {
@@ -16,7 +16,9 @@ export class ThemedProfilePageComponent extends ThemedComponent<ProfilePageCompo
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../themes/${themeName}/app/profile-page/profile-page.component`);
+    return import(
+      `../../themes/${themeName}/app/profile-page/profile-page.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

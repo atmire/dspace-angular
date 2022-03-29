@@ -43,10 +43,10 @@ export class Bundle extends DSpaceObject {
   @link(BITSTREAM, true)
   bitstreams?: Observable<RemoteData<PaginatedList<Bitstream>>>;
 
-    /**
-     * The owning item for this Bundle
-     * Will be undefined unless the Item{@link HALLink} has been resolved.
-     */
+  /**
+   * The owning item for this Bundle
+   * Will be undefined unless the Item{@link HALLink} has been resolved.
+   */
   @link(ITEM)
   item?: Observable<RemoteData<Item>>;
 }

@@ -23,10 +23,12 @@ import { PaginationService } from '../../../../core/pagination/pagination.servic
 @Component({
   selector: 'ds-item-page-full-file-section',
   styleUrls: ['./full-file-section.component.scss'],
-  templateUrl: './full-file-section.component.html'
+  templateUrl: './full-file-section.component.html',
 })
-export class FullFileSectionComponent extends FileSectionComponent implements OnInit {
-
+export class FullFileSectionComponent
+  extends FileSectionComponent
+  implements OnInit
+{
   @Input() item: Item;
 
   label: string;
@@ -38,13 +40,13 @@ export class FullFileSectionComponent extends FileSectionComponent implements On
   originalOptions = Object.assign(new PaginationComponentOptions(), {
     id: 'obo',
     currentPage: 1,
-    pageSize: this.pageSize
+    pageSize: this.pageSize,
   });
 
   licenseOptions = Object.assign(new PaginationComponentOptions(), {
     id: 'lbo',
     currentPage: 1,
-    pageSize: this.pageSize
+    pageSize: this.pageSize,
   });
 
   constructor(
@@ -61,42 +63,59 @@ export class FullFileSectionComponent extends FileSectionComponent implements On
   }
 
   initialize(): void {
-    this.originals$ = this.paginationService.getCurrentPagination(this.originalOptions.id, this.originalOptions).pipe(
-      switchMap((options: PaginationComponentOptions) => this.bitstreamDataService.findAllByItemAndBundleName(
-        this.item,
-        'ORIGINAL',
-        {elementsPerPage: options.pageSize, currentPage: options.currentPage},
-        true,
-        true,
-        followLink('format'),
-        followLink('thumbnail'),
-      )),
-      tap((rd: RemoteData<PaginatedList<Bitstream>>) => {
+    this.originals$ = this.paginationService
+      .getCurrentPagination(this.originalOptions.id, this.originalOptions)
+      .pipe(
+        switchMap((options: PaginationComponentOptions) =>
+          this.bitstreamDataService.findAllByItemAndBundleName(
+            this.item,
+            'ORIGINAL',
+            {
+              elementsPerPage: options.pageSize,
+              currentPage: options.currentPage,
+            },
+            true,
+            true,
+            followLink('format'),
+            followLink('thumbnail')
+          )
+        ),
+        tap((rd: RemoteData<PaginatedList<Bitstream>>) => {
           if (hasValue(rd.errorMessage)) {
-            this.notificationsService.error(this.translateService.get('file-section.error.header'), `${rd.statusCode} ${rd.errorMessage}`);
+            this.notificationsService.error(
+              this.translateService.get('file-section.error.header'),
+              `${rd.statusCode} ${rd.errorMessage}`
+            );
           }
-        }
-      )
-    );
+        })
+      );
 
-    this.licenses$ = this.paginationService.getCurrentPagination(this.licenseOptions.id, this.licenseOptions).pipe(
-      switchMap((options: PaginationComponentOptions) => this.bitstreamDataService.findAllByItemAndBundleName(
-        this.item,
-        'LICENSE',
-        {elementsPerPage: options.pageSize, currentPage: options.currentPage},
-        true,
-        true,
-        followLink('format'),
-        followLink('thumbnail'),
-      )),
-      tap((rd: RemoteData<PaginatedList<Bitstream>>) => {
+    this.licenses$ = this.paginationService
+      .getCurrentPagination(this.licenseOptions.id, this.licenseOptions)
+      .pipe(
+        switchMap((options: PaginationComponentOptions) =>
+          this.bitstreamDataService.findAllByItemAndBundleName(
+            this.item,
+            'LICENSE',
+            {
+              elementsPerPage: options.pageSize,
+              currentPage: options.currentPage,
+            },
+            true,
+            true,
+            followLink('format'),
+            followLink('thumbnail')
+          )
+        ),
+        tap((rd: RemoteData<PaginatedList<Bitstream>>) => {
           if (hasValue(rd.errorMessage)) {
-            this.notificationsService.error(this.translateService.get('file-section.error.header'), `${rd.statusCode} ${rd.errorMessage}`);
+            this.notificationsService.error(
+              this.translateService.get('file-section.error.header'),
+              `${rd.statusCode} ${rd.errorMessage}`
+            );
           }
-        }
-      )
-    );
-
+        })
+      );
   }
 
   hasValuesInBundle(bundle: PaginatedList<Bitstream>) {
@@ -107,5 +126,4 @@ export class FullFileSectionComponent extends FileSectionComponent implements On
     this.paginationService.clearPagination(this.originalOptions.id);
     this.paginationService.clearPagination(this.licenseOptions.id);
   }
-
 }

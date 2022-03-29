@@ -15,7 +15,7 @@
     [disabled]="currentIndex === 0"
     (click)="prevMedia()"
   >
-    {{ "media-viewer.previous" | translate }}
+    {{ 'media-viewer.previous' | translate }}
   </button>
 
   <button
@@ -23,7 +23,7 @@
     [disabled]="currentIndex === filteredMedias.length - 1"
     (click)="nextMedia()"
   >
-    {{ "media-viewer.next" | translate }}
+    {{ 'media-viewer.next' | translate }}
   </button>
   <div ngbDropdown class="d-inline-block">
     <button
@@ -31,7 +31,7 @@
       id="dropdownBasic1"
       ngbDropdownToggle
     >
-      {{ "media-viewer.playlist" | translate }}
+      {{ 'media-viewer.playlist' | translate }}
     </button>
     <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
       <button

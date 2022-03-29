@@ -8,7 +8,7 @@ export interface WorkspaceitemSectionCcLicenseObject {
     id: string;
     fields: {
       [fieldId: string]: Option;
-    }
+    };
   };
   uri?: string;
   accepted?: boolean;

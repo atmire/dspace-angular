@@ -9,7 +9,10 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { StartsWithTextComponent } from './starts-with-text.component';
 import { PaginationComponentOptions } from '../../pagination/pagination-component-options.model';
-import { SortDirection, SortOptions } from '../../../core/cache/models/sort-options.model';
+import {
+  SortDirection,
+  SortOptions,
+} from '../../../core/cache/models/sort-options.model';
 import { FindListOptions } from '../../../core/data/request.models';
 import { of as observableOf } from 'rxjs';
 import { PaginationService } from '../../../core/pagination/pagination.service';
@@ -27,14 +30,19 @@ describe('StartsWithTextComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [CommonModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), NgbModule],
+      imports: [
+        CommonModule,
+        RouterTestingModule.withRoutes([]),
+        TranslateModule.forRoot(),
+        NgbModule,
+      ],
       declarations: [StartsWithTextComponent, EnumKeysPipe],
       providers: [
         { provide: 'startsWithOptions', useValue: options },
         { provide: 'paginationId', useValue: 'page-id' },
-        { provide: PaginationService, useValue: paginationService }
+        { provide: PaginationService, useValue: paginationService },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -78,7 +86,7 @@ describe('StartsWithTextComponent', () => {
     const expectedValue = '0';
     const extras: NavigationExtras = {
       queryParams: Object.assign({ startsWith: expectedValue }),
-      queryParamsHandling: 'merge'
+      queryParamsHandling: 'merge',
     };
 
     beforeEach(() => {
@@ -108,7 +116,7 @@ describe('StartsWithTextComponent', () => {
     const expectedValue = options[1];
     const extras: NavigationExtras = {
       queryParams: Object.assign({ startsWith: expectedValue }),
-      queryParamsHandling: 'merge'
+      queryParamsHandling: 'merge',
     };
 
     beforeEach(() => {
@@ -138,11 +146,13 @@ describe('StartsWithTextComponent', () => {
     const expectedValue = options[1];
     const extras: NavigationExtras = {
       queryParams: Object.assign({ startsWith: expectedValue }),
-      queryParamsHandling: 'merge'
+      queryParamsHandling: 'merge',
     };
 
     beforeEach(() => {
-      optionLink = fixture.debugElement.query(By.css('.list-inline-item:nth-child(2) > a')).nativeElement;
+      optionLink = fixture.debugElement.query(
+        By.css('.list-inline-item:nth-child(2) > a')
+      ).nativeElement;
       input = fixture.debugElement.query(By.css('input')).nativeElement;
       optionLink.click();
       fixture.detectChanges();
@@ -166,7 +176,7 @@ describe('StartsWithTextComponent', () => {
     const expectedValue = 'A';
     const extras: NavigationExtras = {
       queryParams: Object.assign({ startsWith: expectedValue }),
-      queryParamsHandling: 'merge'
+      queryParamsHandling: 'merge',
     };
 
     beforeEach(() => {
@@ -184,5 +194,4 @@ describe('StartsWithTextComponent', () => {
       expect(router.navigate).toHaveBeenCalledWith([], extras);
     });
   });
-
 });

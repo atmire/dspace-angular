@@ -1,4 +1,12 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 
 import { Observable, of as observableOf, Subscription } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
@@ -6,12 +14,18 @@ import { catchError, tap } from 'rxjs/operators';
 import { RequestParam } from '../../../core/cache/models/request-param.model';
 import { ExternalSourceService } from '../../../core/data/external-source.service';
 import { ExternalSource } from '../../../core/shared/external-source.model';
-import { buildPaginatedList, PaginatedList } from '../../../core/data/paginated-list.model';
+import {
+  buildPaginatedList,
+  PaginatedList,
+} from '../../../core/data/paginated-list.model';
 import { RemoteData } from '../../../core/data/remote-data';
 import { PageInfo } from '../../../core/shared/page-info.model';
 import { createSuccessfulRemoteDataObject } from '../../../shared/remote-data.utils';
 import { FindListOptions } from '../../../core/data/request.models';
-import { getFirstSucceededRemoteData, getFirstSucceededRemoteDataPayload } from '../../../core/shared/operators';
+import {
+  getFirstSucceededRemoteData,
+  getFirstSucceededRemoteDataPayload,
+} from '../../../core/shared/operators';
 import { HostWindowService } from '../../../shared/host-window.service';
 import { hasValue } from '../../../shared/empty.util';
 
@@ -38,9 +52,11 @@ export interface ExternalSourceData {
 @Component({
   selector: 'ds-submission-import-external-searchbar',
   styleUrls: ['./submission-import-external-searchbar.component.scss'],
-  templateUrl: './submission-import-external-searchbar.component.html'
+  templateUrl: './submission-import-external-searchbar.component.html',
 })
-export class SubmissionImportExternalSearchbarComponent implements OnInit, OnDestroy {
+export class SubmissionImportExternalSearchbarComponent
+  implements OnInit, OnDestroy
+{
   /**
    * The init external source value.
    */
@@ -68,7 +84,8 @@ export class SubmissionImportExternalSearchbarComponent implements OnInit, OnDes
   /**
    * The external source data to use to perform the search.
    */
-  @Output() public externalSourceData: EventEmitter<ExternalSourceData> = new EventEmitter<ExternalSourceData>();
+  @Output() public externalSourceData: EventEmitter<ExternalSourceData> =
+    new EventEmitter<ExternalSourceData>();
 
   /**
    * The external sources pagination data.
@@ -94,8 +111,7 @@ export class SubmissionImportExternalSearchbarComponent implements OnInit, OnDes
     private externalService: ExternalSourceService,
     private cdr: ChangeDetectorRef,
     protected windowService: HostWindowService
-  ) {
-  }
+  ) {}
 
   /**
    * Component initialization and retrieve first page of external sources.
@@ -103,7 +119,7 @@ export class SubmissionImportExternalSearchbarComponent implements OnInit, OnDes
   ngOnInit() {
     this.selectedElement = {
       id: '',
-      name: 'loading'
+      name: 'loading',
     };
     this.searchString = '';
     this.sourceList = [];
@@ -111,31 +127,35 @@ export class SubmissionImportExternalSearchbarComponent implements OnInit, OnDes
       elementsPerPage: 5,
       currentPage: 1,
       searchParams: [
-        new RequestParam('entityType', this.initExternalSourceData.entity)
-      ]
+        new RequestParam('entityType', this.initExternalSourceData.entity),
+      ],
     });
-    this.externalService.searchBy('findByEntityType', this.findListOptions).pipe(
-      catchError(() => {
-        const pageInfo = new PageInfo();
-        const paginatedList = buildPaginatedList(pageInfo, []);
-        const paginatedListRD = createSuccessfulRemoteDataObject(paginatedList);
-        return observableOf(paginatedListRD);
-      }),
-      getFirstSucceededRemoteDataPayload(),
-    ).subscribe((externalSource: PaginatedList<ExternalSource>) => {
-      externalSource.page.forEach((element) => {
-        this.sourceList.push({ id: element.id, name: element.name });
-        if (this.initExternalSourceData.sourceId === element.id) {
-          this.selectedElement = { id: element.id, name: element.name };
-          this.searchString = this.initExternalSourceData.query;
+    this.externalService
+      .searchBy('findByEntityType', this.findListOptions)
+      .pipe(
+        catchError(() => {
+          const pageInfo = new PageInfo();
+          const paginatedList = buildPaginatedList(pageInfo, []);
+          const paginatedListRD =
+            createSuccessfulRemoteDataObject(paginatedList);
+          return observableOf(paginatedListRD);
+        }),
+        getFirstSucceededRemoteDataPayload()
+      )
+      .subscribe((externalSource: PaginatedList<ExternalSource>) => {
+        externalSource.page.forEach((element) => {
+          this.sourceList.push({ id: element.id, name: element.name });
+          if (this.initExternalSourceData.sourceId === element.id) {
+            this.selectedElement = { id: element.id, name: element.name };
+            this.searchString = this.initExternalSourceData.query;
+          }
+        });
+        if (this.selectedElement.id === '') {
+          this.selectedElement = this.sourceList[0];
         }
+        this.pageInfo = externalSource.pageInfo;
+        this.cdr.detectChanges();
       });
-      if (this.selectedElement.id === '') {
-        this.selectedElement = this.sourceList[0];
-      }
-      this.pageInfo = externalSource.pageInfo;
-      this.cdr.detectChanges();
-    });
     this.isXsOrSm$ = this.windowService.isXsOrSm();
   }
 
@@ -150,31 +170,40 @@ export class SubmissionImportExternalSearchbarComponent implements OnInit, OnDes
    * Load the next pages of external sources.
    */
   public onScroll(): void {
-    if (!this.sourceListLoading && ((this.pageInfo.currentPage + 1) <= this.pageInfo.totalPages)) {
+    if (
+      !this.sourceListLoading &&
+      this.pageInfo.currentPage + 1 <= this.pageInfo.totalPages
+    ) {
       this.sourceListLoading = true;
       this.findListOptions = Object.assign({}, new FindListOptions(), {
         elementsPerPage: 5,
         currentPage: this.findListOptions.currentPage + 1,
         searchParams: [
-          new RequestParam('entityType', this.initExternalSourceData.entity)
-        ]
+          new RequestParam('entityType', this.initExternalSourceData.entity),
+        ],
       });
-      this.externalService.searchBy('findByEntityType', this.findListOptions).pipe(
-        catchError(() => {
-          const pageInfo = new PageInfo();
-          const paginatedList = buildPaginatedList(pageInfo, []);
-          const paginatedListRD = createSuccessfulRemoteDataObject(paginatedList);
-          return observableOf(paginatedListRD);
-        }),
-        getFirstSucceededRemoteData(),
-        tap(() => this.sourceListLoading = false)
-      ).subscribe((externalSource: RemoteData<PaginatedList<ExternalSource>>) => {
-        externalSource.payload.page.forEach((element) => {
-          this.sourceList.push({ id: element.id, name: element.name });
-        });
-        this.pageInfo = externalSource.payload.pageInfo;
-        this.cdr.detectChanges();
-      });
+      this.externalService
+        .searchBy('findByEntityType', this.findListOptions)
+        .pipe(
+          catchError(() => {
+            const pageInfo = new PageInfo();
+            const paginatedList = buildPaginatedList(pageInfo, []);
+            const paginatedListRD =
+              createSuccessfulRemoteDataObject(paginatedList);
+            return observableOf(paginatedListRD);
+          }),
+          getFirstSucceededRemoteData(),
+          tap(() => (this.sourceListLoading = false))
+        )
+        .subscribe(
+          (externalSource: RemoteData<PaginatedList<ExternalSource>>) => {
+            externalSource.payload.page.forEach((element) => {
+              this.sourceList.push({ id: element.id, name: element.name });
+            });
+            this.pageInfo = externalSource.payload.pageInfo;
+            this.cdr.detectChanges();
+          }
+        );
     }
   }
 
@@ -182,13 +211,11 @@ export class SubmissionImportExternalSearchbarComponent implements OnInit, OnDes
    * Passes the search parameters to the parent component.
    */
   public search(): void {
-    this.externalSourceData.emit(
-      {
-        entity: this.initExternalSourceData.entity,
-        sourceId: this.selectedElement.id,
-        query: this.searchString
-      }
-    );
+    this.externalSourceData.emit({
+      entity: this.initExternalSourceData.entity,
+      sourceId: this.selectedElement.id,
+      query: this.searchString,
+    });
   }
 
   /**
@@ -199,5 +226,4 @@ export class SubmissionImportExternalSearchbarComponent implements OnInit, OnDes
       this.sub.unsubscribe();
     }
   }
-
 }

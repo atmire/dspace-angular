@@ -20,11 +20,14 @@ import { TestScheduler } from 'rxjs/testing';
 import {
   createNoContentRemoteDataObject$,
   createSuccessfulRemoteDataObject,
-  createSuccessfulRemoteDataObject$
+  createSuccessfulRemoteDataObject$,
 } from '../../../shared/remote-data.utils';
 import { createPaginatedList } from '../../../shared/testing/utils.test';
 import { PaginationComponentOptions } from '../../../shared/pagination/pagination-component-options.model';
-import { SortDirection, SortOptions } from '../../../core/cache/models/sort-options.model';
+import {
+  SortDirection,
+  SortOptions,
+} from '../../../core/cache/models/sort-options.model';
 import { FindListOptions } from '../../../core/data/request.models';
 import { PaginationService } from '../../../core/pagination/pagination.service';
 import { PaginationServiceStub } from '../../../shared/testing/pagination-service.stub';
@@ -51,7 +54,8 @@ describe('BitstreamFormatsComponent', () => {
   bitstreamFormat2.uuid = 'test-uuid-2';
   bitstreamFormat2.id = 'test-uuid-2';
   bitstreamFormat2.shortDescription = 'License';
-  bitstreamFormat2.description = 'Item-specific license agreed upon to submission';
+  bitstreamFormat2.description =
+    'Item-specific license agreed upon to submission';
   bitstreamFormat2.mimetype = 'text/plain; charset=utf-8';
   bitstreamFormat2.supportLevel = BitstreamFormatSupportLevel.Known;
   bitstreamFormat2.internal = true;
@@ -61,7 +65,8 @@ describe('BitstreamFormatsComponent', () => {
   bitstreamFormat3.uuid = 'test-uuid-3';
   bitstreamFormat3.id = 'test-uuid-3';
   bitstreamFormat3.shortDescription = 'CC License';
-  bitstreamFormat3.description = 'Item-specific Creative Commons license agreed upon to submission';
+  bitstreamFormat3.description =
+    'Item-specific Creative Commons license agreed upon to submission';
   bitstreamFormat3.mimetype = 'text/html; charset=utf-8';
   bitstreamFormat3.supportLevel = BitstreamFormatSupportLevel.Supported;
   bitstreamFormat3.internal = true;
@@ -81,13 +86,21 @@ describe('BitstreamFormatsComponent', () => {
     bitstreamFormat1,
     bitstreamFormat2,
     bitstreamFormat3,
-    bitstreamFormat4
+    bitstreamFormat4,
   ];
-  const mockFormatsRD = createSuccessfulRemoteDataObject(createPaginatedList(mockFormatsList));
+  const mockFormatsRD = createSuccessfulRemoteDataObject(
+    createPaginatedList(mockFormatsList)
+  );
 
-  const pagination = Object.assign(new PaginationComponentOptions(), { currentPage: 1, pageSize: 20 });
+  const pagination = Object.assign(new PaginationComponentOptions(), {
+    currentPage: 1,
+    pageSize: 20,
+  });
   const sort = new SortOptions('score', SortDirection.DESC);
-  const findlistOptions = Object.assign(new FindListOptions(), { currentPage: 1, elementsPerPage: 20 });
+  const findlistOptions = Object.assign(new FindListOptions(), {
+    currentPage: 1,
+    elementsPerPage: 20,
+  });
 
   const initAsync = () => {
     notificationsServiceStub = new NotificationsServiceStub();
@@ -102,20 +115,32 @@ describe('BitstreamFormatsComponent', () => {
       deselectBitstreamFormat: {},
       deselectAllBitstreamFormats: {},
       delete: createSuccessfulRemoteDataObject$({}),
-      clearBitStreamFormatRequests: observableOf('cleared')
+      clearBitStreamFormatRequests: observableOf('cleared'),
     });
 
     paginationService = new PaginationServiceStub();
 
     TestBed.configureTestingModule({
-      imports: [CommonModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), NgbModule],
-      declarations: [BitstreamFormatsComponent, PaginationComponent, EnumKeysPipe],
+      imports: [
+        CommonModule,
+        RouterTestingModule.withRoutes([]),
+        TranslateModule.forRoot(),
+        NgbModule,
+      ],
+      declarations: [
+        BitstreamFormatsComponent,
+        PaginationComponent,
+        EnumKeysPipe,
+      ],
       providers: [
-        { provide: BitstreamFormatDataService, useValue: bitstreamFormatService },
+        {
+          provide: BitstreamFormatDataService,
+          useValue: bitstreamFormatService,
+        },
         { provide: HostWindowService, useValue: new HostWindowServiceStub(0) },
         { provide: NotificationsService, useValue: notificationsServiceStub },
-        { provide: PaginationService, useValue: paginationService }
-      ]
+        { provide: PaginationService, useValue: paginationService },
+      ],
     }).compileComponents();
   };
 
@@ -130,21 +155,31 @@ describe('BitstreamFormatsComponent', () => {
     beforeEach(initBeforeEach);
 
     it('should contain four formats', () => {
-      const tbody: HTMLElement = fixture.debugElement.query(By.css('#formats>tbody')).nativeElement;
+      const tbody: HTMLElement = fixture.debugElement.query(
+        By.css('#formats>tbody')
+      ).nativeElement;
       expect(tbody.children.length).toBe(4);
     });
 
     it('should contain the correct formats', () => {
-      const unknownName: HTMLElement = fixture.debugElement.query(By.css('#formats tr:nth-child(1) td:nth-child(2)')).nativeElement;
+      const unknownName: HTMLElement = fixture.debugElement.query(
+        By.css('#formats tr:nth-child(1) td:nth-child(2)')
+      ).nativeElement;
       expect(unknownName.textContent).toBe('Unknown');
 
-      const licenseName: HTMLElement = fixture.debugElement.query(By.css('#formats tr:nth-child(2) td:nth-child(2)')).nativeElement;
+      const licenseName: HTMLElement = fixture.debugElement.query(
+        By.css('#formats tr:nth-child(2) td:nth-child(2)')
+      ).nativeElement;
       expect(licenseName.textContent).toBe('License');
 
-      const ccLicenseName: HTMLElement = fixture.debugElement.query(By.css('#formats tr:nth-child(3) td:nth-child(2)')).nativeElement;
+      const ccLicenseName: HTMLElement = fixture.debugElement.query(
+        By.css('#formats tr:nth-child(3) td:nth-child(2)')
+      ).nativeElement;
       expect(ccLicenseName.textContent).toBe('CC License');
 
-      const adobeName: HTMLElement = fixture.debugElement.query(By.css('#formats tr:nth-child(4) td:nth-child(2)')).nativeElement;
+      const adobeName: HTMLElement = fixture.debugElement.query(
+        By.css('#formats tr:nth-child(4) td:nth-child(2)')
+      ).nativeElement;
       expect(adobeName.textContent).toBe('Adobe PDF');
     });
   });
@@ -157,23 +192,32 @@ describe('BitstreamFormatsComponent', () => {
 
       comp.selectBitStreamFormat(bitstreamFormat1, event);
 
-      expect(bitstreamFormatService.selectBitstreamFormat).toHaveBeenCalledWith(bitstreamFormat1);
+      expect(bitstreamFormatService.selectBitstreamFormat).toHaveBeenCalledWith(
+        bitstreamFormat1
+      );
     });
     it('should deselect a bitstreamFormat if it is deselected in the event', () => {
       const event = { target: { checked: false } };
 
       comp.selectBitStreamFormat(bitstreamFormat1, event);
 
-      expect(bitstreamFormatService.deselectBitstreamFormat).toHaveBeenCalledWith(bitstreamFormat1);
+      expect(
+        bitstreamFormatService.deselectBitstreamFormat
+      ).toHaveBeenCalledWith(bitstreamFormat1);
     });
     it('should be called when a user clicks a checkbox', () => {
       spyOn(comp, 'selectBitStreamFormat');
-      const unknownFormat = fixture.debugElement.query(By.css('#formats tr:nth-child(1) input'));
+      const unknownFormat = fixture.debugElement.query(
+        By.css('#formats tr:nth-child(1) input')
+      );
 
       const event = { target: { checked: true } };
       unknownFormat.triggerEventHandler('change', event);
 
-      expect(comp.selectBitStreamFormat).toHaveBeenCalledWith(bitstreamFormat1, event);
+      expect(comp.selectBitStreamFormat).toHaveBeenCalledWith(
+        bitstreamFormat1,
+        event
+      );
     });
   });
 
@@ -200,112 +244,166 @@ describe('BitstreamFormatsComponent', () => {
     beforeEach(initBeforeEach);
     it('should deselect all bitstreamFormats', () => {
       comp.deselectAll();
-      expect(bitstreamFormatService.deselectAllBitstreamFormats).toHaveBeenCalled();
+      expect(
+        bitstreamFormatService.deselectAllBitstreamFormats
+      ).toHaveBeenCalled();
     });
 
     it('should be called when the deselect all button is clicked', () => {
       spyOn(comp, 'deselectAll');
-      const deselectAllButton = fixture.debugElement.query(By.css('button.deselect'));
+      const deselectAllButton = fixture.debugElement.query(
+        By.css('button.deselect')
+      );
       deselectAllButton.triggerEventHandler('click', null);
 
       expect(comp.deselectAll).toHaveBeenCalled();
-
     });
   });
 
   describe('deleteFormats success', () => {
     beforeEach(waitForAsync(() => {
-        notificationsServiceStub = new NotificationsServiceStub();
+      notificationsServiceStub = new NotificationsServiceStub();
 
-        scheduler = getTestScheduler();
+      scheduler = getTestScheduler();
 
-        bitstreamFormatService = jasmine.createSpyObj('bitstreamFormatService', {
-          findAll: observableOf(mockFormatsRD),
-          find: createSuccessfulRemoteDataObject$(mockFormatsList[0]),
-          getSelectedBitstreamFormats: observableOf(mockFormatsList),
-          selectBitstreamFormat: {},
-          deselectBitstreamFormat: {},
-          deselectAllBitstreamFormats: {},
-          delete: createNoContentRemoteDataObject$(),
-          clearBitStreamFormatRequests: observableOf('cleared')
-        });
+      bitstreamFormatService = jasmine.createSpyObj('bitstreamFormatService', {
+        findAll: observableOf(mockFormatsRD),
+        find: createSuccessfulRemoteDataObject$(mockFormatsList[0]),
+        getSelectedBitstreamFormats: observableOf(mockFormatsList),
+        selectBitstreamFormat: {},
+        deselectBitstreamFormat: {},
+        deselectAllBitstreamFormats: {},
+        delete: createNoContentRemoteDataObject$(),
+        clearBitStreamFormatRequests: observableOf('cleared'),
+      });
 
       paginationService = new PaginationServiceStub();
 
       TestBed.configureTestingModule({
-          imports: [CommonModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), NgbModule],
-          declarations: [BitstreamFormatsComponent, PaginationComponent, EnumKeysPipe],
-          providers: [
-            { provide: BitstreamFormatDataService, useValue: bitstreamFormatService },
-            { provide: HostWindowService, useValue: new HostWindowServiceStub(0) },
-            { provide: NotificationsService, useValue: notificationsServiceStub },
-            { provide: PaginationService, useValue: paginationService }
-          ]
-        }).compileComponents();
-      }
-    ));
+        imports: [
+          CommonModule,
+          RouterTestingModule.withRoutes([]),
+          TranslateModule.forRoot(),
+          NgbModule,
+        ],
+        declarations: [
+          BitstreamFormatsComponent,
+          PaginationComponent,
+          EnumKeysPipe,
+        ],
+        providers: [
+          {
+            provide: BitstreamFormatDataService,
+            useValue: bitstreamFormatService,
+          },
+          {
+            provide: HostWindowService,
+            useValue: new HostWindowServiceStub(0),
+          },
+          { provide: NotificationsService, useValue: notificationsServiceStub },
+          { provide: PaginationService, useValue: paginationService },
+        ],
+      }).compileComponents();
+    }));
 
     beforeEach(initBeforeEach);
     it('should clear bitstream formats  ', () => {
       comp.deleteFormats();
 
-      expect(bitstreamFormatService.clearBitStreamFormatRequests).toHaveBeenCalled();
-      expect(bitstreamFormatService.delete).toHaveBeenCalledWith(bitstreamFormat1.id);
-      expect(bitstreamFormatService.delete).toHaveBeenCalledWith(bitstreamFormat2.id);
-      expect(bitstreamFormatService.delete).toHaveBeenCalledWith(bitstreamFormat3.id);
-      expect(bitstreamFormatService.delete).toHaveBeenCalledWith(bitstreamFormat4.id);
+      expect(
+        bitstreamFormatService.clearBitStreamFormatRequests
+      ).toHaveBeenCalled();
+      expect(bitstreamFormatService.delete).toHaveBeenCalledWith(
+        bitstreamFormat1.id
+      );
+      expect(bitstreamFormatService.delete).toHaveBeenCalledWith(
+        bitstreamFormat2.id
+      );
+      expect(bitstreamFormatService.delete).toHaveBeenCalledWith(
+        bitstreamFormat3.id
+      );
+      expect(bitstreamFormatService.delete).toHaveBeenCalledWith(
+        bitstreamFormat4.id
+      );
 
-      expect(notificationsServiceStub.success).toHaveBeenCalledWith('admin.registries.bitstream-formats.delete.success.head',
-        'admin.registries.bitstream-formats.delete.success.amount');
+      expect(notificationsServiceStub.success).toHaveBeenCalledWith(
+        'admin.registries.bitstream-formats.delete.success.head',
+        'admin.registries.bitstream-formats.delete.success.amount'
+      );
       expect(notificationsServiceStub.error).not.toHaveBeenCalled();
-
     });
   });
 
   describe('deleteFormats error', () => {
     beforeEach(waitForAsync(() => {
-        notificationsServiceStub = new NotificationsServiceStub();
+      notificationsServiceStub = new NotificationsServiceStub();
 
-        scheduler = getTestScheduler();
+      scheduler = getTestScheduler();
 
-        bitstreamFormatService = jasmine.createSpyObj('bitstreamFormatService', {
-          findAll: observableOf(mockFormatsRD),
-          find: createSuccessfulRemoteDataObject$(mockFormatsList[0]),
-          getSelectedBitstreamFormats: observableOf(mockFormatsList),
-          selectBitstreamFormat: {},
-          deselectBitstreamFormat: {},
-          deselectAllBitstreamFormats: {},
-          delete: observableOf(false),
-          clearBitStreamFormatRequests: observableOf('cleared')
-        });
+      bitstreamFormatService = jasmine.createSpyObj('bitstreamFormatService', {
+        findAll: observableOf(mockFormatsRD),
+        find: createSuccessfulRemoteDataObject$(mockFormatsList[0]),
+        getSelectedBitstreamFormats: observableOf(mockFormatsList),
+        selectBitstreamFormat: {},
+        deselectBitstreamFormat: {},
+        deselectAllBitstreamFormats: {},
+        delete: observableOf(false),
+        clearBitStreamFormatRequests: observableOf('cleared'),
+      });
 
       paginationService = new PaginationServiceStub();
 
       TestBed.configureTestingModule({
-          imports: [CommonModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), NgbModule],
-          declarations: [BitstreamFormatsComponent, PaginationComponent, EnumKeysPipe],
-          providers: [
-            { provide: BitstreamFormatDataService, useValue: bitstreamFormatService },
-            { provide: HostWindowService, useValue: new HostWindowServiceStub(0) },
-            { provide: NotificationsService, useValue: notificationsServiceStub },
-            { provide: PaginationService, useValue: paginationService }
-          ]
-        }).compileComponents();
-      }
-    ));
+        imports: [
+          CommonModule,
+          RouterTestingModule.withRoutes([]),
+          TranslateModule.forRoot(),
+          NgbModule,
+        ],
+        declarations: [
+          BitstreamFormatsComponent,
+          PaginationComponent,
+          EnumKeysPipe,
+        ],
+        providers: [
+          {
+            provide: BitstreamFormatDataService,
+            useValue: bitstreamFormatService,
+          },
+          {
+            provide: HostWindowService,
+            useValue: new HostWindowServiceStub(0),
+          },
+          { provide: NotificationsService, useValue: notificationsServiceStub },
+          { provide: PaginationService, useValue: paginationService },
+        ],
+      }).compileComponents();
+    }));
 
     beforeEach(initBeforeEach);
     it('should clear bitstream formats  ', () => {
       comp.deleteFormats();
 
-      expect(bitstreamFormatService.clearBitStreamFormatRequests).toHaveBeenCalled();
-      expect(bitstreamFormatService.delete).toHaveBeenCalledWith(bitstreamFormat1.id);
-      expect(bitstreamFormatService.delete).toHaveBeenCalledWith(bitstreamFormat2.id);
-      expect(bitstreamFormatService.delete).toHaveBeenCalledWith(bitstreamFormat3.id);
-      expect(bitstreamFormatService.delete).toHaveBeenCalledWith(bitstreamFormat4.id);
+      expect(
+        bitstreamFormatService.clearBitStreamFormatRequests
+      ).toHaveBeenCalled();
+      expect(bitstreamFormatService.delete).toHaveBeenCalledWith(
+        bitstreamFormat1.id
+      );
+      expect(bitstreamFormatService.delete).toHaveBeenCalledWith(
+        bitstreamFormat2.id
+      );
+      expect(bitstreamFormatService.delete).toHaveBeenCalledWith(
+        bitstreamFormat3.id
+      );
+      expect(bitstreamFormatService.delete).toHaveBeenCalledWith(
+        bitstreamFormat4.id
+      );
 
-      expect(notificationsServiceStub.error).toHaveBeenCalledWith('admin.registries.bitstream-formats.delete.failure.head',
-        'admin.registries.bitstream-formats.delete.failure.amount');
+      expect(notificationsServiceStub.error).toHaveBeenCalledWith(
+        'admin.registries.bitstream-formats.delete.failure.head',
+        'admin.registries.bitstream-formats.delete.failure.amount'
+      );
       expect(notificationsServiceStub.success).not.toHaveBeenCalled();
     });
   });

@@ -5,10 +5,11 @@ import { INotification } from './models/notification.model';
 
 export const NotificationsActionTypes = {
   NEW_NOTIFICATION: type('dspace/notifications/NEW_NOTIFICATION'),
-  REMOVE_ALL_NOTIFICATIONS: type('dspace/notifications/REMOVE_ALL_NOTIFICATIONS'),
+  REMOVE_ALL_NOTIFICATIONS: type(
+    'dspace/notifications/REMOVE_ALL_NOTIFICATIONS'
+  ),
   REMOVE_NOTIFICATION: type('dspace/notifications/REMOVE_NOTIFICATION'),
 };
-
 
 /**
  * New notification.
@@ -32,7 +33,7 @@ export class NewNotificationAction implements Action {
 export class RemoveAllNotificationsAction implements Action {
   public type: string = NotificationsActionTypes.REMOVE_ALL_NOTIFICATIONS;
 
-  constructor(public payload?: any) { }
+  constructor(public payload?: any) {}
 }
 
 /**
@@ -49,12 +50,11 @@ export class RemoveNotificationAction implements Action {
   }
 }
 
-
 /**
  * Actions type.
  * @type {NotificationsActions}
  */
-export type NotificationsActions
-  = NewNotificationAction
+export type NotificationsActions =
+  | NewNotificationAction
   | RemoveAllNotificationsAction
   | RemoveNotificationAction;

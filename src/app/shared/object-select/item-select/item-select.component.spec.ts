@@ -33,14 +33,15 @@ describe('ItemSelectComponent', () => {
         {
           key: 'dc.title',
           language: 'en_US',
-          value: 'This is just a title'
+          value: 'This is just a title',
         },
         {
           key: 'dc.type',
           language: null,
-          value: 'Article'
-        }],
-      _links: { self: { href: 'selfId1' } }
+          value: 'Article',
+        },
+      ],
+      _links: { self: { href: 'selfId1' } },
     }),
     Object.assign(new Item(), {
       id: 'id2',
@@ -49,39 +50,65 @@ describe('ItemSelectComponent', () => {
         {
           key: 'dc.title',
           language: 'en_US',
-          value: 'This is just another title'
+          value: 'This is just another title',
         },
         {
           key: 'dc.type',
           language: null,
-          value: 'Article'
-        }],
-      _links: { self: { href: 'selfId2' } }
-    })
+          value: 'Article',
+        },
+      ],
+      _links: { self: { href: 'selfId2' } },
+    }),
   ];
-  const mockItems = createSuccessfulRemoteDataObject$(createPaginatedList(mockItemList));
-  const mockPaginationOptions = Object.assign(new PaginationComponentOptions(), {
-    id: 'search-page-configuration',
-    pageSize: 10,
-    currentPage: 1
-  });
+  const mockItems = createSuccessfulRemoteDataObject$(
+    createPaginatedList(mockItemList)
+  );
+  const mockPaginationOptions = Object.assign(
+    new PaginationComponentOptions(),
+    {
+      id: 'search-page-configuration',
+      pageSize: 10,
+      currentPage: 1,
+    }
+  );
 
   paginationService = new PaginationServiceStub(mockPaginationOptions);
 
-  const authorizationDataService = new AuthorizationDataService(null, null, null, null, null, null, null, null, null, null);
-
+  const authorizationDataService = new AuthorizationDataService(
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  );
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), SharedModule, RouterTestingModule.withRoutes([])],
+      imports: [
+        TranslateModule.forRoot(),
+        SharedModule,
+        RouterTestingModule.withRoutes([]),
+      ],
       declarations: [],
       providers: [
-        { provide: ObjectSelectService, useValue: new ObjectSelectServiceStub([mockItemList[1].id]) },
+        {
+          provide: ObjectSelectService,
+          useValue: new ObjectSelectServiceStub([mockItemList[1].id]),
+        },
         { provide: HostWindowService, useValue: new HostWindowServiceStub(0) },
         { provide: PaginationService, useValue: paginationService },
-        { provide: AuthorizationDataService, useValue: authorizationDataService }
+        {
+          provide: AuthorizationDataService,
+          useValue: authorizationDataService,
+        },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -95,7 +122,9 @@ describe('ItemSelectComponent', () => {
   });
 
   it(`should show a list of ${mockItemList.length} items`, () => {
-    const tbody: HTMLElement = fixture.debugElement.query(By.css('table#item-select tbody')).nativeElement;
+    const tbody: HTMLElement = fixture.debugElement.query(
+      By.css('table#item-select tbody')
+    ).nativeElement;
     expect(tbody.children.length).toBe(mockItemList.length);
   });
 
@@ -103,7 +132,9 @@ describe('ItemSelectComponent', () => {
     let checkbox: HTMLInputElement;
 
     beforeEach(() => {
-      checkbox = fixture.debugElement.query(By.css('input.item-checkbox')).nativeElement;
+      checkbox = fixture.debugElement.query(
+        By.css('input.item-checkbox')
+      ).nativeElement;
     });
 
     it('should initially be unchecked', () => {
@@ -127,7 +158,9 @@ describe('ItemSelectComponent', () => {
     let confirmButton: HTMLButtonElement;
 
     beforeEach(() => {
-      confirmButton = fixture.debugElement.query(By.css('button.item-confirm')).nativeElement;
+      confirmButton = fixture.debugElement.query(
+        By.css('button.item-confirm')
+      ).nativeElement;
       spyOn(comp.confirm, 'emit').and.callThrough();
     });
 
@@ -141,7 +174,9 @@ describe('ItemSelectComponent', () => {
     let cancelButton: HTMLButtonElement;
 
     beforeEach(() => {
-      cancelButton = fixture.debugElement.query(By.css('button.item-cancel')).nativeElement;
+      cancelButton = fixture.debugElement.query(
+        By.css('button.item-cancel')
+      ).nativeElement;
       spyOn(comp.cancel, 'emit').and.callThrough();
     });
 
@@ -152,16 +187,19 @@ describe('ItemSelectComponent', () => {
   });
 
   describe('when the authorize feature is not authorized', () => {
-
     beforeEach(() => {
       comp.featureId = FeatureID.CanManageMappings;
-      spyOn(authorizationDataService, 'isAuthorized').and.returnValue(of(false));
+      spyOn(authorizationDataService, 'isAuthorized').and.returnValue(
+        of(false)
+      );
     });
 
     it('should disable the checkbox', waitForAsync(() => {
       fixture.detectChanges();
       fixture.whenStable().then(() => {
-        const checkbox = fixture.debugElement.query(By.css('input.item-checkbox')).nativeElement;
+        const checkbox = fixture.debugElement.query(
+          By.css('input.item-checkbox')
+        ).nativeElement;
         expect(authorizationDataService.isAuthorized).toHaveBeenCalled();
         expect(checkbox.disabled).toBeTrue();
       });

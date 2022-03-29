@@ -16,7 +16,6 @@ import { DefaultChangeAnalyzer } from '../data/default-change-analyzer.service';
 @Injectable()
 @dataService(SUBMISSION_CC_LICENSE)
 export class SubmissionCcLicenseDataService extends DataService<SubmissionCcLicence> {
-
   protected linkPath = 'submissioncclicenses';
 
   constructor(
@@ -27,7 +26,7 @@ export class SubmissionCcLicenseDataService extends DataService<SubmissionCcLice
     protected objectCache: ObjectCacheService,
     protected rdbService: RemoteDataBuildService,
     protected requestService: RequestService,
-    protected store: Store<CoreState>,
+    protected store: Store<CoreState>
   ) {
     super();
   }

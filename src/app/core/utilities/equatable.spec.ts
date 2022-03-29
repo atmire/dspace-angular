@@ -12,22 +12,17 @@ class Dog extends EquatableObject<Dog> {
   public owner: Owner;
 
   @fieldsForEquals('name')
-  public favouriteToy: { name: string, colour: string };
+  public favouriteToy: { name: string; colour: string };
 }
 
 class Owner extends EquatableObject<Owner> {
   @excludeFromEquals
   favouriteFood: string;
 
-  constructor(
-    public name: string,
-    public age: number,
-    favouriteFood: string
-  ) {
+  constructor(public name: string, public age: number, favouriteFood: string) {
     super();
     this.favouriteFood = favouriteFood;
   }
-
 }
 
 describe('equatable', () => {
@@ -83,28 +78,28 @@ describe('equatable', () => {
     expect(isEqual).toBe(false);
   });
 
-  it('should return true when the other object\'s nested object only differs in fields that are marked as excludeFromEquals, when the nested object is not marked decorated with @fieldsForEquals', () => {
+  it("should return true when the other object's nested object only differs in fields that are marked as excludeFromEquals, when the nested object is not marked decorated with @fieldsForEquals", () => {
     const copyOfDogRoger = cloneDeep(dogRoger);
     copyOfDogRoger.owner.favouriteFood = 'Sushi';
     const isEqual = dogRoger.equals(copyOfDogRoger);
     expect(isEqual).toBe(true);
   });
 
-  it('should return false when the other object\'s nested object differs in fields that are not marked as excludeFromEquals, when the nested object is not marked decorated with @fieldsForEquals', () => {
+  it("should return false when the other object's nested object differs in fields that are not marked as excludeFromEquals, when the nested object is not marked decorated with @fieldsForEquals", () => {
     const copyOfDogRoger = cloneDeep(dogRoger);
     copyOfDogRoger.owner.age = 36;
     const isEqual = dogRoger.equals(copyOfDogRoger);
     expect(isEqual).toBe(false);
   });
 
-  it('should return true when the other object\'s nested object does not differ in fields that are listed inside the nested @fieldsForEquals decorator', () => {
+  it("should return true when the other object's nested object does not differ in fields that are listed inside the nested @fieldsForEquals decorator", () => {
     const copyOfDogRoger = cloneDeep(dogRoger);
     copyOfDogRoger.favouriteToy.colour = 'green';
     const isEqual = dogRoger.equals(copyOfDogRoger);
     expect(isEqual).toBe(true);
   });
 
-  it('should return false when the other object\'s nested object differs in fields that are listed inside the nested @fieldsForEquals decorator', () => {
+  it("should return false when the other object's nested object differs in fields that are listed inside the nested @fieldsForEquals decorator", () => {
     const copyOfDogRoger = cloneDeep(dogRoger);
     copyOfDogRoger.favouriteToy.name = 'Mister Bone';
     const isEqual = dogRoger.equals(copyOfDogRoger);

@@ -1,5 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectionStrategy, DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  DebugElement,
+  NO_ERRORS_SCHEMA,
+} from '@angular/core';
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
@@ -34,44 +38,52 @@ let comp: JournalComponent;
 let fixture: ComponentFixture<JournalComponent>;
 
 const mockItem: Item = Object.assign(new Item(), {
-  bundles: createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), [])),
+  bundles: createSuccessfulRemoteDataObject$(
+    buildPaginatedList(new PageInfo(), [])
+  ),
   metadata: {
     'creativeworkseries.issn': [
       {
         language: 'en_US',
-        value: '1234'
-      }
+        value: '1234',
+      },
     ],
     'creativework.publisher': [
       {
         language: 'en_US',
-        value: 'a publisher'
-      }
+        value: 'a publisher',
+      },
     ],
     'dc.description': [
       {
         language: 'en_US',
-        value: 'desc'
-      }
-    ]
-  }
+        value: 'desc',
+      },
+    ],
+  },
 });
 
 describe('JournalComponent', () => {
   const mockBitstreamDataService = {
     getThumbnailFor(item: Item): Observable<RemoteData<Bitstream>> {
       return createSuccessfulRemoteDataObject$(new Bitstream());
-    }
+    },
   };
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot({
-        loader: {
-          provide: TranslateLoader,
-          useClass: TranslateLoaderMock
-        }
-      })],
-      declarations: [JournalComponent, GenericItemPageFieldComponent, TruncatePipe],
+      imports: [
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useClass: TranslateLoaderMock,
+          },
+        }),
+      ],
+      declarations: [
+        JournalComponent,
+        GenericItemPageFieldComponent,
+        TruncatePipe,
+      ],
       providers: [
         { provide: ItemDataService, useValue: {} },
         { provide: TruncatableService, useValue: {} },
@@ -87,13 +99,15 @@ describe('JournalComponent', () => {
         { provide: NotificationsService, useValue: {} },
         { provide: DefaultChangeAnalyzer, useValue: {} },
         { provide: BitstreamDataService, useValue: mockBitstreamDataService },
-        { provide: RouteService, useValue: {} }
+        { provide: RouteService, useValue: {} },
       ],
 
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(JournalComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(JournalComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -111,7 +125,10 @@ describe('JournalComponent', () => {
   }
 });
 
-function containsFieldInput(fields: DebugElement[], metadataKey: string): boolean {
+function containsFieldInput(
+  fields: DebugElement[],
+  metadataKey: string
+): boolean {
   for (const field of fields) {
     const fieldComp = field.componentInstance;
     if (isNotEmpty(fieldComp.fields)) {

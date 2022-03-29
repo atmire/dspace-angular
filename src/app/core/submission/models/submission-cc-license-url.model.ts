@@ -8,7 +8,6 @@ import { SUBMISSION_CC_LICENSE_URL } from './submission-cc-licence-link.resource
 @typedObject
 @inheritSerialization(HALResource)
 export class SubmissionCcLicenceUrl extends HALResource {
-
   static type = SUBMISSION_CC_LICENSE_URL;
 
   /**

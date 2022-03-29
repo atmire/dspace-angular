@@ -19,7 +19,28 @@ import { ListableObject } from '../object-collection/shared/listable-object.mode
   templateUrl: '../theme-support/themed.component.html',
 })
 export class ThemedSearchComponent extends ThemedComponent<SearchComponent> {
-  protected inAndOutputNames: (keyof SearchComponent & keyof this)[] = ['configurationList', 'context', 'configuration', 'fixedFilterQuery', 'useCachedVersionIfAvailable', 'inPlaceSearch', 'linkType', 'paginationId', 'searchEnabled', 'sideBarWidth', 'searchFormPlaceholder', 'selectable', 'selectionConfig', 'showSidebar', 'showViewModes', 'useUniquePageId', 'viewModeList', 'resultFound', 'deselectObject', 'selectObject'];
+  protected inAndOutputNames: (keyof SearchComponent & keyof this)[] = [
+    'configurationList',
+    'context',
+    'configuration',
+    'fixedFilterQuery',
+    'useCachedVersionIfAvailable',
+    'inPlaceSearch',
+    'linkType',
+    'paginationId',
+    'searchEnabled',
+    'sideBarWidth',
+    'searchFormPlaceholder',
+    'selectable',
+    'selectionConfig',
+    'showSidebar',
+    'showViewModes',
+    'useUniquePageId',
+    'viewModeList',
+    'resultFound',
+    'deselectObject',
+    'selectObject',
+  ];
 
   @Input() configurationList: SearchConfigurationOption[] = [];
 
@@ -55,18 +76,23 @@ export class ThemedSearchComponent extends ThemedComponent<SearchComponent> {
 
   @Input() viewModeList: ViewMode[];
 
-  @Output() resultFound: EventEmitter<SearchObjects<DSpaceObject>> = new EventEmitter<SearchObjects<DSpaceObject>>();
+  @Output() resultFound: EventEmitter<SearchObjects<DSpaceObject>> =
+    new EventEmitter<SearchObjects<DSpaceObject>>();
 
-  @Output() deselectObject: EventEmitter<ListableObject> = new EventEmitter<ListableObject>();
+  @Output() deselectObject: EventEmitter<ListableObject> =
+    new EventEmitter<ListableObject>();
 
-  @Output() selectObject: EventEmitter<ListableObject> = new EventEmitter<ListableObject>();
+  @Output() selectObject: EventEmitter<ListableObject> =
+    new EventEmitter<ListableObject>();
 
   protected getComponentName(): string {
     return 'SearchComponent';
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../themes/${themeName}/app/shared/search/search.component`);
+    return import(
+      `../../../themes/${themeName}/app/shared/search/search.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

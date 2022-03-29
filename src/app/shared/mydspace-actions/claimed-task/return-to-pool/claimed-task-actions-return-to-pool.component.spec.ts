@@ -1,5 +1,14 @@
-import { ChangeDetectionStrategy, Injector, NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, waitForAsync } from '@angular/core/testing';
+import {
+  ChangeDetectionStrategy,
+  Injector,
+  NO_ERRORS_SCHEMA,
+} from '@angular/core';
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  waitForAsync,
+} from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
@@ -31,34 +40,48 @@ let mockPoolTaskDataService: PoolTaskDataService;
 describe('ClaimedTaskActionsReturnToPoolComponent', () => {
   const object = Object.assign(new ClaimedTask(), { id: 'claimed-task-1' });
   const claimedTaskService = jasmine.createSpyObj('claimedTaskService', {
-    returnToPoolTask: of(new ProcessTaskResponse(true))
+    returnToPoolTask: of(new ProcessTaskResponse(true)),
   });
 
   beforeEach(waitForAsync(() => {
-    mockPoolTaskDataService = new PoolTaskDataService(null, null, null, null, null, null, null, null);
+    mockPoolTaskDataService = new PoolTaskDataService(
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    );
     TestBed.configureTestingModule({
       imports: [
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
-            useClass: TranslateLoaderMock
-          }
-        })
+            useClass: TranslateLoaderMock,
+          },
+        }),
       ],
       providers: [
         { provide: ClaimedTaskDataService, useValue: claimedTaskService },
         { provide: Injector, useValue: {} },
-        { provide: NotificationsService, useValue: new NotificationsServiceStub() },
+        {
+          provide: NotificationsService,
+          useValue: new NotificationsServiceStub(),
+        },
         { provide: Router, useValue: new RouterStub() },
         { provide: SearchService, useValue: searchService },
         { provide: RequestService, useValue: requestService },
         { provide: PoolTaskDataService, useValue: mockPoolTaskDataService },
       ],
       declarations: [ClaimedTaskActionsReturnToPoolComponent],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(ClaimedTaskActionsReturnToPoolComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(ClaimedTaskActionsReturnToPoolComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(fakeAsync(() => {
@@ -90,10 +113,11 @@ describe('ClaimedTaskActionsReturnToPoolComponent', () => {
       fixture.detectChanges();
     });
 
-    it('should call claimedTaskService\'s returnToPoolTask', () => {
-      expect(claimedTaskService.returnToPoolTask).toHaveBeenCalledWith(object.id);
+    it("should call claimedTaskService's returnToPoolTask", () => {
+      expect(claimedTaskService.returnToPoolTask).toHaveBeenCalledWith(
+        object.id
+      );
     });
-
   });
 
   describe('reloadObjectExecution', () => {
@@ -109,5 +133,4 @@ describe('ClaimedTaskActionsReturnToPoolComponent', () => {
       expect(mockPoolTaskDataService.findByItem).toHaveBeenCalledWith('uuid');
     });
   });
-
 });

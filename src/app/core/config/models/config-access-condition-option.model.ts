@@ -2,7 +2,6 @@
  * Model class for an Access Condition
  */
 export class AccessConditionOption {
-
   /**
    * The name for this Access Condition
    */

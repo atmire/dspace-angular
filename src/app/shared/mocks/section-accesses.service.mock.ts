@@ -2,8 +2,8 @@ import { SubmissionFormsModel } from '../../core/config/models/config-submission
 import { of as observableOf } from 'rxjs';
 
 const dataRes = Object.assign(new SubmissionFormsModel(), {
-  'id': 'AccessConditionDefaultConfiguration',
-  'accessConditions': [],
+  id: 'AccessConditionDefaultConfiguration',
+  accessConditions: [],
 });
 
 export function getSectionAccessesService() {

@@ -15,24 +15,27 @@ import { MenuID } from './initial-menus-state';
  */
 @Injectable()
 export class MenuEffects {
-
   /**
    * On route change, build menu sections for every menu type depending on the current route data
    */
-  public buildRouteMenuSections$: Observable<Action> = createEffect(() => this.actions$
-    .pipe(
-      ofType(ROUTER_NAVIGATED),
-      tap(() => {
-        Object.values(MenuID).forEach((menuID) => {
-          this.buildRouteMenuSections(menuID);
-        });
-      })
-    ), { dispatch: false });
+  public buildRouteMenuSections$: Observable<Action> = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(ROUTER_NAVIGATED),
+        tap(() => {
+          Object.values(MenuID).forEach((menuID) => {
+            this.buildRouteMenuSections(menuID);
+          });
+        })
+      ),
+    { dispatch: false }
+  );
 
-  constructor(private actions$: Actions,
+  constructor(
+    private actions$: Actions,
     private menuService: MenuService,
-    private route: ActivatedRoute) {
-  }
+    private route: ActivatedRoute
+  ) {}
 
   /**
    * Build menu sections depending on the current route
@@ -41,23 +44,29 @@ export class MenuEffects {
    * @param menuID  The menu to add/remove sections to/from
    */
   buildRouteMenuSections(menuID: MenuID) {
-    this.menuService.getNonPersistentMenuSections(menuID).pipe(
-      map((sections) => sections.map((section) => section.id)),
-      take(1)
-    ).subscribe((shouldNotPersistIDs: string[]) => {
-      const resolvedSections = this.resolveRouteMenuSections(this.route.root, menuID);
-      resolvedSections.forEach((section) => {
-        const index = shouldNotPersistIDs.indexOf(section.id);
-        if (index > -1) {
-          shouldNotPersistIDs.splice(index, 1);
-        } else {
-          this.menuService.addSection(menuID, section);
-        }
+    this.menuService
+      .getNonPersistentMenuSections(menuID)
+      .pipe(
+        map((sections) => sections.map((section) => section.id)),
+        take(1)
+      )
+      .subscribe((shouldNotPersistIDs: string[]) => {
+        const resolvedSections = this.resolveRouteMenuSections(
+          this.route.root,
+          menuID
+        );
+        resolvedSections.forEach((section) => {
+          const index = shouldNotPersistIDs.indexOf(section.id);
+          if (index > -1) {
+            shouldNotPersistIDs.splice(index, 1);
+          } else {
+            this.menuService.addSection(menuID, section);
+          }
+        });
+        shouldNotPersistIDs.forEach((id) => {
+          this.menuService.removeSection(menuID, id);
+        });
       });
-      shouldNotPersistIDs.forEach((id) => {
-        this.menuService.removeSection(menuID, id);
-      });
-    });
   }
 
   /**
@@ -65,7 +74,10 @@ export class MenuEffects {
    * @param route   The route to resolve data for
    * @param menuID  The menu to resolve data for
    */
-  resolveRouteMenuSections(route: ActivatedRoute, menuID: MenuID): MenuSection[] {
+  resolveRouteMenuSections(
+    route: ActivatedRoute,
+    menuID: MenuID
+  ): MenuSection[] {
     const data = route.snapshot.data;
     const params = route.snapshot.params;
     const last: boolean = hasNoValue(route.firstChild);
@@ -79,7 +91,10 @@ export class MenuEffects {
       }
 
       if (!last) {
-        return [...menuSections, ...this.resolveRouteMenuSections(route.firstChild, menuID)];
+        return [
+          ...menuSections,
+          ...this.resolveRouteMenuSections(route.firstChild, menuID),
+        ];
       } else {
         return [...menuSections];
       }
@@ -89,7 +104,6 @@ export class MenuEffects {
   }
 
   private resolveSubstitutions(object, params) {
-
     let resolved;
     if (typeof object === 'string') {
       resolved = object;
@@ -118,5 +132,4 @@ export class MenuEffects {
     }
     return resolved;
   }
-
 }

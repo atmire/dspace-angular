@@ -3,6 +3,6 @@ module.exports = {
     require('postcss-import')(),
     require('postcss-preset-env')(),
     require('postcss-apply')(),
-    require('postcss-responsive-type')()
-  ]
+    require('postcss-responsive-type')(),
+  ],
 };

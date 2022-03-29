@@ -10,7 +10,7 @@ import { NavbarComponent } from './navbar.component';
   styleUrls: [],
   templateUrl: '../shared/theme-support/themed.component.html',
 })
-export class ThemedNavbarComponent  extends ThemedComponent<NavbarComponent> {
+export class ThemedNavbarComponent extends ThemedComponent<NavbarComponent> {
   protected getComponentName(): string {
     return 'NavbarComponent';
   }

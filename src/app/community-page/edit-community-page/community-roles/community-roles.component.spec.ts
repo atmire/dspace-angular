@@ -10,18 +10,19 @@ import { RequestService } from '../../../core/data/request.service';
 import { GroupDataService } from '../../../core/eperson/group-data.service';
 import { SharedModule } from '../../../shared/shared.module';
 import { RouterTestingModule } from '@angular/router/testing';
-import { createSuccessfulRemoteDataObject, createSuccessfulRemoteDataObject$ } from '../../../shared/remote-data.utils';
+import {
+  createSuccessfulRemoteDataObject,
+  createSuccessfulRemoteDataObject$,
+} from '../../../shared/remote-data.utils';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ComcolModule } from '../../../shared/comcol/comcol.module';
 
 describe('CommunityRolesComponent', () => {
-
   let fixture: ComponentFixture<CommunityRolesComponent>;
   let comp: CommunityRolesComponent;
   let de: DebugElement;
 
   beforeEach(() => {
-
     const route = {
       parent: {
         data: observableOf({
@@ -37,8 +38,8 @@ describe('CommunityRolesComponent', () => {
               },
             })
           ),
-        })
-      }
+        }),
+      },
     };
 
     const requestService = {
@@ -55,17 +56,15 @@ describe('CommunityRolesComponent', () => {
         SharedModule,
         RouterTestingModule.withRoutes([]),
         TranslateModule.forRoot(),
-        NoopAnimationsModule
+        NoopAnimationsModule,
       ],
-      declarations: [
-        CommunityRolesComponent,
-      ],
+      declarations: [CommunityRolesComponent],
       providers: [
         { provide: ActivatedRoute, useValue: route },
         { provide: RequestService, useValue: requestService },
         { provide: GroupDataService, useValue: groupDataService },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
 
     fixture = TestBed.createComponent(CommunityRolesComponent);
@@ -76,7 +75,6 @@ describe('CommunityRolesComponent', () => {
   });
 
   it('should display a community admin role component', () => {
-    expect(de.query(By.css('ds-comcol-role .community-admin')))
-      .toBeTruthy();
+    expect(de.query(By.css('ds-comcol-role .community-admin'))).toBeTruthy();
   });
 });

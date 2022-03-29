@@ -3,11 +3,19 @@ import {
   DynamicCheckboxModel,
   DynamicFormControlEvent,
   DynamicFormControlModel,
-  DynamicFormLayout
+  DynamicFormLayout,
 } from '@ng-dynamic-forms/core';
 
 import { Observable, Subscription } from 'rxjs';
-import { distinctUntilChanged, filter, find, map, mergeMap, startWith, take } from 'rxjs/operators';
+import {
+  distinctUntilChanged,
+  filter,
+  find,
+  map,
+  mergeMap,
+  startWith,
+  take,
+} from 'rxjs/operators';
 import { CollectionDataService } from '../../../core/data/collection-data.service';
 import { RemoteData } from '../../../core/data/remote-data';
 import { JsonPatchOperationPathCombiner } from '../../../core/json-patch/builder/json-patch-operation-path-combiner';
@@ -15,7 +23,12 @@ import { JsonPatchOperationsBuilder } from '../../../core/json-patch/builder/jso
 import { Collection } from '../../../core/shared/collection.model';
 import { License } from '../../../core/shared/license.model';
 import { WorkspaceitemSectionLicenseObject } from '../../../core/submission/models/workspaceitem-section-license.model';
-import { hasValue, isNotEmpty, isNotNull, isNotUndefined } from '../../../shared/empty.util';
+import {
+  hasValue,
+  isNotEmpty,
+  isNotNull,
+  isNotUndefined,
+} from '../../../shared/empty.util';
 import { FormBuilderService } from '../../../shared/form/builder/form-builder.service';
 import { FormComponent } from '../../../shared/form/form.component';
 import { FormService } from '../../../shared/form/form.service';
@@ -28,7 +41,10 @@ import { SectionModelComponent } from '../models/section.model';
 import { renderSectionFor } from '../sections-decorator';
 import { SectionsType } from '../sections-type';
 import { SectionsService } from '../sections.service';
-import { SECTION_LICENSE_FORM_LAYOUT, SECTION_LICENSE_FORM_MODEL } from './section-license.model';
+import {
+  SECTION_LICENSE_FORM_LAYOUT,
+  SECTION_LICENSE_FORM_MODEL,
+} from './section-license.model';
 
 /**
  * This component represents a section that contains the submission license form.
@@ -40,7 +56,6 @@ import { SECTION_LICENSE_FORM_LAYOUT, SECTION_LICENSE_FORM_MODEL } from './secti
 })
 @renderSectionFor(SectionsType.License)
 export class SubmissionSectionLicenseComponent extends SectionModelComponent {
-
   /**
    * The form id
    * @type {string}
@@ -103,17 +118,20 @@ export class SubmissionSectionLicenseComponent extends SectionModelComponent {
    * @param {SectionDataObject} injectedSectionData
    * @param {string} injectedSubmissionId
    */
-  constructor(protected changeDetectorRef: ChangeDetectorRef,
-              protected collectionDataService: CollectionDataService,
-              protected formBuilderService: FormBuilderService,
-              protected formOperationsService: SectionFormOperationsService,
-              protected formService: FormService,
-              protected operationsBuilder: JsonPatchOperationsBuilder,
-              protected sectionService: SectionsService,
-              protected submissionService: SubmissionService,
-              @Inject('collectionIdProvider') public injectedCollectionId: string,
-              @Inject('sectionDataProvider') public injectedSectionData: SectionDataObject,
-              @Inject('submissionIdProvider') public injectedSubmissionId: string) {
+  constructor(
+    protected changeDetectorRef: ChangeDetectorRef,
+    protected collectionDataService: CollectionDataService,
+    protected formBuilderService: FormBuilderService,
+    protected formOperationsService: SectionFormOperationsService,
+    protected formService: FormService,
+    protected operationsBuilder: JsonPatchOperationsBuilder,
+    protected sectionService: SectionsService,
+    protected submissionService: SubmissionService,
+    @Inject('collectionIdProvider') public injectedCollectionId: string,
+    @Inject('sectionDataProvider')
+    public injectedSectionData: SectionDataObject,
+    @Inject('submissionIdProvider') public injectedSubmissionId: string
+  ) {
     super(injectedCollectionId, injectedSectionData, injectedSubmissionId);
   }
 
@@ -121,59 +139,95 @@ export class SubmissionSectionLicenseComponent extends SectionModelComponent {
    * Initialize all instance variables and retrieve submission license
    */
   onSectionInit() {
-    this.pathCombiner = new JsonPatchOperationPathCombiner('sections', this.sectionData.id);
+    this.pathCombiner = new JsonPatchOperationPathCombiner(
+      'sections',
+      this.sectionData.id
+    );
     this.formId = this.formService.getUniqueId(this.sectionData.id);
-    this.formModel = this.formBuilderService.fromJSON(SECTION_LICENSE_FORM_MODEL);
+    this.formModel = this.formBuilderService.fromJSON(
+      SECTION_LICENSE_FORM_MODEL
+    );
     const model = this.formBuilderService.findById('granted', this.formModel);
 
     // Retrieve license accepted status
-    (model as DynamicCheckboxModel).value = (this.sectionData.data as WorkspaceitemSectionLicenseObject).granted;
+    (model as DynamicCheckboxModel).value = (
+      this.sectionData.data as WorkspaceitemSectionLicenseObject
+    ).granted;
 
-    this.licenseText$ = this.collectionDataService.findById(this.collectionId, true, true, followLink('license')).pipe(
-      filter((collectionData: RemoteData<Collection>) => isNotUndefined((collectionData.payload))),
-      mergeMap((collectionData: RemoteData<Collection>) => (collectionData.payload as any).license),
-      find((licenseData: RemoteData<License>) => isNotUndefined((licenseData.payload))),
-      map((licenseData: RemoteData<License>) => licenseData.payload.text),
-      startWith(''));
+    this.licenseText$ = this.collectionDataService
+      .findById(this.collectionId, true, true, followLink('license'))
+      .pipe(
+        filter((collectionData: RemoteData<Collection>) =>
+          isNotUndefined(collectionData.payload)
+        ),
+        mergeMap(
+          (collectionData: RemoteData<Collection>) =>
+            (collectionData.payload as any).license
+        ),
+        find((licenseData: RemoteData<License>) =>
+          isNotUndefined(licenseData.payload)
+        ),
+        map((licenseData: RemoteData<License>) => licenseData.payload.text),
+        startWith('')
+      );
 
     this.subs.push(
       // Disable checkbox whether it's in workflow or item scope
-      this.sectionService.isSectionReadOnly(
-        this.submissionId,
-        this.sectionData.id,
-        this.submissionService.getSubmissionScope()).pipe(
-        take(1),
-        filter((isReadOnly) => isReadOnly))
+      this.sectionService
+        .isSectionReadOnly(
+          this.submissionId,
+          this.sectionData.id,
+          this.submissionService.getSubmissionScope()
+        )
+        .pipe(
+          take(1),
+          filter((isReadOnly) => isReadOnly)
+        )
         .subscribe(() => {
           model.disabled = true;
         }),
 
-      this.sectionService.getSectionErrors(this.submissionId, this.sectionData.id).pipe(
-        filter((errors) => isNotEmpty(errors)),
-        distinctUntilChanged())
+      this.sectionService
+        .getSectionErrors(this.submissionId, this.sectionData.id)
+        .pipe(
+          filter((errors) => isNotEmpty(errors)),
+          distinctUntilChanged()
+        )
         .subscribe((errors) => {
           // parse errors
-          const newErrors = errors.map((error) => {
-            // When the error path is only on the section,
-            // replace it with the path to the form field to display error also on the form
-            if (error.path === '/sections/license') {
-              // check whether license is not accepted
-              if (!(model as DynamicCheckboxModel).checked) {
-                return Object.assign({}, error, { path: '/sections/license/granted' });
+          const newErrors = errors
+            .map((error) => {
+              // When the error path is only on the section,
+              // replace it with the path to the form field to display error also on the form
+              if (error.path === '/sections/license') {
+                // check whether license is not accepted
+                if (!(model as DynamicCheckboxModel).checked) {
+                  return Object.assign({}, error, {
+                    path: '/sections/license/granted',
+                  });
+                } else {
+                  return null;
+                }
               } else {
-                return null;
+                return error;
               }
-            } else {
-              return error;
-            }
-          }).filter((error) => isNotNull(error));
+            })
+            .filter((error) => isNotNull(error));
 
           if (isNotEmpty(newErrors)) {
-            this.sectionService.checkSectionErrors(this.submissionId, this.sectionData.id, this.formId, newErrors);
+            this.sectionService.checkSectionErrors(
+              this.submissionId,
+              this.sectionData.id,
+              this.formId,
+              newErrors
+            );
             this.sectionData.errors = errors;
           } else {
             // Remove any section's errors
-            this.sectionService.dispatchRemoveSectionErrors(this.submissionId, this.sectionData.id);
+            this.sectionService.dispatchRemoveSectionErrors(
+              this.submissionId,
+              this.sectionData.id
+            );
           }
           this.changeDetectorRef.detectChanges();
         })
@@ -190,7 +244,8 @@ export class SubmissionSectionLicenseComponent extends SectionModelComponent {
     const model = this.formBuilderService.findById('granted', this.formModel);
     return (model as DynamicCheckboxModel).valueChanges.pipe(
       map((value) => value === true),
-      startWith((model as DynamicCheckboxModel).value));
+      startWith((model as DynamicCheckboxModel).value)
+    );
   }
 
   /**
@@ -198,12 +253,22 @@ export class SubmissionSectionLicenseComponent extends SectionModelComponent {
    * Dispatch form operations based on changes.
    */
   onChange(event: DynamicFormControlEvent) {
-    const path = this.formOperationsService.getFieldPathSegmentedFromChangeEvent(event);
-    const value = this.formOperationsService.getFieldValueFromChangeEvent(event);
+    const path =
+      this.formOperationsService.getFieldPathSegmentedFromChangeEvent(event);
+    const value =
+      this.formOperationsService.getFieldValueFromChangeEvent(event);
     if (value) {
-      this.operationsBuilder.add(this.pathCombiner.getPath(path), value.value.toString(), false, true);
+      this.operationsBuilder.add(
+        this.pathCombiner.getPath(path),
+        value.value.toString(),
+        false,
+        true
+      );
       // Remove any section's errors
-      this.sectionService.dispatchRemoveSectionErrors(this.submissionId, this.sectionData.id);
+      this.sectionService.dispatchRemoveSectionErrors(
+        this.submissionId,
+        this.sectionData.id
+      );
     } else {
       this.operationsBuilder.remove(this.pathCombiner.getPath(path));
     }
@@ -217,5 +282,4 @@ export class SubmissionSectionLicenseComponent extends SectionModelComponent {
       .filter((subscription) => hasValue(subscription))
       .forEach((subscription) => subscription.unsubscribe());
   }
-
 }

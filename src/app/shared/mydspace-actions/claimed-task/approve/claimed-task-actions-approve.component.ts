@@ -28,13 +28,22 @@ export class ClaimedTaskActionsApproveComponent extends ClaimedTaskActionsAbstra
    */
   option = WORKFLOW_TASK_OPTION_APPROVE;
 
-  constructor(protected injector: Injector,
-              protected router: Router,
-              protected notificationsService: NotificationsService,
-              protected translate: TranslateService,
-              protected searchService: SearchService,
-              protected requestService: RequestService) {
-    super(injector, router, notificationsService, translate, searchService, requestService);
+  constructor(
+    protected injector: Injector,
+    protected router: Router,
+    protected notificationsService: NotificationsService,
+    protected translate: TranslateService,
+    protected searchService: SearchService,
+    protected requestService: RequestService
+  ) {
+    super(
+      injector,
+      router,
+      notificationsService,
+      translate,
+      searchService,
+      requestService
+    );
   }
 
   reloadObjectExecution(): Observable<RemoteData<DSpaceObject> | DSpaceObject> {
@@ -42,10 +51,13 @@ export class ClaimedTaskActionsApproveComponent extends ClaimedTaskActionsAbstra
   }
 
   convertReloadedObject(dso: DSpaceObject): DSpaceObject {
-    const reloadedObject = Object.assign(new ClaimedApprovedTaskSearchResult(), dso, {
-      indexableObject: dso
-    });
+    const reloadedObject = Object.assign(
+      new ClaimedApprovedTaskSearchResult(),
+      dso,
+      {
+        indexableObject: dso,
+      }
+    );
     return reloadedObject;
   }
-
 }

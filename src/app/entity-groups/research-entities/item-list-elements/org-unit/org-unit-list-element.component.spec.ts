@@ -13,16 +13,16 @@ const mockItem: Item = Object.assign(new Item(), {
     'dc.title': [
       {
         language: 'en_US',
-        value: 'This is just another title'
-      }
+        value: 'This is just another title',
+      },
     ],
     'dc.description': [
       {
         language: 'en_US',
-        value: 'A description about the OrgUnit'
-      }
-    ]
-  }
+        value: 'A description about the OrgUnit',
+      },
+    ],
+  },
 });
 
 describe('OrgUnitListElementComponent', () => {
@@ -39,10 +39,12 @@ describe('OrgUnitListElementComponent', () => {
       providers: [
         { provide: TruncatableService, useValue: truncatableServiceStub },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(OrgUnitListElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(OrgUnitListElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -57,7 +59,9 @@ describe('OrgUnitListElementComponent', () => {
     });
 
     it(`should contain a OrgUnitListElementComponent`, () => {
-      const orgUnitListElement = fixture.debugElement.query(By.css(`ds-org-unit-search-result-list-element`));
+      const orgUnitListElement = fixture.debugElement.query(
+        By.css(`ds-org-unit-search-result-list-element`)
+      );
       expect(orgUnitListElement).not.toBeNull();
     });
   });

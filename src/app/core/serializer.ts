@@ -3,7 +3,6 @@
  * and vice versa
  */
 export interface Serializer<T> {
-
   /**
    * Convert a model in to the format expected by the backend
    *

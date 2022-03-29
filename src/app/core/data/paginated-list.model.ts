@@ -1,5 +1,10 @@
 import { PageInfo } from '../shared/page-info.model';
-import { hasValue, isEmpty, hasNoValue, isUndefined } from '../../shared/empty.util';
+import {
+  hasValue,
+  isEmpty,
+  hasNoValue,
+  isUndefined,
+} from '../../shared/empty.util';
 import { HALResource } from '../shared/hal-resource.model';
 import { HALLink } from '../shared/hal-link.model';
 import { typedObject } from '../cache/builders/build-decorators';
@@ -18,7 +23,12 @@ import { autoserialize, deserialize } from 'cerialize';
  *                    not the objects themselves
  * @param _links      Optional HALLinks to attach to the new PaginatedList
  */
-export const buildPaginatedList = <T>(pageInfo: PageInfo, page: T[], normalized = false, _links?: { [k: string]: HALLink | HALLink[] }): PaginatedList<T> => {
+export const buildPaginatedList = <T>(
+  pageInfo: PageInfo,
+  page: T[],
+  normalized = false,
+  _links?: { [k: string]: HALLink | HALLink[] }
+): PaginatedList<T> => {
   const result = new PaginatedList<T>();
 
   if (hasNoValue(pageInfo)) {
@@ -32,7 +42,11 @@ export const buildPaginatedList = <T>(pageInfo: PageInfo, page: T[], normalized 
     pageLinks = [];
   } else {
     pageLinks = page.map((element: any) => {
-      if (hasValue(element) && hasValue(element._links) && hasValue(element._links.self)) {
+      if (
+        hasValue(element) &&
+        hasValue(element._links) &&
+        hasValue(element._links.self)
+      ) {
         return (element as HALResource)._links.self;
       } else {
         return null;
@@ -45,7 +59,7 @@ export const buildPaginatedList = <T>(pageInfo: PageInfo, page: T[], normalized 
   }
 
   result._links = Object.assign({}, _links, pageInfo._links, {
-    page: pageLinks
+    page: pageLinks,
   });
 
   if (!normalized || isUndefined(pageLinks)) {
@@ -57,7 +71,6 @@ export const buildPaginatedList = <T>(pageInfo: PageInfo, page: T[], normalized 
 
 @typedObject
 export class PaginatedList<T> extends CacheableObject {
-
   static type = PAGINATED_LIST;
 
   /**
@@ -194,6 +207,6 @@ export class PaginatedList<T> extends CacheableObject {
   }
 
   protected getPageLength() {
-    return (Array.isArray(this.page)) ? this.page.length : 0;
+    return Array.isArray(this.page) ? this.page.length : 0;
   }
 }

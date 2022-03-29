@@ -11,7 +11,10 @@ import { VarDirective } from '../../shared/utils/var.directive';
 import { of as observableOf } from 'rxjs';
 import { WorkflowItemSendBackComponent } from './workflow-item-send-back.component';
 import { RequestService } from '../../core/data/request.service';
-import { createSuccessfulRemoteDataObject, createSuccessfulRemoteDataObject$ } from '../../shared/remote-data.utils';
+import {
+  createSuccessfulRemoteDataObject,
+  createSuccessfulRemoteDataObject$,
+} from '../../shared/remote-data.utils';
 import { ActivatedRouteStub } from '../../shared/testing/active-router.stub';
 import { RouterStub } from '../../shared/testing/router.stub';
 import { NotificationsServiceStub } from '../../shared/testing/notifications-service.stub';
@@ -28,7 +31,7 @@ describe('WorkflowItemSendBackComponent', () => {
 
   function init() {
     wfiService = jasmine.createSpyObj('workflowItemService', {
-      sendBack: observableOf(true)
+      sendBack: observableOf(true),
     });
     itemRD$ = createSuccessfulRemoteDataObject$(itemRD$);
     wfi = new WorkflowItem();
@@ -39,24 +42,31 @@ describe('WorkflowItemSendBackComponent', () => {
   beforeEach(waitForAsync(() => {
     init();
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot({
-        loader: {
-          provide: TranslateLoader,
-          useClass: TranslateLoaderMock
-        }
-      })],
+      imports: [
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useClass: TranslateLoaderMock,
+          },
+        }),
+      ],
       declarations: [WorkflowItemSendBackComponent, VarDirective],
       providers: [
-        { provide: ActivatedRoute, useValue: new ActivatedRouteStub({}, { wfi: createSuccessfulRemoteDataObject(wfi) }) },
+        {
+          provide: ActivatedRoute,
+          useValue: new ActivatedRouteStub(
+            {},
+            { wfi: createSuccessfulRemoteDataObject(wfi) }
+          ),
+        },
         { provide: Router, useClass: RouterStub },
         { provide: RouteService, useValue: {} },
         { provide: NotificationsService, useClass: NotificationsServiceStub },
         { provide: WorkflowItemDataService, useValue: wfiService },
         { provide: RequestService, useValue: getMockRequestService() },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
-      .compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

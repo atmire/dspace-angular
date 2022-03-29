@@ -6,20 +6,19 @@ import { TruncatablesState, TruncatableState } from './truncatable.reducer';
 import {
   TruncatableExpandAction,
   TruncatableToggleAction,
-  TruncatableCollapseAction
+  TruncatableCollapseAction,
 } from './truncatable.actions';
 import { hasValue } from '../empty.util';
 
-const truncatableStateSelector = (state: TruncatablesState) => state.truncatable;
+const truncatableStateSelector = (state: TruncatablesState) =>
+  state.truncatable;
 
 /**
  * Service responsible for truncating/clamping text and performing actions on truncatable elements
  */
 @Injectable()
 export class TruncatableService {
-
-  constructor(private store: Store<TruncatablesState>) {
-  }
+  constructor(private store: Store<TruncatablesState>) {}
 
   /**
    * Checks if a trunctable component should currently be collapsed
@@ -64,11 +63,15 @@ export class TruncatableService {
   }
 }
 
-function truncatableByIdSelector(id: string): MemoizedSelector<TruncatablesState, TruncatableState> {
+function truncatableByIdSelector(
+  id: string
+): MemoizedSelector<TruncatablesState, TruncatableState> {
   return keySelector<TruncatableState>(id);
 }
 
-export function keySelector<T>(key: string): MemoizedSelector<TruncatablesState, T> {
+export function keySelector<T>(
+  key: string
+): MemoizedSelector<TruncatablesState, T> {
   return createSelector(truncatableStateSelector, (state: TruncatableState) => {
     if (hasValue(state)) {
       return state[key];

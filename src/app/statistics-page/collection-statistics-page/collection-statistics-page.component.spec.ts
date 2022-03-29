@@ -17,38 +17,33 @@ import { AuthService } from '../../core/auth/auth.service';
 import { createSuccessfulRemoteDataObject } from '../../shared/remote-data.utils';
 
 describe('CollectionStatisticsPageComponent', () => {
-
   let component: CollectionStatisticsPageComponent;
   let de: DebugElement;
   let fixture: ComponentFixture<CollectionStatisticsPageComponent>;
 
   beforeEach(waitForAsync(() => {
-
     const activatedRoute = {
       data: observableOf({
         scope: createSuccessfulRemoteDataObject(
           Object.assign(new Collection(), {
             id: 'collection_id',
           })
-        )
-      })
+        ),
+      }),
     };
 
-    const router = {
-    };
+    const router = {};
 
     const usageReportService = {
       getStatistic: (scope, type) => undefined,
     };
 
-    spyOn(usageReportService, 'getStatistic').and.callFake(
-      (scope, type) => observableOf(
-        Object.assign(
-          new UsageReport(), {
-            id: `${scope}-${type}-report`,
-            points: [],
-          }
-        )
+    spyOn(usageReportService, 'getStatistic').and.callFake((scope, type) =>
+      observableOf(
+        Object.assign(new UsageReport(), {
+          id: `${scope}-${type}-report`,
+          points: [],
+        })
       )
     );
 
@@ -58,15 +53,11 @@ describe('CollectionStatisticsPageComponent', () => {
 
     const authService = jasmine.createSpyObj('authService', {
       isAuthenticated: observableOf(true),
-      setRedirectUrl: {}
+      setRedirectUrl: {},
     });
 
     TestBed.configureTestingModule({
-      imports: [
-        TranslateModule.forRoot(),
-        CommonModule,
-        SharedModule,
-      ],
+      imports: [TranslateModule.forRoot(), CommonModule, SharedModule],
       declarations: [
         CollectionStatisticsPageComponent,
         StatisticsTableComponent,
@@ -79,8 +70,7 @@ describe('CollectionStatisticsPageComponent', () => {
         { provide: DSONameService, useValue: nameService },
         { provide: AuthService, useValue: authService },
       ],
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -95,18 +85,28 @@ describe('CollectionStatisticsPageComponent', () => {
   });
 
   it('should resolve to the correct collection', () => {
-    expect(de.query(By.css('.header')).nativeElement.id)
-      .toEqual('collection_id');
+    expect(de.query(By.css('.header')).nativeElement.id).toEqual(
+      'collection_id'
+    );
   });
 
   it('should show a statistics table for each usage report', () => {
-    expect(de.query(By.css('ds-statistics-table.collection_id-TotalVisits-report')).nativeElement)
-      .toBeTruthy();
-    expect(de.query(By.css('ds-statistics-table.collection_id-TotalVisitsPerMonth-report')).nativeElement)
-      .toBeTruthy();
-    expect(de.query(By.css('ds-statistics-table.collection_id-TopCountries-report')).nativeElement)
-      .toBeTruthy();
-    expect(de.query(By.css('ds-statistics-table.collection_id-TopCities-report')).nativeElement)
-      .toBeTruthy();
+    expect(
+      de.query(By.css('ds-statistics-table.collection_id-TotalVisits-report'))
+        .nativeElement
+    ).toBeTruthy();
+    expect(
+      de.query(
+        By.css('ds-statistics-table.collection_id-TotalVisitsPerMonth-report')
+      ).nativeElement
+    ).toBeTruthy();
+    expect(
+      de.query(By.css('ds-statistics-table.collection_id-TopCountries-report'))
+        .nativeElement
+    ).toBeTruthy();
+    expect(
+      de.query(By.css('ds-statistics-table.collection_id-TopCities-report'))
+        .nativeElement
+    ).toBeTruthy();
   });
 });

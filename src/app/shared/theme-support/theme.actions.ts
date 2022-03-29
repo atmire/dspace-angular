@@ -11,7 +11,7 @@ export const ThemeActionTypes = {
 export class SetThemeAction implements Action {
   type = ThemeActionTypes.SET;
   payload: {
-    name: string
+    name: string;
   };
 
   constructor(name: string) {

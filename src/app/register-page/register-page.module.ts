@@ -19,14 +19,12 @@ import { ThemedCreateProfileComponent } from './create-profile/themed-create-pro
   declarations: [
     RegisterEmailComponent,
     CreateProfileComponent,
-    ThemedCreateProfileComponent
+    ThemedCreateProfileComponent,
   ],
-  providers: []
+  providers: [],
 })
 
 /**
  * Module related to components used to register a new user
  */
-export class RegisterPageModule {
-
-}
+export class RegisterPageModule {}

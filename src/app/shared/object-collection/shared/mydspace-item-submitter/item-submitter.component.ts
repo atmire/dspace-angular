@@ -14,10 +14,9 @@ import { WorkflowItem } from '../../../../core/submission/models/workflowitem.mo
 @Component({
   selector: 'ds-item-submitter',
   styleUrls: ['./item-submitter.component.scss'],
-  templateUrl: './item-submitter.component.html'
+  templateUrl: './item-submitter.component.html',
 })
 export class ItemSubmitterComponent implements OnInit {
-
   /**
    * The target object
    */
@@ -32,10 +31,21 @@ export class ItemSubmitterComponent implements OnInit {
    * Initialize submitter object
    */
   ngOnInit() {
-    this.submitter$ = (this.object.workflowitem as Observable<RemoteData<WorkflowItem>>).pipe(
-      filter((rd: RemoteData<WorkflowItem>) => (rd.hasSucceeded && isNotUndefined(rd.payload))),
-      mergeMap((rd: RemoteData<WorkflowItem>) => rd.payload.submitter as Observable<RemoteData<EPerson>>),
-      find((rd: RemoteData<EPerson>) => rd.hasSucceeded && isNotEmpty(rd.payload)),
-      map((rd: RemoteData<EPerson>) => rd.payload));
+    this.submitter$ = (
+      this.object.workflowitem as Observable<RemoteData<WorkflowItem>>
+    ).pipe(
+      filter(
+        (rd: RemoteData<WorkflowItem>) =>
+          rd.hasSucceeded && isNotUndefined(rd.payload)
+      ),
+      mergeMap(
+        (rd: RemoteData<WorkflowItem>) =>
+          rd.payload.submitter as Observable<RemoteData<EPerson>>
+      ),
+      find(
+        (rd: RemoteData<EPerson>) => rd.hasSucceeded && isNotEmpty(rd.payload)
+      ),
+      map((rd: RemoteData<EPerson>) => rd.payload)
+    );
   }
 }

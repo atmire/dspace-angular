@@ -16,7 +16,9 @@ export class ThemedHeaderNavbarWrapperComponent extends ThemedComponent<HeaderNa
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../themes/${themeName}/app/header-nav-wrapper/header-navbar-wrapper.component`);
+    return import(
+      `../../themes/${themeName}/app/header-nav-wrapper/header-navbar-wrapper.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

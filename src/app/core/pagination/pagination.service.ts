@@ -23,15 +23,11 @@ import { isNumeric } from 'rxjs/internal-compatibility';
  *    - For the sort field: {paginationID}.sf
  */
 export class PaginationService {
-
   private defaultSortOptions = new SortOptions('id', SortDirection.ASC);
 
   private clearParams = {};
 
-  constructor(protected routeService: RouteService,
-              protected router: Router
-  ) {
-  }
+  constructor(protected routeService: RouteService, protected router: Router) {}
 
   /**
    * Method to retrieve the current pagination settings for an ID based on the router params and default options
@@ -39,15 +35,29 @@ export class PaginationService {
    * @param defaultPagination - The default pagination values to be used when no route info is present
    * @returns {Observable<PaginationComponentOptions>} Retrieves the current pagination settings based on the router params
    */
-  getCurrentPagination(paginationId: string, defaultPagination: PaginationComponentOptions): Observable<PaginationComponentOptions> {
-    const page$ = this.routeService.getQueryParameterValue(`${paginationId}.page`);
-    const size$ = this.routeService.getQueryParameterValue(`${paginationId}.rpp`);
+  getCurrentPagination(
+    paginationId: string,
+    defaultPagination: PaginationComponentOptions
+  ): Observable<PaginationComponentOptions> {
+    const page$ = this.routeService.getQueryParameterValue(
+      `${paginationId}.page`
+    );
+    const size$ = this.routeService.getQueryParameterValue(
+      `${paginationId}.rpp`
+    );
     return observableCombineLatest([page$, size$]).pipe(
       map(([page, size]) => {
-        return Object.assign(new PaginationComponentOptions(), defaultPagination, {
-          currentPage: this.convertToNumeric(page, defaultPagination.currentPage),
-          pageSize: this.getBestMatchPageSize(size, defaultPagination)
-        });
+        return Object.assign(
+          new PaginationComponentOptions(),
+          defaultPagination,
+          {
+            currentPage: this.convertToNumeric(
+              page,
+              defaultPagination.currentPage
+            ),
+            pageSize: this.getBestMatchPageSize(size, defaultPagination),
+          }
+        );
       })
     );
   }
@@ -59,15 +69,25 @@ export class PaginationService {
    * @param ignoreDefault - Indicate whether the default should be ignored
    * @returns {Observable<SortOptions>} Retrieves the current sort options based on the router params
    */
-  getCurrentSort(paginationId: string, defaultSort: SortOptions, ignoreDefault?: boolean): Observable<SortOptions> {
+  getCurrentSort(
+    paginationId: string,
+    defaultSort: SortOptions,
+    ignoreDefault?: boolean
+  ): Observable<SortOptions> {
     if (!ignoreDefault && (isEmpty(defaultSort) || !hasValue(defaultSort))) {
       defaultSort = this.defaultSortOptions;
     }
-    const sortDirection$ = this.routeService.getQueryParameterValue(`${paginationId}.sd`);
-    const sortField$ = this.routeService.getQueryParameterValue(`${paginationId}.sf`);
-    return observableCombineLatest([sortDirection$, sortField$]).pipe(map(([sortDirection, sortField]) => {
+    const sortDirection$ = this.routeService.getQueryParameterValue(
+      `${paginationId}.sd`
+    );
+    const sortField$ = this.routeService.getQueryParameterValue(
+      `${paginationId}.sf`
+    );
+    return observableCombineLatest([sortDirection$, sortField$]).pipe(
+      map(([sortDirection, sortField]) => {
         const field = sortField || defaultSort?.field;
-        const direction = SortDirection[sortDirection] || defaultSort?.direction;
+        const direction =
+          SortDirection[sortDirection] || defaultSort?.direction;
         return new SortOptions(field, direction);
       })
     );
@@ -80,22 +100,40 @@ export class PaginationService {
    * @param ignoreDefault - Indicate whether the default should be ignored
    * @returns {Observable<FindListOptions>} Retrieves the current find list options based on the router params
    */
-  getFindListOptions(paginationId: string, defaultFindList: FindListOptions, ignoreDefault?: boolean): Observable<FindListOptions> {
+  getFindListOptions(
+    paginationId: string,
+    defaultFindList: FindListOptions,
+    ignoreDefault?: boolean
+  ): Observable<FindListOptions> {
     const paginationComponentOptions = new PaginationComponentOptions();
     paginationComponentOptions.currentPage = defaultFindList.currentPage;
     paginationComponentOptions.pageSize = defaultFindList.elementsPerPage;
-    const currentPagination$ = this.getCurrentPagination(paginationId, paginationComponentOptions);
-    const currentSortOptions$ = this.getCurrentSort(paginationId, defaultFindList.sort, ignoreDefault);
+    const currentPagination$ = this.getCurrentPagination(
+      paginationId,
+      paginationComponentOptions
+    );
+    const currentSortOptions$ = this.getCurrentSort(
+      paginationId,
+      defaultFindList.sort,
+      ignoreDefault
+    );
 
-    return observableCombineLatest([currentPagination$, currentSortOptions$]).pipe(
-      filter(([currentPagination, currentSortOptions]) => hasValue(currentPagination) && hasValue(currentSortOptions)),
+    return observableCombineLatest([
+      currentPagination$,
+      currentSortOptions$,
+    ]).pipe(
+      filter(
+        ([currentPagination, currentSortOptions]) =>
+          hasValue(currentPagination) && hasValue(currentSortOptions)
+      ),
       map(([currentPagination, currentSortOptions]) => {
         return Object.assign(new FindListOptions(), defaultFindList, {
           sort: currentSortOptions,
           currentPage: currentPagination.currentPage,
-          elementsPerPage: currentPagination.pageSize
+          elementsPerPage: currentPagination.pageSize,
         });
-      }));
+      })
+    );
   }
 
   /**
@@ -103,9 +141,8 @@ export class PaginationService {
    * @param paginationId - The pagination id for which to reset the page
    */
   resetPage(paginationId: string) {
-    this.updateRoute(paginationId, {page: 1});
+    this.updateRoute(paginationId, { page: 1 });
   }
-
 
   /**
    * Update the route with the provided information
@@ -114,14 +151,24 @@ export class PaginationService {
    * @param extraParams - Addition params unrelated to the pagination that need to be added to the route
    * @param retainScrollPosition - Scroll to the pagination component after updating the route instead of the top of the page
    */
-  updateRoute(paginationId: string, params: {
-    page?: number
-    pageSize?: number
-    sortField?: string
-    sortDirection?: SortDirection
-  }, extraParams?, retainScrollPosition?: boolean) {
-
-    this.updateRouteWithUrl(paginationId, [], params, extraParams, retainScrollPosition);
+  updateRoute(
+    paginationId: string,
+    params: {
+      page?: number;
+      pageSize?: number;
+      sortField?: string;
+      sortDirection?: SortDirection;
+    },
+    extraParams?,
+    retainScrollPosition?: boolean
+  ) {
+    this.updateRouteWithUrl(
+      paginationId,
+      [],
+      params,
+      extraParams,
+      retainScrollPosition
+    );
   }
 
   /**
@@ -132,28 +179,51 @@ export class PaginationService {
    * @param extraParams - Addition params unrelated to the pagination that need to be added to the route
    * @param retainScrollPosition - Scroll to the pagination component after updating the route instead of the top of the page
    */
-  updateRouteWithUrl(paginationId: string, url: string[], params: {
-    page?: number
-    pageSize?: number
-    sortField?: string
-    sortDirection?: SortDirection
-  }, extraParams?, retainScrollPosition?: boolean) {
+  updateRouteWithUrl(
+    paginationId: string,
+    url: string[],
+    params: {
+      page?: number;
+      pageSize?: number;
+      sortField?: string;
+      sortDirection?: SortDirection;
+    },
+    extraParams?,
+    retainScrollPosition?: boolean
+  ) {
     this.getCurrentRouting(paginationId).subscribe((currentFindListOptions) => {
-      const currentParametersWithIdName = this.getParametersWithIdName(paginationId, currentFindListOptions);
-      const parametersWithIdName = this.getParametersWithIdName(paginationId, params);
-      if (isNotEmpty(difference(parametersWithIdName, currentParametersWithIdName)) || isNotEmpty(extraParams) || isNotEmpty(this.clearParams)) {
-        const queryParams = Object.assign({}, this.clearParams, currentParametersWithIdName,
-          parametersWithIdName, extraParams);
+      const currentParametersWithIdName = this.getParametersWithIdName(
+        paginationId,
+        currentFindListOptions
+      );
+      const parametersWithIdName = this.getParametersWithIdName(
+        paginationId,
+        params
+      );
+      if (
+        isNotEmpty(
+          difference(parametersWithIdName, currentParametersWithIdName)
+        ) ||
+        isNotEmpty(extraParams) ||
+        isNotEmpty(this.clearParams)
+      ) {
+        const queryParams = Object.assign(
+          {},
+          this.clearParams,
+          currentParametersWithIdName,
+          parametersWithIdName,
+          extraParams
+        );
         if (retainScrollPosition) {
           this.router.navigate(url, {
             queryParams: queryParams,
             queryParamsHandling: 'merge',
-            fragment: `p-${paginationId}`
+            fragment: `p-${paginationId}`,
           });
         } else {
           this.router.navigate(url, {
             queryParams: queryParams,
-            queryParamsHandling: 'merge'
+            queryParamsHandling: 'merge',
           });
         }
         this.clearParams = {};
@@ -198,12 +268,15 @@ export class PaginationService {
     );
   }
 
-  private getParametersWithIdName(paginationId: string, params: {
-    page?: number
-    pageSize?: number
-    sortField?: string
-    sortDirection?: SortDirection
-  }) {
+  private getParametersWithIdName(
+    paginationId: string,
+    params: {
+      page?: number;
+      pageSize?: number;
+      sortField?: string;
+      sortDirection?: SortDirection;
+    }
+  ) {
     const paramsWithIdName = {};
     if (hasValue(params.page)) {
       paramsWithIdName[`${paginationId}.page`] = `${params.page}`;
@@ -228,14 +301,22 @@ export class PaginationService {
     return result;
   }
 
-
-  private getBestMatchPageSize(pageSize: any, defaultPagination: PaginationComponentOptions): number {
-    const numberPageSize = this.convertToNumeric(pageSize, defaultPagination.pageSize);
-    const differenceList = defaultPagination.pageSizeOptions.map((pageSizeOption) => {
-      return Math.abs(pageSizeOption - numberPageSize);
-    });
+  private getBestMatchPageSize(
+    pageSize: any,
+    defaultPagination: PaginationComponentOptions
+  ): number {
+    const numberPageSize = this.convertToNumeric(
+      pageSize,
+      defaultPagination.pageSize
+    );
+    const differenceList = defaultPagination.pageSizeOptions.map(
+      (pageSizeOption) => {
+        return Math.abs(pageSizeOption - numberPageSize);
+      }
+    );
     const minDifference = Math.min.apply(Math, differenceList);
-    return defaultPagination.pageSizeOptions[differenceList.indexOf(minDifference)];
+    return defaultPagination.pageSizeOptions[
+      differenceList.indexOf(minDifference)
+    ];
   }
-
 }

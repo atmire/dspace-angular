@@ -65,5 +65,5 @@ export enum ActionType {
   /**
    * Action of withdrawn reading
    */
-  WITHDRAWN_READ = 'WITHDRAWN_READ'
+  WITHDRAWN_READ = 'WITHDRAWN_READ',
 }

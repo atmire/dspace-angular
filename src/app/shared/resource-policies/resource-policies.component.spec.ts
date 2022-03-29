@@ -1,4 +1,9 @@
-import { ComponentFixture, inject, TestBed, waitForAsync } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  inject,
+  TestBed,
+  waitForAsync,
+} from '@angular/core/testing';
 import { ChangeDetectorRef, Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -15,8 +20,14 @@ import { Bundle } from '../../core/shared/bundle.model';
 import { Item } from '../../core/shared/item.model';
 import { LinkService } from '../../core/cache/builders/link.service';
 import { getMockLinkService } from '../mocks/link-service.mock';
-import { createSuccessfulRemoteDataObject, createSuccessfulRemoteDataObject$ } from '../remote-data.utils';
-import { createPaginatedList, createTestComponent } from '../testing/utils.test';
+import {
+  createSuccessfulRemoteDataObject,
+  createSuccessfulRemoteDataObject$,
+} from '../remote-data.utils';
+import {
+  createPaginatedList,
+  createTestComponent,
+} from '../testing/utils.test';
 import { EPersonDataService } from '../../core/eperson/eperson-data.service';
 import { NotificationsService } from '../notifications/notifications.service';
 import { NotificationsServiceStub } from '../testing/notifications-service.stub';
@@ -57,17 +68,17 @@ describe('ResourcePoliciesComponent test suite', () => {
     uuid: 'resource-policy-1',
     _links: {
       eperson: {
-        href: 'https://rest.api/rest/api/eperson'
+        href: 'https://rest.api/rest/api/eperson',
       },
       group: {
-        href: 'https://rest.api/rest/api/group'
+        href: 'https://rest.api/rest/api/group',
       },
       self: {
-        href: 'https://rest.api/rest/api/resourcepolicies/1'
+        href: 'https://rest.api/rest/api/resourcepolicies/1',
       },
     },
     eperson: observableOf(createSuccessfulRemoteDataObject({})),
-    group: observableOf(createSuccessfulRemoteDataObject(GroupMock))
+    group: observableOf(createSuccessfulRemoteDataObject(GroupMock)),
   };
 
   const anotherResourcePolicy: any = {
@@ -82,65 +93,71 @@ describe('ResourcePoliciesComponent test suite', () => {
     uuid: 'resource-policy-2',
     _links: {
       eperson: {
-        href: 'https://rest.api/rest/api/eperson'
+        href: 'https://rest.api/rest/api/eperson',
       },
       group: {
-        href: 'https://rest.api/rest/api/group'
+        href: 'https://rest.api/rest/api/group',
       },
       self: {
-        href: 'https://rest.api/rest/api/resourcepolicies/1'
+        href: 'https://rest.api/rest/api/resourcepolicies/1',
       },
     },
     eperson: observableOf(createSuccessfulRemoteDataObject(EPersonMock)),
-    group: observableOf(createSuccessfulRemoteDataObject({}))
+    group: observableOf(createSuccessfulRemoteDataObject({})),
   };
 
   const bitstream1 = Object.assign(new Bitstream(), {
     id: 'bitstream1',
-    uuid: 'bitstream1'
+    uuid: 'bitstream1',
   });
   const bitstream2 = Object.assign(new Bitstream(), {
     id: 'bitstream2',
-    uuid: 'bitstream2'
+    uuid: 'bitstream2',
   });
   const bitstream3 = Object.assign(new Bitstream(), {
     id: 'bitstream3',
-    uuid: 'bitstream3'
+    uuid: 'bitstream3',
   });
   const bitstream4 = Object.assign(new Bitstream(), {
     id: 'bitstream4',
-    uuid: 'bitstream4'
+    uuid: 'bitstream4',
   });
   const bundle1 = Object.assign(new Bundle(), {
     id: 'bundle1',
     uuid: 'bundle1',
     _links: {
-      self: { href: 'bundle1-selflink' }
+      self: { href: 'bundle1-selflink' },
     },
-    bitstreams: createSuccessfulRemoteDataObject$(createPaginatedList([bitstream1, bitstream2]))
+    bitstreams: createSuccessfulRemoteDataObject$(
+      createPaginatedList([bitstream1, bitstream2])
+    ),
   });
   const bundle2 = Object.assign(new Bundle(), {
     id: 'bundle2',
     uuid: 'bundle2',
     _links: {
-      self: { href: 'bundle2-selflink' }
+      self: { href: 'bundle2-selflink' },
     },
-    bitstreams: createSuccessfulRemoteDataObject$(createPaginatedList([bitstream3, bitstream4]))
+    bitstreams: createSuccessfulRemoteDataObject$(
+      createPaginatedList([bitstream3, bitstream4])
+    ),
   });
 
   const item = Object.assign(new Item(), {
     uuid: 'itemUUID',
     id: 'itemUUID',
     _links: {
-      self: { href: 'item-selflink' }
+      self: { href: 'item-selflink' },
     },
-    bundles: createSuccessfulRemoteDataObject$(createPaginatedList([bundle1, bundle2]))
+    bundles: createSuccessfulRemoteDataObject$(
+      createPaginatedList([bundle1, bundle2])
+    ),
   });
 
   const routeStub = {
     data: observableOf({
-      item: createSuccessfulRemoteDataObject(item)
-    })
+      item: createSuccessfulRemoteDataObject(item),
+    }),
   };
 
   const epersonService = jasmine.createSpyObj('epersonService', {
@@ -152,21 +169,27 @@ describe('ResourcePoliciesComponent test suite', () => {
   });
 
   routerStub = Object.assign(new RouterStub(), {
-    url: `url/edit`
+    url: `url/edit`,
   });
 
   const getInitEntries = () => {
     return [
-      Object.assign({}, {
-        id: resourcePolicy.id,
-        policy: resourcePolicy,
-        checked: false
-      }),
-      Object.assign({}, {
-        id: anotherResourcePolicy.id,
-        policy: anotherResourcePolicy,
-        checked: false
-      })
+      Object.assign(
+        {},
+        {
+          id: resourcePolicy.id,
+          policy: resourcePolicy,
+          checked: false,
+        }
+      ),
+      Object.assign(
+        {},
+        {
+          id: anotherResourcePolicy.id,
+          policy: anotherResourcePolicy,
+          checked: false,
+        }
+      ),
     ];
   };
 
@@ -174,13 +197,13 @@ describe('ResourcePoliciesComponent test suite', () => {
     {
       id: resourcePolicy.id,
       policy: resourcePolicy,
-      checked: true
+      checked: true,
     },
     {
       id: anotherResourcePolicy.id,
       policy: anotherResourcePolicy,
-      checked: false
-    }
+      checked: false,
+    },
   ];
 
   const pageInfo = new PageInfo();
@@ -194,12 +217,9 @@ describe('ResourcePoliciesComponent test suite', () => {
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
       ],
-      declarations: [
-        ResourcePoliciesComponent,
-        TestComponent
-      ],
+      declarations: [ResourcePoliciesComponent, TestComponent],
       providers: [
         { provide: LinkService, useValue: linkService },
         { provide: ActivatedRoute, useValue: routeStub },
@@ -210,10 +230,9 @@ describe('ResourcePoliciesComponent test suite', () => {
         { provide: RequestService, useValue: getMockRequestService() },
         { provide: Router, useValue: routerStub },
         ChangeDetectorRef,
-        ResourcePoliciesComponent
-      ], schemas: [
-        NO_ERRORS_SCHEMA
-      ]
+        ResourcePoliciesComponent,
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -223,13 +242,18 @@ describe('ResourcePoliciesComponent test suite', () => {
 
     // synchronous beforeEach
     beforeEach(() => {
-      resourcePolicyService.searchByResource.and.returnValue(hot('a|', {
-        a: paginatedListRD
-      }));
+      resourcePolicyService.searchByResource.and.returnValue(
+        hot('a|', {
+          a: paginatedListRD,
+        })
+      );
       const html = `
         <ds-resource-policies [resourceUUID]="resourceUUID" [resourceType]="resourceType"></ds-resource-policies>`;
 
-      testFixture = createTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
+      testFixture = createTestComponent(
+        html,
+        TestComponent
+      ) as ComponentFixture<TestComponent>;
       testComp = testFixture.componentInstance;
     });
 
@@ -237,11 +261,12 @@ describe('ResourcePoliciesComponent test suite', () => {
       testFixture.destroy();
     });
 
-    it('should create ResourcePoliciesComponent', inject([ResourcePoliciesComponent], (app: ResourcePoliciesComponent) => {
-
-      expect(app).toBeDefined();
-
-    }));
+    it('should create ResourcePoliciesComponent', inject(
+      [ResourcePoliciesComponent],
+      (app: ResourcePoliciesComponent) => {
+        expect(app).toBeDefined();
+      }
+    ));
   });
 
   describe('', () => {
@@ -269,9 +294,11 @@ describe('ResourcePoliciesComponent test suite', () => {
     it('should init resource policies list properly', () => {
       const expected = getInitEntries();
       compAsAny.isActive = true;
-      resourcePolicyService.searchByResource.and.returnValue(hot('a|', {
-        a: paginatedListRD
-      }));
+      resourcePolicyService.searchByResource.and.returnValue(
+        hot('a|', {
+          a: paginatedListRD,
+        })
+      );
 
       scheduler = getTestScheduler();
       scheduler.schedule(() => comp.initResourcePolicyLIst());
@@ -317,18 +344,24 @@ describe('ResourcePoliciesComponent test suite', () => {
       });
 
       it('should return false when no row is selected', () => {
-        expect(comp.canDelete()).toBeObservable(cold('(a|)', {
-          a: false
-        }));
+        expect(comp.canDelete()).toBeObservable(
+          cold('(a|)', {
+            a: false,
+          })
+        );
       });
 
       it('should return true when at least one row is selected', () => {
-        const checkbox = fixture.debugElement.query(By.css('table > tbody > tr:nth-child(1) input'));
+        const checkbox = fixture.debugElement.query(
+          By.css('table > tbody > tr:nth-child(1) input')
+        );
         const event = { target: { checked: true } };
         checkbox.triggerEventHandler('change', event);
-        expect(comp.canDelete()).toBeObservable(cold('(a|)', {
-          a: true
-        }));
+        expect(comp.canDelete()).toBeObservable(
+          cold('(a|)', {
+            a: true,
+          })
+        );
       });
     });
 
@@ -344,7 +377,6 @@ describe('ResourcePoliciesComponent test suite', () => {
       });
 
       it('should notify success when delete is successful', () => {
-
         resourcePolicyService.delete.and.returnValue(observableOf(true));
         scheduler = getTestScheduler();
         scheduler.schedule(() => comp.deleteSelectedResourcePolicies());
@@ -355,7 +387,6 @@ describe('ResourcePoliciesComponent test suite', () => {
       });
 
       it('should notify error when delete is not successful', () => {
-
         resourcePolicyService.delete.and.returnValue(observableOf(false));
         scheduler = getTestScheduler();
         scheduler.schedule(() => comp.deleteSelectedResourcePolicies());
@@ -366,69 +397,72 @@ describe('ResourcePoliciesComponent test suite', () => {
       });
     });
 
-    it('should get the resource\'s policy list', () => {
+    it("should get the resource's policy list", () => {
       const initResourcePolicyEntries = getInitEntries();
-      expect(comp.getResourcePolicies()).toBeObservable(cold('a', {
-        a: initResourcePolicyEntries
-      }));
-
+      expect(comp.getResourcePolicies()).toBeObservable(
+        cold('a', {
+          a: initResourcePolicyEntries,
+        })
+      );
     });
 
     describe('hasEPerson', () => {
       it('should true when policy is link to the eperson', () => {
-
-        expect(comp.hasEPerson(anotherResourcePolicy)).toBeObservable(cold('(ab|)', {
-          a: false,
-          b: true
-        }));
-
+        expect(comp.hasEPerson(anotherResourcePolicy)).toBeObservable(
+          cold('(ab|)', {
+            a: false,
+            b: true,
+          })
+        );
       });
 
       it('should false when policy is not link to the eperson', () => {
-
-        expect(comp.hasEPerson(resourcePolicy)).toBeObservable(cold('(aa|)', {
-          a: false
-        }));
-
+        expect(comp.hasEPerson(resourcePolicy)).toBeObservable(
+          cold('(aa|)', {
+            a: false,
+          })
+        );
       });
     });
 
     describe('hasGroup', () => {
       it('should true when policy is link to the group', () => {
-
-        expect(comp.hasGroup(resourcePolicy)).toBeObservable(cold('(ab|)', {
-          a: false,
-          b: true
-        }));
-
+        expect(comp.hasGroup(resourcePolicy)).toBeObservable(
+          cold('(ab|)', {
+            a: false,
+            b: true,
+          })
+        );
       });
 
       it('should false when policy is not link to the group', () => {
-
-        expect(comp.hasGroup(anotherResourcePolicy)).toBeObservable(cold('(aa|)', {
-          a: false
-        }));
-
+        expect(comp.hasGroup(anotherResourcePolicy)).toBeObservable(
+          cold('(aa|)', {
+            a: false,
+          })
+        );
       });
     });
 
     describe('getEPersonName', () => {
       it('should return the eperson name', () => {
-
-        expect(comp.getEPersonName(anotherResourcePolicy)).toBeObservable(cold('(ab|)', {
-          a: '',
-          b: 'User Test'
-        }));
+        expect(comp.getEPersonName(anotherResourcePolicy)).toBeObservable(
+          cold('(ab|)', {
+            a: '',
+            b: 'User Test',
+          })
+        );
       });
     });
 
     describe('getGroupName', () => {
       it('should return the group name', () => {
-
-        expect(comp.getGroupName(resourcePolicy)).toBeObservable(cold('(ab|)', {
-          a: '',
-          b: 'testgroupname'
-        }));
+        expect(comp.getGroupName(resourcePolicy)).toBeObservable(
+          cold('(ab|)', {
+            a: '',
+            b: 'testgroupname',
+          })
+        );
       });
     });
 
@@ -438,7 +472,9 @@ describe('ResourcePoliciesComponent test suite', () => {
 
     it('should select All Checkbox', () => {
       spyOn(comp, 'selectAllCheckbox').and.callThrough();
-      const checkbox = fixture.debugElement.query(By.css('table > thead > tr:nth-child(2) input'));
+      const checkbox = fixture.debugElement.query(
+        By.css('table > thead > tr:nth-child(2) input')
+      );
 
       const event = { target: { checked: true } };
       checkbox.triggerEventHandler('change', event);
@@ -447,7 +483,9 @@ describe('ResourcePoliciesComponent test suite', () => {
 
     it('should select a Checkbox', () => {
       spyOn(comp, 'selectCheckbox').and.callThrough();
-      const checkbox = fixture.debugElement.query(By.css('table > tbody > tr:nth-child(1) input'));
+      const checkbox = fixture.debugElement.query(
+        By.css('table > tbody > tr:nth-child(1) input')
+      );
 
       const event = { target: { checked: true } };
       checkbox.triggerEventHandler('change', event);
@@ -455,19 +493,19 @@ describe('ResourcePoliciesComponent test suite', () => {
     });
 
     it('should redirect to create resource policy page', () => {
-
       comp.redirectToResourcePolicyCreatePage();
       expect(compAsAny.router.navigate).toHaveBeenCalled();
     });
 
     it('should redirect to resource policy edit page', () => {
-
       comp.redirectToResourcePolicyEditPage(resourcePolicy);
       expect(compAsAny.router.navigate).toHaveBeenCalled();
     });
 
     it('should redirect to resource policy edit page', () => {
-      compAsAny.groupService.findByHref.and.returnValue(observableOf(createSuccessfulRemoteDataObject(GroupMock)));
+      compAsAny.groupService.findByHref.and.returnValue(
+        observableOf(createSuccessfulRemoteDataObject(GroupMock))
+      );
 
       comp.redirectToGroupEditPage(resourcePolicy);
       expect(compAsAny.router.navigate).toHaveBeenCalled();
@@ -478,10 +516,9 @@ describe('ResourcePoliciesComponent test suite', () => {
 // declare a test component
 @Component({
   selector: 'ds-test-cmp',
-  template: ``
+  template: ``,
 })
 class TestComponent {
-
   resourceUUID = 'itemUUID';
   resourceType = 'item';
 }

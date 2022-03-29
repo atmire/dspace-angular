@@ -22,18 +22,19 @@ const mockItemWithMetadata: ItemSearchResult = Object.assign(
         'dc.title': [
           {
             language: 'en_US',
-            value: 'This is just another title'
-          }
+            value: 'This is just another title',
+          },
         ],
         'person.jobTitle': [
           {
             language: 'en_US',
-            value: 'Developer'
-          }
-        ]
-      }
-    })
-  });
+            value: 'Developer',
+          },
+        ],
+      },
+    }),
+  }
+);
 const mockItemWithoutMetadata: ItemSearchResult = Object.assign(
   new ItemSearchResult(),
   {
@@ -43,12 +44,13 @@ const mockItemWithoutMetadata: ItemSearchResult = Object.assign(
         'dc.title': [
           {
             language: 'en_US',
-            value: 'This is just another title'
-          }
-        ]
-      }
-    })
-  });
+            value: 'This is just another title',
+          },
+        ],
+      },
+    }),
+  }
+);
 
 describe('PersonSearchResultListElementComponent', () => {
   beforeEach(waitForAsync(() => {
@@ -56,19 +58,20 @@ describe('PersonSearchResultListElementComponent', () => {
       declarations: [PersonSearchResultListElementComponent, TruncatePipe],
       providers: [
         { provide: TruncatableService, useValue: {} },
-        { provide: DSONameService, useClass: DSONameServiceMock }
+        { provide: DSONameService, useClass: DSONameServiceMock },
       ],
 
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(PersonSearchResultListElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(PersonSearchResultListElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
     fixture = TestBed.createComponent(PersonSearchResultListElementComponent);
     personListElementComponent = fixture.componentInstance;
-
   }));
 
   describe('When the item has a job title', () => {
@@ -78,7 +81,9 @@ describe('PersonSearchResultListElementComponent', () => {
     });
 
     it('should show the job title span', () => {
-      const jobTitleField = fixture.debugElement.query(By.css('span.item-list-job-title'));
+      const jobTitleField = fixture.debugElement.query(
+        By.css('span.item-list-job-title')
+      );
       expect(jobTitleField).not.toBeNull();
     });
   });
@@ -90,7 +95,9 @@ describe('PersonSearchResultListElementComponent', () => {
     });
 
     it('should not show the job title span', () => {
-      const jobTitleField = fixture.debugElement.query(By.css('span.item-list-job-title'));
+      const jobTitleField = fixture.debugElement.query(
+        By.css('span.item-list-job-title')
+      );
       expect(jobTitleField).toBeNull();
     });
   });

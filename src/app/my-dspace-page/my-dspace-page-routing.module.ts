@@ -11,18 +11,15 @@ import { I18nBreadcrumbResolver } from '../core/breadcrumbs/i18n-breadcrumb.reso
         path: '',
         component: ThemedMyDSpacePageComponent,
         resolve: {
-          breadcrumb: I18nBreadcrumbResolver
+          breadcrumb: I18nBreadcrumbResolver,
         },
         data: { title: 'mydspace.title', breadcrumbKey: 'mydspace' },
-        canActivate: [
-          MyDSpaceGuard
-        ]
-      }
-    ])
-  ]
+        canActivate: [MyDSpaceGuard],
+      },
+    ]),
+  ],
 })
 /**
  * This module defines the default component to load when navigating to the mydspace page path.
  */
-export class MyDspacePageRoutingModule {
-}
+export class MyDspacePageRoutingModule {}

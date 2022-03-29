@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+  ViewContainerRef,
+} from '@angular/core';
 import { Bundle } from '../../../../core/shared/bundle.model';
 import { Item } from '../../../../core/shared/item.model';
 import { ResponsiveColumnSizes } from '../../../../shared/responsive-table-sizes/responsive-column-sizes';
@@ -16,11 +24,10 @@ import { getItemPageRoute } from '../../../item-page-routing-paths';
  * (which means it'll be added to the parents html without a wrapping ds-item-edit-bitstream-bundle element)
  */
 export class ItemEditBitstreamBundleComponent implements OnInit {
-
   /**
    * The view on the bundle information and bitstreams
    */
-  @ViewChild('bundleView', {static: true}) bundleView;
+  @ViewChild('bundleView', { static: true }) bundleView;
 
   /**
    * The bundle to display bitstreams for
@@ -55,8 +62,7 @@ export class ItemEditBitstreamBundleComponent implements OnInit {
    */
   itemPageRoute: string;
 
-  constructor(private viewContainerRef: ViewContainerRef) {
-  }
+  constructor(private viewContainerRef: ViewContainerRef) {}
 
   ngOnInit(): void {
     this.bundleNameColumn = this.columnSizes.combineColumns(0, 2);

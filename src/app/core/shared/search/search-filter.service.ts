@@ -3,7 +3,7 @@ import { distinctUntilChanged, map } from 'rxjs/operators';
 import { Injectable, InjectionToken } from '@angular/core';
 import {
   SearchFiltersState,
-  SearchFilterState
+  SearchFilterState,
 } from '../../../shared/search/search-filters/search-filter/search-filter.reducer';
 import { createSelector, MemoizedSelector, select, Store } from '@ngrx/store';
 import {
@@ -13,29 +13,34 @@ import {
   SearchFilterIncrementPageAction,
   SearchFilterInitializeAction,
   SearchFilterResetPageAction,
-  SearchFilterToggleAction
+  SearchFilterToggleAction,
 } from '../../../shared/search/search-filters/search-filter/search-filter.actions';
-import { hasValue, isNotEmpty, } from '../../../shared/empty.util';
+import { hasValue, isNotEmpty } from '../../../shared/empty.util';
 import { SearchFilterConfig } from '../../../shared/search/models/search-filter-config.model';
-import { SortDirection, SortOptions } from '../../cache/models/sort-options.model';
+import {
+  SortDirection,
+  SortOptions,
+} from '../../cache/models/sort-options.model';
 import { RouteService } from '../../services/route.service';
 import { PaginationComponentOptions } from '../../../shared/pagination/pagination-component-options.model';
 import { Params } from '@angular/router';
 
 const filterStateSelector = (state: SearchFiltersState) => state.searchFilter;
 
-export const FILTER_CONFIG: InjectionToken<SearchFilterConfig> = new InjectionToken<SearchFilterConfig>('filterConfig');
-export const IN_PLACE_SEARCH: InjectionToken<boolean> = new InjectionToken<boolean>('inPlaceSearch');
+export const FILTER_CONFIG: InjectionToken<SearchFilterConfig> =
+  new InjectionToken<SearchFilterConfig>('filterConfig');
+export const IN_PLACE_SEARCH: InjectionToken<boolean> =
+  new InjectionToken<boolean>('inPlaceSearch');
 
 /**
  * Service that performs all actions that have to do with search filters and facets
  */
 @Injectable()
 export class SearchFilterService {
-
-  constructor(private store: Store<SearchFiltersState>,
-              private routeService: RouteService) {
-  }
+  constructor(
+    private store: Store<SearchFiltersState>,
+    private routeService: RouteService
+  ) {}
 
   /**
    * Checks if a given filter is active with a given value
@@ -43,7 +48,10 @@ export class SearchFilterService {
    * @param {string} filterValue The value for which to search
    * @returns {Observable<boolean>} Emit true when the filter is active with the given value
    */
-  isFilterActiveWithValue(paramName: string, filterValue: string): Observable<boolean> {
+  isFilterActiveWithValue(
+    paramName: string,
+    filterValue: string
+  ): Observable<boolean> {
     return this.routeService.hasQueryParamWithValue(paramName, filterValue);
   }
 
@@ -78,15 +86,19 @@ export class SearchFilterService {
    * @param pagination      Pagination options to combine the query parameters with
    * @returns {Observable<PaginationComponentOptions>}
    */
-  getCurrentPagination(pagination: any = {}): Observable<PaginationComponentOptions> {
+  getCurrentPagination(
+    pagination: any = {}
+  ): Observable<PaginationComponentOptions> {
     const page$ = this.routeService.getQueryParameterValue('page');
     const size$ = this.routeService.getQueryParameterValue('pageSize');
-    return observableCombineLatest(page$, size$).pipe(map(([page, size]) => {
-      return Object.assign(new PaginationComponentOptions(), pagination, {
-        currentPage: page || 1,
-        pageSize: size || pagination.pageSize
-      });
-    }));
+    return observableCombineLatest(page$, size$).pipe(
+      map(([page, size]) => {
+        return Object.assign(new PaginationComponentOptions(), pagination, {
+          currentPage: page || 1,
+          pageSize: size || pagination.pageSize,
+        });
+      })
+    );
   }
 
   /**
@@ -96,14 +108,16 @@ export class SearchFilterService {
    * @returns {Observable<SortOptions>}
    */
   getCurrentSort(defaultSort: SortOptions): Observable<SortOptions> {
-    const sortDirection$ = this.routeService.getQueryParameterValue('sortDirection');
+    const sortDirection$ =
+      this.routeService.getQueryParameterValue('sortDirection');
     const sortField$ = this.routeService.getQueryParameterValue('sortField');
-    return observableCombineLatest(sortDirection$, sortField$).pipe(map(([sortDirection, sortField]) => {
+    return observableCombineLatest(sortDirection$, sortField$).pipe(
+      map(([sortDirection, sortField]) => {
         const field = sortField || defaultSort.field;
         const direction = SortDirection[sortDirection] || defaultSort.direction;
         return new SortOptions(field, direction);
-      }
-    ));
+      })
+    );
   }
 
   /**
@@ -127,19 +141,22 @@ export class SearchFilterService {
    * @param {SearchFilterConfig} filterConfig The configuration for which the filters are active
    * @returns {Observable<string[]>} Emits the active filters for the given filter configuration
    */
-  getSelectedValuesForFilter(filterConfig: SearchFilterConfig): Observable<string[]> {
-    const values$ = this.routeService.getQueryParameterValues(filterConfig.paramName);
-    const prefixValues$ = this.routeService.getQueryParamsWithPrefix(filterConfig.paramName + '.').pipe(
-      map((params: Params) => [].concat(...Object.values(params))),
+  getSelectedValuesForFilter(
+    filterConfig: SearchFilterConfig
+  ): Observable<string[]> {
+    const values$ = this.routeService.getQueryParameterValues(
+      filterConfig.paramName
     );
+    const prefixValues$ = this.routeService
+      .getQueryParamsWithPrefix(filterConfig.paramName + '.')
+      .pipe(map((params: Params) => [].concat(...Object.values(params))));
     return observableCombineLatest(values$, prefixValues$).pipe(
       map(([values, prefixValues]) => {
-          if (isNotEmpty(values)) {
-            return values;
-          }
-          return prefixValues;
+        if (isNotEmpty(values)) {
+          return values;
         }
-      )
+        return prefixValues;
+      })
     );
   }
 
@@ -177,7 +194,8 @@ export class SearchFilterService {
           return 1;
         }
       }),
-      distinctUntilChanged());
+      distinctUntilChanged()
+    );
   }
 
   /**
@@ -237,11 +255,15 @@ export class SearchFilterService {
   }
 }
 
-function filterByNameSelector(name: string): MemoizedSelector<SearchFiltersState, SearchFilterState> {
+function filterByNameSelector(
+  name: string
+): MemoizedSelector<SearchFiltersState, SearchFilterState> {
   return keySelector<SearchFilterState>(name);
 }
 
-export function keySelector<T>(key: string): MemoizedSelector<SearchFiltersState, T> {
+export function keySelector<T>(
+  key: string
+): MemoizedSelector<SearchFiltersState, T> {
   return createSelector(filterStateSelector, (state: SearchFilterState) => {
     if (hasValue(state)) {
       return state[key];

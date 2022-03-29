@@ -6,33 +6,31 @@ import { Observable } from 'rxjs';
 import { filter, find, map, skipWhile } from 'rxjs/operators';
 import { hasValue, isNotEmpty } from '../../shared/empty.util';
 import { Registration } from '../shared/registration.model';
-import { getFirstCompletedRemoteData, getFirstSucceededRemoteData } from '../shared/operators';
+import {
+  getFirstCompletedRemoteData,
+  getFirstSucceededRemoteData,
+} from '../shared/operators';
 import { ResponseParsingService } from './parsing.service';
 import { GenericConstructor } from '../shared/generic-constructor';
 import { RegistrationResponseParsingService } from './registration-response-parsing.service';
 import { RemoteData } from './remote-data';
 import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
 
-@Injectable(
-  {
-    providedIn: 'root',
-  }
-)
+@Injectable({
+  providedIn: 'root',
+})
 /**
  * Service that will register a new email address and request a token
  */
 export class EpersonRegistrationService {
-
   protected linkPath = 'registrations';
   protected searchByTokenPath = '/search/findByToken?token=';
 
   constructor(
     protected requestService: RequestService,
     protected rdbService: RemoteDataBuildService,
-    protected halService: HALEndpointService,
-  ) {
-
-  }
+    protected halService: HALEndpointService
+  ) {}
 
   /**
    * Retrieves the Registration endpoint
@@ -47,7 +45,8 @@ export class EpersonRegistrationService {
   getTokenSearchEndpoint(token: string): Observable<string> {
     return this.halService.getEndpoint(this.linkPath).pipe(
       filter((href: string) => isNotEmpty(href)),
-      map((href: string) => `${href}${this.searchByTokenPath}${token}`));
+      map((href: string) => `${href}${this.searchByTokenPath}${token}`)
+    );
   }
 
   /**
@@ -62,17 +61,19 @@ export class EpersonRegistrationService {
 
     const href$ = this.getRegistrationEndpoint();
 
-    href$.pipe(
-      find((href: string) => hasValue(href)),
-      map((href: string) => {
-        const request = new PostRequest(requestId, href, registration);
-        this.requestService.send(request);
-      })
-    ).subscribe();
+    href$
+      .pipe(
+        find((href: string) => hasValue(href)),
+        map((href: string) => {
+          const request = new PostRequest(requestId, href, registration);
+          this.requestService.send(request);
+        })
+      )
+      .subscribe();
 
-    return this.rdbService.buildFromRequestUUID<Registration>(requestId).pipe(
-      getFirstCompletedRemoteData()
-    );
+    return this.rdbService
+      .buildFromRequestUUID<Registration>(requestId)
+      .pipe(getFirstCompletedRemoteData());
   }
 
   /**
@@ -83,7 +84,7 @@ export class EpersonRegistrationService {
     const requestId = this.requestService.generateRequestId();
 
     const href$ = this.getTokenSearchEndpoint(token).pipe(
-      find((href: string) => hasValue(href)),
+      find((href: string) => hasValue(href))
     );
 
     href$.subscribe((href: string) => {
@@ -91,7 +92,7 @@ export class EpersonRegistrationService {
       Object.assign(request, {
         getResponseParser(): GenericConstructor<ResponseParsingService> {
           return RegistrationResponseParsingService;
-        }
+        },
       });
       this.requestService.send(request, true);
     });
@@ -99,12 +100,13 @@ export class EpersonRegistrationService {
     return this.rdbService.buildSingle<Registration>(href$).pipe(
       map((rd) => {
         if (rd.hasSucceeded && hasValue(rd.payload)) {
-          return Object.assign(rd, { payload: Object.assign(rd.payload, { token }) });
+          return Object.assign(rd, {
+            payload: Object.assign(rd.payload, { token }),
+          });
         } else {
           return rd;
         }
       })
     );
   }
-
 }

@@ -2,7 +2,6 @@ import { ThemedComponent } from '../../shared/theme-support/themed.component';
 import { CommunityListComponent } from './community-list.component';
 import { Component } from '@angular/core';
 
-
 @Component({
   selector: 'ds-themed-community-list',
   styleUrls: [],
@@ -14,11 +13,12 @@ export class ThemedCommunityListComponent extends ThemedComponent<CommunityListC
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../themes/${themeName}/app/community-list-page/community-list/community-list.component`);
+    return import(
+      `../../../themes/${themeName}/app/community-list-page/community-list/community-list.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {
     return import(`./community-list.component`);
   }
-
 }

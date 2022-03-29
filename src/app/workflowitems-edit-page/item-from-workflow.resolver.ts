@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  Resolve,
+  RouterStateSnapshot,
+} from '@angular/router';
 import { Observable } from 'rxjs';
 import { RemoteData } from '../core/data/remote-data';
 import { Item } from '../core/shared/item.model';
@@ -18,8 +22,7 @@ export class ItemFromWorkflowResolver implements Resolve<RemoteData<Item>> {
   constructor(
     private workflowItemService: WorkflowItemDataService,
     protected store: Store<any>
-  ) {
-  }
+  ) {}
 
   /**
    * Method for resolving an item based on the parameters in the current route
@@ -28,16 +31,20 @@ export class ItemFromWorkflowResolver implements Resolve<RemoteData<Item>> {
    * @returns Observable<<RemoteData<Item>> Emits the found item based on the parameters in the current route,
    * or an error if something went wrong
    */
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<RemoteData<Item>> {
-    const itemRD$ = this.workflowItemService.findById(route.params.id,
-      true,
-      false,
-      followLink('item'),
-    ).pipe(
-      getFirstCompletedRemoteData(),
-      switchMap((wfiRD: RemoteData<WorkflowItem>) => wfiRD.payload.item as Observable<RemoteData<Item>>),
-      getFirstCompletedRemoteData()
-    );
+  resolve(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<RemoteData<Item>> {
+    const itemRD$ = this.workflowItemService
+      .findById(route.params.id, true, false, followLink('item'))
+      .pipe(
+        getFirstCompletedRemoteData(),
+        switchMap(
+          (wfiRD: RemoteData<WorkflowItem>) =>
+            wfiRD.payload.item as Observable<RemoteData<Item>>
+        ),
+        getFirstCompletedRemoteData()
+      );
     return itemRD$;
   }
 }

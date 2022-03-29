@@ -5,7 +5,7 @@ import { DSpaceObject } from '../../../../core/shared/dspace-object.model';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   DSOSelectorModalWrapperComponent,
-  SelectorActionType
+  SelectorActionType,
 } from '../dso-selector-modal-wrapper.component';
 import { getCommunityEditRoute } from '../../../../community-page/community-page-routing-paths';
 
@@ -18,13 +18,19 @@ import { getCommunityEditRoute } from '../../../../community-page/community-page
   selector: 'ds-edit-community-selector',
   templateUrl: '../dso-selector-modal-wrapper.component.html',
 })
-
-export class EditCommunitySelectorComponent extends DSOSelectorModalWrapperComponent implements OnInit {
+export class EditCommunitySelectorComponent
+  extends DSOSelectorModalWrapperComponent
+  implements OnInit
+{
   objectType = DSpaceObjectType.COMMUNITY;
   selectorTypes = [DSpaceObjectType.COMMUNITY];
   action = SelectorActionType.EDIT;
 
-  constructor(protected activeModal: NgbActiveModal, protected route: ActivatedRoute, private router: Router) {
+  constructor(
+    protected activeModal: NgbActiveModal,
+    protected route: ActivatedRoute,
+    private router: Router
+  ) {
     super(activeModal, route);
   }
 

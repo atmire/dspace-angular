@@ -27,7 +27,8 @@ class DataServiceImpl extends DataService<ConfigurationProperty> {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DefaultChangeAnalyzer<ConfigurationProperty>) {
+    protected comparator: DefaultChangeAnalyzer<ConfigurationProperty>
+  ) {
     super();
   }
 }
@@ -48,15 +49,27 @@ export class ConfigurationDataService {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DefaultChangeAnalyzer<ConfigurationProperty>) {
-    this.dataService = new DataServiceImpl(requestService, rdbService, null, objectCache, halService, notificationsService, http, comparator);
+    protected comparator: DefaultChangeAnalyzer<ConfigurationProperty>
+  ) {
+    this.dataService = new DataServiceImpl(
+      requestService,
+      rdbService,
+      null,
+      objectCache,
+      halService,
+      notificationsService,
+      http,
+      comparator
+    );
   }
 
   /**
    * Finds a configuration property by name
    * @param name
    */
-  findByPropertyName(name: string): Observable<RemoteData<ConfigurationProperty>> {
+  findByPropertyName(
+    name: string
+  ): Observable<RemoteData<ConfigurationProperty>> {
     return this.dataService.findById(name);
   }
 }

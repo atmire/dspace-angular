@@ -12,7 +12,10 @@ import { SearchServiceStub } from '../../../testing/search-service.stub';
 import { SearchConfigurationServiceStub } from '../../../testing/search-configuration-service.stub';
 import { SearchService } from '../../../../core/shared/search/search.service';
 import { PaginationComponentOptions } from '../../../pagination/pagination-component-options.model';
-import { SortDirection, SortOptions } from '../../../../core/cache/models/sort-options.model';
+import {
+  SortDirection,
+  SortOptions,
+} from '../../../../core/cache/models/sort-options.model';
 import { FindListOptions } from '../../../../core/data/request.models';
 import { PaginationService } from '../../../../core/pagination/pagination.service';
 import { SearchConfigurationService } from '../../../../core/shared/search/search-configuration.service';
@@ -34,12 +37,13 @@ describe('SearchLabelComponent', () => {
   const normValue3 = 'Test, Authority';
   const filter1 = [key1, value1];
   const filter2 = [key2, value2];
-  const mockFilters = [
-    filter1,
-    filter2
-  ];
+  const mockFilters = [filter1, filter2];
 
-  const pagination = Object.assign(new PaginationComponentOptions(), { id: 'page-id', currentPage: 1, pageSize: 20 });
+  const pagination = Object.assign(new PaginationComponentOptions(), {
+    id: 'page-id',
+    currentPage: 1,
+    pageSize: 20,
+  });
   const paginationService = new PaginationServiceStub(pagination);
 
   beforeEach(waitForAsync(() => {
@@ -48,16 +52,24 @@ describe('SearchLabelComponent', () => {
       declarations: [SearchLabelComponent, ObjectKeysPipe],
       providers: [
         { provide: SearchService, useValue: new SearchServiceStub(searchLink) },
-        { provide: SEARCH_CONFIG_SERVICE, useValue: new SearchConfigurationServiceStub() },
-        { provide: SearchConfigurationService, useValue: new SearchConfigurationServiceStub() },
+        {
+          provide: SEARCH_CONFIG_SERVICE,
+          useValue: new SearchConfigurationServiceStub(),
+        },
+        {
+          provide: SearchConfigurationService,
+          useValue: new SearchConfigurationServiceStub(),
+        },
         { provide: PaginationService, useValue: paginationService },
-        { provide: Router, useValue: {} }
+        { provide: Router, useValue: {} },
         // { provide: SearchConfigurationService, useValue: {getCurrentFrontendFilters : () =>  observableOf({})} }
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(SearchLabelComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(SearchLabelComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -14,7 +14,7 @@ import { RequestService } from '../../core/data/request.service';
 @Component({
   selector: 'ds-create-community',
   styleUrls: ['./create-community-page.component.scss'],
-  templateUrl: './create-community-page.component.html'
+  templateUrl: './create-community-page.component.html',
 })
 export class CreateCommunityPageComponent extends CreateComColPageComponent<Community> {
   protected frontendURL = '/communities/';
@@ -28,6 +28,14 @@ export class CreateCommunityPageComponent extends CreateComColPageComponent<Comm
     protected translate: TranslateService,
     protected requestService: RequestService
   ) {
-    super(communityDataService, communityDataService, routeService, router, notificationsService, translate, requestService);
+    super(
+      communityDataService,
+      communityDataService,
+      routeService,
+      router,
+      notificationsService,
+      translate,
+      requestService
+    );
   }
 }

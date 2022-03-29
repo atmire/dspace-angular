@@ -1,10 +1,14 @@
-<div class="notifications-wrapper position-fixed"
-     [ngClass]="position"
-     (mouseenter)="this.isPaused$.next(true);"
-     (mouseleave)="this.isPaused$.next(false);">
+<div
+  class="notifications-wrapper position-fixed"
+  [ngClass]="position"
+  (mouseenter)="this.isPaused$.next(true)"
+  (mouseleave)="this.isPaused$.next(false)"
+>
   <ds-notification
     class="notification"
     *ngFor="let a of notifications; let i = index"
-    [notification]="a" [isPaused$]="isPaused$">
+    [notification]="a"
+    [isPaused$]="isPaused$"
+  >
   </ds-notification>
 </div>

@@ -1,10 +1,13 @@
 import { Action } from '@ngrx/store';
 import { BitstreamFormat } from '../../../core/shared/bitstream-format.model';
-import { bitstreamFormatReducer, BitstreamFormatRegistryState } from './bitstream-format.reducers';
+import {
+  bitstreamFormatReducer,
+  BitstreamFormatRegistryState,
+} from './bitstream-format.reducers';
 import {
   BitstreamFormatsRegistryDeselectAction,
   BitstreamFormatsRegistryDeselectAllAction,
-  BitstreamFormatsRegistrySelectAction
+  BitstreamFormatsRegistrySelectAction,
 } from './bitstream-format.actions';
 
 const bitstreamFormat1: BitstreamFormat = new BitstreamFormat();
@@ -16,15 +19,15 @@ bitstreamFormat2.id = 'test-uuid-2';
 bitstreamFormat2.shortDescription = 'test-short-2';
 
 const initialState: BitstreamFormatRegistryState = {
-  selectedBitstreamFormats: []
+  selectedBitstreamFormats: [],
 };
 
 const bitstream1SelectedState: BitstreamFormatRegistryState = {
-  selectedBitstreamFormats: [bitstreamFormat1]
+  selectedBitstreamFormats: [bitstreamFormat1],
 };
 
 const bitstream1and2SelectedState: BitstreamFormatRegistryState = {
-  selectedBitstreamFormats: [bitstreamFormat1, bitstreamFormat2]
+  selectedBitstreamFormats: [bitstreamFormat1, bitstreamFormat2],
 };
 
 describe('BitstreamFormatReducer', () => {
@@ -47,7 +50,9 @@ describe('BitstreamFormatReducer', () => {
   describe('BitstreamFormatsRegistryActionTypes.DESELECT_FORMAT', () => {
     it('should deselect a format', () => {
       const state = bitstream1and2SelectedState;
-      const action = new BitstreamFormatsRegistryDeselectAction(bitstreamFormat2);
+      const action = new BitstreamFormatsRegistryDeselectAction(
+        bitstreamFormat2
+      );
       const newState = bitstreamFormatReducer(state, action);
 
       expect(newState).toEqual(bitstream1SelectedState);

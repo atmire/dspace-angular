@@ -1,5 +1,11 @@
 import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
-import { waitForAsync, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import {
+  waitForAsync,
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+} from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { of as observableOf } from 'rxjs';
@@ -25,28 +31,28 @@ mockResultObject.indexableObject = Object.assign(new Item(), {
     'dc.title': [
       {
         language: 'en_US',
-        value: 'This is just another title'
-      }
+        value: 'This is just another title',
+      },
     ],
     'dc.type': [
       {
         language: null,
-        value: 'Article'
-      }
+        value: 'Article',
+      },
     ],
     'dc.contributor.author': [
       {
         language: 'en_US',
-        value: 'Smith, Donald'
-      }
+        value: 'Smith, Donald',
+      },
     ],
     'dc.date.issued': [
       {
         language: null,
-        value: '2015-06-26'
-      }
-    ]
-  }
+        value: '2015-06-26',
+      },
+    ],
+  },
 });
 
 describe('ItemMyDSpaceResultListElementComponent', () => {
@@ -56,16 +62,20 @@ describe('ItemMyDSpaceResultListElementComponent', () => {
       declarations: [ItemSearchResultListElementSubmissionComponent],
       providers: [
         { provide: TruncatableService, useValue: {} },
-        { provide: DSONameService, useClass: DSONameServiceMock }
+        { provide: DSONameService, useClass: DSONameServiceMock },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(ItemSearchResultListElementSubmissionComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(ItemSearchResultListElementSubmissionComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
-    fixture = TestBed.createComponent(ItemSearchResultListElementSubmissionComponent);
+    fixture = TestBed.createComponent(
+      ItemSearchResultListElementSubmissionComponent
+    );
     component = fixture.componentInstance;
   }));
 
@@ -80,13 +90,16 @@ describe('ItemMyDSpaceResultListElementComponent', () => {
 
   it('should forward item-actions processComplete event to reloadObject event emitter', fakeAsync(() => {
     spyOn(component.reloadedObject, 'emit').and.callThrough();
-    const actionPayload: any = { reloadedObject: {}};
+    const actionPayload: any = { reloadedObject: {} };
 
-    const actionsComponent = fixture.debugElement.query(By.css('ds-item-actions'));
+    const actionsComponent = fixture.debugElement.query(
+      By.css('ds-item-actions')
+    );
     actionsComponent.triggerEventHandler('processCompleted', actionPayload);
     tick();
 
-    expect(component.reloadedObject.emit).toHaveBeenCalledWith(actionPayload.reloadedObject);
-
+    expect(component.reloadedObject.emit).toHaveBeenCalledWith(
+      actionPayload.reloadedObject
+    );
   }));
 });

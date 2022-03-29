@@ -9,10 +9,9 @@ import { Component } from '@angular/core';
  */
 @Component({
   selector: 'ds-abstract-trackable',
-  template: ''
+  template: '',
 })
 export class AbstractTrackableComponent {
-
   /**
    * The time span for being able to undo discarding changes
    */
@@ -24,17 +23,19 @@ export class AbstractTrackableComponent {
   constructor(
     public objectUpdatesService: ObjectUpdatesService,
     public notificationsService: NotificationsService,
-    public translateService: TranslateService,
-  ) {
-
-  }
+    public translateService: TranslateService
+  ) {}
 
   /**
    * Request the object updates service to discard all current changes to this item
    * Shows a notification to remind the user that they can undo this
    */
   discard() {
-    const undoNotification = this.notificationsService.info(this.getNotificationTitle('discarded'), this.getNotificationContent('discarded'), {timeOut: this.discardTimeOut});
+    const undoNotification = this.notificationsService.info(
+      this.getNotificationTitle('discarded'),
+      this.getNotificationContent('discarded'),
+      { timeOut: this.discardTimeOut }
+    );
     this.objectUpdatesService.discardFieldUpdates(this.url, undoNotification);
   }
 
@@ -64,7 +65,9 @@ export class AbstractTrackableComponent {
    * @param key
    */
   getNotificationTitle(key: string) {
-    return this.translateService.instant(this.notificationsPrefix + key + '.title');
+    return this.translateService.instant(
+      this.notificationsPrefix + key + '.title'
+    );
   }
 
   /**
@@ -72,7 +75,8 @@ export class AbstractTrackableComponent {
    * @param key
    */
   getNotificationContent(key: string) {
-    return this.translateService.instant(this.notificationsPrefix + key + '.content');
-
+    return this.translateService.instant(
+      this.notificationsPrefix + key + '.content'
+    );
   }
 }

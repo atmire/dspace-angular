@@ -9,7 +9,7 @@ import { AlertType } from '../../../shared/alert/aletr-type';
 
 @Component({
   selector: 'ds-item-version-history',
-  templateUrl: './item-version-history.component.html'
+  templateUrl: './item-version-history.component.html',
 })
 /**
  * Component for listing and managing an item's version history
@@ -26,10 +26,11 @@ export class ItemVersionHistoryComponent {
    */
   AlertTypeEnum = AlertType;
 
-  constructor(private route: ActivatedRoute) {
-  }
+  constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.itemRD$ = this.route.parent.parent.data.pipe(map((data) => data.dso)).pipe(getFirstSucceededRemoteData()) as Observable<RemoteData<Item>>;
+    this.itemRD$ = this.route.parent.parent.data
+      .pipe(map((data) => data.dso))
+      .pipe(getFirstSucceededRemoteData()) as Observable<RemoteData<Item>>;
   }
 }

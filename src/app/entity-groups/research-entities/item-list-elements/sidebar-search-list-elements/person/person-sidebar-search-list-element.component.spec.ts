@@ -11,35 +11,47 @@ const object = Object.assign(new ItemSearchResult(), {
     metadata: {
       'person.familyName': [
         {
-          value: 'family name'
-        }
+          value: 'family name',
+        },
       ],
       'person.givenName': [
         {
-          value: 'given name'
-        }
+          value: 'given name',
+        },
       ],
       'person.jobTitle': [
         {
-          value: 'job title'
-        }
-      ]
-    }
-  })
+          value: 'job title',
+        },
+      ],
+    },
+  }),
 });
 const parent = Object.assign(new Collection(), {
   id: 'test-collection',
   metadata: {
     'dc.title': [
       {
-        value: 'parent title'
-      }
-    ]
-  }
+        value: 'parent title',
+      },
+    ],
+  },
 });
 
-describe('PersonSidebarSearchListElementComponent',
-  createSidebarSearchListElementTests(PersonSidebarSearchListElementComponent, object, parent, 'parent title', 'family name, given name', 'job title', [
-    { provide: TranslateService, useValue: jasmine.createSpyObj('translate', { instant: '' }) }
-  ])
+describe(
+  'PersonSidebarSearchListElementComponent',
+  createSidebarSearchListElementTests(
+    PersonSidebarSearchListElementComponent,
+    object,
+    parent,
+    'parent title',
+    'family name, given name',
+    'job title',
+    [
+      {
+        provide: TranslateService,
+        useValue: jasmine.createSpyObj('translate', { instant: '' }),
+      },
+    ]
+  )
 );

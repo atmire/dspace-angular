@@ -27,14 +27,16 @@
   cursor: move;
 }
 
-:host ::ng-deep .bitstream-row:hover .drag-handle, :host ::ng-deep .bitstream-row-drag-handle:focus .drag-handle {
+:host ::ng-deep .bitstream-row:hover .drag-handle,
+:host ::ng-deep .bitstream-row-drag-handle:focus .drag-handle {
   visibility: visible !important;
 }
 
 .cdk-drag-preview {
   margin-left: 0;
   box-sizing: border-box;
-  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
 }
 
 .cdk-drag-placeholder {
@@ -46,7 +48,8 @@
 }
 
 .cdk-drop-list-dragging {
-  .bitstream-row-drag-handle, .drag-handle {
+  .bitstream-row-drag-handle,
+  .drag-handle {
     cursor: grabbing;
   }
 }

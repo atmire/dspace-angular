@@ -4,14 +4,14 @@ about: Create a report to help us improve
 title: ''
 labels: bug, needs triage
 assignees: ''
-
 ---
 
 **Describe the bug**
-A clear and concise description of what the bug is. Include the version(s) of DSpace where you've seen this problem & what *web browser* you were using. Link to examples if they are public.
+A clear and concise description of what the bug is. Include the version(s) of DSpace where you've seen this problem & what _web browser_ you were using. Link to examples if they are public.
 
 **To Reproduce**
 Steps to reproduce the behavior:
+
 1. Do this
 2. Then this...
 

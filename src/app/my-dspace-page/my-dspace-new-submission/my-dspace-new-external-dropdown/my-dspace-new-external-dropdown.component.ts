@@ -17,10 +17,9 @@ import { PaginatedList } from '../../../core/data/paginated-list.model';
 @Component({
   selector: 'ds-my-dspace-new-external-dropdown',
   styleUrls: ['./my-dspace-new-external-dropdown.component.scss'],
-  templateUrl: './my-dspace-new-external-dropdown.component.html'
+  templateUrl: './my-dspace-new-external-dropdown.component.html',
 })
 export class MyDSpaceNewExternalDropdownComponent implements OnInit, OnDestroy {
-
   /**
    * Used to verify if there are one or more entities available
    */
@@ -53,8 +52,10 @@ export class MyDSpaceNewExternalDropdownComponent implements OnInit, OnDestroy {
    * @param {EntityTypeService} entityTypeService
    * @param {Router} router
    */
-  constructor(private entityTypeService: EntityTypeService,
-              private router: Router) { }
+  constructor(
+    private entityTypeService: EntityTypeService,
+    private router: Router
+  ) {}
 
   /**
    * Initialize entity type list
@@ -67,15 +68,17 @@ export class MyDSpaceNewExternalDropdownComponent implements OnInit, OnDestroy {
         if (!response) {
           const findListOptions: FindListOptions = {
             elementsPerPage: 1,
-            currentPage: 1
+            currentPage: 1,
           };
-          return this.entityTypeService.getAllAuthorizedRelationshipTypeImport(findListOptions).pipe(
-            map((entities: RemoteData<PaginatedList<ItemType>>) => {
-              this.initialized$ = observableOf(true);
-              return entities.payload.page[0];
-            }),
-            take(1)
-          );
+          return this.entityTypeService
+            .getAllAuthorizedRelationshipTypeImport(findListOptions)
+            .pipe(
+              map((entities: RemoteData<PaginatedList<ItemType>>) => {
+                this.initialized$ = observableOf(true);
+                return entities.payload.page[0];
+              }),
+              take(1)
+            );
         } else {
           this.initialized$ = observableOf(true);
           return observableOf(null);
@@ -84,7 +87,7 @@ export class MyDSpaceNewExternalDropdownComponent implements OnInit, OnDestroy {
       take(1)
     );
     this.subs.push(
-      this.singleEntity$.subscribe((result) => this.singleEntity = result )
+      this.singleEntity$.subscribe((result) => (this.singleEntity = result))
     );
   }
 

@@ -20,10 +20,18 @@ describe('DsoPageVersionButtonComponent', () => {
   let dso: Item;
   let tooltipMsg: Observable<string>;
 
-  const authorizationServiceSpy = jasmine.createSpyObj('authorizationService', ['isAuthorized']);
+  const authorizationServiceSpy = jasmine.createSpyObj('authorizationService', [
+    'isAuthorized',
+  ]);
 
-  const versionHistoryServiceSpy = jasmine.createSpyObj('versionHistoryService',
-    ['getVersions', 'getLatestVersionFromHistory$', 'isLatest$', 'hasDraftVersion$']
+  const versionHistoryServiceSpy = jasmine.createSpyObj(
+    'versionHistoryService',
+    [
+      'getVersions',
+      'getLatestVersionFromHistory$',
+      'isLatest$',
+      'hasDraftVersion$',
+    ]
   );
 
   beforeEach(waitForAsync(() => {
@@ -38,17 +46,29 @@ describe('DsoPageVersionButtonComponent', () => {
 
     TestBed.configureTestingModule({
       declarations: [DsoPageVersionButtonComponent],
-      imports: [TranslateModule.forRoot(), RouterTestingModule.withRoutes([]), NgbModule],
+      imports: [
+        TranslateModule.forRoot(),
+        RouterTestingModule.withRoutes([]),
+        NgbModule,
+      ],
       providers: [
-        { provide: AuthorizationDataService, useValue: authorizationServiceSpy },
-        { provide: VersionHistoryDataService, useValue: versionHistoryServiceSpy },
-      ]
+        {
+          provide: AuthorizationDataService,
+          useValue: authorizationServiceSpy,
+        },
+        {
+          provide: VersionHistoryDataService,
+          useValue: versionHistoryServiceSpy,
+        },
+      ],
     }).compileComponents();
 
     authorizationService = TestBed.inject(AuthorizationDataService);
     versionHistoryService = TestBed.inject(VersionHistoryDataService);
 
-    versionHistoryServiceSpy.hasDraftVersion$.and.returnValue(observableOf(true));
+    versionHistoryServiceSpy.hasDraftVersion$.and.returnValue(
+      observableOf(true)
+    );
   }));
 
   beforeEach(() => {
@@ -60,11 +80,16 @@ describe('DsoPageVersionButtonComponent', () => {
   });
 
   it('should check the authorization of the current user', () => {
-    expect(authorizationService.isAuthorized).toHaveBeenCalledWith(FeatureID.CanCreateVersion, dso.self);
+    expect(authorizationService.isAuthorized).toHaveBeenCalledWith(
+      FeatureID.CanCreateVersion,
+      dso.self
+    );
   });
 
   it('should check if the item has a draft version', () => {
-    expect(versionHistoryServiceSpy.hasDraftVersion$).toHaveBeenCalledWith(dso._links.version.href);
+    expect(versionHistoryServiceSpy.hasDraftVersion$).toHaveBeenCalledWith(
+      dso._links.version.href
+    );
   });
 
   describe('when the user is authorized', () => {
@@ -92,5 +117,4 @@ describe('DsoPageVersionButtonComponent', () => {
       expect(button).toBeNull();
     });
   });
-
 });

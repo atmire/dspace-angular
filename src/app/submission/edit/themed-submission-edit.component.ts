@@ -8,7 +8,7 @@ import { SubmissionEditComponent } from './submission-edit.component';
 @Component({
   selector: 'ds-themed-submission-edit',
   styleUrls: [],
-  templateUrl: './../../shared/theme-support/themed.component.html'
+  templateUrl: './../../shared/theme-support/themed.component.html',
 })
 export class ThemedSubmissionEditComponent extends ThemedComponent<SubmissionEditComponent> {
   protected getComponentName(): string {
@@ -16,7 +16,9 @@ export class ThemedSubmissionEditComponent extends ThemedComponent<SubmissionEdi
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../themes/${themeName}/app/submission/edit/submission-edit.component`);
+    return import(
+      `../../../themes/${themeName}/app/submission/edit/submission-edit.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

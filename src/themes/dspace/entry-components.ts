@@ -1,2 +1,1 @@
-export const ENTRY_COMPONENTS = [
-];
+export const ENTRY_COMPONENTS = [];

@@ -1,4 +1,3 @@
-
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
@@ -9,10 +8,9 @@ import { ActivatedRoute } from '@angular/router';
   selector: 'ds-objnotfound',
   styleUrls: ['./objectnotfound.component.scss'],
   templateUrl: './objectnotfound.component.html',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Default,
 })
 export class ObjectNotFoundComponent implements OnInit {
-
   idType: string;
 
   id: string;
@@ -39,5 +37,4 @@ export class ObjectNotFoundComponent implements OnInit {
       this.missingItem = 'handle: ' + this.idType + '/' + this.id;
     }
   }
-
 }

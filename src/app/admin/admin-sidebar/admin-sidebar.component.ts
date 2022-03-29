@@ -1,7 +1,19 @@
 import { Component, HostListener, Injector, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { combineLatest, combineLatest as observableCombineLatest, Observable, BehaviorSubject } from 'rxjs';
-import { debounceTime, first, map, take, distinctUntilChanged, withLatestFrom } from 'rxjs/operators';
+import {
+  combineLatest,
+  combineLatest as observableCombineLatest,
+  Observable,
+  BehaviorSubject,
+} from 'rxjs';
+import {
+  debounceTime,
+  first,
+  map,
+  take,
+  distinctUntilChanged,
+  withLatestFrom,
+} from 'rxjs/operators';
 import { AuthService } from '../../core/auth/auth.service';
 import { ScriptDataService } from '../../core/data/processes/script-data.service';
 import { slideHorizontal, slideSidebar } from '../../shared/animations/slide';
@@ -30,7 +42,7 @@ import { Router, ActivatedRoute } from '@angular/router';
   selector: 'ds-admin-sidebar',
   templateUrl: './admin-sidebar.component.html',
   styleUrls: ['./admin-sidebar.component.scss'],
-  animations: [slideHorizontal, slideSidebar]
+  animations: [slideHorizontal, slideSidebar],
 })
 export class AdminSidebarComponent extends MenuComponent implements OnInit {
   /**
@@ -84,36 +96,38 @@ export class AdminSidebarComponent extends MenuComponent implements OnInit {
     this.createMenu();
     super.ngOnInit();
     this.sidebarWidth = this.variableService.getVariable('sidebarItemsWidth');
-    this.authService.isAuthenticated()
-      .subscribe((loggedIn: boolean) => {
-        if (loggedIn) {
-          this.menuService.showMenu(this.menuID);
-        }
-      });
-    this.menuCollapsed.pipe(first())
-      .subscribe((collapsed: boolean) => {
-        this.sidebarOpen = !collapsed;
-        this.sidebarClosed = collapsed;
-      });
-    this.sidebarExpanded = combineLatest([this.menuCollapsed, this.menuPreviewCollapsed])
-      .pipe(
-        map(([collapsed, previewCollapsed]) => (!collapsed || !previewCollapsed))
-      );
-    this.inFocus$.pipe(
-      debounceTime(50),
-      distinctUntilChanged(),  // disregard focusout in situations like --(focusout)-(focusin)--
-      withLatestFrom(
-        combineLatest([this.menuCollapsed, this.menuPreviewCollapsed])
-      ),
-    ).subscribe(([inFocus, [collapsed, previewCollapsed]]) => {
-      if (collapsed) {
-        if (inFocus && previewCollapsed) {
-          this.expandPreview(new Event('focusin → expand'));
-        } else if (!inFocus && !previewCollapsed) {
-          this.collapsePreview(new Event('focusout → collapse'));
-        }
+    this.authService.isAuthenticated().subscribe((loggedIn: boolean) => {
+      if (loggedIn) {
+        this.menuService.showMenu(this.menuID);
       }
     });
+    this.menuCollapsed.pipe(first()).subscribe((collapsed: boolean) => {
+      this.sidebarOpen = !collapsed;
+      this.sidebarClosed = collapsed;
+    });
+    this.sidebarExpanded = combineLatest([
+      this.menuCollapsed,
+      this.menuPreviewCollapsed,
+    ]).pipe(
+      map(([collapsed, previewCollapsed]) => !collapsed || !previewCollapsed)
+    );
+    this.inFocus$
+      .pipe(
+        debounceTime(50),
+        distinctUntilChanged(), // disregard focusout in situations like --(focusout)-(focusin)--
+        withLatestFrom(
+          combineLatest([this.menuCollapsed, this.menuPreviewCollapsed])
+        )
+      )
+      .subscribe(([inFocus, [collapsed, previewCollapsed]]) => {
+        if (collapsed) {
+          if (inFocus && previewCollapsed) {
+            this.expandPreview(new Event('focusin → expand'));
+          } else if (!inFocus && !previewCollapsed) {
+            this.collapsePreview(new Event('focusout → collapse'));
+          }
+        }
+      });
   }
 
   /**
@@ -135,7 +149,7 @@ export class AdminSidebarComponent extends MenuComponent implements OnInit {
     combineLatest([
       this.authorizationService.isAuthorized(FeatureID.IsCollectionAdmin),
       this.authorizationService.isAuthorized(FeatureID.IsCommunityAdmin),
-      this.authorizationService.isAuthorized(FeatureID.AdministratorOf)
+      this.authorizationService.isAuthorized(FeatureID.AdministratorOf),
     ]).subscribe(([isCollectionAdmin, isCommunityAdmin, isSiteAdmin]) => {
       const menuList = [
         /* News */
@@ -145,10 +159,10 @@ export class AdminSidebarComponent extends MenuComponent implements OnInit {
           visible: true,
           model: {
             type: MenuItemType.TEXT,
-            text: 'menu.section.new'
+            text: 'menu.section.new',
           } as TextMenuItemModel,
           icon: 'plus',
-          index: 0
+          index: 0,
         },
         {
           id: 'new_community',
@@ -160,7 +174,7 @@ export class AdminSidebarComponent extends MenuComponent implements OnInit {
             text: 'menu.section.new_community',
             function: () => {
               this.modalService.open(CreateCommunityParentSelectorComponent);
-            }
+            },
           } as OnClickMenuItemModel,
         },
         {
@@ -173,7 +187,7 @@ export class AdminSidebarComponent extends MenuComponent implements OnInit {
             text: 'menu.section.new_collection',
             function: () => {
               this.modalService.open(CreateCollectionParentSelectorComponent);
-            }
+            },
           } as OnClickMenuItemModel,
         },
         {
@@ -186,7 +200,7 @@ export class AdminSidebarComponent extends MenuComponent implements OnInit {
             text: 'menu.section.new_item',
             function: () => {
               this.modalService.open(CreateItemParentSelectorComponent);
-            }
+            },
           } as OnClickMenuItemModel,
         },
         {
@@ -197,7 +211,7 @@ export class AdminSidebarComponent extends MenuComponent implements OnInit {
           model: {
             type: MenuItemType.LINK,
             text: 'menu.section.new_process',
-            link: '/processes/new'
+            link: '/processes/new',
           } as LinkMenuItemModel,
         },
         // TODO: enable this menu item once the feature has been implemented
@@ -220,10 +234,10 @@ export class AdminSidebarComponent extends MenuComponent implements OnInit {
           visible: true,
           model: {
             type: MenuItemType.TEXT,
-            text: 'menu.section.edit'
+            text: 'menu.section.edit',
           } as TextMenuItemModel,
           icon: 'pencil-alt',
-          index: 1
+          index: 1,
         },
         {
           id: 'edit_community',
@@ -235,7 +249,7 @@ export class AdminSidebarComponent extends MenuComponent implements OnInit {
             text: 'menu.section.edit_community',
             function: () => {
               this.modalService.open(EditCommunitySelectorComponent);
-            }
+            },
           } as OnClickMenuItemModel,
         },
         {
@@ -248,7 +262,7 @@ export class AdminSidebarComponent extends MenuComponent implements OnInit {
             text: 'menu.section.edit_collection',
             function: () => {
               this.modalService.open(EditCollectionSelectorComponent);
-            }
+            },
           } as OnClickMenuItemModel,
         },
         {
@@ -261,7 +275,7 @@ export class AdminSidebarComponent extends MenuComponent implements OnInit {
             text: 'menu.section.edit_item',
             function: () => {
               this.modalService.open(EditItemSelectorComponent);
-            }
+            },
           } as OnClickMenuItemModel,
         },
 
@@ -303,15 +317,20 @@ export class AdminSidebarComponent extends MenuComponent implements OnInit {
           model: {
             type: MenuItemType.LINK,
             text: 'menu.section.processes',
-            link: '/processes'
+            link: '/processes',
           } as LinkMenuItemModel,
           icon: 'terminal',
-          index: 10
+          index: 10,
         },
       ];
-      menuList.forEach((menuSection) => this.menuService.addSection(this.menuID, Object.assign(menuSection, {
-        shouldPersistOnRouteChange: true
-      })));
+      menuList.forEach((menuSection) =>
+        this.menuService.addSection(
+          this.menuID,
+          Object.assign(menuSection, {
+            shouldPersistOnRouteChange: true,
+          })
+        )
+      );
     });
   }
 
@@ -328,11 +347,11 @@ export class AdminSidebarComponent extends MenuComponent implements OnInit {
         visible: true,
         model: {
           type: MenuItemType.TEXT,
-          text: 'menu.section.export'
+          text: 'menu.section.export',
         } as TextMenuItemModel,
         icon: 'file-export',
         index: 3,
-        shouldPersistOnRouteChange: true
+        shouldPersistOnRouteChange: true,
       },
       // TODO: enable this menu item once the feature has been implemented
       // {
@@ -374,31 +393,35 @@ export class AdminSidebarComponent extends MenuComponent implements OnInit {
       //   shouldPersistOnRouteChange: true
       // },
     ];
-    menuList.forEach((menuSection) => this.menuService.addSection(this.menuID, menuSection));
+    menuList.forEach((menuSection) =>
+      this.menuService.addSection(this.menuID, menuSection)
+    );
 
     observableCombineLatest(
-      this.authorizationService.isAuthorized(FeatureID.AdministratorOf),
+      this.authorizationService.isAuthorized(FeatureID.AdministratorOf)
       // this.scriptDataService.scriptWithNameExistsAndCanExecute(METADATA_EXPORT_SCRIPT_NAME)
-    ).pipe(
-      // TODO uncomment when #635 (https://github.com/DSpace/dspace-angular/issues/635) is fixed; otherwise even in production mode, the metadata export button is only available after a refresh (and not in dev mode)
-      // filter(([authorized, metadataExportScriptExists]: boolean[]) => authorized && metadataExportScriptExists),
-      take(1)
-    ).subscribe(() => {
-      this.menuService.addSection(this.menuID, {
-        id: 'export_metadata',
-        parentID: 'export',
-        active: true,
-        visible: true,
-        model: {
-          type: MenuItemType.ONCLICK,
-          text: 'menu.section.export_metadata',
-          function: () => {
-            this.modalService.open(ExportMetadataSelectorComponent);
-          }
-        } as OnClickMenuItemModel,
-        shouldPersistOnRouteChange: true
+    )
+      .pipe(
+        // TODO uncomment when #635 (https://github.com/DSpace/dspace-angular/issues/635) is fixed; otherwise even in production mode, the metadata export button is only available after a refresh (and not in dev mode)
+        // filter(([authorized, metadataExportScriptExists]: boolean[]) => authorized && metadataExportScriptExists),
+        take(1)
+      )
+      .subscribe(() => {
+        this.menuService.addSection(this.menuID, {
+          id: 'export_metadata',
+          parentID: 'export',
+          active: true,
+          visible: true,
+          model: {
+            type: MenuItemType.ONCLICK,
+            text: 'menu.section.export_metadata',
+            function: () => {
+              this.modalService.open(ExportMetadataSelectorComponent);
+            },
+          } as OnClickMenuItemModel,
+          shouldPersistOnRouteChange: true,
+        });
       });
-    });
   }
 
   /**
@@ -414,10 +437,10 @@ export class AdminSidebarComponent extends MenuComponent implements OnInit {
         visible: true,
         model: {
           type: MenuItemType.TEXT,
-          text: 'menu.section.import'
+          text: 'menu.section.import',
         } as TextMenuItemModel,
         icon: 'file-import',
-        index: 2
+        index: 2,
       },
       // TODO: enable this menu item once the feature has been implemented
       // {
@@ -432,120 +455,134 @@ export class AdminSidebarComponent extends MenuComponent implements OnInit {
       //   } as LinkMenuItemModel,
       // }
     ];
-    menuList.forEach((menuSection) => this.menuService.addSection(this.menuID, Object.assign(menuSection, {
-      shouldPersistOnRouteChange: true
-    })));
+    menuList.forEach((menuSection) =>
+      this.menuService.addSection(
+        this.menuID,
+        Object.assign(menuSection, {
+          shouldPersistOnRouteChange: true,
+        })
+      )
+    );
 
     observableCombineLatest(
-      this.authorizationService.isAuthorized(FeatureID.AdministratorOf),
+      this.authorizationService.isAuthorized(FeatureID.AdministratorOf)
       // this.scriptDataService.scriptWithNameExistsAndCanExecute(METADATA_IMPORT_SCRIPT_NAME)
-    ).pipe(
-      // TODO uncomment when #635 (https://github.com/DSpace/dspace-angular/issues/635) is fixed
-      // filter(([authorized, metadataImportScriptExists]: boolean[]) => authorized && metadataImportScriptExists),
-      take(1)
-    ).subscribe(() => {
-      this.menuService.addSection(this.menuID, {
-        id: 'import_metadata',
-        parentID: 'import',
-        active: true,
-        visible: true,
-        model: {
-          type: MenuItemType.LINK,
-          text: 'menu.section.import_metadata',
-          link: '/admin/metadata-import'
-        } as LinkMenuItemModel,
-        shouldPersistOnRouteChange: true
+    )
+      .pipe(
+        // TODO uncomment when #635 (https://github.com/DSpace/dspace-angular/issues/635) is fixed
+        // filter(([authorized, metadataImportScriptExists]: boolean[]) => authorized && metadataImportScriptExists),
+        take(1)
+      )
+      .subscribe(() => {
+        this.menuService.addSection(this.menuID, {
+          id: 'import_metadata',
+          parentID: 'import',
+          active: true,
+          visible: true,
+          model: {
+            type: MenuItemType.LINK,
+            text: 'menu.section.import_metadata',
+            link: '/admin/metadata-import',
+          } as LinkMenuItemModel,
+          shouldPersistOnRouteChange: true,
+        });
       });
-    });
   }
 
   /**
    * Create menu sections dependent on whether or not the current user is a site administrator
    */
   createSiteAdministratorMenuSections() {
-    this.authorizationService.isAuthorized(FeatureID.AdministratorOf).subscribe((authorized) => {
-      const menuList = [
-        /*  Admin Search */
-        {
-          id: 'admin_search',
-          active: false,
-          visible: authorized,
-          model: {
-            type: MenuItemType.LINK,
-            text: 'menu.section.admin_search',
-            link: '/admin/search'
-          } as LinkMenuItemModel,
-          icon: 'search',
-          index: 5
-        },
-        /*  Registries */
-        {
-          id: 'registries',
-          active: false,
-          visible: authorized,
-          model: {
-            type: MenuItemType.TEXT,
-            text: 'menu.section.registries'
-          } as TextMenuItemModel,
-          icon: 'list',
-          index: 6
-        },
-        {
-          id: 'registries_metadata',
-          parentID: 'registries',
-          active: false,
-          visible: authorized,
-          model: {
-            type: MenuItemType.LINK,
-            text: 'menu.section.registries_metadata',
-            link: 'admin/registries/metadata'
-          } as LinkMenuItemModel,
-        },
-        {
-          id: 'registries_format',
-          parentID: 'registries',
-          active: false,
-          visible: authorized,
-          model: {
-            type: MenuItemType.LINK,
-            text: 'menu.section.registries_format',
-            link: 'admin/registries/bitstream-formats'
-          } as LinkMenuItemModel,
-        },
+    this.authorizationService
+      .isAuthorized(FeatureID.AdministratorOf)
+      .subscribe((authorized) => {
+        const menuList = [
+          /*  Admin Search */
+          {
+            id: 'admin_search',
+            active: false,
+            visible: authorized,
+            model: {
+              type: MenuItemType.LINK,
+              text: 'menu.section.admin_search',
+              link: '/admin/search',
+            } as LinkMenuItemModel,
+            icon: 'search',
+            index: 5,
+          },
+          /*  Registries */
+          {
+            id: 'registries',
+            active: false,
+            visible: authorized,
+            model: {
+              type: MenuItemType.TEXT,
+              text: 'menu.section.registries',
+            } as TextMenuItemModel,
+            icon: 'list',
+            index: 6,
+          },
+          {
+            id: 'registries_metadata',
+            parentID: 'registries',
+            active: false,
+            visible: authorized,
+            model: {
+              type: MenuItemType.LINK,
+              text: 'menu.section.registries_metadata',
+              link: 'admin/registries/metadata',
+            } as LinkMenuItemModel,
+          },
+          {
+            id: 'registries_format',
+            parentID: 'registries',
+            active: false,
+            visible: authorized,
+            model: {
+              type: MenuItemType.LINK,
+              text: 'menu.section.registries_format',
+              link: 'admin/registries/bitstream-formats',
+            } as LinkMenuItemModel,
+          },
 
-        /* Curation tasks */
-        {
-          id: 'curation_tasks',
-          active: false,
-          visible: authorized,
-          model: {
-            type: MenuItemType.LINK,
-            text: 'menu.section.curation_task',
-            link: 'admin/curation-tasks'
-          } as LinkMenuItemModel,
-          icon: 'filter',
-          index: 7
-        },
+          /* Curation tasks */
+          {
+            id: 'curation_tasks',
+            active: false,
+            visible: authorized,
+            model: {
+              type: MenuItemType.LINK,
+              text: 'menu.section.curation_task',
+              link: 'admin/curation-tasks',
+            } as LinkMenuItemModel,
+            icon: 'filter',
+            index: 7,
+          },
 
-        /* Workflow */
-        {
-          id: 'workflow',
-          active: false,
-          visible: authorized,
-          model: {
-            type: MenuItemType.LINK,
-            text: 'menu.section.workflow',
-            link: '/admin/workflow'
-          } as LinkMenuItemModel,
-          icon: 'user-check',
-          index: 11
-        },
-      ];
+          /* Workflow */
+          {
+            id: 'workflow',
+            active: false,
+            visible: authorized,
+            model: {
+              type: MenuItemType.LINK,
+              text: 'menu.section.workflow',
+              link: '/admin/workflow',
+            } as LinkMenuItemModel,
+            icon: 'user-check',
+            index: 11,
+          },
+        ];
 
-      menuList.forEach((menuSection) => this.menuService.addSection(this.menuID, Object.assign(menuSection, {
-        shouldPersistOnRouteChange: true
-      })));
-    });
+        menuList.forEach((menuSection) =>
+          this.menuService.addSection(
+            this.menuID,
+            Object.assign(menuSection, {
+              shouldPersistOnRouteChange: true,
+            })
+          )
+        );
+      });
   }
 
   /**
@@ -566,7 +603,7 @@ export class AdminSidebarComponent extends MenuComponent implements OnInit {
           model: {
             type: MenuItemType.LINK,
             text: 'menu.section.access_control_people',
-            link: '/access-control/epeople'
+            link: '/access-control/epeople',
           } as LinkMenuItemModel,
         },
         {
@@ -577,7 +614,7 @@ export class AdminSidebarComponent extends MenuComponent implements OnInit {
           model: {
             type: MenuItemType.LINK,
             text: 'menu.section.access_control_groups',
-            link: '/access-control/groups'
+            link: '/access-control/groups',
           } as LinkMenuItemModel,
         },
         // TODO: enable this menu item once the feature has been implemented
@@ -598,16 +635,21 @@ export class AdminSidebarComponent extends MenuComponent implements OnInit {
           visible: canManageGroups || isSiteAdmin,
           model: {
             type: MenuItemType.TEXT,
-            text: 'menu.section.access_control'
+            text: 'menu.section.access_control',
           } as TextMenuItemModel,
           icon: 'key',
-          index: 4
+          index: 4,
         },
       ];
 
-      menuList.forEach((menuSection) => this.menuService.addSection(this.menuID, Object.assign(menuSection, {
-        shouldPersistOnRouteChange: true,
-      })));
+      menuList.forEach((menuSection) =>
+        this.menuService.addSection(
+          this.menuID,
+          Object.assign(menuSection, {
+            shouldPersistOnRouteChange: true,
+          })
+        )
+      );
     });
   }
 

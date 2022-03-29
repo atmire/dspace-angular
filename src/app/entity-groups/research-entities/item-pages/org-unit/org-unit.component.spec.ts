@@ -4,45 +4,47 @@ import { PageInfo } from '../../../../core/shared/page-info.model';
 import { OrgUnitComponent } from './org-unit.component';
 import {
   createRelationshipsObservable,
-  getItemPageFieldsTest
+  getItemPageFieldsTest,
 } from '../../../../item-page/simple/item-types/shared/item.component.spec';
 import { createSuccessfulRemoteDataObject$ } from '../../../../shared/remote-data.utils';
 
 const mockItem: Item = Object.assign(new Item(), {
-  bundles: createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), [])),
+  bundles: createSuccessfulRemoteDataObject$(
+    buildPaginatedList(new PageInfo(), [])
+  ),
   metadata: {
     'organization.foundingDate': [
       {
         language: 'en_US',
-        value: '2018'
-      }
+        value: '2018',
+      },
     ],
     'organization.address.addressLocality': [
       {
         language: 'en_US',
-        value: 'New York'
-      }
+        value: 'New York',
+      },
     ],
     'organization.adress.addressCountry': [
       {
         language: 'en_US',
-        value: 'USA'
-      }
+        value: 'USA',
+      },
     ],
     'dc.identifier': [
       {
         language: 'en_US',
-        value: '1'
-      }
+        value: '1',
+      },
     ],
     'dc.description': [
       {
         language: 'en_US',
-        value: 'desc'
-      }
-    ]
+        value: 'desc',
+      },
+    ],
   },
-  relationships: createRelationshipsObservable()
+  relationships: createRelationshipsObservable(),
 });
 
 describe('OrgUnitComponent', getItemPageFieldsTest(mockItem, OrgUnitComponent));

@@ -10,12 +10,12 @@ describe('EndUserAgreementCookieGuard', () => {
 
   beforeEach(() => {
     endUserAgreementService = jasmine.createSpyObj('endUserAgreementService', {
-      isCookieAccepted: true
+      isCookieAccepted: true,
     });
     router = jasmine.createSpyObj('router', {
       navigateByUrl: {},
       parseUrl: new UrlTree(),
-      createUrlTree: new UrlTree()
+      createUrlTree: new UrlTree(),
     });
 
     guard = new EndUserAgreementCookieGuard(endUserAgreementService, router);
@@ -24,23 +24,31 @@ describe('EndUserAgreementCookieGuard', () => {
   describe('canActivate', () => {
     describe('when the cookie has been accepted', () => {
       it('should return true', (done) => {
-        guard.canActivate(undefined, { url: Object.assign({ url: 'redirect' }) } as any).subscribe((result) => {
-          expect(result).toEqual(true);
-          done();
-        });
+        guard
+          .canActivate(undefined, {
+            url: Object.assign({ url: 'redirect' }),
+          } as any)
+          .subscribe((result) => {
+            expect(result).toEqual(true);
+            done();
+          });
       });
     });
 
-    describe('when the cookie hasn\'t been accepted', () => {
+    describe("when the cookie hasn't been accepted", () => {
       beforeEach(() => {
-        (endUserAgreementService.isCookieAccepted as jasmine.Spy).and.returnValue(false);
+        (
+          endUserAgreementService.isCookieAccepted as jasmine.Spy
+        ).and.returnValue(false);
       });
 
       it('should return a UrlTree', (done) => {
-        guard.canActivate(undefined, Object.assign({ url: 'redirect' })).subscribe((result) => {
-          expect(result).toEqual(jasmine.any(UrlTree));
-          done();
-        });
+        guard
+          .canActivate(undefined, Object.assign({ url: 'redirect' }))
+          .subscribe((result) => {
+            expect(result).toEqual(jasmine.any(UrlTree));
+            done();
+          });
       });
     });
   });

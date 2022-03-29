@@ -1,10 +1,11 @@
-import {of as observableOf,  Observable ,  BehaviorSubject } from 'rxjs';
+import { of as observableOf, Observable, BehaviorSubject } from 'rxjs';
 import { ViewMode } from '../../core/shared/view-mode.model';
 
 export class SearchServiceStub {
-
   private _viewMode: ViewMode;
-  private subject?: BehaviorSubject<any> = new BehaviorSubject(this.testViewMode);
+  private subject?: BehaviorSubject<any> = new BehaviorSubject(
+    this.testViewMode
+  );
 
   viewMode = this.subject.asObservable();
 

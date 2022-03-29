@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -21,7 +29,6 @@ import { findIndex } from 'lodash';
  * Represents a select that allow to switch over available search configurations
  */
 export class SearchSwitchConfigurationComponent implements OnDestroy, OnInit {
-
   /**
    * True when the search component should show results on the current page
    */
@@ -47,20 +54,26 @@ export class SearchSwitchConfigurationComponent implements OnDestroy, OnInit {
   /**
    * Emits event when the user select a new configuration
    */
-  @Output() changeConfiguration: EventEmitter<SearchConfigurationOption> = new EventEmitter<SearchConfigurationOption>();
+  @Output() changeConfiguration: EventEmitter<SearchConfigurationOption> =
+    new EventEmitter<SearchConfigurationOption>();
 
-  constructor(private router: Router,
-              private searchService: SearchService,
-              @Inject(SEARCH_CONFIG_SERVICE) private searchConfigService: SearchConfigurationService) {
-  }
+  constructor(
+    private router: Router,
+    private searchService: SearchService,
+    @Inject(SEARCH_CONFIG_SERVICE)
+    private searchConfigService: SearchConfigurationService
+  ) {}
 
   /**
    * Init current configuration
    */
   ngOnInit() {
-    this.searchConfigService.getCurrentConfiguration(this.defaultConfiguration)
+    this.searchConfigService
+      .getCurrentConfiguration(this.defaultConfiguration)
       .subscribe((currentConfiguration) => {
-        const index = findIndex(this.configurationList, {value: currentConfiguration });
+        const index = findIndex(this.configurationList, {
+          value: currentConfiguration,
+        });
         this.selectedOption = this.configurationList[index];
       });
   }
@@ -70,7 +83,7 @@ export class SearchSwitchConfigurationComponent implements OnDestroy, OnInit {
    */
   onSelect() {
     const navigationExtras: NavigationExtras = {
-      queryParams: {configuration: this.selectedOption.value},
+      queryParams: { configuration: this.selectedOption.value },
     };
 
     this.changeConfiguration.emit(this.selectedOption);
@@ -83,7 +96,10 @@ export class SearchSwitchConfigurationComponent implements OnDestroy, OnInit {
    * @param item1
    * @param item2
    */
-  compare(item1: MyDSpaceConfigurationValueType, item2: MyDSpaceConfigurationValueType) {
+  compare(
+    item1: MyDSpaceConfigurationValueType,
+    item2: MyDSpaceConfigurationValueType
+  ) {
     return item1 === item2;
   }
 

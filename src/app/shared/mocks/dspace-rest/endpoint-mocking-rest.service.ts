@@ -5,7 +5,10 @@ import { isEmpty } from '../../empty.util';
 import { RestRequestMethod } from '../../../core/data/rest-request-method';
 
 import { RawRestResponse } from '../../../core/dspace-rest/raw-rest-response.model';
-import { DspaceRestService, HttpOptions } from '../../../core/dspace-rest/dspace-rest.service';
+import {
+  DspaceRestService,
+  HttpOptions,
+} from '../../../core/dspace-rest/dspace-rest.service';
 import { MOCK_RESPONSE_MAP, ResponseMapMock } from './mocks/response-map.mock';
 import * as URL from 'url-parse';
 import { environment } from '../../../../environments/environment';
@@ -19,7 +22,6 @@ import { environment } from '../../../../environments/environment';
  */
 @Injectable()
 export class EndpointMockingRestService extends DspaceRestService {
-
   constructor(
     @Inject(MOCK_RESPONSE_MAP) protected mockResponseMap: ResponseMapMock,
     protected http: HttpClient
@@ -62,7 +64,13 @@ export class EndpointMockingRestService extends DspaceRestService {
    * @return Observable<RawRestResponse>
    *      An Observable<RawRestResponse> containing the response from the server
    */
-  request(method: RestRequestMethod, url: string, body?: any, options?: HttpOptions, isMultipart?: boolean): Observable<RawRestResponse> {
+  request(
+    method: RestRequestMethod,
+    url: string,
+    body?: any,
+    options?: HttpOptions,
+    isMultipart?: boolean
+  ): Observable<RawRestResponse> {
     const mockData = this.getMockData(url);
     if (isEmpty(mockData)) {
       return super.request(method, url, body, options, isMultipart);
@@ -84,7 +92,7 @@ export class EndpointMockingRestService extends DspaceRestService {
       payload: mockData,
       headers: new HttpHeaders(),
       statusCode: 200,
-      statusText: 'OK'
+      statusText: 'OK',
     });
   }
 

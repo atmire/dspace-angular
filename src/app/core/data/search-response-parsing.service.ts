@@ -13,9 +13,9 @@ export class SearchResponseParsingService extends DspaceRestResponseParsingServi
   parse(request: RestRequest, data: RawRestResponse): ParsedResponse {
     // fallback for unexpected empty response
     const emptyPayload = {
-      _embedded : {
-        objects: []
-      }
+      _embedded: {
+        objects: [],
+      },
     };
     const payload = data.payload._embedded.searchResult || emptyPayload;
     payload.appliedFilters = data.payload.appliedFilters;
@@ -28,8 +28,11 @@ export class SearchResponseParsingService extends DspaceRestResponseParsingServi
         const mdMap: MetadataMap = {};
         if (hhObject) {
           for (const key of Object.keys(hhObject)) {
-            const value: MetadataValue = Object.assign(new MetadataValue(), { value: hhObject[key].join('...'), language: null });
-            mdMap[key] = [ value ];
+            const value: MetadataValue = Object.assign(new MetadataValue(), {
+              value: hhObject[key].join('...'),
+              language: null,
+            });
+            mdMap[key] = [value];
           }
         }
         return mdMap;
@@ -44,12 +47,16 @@ export class SearchResponseParsingService extends DspaceRestResponseParsingServi
 
     const objects = payload._embedded.objects
       .filter((object) => hasValue(object._embedded))
-      .map((object, index) => Object.assign({}, object, {
-        indexableObject: dsoSelfLinks[index],
-        hitHighlights: hitHighlights[index],
-      }));
+      .map((object, index) =>
+        Object.assign({}, object, {
+          indexableObject: dsoSelfLinks[index],
+          hitHighlights: hitHighlights[index],
+        })
+      );
     payload.objects = objects;
-    const deserialized: any = new DSpaceSerializer(SearchObjects).deserialize(payload);
+    const deserialized: any = new DSpaceSerializer(SearchObjects).deserialize(
+      payload
+    );
     deserialized.pageInfo = this.processPageInfo(payload);
     this.addToObjectCache(deserialized, request, data);
     return new ParsedResponse(data.statusCode, deserialized._links.self);

@@ -25,5 +25,5 @@ export enum FilterType {
   /**
    * Represents binary facets
    */
-  boolean = 'standard'
+  boolean = 'standard',
 }

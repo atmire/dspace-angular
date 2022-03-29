@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, Optional, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Optional,
+  Output,
+} from '@angular/core';
 import { ProcessParameter } from '../../../processes/process-parameter.model';
 import { ScriptParameter } from '../../../scripts/script-parameter.model';
 import { ControlContainer, NgForm } from '@angular/forms';
@@ -11,11 +17,13 @@ import { controlContainerFactory } from '../../process-form.component';
   selector: 'ds-parameter-select',
   templateUrl: './parameter-select.component.html',
   styleUrls: ['./parameter-select.component.scss'],
-  viewProviders: [{
-    provide: ControlContainer,
-    useFactory: controlContainerFactory,
-    deps: [[new Optional(), NgForm]]
-  }]
+  viewProviders: [
+    {
+      provide: ControlContainer,
+      useFactory: controlContainerFactory,
+      deps: [[new Optional(), NgForm]],
+    },
+  ],
 })
 export class ParameterSelectComponent {
   @Input() index: number;
@@ -38,18 +46,22 @@ export class ParameterSelectComponent {
   /**
    * Emits the parameter value when it's removed
    */
-  @Output() removeParameter: EventEmitter<ProcessParameter> = new EventEmitter<ProcessParameter>();
+  @Output() removeParameter: EventEmitter<ProcessParameter> =
+    new EventEmitter<ProcessParameter>();
 
   /**
    * Emits the updated parameter value when it changes
    */
-  @Output() changeParameter: EventEmitter<ProcessParameter> = new EventEmitter<ProcessParameter>();
+  @Output() changeParameter: EventEmitter<ProcessParameter> =
+    new EventEmitter<ProcessParameter>();
 
   /**
    * Returns the script parameter based on the currently selected name
    */
   get selectedScriptParameter(): ScriptParameter {
-    return this.parameters.find((parameter: ScriptParameter) => parameter.name === this.selectedParameter);
+    return this.parameters.find(
+      (parameter: ScriptParameter) => parameter.name === this.selectedParameter
+    );
   }
 
   /**

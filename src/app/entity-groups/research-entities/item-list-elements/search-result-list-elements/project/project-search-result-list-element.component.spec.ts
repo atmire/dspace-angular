@@ -21,8 +21,8 @@ const mockItemWithMetadata: ItemSearchResult = Object.assign(
         'dc.title': [
           {
             language: 'en_US',
-            value: 'This is just another title'
-          }
+            value: 'This is just another title',
+          },
         ],
         // 'project.identifier.status': [
         //   {
@@ -30,9 +30,10 @@ const mockItemWithMetadata: ItemSearchResult = Object.assign(
         //     value: 'A status about the project'
         //   }
         // ]
-      }
-    })
-  });
+      },
+    }),
+  }
+);
 
 const mockItemWithoutMetadata: ItemSearchResult = Object.assign(
   new ItemSearchResult(),
@@ -43,12 +44,13 @@ const mockItemWithoutMetadata: ItemSearchResult = Object.assign(
         'dc.title': [
           {
             language: 'en_US',
-            value: 'This is just another title'
-          }
-        ]
-      }
-    })
-  });
+            value: 'This is just another title',
+          },
+        ],
+      },
+    }),
+  }
+);
 
 describe('ProjectSearchResultListElementComponent', () => {
   beforeEach(waitForAsync(() => {
@@ -56,19 +58,20 @@ describe('ProjectSearchResultListElementComponent', () => {
       declarations: [ProjectSearchResultListElementComponent, TruncatePipe],
       providers: [
         { provide: TruncatableService, useValue: {} },
-        { provide: DSONameService, useClass: DSONameServiceMock }
+        { provide: DSONameService, useClass: DSONameServiceMock },
       ],
 
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(ProjectSearchResultListElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(ProjectSearchResultListElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
     fixture = TestBed.createComponent(ProjectSearchResultListElementComponent);
     projectListElementComponent = fixture.componentInstance;
-
   }));
 
   // describe('When the item has a status', () => {

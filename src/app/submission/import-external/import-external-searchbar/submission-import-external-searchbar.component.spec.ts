@@ -1,10 +1,15 @@
 import { ChangeDetectorRef, Component, NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, inject, TestBed, waitForAsync } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  inject,
+  TestBed,
+  waitForAsync,
+} from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
 import {
   SourceElement,
-  SubmissionImportExternalSearchbarComponent
+  SubmissionImportExternalSearchbarComponent,
 } from './submission-import-external-searchbar.component';
 import { ExternalSourceService } from '../../../core/data/external-source.service';
 import { createTestComponent } from '../../../shared/testing/utils.test';
@@ -12,10 +17,13 @@ import {
   externalSourceCiencia,
   externalSourceMyStaffDb,
   externalSourceOrcid,
-  getMockExternalSourceService
+  getMockExternalSourceService,
 } from '../../../shared/mocks/external-source.service.mock';
 import { PageInfo } from '../../../core/shared/page-info.model';
-import { buildPaginatedList, PaginatedList } from '../../../core/data/paginated-list.model';
+import {
+  buildPaginatedList,
+  PaginatedList,
+} from '../../../core/data/paginated-list.model';
 import { createSuccessfulRemoteDataObject } from '../../../shared/remote-data.utils';
 import { ExternalSource } from '../../../core/shared/external-source.model';
 import { FindListOptions } from '../../../core/data/request.models';
@@ -34,27 +42,31 @@ describe('SubmissionImportExternalSearchbarComponent test suite', () => {
   let paginatedList: PaginatedList<ExternalSource>;
 
   const mockExternalSourceService: any = getMockExternalSourceService();
-  paginatedList = buildPaginatedList(new PageInfo(), [externalSourceOrcid, externalSourceCiencia, externalSourceMyStaffDb]);
+  paginatedList = buildPaginatedList(new PageInfo(), [
+    externalSourceOrcid,
+    externalSourceCiencia,
+    externalSourceMyStaffDb,
+  ]);
   let paginatedListRD = createSuccessfulRemoteDataObject(paginatedList);
 
   beforeEach(waitForAsync(() => {
     scheduler = getTestScheduler();
     TestBed.configureTestingModule({
-      imports: [
-        TranslateModule.forRoot(),
-      ],
-      declarations: [
-        SubmissionImportExternalSearchbarComponent,
-        TestComponent,
-      ],
+      imports: [TranslateModule.forRoot()],
+      declarations: [SubmissionImportExternalSearchbarComponent, TestComponent],
       providers: [
         { provide: ExternalSourceService, useValue: mockExternalSourceService },
         ChangeDetectorRef,
-        { provide: HostWindowService, useValue: new HostWindowServiceStub(800) },
-        SubmissionImportExternalSearchbarComponent
+        {
+          provide: HostWindowService,
+          useValue: new HostWindowServiceStub(800),
+        },
+        SubmissionImportExternalSearchbarComponent,
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents().then();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .compileComponents()
+      .then();
   }));
 
   // First test to check the correct component creation
@@ -64,10 +76,15 @@ describe('SubmissionImportExternalSearchbarComponent test suite', () => {
 
     // synchronous beforeEach
     beforeEach(() => {
-      mockExternalSourceService.searchBy.and.returnValue(observableOf(paginatedListRD));
+      mockExternalSourceService.searchBy.and.returnValue(
+        observableOf(paginatedListRD)
+      );
       const html = `
         <ds-submission-import-external-searchbar [initExternalSourceData]="initExternalSourceData"></ds-submission-import-external-searchbar>`;
-      testFixture = createTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
+      testFixture = createTestComponent(
+        html,
+        TestComponent
+      ) as ComponentFixture<TestComponent>;
       testComp = testFixture.componentInstance;
     });
 
@@ -75,25 +92,35 @@ describe('SubmissionImportExternalSearchbarComponent test suite', () => {
       testFixture.destroy();
     });
 
-    it('should create SubmissionImportExternalSearchbarComponent', inject([SubmissionImportExternalSearchbarComponent], (app: SubmissionImportExternalSearchbarComponent) => {
-      expect(app).toBeDefined();
-    }));
+    it('should create SubmissionImportExternalSearchbarComponent', inject(
+      [SubmissionImportExternalSearchbarComponent],
+      (app: SubmissionImportExternalSearchbarComponent) => {
+        expect(app).toBeDefined();
+      }
+    ));
   });
 
   describe('', () => {
-
     beforeEach(() => {
-      fixture = TestBed.createComponent(SubmissionImportExternalSearchbarComponent);
+      fixture = TestBed.createComponent(
+        SubmissionImportExternalSearchbarComponent
+      );
       comp = fixture.componentInstance;
       compAsAny = comp;
       const pageInfo = new PageInfo();
-      paginatedList = buildPaginatedList(pageInfo, [externalSourceOrcid, externalSourceCiencia, externalSourceMyStaffDb]);
+      paginatedList = buildPaginatedList(pageInfo, [
+        externalSourceOrcid,
+        externalSourceCiencia,
+        externalSourceMyStaffDb,
+      ]);
       paginatedListRD = createSuccessfulRemoteDataObject(paginatedList);
-      compAsAny.externalService.searchBy.and.returnValue(observableOf(paginatedListRD));
+      compAsAny.externalService.searchBy.and.returnValue(
+        observableOf(paginatedListRD)
+      );
       sourceList = [
-        {id: 'orcid', name: 'orcid'},
-        {id: 'ciencia', name: 'ciencia'},
-        {id: 'my_staff_db', name: 'my_staff_db'},
+        { id: 'orcid', name: 'orcid' },
+        { id: 'ciencia', name: 'ciencia' },
+        { id: 'my_staff_db', name: 'my_staff_db' },
       ];
     });
 
@@ -104,7 +131,11 @@ describe('SubmissionImportExternalSearchbarComponent test suite', () => {
     });
 
     it('Should init component properly (without initExternalSourceData)', () => {
-      comp.initExternalSourceData = { entity: 'Publication', sourceId: '', query: '' };
+      comp.initExternalSourceData = {
+        entity: 'Publication',
+        sourceId: '',
+        query: '',
+      };
       scheduler.schedule(() => fixture.detectChanges());
       scheduler.flush();
 
@@ -114,7 +145,11 @@ describe('SubmissionImportExternalSearchbarComponent test suite', () => {
     });
 
     it('Should init component properly (with initExternalSourceData populated)', () => {
-      comp.initExternalSourceData = { entity: 'Publication', query: 'dummy', sourceId: 'ciencia' };
+      comp.initExternalSourceData = {
+        entity: 'Publication',
+        query: 'dummy',
+        sourceId: 'ciencia',
+      };
       scheduler.schedule(() => fixture.detectChanges());
       scheduler.flush();
 
@@ -123,27 +158,29 @@ describe('SubmissionImportExternalSearchbarComponent test suite', () => {
       expect(comp.sourceList).toEqual(sourceList);
     });
 
-    it('Variable \'selectedElement\' should be assigned', () => {
-      const selectedElement = {id: 'orcid', name: 'orcid'};
+    it("Variable 'selectedElement' should be assigned", () => {
+      const selectedElement = { id: 'orcid', name: 'orcid' };
       comp.makeSourceSelection(selectedElement);
       expect(comp.selectedElement).toEqual(selectedElement);
     });
 
     it('Should load additional external sources', () => {
-      comp.initExternalSourceData = { entity: 'Publication', query: 'dummy', sourceId: 'ciencia' };
+      comp.initExternalSourceData = {
+        entity: 'Publication',
+        query: 'dummy',
+        sourceId: 'ciencia',
+      };
       comp.sourceListLoading = false;
       compAsAny.pageInfo = new PageInfo({
         elementsPerPage: 3,
         totalElements: 6,
         totalPages: 2,
-        currentPage: 0
+        currentPage: 0,
       });
       compAsAny.findListOptions = Object.assign({}, new FindListOptions(), {
         elementsPerPage: 3,
         currentPage: 0,
-        searchParams: [
-          new RequestParam('entityType', 'Publication')
-        ]
+        searchParams: [new RequestParam('entityType', 'Publication')],
       });
       comp.sourceList = sourceList;
       const expected = sourceList.concat(sourceList);
@@ -154,11 +191,19 @@ describe('SubmissionImportExternalSearchbarComponent test suite', () => {
       expect(comp.sourceList).toEqual(expected);
     });
 
-    it('The \'search\' method should call \'emit\'', () => {
-      comp.initExternalSourceData = { entity: 'Publication', query: 'dummy', sourceId: 'ciencia' };
+    it("The 'search' method should call 'emit'", () => {
+      comp.initExternalSourceData = {
+        entity: 'Publication',
+        query: 'dummy',
+        sourceId: 'ciencia',
+      };
       comp.selectedElement = { id: 'orcidV2', name: 'orcidV2' };
       comp.searchString = 'dummy';
-      const expected = { entity: 'Publication', sourceId: comp.selectedElement.id, query: comp.searchString };
+      const expected = {
+        entity: 'Publication',
+        sourceId: comp.selectedElement.id,
+        query: comp.searchString,
+      };
       spyOn(comp.externalSourceData, 'emit');
       comp.search();
 
@@ -170,8 +215,12 @@ describe('SubmissionImportExternalSearchbarComponent test suite', () => {
 // declare a test component
 @Component({
   selector: 'ds-test-cmp',
-  template: ``
+  template: ``,
 })
 class TestComponent {
-  initExternalSourceData = { entity: 'Publication', query: 'dummy', sourceId: 'ciencia' };
+  initExternalSourceData = {
+    entity: 'Publication',
+    query: 'dummy',
+    sourceId: 'ciencia',
+  };
 }

@@ -34,7 +34,8 @@ describe('SubmissionJsonPatchOperationsService', () => {
 
   it('should instantiate SubmissionJsonPatchOperationsService properly', () => {
     expect(service).toBeDefined();
-    expect((service as any).patchRequestConstructor).toEqual(SubmissionPatchRequest);
+    expect((service as any).patchRequestConstructor).toEqual(
+      SubmissionPatchRequest
+    );
   });
-
 });

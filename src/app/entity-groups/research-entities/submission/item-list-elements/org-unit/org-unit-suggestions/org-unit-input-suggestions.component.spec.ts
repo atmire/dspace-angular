@@ -19,15 +19,14 @@ describe('OrgUnitInputSuggestionsComponent', () => {
     init();
     TestBed.configureTestingModule({
       declarations: [OrgUnitInputSuggestionsComponent],
-      imports: [
-        FormsModule,
-      ],
-      providers: [
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(OrgUnitInputSuggestionsComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      imports: [FormsModule],
+      providers: [],
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(OrgUnitInputSuggestionsComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -60,5 +59,4 @@ describe('OrgUnitInputSuggestionsComponent', () => {
       expect(component.value).toEqual(testValue);
     });
   });
-
 });

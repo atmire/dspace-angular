@@ -20,10 +20,7 @@ export class HeaderComponent {
   public showAuth = false;
   menuID = MenuID.PUBLIC;
 
-  constructor(
-    private menuService: MenuService
-  ) {
-  }
+  constructor(private menuService: MenuService) {}
 
   public toggleNavbar(): void {
     this.menuService.toggleMenu(this.menuID);

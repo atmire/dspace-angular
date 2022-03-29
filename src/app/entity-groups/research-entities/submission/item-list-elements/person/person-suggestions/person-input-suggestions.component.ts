@@ -4,7 +4,10 @@ import { InputSuggestionsComponent } from '../../../../../../shared/input-sugges
 
 @Component({
   selector: 'ds-person-input-suggestions',
-  styleUrls: ['./person-input-suggestions.component.scss', './../../../../../../shared/input-suggestions/input-suggestions.component.scss'],
+  styleUrls: [
+    './person-input-suggestions.component.scss',
+    './../../../../../../shared/input-suggestions/input-suggestions.component.scss',
+  ],
   templateUrl: './person-input-suggestions.component.html',
   providers: [
     {
@@ -12,15 +15,18 @@ import { InputSuggestionsComponent } from '../../../../../../shared/input-sugges
       // Usage of forwardRef necessary https://github.com/angular/angular.io/issues/1151
       // eslint-disable-next-line @angular-eslint/no-forward-ref
       useExisting: forwardRef(() => PersonInputSuggestionsComponent),
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+  ],
 })
 
 /**
  * Component representing a form with a autocomplete functionality
  */
-export class PersonInputSuggestionsComponent extends InputSuggestionsComponent implements OnInit {
+export class PersonInputSuggestionsComponent
+  extends InputSuggestionsComponent
+  implements OnInit
+{
   /**
    * The suggestions that should be shown
    */

@@ -20,7 +20,8 @@ let fixture: ComponentFixture<WorkflowItemSearchResultDetailElementComponent>;
 
 const compIndex = 1;
 
-const mockResultObject: WorkflowItemSearchResult = new WorkflowItemSearchResult();
+const mockResultObject: WorkflowItemSearchResult =
+  new WorkflowItemSearchResult();
 mockResultObject.hitHighlights = {};
 const linkService = getMockLinkService();
 
@@ -30,31 +31,33 @@ const item = Object.assign(new Item(), {
     'dc.title': [
       {
         language: 'en_US',
-        value: 'This is just another title'
-      }
+        value: 'This is just another title',
+      },
     ],
     'dc.type': [
       {
         language: null,
-        value: 'Article'
-      }
+        value: 'Article',
+      },
     ],
     'dc.contributor.author': [
       {
         language: 'en_US',
-        value: 'Smith, Donald'
-      }
+        value: 'Smith, Donald',
+      },
     ],
     'dc.date.issued': [
       {
         language: null,
-        value: '2015-06-26'
-      }
-    ]
-  }
+        value: '2015-06-26',
+      },
+    ],
+  },
 });
 const rd = createSuccessfulRemoteDataObject(item);
-mockResultObject.indexableObject = Object.assign(new WorkflowItem(), { item: observableOf(rd) });
+mockResultObject.indexableObject = Object.assign(new WorkflowItem(), {
+  item: observableOf(rd),
+});
 
 describe('WorkflowItemSearchResultDetailElementComponent', () => {
   beforeEach(waitForAsync(() => {
@@ -62,19 +65,23 @@ describe('WorkflowItemSearchResultDetailElementComponent', () => {
       imports: [NoopAnimationsModule],
       declarations: [WorkflowItemSearchResultDetailElementComponent],
       providers: [
-        { provide: 'objectElementProvider', useValue: (mockResultObject) },
-        { provide: 'indexElementProvider', useValue: (compIndex) },
+        { provide: 'objectElementProvider', useValue: mockResultObject },
+        { provide: 'indexElementProvider', useValue: compIndex },
         { provide: LinkService, useValue: linkService },
         { provide: DSONameService, useClass: DSONameServiceMock },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(WorkflowItemSearchResultDetailElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(WorkflowItemSearchResultDetailElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
-    fixture = TestBed.createComponent(WorkflowItemSearchResultDetailElementComponent);
+    fixture = TestBed.createComponent(
+      WorkflowItemSearchResultDetailElementComponent
+    );
     component = fixture.componentInstance;
   }));
 

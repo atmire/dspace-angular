@@ -8,7 +8,8 @@
 }
 
 :host ::ng-deep .dropdown-item {
-  border-bottom: var(--bs-dropdown-border-width) solid var(--bs-dropdown-border-color);
+  border-bottom: var(--bs-dropdown-border-width) solid
+    var(--bs-dropdown-border-color);
 }
 
 :host ::ng-deep .dropdown-item.active,
@@ -25,9 +26,9 @@
 }
 
 .tree-toggle {
-  padding:  0.70rem 0.70rem 0 0.70rem ;
+  padding: 0.7rem 0.7rem 0 0.7rem;
 }
 
-.tree-input[readonly]{
+.tree-input[readonly] {
   background-color: #fff;
 }

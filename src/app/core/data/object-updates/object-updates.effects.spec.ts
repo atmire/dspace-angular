@@ -9,11 +9,11 @@ import {
   ObjectUpdatesAction,
   ReinstateObjectUpdatesAction,
   RemoveFieldUpdateAction,
-  RemoveObjectUpdatesAction
+  RemoveObjectUpdatesAction,
 } from './object-updates.actions';
 import {
   INotification,
-  Notification
+  Notification,
 } from '../../../shared/notifications/models/notification.model';
 import { NotificationType } from '../../../shared/notifications/models/notification-type';
 import { filter } from 'rxjs/operators';
@@ -34,9 +34,10 @@ describe('ObjectUpdatesEffects', () => {
         {
           provide: NotificationsService,
           useValue: {
-            remove: (notification) => { /* empty */
-            }
-          }
+            remove: (notification) => {
+              /* empty */
+            },
+          },
         },
       ],
     });
@@ -46,9 +47,13 @@ describe('ObjectUpdatesEffects', () => {
     testURL = 'www.dspace.org/dspace7';
     testUUID = '20e24c2f-a00a-467c-bdee-c929e79bf08d';
     updatesEffects = TestBed.inject(ObjectUpdatesEffects);
-    (updatesEffects as any).actionMap$[testURL] = new Subject<ObjectUpdatesAction>();
-    (updatesEffects as any).notificationActionMap$[fakeID] = new Subject<ObjectUpdatesAction>();
-    (updatesEffects as any).notificationActionMap$[(updatesEffects as any).allIdentifier] = new Subject<ObjectUpdatesAction>();
+    (updatesEffects as any).actionMap$[testURL] =
+      new Subject<ObjectUpdatesAction>();
+    (updatesEffects as any).notificationActionMap$[fakeID] =
+      new Subject<ObjectUpdatesAction>();
+    (updatesEffects as any).notificationActionMap$[
+      (updatesEffects as any).allIdentifier
+    ] = new Subject<ObjectUpdatesAction>();
   });
 
   describe('mapLastActions$', () => {
@@ -58,10 +63,12 @@ describe('ObjectUpdatesEffects', () => {
       beforeEach(() => {
         action = new RemoveObjectUpdatesAction(testURL);
       });
-      it('should emit the action from the actionMap\'s value which key matches the action\'s URL', () => {
+      it("should emit the action from the actionMap's value which key matches the action's URL", () => {
         action = new RemoveObjectUpdatesAction(testURL);
         actions = hot('--a-', { a: action });
-        (updatesEffects as any).actionMap$[testURL].subscribe((act) => emittedAction = act);
+        (updatesEffects as any).actionMap$[testURL].subscribe(
+          (act) => (emittedAction = act)
+        );
         const expected = cold('--b-', { b: undefined });
 
         expect(updatesEffects.mapLastActions$).toBeObservable(expected);
@@ -76,45 +83,62 @@ describe('ObjectUpdatesEffects', () => {
       let removeAction;
       describe('When there is no user interactions before the timeout is finished', () => {
         beforeEach(() => {
-          infoNotification = new Notification('id', NotificationType.Info, 'info');
+          infoNotification = new Notification(
+            'id',
+            NotificationType.Info,
+            'info'
+          );
           infoNotification.options.timeOut = 0;
           removeAction = new RemoveObjectUpdatesAction(testURL);
         });
         it('should return a RemoveObjectUpdatesAction', () => {
-          actions = hot('a|', { a: new DiscardObjectUpdatesAction(testURL, infoNotification) });
-          updatesEffects.removeAfterDiscardOrReinstateOnUndo$.pipe(
-            filter(((action) => hasValue(action))))
+          actions = hot('a|', {
+            a: new DiscardObjectUpdatesAction(testURL, infoNotification),
+          });
+          updatesEffects.removeAfterDiscardOrReinstateOnUndo$
+            .pipe(filter((action) => hasValue(action)))
             .subscribe((t) => {
-                expect(t).toEqual(removeAction);
-              }
-            )
-          ;
+              expect(t).toEqual(removeAction);
+            });
         });
       });
 
       describe('When there a REINSTATE action is fired before the timeout is finished', () => {
         beforeEach(() => {
-          infoNotification = new Notification('id', NotificationType.Info, 'info');
+          infoNotification = new Notification(
+            'id',
+            NotificationType.Info,
+            'info'
+          );
           infoNotification.options.timeOut = 10;
         });
         it('should return an action with type NO_ACTION', () => {
-          actions = hot('a', { a: new DiscardObjectUpdatesAction(testURL, infoNotification) });
+          actions = hot('a', {
+            a: new DiscardObjectUpdatesAction(testURL, infoNotification),
+          });
           actions = hot('b', { b: new ReinstateObjectUpdatesAction(testURL) });
           updatesEffects.removeAfterDiscardOrReinstateOnUndo$.subscribe((t) => {
-              expect(t).toEqual(new NoOpAction());
-            }
-          );
+            expect(t).toEqual(new NoOpAction());
+          });
         });
       });
 
       describe('When there any ObjectUpdates action - other than REINSTATE - is fired before the timeout is finished', () => {
         beforeEach(() => {
-          infoNotification = new Notification('id', NotificationType.Info, 'info');
+          infoNotification = new Notification(
+            'id',
+            NotificationType.Info,
+            'info'
+          );
           infoNotification.options.timeOut = 10;
         });
         it('should return a RemoveObjectUpdatesAction', () => {
-          actions = hot('a', { a: new DiscardObjectUpdatesAction(testURL, infoNotification) });
-          actions = hot('b', { b: new RemoveFieldUpdateAction(testURL, testUUID) });
+          actions = hot('a', {
+            a: new DiscardObjectUpdatesAction(testURL, infoNotification),
+          });
+          actions = hot('b', {
+            b: new RemoveFieldUpdateAction(testURL, testUUID),
+          });
 
           updatesEffects.removeAfterDiscardOrReinstateOnUndo$.subscribe((t) =>
             expect(t).toEqual(new RemoveObjectUpdatesAction(testURL))

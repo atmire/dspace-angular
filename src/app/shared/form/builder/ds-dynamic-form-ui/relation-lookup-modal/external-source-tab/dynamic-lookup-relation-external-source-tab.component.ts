@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { SEARCH_CONFIG_SERVICE } from '../../../../../../my-dspace-page/my-dspace-page.component';
 import { SearchConfigurationService } from '../../../../../../core/shared/search/search-configuration.service';
 import { Router } from '@angular/router';
@@ -32,19 +39,18 @@ import { getFirstCompletedRemoteData } from '../../../../../../core/shared/opera
   providers: [
     {
       provide: SEARCH_CONFIG_SERVICE,
-      useClass: SearchConfigurationService
-    }
+      useClass: SearchConfigurationService,
+    },
   ],
-  animations: [
-    fadeIn,
-    fadeInOut
-  ]
+  animations: [fadeIn, fadeInOut],
 })
 /**
  * Component rendering the tab content of an external source during submission lookup
  * Shows a list of entries matching the current search query with the option to import them into the repository
  */
-export class DsDynamicLookupRelationExternalSourceTabComponent implements OnInit, OnDestroy {
+export class DsDynamicLookupRelationExternalSourceTabComponent
+  implements OnInit, OnDestroy
+{
   /**
    * The label to use for all messages (added to the end of relevant i18n keys)
    */
@@ -78,14 +84,15 @@ export class DsDynamicLookupRelationExternalSourceTabComponent implements OnInit
   /**
    * Emit an event when an object has been imported (or selected from similar local entries)
    */
-  @Output() importedObject: EventEmitter<ListableObject> = new EventEmitter<ListableObject>();
+  @Output() importedObject: EventEmitter<ListableObject> =
+    new EventEmitter<ListableObject>();
 
   /**
    * The initial pagination options
    */
   initialPagination = Object.assign(new PaginationComponentOptions(), {
     id: 'spc',
-    pageSize: 5
+    pageSize: 5,
   });
 
   /**
@@ -123,36 +130,49 @@ export class DsDynamicLookupRelationExternalSourceTabComponent implements OnInit
    */
   relatedEntityType: ItemType;
 
-  constructor(private router: Router,
-              public searchConfigService: SearchConfigurationService,
-              private externalSourceService: ExternalSourceService,
-              private modalService: NgbModal,
-              private selectableListService: SelectableListService,
-              private paginationService: PaginationService
-  ) {
-  }
+  constructor(
+    private router: Router,
+    public searchConfigService: SearchConfigurationService,
+    private externalSourceService: ExternalSourceService,
+    private modalService: NgbModal,
+    private selectableListService: SelectableListService,
+    private paginationService: PaginationService
+  ) {}
 
   /**
    * Get the entries for the selected external source
    */
   ngOnInit(): void {
-    this.externalSource.entityTypes.pipe(
-      getFirstCompletedRemoteData(),
-      map((entityTypesRD: RemoteData<PaginatedList<ItemType>>) => {
-        return (entityTypesRD.hasSucceeded && entityTypesRD.payload.totalElements > 0) ? entityTypesRD.payload.page[0] : null;
-      })
-    ).subscribe((entityType: ItemType) => {
-      this.relatedEntityType = entityType;
-    });
+    this.externalSource.entityTypes
+      .pipe(
+        getFirstCompletedRemoteData(),
+        map((entityTypesRD: RemoteData<PaginatedList<ItemType>>) => {
+          return entityTypesRD.hasSucceeded &&
+            entityTypesRD.payload.totalElements > 0
+            ? entityTypesRD.payload.page[0]
+            : null;
+        })
+      )
+      .subscribe((entityType: ItemType) => {
+        this.relatedEntityType = entityType;
+      });
 
     this.resetRoute();
     this.entriesRD$ = this.searchConfigService.paginatedSearchOptions.pipe(
       switchMap((searchOptions: PaginatedSearchOptions) =>
-        this.externalSourceService.getExternalSourceEntries(this.externalSource.id, searchOptions).pipe(startWith(undefined)))
+        this.externalSourceService
+          .getExternalSourceEntries(this.externalSource.id, searchOptions)
+          .pipe(startWith(undefined))
+      )
     );
-    this.currentPagination$ = this.paginationService.getCurrentPagination(this.searchConfigService.paginationID, this.initialPagination);
+    this.currentPagination$ = this.paginationService.getCurrentPagination(
+      this.searchConfigService.paginationID,
+      this.initialPagination
+    );
     this.importConfig = {
-      buttonLabel: 'submission.sections.describe.relationship-lookup.external-source.import-button-title.' + this.label
+      buttonLabel:
+        'submission.sections.describe.relationship-lookup.external-source.import-button-title.' +
+        this.label,
     };
   }
 
@@ -161,10 +181,13 @@ export class DsDynamicLookupRelationExternalSourceTabComponent implements OnInit
    * @param entry The entry to import
    */
   import(entry) {
-    this.modalRef = this.modalService.open(ExternalSourceEntryImportModalComponent, {
-      size: 'lg',
-      container: 'ds-dynamic-lookup-relation-modal'
-    });
+    this.modalRef = this.modalService.open(
+      ExternalSourceEntryImportModalComponent,
+      {
+        size: 'lg',
+        container: 'ds-dynamic-lookup-relation-modal',
+      }
+    );
     const modalComp = this.modalRef.componentInstance;
     modalComp.externalSourceEntry = entry;
     modalComp.item = this.item;
@@ -193,7 +216,7 @@ export class DsDynamicLookupRelationExternalSourceTabComponent implements OnInit
   resetRoute() {
     this.paginationService.updateRoute(this.searchConfigService.paginationID, {
       page: 1,
-      pageSize: 5
+      pageSize: 5,
     });
   }
 }

@@ -50,5 +50,4 @@ export class URLCombiner {
       return url;
     }
   }
-
 }

@@ -7,7 +7,8 @@
 }
 
 .collection-item {
-  border-bottom: var(--bs-dropdown-border-width) solid var(--bs-dropdown-border-color);
+  border-bottom: var(--bs-dropdown-border-width) solid
+    var(--bs-dropdown-border-color);
 }
 
 .scrollable-dropdown-loading {
@@ -26,9 +27,9 @@
 }
 
 .scrollable-dropdown-toggle {
-  padding:  0.70rem 0.70rem 0 0.70rem ;
+  padding: 0.7rem 0.7rem 0 0.7rem;
 }
 
-.scrollable-dropdown-input[readonly]{
+.scrollable-dropdown-input[readonly] {
   background-color: #fff;
 }

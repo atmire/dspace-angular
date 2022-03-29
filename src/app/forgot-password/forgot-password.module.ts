@@ -23,12 +23,10 @@ import { ThemedForgotEmailComponent } from './forgot-password-email/themed-forgo
     ForgotPasswordFormComponent,
     ThemedForgotPasswordFormComponent,
   ],
-  providers: []
+  providers: [],
 })
 
 /**
  * Module related to the Forgot Password components
  */
-export class ForgotPasswordModule {
-
-}
+export class ForgotPasswordModule {}

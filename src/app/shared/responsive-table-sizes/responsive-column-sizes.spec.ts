@@ -16,7 +16,9 @@ describe('ResponsiveColumnSizes', () => {
     });
 
     it('should return the correct bootstrap classes', () => {
-      expect(classes).toEqual(`col-${xs} col-sm-${sm} col-md-${md} col-lg-${lg} col-xl-${xl}`);
+      expect(classes).toEqual(
+        `col-${xs} col-sm-${sm} col-md-${md} col-lg-${lg} col-xl-${xl}`
+      );
     });
   });
 });

@@ -14,18 +14,13 @@ const ENTRY_COMPONENTS = [
 ];
 
 @NgModule({
-  imports: [
-    SearchModule,
-    SharedModule.withEntryComponents()
-  ],
+  imports: [SearchModule, SharedModule.withEntryComponents()],
   declarations: [
     AdminWorkflowPageComponent,
     WorkflowItemAdminWorkflowActionsComponent,
-    ...ENTRY_COMPONENTS
+    ...ENTRY_COMPONENTS,
   ],
-  exports: [
-    AdminWorkflowPageComponent
-  ]
+  exports: [AdminWorkflowPageComponent],
 })
 export class AdminWorkflowModuleModule {
   /**
@@ -35,7 +30,7 @@ export class AdminWorkflowModuleModule {
   static withEntryComponents() {
     return {
       ngModule: SharedModule,
-      providers: ENTRY_COMPONENTS.map((component) => ({provide: component}))
+      providers: ENTRY_COMPONENTS.map((component) => ({ provide: component })),
     };
   }
 }

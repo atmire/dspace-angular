@@ -12,10 +12,8 @@ describe('ItemVersionsDeleteModalComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ItemVersionsDeleteModalComponent],
-      imports: [ TranslateModule.forRoot(), RouterTestingModule.withRoutes([]) ],
-      providers: [
-        { provide: NgbActiveModal },
-      ]
+      imports: [TranslateModule.forRoot(), RouterTestingModule.withRoutes([])],
+      providers: [{ provide: NgbActiveModal }],
     }).compileComponents();
   });
 

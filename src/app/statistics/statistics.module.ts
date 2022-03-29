@@ -8,22 +8,12 @@ import { StatisticsEndpoint } from './statistics-endpoint.model';
 /**
  * Declaration needed to make sure all decorator functions are called in time
  */
-export const models = [
-  StatisticsEndpoint
-];
+export const models = [StatisticsEndpoint];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    CoreModule.forRoot(),
-    SharedModule,
-  ],
-  declarations: [
-    ViewTrackerComponent,
-  ],
-  exports: [
-    ViewTrackerComponent,
-  ]
+  imports: [CommonModule, CoreModule.forRoot(), SharedModule],
+  declarations: [ViewTrackerComponent],
+  exports: [ViewTrackerComponent],
 })
 /**
  * This module handles the statistics

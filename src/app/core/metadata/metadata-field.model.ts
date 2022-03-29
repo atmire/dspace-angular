@@ -56,8 +56,8 @@ export class MetadataField extends ListableObject implements HALResource {
    */
   @deserialize
   _links: {
-    self: HALLink,
-    schema: HALLink
+    self: HALLink;
+    schema: HALLink;
   };
 
   /**

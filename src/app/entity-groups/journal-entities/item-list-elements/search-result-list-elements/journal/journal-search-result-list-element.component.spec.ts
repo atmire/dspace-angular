@@ -22,18 +22,19 @@ const mockItemWithMetadata: ItemSearchResult = Object.assign(
         'dc.title': [
           {
             language: 'en_US',
-            value: 'This is just another title'
-          }
+            value: 'This is just another title',
+          },
         ],
         'creativeworkseries.issn': [
           {
             language: 'en_US',
-            value: '1234'
-          }
-        ]
-      }
-    })
-  });
+            value: '1234',
+          },
+        ],
+      },
+    }),
+  }
+);
 
 const mockItemWithoutMetadata: ItemSearchResult = Object.assign(
   new ItemSearchResult(),
@@ -44,11 +45,11 @@ const mockItemWithoutMetadata: ItemSearchResult = Object.assign(
         'dc.title': [
           {
             language: 'en_US',
-            value: 'This is just another title'
-          }
-        ]
-      }
-    })
+            value: 'This is just another title',
+          },
+        ],
+      },
+    }),
   }
 );
 
@@ -61,16 +62,17 @@ describe('JournalSearchResultListElementComponent', () => {
         { provide: DSONameService, useClass: DSONameServiceMock },
       ],
 
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(JournalSearchResultListElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(JournalSearchResultListElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
     fixture = TestBed.createComponent(JournalSearchResultListElementComponent);
     journalListElementComponent = fixture.componentInstance;
-
   }));
 
   describe('When the item has an issn', () => {
@@ -80,7 +82,9 @@ describe('JournalSearchResultListElementComponent', () => {
     });
 
     it('should show the journals span', () => {
-      const issnField = fixture.debugElement.query(By.css('span.item-list-journals'));
+      const issnField = fixture.debugElement.query(
+        By.css('span.item-list-journals')
+      );
       expect(issnField).not.toBeNull();
     });
   });
@@ -92,7 +96,9 @@ describe('JournalSearchResultListElementComponent', () => {
     });
 
     it('should not show the journals span', () => {
-      const issnField = fixture.debugElement.query(By.css('span.item-list-journals'));
+      const issnField = fixture.debugElement.query(
+        By.css('span.item-list-journals')
+      );
       expect(issnField).toBeNull();
     });
   });

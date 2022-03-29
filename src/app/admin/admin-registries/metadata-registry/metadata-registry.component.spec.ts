@@ -1,5 +1,10 @@
 import { MetadataRegistryComponent } from './metadata-registry.component';
-import { ComponentFixture, inject, TestBed, waitForAsync } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  inject,
+  TestBed,
+  waitForAsync,
+} from '@angular/core/testing';
 import { of as observableOf } from 'rxjs';
 import { buildPaginatedList } from '../../../core/data/paginated-list.model';
 import { TranslateModule } from '@ngx-translate/core';
@@ -20,7 +25,10 @@ import { MetadataSchema } from '../../../core/metadata/metadata-schema.model';
 import { createSuccessfulRemoteDataObject$ } from '../../../shared/remote-data.utils';
 import { PaginationService } from '../../../core/pagination/pagination.service';
 import { PaginationComponentOptions } from '../../../shared/pagination/pagination-component-options.model';
-import { SortDirection, SortOptions } from '../../../core/cache/models/sort-options.model';
+import {
+  SortDirection,
+  SortOptions,
+} from '../../../core/cache/models/sort-options.model';
 import { FindListOptions } from '../../../core/data/request.models';
 import { PaginationServiceStub } from '../../../shared/testing/pagination-service.stub';
 
@@ -34,37 +42,36 @@ describe('MetadataRegistryComponent', () => {
       id: 1,
       _links: {
         self: {
-          href: 'https://dspace7.4science.it/dspace-spring-rest/api/core/metadataschemas/1'
+          href: 'https://dspace7.4science.it/dspace-spring-rest/api/core/metadataschemas/1',
         },
       },
       prefix: 'dc',
-      namespace: 'http://dublincore.org/documents/dcmi-terms/'
+      namespace: 'http://dublincore.org/documents/dcmi-terms/',
     },
     {
       id: 2,
       _links: {
         self: {
-          href: 'https://dspace7.4science.it/dspace-spring-rest/api/core/metadataschemas/2'
+          href: 'https://dspace7.4science.it/dspace-spring-rest/api/core/metadataschemas/2',
         },
       },
       prefix: 'mock',
-      namespace: 'http://dspace.org/mockschema'
-    }
+      namespace: 'http://dspace.org/mockschema',
+    },
   ];
-  const mockSchemas = createSuccessfulRemoteDataObject$(buildPaginatedList(null, mockSchemasList));
+  const mockSchemas = createSuccessfulRemoteDataObject$(
+    buildPaginatedList(null, mockSchemasList)
+  );
   /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
   const registryServiceStub = {
     getMetadataSchemas: () => mockSchemas,
     getActiveMetadataSchema: () => observableOf(undefined),
     getSelectedMetadataSchemas: () => observableOf([]),
-    editMetadataSchema: (schema) => {
-    },
-    cancelEditMetadataSchema: () => {
-    },
+    editMetadataSchema: (schema) => {},
+    cancelEditMetadataSchema: () => {},
     deleteMetadataSchema: () => observableOf(new RestResponse(true, 200, 'OK')),
-    deselectAllMetadataSchema: () => {
-    },
-    clearMetadataSchemaRequests: () => observableOf(undefined)
+    deselectAllMetadataSchema: () => {},
+    clearMetadataSchemaRequests: () => observableOf(undefined),
   };
   /* eslint-enable no-empty, @typescript-eslint/no-empty-function */
 
@@ -72,18 +79,32 @@ describe('MetadataRegistryComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [CommonModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), NgbModule],
-      declarations: [MetadataRegistryComponent, PaginationComponent, EnumKeysPipe],
+      imports: [
+        CommonModule,
+        RouterTestingModule.withRoutes([]),
+        TranslateModule.forRoot(),
+        NgbModule,
+      ],
+      declarations: [
+        MetadataRegistryComponent,
+        PaginationComponent,
+        EnumKeysPipe,
+      ],
       providers: [
         { provide: RegistryService, useValue: registryServiceStub },
         { provide: HostWindowService, useValue: new HostWindowServiceStub(0) },
         { provide: PaginationService, useValue: paginationService },
-        { provide: NotificationsService, useValue: new NotificationsServiceStub() }
+        {
+          provide: NotificationsService,
+          useValue: new NotificationsServiceStub(),
+        },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(MetadataRegistryComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(MetadataRegistryComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -97,15 +118,21 @@ describe('MetadataRegistryComponent', () => {
   }));
 
   it('should contain two schemas', () => {
-    const tbody: HTMLElement = fixture.debugElement.query(By.css('#metadata-schemas>tbody')).nativeElement;
+    const tbody: HTMLElement = fixture.debugElement.query(
+      By.css('#metadata-schemas>tbody')
+    ).nativeElement;
     expect(tbody.children.length).toBe(2);
   });
 
   it('should contain the correct schemas', () => {
-    const dcName: HTMLElement = fixture.debugElement.query(By.css('#metadata-schemas tr:nth-child(1) td:nth-child(4)')).nativeElement;
+    const dcName: HTMLElement = fixture.debugElement.query(
+      By.css('#metadata-schemas tr:nth-child(1) td:nth-child(4)')
+    ).nativeElement;
     expect(dcName.textContent).toBe('dc');
 
-    const mockName: HTMLElement = fixture.debugElement.query(By.css('#metadata-schemas tr:nth-child(2) td:nth-child(4)')).nativeElement;
+    const mockName: HTMLElement = fixture.debugElement.query(
+      By.css('#metadata-schemas tr:nth-child(2) td:nth-child(4)')
+    ).nativeElement;
     expect(mockName.textContent).toBe('mock');
   });
 
@@ -121,12 +148,16 @@ describe('MetadataRegistryComponent', () => {
 
     it('should start editing the selected schema', waitForAsync(() => {
       fixture.whenStable().then(() => {
-        expect(registryService.editMetadataSchema).toHaveBeenCalledWith(mockSchemasList[0] as MetadataSchema);
+        expect(registryService.editMetadataSchema).toHaveBeenCalledWith(
+          mockSchemasList[0] as MetadataSchema
+        );
       });
     }));
 
     it('should cancel editing the selected schema when clicked again', waitForAsync(() => {
-      spyOn(registryService, 'getActiveMetadataSchema').and.returnValue(observableOf(mockSchemasList[0] as MetadataSchema));
+      spyOn(registryService, 'getActiveMetadataSchema').and.returnValue(
+        observableOf(mockSchemasList[0] as MetadataSchema)
+      );
       spyOn(registryService, 'cancelEditMetadataSchema');
       row.click();
       fixture.detectChanges();
@@ -141,14 +172,18 @@ describe('MetadataRegistryComponent', () => {
 
     beforeEach(() => {
       spyOn(registryService, 'deleteMetadataSchema').and.callThrough();
-      spyOn(registryService, 'getSelectedMetadataSchemas').and.returnValue(observableOf(selectedSchemas as MetadataSchema[]));
+      spyOn(registryService, 'getSelectedMetadataSchemas').and.returnValue(
+        observableOf(selectedSchemas as MetadataSchema[])
+      );
       comp.deleteSchemas();
       fixture.detectChanges();
     });
 
     it('should call deleteMetadataSchema with the selected id', waitForAsync(() => {
       fixture.whenStable().then(() => {
-        expect(registryService.deleteMetadataSchema).toHaveBeenCalledWith(selectedSchemas[0].id);
+        expect(registryService.deleteMetadataSchema).toHaveBeenCalledWith(
+          selectedSchemas[0].id
+        );
       });
     }));
   });

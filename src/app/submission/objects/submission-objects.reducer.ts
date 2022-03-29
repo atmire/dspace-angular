@@ -1,4 +1,10 @@
-import { hasValue, isEmpty, isNotEmpty, isNotNull, isUndefined } from '../../shared/empty.util';
+import {
+  hasValue,
+  isEmpty,
+  isNotEmpty,
+  isNotNull,
+  isUndefined,
+} from '../../shared/empty.util';
 import { differenceWith, findKey, isEqual, uniqWith } from 'lodash';
 
 import {
@@ -33,7 +39,7 @@ import {
   SetSectionFormId,
   SubmissionObjectAction,
   SubmissionObjectActionTypes,
-  UpdateSectionDataAction
+  UpdateSectionDataAction,
 } from './submission-objects.actions';
 import { WorkspaceitemSectionDataType } from '../../core/submission/models/workspaceitem-sections.model';
 import { WorkspaceitemSectionUploadObject } from '../../core/submission/models/workspaceitem-section-upload.model';
@@ -208,9 +214,11 @@ export interface SubmissionObjectState {
 
 const initialState: SubmissionObjectState = Object.create({});
 
-export function submissionObjectReducer(state = initialState, action: SubmissionObjectAction): SubmissionObjectState {
+export function submissionObjectReducer(
+  state = initialState,
+  action: SubmissionObjectAction
+): SubmissionObjectState {
   switch (action.type) {
-
     // submission form actions
     case SubmissionObjectActionTypes.COMPLETE_INIT_SUBMISSION_FORM: {
       return completeInit(state, action as CompleteInitSubmissionFormAction);
@@ -244,7 +252,10 @@ export function submissionObjectReducer(state = initialState, action: Submission
     }
 
     case SubmissionObjectActionTypes.CHANGE_SUBMISSION_COLLECTION: {
-      return changeCollection(state, action as ChangeSubmissionCollectionAction);
+      return changeCollection(
+        state,
+        action as ChangeSubmissionCollectionAction
+      );
     }
 
     case SubmissionObjectActionTypes.DEPOSIT_SUBMISSION: {
@@ -335,47 +346,71 @@ export function submissionObjectReducer(state = initialState, action: Submission
 
 // ------ Submission error functions ------ //
 
-const removeError = (state: SubmissionObjectState, action: DeleteSectionErrorsAction): SubmissionObjectState => {
+const removeError = (
+  state: SubmissionObjectState,
+  action: DeleteSectionErrorsAction
+): SubmissionObjectState => {
   const { submissionId, sectionId, errors } = action.payload;
 
-  if (hasValue(state[ submissionId ].sections[ sectionId ])) {
+  if (hasValue(state[submissionId].sections[sectionId])) {
     let filteredErrors;
 
     if (Array.isArray(errors)) {
       filteredErrors = differenceWith(errors, errors, isEqual);
     } else {
-      filteredErrors = state[ submissionId ].sections[ sectionId ].errorsToShow
-        .filter((currentError) => currentError.path !== errors.path || !isEqual(currentError, errors));
+      filteredErrors = state[submissionId].sections[
+        sectionId
+      ].errorsToShow.filter(
+        (currentError) =>
+          currentError.path !== errors.path || !isEqual(currentError, errors)
+      );
     }
 
     return Object.assign({}, state, {
-      [ submissionId ]: Object.assign({}, state[ submissionId ], {
-        sections: Object.assign({}, state[ submissionId ].sections, {
-          [ sectionId ]: Object.assign({}, state[ submissionId ].sections [ sectionId ], {
-            errorsToShow: filteredErrors
-          })
-        })
-      })
+      [submissionId]: Object.assign({}, state[submissionId], {
+        sections: Object.assign({}, state[submissionId].sections, {
+          [sectionId]: Object.assign(
+            {},
+            state[submissionId].sections[sectionId],
+            {
+              errorsToShow: filteredErrors,
+            }
+          ),
+        }),
+      }),
     });
   } else {
     return state;
   }
 };
 
-const addError = (state: SubmissionObjectState, action: InertSectionErrorsAction): SubmissionObjectState => {
+const addError = (
+  state: SubmissionObjectState,
+  action: InertSectionErrorsAction
+): SubmissionObjectState => {
   const { submissionId, sectionId, error } = action.payload;
 
-  if (hasValue(state[ submissionId ].sections[ sectionId ])) {
-    const errorsToShow = uniqWith(state[ submissionId ].sections[ sectionId ].errorsToShow.concat(error), isEqual);
+  if (hasValue(state[submissionId].sections[sectionId])) {
+    const errorsToShow = uniqWith(
+      state[submissionId].sections[sectionId].errorsToShow.concat(error),
+      isEqual
+    );
 
     return Object.assign({}, state, {
-      [ submissionId ]: Object.assign({}, state[ submissionId ], {
-        activeSection: state[ action.payload.submissionId ].activeSection,        sections: Object.assign({}, state[ submissionId ].sections, {
-          [ sectionId ]: Object.assign({}, state[ action.payload.submissionId ].sections [ action.payload.sectionId ], {
-            errorsToShow
-          })
+      [submissionId]: Object.assign({}, state[submissionId], {
+        activeSection: state[action.payload.submissionId].activeSection,
+        sections: Object.assign({}, state[submissionId].sections, {
+          [sectionId]: Object.assign(
+            {},
+            state[action.payload.submissionId].sections[
+              action.payload.sectionId
+            ],
+            {
+              errorsToShow,
+            }
+          ),
         }),
-      })
+      }),
     });
   } else {
     return state;
@@ -392,17 +427,38 @@ const addError = (state: SubmissionObjectState, action: InertSectionErrorsAction
  * @return SubmissionObjectState
  *    the new state, with the section's errorsToShow updated.
  */
-function removeSectionErrors(state: SubmissionObjectState, action: RemoveSectionErrorsAction): SubmissionObjectState {
-  if (isNotEmpty(state[ action.payload.submissionId ])
-    && isNotEmpty(state[ action.payload.submissionId ].sections[ action.payload.sectionId])) {
+function removeSectionErrors(
+  state: SubmissionObjectState,
+  action: RemoveSectionErrorsAction
+): SubmissionObjectState {
+  if (
+    isNotEmpty(state[action.payload.submissionId]) &&
+    isNotEmpty(
+      state[action.payload.submissionId].sections[action.payload.sectionId]
+    )
+  ) {
     return Object.assign({}, state, {
-      [ action.payload.submissionId ]: Object.assign({}, state[ action.payload.submissionId ], {
-        sections: Object.assign({}, state[ action.payload.submissionId ].sections, {
-          [ action.payload.sectionId ]: Object.assign({}, state[ action.payload.submissionId ].sections [ action.payload.sectionId ], {
-            errorsToShow: []
-          })
-        })
-      })
+      [action.payload.submissionId]: Object.assign(
+        {},
+        state[action.payload.submissionId],
+        {
+          sections: Object.assign(
+            {},
+            state[action.payload.submissionId].sections,
+            {
+              [action.payload.sectionId]: Object.assign(
+                {},
+                state[action.payload.submissionId].sections[
+                  action.payload.sectionId
+                ],
+                {
+                  errorsToShow: [],
+                }
+              ),
+            }
+          ),
+        }
+      ),
     });
   } else {
     return state;
@@ -421,10 +477,12 @@ function removeSectionErrors(state: SubmissionObjectState, action: RemoveSection
  * @return SubmissionObjectState
  *    the new state, with the section removed.
  */
-function initSubmission(state: SubmissionObjectState, action: InitSubmissionFormAction | ResetSubmissionFormAction): SubmissionObjectState {
-
+function initSubmission(
+  state: SubmissionObjectState,
+  action: InitSubmissionFormAction | ResetSubmissionFormAction
+): SubmissionObjectState {
   const newState = Object.assign({}, state);
-  newState[ action.payload.submissionId ] = {
+  newState[action.payload.submissionId] = {
     collection: action.payload.collectionId,
     definition: action.payload.submissionDefinition.name,
     selfUrl: action.payload.selfUrl,
@@ -447,13 +505,20 @@ function initSubmission(state: SubmissionObjectState, action: InitSubmissionForm
  * @return SubmissionObjectState
  *    the new state, with the section removed.
  */
-function resetSubmission(state: SubmissionObjectState, action: ResetSubmissionFormAction): SubmissionObjectState {
-  if (hasValue(state[ action.payload.submissionId ])) {
+function resetSubmission(
+  state: SubmissionObjectState,
+  action: ResetSubmissionFormAction
+): SubmissionObjectState {
+  if (hasValue(state[action.payload.submissionId])) {
     return Object.assign({}, state, {
-      [ action.payload.submissionId ]: Object.assign({}, state[ action.payload.submissionId ], {
-        sections: Object.create(null),
-        isLoading: true
-      })
+      [action.payload.submissionId]: Object.assign(
+        {},
+        state[action.payload.submissionId],
+        {
+          sections: Object.create(null),
+          isLoading: true,
+        }
+      ),
     });
   } else {
     return state;
@@ -470,12 +535,19 @@ function resetSubmission(state: SubmissionObjectState, action: ResetSubmissionFo
  * @return SubmissionObjectState
  *    the new state, with the section removed.
  */
-function completeInit(state: SubmissionObjectState, action: CompleteInitSubmissionFormAction): SubmissionObjectState {
-  if (hasValue(state[ action.payload.submissionId ])) {
+function completeInit(
+  state: SubmissionObjectState,
+  action: CompleteInitSubmissionFormAction
+): SubmissionObjectState {
+  if (hasValue(state[action.payload.submissionId])) {
     return Object.assign({}, state, {
-      [ action.payload.submissionId ]: Object.assign({}, state[ action.payload.submissionId ], {
-        isLoading: false
-      })
+      [action.payload.submissionId]: Object.assign(
+        {},
+        state[action.payload.submissionId],
+        {
+          isLoading: false,
+        }
+      ),
     });
   } else {
     return state;
@@ -493,19 +565,26 @@ function completeInit(state: SubmissionObjectState, action: CompleteInitSubmissi
  * @return SubmissionObjectState
  *    the new state, with the flag set to true.
  */
-function saveSubmission(state: SubmissionObjectState,
-                        action: SaveSubmissionFormAction
-                          | SaveSubmissionSectionFormAction
-                          | SaveForLaterSubmissionFormAction
-                          | SaveAndDepositSubmissionAction): SubmissionObjectState {
-  if (hasValue(state[ action.payload.submissionId ])) {
+function saveSubmission(
+  state: SubmissionObjectState,
+  action:
+    | SaveSubmissionFormAction
+    | SaveSubmissionSectionFormAction
+    | SaveForLaterSubmissionFormAction
+    | SaveAndDepositSubmissionAction
+): SubmissionObjectState {
+  if (hasValue(state[action.payload.submissionId])) {
     return Object.assign({}, state, {
-      [ action.payload.submissionId ]: Object.assign({}, state[ action.payload.submissionId ], {
-        activeSection: state[ action.payload.submissionId ].activeSection,
-        sections: state[ action.payload.submissionId ].sections,
-        isLoading: state[ action.payload.submissionId ].isLoading,
-        savePending: true,
-      })
+      [action.payload.submissionId]: Object.assign(
+        {},
+        state[action.payload.submissionId],
+        {
+          activeSection: state[action.payload.submissionId].activeSection,
+          sections: state[action.payload.submissionId].sections,
+          isLoading: state[action.payload.submissionId].isLoading,
+          savePending: true,
+        }
+      ),
     });
   } else {
     return state;
@@ -524,18 +603,25 @@ function saveSubmission(state: SubmissionObjectState,
  * @return SubmissionObjectState
  *    the new state, with the flag set to false.
  */
-function completeSave(state: SubmissionObjectState,
-                      action: SaveSubmissionFormSuccessAction
-                        | SaveForLaterSubmissionFormSuccessAction
-                        | SaveSubmissionSectionFormSuccessAction
-                        | SaveSubmissionFormErrorAction
-                        | SaveForLaterSubmissionFormErrorAction
-                        | SaveSubmissionSectionFormErrorAction): SubmissionObjectState {
-  if (hasValue(state[ action.payload.submissionId ])) {
+function completeSave(
+  state: SubmissionObjectState,
+  action:
+    | SaveSubmissionFormSuccessAction
+    | SaveForLaterSubmissionFormSuccessAction
+    | SaveSubmissionSectionFormSuccessAction
+    | SaveSubmissionFormErrorAction
+    | SaveForLaterSubmissionFormErrorAction
+    | SaveSubmissionSectionFormErrorAction
+): SubmissionObjectState {
+  if (hasValue(state[action.payload.submissionId])) {
     return Object.assign({}, state, {
-      [ action.payload.submissionId ]: Object.assign({}, state[ action.payload.submissionId ], {
-        savePending: false,
-      })
+      [action.payload.submissionId]: Object.assign(
+        {},
+        state[action.payload.submissionId],
+        {
+          savePending: false,
+        }
+      ),
     });
   } else {
     return state;
@@ -552,13 +638,20 @@ function completeSave(state: SubmissionObjectState,
  * @return SubmissionObjectState
  *    the new state, with the deposit flag changed.
  */
-function startDeposit(state: SubmissionObjectState, action: DepositSubmissionAction): SubmissionObjectState {
-  if (hasValue(state[ action.payload.submissionId ])) {
+function startDeposit(
+  state: SubmissionObjectState,
+  action: DepositSubmissionAction
+): SubmissionObjectState {
+  if (hasValue(state[action.payload.submissionId])) {
     return Object.assign({}, state, {
-      [ action.payload.submissionId ]: Object.assign({}, state[ action.payload.submissionId ], {
-        savePending: false,
-        depositPending: true,
-      })
+      [action.payload.submissionId]: Object.assign(
+        {},
+        state[action.payload.submissionId],
+        {
+          savePending: false,
+          depositPending: true,
+        }
+      ),
     });
   } else {
     return state;
@@ -575,12 +668,22 @@ function startDeposit(state: SubmissionObjectState, action: DepositSubmissionAct
  * @return SubmissionObjectState
  *    the new state, with the deposit flag changed.
  */
-function endDeposit(state: SubmissionObjectState, action: DepositSubmissionSuccessAction | DepositSubmissionErrorAction | DepositSubmissionAction): SubmissionObjectState {
-  if (hasValue(state[ action.payload.submissionId ])) {
+function endDeposit(
+  state: SubmissionObjectState,
+  action:
+    | DepositSubmissionSuccessAction
+    | DepositSubmissionErrorAction
+    | DepositSubmissionAction
+): SubmissionObjectState {
+  if (hasValue(state[action.payload.submissionId])) {
     return Object.assign({}, state, {
-      [ action.payload.submissionId ]: Object.assign({}, state[ action.payload.submissionId ], {
-        depositPending: false,
-      })
+      [action.payload.submissionId]: Object.assign(
+        {},
+        state[action.payload.submissionId],
+        {
+          depositPending: false,
+        }
+      ),
     });
   } else {
     return state;
@@ -597,11 +700,18 @@ function endDeposit(state: SubmissionObjectState, action: DepositSubmissionSucce
  * @return SubmissionObjectState
  *    the new state, with the section removed.
  */
-function changeCollection(state: SubmissionObjectState, action: ChangeSubmissionCollectionAction): SubmissionObjectState {
+function changeCollection(
+  state: SubmissionObjectState,
+  action: ChangeSubmissionCollectionAction
+): SubmissionObjectState {
   return Object.assign({}, state, {
-    [ action.payload.submissionId ]: Object.assign({}, state[ action.payload.submissionId ], {
-      collection: action.payload.collectionId
-    })
+    [action.payload.submissionId]: Object.assign(
+      {},
+      state[action.payload.submissionId],
+      {
+        collection: action.payload.collectionId,
+      }
+    ),
   });
 }
 
@@ -617,15 +727,22 @@ function changeCollection(state: SubmissionObjectState, action: ChangeSubmission
  * @return SubmissionObjectState
  *    the new state, with the active section.
  */
-function setActiveSection(state: SubmissionObjectState, action: SetActiveSectionAction): SubmissionObjectState {
-  if (hasValue(state[ action.payload.submissionId ])) {
+function setActiveSection(
+  state: SubmissionObjectState,
+  action: SetActiveSectionAction
+): SubmissionObjectState {
+  if (hasValue(state[action.payload.submissionId])) {
     return Object.assign({}, state, {
-      [ action.payload.submissionId ]: Object.assign({}, state[ action.payload.submissionId ], {
-        activeSection: action.payload.sectionId,
-        sections: state[ action.payload.submissionId ].sections,
-        isLoading: state[ action.payload.submissionId ].isLoading,
-        savePending: state[ action.payload.submissionId ].savePending,
-      })
+      [action.payload.submissionId]: Object.assign(
+        {},
+        state[action.payload.submissionId],
+        {
+          activeSection: action.payload.sectionId,
+          sections: state[action.payload.submissionId].sections,
+          isLoading: state[action.payload.submissionId].isLoading,
+          savePending: state[action.payload.submissionId].savePending,
+        }
+      ),
     });
   } else {
     return state;
@@ -642,27 +759,38 @@ function setActiveSection(state: SubmissionObjectState, action: SetActiveSection
  * @return SubmissionObjectState
  *    the new state, with the section removed.
  */
-function initSection(state: SubmissionObjectState, action: InitSectionAction): SubmissionObjectState {
-  if (hasValue(state[ action.payload.submissionId ])) {
+function initSection(
+  state: SubmissionObjectState,
+  action: InitSectionAction
+): SubmissionObjectState {
+  if (hasValue(state[action.payload.submissionId])) {
     return Object.assign({}, state, {
-      [ action.payload.submissionId ]: Object.assign({}, state[ action.payload.submissionId ], {
-        sections: Object.assign({}, state[ action.payload.submissionId ].sections, {
-          [ action.payload.sectionId ]: {
-            header: action.payload.header,
-            config: action.payload.config,
-            mandatory: action.payload.mandatory,
-            sectionType: action.payload.sectionType,
-            visibility: action.payload.visibility,
-            collapsed: false,
-            enabled: action.payload.enabled,
-            data: action.payload.data,
-            errorsToShow: [],
-            serverValidationErrors: action.payload.errors || [],
-            isLoading: false,
-            isValid: isEmpty(action.payload.errors)
-          }
-        })
-      })
+      [action.payload.submissionId]: Object.assign(
+        {},
+        state[action.payload.submissionId],
+        {
+          sections: Object.assign(
+            {},
+            state[action.payload.submissionId].sections,
+            {
+              [action.payload.sectionId]: {
+                header: action.payload.header,
+                config: action.payload.config,
+                mandatory: action.payload.mandatory,
+                sectionType: action.payload.sectionType,
+                visibility: action.payload.visibility,
+                collapsed: false,
+                enabled: action.payload.enabled,
+                data: action.payload.data,
+                errorsToShow: [],
+                serverValidationErrors: action.payload.errors || [],
+                isLoading: false,
+                isValid: isEmpty(action.payload.errors),
+              },
+            }
+          ),
+        }
+      ),
     });
   } else {
     return state;
@@ -679,17 +807,30 @@ function initSection(state: SubmissionObjectState, action: InitSectionAction): S
  * @return SubmissionObjectState
  *    the new state
  */
-function setSectionFormId(state: SubmissionObjectState, action: SetSectionFormId): SubmissionObjectState {
-  if (hasValue(state[ action.payload.submissionId ])) {
+function setSectionFormId(
+  state: SubmissionObjectState,
+  action: SetSectionFormId
+): SubmissionObjectState {
+  if (hasValue(state[action.payload.submissionId])) {
     return Object.assign({}, state, {
-      [ action.payload.submissionId ]: Object.assign({}, state[ action.payload.submissionId ], {
-        sections: Object.assign({}, state[ action.payload.submissionId ].sections, {
-          [ action.payload.sectionId ]: {
-            ...state[ action.payload.submissionId ].sections [action.payload.sectionId],
-            formId: action.payload.formId
-          }
-        })
-      })
+      [action.payload.submissionId]: Object.assign(
+        {},
+        state[action.payload.submissionId],
+        {
+          sections: Object.assign(
+            {},
+            state[action.payload.submissionId].sections,
+            {
+              [action.payload.sectionId]: {
+                ...state[action.payload.submissionId].sections[
+                  action.payload.sectionId
+                ],
+                formId: action.payload.formId,
+              },
+            }
+          ),
+        }
+      ),
     });
   } else {
     return state;
@@ -706,21 +847,47 @@ function setSectionFormId(state: SubmissionObjectState, action: SetSectionFormId
  * @return SubmissionObjectState
  *    the new state, with the section's data updated.
  */
-function updateSectionData(state: SubmissionObjectState, action: UpdateSectionDataAction): SubmissionObjectState {
-  if (isNotEmpty(state[ action.payload.submissionId ])
-    && isNotEmpty(state[ action.payload.submissionId ].sections[ action.payload.sectionId])) {
+function updateSectionData(
+  state: SubmissionObjectState,
+  action: UpdateSectionDataAction
+): SubmissionObjectState {
+  if (
+    isNotEmpty(state[action.payload.submissionId]) &&
+    isNotEmpty(
+      state[action.payload.submissionId].sections[action.payload.sectionId]
+    )
+  ) {
     return Object.assign({}, state, {
-      [ action.payload.submissionId ]: Object.assign({}, state[ action.payload.submissionId ], {
-        sections: Object.assign({}, state[ action.payload.submissionId ].sections, {
-          [ action.payload.sectionId ]: Object.assign({}, state[ action.payload.submissionId ].sections [ action.payload.sectionId ], {
-            enabled: true,
-            data: action.payload.data,
-            errorsToShow: action.payload.errorsToShow,
-            serverValidationErrors: action.payload.serverValidationErrors,
-            metadata: reduceSectionMetadata(action.payload.metadata, state[ action.payload.submissionId ].sections [ action.payload.sectionId ].metadata)
-          })
-        })
-      })
+      [action.payload.submissionId]: Object.assign(
+        {},
+        state[action.payload.submissionId],
+        {
+          sections: Object.assign(
+            {},
+            state[action.payload.submissionId].sections,
+            {
+              [action.payload.sectionId]: Object.assign(
+                {},
+                state[action.payload.submissionId].sections[
+                  action.payload.sectionId
+                ],
+                {
+                  enabled: true,
+                  data: action.payload.data,
+                  errorsToShow: action.payload.errorsToShow,
+                  serverValidationErrors: action.payload.serverValidationErrors,
+                  metadata: reduceSectionMetadata(
+                    action.payload.metadata,
+                    state[action.payload.submissionId].sections[
+                      action.payload.sectionId
+                    ].metadata
+                  ),
+                }
+              ),
+            }
+          ),
+        }
+      ),
     });
   } else {
     return state;
@@ -735,7 +902,10 @@ function updateSectionData(state: SubmissionObjectState, action: UpdateSectionDa
  * @return
  *   new sectionMetadata value
  */
-function reduceSectionMetadata(newMetadata: string[], oldMetadata: string[]): string[] {
+function reduceSectionMetadata(
+  newMetadata: string[],
+  oldMetadata: string[]
+): string[] {
   if (newMetadata) {
     return newMetadata;
   }
@@ -757,17 +927,39 @@ function reduceSectionMetadata(newMetadata: string[], oldMetadata: string[]): st
  * @return SubmissionObjectState
  *    the new state, with the section removed.
  */
-function changeSectionState(state: SubmissionObjectState, action: EnableSectionAction | DisableSectionAction, enabled: boolean): SubmissionObjectState {
-  if (hasValue(state[ action.payload.submissionId ].sections[ action.payload.sectionId ])) {
+function changeSectionState(
+  state: SubmissionObjectState,
+  action: EnableSectionAction | DisableSectionAction,
+  enabled: boolean
+): SubmissionObjectState {
+  if (
+    hasValue(
+      state[action.payload.submissionId].sections[action.payload.sectionId]
+    )
+  ) {
     return Object.assign({}, state, {
-      [ action.payload.submissionId ]: Object.assign({}, state[ action.payload.submissionId ], {
-        // sections: deleteProperty(state[ action.payload.submissionId ].sections, action.payload.sectionId),
-        sections: Object.assign({}, state[ action.payload.submissionId ].sections, {
-          [ action.payload.sectionId ]: Object.assign({}, state[ action.payload.submissionId ].sections [ action.payload.sectionId ], {
-            enabled
-          })
-        })
-      })
+      [action.payload.submissionId]: Object.assign(
+        {},
+        state[action.payload.submissionId],
+        {
+          // sections: deleteProperty(state[ action.payload.submissionId ].sections, action.payload.sectionId),
+          sections: Object.assign(
+            {},
+            state[action.payload.submissionId].sections,
+            {
+              [action.payload.sectionId]: Object.assign(
+                {},
+                state[action.payload.submissionId].sections[
+                  action.payload.sectionId
+                ],
+                {
+                  enabled,
+                }
+              ),
+            }
+          ),
+        }
+      ),
     });
   } else {
     return state;
@@ -784,18 +976,41 @@ function changeSectionState(state: SubmissionObjectState, action: EnableSectionA
  * @return SubmissionObjectState
  *    the new state, with the section new validity status.
  */
-function setIsValid(state: SubmissionObjectState, action: SectionStatusChangeAction): SubmissionObjectState {
-  if (isNotEmpty(state[ action.payload.submissionId ]) && hasValue(state[ action.payload.submissionId ].sections[ action.payload.sectionId ])) {
+function setIsValid(
+  state: SubmissionObjectState,
+  action: SectionStatusChangeAction
+): SubmissionObjectState {
+  if (
+    isNotEmpty(state[action.payload.submissionId]) &&
+    hasValue(
+      state[action.payload.submissionId].sections[action.payload.sectionId]
+    )
+  ) {
     return Object.assign({}, state, {
-      [ action.payload.submissionId ]: Object.assign({}, state[ action.payload.submissionId ], {
-        sections: Object.assign({}, state[ action.payload.submissionId ].sections,
-          Object.assign({}, {
-            [ action.payload.sectionId ]: Object.assign({}, state[ action.payload.submissionId ].sections [ action.payload.sectionId ], {
-              isValid: action.payload.status
-            })
-          })
-        )
-      })
+      [action.payload.submissionId]: Object.assign(
+        {},
+        state[action.payload.submissionId],
+        {
+          sections: Object.assign(
+            {},
+            state[action.payload.submissionId].sections,
+            Object.assign(
+              {},
+              {
+                [action.payload.sectionId]: Object.assign(
+                  {},
+                  state[action.payload.submissionId].sections[
+                    action.payload.sectionId
+                  ],
+                  {
+                    isValid: action.payload.status,
+                  }
+                ),
+              }
+            )
+          ),
+        }
+      ),
     });
   } else {
     return state;
@@ -814,12 +1029,17 @@ function setIsValid(state: SubmissionObjectState, action: SectionStatusChangeAct
  * @return SubmissionObjectState
  *    the new state, with the new file.
  */
-function newFile(state: SubmissionObjectState, action: NewUploadedFileAction): SubmissionObjectState {
-  const filesData = state[ action.payload.submissionId ].sections[ action.payload.sectionId ].data as WorkspaceitemSectionUploadObject;
+function newFile(
+  state: SubmissionObjectState,
+  action: NewUploadedFileAction
+): SubmissionObjectState {
+  const filesData = state[action.payload.submissionId].sections[
+    action.payload.sectionId
+  ].data as WorkspaceitemSectionUploadObject;
   let newData;
   if (isUndefined(filesData.files)) {
     newData = {
-      files: [action.payload.data]
+      files: [action.payload.data],
     };
   } else {
     newData = filesData;
@@ -827,14 +1047,28 @@ function newFile(state: SubmissionObjectState, action: NewUploadedFileAction): S
   }
 
   return Object.assign({}, state, {
-    [ action.payload.submissionId ]: Object.assign({}, state[ action.payload.submissionId ], {
-      sections: Object.assign({}, state[ action.payload.submissionId ].sections, {
-        [ action.payload.sectionId ]: Object.assign({}, state[ action.payload.submissionId ].sections [ action.payload.sectionId ], {
-          enabled: true,
-          data: newData
-        })
-      })
-    })
+    [action.payload.submissionId]: Object.assign(
+      {},
+      state[action.payload.submissionId],
+      {
+        sections: Object.assign(
+          {},
+          state[action.payload.submissionId].sections,
+          {
+            [action.payload.sectionId]: Object.assign(
+              {},
+              state[action.payload.submissionId].sections[
+                action.payload.sectionId
+              ],
+              {
+                enabled: true,
+                data: newData,
+              }
+            ),
+          }
+        ),
+      }
+    ),
   });
 }
 
@@ -848,30 +1082,54 @@ function newFile(state: SubmissionObjectState, action: NewUploadedFileAction): S
  * @return SubmissionObjectState
  *    the new state, with the edited file.
  */
-function editFileData(state: SubmissionObjectState, action: EditFileDataAction): SubmissionObjectState {
-  const filesData = state[ action.payload.submissionId ].sections[ action.payload.sectionId ].data as WorkspaceitemSectionUploadObject;
+function editFileData(
+  state: SubmissionObjectState,
+  action: EditFileDataAction
+): SubmissionObjectState {
+  const filesData = state[action.payload.submissionId].sections[
+    action.payload.sectionId
+  ].data as WorkspaceitemSectionUploadObject;
   if (hasValue(filesData.files)) {
-    const fileIndex = findKey(
-      filesData.files,
-      { uuid: action.payload.fileId });
+    const fileIndex = findKey(filesData.files, { uuid: action.payload.fileId });
     if (isNotNull(fileIndex)) {
       const newData = Array.from(filesData.files);
       newData[fileIndex] = action.payload.data;
       return Object.assign({}, state, {
-        [ action.payload.submissionId ]: Object.assign({}, state[ action.payload.submissionId ], {
-          activeSection: state[ action.payload.submissionId ].activeSection,
-          sections: Object.assign({}, state[ action.payload.submissionId ].sections,
-            Object.assign({}, {
-              [ action.payload.sectionId ]: Object.assign({}, state[ action.payload.submissionId ].sections [ action.payload.sectionId ], {
-                data: Object.assign({}, state[ action.payload.submissionId ].sections[ action.payload.sectionId ].data, {
-                  files: newData
-                })
-              })
-            })
-          ),
-          isLoading: state[ action.payload.submissionId ].isLoading,
-          savePending: state[ action.payload.submissionId ].savePending,
-        })
+        [action.payload.submissionId]: Object.assign(
+          {},
+          state[action.payload.submissionId],
+          {
+            activeSection: state[action.payload.submissionId].activeSection,
+            sections: Object.assign(
+              {},
+              state[action.payload.submissionId].sections,
+              Object.assign(
+                {},
+                {
+                  [action.payload.sectionId]: Object.assign(
+                    {},
+                    state[action.payload.submissionId].sections[
+                      action.payload.sectionId
+                    ],
+                    {
+                      data: Object.assign(
+                        {},
+                        state[action.payload.submissionId].sections[
+                          action.payload.sectionId
+                        ].data,
+                        {
+                          files: newData,
+                        }
+                      ),
+                    }
+                  ),
+                }
+              )
+            ),
+            isLoading: state[action.payload.submissionId].isLoading,
+            savePending: state[action.payload.submissionId].savePending,
+          }
+        ),
       });
     }
   }
@@ -888,27 +1146,53 @@ function editFileData(state: SubmissionObjectState, action: EditFileDataAction):
  * @return SubmissionObjectState
  *    the new state, with the file removed.
  */
-function deleteFile(state: SubmissionObjectState, action: DeleteUploadedFileAction): SubmissionObjectState {
-  const filesData = state[ action.payload.submissionId ].sections[ action.payload.sectionId ].data as WorkspaceitemSectionUploadObject;
+function deleteFile(
+  state: SubmissionObjectState,
+  action: DeleteUploadedFileAction
+): SubmissionObjectState {
+  const filesData = state[action.payload.submissionId].sections[
+    action.payload.sectionId
+  ].data as WorkspaceitemSectionUploadObject;
   if (hasValue(filesData.files)) {
-    const fileIndex: any = findKey(
-      filesData.files,
-      {uuid: action.payload.fileId});
+    const fileIndex: any = findKey(filesData.files, {
+      uuid: action.payload.fileId,
+    });
     if (isNotNull(fileIndex)) {
       const newData = Array.from(filesData.files);
       newData.splice(fileIndex, 1);
       return Object.assign({}, state, {
-        [ action.payload.submissionId ]: Object.assign({}, state[action.payload.submissionId], {
-          sections: Object.assign({}, state[action.payload.submissionId].sections,
-            Object.assign({}, {
-              [ action.payload.sectionId ]: Object.assign({}, state[ action.payload.submissionId ].sections[ action.payload.sectionId ], {
-                data: Object.assign({}, state[ action.payload.submissionId ].sections[ action.payload.sectionId ].data, {
-                  files: newData
-                })
-              })
-            })
-          )
-        })
+        [action.payload.submissionId]: Object.assign(
+          {},
+          state[action.payload.submissionId],
+          {
+            sections: Object.assign(
+              {},
+              state[action.payload.submissionId].sections,
+              Object.assign(
+                {},
+                {
+                  [action.payload.sectionId]: Object.assign(
+                    {},
+                    state[action.payload.submissionId].sections[
+                      action.payload.sectionId
+                    ],
+                    {
+                      data: Object.assign(
+                        {},
+                        state[action.payload.submissionId].sections[
+                          action.payload.sectionId
+                        ].data,
+                        {
+                          files: newData,
+                        }
+                      ),
+                    }
+                  ),
+                }
+              )
+            ),
+          }
+        ),
       });
     }
   }

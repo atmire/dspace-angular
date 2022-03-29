@@ -21,11 +21,13 @@ import { WorkspaceItem } from './models/workspaceitem.model';
  * @param obj
  */
 export function isServerFormValue(obj: any): boolean {
-  return (typeof obj === 'object'
-    && obj.hasOwnProperty('value')
-    && obj.hasOwnProperty('language')
-    && obj.hasOwnProperty('authority')
-    && obj.hasOwnProperty('confidence'));
+  return (
+    typeof obj === 'object' &&
+    obj.hasOwnProperty('value') &&
+    obj.hasOwnProperty('language') &&
+    obj.hasOwnProperty('authority') &&
+    obj.hasOwnProperty('confidence')
+  );
 }
 
 /**
@@ -46,7 +48,7 @@ export function normalizeSectionData(obj: any, objIndex?: number) {
         obj.value,
         obj.language,
         obj.authority,
-        (obj.display || obj.value),
+        obj.display || obj.value,
         obj.place || objIndex,
         obj.confidence,
         obj.otherInformation
@@ -58,10 +60,9 @@ export function normalizeSectionData(obj: any, objIndex?: number) {
       });
     } else if (typeof obj === 'object') {
       result = Object.create({});
-      Object.keys(obj)
-        .forEach((key) => {
-          result[key] = normalizeSectionData(obj[key]);
-        });
+      Object.keys(obj).forEach((key) => {
+        result[key] = normalizeSectionData(obj[key]);
+      });
     }
   }
   return result;
@@ -71,8 +72,10 @@ export function normalizeSectionData(obj: any, objIndex?: number) {
  * Provides methods to parse response for a submission request.
  */
 @Injectable()
-export class SubmissionResponseParsingService extends BaseResponseParsingService implements ResponseParsingService {
-
+export class SubmissionResponseParsingService
+  extends BaseResponseParsingService
+  implements ResponseParsingService
+{
   protected toCache = false;
 
   /**
@@ -87,8 +90,9 @@ export class SubmissionResponseParsingService extends BaseResponseParsingService
    */
   protected shouldDirectlyAttachEmbeds = true;
 
-  constructor(protected objectCache: ObjectCacheService,
-              protected dsoParser: DSOResponseParsingService
+  constructor(
+    protected objectCache: ObjectCacheService,
+    protected dsoParser: DSOResponseParsingService
   ) {
     super();
   }
@@ -102,10 +106,14 @@ export class SubmissionResponseParsingService extends BaseResponseParsingService
    */
   parse(request: RestRequest, data: RawRestResponse): ParsedResponse {
     this.dsoParser.parse(deepClone(request), deepClone(data));
-    if (isNotEmpty(data.payload)
-      && isNotEmpty(data.payload._links)
-      && this.isSuccessStatus(data.statusCode)) {
-      const dataDefinition = this.processResponse<SubmissionObject | ConfigObject>(data.payload, request);
+    if (
+      isNotEmpty(data.payload) &&
+      isNotEmpty(data.payload._links) &&
+      this.isSuccessStatus(data.statusCode)
+    ) {
+      const dataDefinition = this.processResponse<
+        SubmissionObject | ConfigObject
+      >(data.payload, request);
       return new ParsedResponse(data.statusCode, undefined, { dataDefinition });
     } else if (isEmpty(data.payload) && this.isSuccessStatus(data.statusCode)) {
       return new ParsedResponse(data.statusCode);
@@ -121,48 +129,52 @@ export class SubmissionResponseParsingService extends BaseResponseParsingService
    * @param {RestRequest} request
    * @returns {any[]}
    */
-  protected processResponse<ObjectDomain>(data: any, request: RestRequest): any[] {
+  protected processResponse<ObjectDomain>(
+    data: any,
+    request: RestRequest
+  ): any[] {
     const dataDefinition = this.process<ObjectDomain>(data, request);
     const definition = Array.of();
-    const processedList = Array.isArray(dataDefinition) ? dataDefinition : Array.of(dataDefinition);
+    const processedList = Array.isArray(dataDefinition)
+      ? dataDefinition
+      : Array.of(dataDefinition);
 
     processedList.forEach((item) => {
-
       // item = Object.assign({}, item);
       // In case data is an Instance of WorkspaceItem normalize field value of all the section of type form
-      if (item instanceof WorkspaceItem
-        || item instanceof WorkflowItem) {
+      if (item instanceof WorkspaceItem || item instanceof WorkflowItem) {
         if (item.sections) {
           const precessedSection = Object.create({});
           // Iterate over all workspaceitem's sections
-          Object.keys(item.sections)
-            .forEach((sectionId) => {
-              if (typeof item.sections[sectionId] === 'object' && (isNotEmpty(item.sections[sectionId]) &&
-                // When Upload section is disabled, add to submission only if there are files
-                (!item.sections[sectionId].hasOwnProperty('files') || isNotEmpty((item.sections[sectionId] as any).files)))) {
-
-                const sectiondata = Object.create({});
-                // Iterate over all sections property
-                Object.keys(item.sections[sectionId])
-                  .forEach((metdadataId) => {
-                    const entry = item.sections[sectionId][metdadataId];
-                    // If entry is not an array, for sure is not a section of type form
-                    if (Array.isArray(entry)) {
-                      sectiondata[metdadataId] = [];
-                      entry.forEach((valueItem, index) => {
-                        // Parse value and normalize it
-                        const normValue = normalizeSectionData(valueItem, index);
-                        if (isNotEmpty(normValue)) {
-                          sectiondata[metdadataId].push(normValue);
-                        }
-                      });
-                    } else {
-                      sectiondata[metdadataId] = entry;
+          Object.keys(item.sections).forEach((sectionId) => {
+            if (
+              typeof item.sections[sectionId] === 'object' &&
+              isNotEmpty(item.sections[sectionId]) &&
+              // When Upload section is disabled, add to submission only if there are files
+              (!item.sections[sectionId].hasOwnProperty('files') ||
+                isNotEmpty((item.sections[sectionId] as any).files))
+            ) {
+              const sectiondata = Object.create({});
+              // Iterate over all sections property
+              Object.keys(item.sections[sectionId]).forEach((metdadataId) => {
+                const entry = item.sections[sectionId][metdadataId];
+                // If entry is not an array, for sure is not a section of type form
+                if (Array.isArray(entry)) {
+                  sectiondata[metdadataId] = [];
+                  entry.forEach((valueItem, index) => {
+                    // Parse value and normalize it
+                    const normValue = normalizeSectionData(valueItem, index);
+                    if (isNotEmpty(normValue)) {
+                      sectiondata[metdadataId].push(normValue);
                     }
                   });
-                precessedSection[sectionId] = sectiondata;
-              }
-            });
+                } else {
+                  sectiondata[metdadataId] = entry;
+                }
+              });
+              precessedSection[sectionId] = sectiondata;
+            }
+          });
           item = Object.assign({}, item, { sections: precessedSection });
         }
       }

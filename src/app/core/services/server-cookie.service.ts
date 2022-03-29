@@ -3,8 +3,10 @@ import { CookieAttributes } from 'js-cookie';
 import { CookieService, ICookieService } from './cookie.service';
 
 @Injectable()
-export class ServerCookieService extends CookieService implements ICookieService {
-
+export class ServerCookieService
+  extends CookieService
+  implements ICookieService
+{
   public set(name: string, value: any, options?: CookieAttributes): void {
     return;
   }

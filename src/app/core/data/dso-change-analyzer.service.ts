@@ -10,8 +10,9 @@ import { cloneDeep } from 'lodash';
  * DSpaceObjects
  */
 @Injectable()
-export class DSOChangeAnalyzer<T extends DSpaceObject> implements ChangeAnalyzer<T> {
-
+export class DSOChangeAnalyzer<T extends DSpaceObject>
+  implements ChangeAnalyzer<T>
+{
   /**
    * Compare the metadata of two DSpaceObjects and return the differences as
    * a JsonPatch Operation Array
@@ -22,8 +23,12 @@ export class DSOChangeAnalyzer<T extends DSpaceObject> implements ChangeAnalyzer
    *    The second object to compare
    */
   diff(object1: DSpaceObject, object2: DSpaceObject): Operation[] {
-    return compare(this.filterUUIDsFromMetadata(object1.metadata), this.filterUUIDsFromMetadata(object2.metadata))
-      .map((operation: Operation) => Object.assign({}, operation, { path: '/metadata' + operation.path }));
+    return compare(
+      this.filterUUIDsFromMetadata(object1.metadata),
+      this.filterUUIDsFromMetadata(object2.metadata)
+    ).map((operation: Operation) =>
+      Object.assign({}, operation, { path: '/metadata' + operation.path })
+    );
   }
 
   /**

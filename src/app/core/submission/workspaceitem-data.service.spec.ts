@@ -38,31 +38,35 @@ describe('WorkspaceitemDataService test', () => {
       'dc.title': [
         {
           language: 'en_US',
-          value: 'This is just another title'
-        }
+          value: 'This is just another title',
+        },
       ],
       'dc.type': [
         {
           language: null,
-          value: 'Article'
-        }
+          value: 'Article',
+        },
       ],
       'dc.contributor.author': [
         {
           language: 'en_US',
-          value: 'Smith, Donald'
-        }
+          value: 'Smith, Donald',
+        },
       ],
       'dc.date.issued': [
         {
           language: null,
-          value: '2015-06-26'
-        }
-      ]
-    }
+          value: '2015-06-26',
+        },
+      ],
+    },
   });
   const itemRD = createSuccessfulRemoteDataObject(item);
-  const wsi = Object.assign(new WorkspaceItem(), { item: observableOf(itemRD), id: '1234', uuid: '1234' });
+  const wsi = Object.assign(new WorkspaceItem(), {
+    item: observableOf(itemRD),
+    id: '1234',
+    uuid: '1234',
+  });
   const wsiRD = createSuccessfulRemoteDataObject(wsi);
 
   const endpointURL = `https://rest.api/rest/api/submission/workspaceitems`;
@@ -95,11 +99,10 @@ describe('WorkspaceitemDataService test', () => {
 
   describe('', () => {
     beforeEach(() => {
-
       scheduler = getTestScheduler();
 
       halService = jasmine.createSpyObj('halService', {
-        getEndpoint: cold('a', { a: endpointURL })
+        getEndpoint: cold('a', { a: endpointURL }),
       });
       responseCacheEntry = new RequestEntry();
       responseCacheEntry.request = { href: 'https://rest.api/' } as any;
@@ -114,14 +117,16 @@ describe('WorkspaceitemDataService test', () => {
       });
       rdbService = jasmine.createSpyObj('rdbService', {
         buildSingle: hot('a|', {
-          a: wsiRD
-        })
+          a: wsiRD,
+        }),
       });
 
       service = initTestService();
 
-      spyOn((service as any), 'findByHref').and.callThrough();
-      spyOn((service as any), 'getSearchByHref').and.returnValue(searchRequestURL$);
+      spyOn(service as any, 'findByHref').and.callThrough();
+      spyOn(service as any, 'getSearchByHref').and.returnValue(
+        searchRequestURL$
+      );
     });
 
     afterEach(() => {
@@ -130,21 +135,25 @@ describe('WorkspaceitemDataService test', () => {
 
     describe('findByItem', () => {
       it('should proxy the call to DataService.findByHref', () => {
-        scheduler.schedule(() => service.findByItem('1234-1234', true, true, pageInfo));
+        scheduler.schedule(() =>
+          service.findByItem('1234-1234', true, true, pageInfo)
+        );
         scheduler.flush();
 
-        expect((service as any).findByHref).toHaveBeenCalledWith(searchRequestURL$, true, true);
+        expect((service as any).findByHref).toHaveBeenCalledWith(
+          searchRequestURL$,
+          true,
+          true
+        );
       });
 
       it('should return a RemoteData<WorkspaceItem> for the search', () => {
         const result = service.findByItem('1234-1234', true, true, pageInfo);
         const expected = cold('a|', {
-          a: wsiRD
+          a: wsiRD,
         });
         expect(result).toBeObservable(expected);
       });
-
     });
   });
-
 });

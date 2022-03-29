@@ -11,21 +11,18 @@ import { RegistrationGuard } from '../register-page/registration.guard';
       {
         path: '',
         component: ThemedForgotEmailComponent,
-        data: {title: 'forgot-password.title'},
+        data: { title: 'forgot-password.title' },
       },
       {
         path: ':token',
         component: ThemedForgotPasswordFormComponent,
-        canActivate: [ RegistrationGuard ],
-      }
-    ])
+        canActivate: [RegistrationGuard],
+      },
+    ]),
   ],
-  providers: [
-    ItemPageResolver,
-  ]
+  providers: [ItemPageResolver],
 })
 /**
  * This module defines the routing to the components related to the forgot password components.
  */
-export class ForgotPasswordRoutingModule {
-}
+export class ForgotPasswordRoutingModule {}

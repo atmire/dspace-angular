@@ -13,8 +13,8 @@ const mockItem: Item = Object.assign(new Item(), {
     'dc.title': [
       {
         language: 'en_US',
-        value: 'This is just another title'
-      }
+        value: 'This is just another title',
+      },
     ],
     // 'project.identifier.status': [
     //   {
@@ -22,7 +22,7 @@ const mockItem: Item = Object.assign(new Item(), {
     //     value: 'A status about the project'
     //   }
     // ]
-  }
+  },
 });
 
 describe('ProjectListElementComponent', () => {
@@ -39,10 +39,12 @@ describe('ProjectListElementComponent', () => {
       providers: [
         { provide: TruncatableService, useValue: truncatableServiceStub },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(ProjectListElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(ProjectListElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -57,7 +59,9 @@ describe('ProjectListElementComponent', () => {
     });
 
     it(`should contain a ProjectListElementComponent`, () => {
-      const projectListElement = fixture.debugElement.query(By.css(`ds-project-search-result-list-element`));
+      const projectListElement = fixture.debugElement.query(
+        By.css(`ds-project-search-result-list-element`)
+      );
       expect(projectListElement).not.toBeNull();
     });
   });

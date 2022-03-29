@@ -8,10 +8,9 @@ import { AlertType } from '../alert/aletr-type';
 @Component({
   selector: 'ds-error',
   styleUrls: ['./error.component.scss'],
-  templateUrl: './error.component.html'
+  templateUrl: './error.component.html',
 })
 export class ErrorComponent {
-
   @Input() message = 'Error...';
 
   /**
@@ -22,15 +21,15 @@ export class ErrorComponent {
 
   private subscription: Subscription;
 
-  constructor(private translate: TranslateService) {
-
-  }
+  constructor(private translate: TranslateService) {}
 
   ngOnInit() {
     if (this.message === undefined) {
-      this.subscription = this.translate.get('error.default').subscribe((message: string) => {
-        this.message = message;
-      });
+      this.subscription = this.translate
+        .get('error.default')
+        .subscribe((message: string) => {
+          this.message = message;
+        });
     }
   }
 

@@ -1,17 +1,20 @@
 import { FieldParser } from './field-parser';
 import {
   DynamicDsDateControlModelConfig,
-  DynamicDsDatePickerModel
+  DynamicDsDatePickerModel,
 } from '../ds-dynamic-form-ui/models/date-picker/date-picker.model';
 import { isNotEmpty } from '../../../empty.util';
 import { DS_DATE_PICKER_SEPARATOR } from '../ds-dynamic-form-ui/models/date-picker/date-picker.component';
 import { FormFieldMetadataValueObject } from '../models/form-field-metadata-value.model';
 
 export class DateFieldParser extends FieldParser {
-
-  public modelFactory(fieldValue?: FormFieldMetadataValueObject | any, label?: boolean): any {
+  public modelFactory(
+    fieldValue?: FormFieldMetadataValueObject | any,
+    label?: boolean
+  ): any {
     let malformedDate = false;
-    const inputDateModelConfig: DynamicDsDateControlModelConfig = this.initModel(null, false, true);
+    const inputDateModelConfig: DynamicDsDateControlModelConfig =
+      this.initModel(null, false, true);
     inputDateModelConfig.legend = this.configData.label;
 
     inputDateModelConfig.toggleIcon = 'fas fa-calendar';
@@ -30,7 +33,6 @@ export class DateFieldParser extends FieldParser {
           }
         }
       }
-
     }
     const dateModel = new DynamicDsDatePickerModel(inputDateModelConfig);
     dateModel.malformedDate = malformedDate;

@@ -19,22 +19,30 @@ describe('BrowseByGuard', () => {
     const id = 'author';
     const scope = '1234-65487-12354-1235';
     const value = 'Filter';
-    const browseDefinition = Object.assign(new BrowseDefinition(), { type: BrowseByDataType.Metadata, metadataKeys: ['dc.contributor'] });
+    const browseDefinition = Object.assign(new BrowseDefinition(), {
+      type: BrowseByDataType.Metadata,
+      metadataKeys: ['dc.contributor'],
+    });
 
     beforeEach(() => {
       dsoService = {
-        findById: (dsoId: string) => observableOf({ payload: { name: name }, hasSucceeded: true })
+        findById: (dsoId: string) =>
+          observableOf({ payload: { name: name }, hasSucceeded: true }),
       };
 
       translateService = {
-        instant: () => field
+        instant: () => field,
       };
 
       browseDefinitionService = {
-        findById: () => createSuccessfulRemoteDataObject$(browseDefinition)
+        findById: () => createSuccessfulRemoteDataObject$(browseDefinition),
       };
 
-      guard = new BrowseByGuard(dsoService, translateService, browseDefinitionService);
+      guard = new BrowseByGuard(
+        dsoService,
+        translateService,
+        browseDefinitionService
+      );
     });
 
     it('should return true, and sets up the data correctly, with a scope and value', () => {
@@ -48,25 +56,24 @@ describe('BrowseByGuard', () => {
         },
         queryParams: {
           scope,
-          value
-        }
+          value,
+        },
       };
-      guard.canActivate(scopedRoute as any, undefined)
+      guard
+        .canActivate(scopedRoute as any, undefined)
         .pipe(first())
-        .subscribe(
-          (canActivate) => {
-            const result = {
-              title,
-              id,
-              browseDefinition,
-              collection: name,
-              field,
-              value: '"' + value + '"'
-            };
-            expect(scopedRoute.data).toEqual(result);
-            expect(canActivate).toEqual(true);
-          }
-        );
+        .subscribe((canActivate) => {
+          const result = {
+            title,
+            id,
+            browseDefinition,
+            collection: name,
+            field,
+            value: '"' + value + '"',
+          };
+          expect(scopedRoute.data).toEqual(result);
+          expect(canActivate).toEqual(true);
+        });
     });
 
     it('should return true, and sets up the data correctly, with a scope and without value', () => {
@@ -79,26 +86,25 @@ describe('BrowseByGuard', () => {
           id,
         },
         queryParams: {
-          scope
-        }
+          scope,
+        },
       };
 
-      guard.canActivate(scopedNoValueRoute as any, undefined)
+      guard
+        .canActivate(scopedNoValueRoute as any, undefined)
         .pipe(first())
-        .subscribe(
-          (canActivate) => {
-            const result = {
-              title,
-              id,
-              browseDefinition,
-              collection: name,
-              field,
-              value: ''
-            };
-            expect(scopedNoValueRoute.data).toEqual(result);
-            expect(canActivate).toEqual(true);
-          }
-        );
+        .subscribe((canActivate) => {
+          const result = {
+            title,
+            id,
+            browseDefinition,
+            collection: name,
+            field,
+            value: '',
+          };
+          expect(scopedNoValueRoute.data).toEqual(result);
+          expect(canActivate).toEqual(true);
+        });
     });
 
     it('should return true, and sets up the data correctly, without a scope and with a value', () => {
@@ -111,25 +117,24 @@ describe('BrowseByGuard', () => {
           id,
         },
         queryParams: {
-          value
-        }
+          value,
+        },
       };
-      guard.canActivate(route as any, undefined)
+      guard
+        .canActivate(route as any, undefined)
         .pipe(first())
-        .subscribe(
-          (canActivate) => {
-            const result = {
-              title,
-              id,
-              browseDefinition,
-              collection: '',
-              field,
-              value: '"' + value + '"'
-            };
-            expect(route.data).toEqual(result);
-            expect(canActivate).toEqual(true);
-          }
-        );
+        .subscribe((canActivate) => {
+          const result = {
+            title,
+            id,
+            browseDefinition,
+            collection: '',
+            field,
+            value: '"' + value + '"',
+          };
+          expect(route.data).toEqual(result);
+          expect(canActivate).toEqual(true);
+        });
     });
   });
 });

@@ -20,9 +20,13 @@ const compIndex = 1;
 let mockResultObject: PoolTask;
 
 const rdSumbitter = createSuccessfulRemoteDataObject(EPersonMock);
-const workflowitem = Object.assign(new WorkflowItem(), { submitter: observableOf(rdSumbitter) });
+const workflowitem = Object.assign(new WorkflowItem(), {
+  submitter: observableOf(rdSumbitter),
+});
 const rdWorkflowitem = createSuccessfulRemoteDataObject(workflowitem);
-mockResultObject = Object.assign(new PoolTask(), { workflowitem: observableOf(rdWorkflowitem) });
+mockResultObject = Object.assign(new PoolTask(), {
+  workflowitem: observableOf(rdWorkflowitem),
+});
 
 describe('ItemSubmitterComponent', () => {
   beforeEach(waitForAsync(() => {
@@ -31,15 +35,17 @@ describe('ItemSubmitterComponent', () => {
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
-            useClass: TranslateLoaderMock
-          }
-        })
+            useClass: TranslateLoaderMock,
+          },
+        }),
       ],
       declarations: [ItemSubmitterComponent],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(ItemSubmitterComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(ItemSubmitterComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -53,9 +59,11 @@ describe('ItemSubmitterComponent', () => {
   });
 
   it('should init submitter properly', () => {
-    expect(component.submitter$).toBeObservable(cold('(b|)', {
-      b: EPersonMock
-    }));
+    expect(component.submitter$).toBeObservable(
+      cold('(b|)', {
+        b: EPersonMock,
+      })
+    );
   });
 
   it('should show a badge with submitter name', () => {

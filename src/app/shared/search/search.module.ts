@@ -23,7 +23,10 @@ import { SearchObjects } from './models/search-objects.model';
 import { FacetConfigResponse } from './models/facet-config-response.model';
 import { FacetValues } from './models/facet-values.model';
 import { SearchResult } from './models/search-result.model';
-import { MissingTranslationHandler, TranslateModule } from '@ngx-translate/core';
+import {
+  MissingTranslationHandler,
+  TranslateModule,
+} from '@ngx-translate/core';
 import { MissingTranslationHelper } from '../translate/missing-translation.helper';
 import { SharedModule } from '../shared.module';
 import { SearchResultsComponent } from './search-results/search-results.component';
@@ -52,7 +55,7 @@ const COMPONENTS = [
   SearchAuthorityFilterComponent,
   SearchSwitchConfigurationComponent,
   ConfigurationSearchPageComponent,
-  ThemedConfigurationSearchPageComponent
+  ThemedConfigurationSearchPageComponent,
 ];
 
 const ENTRY_COMPONENTS = [
@@ -74,24 +77,23 @@ export const MODELS = [
   SearchObjects,
   FacetConfigResponse,
   FacetValues,
-  SearchResult
+  SearchResult,
 ];
 
 @NgModule({
-  declarations: [
-    ...COMPONENTS
-  ],
+  declarations: [...COMPONENTS],
   imports: [
     CommonModule,
     TranslateModule.forChild({
-      missingTranslationHandler: { provide: MissingTranslationHandler, useClass: MissingTranslationHelper },
-      useDefaultLang: true
+      missingTranslationHandler: {
+        provide: MissingTranslationHandler,
+        useClass: MissingTranslationHelper,
+      },
+      useDefaultLang: true,
     }),
-    SharedModule.withEntryComponents()
+    SharedModule.withEntryComponents(),
   ],
-  exports: [
-    ...COMPONENTS
-  ]
+  exports: [...COMPONENTS],
 })
 export class SearchModule {
   /**
@@ -101,7 +103,7 @@ export class SearchModule {
   static withEntryComponents() {
     return {
       ngModule: SearchModule,
-      providers: ENTRY_COMPONENTS.map((component) => ({ provide: component }))
+      providers: ENTRY_COMPONENTS.map((component) => ({ provide: component })),
     };
   }
 }

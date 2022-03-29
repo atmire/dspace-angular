@@ -1,7 +1,8 @@
 export class SectionsServiceStub {
-
   checkSectionErrors = jasmine.createSpy('checkSectionErrors');
-  dispatchRemoveSectionErrors = jasmine.createSpy('dispatchRemoveSectionErrors');
+  dispatchRemoveSectionErrors = jasmine.createSpy(
+    'dispatchRemoveSectionErrors'
+  );
   dispatchSetSectionFormId = jasmine.createSpy('dispatchSetSectionFormId');
   getSectionData = jasmine.createSpy('getSectionData');
   getSectionErrors = jasmine.createSpy('getSectionErrors');
@@ -17,7 +18,9 @@ export class SectionsServiceStub {
   updateSectionData = jasmine.createSpy('updateSectionData');
   setSectionError = jasmine.createSpy('setSectionError');
   setSectionStatus = jasmine.createSpy('setSectionStatus');
-  computeSectionConfiguredMetadata = jasmine.createSpy('computeSectionConfiguredMetadata');
+  computeSectionConfiguredMetadata = jasmine.createSpy(
+    'computeSectionConfiguredMetadata'
+  );
   getShownSectionErrors = jasmine.createSpy('getShownSectionErrors');
   getSectionServerErrors = jasmine.createSpy('getSectionServerErrors');
 }

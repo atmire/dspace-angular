@@ -4,7 +4,6 @@ import { StatusCodeOnlyResponseParsingService } from '../core/data/status-code-o
 import { GenericConstructor } from '../core/shared/generic-constructor';
 
 export class TrackRequest extends PostRequest {
-
   getResponseParser(): GenericConstructor<ResponseParsingService> {
     return StatusCodeOnlyResponseParsingService;
   }

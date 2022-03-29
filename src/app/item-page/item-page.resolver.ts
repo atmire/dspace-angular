@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  Resolve,
+  Router,
+  RouterStateSnapshot,
+} from '@angular/router';
 import { Observable } from 'rxjs';
 import { RemoteData } from '../core/data/remote-data';
 import { ItemDataService } from '../core/data/item-data.service';
@@ -31,7 +36,10 @@ export class ItemPageResolver extends ItemResolver {
    * @returns Observable<<RemoteData<Item>> Emits the found item based on the parameters in the current route,
    * or an error if something went wrong
    */
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<RemoteData<Item>> {
+  resolve(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<RemoteData<Item>> {
     return super.resolve(route, state).pipe(
       map((rd: RemoteData<Item>) => {
         if (rd.hasSucceeded && hasValue(rd.payload)) {
@@ -39,7 +47,10 @@ export class ItemPageResolver extends ItemResolver {
           const thisRoute = state.url;
           if (!thisRoute.startsWith(itemRoute)) {
             const itemId = rd.payload.uuid;
-            const subRoute = thisRoute.substring(thisRoute.indexOf(itemId) + itemId.length, thisRoute.length);
+            const subRoute = thisRoute.substring(
+              thisRoute.indexOf(itemId) + itemId.length,
+              thisRoute.length
+            );
             this.router.navigateByUrl(itemRoute + subRoute);
           }
         }

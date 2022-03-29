@@ -23,7 +23,7 @@ import { CollectionAdministratorGuard } from '../../core/data/feature-authorizat
       {
         path: '',
         resolve: {
-          breadcrumb: I18nBreadcrumbResolver
+          breadcrumb: I18nBreadcrumbResolver,
         },
         data: { breadcrumbKey: 'collection.edit' },
         component: EditCollectionPageComponent,
@@ -32,7 +32,7 @@ import { CollectionAdministratorGuard } from '../../core/data/feature-authorizat
           {
             path: '',
             redirectTo: 'metadata',
-            pathMatch: 'full'
+            pathMatch: 'full',
           },
           {
             path: 'metadata',
@@ -40,25 +40,34 @@ import { CollectionAdministratorGuard } from '../../core/data/feature-authorizat
             data: {
               title: 'collection.edit.tabs.metadata.title',
               hideReturnButton: true,
-              showBreadcrumbs: true
-            }
+              showBreadcrumbs: true,
+            },
           },
           {
             path: 'roles',
             component: CollectionRolesComponent,
-            data: { title: 'collection.edit.tabs.roles.title', showBreadcrumbs: true }
+            data: {
+              title: 'collection.edit.tabs.roles.title',
+              showBreadcrumbs: true,
+            },
           },
           {
             path: 'source',
             component: CollectionSourceComponent,
-            data: { title: 'collection.edit.tabs.source.title', showBreadcrumbs: true }
+            data: {
+              title: 'collection.edit.tabs.source.title',
+              showBreadcrumbs: true,
+            },
           },
           {
             path: 'curate',
             component: CollectionCurateComponent,
-            data: { title: 'collection.edit.tabs.curate.title', showBreadcrumbs: true }
+            data: {
+              title: 'collection.edit.tabs.curate.title',
+              showBreadcrumbs: true,
+            },
           },
-/*          {
+          /*          {
             path: 'authorizations',
             component: CollectionAuthorizationsComponent,
             data: { title: 'collection.edit.tabs.authorizations.title', showBreadcrumbs: true }
@@ -70,40 +79,42 @@ import { CollectionAdministratorGuard } from '../../core/data/feature-authorizat
               {
                 path: 'create',
                 resolve: {
-                  resourcePolicyTarget: ResourcePolicyTargetResolver
+                  resourcePolicyTarget: ResourcePolicyTargetResolver,
                 },
                 component: ResourcePolicyCreateComponent,
-                data: { title: 'resource-policies.create.page.title' }
+                data: { title: 'resource-policies.create.page.title' },
               },
               {
                 path: 'edit',
                 resolve: {
-                  resourcePolicy: ResourcePolicyResolver
+                  resourcePolicy: ResourcePolicyResolver,
                 },
                 component: ResourcePolicyEditComponent,
-                data: { title: 'resource-policies.edit.page.title' }
+                data: { title: 'resource-policies.edit.page.title' },
               },
               {
                 path: '',
                 component: CollectionAuthorizationsComponent,
-                data: { title: 'collection.edit.tabs.authorizations.title', showBreadcrumbs: true }
-              }
-            ]
+                data: {
+                  title: 'collection.edit.tabs.authorizations.title',
+                  showBreadcrumbs: true,
+                },
+              },
+            ],
           },
           {
             path: 'mapper',
             component: CollectionItemMapperComponent,
-            data: { title: 'collection.edit.tabs.item-mapper.title', hideReturnButton: true, showBreadcrumbs: true }
+            data: {
+              title: 'collection.edit.tabs.item-mapper.title',
+              hideReturnButton: true,
+              showBreadcrumbs: true,
+            },
           },
-        ]
-      }
-    ])
+        ],
+      },
+    ]),
   ],
-  providers: [
-    ResourcePolicyResolver,
-    ResourcePolicyTargetResolver
-  ]
+  providers: [ResourcePolicyResolver, ResourcePolicyTargetResolver],
 })
-export class EditCollectionPageRoutingModule {
-
-}
+export class EditCollectionPageRoutingModule {}

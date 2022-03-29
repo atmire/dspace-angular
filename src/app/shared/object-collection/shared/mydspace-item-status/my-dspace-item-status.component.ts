@@ -7,10 +7,9 @@ import { MyDspaceItemStatusType } from './my-dspace-item-status-type';
 @Component({
   selector: 'ds-mydspace-item-status',
   styleUrls: ['./my-dspace-item-status.component.scss'],
-  templateUrl: './my-dspace-item-status.component.html'
+  templateUrl: './my-dspace-item-status.component.html',
 })
 export class MyDSpaceItemStatusComponent implements OnInit {
-
   /**
    * This mydspace item status
    */
@@ -50,5 +49,4 @@ export class MyDSpaceItemStatusComponent implements OnInit {
         break;
     }
   }
-
 }

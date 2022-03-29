@@ -11,7 +11,6 @@ export function getMockObjectCacheService(): ObjectCacheService {
     'getRequestHrefByUUID',
     'getList',
     'hasByUUID',
-    'hasByHref'
+    'hasByHref',
   ]);
-
 }

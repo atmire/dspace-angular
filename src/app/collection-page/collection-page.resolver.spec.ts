@@ -11,7 +11,7 @@ describe('CollectionPageResolver', () => {
 
     beforeEach(() => {
       collectionService = {
-        findById: (id: string) => createSuccessfulRemoteDataObject$({ id })
+        findById: (id: string) => createSuccessfulRemoteDataObject$({ id }),
       };
       store = jasmine.createSpyObj('store', {
         dispatch: {},
@@ -20,14 +20,13 @@ describe('CollectionPageResolver', () => {
     });
 
     it('should resolve a collection with the correct id', (done) => {
-      resolver.resolve({ params: { id: uuid } } as any, { url: 'current-url' } as any)
+      resolver
+        .resolve({ params: { id: uuid } } as any, { url: 'current-url' } as any)
         .pipe(first())
-        .subscribe(
-          (resolved) => {
-            expect(resolved.payload.id).toEqual(uuid);
-            done();
-          }
-        );
+        .subscribe((resolved) => {
+          expect(resolved.payload.id).toEqual(uuid);
+          done();
+        });
     });
   });
 });

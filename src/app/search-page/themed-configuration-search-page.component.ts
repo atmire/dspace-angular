@@ -54,19 +54,27 @@ export class ThemedConfigurationSearchPageComponent extends ThemedComponent<Conf
   @Input()
   context: Context;
 
-  protected inAndOutputNames: (keyof ConfigurationSearchPageComponent & keyof this)[] =
-    ['context', 'configuration', 'fixedFilterQuery', 'inPlaceSearch', 'searchEnabled', 'sideBarWidth'];
+  protected inAndOutputNames: (keyof ConfigurationSearchPageComponent &
+    keyof this)[] = [
+    'context',
+    'configuration',
+    'fixedFilterQuery',
+    'inPlaceSearch',
+    'searchEnabled',
+    'sideBarWidth',
+  ];
 
   protected getComponentName(): string {
     return 'ConfigurationSearchPageComponent';
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../themes/${themeName}/app/search-page/configuration-search-page.component`);
+    return import(
+      `../../themes/${themeName}/app/search-page/configuration-search-page.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {
     return import(`./configuration-search-page.component`);
   }
-
 }

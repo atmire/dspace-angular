@@ -15,15 +15,13 @@ import { FormModule } from '../../../shared/form/form.module';
     SharedModule,
     RouterModule,
     BitstreamFormatsRoutingModule,
-    FormModule
+    FormModule,
   ],
   declarations: [
     BitstreamFormatsComponent,
     EditBitstreamFormatComponent,
     AddBitstreamFormatComponent,
-    FormatFormComponent
-  ]
+    FormatFormComponent,
+  ],
 })
-export class BitstreamFormatsModule {
-
-}
+export class BitstreamFormatsModule {}

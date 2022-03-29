@@ -14,7 +14,6 @@ import { slide } from '../../animations/slide';
  * The filter input itself should still be provided in the content.
  */
 export class SidebarFilterComponent implements OnInit {
-
   @Input() name: string;
   @Input() type: string;
   @Input() label: string;
@@ -33,10 +32,7 @@ export class SidebarFilterComponent implements OnInit {
    */
   collapsed$: Observable<boolean>;
 
-  constructor(
-    protected filterService: SidebarFilterService,
-  ) {
-  }
+  constructor(protected filterService: SidebarFilterService) {}
 
   /**
    *  Changes the state for this filter to collapsed when it's expanded and to expanded it when it's collapsed
@@ -85,5 +81,4 @@ export class SidebarFilterComponent implements OnInit {
   private isCollapsed(): Observable<boolean> {
     return this.filterService.isCollapsed(this.name);
   }
-
 }

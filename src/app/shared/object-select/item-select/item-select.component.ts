@@ -11,14 +11,13 @@ import { AuthorizationDataService } from '../../../core/data/feature-authorizati
 
 @Component({
   selector: 'ds-item-select',
-  templateUrl: './item-select.component.html'
+  templateUrl: './item-select.component.html',
 })
 
 /**
  * A component used to select items from a specific list and returning the UUIDs of the selected items
  */
 export class ItemSelectComponent extends ObjectSelectComponent<Item> {
-
   /**
    * Whether or not to hide the collection column
    */
@@ -31,11 +30,13 @@ export class ItemSelectComponent extends ObjectSelectComponent<Item> {
    * Value: Route to item page
    */
   itemPageRoutes$: Observable<{
-    [itemId: string]: string
+    [itemId: string]: string;
   }>;
 
-  constructor(protected objectSelectService: ObjectSelectService,
-              protected authorizationService: AuthorizationDataService ) {
+  constructor(
+    protected objectSelectService: ObjectSelectService,
+    protected authorizationService: AuthorizationDataService
+  ) {
     super(objectSelectService, authorizationService);
   }
 
@@ -49,10 +50,11 @@ export class ItemSelectComponent extends ObjectSelectComponent<Item> {
       getAllSucceededRemoteDataPayload(),
       map((items) => {
         const itemPageRoutes = {};
-        items.page.forEach((item) => itemPageRoutes[item.uuid] = getItemPageRoute(item));
+        items.page.forEach(
+          (item) => (itemPageRoutes[item.uuid] = getItemPageRoute(item))
+        );
         return itemPageRoutes;
       })
     );
   }
-
 }

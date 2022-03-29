@@ -7,11 +7,10 @@ import { PageNotFoundComponent as BaseComponent } from '../../../../app/pagenotf
   styleUrls: ['../../../../app/pagenotfound/pagenotfound.component.scss'],
   // templateUrl: './pagenotfound.component.html'
   templateUrl: '../../../../app/pagenotfound/pagenotfound.component.html',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.Default,
 })
 
 /**
  * This component representing the `PageNotFound` DSpace page.
  */
 export class PageNotFoundComponent extends BaseComponent {}
-

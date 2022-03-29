@@ -28,7 +28,5 @@ describe('IDToUUIDSerializer', () => {
         expect(serializer.Deserialize(undefined)).toBeUndefined();
       });
     });
-
   });
-
 });

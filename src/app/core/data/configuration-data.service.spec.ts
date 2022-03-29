@@ -20,7 +20,7 @@ describe('ConfigurationDataService', () => {
   const testObject = {
     uuid: 'test-property',
     name: 'test-property',
-    values: ['value-1', 'value-2']
+    values: ['value-1', 'value-2'],
   } as ConfigurationProperty;
   const configLink = 'https://rest.api/rest/api/config/properties';
   const requestURL = `https://rest.api/rest/api/config/properties/${testObject.name}`;
@@ -30,18 +30,18 @@ describe('ConfigurationDataService', () => {
     scheduler = getTestScheduler();
 
     halService = jasmine.createSpyObj('halService', {
-      getEndpoint: cold('a', { a: configLink })
+      getEndpoint: cold('a', { a: configLink }),
     });
     requestService = jasmine.createSpyObj('requestService', {
       generateRequestId: requestUUID,
-      send: true
+      send: true,
     });
     rdbService = jasmine.createSpyObj('rdbService', {
       buildSingle: cold('a', {
         a: {
-          payload: testObject
-        }
-      })
+          payload: testObject,
+        },
+      }),
     });
     objectCache = {} as ObjectCacheService;
     const notificationsService = {} as NotificationsService;
@@ -71,15 +71,18 @@ describe('ConfigurationDataService', () => {
       scheduler.schedule(() => service.findByPropertyName(testObject.name));
       scheduler.flush();
 
-      expect(requestService.send).toHaveBeenCalledWith(new GetRequest(requestUUID, requestURL), true);
+      expect(requestService.send).toHaveBeenCalledWith(
+        new GetRequest(requestUUID, requestURL),
+        true
+      );
     });
 
     it('should return a RemoteData<ConfigurationProperty> for the object with the given name', () => {
       const result = service.findByPropertyName(testObject.name);
       const expected = cold('a', {
         a: {
-          payload: testObject
-        }
+          payload: testObject,
+        },
       });
       expect(result).toBeObservable(expected);
     });

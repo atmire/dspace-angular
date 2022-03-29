@@ -2,11 +2,20 @@ import { ChangeDetectorRef, Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ComponentFixture, inject, TestBed, waitForAsync } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  inject,
+  TestBed,
+  waitForAsync,
+} from '@angular/core/testing';
 
 import { of as observableOf } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
-import { DynamicCheckboxModel, DynamicFormControlEvent, DynamicFormControlEventType } from '@ng-dynamic-forms/core';
+import {
+  DynamicCheckboxModel,
+  DynamicFormControlEvent,
+  DynamicFormControlEventType,
+} from '@ng-dynamic-forms/core';
 
 import { createSuccessfulRemoteDataObject$ } from '../../../shared/remote-data.utils';
 import { createTestComponent } from '../../../shared/testing/utils.test';
@@ -26,7 +35,7 @@ import { SectionsType } from '../sections-type';
 import {
   mockLicenseParsedErrors,
   mockSubmissionCollectionId,
-  mockSubmissionId
+  mockSubmissionId,
 } from '../../../shared/mocks/submission.mock';
 import { FormComponent } from '../../../shared/form/form.component';
 import { JsonPatchOperationPathCombiner } from '../../../core/json-patch/builder/json-patch-operation-path-combiner';
@@ -48,9 +57,12 @@ const mockCollection = Object.assign(new Collection(), {
     {
       key: 'dc.title',
       language: 'en_US',
-      value: 'Community 1-Collection 1'
-    }],
-  license: createSuccessfulRemoteDataObject$(Object.assign(new License(), { text: licenseText }))
+      value: 'Community 1-Collection 1',
+    },
+  ],
+  license: createSuccessfulRemoteDataObject$(
+    Object.assign(new License(), { text: licenseText })
+  ),
 });
 
 function getMockSubmissionFormsConfigService(): SubmissionFormsConfigService {
@@ -58,23 +70,24 @@ function getMockSubmissionFormsConfigService(): SubmissionFormsConfigService {
     getConfigAll: jasmine.createSpy('getConfigAll'),
     getConfigByHref: jasmine.createSpy('getConfigByHref'),
     getConfigByName: jasmine.createSpy('getConfigByName'),
-    getConfigBySearch: jasmine.createSpy('getConfigBySearch')
+    getConfigBySearch: jasmine.createSpy('getConfigBySearch'),
   });
 }
 
 const sectionObject: SectionDataObject = {
-  config: 'https://dspace7.4science.it/or2018/api/config/submissionforms/license',
+  config:
+    'https://dspace7.4science.it/or2018/api/config/submissionforms/license',
   mandatory: true,
   data: {
     url: null,
     acceptanceDate: null,
-    granted: false
+    granted: false,
   },
   errorsToShow: [],
   serverValidationErrors: [],
   header: 'submit.progressbar.describe.license',
   id: 'license',
-  sectionType: SectionsType.License
+  sectionType: SectionsType.License,
 };
 
 const dynamicFormControlEvent: DynamicFormControlEvent = {
@@ -83,11 +96,10 @@ const dynamicFormControlEvent: DynamicFormControlEvent = {
   control: null,
   group: null,
   model: null,
-  type: DynamicFormControlEventType.Change
+  type: DynamicFormControlEventType.Change,
 };
 
 describe('SubmissionSectionLicenseComponent test suite', () => {
-
   let comp: SubmissionSectionLicenseComponent;
   let compAsAny: any;
   let fixture: ComponentFixture<SubmissionSectionLicenseComponent>;
@@ -99,17 +111,23 @@ describe('SubmissionSectionLicenseComponent test suite', () => {
   const sectionsServiceStub: any = new SectionsServiceStub();
   const submissionId = mockSubmissionId;
 
-  const pathCombiner = new JsonPatchOperationPathCombiner('sections', sectionObject.id);
+  const pathCombiner = new JsonPatchOperationPathCombiner(
+    'sections',
+    sectionObject.id
+  );
   const jsonPatchOpBuilder: any = jasmine.createSpyObj('jsonPatchOpBuilder', {
     add: jasmine.createSpy('add'),
     replace: jasmine.createSpy('replace'),
     remove: jasmine.createSpy('remove'),
   });
 
-  const mockCollectionDataService = jasmine.createSpyObj('CollectionDataService', {
-    findById: jasmine.createSpy('findById'),
-    findByHref: jasmine.createSpy('findByHref')
-  });
+  const mockCollectionDataService = jasmine.createSpyObj(
+    'CollectionDataService',
+    {
+      findById: jasmine.createSpy('findById'),
+      findByHref: jasmine.createSpy('findByHref'),
+    }
+  );
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -118,31 +136,42 @@ describe('SubmissionSectionLicenseComponent test suite', () => {
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
       ],
       declarations: [
         FormComponent,
         SubmissionSectionLicenseComponent,
-        TestComponent
+        TestComponent,
       ],
       providers: [
         { provide: CollectionDataService, useValue: mockCollectionDataService },
-        { provide: SectionFormOperationsService, useValue: getMockFormOperationsService() },
+        {
+          provide: SectionFormOperationsService,
+          useValue: getMockFormOperationsService(),
+        },
         { provide: FormService, useValue: getMockFormService() },
         { provide: JsonPatchOperationsBuilder, useValue: jsonPatchOpBuilder },
-        { provide: SubmissionFormsConfigService, useValue: getMockSubmissionFormsConfigService() },
+        {
+          provide: SubmissionFormsConfigService,
+          useValue: getMockSubmissionFormsConfigService(),
+        },
         { provide: NotificationsService, useClass: NotificationsServiceStub },
         { provide: SectionsService, useValue: sectionsServiceStub },
         { provide: SubmissionService, useClass: SubmissionServiceStub },
         { provide: 'collectionIdProvider', useValue: collectionId },
-        { provide: 'sectionDataProvider', useValue: Object.assign({}, sectionObject) },
+        {
+          provide: 'sectionDataProvider',
+          useValue: Object.assign({}, sectionObject),
+        },
         { provide: 'submissionIdProvider', useValue: submissionId },
         ChangeDetectorRef,
         FormBuilderService,
-        SubmissionSectionLicenseComponent
+        SubmissionSectionLicenseComponent,
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents().then();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .compileComponents()
+      .then();
   }));
 
   describe('', () => {
@@ -151,14 +180,21 @@ describe('SubmissionSectionLicenseComponent test suite', () => {
 
     // synchronous beforeEach
     beforeEach(() => {
-      mockCollectionDataService.findById.and.returnValue(createSuccessfulRemoteDataObject$(mockCollection));
-      sectionsServiceStub.isSectionReadOnly.and.returnValue(observableOf(false));
+      mockCollectionDataService.findById.and.returnValue(
+        createSuccessfulRemoteDataObject$(mockCollection)
+      );
+      sectionsServiceStub.isSectionReadOnly.and.returnValue(
+        observableOf(false)
+      );
       sectionsServiceStub.getSectionErrors.and.returnValue(observableOf([]));
 
       const html = `
         <ds-submission-section-license></ds-submission-section-license>`;
 
-      testFixture = createTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
+      testFixture = createTestComponent(
+        html,
+        TestComponent
+      ) as ComponentFixture<TestComponent>;
       testComp = testFixture.componentInstance;
     });
 
@@ -166,11 +202,12 @@ describe('SubmissionSectionLicenseComponent test suite', () => {
       testFixture.destroy();
     });
 
-    it('should create SubmissionSectionLicenseComponent', inject([SubmissionSectionLicenseComponent], (app: SubmissionSectionLicenseComponent) => {
-
-      expect(app).toBeDefined();
-
-    }));
+    it('should create SubmissionSectionLicenseComponent', inject(
+      [SubmissionSectionLicenseComponent],
+      (app: SubmissionSectionLicenseComponent) => {
+        expect(app).toBeDefined();
+      }
+    ));
   });
 
   describe('', () => {
@@ -183,8 +220,10 @@ describe('SubmissionSectionLicenseComponent test suite', () => {
       formBuilderService = TestBed.inject(FormBuilderService);
       formOperationsService = TestBed.inject(SectionFormOperationsService);
 
-      compAsAny.pathCombiner = new JsonPatchOperationPathCombiner('sections', sectionObject.id);
-
+      compAsAny.pathCombiner = new JsonPatchOperationPathCombiner(
+        'sections',
+        sectionObject.id
+      );
     });
 
     afterEach(() => {
@@ -195,13 +234,16 @@ describe('SubmissionSectionLicenseComponent test suite', () => {
 
     describe('', () => {
       beforeEach(() => {
-        mockCollectionDataService.findById.and.returnValue(createSuccessfulRemoteDataObject$(mockCollection));
+        mockCollectionDataService.findById.and.returnValue(
+          createSuccessfulRemoteDataObject$(mockCollection)
+        );
         sectionsServiceStub.getSectionErrors.and.returnValue(observableOf([]));
-        sectionsServiceStub.isSectionReadOnly.and.returnValue(observableOf(false));
+        sectionsServiceStub.isSectionReadOnly.and.returnValue(
+          observableOf(false)
+        );
       });
 
       it('should init section properly', () => {
-
         spyOn(compAsAny, 'getSectionStatus');
 
         comp.onSectionInit();
@@ -211,17 +253,19 @@ describe('SubmissionSectionLicenseComponent test suite', () => {
         expect(compAsAny.subs.length).toBe(2);
         expect(comp.formModel).toBeDefined();
         expect(model.value).toBeFalsy();
-        expect(comp.licenseText$).toBeObservable(cold('(ab|)', {
-          a: '',
-          b: licenseText
-        }));
+        expect(comp.licenseText$).toBeObservable(
+          cold('(ab|)', {
+            a: '',
+            b: licenseText,
+          })
+        );
       });
 
       it('should set checkbox value to true', () => {
         comp.sectionData.data = {
           url: 'url',
           acceptanceDate: Date.now(),
-          granted: true
+          granted: true,
         } as any;
 
         spyOn(compAsAny, 'getSectionStatus');
@@ -233,10 +277,12 @@ describe('SubmissionSectionLicenseComponent test suite', () => {
         expect(compAsAny.subs.length).toBe(2);
         expect(comp.formModel).toBeDefined();
         expect(model.value).toBeTruthy();
-        expect(comp.licenseText$).toBeObservable(cold('(ab|)', {
-          a: '',
-          b: licenseText
-        }));
+        expect(comp.licenseText$).toBeObservable(
+          cold('(ab|)', {
+            a: '',
+            b: licenseText,
+          })
+        );
       });
 
       it('should have status true when checkbox is selected', () => {
@@ -260,14 +306,19 @@ describe('SubmissionSectionLicenseComponent test suite', () => {
 
         (model as DynamicCheckboxModel).value = false;
       });
-
     });
 
     describe('', () => {
       beforeEach(() => {
-        mockCollectionDataService.findById.and.returnValue(createSuccessfulRemoteDataObject$(mockCollection));
-        sectionsServiceStub.getSectionErrors.and.returnValue(observableOf(mockLicenseParsedErrors.license));
-        sectionsServiceStub.isSectionReadOnly.and.returnValue(observableOf(false));
+        mockCollectionDataService.findById.and.returnValue(
+          createSuccessfulRemoteDataObject$(mockCollection)
+        );
+        sectionsServiceStub.getSectionErrors.and.returnValue(
+          observableOf(mockLicenseParsedErrors.license)
+        );
+        sectionsServiceStub.isSectionReadOnly.and.returnValue(
+          observableOf(false)
+        );
       });
 
       it('should set section errors properly', () => {
@@ -276,20 +327,20 @@ describe('SubmissionSectionLicenseComponent test suite', () => {
 
         expect(sectionsServiceStub.checkSectionErrors).toHaveBeenCalled();
         expect(comp.sectionData.errors).toEqual(expectedErrors);
-
       });
 
-      it('should remove any section\'s errors when checkbox is selected', () => {
+      it("should remove any section's errors when checkbox is selected", () => {
         comp.sectionData.data = {
           url: 'url',
           acceptanceDate: Date.now(),
-          granted: true
+          granted: true,
         } as any;
 
         comp.onSectionInit();
 
-        expect(sectionsServiceStub.dispatchRemoveSectionErrors).toHaveBeenCalled();
-
+        expect(
+          sectionsServiceStub.dispatchRemoveSectionErrors
+        ).toHaveBeenCalled();
       });
     });
 
@@ -297,26 +348,39 @@ describe('SubmissionSectionLicenseComponent test suite', () => {
       let event;
       beforeEach(() => {
         event = dynamicFormControlEvent;
-        formOperationsService.getFieldPathSegmentedFromChangeEvent.and.returnValue('granted');
+        formOperationsService.getFieldPathSegmentedFromChangeEvent.and.returnValue(
+          'granted'
+        );
       });
 
       it('should dispatch a json-path add operation when checkbox is selected', () => {
-
-        formOperationsService.getFieldValueFromChangeEvent.and.returnValue(new FormFieldMetadataValueObject(true));
+        formOperationsService.getFieldValueFromChangeEvent.and.returnValue(
+          new FormFieldMetadataValueObject(true)
+        );
 
         comp.onChange(event);
 
-        expect(jsonPatchOpBuilder.add).toHaveBeenCalledWith(pathCombiner.getPath('granted'), 'true', false, true);
-        expect(sectionsServiceStub.dispatchRemoveSectionErrors).toHaveBeenCalled();
+        expect(jsonPatchOpBuilder.add).toHaveBeenCalledWith(
+          pathCombiner.getPath('granted'),
+          'true',
+          false,
+          true
+        );
+        expect(
+          sectionsServiceStub.dispatchRemoveSectionErrors
+        ).toHaveBeenCalled();
       });
 
       it('should dispatch a json-path remove operation when checkbox is not selected', () => {
-
-        formOperationsService.getFieldValueFromChangeEvent.and.returnValue(null);
+        formOperationsService.getFieldValueFromChangeEvent.and.returnValue(
+          null
+        );
 
         comp.onChange(event);
 
-        expect(jsonPatchOpBuilder.remove).toHaveBeenCalledWith(pathCombiner.getPath('granted'));
+        expect(jsonPatchOpBuilder.remove).toHaveBeenCalledWith(
+          pathCombiner.getPath('granted')
+        );
       });
     });
   });
@@ -325,8 +389,6 @@ describe('SubmissionSectionLicenseComponent test suite', () => {
 // declare a test component
 @Component({
   selector: 'ds-test-cmp',
-  template: ``
+  template: ``,
 })
-class TestComponent {
-
-}
+class TestComponent {}

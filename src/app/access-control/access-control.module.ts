@@ -17,7 +17,7 @@ import { FormModule } from '../shared/form/form.module';
     SharedModule,
     RouterModule,
     AccessControlRoutingModule,
-    FormModule
+    FormModule,
   ],
   declarations: [
     EPeopleRegistryComponent,
@@ -25,12 +25,10 @@ import { FormModule } from '../shared/form/form.module';
     GroupsRegistryComponent,
     GroupFormComponent,
     SubgroupsListComponent,
-    MembersListComponent
-  ]
+    MembersListComponent,
+  ],
 })
 /**
  * This module handles all components related to the access control pages
  */
-export class AccessControlModule {
-
-}
+export class AccessControlModule {}

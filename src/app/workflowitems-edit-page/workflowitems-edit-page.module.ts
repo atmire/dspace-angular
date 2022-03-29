@@ -17,18 +17,16 @@ import { ItemPageModule } from '../item-page/item-page.module';
     SharedModule,
     SubmissionModule,
     StatisticsModule,
-    ItemPageModule
+    ItemPageModule,
   ],
   declarations: [
     WorkflowItemDeleteComponent,
     ThemedWorkflowItemDeleteComponent,
     WorkflowItemSendBackComponent,
-    ThemedWorkflowItemSendBackComponent
-  ]
+    ThemedWorkflowItemSendBackComponent,
+  ],
 })
 /**
  * This module handles all modules that need to access the workflowitems edit page.
  */
-export class WorkflowItemsEditPageModule {
-
-}
+export class WorkflowItemsEditPageModule {}

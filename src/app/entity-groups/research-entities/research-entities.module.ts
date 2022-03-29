@@ -31,7 +31,7 @@ import { ProjectSidebarSearchListElementComponent } from './item-list-elements/s
 import { ItemSharedModule } from '../../item-page/item-shared.module';
 
 const ENTRY_COMPONENTS = [
-// put only entry components that use custom decorator
+  // put only entry components that use custom decorator
   OrgUnitComponent,
   PersonComponent,
   ProjectComponent,
@@ -61,19 +61,12 @@ const ENTRY_COMPONENTS = [
 const COMPONENTS = [
   NameVariantModalComponent,
   PersonInputSuggestionsComponent,
-  ...ENTRY_COMPONENTS
+  ...ENTRY_COMPONENTS,
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    ItemSharedModule,
-    SharedModule,
-    NgbTooltipModule
-  ],
-  declarations: [
-    ...COMPONENTS,
-  ]
+  imports: [CommonModule, ItemSharedModule, SharedModule, NgbTooltipModule],
+  declarations: [...COMPONENTS],
 })
 export class ResearchEntitiesModule {
   /**
@@ -83,7 +76,7 @@ export class ResearchEntitiesModule {
   static withEntryComponents() {
     return {
       ngModule: ResearchEntitiesModule,
-      providers: ENTRY_COMPONENTS.map((component) => ({ provide: component }))
+      providers: ENTRY_COMPONENTS.map((component) => ({ provide: component })),
     };
   }
 }

@@ -4,12 +4,24 @@ import {
   BehaviorSubject,
   combineLatest as observableCombineLatest,
   Observable,
-  Subscription
+  Subscription,
 } from 'rxjs';
-import { distinctUntilChanged, filter, map, mergeMap, switchMap, tap } from 'rxjs/operators';
+import {
+  distinctUntilChanged,
+  filter,
+  map,
+  mergeMap,
+  switchMap,
+  tap,
+} from 'rxjs/operators';
 
 import { SectionModelComponent } from '../models/section.model';
-import { hasValue, isNotEmpty, isNotUndefined, isUndefined } from '../../../shared/empty.util';
+import {
+  hasValue,
+  isNotEmpty,
+  isNotUndefined,
+  isUndefined,
+} from '../../../shared/empty.util';
 import { SectionUploadService } from './section-upload.service';
 import { CollectionDataService } from '../../../core/data/collection-data.service';
 import { GroupDataService } from '../../../core/eperson/group-data.service';
@@ -49,7 +61,6 @@ export interface AccessConditionGroupsMapEntry {
 })
 @renderSectionFor(SectionsType.Upload)
 export class SubmissionSectionUploadComponent extends SectionModelComponent {
-
   /**
    * The AlertType enumeration
    * @type {AlertType}
@@ -102,7 +113,7 @@ export class SubmissionSectionUploadComponent extends SectionModelComponent {
   /**
    * List of available access conditions that could be set to files
    */
-  public availableAccessConditionOptions: AccessConditionOption[];  // List of accessConditions that an user can select
+  public availableAccessConditionOptions: AccessConditionOption[]; // List of accessConditions that an user can select
 
   /**
    * Is the upload required
@@ -130,16 +141,19 @@ export class SubmissionSectionUploadComponent extends SectionModelComponent {
    * @param {SectionDataObject} injectedSectionData
    * @param {string} injectedSubmissionId
    */
-  constructor(private bitstreamService: SectionUploadService,
-              private changeDetectorRef: ChangeDetectorRef,
-              private collectionDataService: CollectionDataService,
-              private groupService: GroupDataService,
-              private resourcePolicyService: ResourcePolicyService,
-              protected sectionService: SectionsService,
-              private submissionService: SubmissionService,
-              private uploadsConfigService: SubmissionUploadsConfigService,
-              @Inject('sectionDataProvider') public injectedSectionData: SectionDataObject,
-              @Inject('submissionIdProvider') public injectedSubmissionId: string) {
+  constructor(
+    private bitstreamService: SectionUploadService,
+    private changeDetectorRef: ChangeDetectorRef,
+    private collectionDataService: CollectionDataService,
+    private groupService: GroupDataService,
+    private resourcePolicyService: ResourcePolicyService,
+    protected sectionService: SectionsService,
+    private submissionService: SubmissionService,
+    private uploadsConfigService: SubmissionUploadsConfigService,
+    @Inject('sectionDataProvider')
+    public injectedSectionData: SectionDataObject,
+    @Inject('submissionIdProvider') public injectedSubmissionId: string
+  ) {
     super(undefined, injectedSectionData, injectedSubmissionId);
   }
 
@@ -147,29 +161,52 @@ export class SubmissionSectionUploadComponent extends SectionModelComponent {
    * Initialize all instance variables and retrieve collection default access conditions
    */
   onSectionInit() {
-    const config$ = this.uploadsConfigService.findByHref(this.sectionData.config, true, false, followLink('metadata')).pipe(
-      getFirstSucceededRemoteData(),
-      map((config) => config.payload));
+    const config$ = this.uploadsConfigService
+      .findByHref(this.sectionData.config, true, false, followLink('metadata'))
+      .pipe(
+        getFirstSucceededRemoteData(),
+        map((config) => config.payload)
+      );
 
     // retrieve configuration for the bitstream's metadata form
     this.configMetadataForm$ = config$.pipe(
       switchMap((config: SubmissionUploadsModel) =>
         config.metadata.pipe(
           getFirstSucceededRemoteData(),
-          map((remoteData: RemoteData<SubmissionFormsModel>) => remoteData.payload)
+          map(
+            (remoteData: RemoteData<SubmissionFormsModel>) => remoteData.payload
+          )
         )
-      ));
+      )
+    );
 
     this.subs.push(
-      this.submissionService.getSubmissionObject(this.submissionId).pipe(
-        filter((submissionObject: SubmissionObjectEntry) => isNotUndefined(submissionObject) && !submissionObject.isLoading),
-        filter((submissionObject: SubmissionObjectEntry) => isUndefined(this.collectionId) || this.collectionId !== submissionObject.collection),
-        tap((submissionObject: SubmissionObjectEntry) => this.collectionId = submissionObject.collection),
-        mergeMap((submissionObject: SubmissionObjectEntry) => this.collectionDataService.findById(submissionObject.collection)),
-        filter((rd: RemoteData<Collection>) => isNotUndefined((rd.payload))),
-        tap((collectionRemoteData: RemoteData<Collection>) => this.collectionName = collectionRemoteData.payload.name),
-        // TODO review this part when https://github.com/DSpace/dspace-angular/issues/575 is resolved
-/*        mergeMap((collectionRemoteData: RemoteData<Collection>) => {
+      this.submissionService
+        .getSubmissionObject(this.submissionId)
+        .pipe(
+          filter(
+            (submissionObject: SubmissionObjectEntry) =>
+              isNotUndefined(submissionObject) && !submissionObject.isLoading
+          ),
+          filter(
+            (submissionObject: SubmissionObjectEntry) =>
+              isUndefined(this.collectionId) ||
+              this.collectionId !== submissionObject.collection
+          ),
+          tap(
+            (submissionObject: SubmissionObjectEntry) =>
+              (this.collectionId = submissionObject.collection)
+          ),
+          mergeMap((submissionObject: SubmissionObjectEntry) =>
+            this.collectionDataService.findById(submissionObject.collection)
+          ),
+          filter((rd: RemoteData<Collection>) => isNotUndefined(rd.payload)),
+          tap(
+            (collectionRemoteData: RemoteData<Collection>) =>
+              (this.collectionName = collectionRemoteData.payload.name)
+          ),
+          // TODO review this part when https://github.com/DSpace/dspace-angular/issues/575 is resolved
+          /*        mergeMap((collectionRemoteData: RemoteData<Collection>) => {
           return this.resourcePolicyService.findByHref(
             (collectionRemoteData.payload as any)._links.defaultAccessConditions.href
           );
@@ -182,24 +219,40 @@ export class SubmissionSectionUploadComponent extends SectionModelComponent {
               ? defaultAccessConditionsRemoteData.payload : [defaultAccessConditionsRemoteData.payload];
           }
         }),*/
-        mergeMap(() => config$),
-      ).subscribe((config: SubmissionUploadsModel) => {
-        this.required$.next(config.required);
-        this.availableAccessConditionOptions = isNotEmpty(config.accessConditionOptions) ? config.accessConditionOptions : [];
-        this.collectionPolicyType = this.availableAccessConditionOptions.length > 0
-          ? POLICY_DEFAULT_WITH_LIST
-          : POLICY_DEFAULT_NO_LIST;
-        this.changeDetectorRef.detectChanges();
-      }),
+          mergeMap(() => config$)
+        )
+        .subscribe((config: SubmissionUploadsModel) => {
+          this.required$.next(config.required);
+          this.availableAccessConditionOptions = isNotEmpty(
+            config.accessConditionOptions
+          )
+            ? config.accessConditionOptions
+            : [];
+          this.collectionPolicyType =
+            this.availableAccessConditionOptions.length > 0
+              ? POLICY_DEFAULT_WITH_LIST
+              : POLICY_DEFAULT_NO_LIST;
+          this.changeDetectorRef.detectChanges();
+        }),
 
       // retrieve submission's bitstreams from state
-      observableCombineLatest(this.configMetadataForm$,
-        this.bitstreamService.getUploadedFileList(this.submissionId, this.sectionData.id)).pipe(
-        filter(([configMetadataForm, fileList]: [SubmissionFormsModel, any[]]) => {
-          return isNotEmpty(configMetadataForm) && isNotUndefined(fileList);
-        }),
-        distinctUntilChanged())
-        .subscribe(([configMetadataForm, fileList]: [SubmissionFormsModel, any[]]) => {
+      observableCombineLatest(
+        this.configMetadataForm$,
+        this.bitstreamService.getUploadedFileList(
+          this.submissionId,
+          this.sectionData.id
+        )
+      )
+        .pipe(
+          filter(
+            ([configMetadataForm, fileList]: [SubmissionFormsModel, any[]]) => {
+              return isNotEmpty(configMetadataForm) && isNotUndefined(fileList);
+            }
+          ),
+          distinctUntilChanged()
+        )
+        .subscribe(
+          ([configMetadataForm, fileList]: [SubmissionFormsModel, any[]]) => {
             this.fileList = [];
             this.fileIndexes = [];
             this.fileNames = [];
@@ -226,10 +279,17 @@ export class SubmissionSectionUploadComponent extends SectionModelComponent {
    * @param fileData
    *    the file metadata
    */
-  private getFileName(configMetadataForm: SubmissionFormsModel, fileData: any): string {
-    const metadataName: string = configMetadataForm.rows[0].fields[0].selectableMetadata[0].metadata;
+  private getFileName(
+    configMetadataForm: SubmissionFormsModel,
+    fileData: any
+  ): string {
+    const metadataName: string =
+      configMetadataForm.rows[0].fields[0].selectableMetadata[0].metadata;
     let title: string;
-    if (isNotEmpty(fileData.metadata) && isNotEmpty(fileData.metadata[metadataName])) {
+    if (
+      isNotEmpty(fileData.metadata) &&
+      isNotEmpty(fileData.metadata[metadataName])
+    ) {
       title = fileData.metadata[metadataName][0].display;
     } else {
       title = fileData.uuid;
@@ -247,11 +307,16 @@ export class SubmissionSectionUploadComponent extends SectionModelComponent {
   protected getSectionStatus(): Observable<boolean> {
     // if not mandatory, always true
     // if mandatory, at least one file is required
-    return observableCombineLatest(this.required$,
-      this.bitstreamService.getUploadedFileList(this.submissionId, this.sectionData.id),
-      (required,fileList: any[]) => {
-        return (!required || (isNotUndefined(fileList) && fileList.length > 0));
-      });
+    return observableCombineLatest(
+      this.required$,
+      this.bitstreamService.getUploadedFileList(
+        this.submissionId,
+        this.sectionData.id
+      ),
+      (required, fileList: any[]) => {
+        return !required || (isNotUndefined(fileList) && fileList.length > 0);
+      }
+    );
   }
 
   /**
@@ -262,5 +327,4 @@ export class SubmissionSectionUploadComponent extends SectionModelComponent {
       .filter((subscription) => hasValue(subscription))
       .forEach((subscription) => subscription.unsubscribe());
   }
-
 }

@@ -18,7 +18,7 @@ import { RequestEntryState } from '../data/request.reducer';
  * without knowing their type
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SubmissionObjectDataService {
   constructor(
@@ -26,18 +26,26 @@ export class SubmissionObjectDataService {
     private workflowItemDataService: WorkflowItemDataService,
     private submissionService: SubmissionService,
     private halService: HALEndpointService
-  ) {
-  }
+  ) {}
 
   /**
    * Create the HREF for a specific object based on its identifier
    * @param id The identifier for the object
    */
   getHrefByID(id): Observable<string> {
-    const dataService: DataService<SubmissionObject> = this.submissionService.getSubmissionScope() === SubmissionScopeType.WorkspaceItem ? this.workspaceitemDataService : this.workflowItemDataService;
+    const dataService: DataService<SubmissionObject> =
+      this.submissionService.getSubmissionScope() ===
+      SubmissionScopeType.WorkspaceItem
+        ? this.workspaceitemDataService
+        : this.workflowItemDataService;
 
-    return this.halService.getEndpoint(dataService.getLinkPath()).pipe(
-      map((endpoint: string) => dataService.getIDHref(endpoint, encodeURIComponent(id))));
+    return this.halService
+      .getEndpoint(dataService.getLinkPath())
+      .pipe(
+        map((endpoint: string) =>
+          dataService.getIDHref(endpoint, encodeURIComponent(id))
+        )
+      );
   }
 
   /**
@@ -51,23 +59,40 @@ export class SubmissionObjectDataService {
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  findById(id: string, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<SubmissionObject>[]): Observable<RemoteData<SubmissionObject>> {
+  findById(
+    id: string,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<SubmissionObject>[]
+  ): Observable<RemoteData<SubmissionObject>> {
     switch (this.submissionService.getSubmissionScope()) {
       case SubmissionScopeType.WorkspaceItem:
-        return this.workspaceitemDataService.findById(id, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+        return this.workspaceitemDataService.findById(
+          id,
+          useCachedVersionIfAvailable,
+          reRequestOnStale,
+          ...linksToFollow
+        );
       case SubmissionScopeType.WorkflowItem:
-        return this.workflowItemDataService.findById(id, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+        return this.workflowItemDataService.findById(
+          id,
+          useCachedVersionIfAvailable,
+          reRequestOnStale,
+          ...linksToFollow
+        );
       default:
         const now = new Date().getTime();
-        return observableOf(new RemoteData(
-          now,
-          environment.cache.msToLive.default,
-          now,
-          RequestEntryState.Error,
-          'The request couldn\'t be sent. Unable to determine the type of submission object',
-          undefined,
-          400
-        ));
+        return observableOf(
+          new RemoteData(
+            now,
+            environment.cache.msToLive.default,
+            now,
+            RequestEntryState.Error,
+            "The request couldn't be sent. Unable to determine the type of submission object",
+            undefined,
+            400
+          )
+        );
     }
   }
 }

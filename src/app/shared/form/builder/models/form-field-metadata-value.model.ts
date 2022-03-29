@@ -1,6 +1,9 @@
 import { hasValue, isEmpty, isNotEmpty, isNotNull } from '../../../empty.util';
 import { ConfidenceType } from '../../../../core/shared/confidence-type';
-import { MetadataValueInterface, VIRTUAL_METADATA_PREFIX } from '../../../../core/shared/metadata.models';
+import {
+  MetadataValueInterface,
+  VIRTUAL_METADATA_PREFIX,
+} from '../../../../core/shared/metadata.models';
 import { PLACEHOLDER_PARENT_METADATA } from '../ds-dynamic-form-ui/ds-dynamic-form-constants';
 
 export interface OtherInformation {
@@ -21,15 +24,21 @@ export class FormFieldMetadataValueObject implements MetadataValueInterface {
   label: string;
   otherInformation: OtherInformation;
 
-  constructor(value: any = null,
-              language: any = null,
-              authority: string = null,
-              display: string = null,
-              place: number = 0,
-              confidence: number = null,
-              otherInformation: any = null,
-              metadata: string = null) {
-    this.value = isNotNull(value) ? ((typeof value === 'string') ? value.trim() : value) : null;
+  constructor(
+    value: any = null,
+    language: any = null,
+    authority: string = null,
+    display: string = null,
+    place: number = 0,
+    confidence: number = null,
+    otherInformation: any = null,
+    metadata: string = null
+  ) {
+    this.value = isNotNull(value)
+      ? typeof value === 'string'
+        ? value.trim()
+        : value
+      : null;
     this.language = language;
     this.authority = authority;
     this.display = display || value;
@@ -83,7 +92,10 @@ export class FormFieldMetadataValueObject implements MetadataValueInterface {
    * Returns true if this Metadatum's authority key starts with 'virtual::'
    */
   get isVirtual(): boolean {
-    return hasValue(this.authority) && this.authority.startsWith(VIRTUAL_METADATA_PREFIX);
+    return (
+      hasValue(this.authority) &&
+      this.authority.startsWith(VIRTUAL_METADATA_PREFIX)
+    );
   }
 
   /**
@@ -92,7 +104,10 @@ export class FormFieldMetadataValueObject implements MetadataValueInterface {
    */
   get virtualValue(): string {
     if (this.isVirtual) {
-      return this.authority.substring(this.authority.indexOf(VIRTUAL_METADATA_PREFIX) + VIRTUAL_METADATA_PREFIX.length);
+      return this.authority.substring(
+        this.authority.indexOf(VIRTUAL_METADATA_PREFIX) +
+          VIRTUAL_METADATA_PREFIX.length
+      );
     } else {
       return undefined;
     }

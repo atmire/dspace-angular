@@ -1,7 +1,12 @@
 import { ChangeDetectorRef, Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserModule, By } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
-import { ComponentFixture, inject, TestBed, waitForAsync } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  inject,
+  TestBed,
+  waitForAsync,
+} from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { TranslateModule } from '@ngx-translate/core';
@@ -11,7 +16,6 @@ import { createTestComponent } from '../testing/utils.test';
 import { AlertType } from './aletr-type';
 
 describe('AlertComponent test suite', () => {
-
   let comp: AlertComponent;
   let compAsAny: any;
   let fixture: ComponentFixture<AlertComponent>;
@@ -22,18 +26,14 @@ describe('AlertComponent test suite', () => {
         BrowserModule,
         CommonModule,
         NoopAnimationsModule,
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
       ],
-      declarations: [
-        AlertComponent,
-        TestComponent
-      ],
-      providers: [
-        ChangeDetectorRef,
-        AlertComponent
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents().then();
+      declarations: [AlertComponent, TestComponent],
+      providers: [ChangeDetectorRef, AlertComponent],
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .compileComponents()
+      .then();
   }));
 
   describe('', () => {
@@ -45,7 +45,10 @@ describe('AlertComponent test suite', () => {
       const html = `
         <ds-alert [content]="content" [dismissible]="dismissible" [type]="type"></ds-alert>`;
 
-      testFixture = createTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
+      testFixture = createTestComponent(
+        html,
+        TestComponent
+      ) as ComponentFixture<TestComponent>;
       testComp = testFixture.componentInstance;
     });
 
@@ -53,10 +56,12 @@ describe('AlertComponent test suite', () => {
       testFixture.destroy();
     });
 
-    it('should create AlertComponent', inject([AlertComponent], (app: AlertComponent) => {
-
-      expect(app).toBeDefined();
-    }));
+    it('should create AlertComponent', inject(
+      [AlertComponent],
+      (app: AlertComponent) => {
+        expect(app).toBeDefined();
+      }
+    ));
   });
 
   describe('', () => {
@@ -71,7 +76,6 @@ describe('AlertComponent test suite', () => {
     });
 
     it('should display close icon when dismissible is true', () => {
-
       const btn = fixture.debugElement.query(By.css('.close'));
       expect(btn).toBeDefined();
     });
@@ -104,10 +108,9 @@ describe('AlertComponent test suite', () => {
 // declare a test component
 @Component({
   selector: 'ds-test-cmp',
-  template: ``
+  template: ``,
 })
 class TestComponent {
-
   content = 'test alert';
   dismissible = true;
   type = AlertType.Info;

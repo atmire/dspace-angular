@@ -8,10 +8,15 @@ import {
   OnDestroy,
   ComponentFactoryResolver,
   ChangeDetectorRef,
-  OnChanges
+  OnChanges,
 } from '@angular/core';
 import { hasValue, isNotEmpty } from '../empty.util';
-import { from as fromPromise, Observable, of as observableOf, Subscription } from 'rxjs';
+import {
+  from as fromPromise,
+  Observable,
+  of as observableOf,
+  Subscription,
+} from 'rxjs';
 import { ThemeService } from './theme.service';
 import { catchError, switchMap, map } from 'rxjs/operators';
 import { GenericConstructor } from '../../core/shared/generic-constructor';
@@ -21,7 +26,9 @@ import { GenericConstructor } from '../../core/shared/generic-constructor';
   styleUrls: ['./themed.component.scss'],
   templateUrl: './themed.component.html',
 })
-export abstract class ThemedComponent<T> implements OnInit, OnDestroy, OnChanges {
+export abstract class ThemedComponent<T>
+  implements OnInit, OnDestroy, OnChanges
+{
   @ViewChild('vcr', { read: ViewContainerRef }) vcr: ViewContainerRef;
   protected compRef: ComponentRef<T>;
 
@@ -34,8 +41,7 @@ export abstract class ThemedComponent<T> implements OnInit, OnDestroy, OnChanges
     protected resolver: ComponentFactoryResolver,
     protected cdr: ChangeDetectorRef,
     protected themeService: ThemeService
-  ) {
-  }
+  ) {}
 
   protected abstract getComponentName(): string;
 
@@ -60,7 +66,9 @@ export abstract class ThemedComponent<T> implements OnInit, OnDestroy, OnChanges
   }
 
   ngOnDestroy(): void {
-    [this.themeSub, this.lazyLoadSub].filter((sub) => hasValue(sub)).forEach((sub) => sub.unsubscribe());
+    [this.themeSub, this.lazyLoadSub]
+      .filter((sub) => hasValue(sub))
+      .forEach((sub) => sub.unsubscribe());
     this.destroyComponentInstance();
   }
 
@@ -71,27 +79,34 @@ export abstract class ThemedComponent<T> implements OnInit, OnDestroy, OnChanges
       this.lazyLoadSub.unsubscribe();
     }
 
-    this.lazyLoadSub = this.resolveThemedComponent(this.themeService.getThemeName()).pipe(
-      switchMap((themedFile: any) => {
-        if (hasValue(themedFile) && hasValue(themedFile[this.getComponentName()])) {
-          // if the file is not null, and exports a component with the specified name,
-          // return that component
-          return [themedFile[this.getComponentName()]];
-        } else {
-          // otherwise import and return the default component
-          return fromPromise(this.importUnthemedComponent()).pipe(
-            map((unthemedFile: any) => {
-              return unthemedFile[this.getComponentName()];
-            })
-          );
-        }
-      }),
-    ).subscribe((constructor: GenericConstructor<T>) => {
-      const factory = this.resolver.resolveComponentFactory(constructor);
-      this.compRef = this.vcr.createComponent(factory);
-      this.connectInputsAndOutputs();
-      this.cdr.markForCheck();
-    });
+    this.lazyLoadSub = this.resolveThemedComponent(
+      this.themeService.getThemeName()
+    )
+      .pipe(
+        switchMap((themedFile: any) => {
+          if (
+            hasValue(themedFile) &&
+            hasValue(themedFile[this.getComponentName()])
+          ) {
+            // if the file is not null, and exports a component with the specified name,
+            // return that component
+            return [themedFile[this.getComponentName()]];
+          } else {
+            // otherwise import and return the default component
+            return fromPromise(this.importUnthemedComponent()).pipe(
+              map((unthemedFile: any) => {
+                return unthemedFile[this.getComponentName()];
+              })
+            );
+          }
+        })
+      )
+      .subscribe((constructor: GenericConstructor<T>) => {
+        const factory = this.resolver.resolveComponentFactory(constructor);
+        this.compRef = this.vcr.createComponent(factory);
+        this.connectInputsAndOutputs();
+        this.cdr.markForCheck();
+      });
   }
 
   protected destroyComponentInstance(): void {
@@ -105,7 +120,11 @@ export abstract class ThemedComponent<T> implements OnInit, OnDestroy, OnChanges
   }
 
   protected connectInputsAndOutputs(): void {
-    if (isNotEmpty(this.inAndOutputNames) && hasValue(this.compRef) && hasValue(this.compRef.instance)) {
+    if (
+      isNotEmpty(this.inAndOutputNames) &&
+      hasValue(this.compRef) &&
+      hasValue(this.compRef.instance)
+    ) {
       this.inAndOutputNames.forEach((name: any) => {
         this.compRef.instance[name] = this[name];
       });
@@ -120,19 +139,29 @@ export abstract class ThemedComponent<T> implements OnInit, OnDestroy, OnChanges
    * @param checkedThemeNames The list of theme names that are already checked
    * @private
    */
-  private resolveThemedComponent(themeName?: string, checkedThemeNames: string[] = []): Observable<any> {
+  private resolveThemedComponent(
+    themeName?: string,
+    checkedThemeNames: string[] = []
+  ): Observable<any> {
     if (isNotEmpty(themeName)) {
       return fromPromise(this.importThemedComponent(themeName)).pipe(
         catchError(() => {
           // Try the next ancestor theme instead
-          const nextTheme = this.themeService.getThemeConfigFor(themeName)?.extends;
+          const nextTheme =
+            this.themeService.getThemeConfigFor(themeName)?.extends;
           const nextCheckedThemeNames = [...checkedThemeNames, themeName];
           if (checkedThemeNames.includes(nextTheme)) {
-            throw new Error('Theme extension cycle detected: ' + [...nextCheckedThemeNames, nextTheme].join(' -> '));
+            throw new Error(
+              'Theme extension cycle detected: ' +
+                [...nextCheckedThemeNames, nextTheme].join(' -> ')
+            );
           } else {
-            return this.resolveThemedComponent(nextTheme, nextCheckedThemeNames);
+            return this.resolveThemedComponent(
+              nextTheme,
+              nextCheckedThemeNames
+            );
           }
-        }),
+        })
       );
     } else {
       // If we got here, we've failed to import this component from any ancestor theme → fall back to unthemed

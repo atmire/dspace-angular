@@ -11,13 +11,20 @@ import { Injectable } from '@angular/core';
  * wrapped in a TokenResponse
  */
 export class TokenResponseParsingService implements ResponseParsingService {
-
   parse(request: RestRequest, data: RawRestResponse): RestResponse {
-    if (isNotEmpty(data.payload) && isNotEmpty(data.payload.token) && (data.statusCode === 200)) {
-      return new TokenResponse(data.payload.token, true, data.statusCode, data.statusText);
+    if (
+      isNotEmpty(data.payload) &&
+      isNotEmpty(data.payload.token) &&
+      data.statusCode === 200
+    ) {
+      return new TokenResponse(
+        data.payload.token,
+        true,
+        data.statusCode,
+        data.statusText
+      );
     } else {
       return new TokenResponse(null, false, data.statusCode, data.statusText);
     }
   }
-
 }

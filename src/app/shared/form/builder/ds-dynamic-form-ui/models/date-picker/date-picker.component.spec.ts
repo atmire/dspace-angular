@@ -1,22 +1,33 @@
 // Load the implementations that should be tested
-import { ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ComponentFixture, inject, TestBed, waitForAsync, } from '@angular/core/testing';
+import {
+  ChangeDetectorRef,
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+} from '@angular/core';
+import {
+  ComponentFixture,
+  inject,
+  TestBed,
+  waitForAsync,
+} from '@angular/core/testing';
 import { FormControl, FormGroup } from '@angular/forms';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { DynamicFormLayoutService, DynamicFormValidationService } from '@ng-dynamic-forms/core';
+import {
+  DynamicFormLayoutService,
+  DynamicFormValidationService,
+} from '@ng-dynamic-forms/core';
 
 import { DsDatePickerComponent } from './date-picker.component';
 import { DynamicDsDatePickerModel } from './date-picker.model';
 import { createTestComponent } from '../../../../../testing/utils.test';
 import {
   mockDynamicFormLayoutService,
-  mockDynamicFormValidationService
+  mockDynamicFormValidationService,
 } from '../../../../../testing/dynamic-form-mock-services';
 
-
 export const DATE_TEST_GROUP = new FormGroup({
-  date: new FormControl()
+  date: new FormControl(),
 });
 
 export const DATE_TEST_MODEL_CONFIG = {
@@ -28,11 +39,10 @@ export const DATE_TEST_MODEL_CONFIG = {
   placeholder: 'Date',
   readOnly: false,
   required: true,
-  toggleIcon: 'fas fa-calendar'
+  toggleIcon: 'fas fa-calendar',
 };
 
 describe('DsDatePickerComponent test suite', () => {
-
   let testComp: TestComponent;
   let dateComp: DsDatePickerComponent;
   let testFixture: ComponentFixture<TestComponent>;
@@ -41,24 +51,23 @@ describe('DsDatePickerComponent test suite', () => {
 
   // waitForAsync beforeEach
   beforeEach(waitForAsync(() => {
-
     TestBed.configureTestingModule({
-      imports: [
-        NgbModule
-      ],
-      declarations: [
-        DsDatePickerComponent,
-        TestComponent,
-      ], // declare the test component
+      imports: [NgbModule],
+      declarations: [DsDatePickerComponent, TestComponent], // declare the test component
       providers: [
         ChangeDetectorRef,
         DsDatePickerComponent,
-        { provide: DynamicFormLayoutService, useValue: mockDynamicFormLayoutService },
-        { provide: DynamicFormValidationService, useValue: mockDynamicFormValidationService }
+        {
+          provide: DynamicFormLayoutService,
+          useValue: mockDynamicFormLayoutService,
+        },
+        {
+          provide: DynamicFormValidationService,
+          useValue: mockDynamicFormValidationService,
+        },
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     });
-
   }));
 
   describe('', () => {
@@ -74,21 +83,24 @@ describe('DsDatePickerComponent test suite', () => {
             (change)='onValueChange($event)'
             (focus)='onFocus($event)'></ds-date-picker>`;
 
-      testFixture = createTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
+      testFixture = createTestComponent(
+        html,
+        TestComponent
+      ) as ComponentFixture<TestComponent>;
       testComp = testFixture.componentInstance;
     });
 
-    it('should create DsDatePickerComponent', inject([DsDatePickerComponent], (app: DsDatePickerComponent) => {
-
-      expect(app).toBeDefined();
-    }));
-
+    it('should create DsDatePickerComponent', inject(
+      [DsDatePickerComponent],
+      (app: DsDatePickerComponent) => {
+        expect(app).toBeDefined();
+      }
+    ));
   });
 
   describe('', () => {
     describe('when init model value is empty', () => {
       beforeEach(() => {
-
         dateFixture = TestBed.createComponent(DsDatePickerComponent);
         dateComp = dateFixture.componentInstance; // FormComponent test instance
         dateComp.group = DATE_TEST_GROUP;
@@ -108,7 +120,7 @@ describe('DsDatePickerComponent test suite', () => {
       it('should set year and enable month field when year field is entered', () => {
         const event = {
           field: 'year',
-          value: '1983'
+          value: '1983',
         };
         dateComp.onChange(event);
 
@@ -120,7 +132,7 @@ describe('DsDatePickerComponent test suite', () => {
       it('should set month and enable day field when month field is entered', () => {
         const event = {
           field: 'month',
-          value: '11'
+          value: '11',
         };
 
         dateComp.year = '1983';
@@ -138,7 +150,7 @@ describe('DsDatePickerComponent test suite', () => {
       it('should set day when day field is entered', () => {
         const event = {
           field: 'day',
-          value: '18'
+          value: '18',
         };
 
         dateComp.year = '1983';
@@ -171,7 +183,6 @@ describe('DsDatePickerComponent test suite', () => {
 
     describe('when init model value is not empty', () => {
       beforeEach(() => {
-
         dateFixture = TestBed.createComponent(DsDatePickerComponent);
         dateComp = dateFixture.componentInstance; // FormComponent test instance
         dateComp.group = DATE_TEST_GROUP;
@@ -195,7 +206,7 @@ describe('DsDatePickerComponent test suite', () => {
       it('should disable month and day fields when year field is canceled', () => {
         const event = {
           field: 'year',
-          value: null
+          value: null,
         };
         dateComp.onChange(event);
 
@@ -209,7 +220,7 @@ describe('DsDatePickerComponent test suite', () => {
       it('should disable day field when month field is canceled', () => {
         const event = {
           field: 'month',
-          value: null
+          value: null,
         };
         dateComp.onChange(event);
 
@@ -223,7 +234,7 @@ describe('DsDatePickerComponent test suite', () => {
       it('should not disable day field when day field is canceled', () => {
         const event = {
           field: 'day',
-          value: null
+          value: null,
         };
         dateComp.onChange(event);
 
@@ -235,20 +246,17 @@ describe('DsDatePickerComponent test suite', () => {
       });
     });
   });
-
 });
 
 // declare a test component
 @Component({
   selector: 'ds-test-cmp',
-  template: ``
+  template: ``,
 })
 class TestComponent {
-
   group = DATE_TEST_GROUP;
 
   model = new DynamicDsDatePickerModel(DATE_TEST_MODEL_CONFIG);
 
   showErrorMessages = false;
-
 }

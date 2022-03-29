@@ -5,7 +5,7 @@ import { KlaroService } from '../shared/cookies/klaro.service';
 @Component({
   selector: 'ds-footer',
   styleUrls: ['footer.component.scss'],
-  templateUrl: 'footer.component.html'
+  templateUrl: 'footer.component.html',
 })
 export class FooterComponent {
   dateObj: number = Date.now();
@@ -15,8 +15,7 @@ export class FooterComponent {
    */
   showTopFooter = false;
 
-  constructor(@Optional() private cookies: KlaroService) {
-  }
+  constructor(@Optional() private cookies: KlaroService) {}
 
   showCookieSettings() {
     if (hasValue(this.cookies)) {

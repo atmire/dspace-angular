@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FilterType } from '../../../models/filter-type.model';
-import { facetLoad, SearchFacetFilterComponent } from '../search-facet-filter/search-facet-filter.component';
+import {
+  facetLoad,
+  SearchFacetFilterComponent,
+} from '../search-facet-filter/search-facet-filter.component';
 import { renderFacetFor } from '../search-filter-type-decorator';
-import { addOperatorToFilterValue, } from '../../../search.utils';
+import { addOperatorToFilterValue } from '../../../search.utils';
 
 /**
  * This component renders a simple item page.
@@ -14,14 +17,16 @@ import { addOperatorToFilterValue, } from '../../../search.utils';
   selector: 'ds-search-text-filter',
   styleUrls: ['./search-text-filter.component.scss'],
   templateUrl: './search-text-filter.component.html',
-  animations: [facetLoad]
+  animations: [facetLoad],
 })
-
 /**
  * Component that represents a text facet for a specific filter configuration
  */
 @renderFacetFor(FilterType.text)
-export class SearchTextFilterComponent extends SearchFacetFilterComponent implements OnInit {
+export class SearchTextFilterComponent
+  extends SearchFacetFilterComponent
+  implements OnInit
+{
   /**
    * Submits a new active custom value to the filter from the input field
    * Overwritten method from parent component, adds the "query" operator to the received data before passing it on

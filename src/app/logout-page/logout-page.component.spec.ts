@@ -10,11 +10,9 @@ describe('LogoutPageComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        TranslateModule.forRoot()
-      ],
+      imports: [TranslateModule.forRoot()],
       declarations: [LogoutPageComponent],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -27,5 +25,4 @@ describe('LogoutPageComponent', () => {
   it('should create instance', () => {
     expect(comp).toBeDefined();
   });
-
 });

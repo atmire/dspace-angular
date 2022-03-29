@@ -14,7 +14,8 @@ import { SearchResult } from '../../../search/models/search-result.model';
   templateUrl: '../../../theme-support/themed.component.html',
 })
 export class ThemedItemListPreviewComponent extends ThemedComponent<ItemListPreviewComponent> {
-  protected inAndOutputNames: (keyof ItemListPreviewComponent & keyof this)[] = ['item', 'object', 'status', 'showSubmitter'];
+  protected inAndOutputNames: (keyof ItemListPreviewComponent & keyof this)[] =
+    ['item', 'object', 'status', 'showSubmitter'];
 
   @Input() item: Item;
 
@@ -29,7 +30,9 @@ export class ThemedItemListPreviewComponent extends ThemedComponent<ItemListPrev
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../../../themes/${themeName}/app/shared/object-list/my-dspace-result-list-element/item-list-preview/item-list-preview.component`);
+    return import(
+      `../../../../../themes/${themeName}/app/shared/object-list/my-dspace-result-list-element/item-list-preview/item-list-preview.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

@@ -16,11 +16,12 @@ export class ThemedCommunityStatisticsPageComponent extends ThemedComponent<Comm
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../themes/${themeName}/app/statistics-page/community-statistics-page/community-statistics-page.component`);
+    return import(
+      `../../../themes/${themeName}/app/statistics-page/community-statistics-page/community-statistics-page.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {
     return import(`./community-statistics-page.component`);
   }
-
 }

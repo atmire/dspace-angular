@@ -12,13 +12,13 @@ describe('TextareaFieldParser test suite', () => {
   const parserOptions: ParserOptions = {
     readOnly: false,
     submissionScope: null,
-    collectionUUID: null
+    collectionUUID: null,
   };
 
   beforeEach(() => {
     field = {
       input: {
-        type: 'textarea'
+        type: 'textarea',
       },
       label: 'Description',
       mandatory: 'false',
@@ -26,22 +26,31 @@ describe('TextareaFieldParser test suite', () => {
       hints: 'Enter a description.',
       selectableMetadata: [
         {
-          metadata: 'description'
-        }
+          metadata: 'description',
+        },
       ],
-      languageCodes: []
+      languageCodes: [],
     } as FormFieldModel;
-
   });
 
   it('should init parser properly', () => {
-    const parser = new TextareaFieldParser(submissionId, field, initFormValues, parserOptions);
+    const parser = new TextareaFieldParser(
+      submissionId,
+      field,
+      initFormValues,
+      parserOptions
+    );
 
     expect(parser instanceof TextareaFieldParser).toBe(true);
   });
 
   it('should return a DsDynamicTextAreaModel object when repeatable option is false', () => {
-    const parser = new TextareaFieldParser(submissionId, field, initFormValues, parserOptions);
+    const parser = new TextareaFieldParser(
+      submissionId,
+      field,
+      initFormValues,
+      parserOptions
+    );
 
     const fieldModel = parser.parse();
 
@@ -50,17 +59,19 @@ describe('TextareaFieldParser test suite', () => {
 
   it('should set init value properly', () => {
     initFormValues = {
-      description: [
-        new FormFieldMetadataValueObject('test description'),
-      ],
+      description: [new FormFieldMetadataValueObject('test description')],
     };
     const expectedValue = 'test description';
 
-    const parser = new TextareaFieldParser(submissionId, field, initFormValues, parserOptions);
+    const parser = new TextareaFieldParser(
+      submissionId,
+      field,
+      initFormValues,
+      parserOptions
+    );
 
     const fieldModel = parser.parse();
 
     expect(fieldModel.value).toEqual(expectedValue);
   });
-
 });

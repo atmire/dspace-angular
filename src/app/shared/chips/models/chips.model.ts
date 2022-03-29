@@ -15,11 +15,12 @@ export class Chips {
 
   private _items: ChipsItem[];
 
-  constructor(items: any[] = [],
-              displayField: string = 'display',
-              displayObj?: string,
-              iconsConfig?: MetadataIconConfig[]) {
-
+  constructor(
+    items: any[] = [],
+    displayField: string = 'display',
+    displayObj?: string,
+    iconsConfig?: MetadataIconConfig[]
+  ) {
     this.displayField = displayField;
     this.displayObj = displayObj;
     this.iconsConfig = iconsConfig || [];
@@ -30,17 +31,27 @@ export class Chips {
 
   public add(item: any): void {
     const icons = this.getChipsIcons(item);
-    const chipsItem = new ChipsItem(item, this.displayField, this.displayObj, icons);
+    const chipsItem = new ChipsItem(
+      item,
+      this.displayField,
+      this.displayObj,
+      icons
+    );
 
-    const duplicatedIndex = findIndex(this._items, {display: chipsItem.display.trim()});
-    if (duplicatedIndex === -1 || !isEqual(item, this.getChipByIndex(duplicatedIndex).item)) {
+    const duplicatedIndex = findIndex(this._items, {
+      display: chipsItem.display.trim(),
+    });
+    if (
+      duplicatedIndex === -1 ||
+      !isEqual(item, this.getChipByIndex(duplicatedIndex).item)
+    ) {
       this._items.push(chipsItem);
       this.chipsItems.next(this._items);
     }
   }
 
   public getChipById(id): ChipsItem {
-    const index = findIndex(this._items, {id: id});
+    const index = findIndex(this._items, { id: id });
     return this.getChipByIndex(index);
   }
 
@@ -81,7 +92,7 @@ export class Chips {
   }
 
   public remove(chipsItem: ChipsItem): void {
-    const index = findIndex(this._items, {id: chipsItem.id});
+    const index = findIndex(this._items, { id: chipsItem.id });
     this._items.splice(index, 1);
     this.chipsItems.next(this._items);
   }
@@ -102,39 +113,50 @@ export class Chips {
 
   private getChipsIcons(item) {
     const icons = [];
-    if (typeof item === 'string' || item instanceof FormFieldMetadataValueObject || item instanceof VocabularyEntry) {
+    if (
+      typeof item === 'string' ||
+      item instanceof FormFieldMetadataValueObject ||
+      item instanceof VocabularyEntry
+    ) {
       return icons;
     }
 
-    const defaultConfigIndex: number = findIndex(this.iconsConfig, {name: 'default'});
-    const defaultConfig: MetadataIconConfig = (defaultConfigIndex !== -1) ? this.iconsConfig[defaultConfigIndex] : undefined;
+    const defaultConfigIndex: number = findIndex(this.iconsConfig, {
+      name: 'default',
+    });
+    const defaultConfig: MetadataIconConfig =
+      defaultConfigIndex !== -1
+        ? this.iconsConfig[defaultConfigIndex]
+        : undefined;
     let config: MetadataIconConfig;
     let configIndex: number;
     let value: any;
 
-    Object.keys(item)
-      .forEach((metadata) => {
+    Object.keys(item).forEach((metadata) => {
+      value = item[metadata];
+      configIndex = findIndex(this.iconsConfig, { name: metadata });
 
-        value = item[metadata];
-        configIndex = findIndex(this.iconsConfig, {name: metadata});
+      config =
+        configIndex !== -1 ? this.iconsConfig[configIndex] : defaultConfig;
 
-        config = (configIndex !== -1) ? this.iconsConfig[configIndex] : defaultConfig;
+      if (
+        hasValue(value) &&
+        isNotEmpty(config) &&
+        !this.hasPlaceholder(value)
+      ) {
+        let icon: ChipsItemIcon;
+        const visibleWhenAuthorityEmpty = this.displayObj !== metadata;
 
-        if (hasValue(value) && isNotEmpty(config) && !this.hasPlaceholder(value)) {
+        // Set icon
+        icon = {
+          metadata,
+          visibleWhenAuthorityEmpty,
+          style: config.style,
+        };
 
-          let icon: ChipsItemIcon;
-          const visibleWhenAuthorityEmpty = this.displayObj !== metadata;
-
-          // Set icon
-          icon = {
-            metadata,
-            visibleWhenAuthorityEmpty,
-            style: config.style
-          };
-
-          icons.push(icon);
-        }
-      });
+        icons.push(icon);
+      }
+    });
 
     return icons;
   }
@@ -146,7 +168,12 @@ export class Chips {
     this._items = [];
     items.forEach((item) => {
       const icons = this.getChipsIcons(item);
-      const chipsItem = new ChipsItem(item, this.displayField, this.displayObj, icons);
+      const chipsItem = new ChipsItem(
+        item,
+        this.displayField,
+        this.displayObj,
+        icons
+      );
       this._items.push(chipsItem);
     });
 

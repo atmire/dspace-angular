@@ -3,14 +3,22 @@ import { Inject, InjectionToken } from '@angular/core';
 import { uniqueId } from 'lodash';
 import { DynamicFormControlLayout } from '@ng-dynamic-forms/core';
 
-import { hasValue, isNotEmpty, isNotNull, isNotUndefined } from '../../../empty.util';
+import {
+  hasValue,
+  isNotEmpty,
+  isNotNull,
+  isNotUndefined,
+} from '../../../empty.util';
 import { FormFieldModel } from '../models/form-field.model';
 import { FormFieldMetadataValueObject } from '../models/form-field-metadata-value.model';
 import {
   DynamicRowArrayModel,
-  DynamicRowArrayModelConfig
+  DynamicRowArrayModelConfig,
 } from '../ds-dynamic-form-ui/models/ds-dynamic-row-array-model';
-import { DsDynamicInputModel, DsDynamicInputModelConfig } from '../ds-dynamic-form-ui/models/ds-dynamic-input.model';
+import {
+  DsDynamicInputModel,
+  DsDynamicInputModelConfig,
+} from '../ds-dynamic-form-ui/models/ds-dynamic-input.model';
 import { setLayout } from './parser.utils';
 import { ParserOptions } from './parser-options';
 import { RelationshipOptions } from '../models/relationship-options.model';
@@ -18,13 +26,18 @@ import { VocabularyOptions } from '../../../../core/submission/vocabularies/mode
 import { ParserType } from './parser-type';
 import { isNgbDateStruct } from '../../../date.util';
 
-export const SUBMISSION_ID: InjectionToken<string> = new InjectionToken<string>('submissionId');
-export const CONFIG_DATA: InjectionToken<FormFieldModel> = new InjectionToken<FormFieldModel>('configData');
-export const INIT_FORM_VALUES: InjectionToken<any> = new InjectionToken<any>('initFormValues');
-export const PARSER_OPTIONS: InjectionToken<ParserOptions> = new InjectionToken<ParserOptions>('parserOptions');
+export const SUBMISSION_ID: InjectionToken<string> = new InjectionToken<string>(
+  'submissionId'
+);
+export const CONFIG_DATA: InjectionToken<FormFieldModel> =
+  new InjectionToken<FormFieldModel>('configData');
+export const INIT_FORM_VALUES: InjectionToken<any> = new InjectionToken<any>(
+  'initFormValues'
+);
+export const PARSER_OPTIONS: InjectionToken<ParserOptions> =
+  new InjectionToken<ParserOptions>('parserOptions');
 
 export abstract class FieldParser {
-
   protected fieldId: string;
 
   constructor(
@@ -32,27 +45,37 @@ export abstract class FieldParser {
     @Inject(CONFIG_DATA) protected configData: FormFieldModel,
     @Inject(INIT_FORM_VALUES) protected initFormValues: any,
     @Inject(PARSER_OPTIONS) protected parserOptions: ParserOptions
-  ) {
-  }
+  ) {}
 
-  public abstract modelFactory(fieldValue?: FormFieldMetadataValueObject, label?: boolean): any;
+  public abstract modelFactory(
+    fieldValue?: FormFieldMetadataValueObject,
+    label?: boolean
+  ): any;
 
   public parse() {
-    if (((this.getInitValueCount() > 1 && !this.configData.repeatable) || (this.configData.repeatable))
-      && (this.configData.input.type !== ParserType.List)
-      && (this.configData.input.type !== ParserType.Tag)
+    if (
+      ((this.getInitValueCount() > 1 && !this.configData.repeatable) ||
+        this.configData.repeatable) &&
+      this.configData.input.type !== ParserType.List &&
+      this.configData.input.type !== ParserType.Tag
     ) {
       let arrayCounter = 0;
       let fieldArrayCounter = 0;
 
       let metadataKey;
 
-      if (Array.isArray(this.configData.selectableMetadata) && this.configData.selectableMetadata.length === 1) {
+      if (
+        Array.isArray(this.configData.selectableMetadata) &&
+        this.configData.selectableMetadata.length === 1
+      ) {
         metadataKey = this.configData.selectableMetadata[0].metadata;
       }
 
       let isDraggable = true;
-      if (this.configData.input.type === ParserType.Onebox && this.configData?.selectableMetadata?.length > 1) {
+      if (
+        this.configData.input.type === ParserType.Onebox &&
+        this.configData?.selectableMetadata?.length > 1
+      ) {
         isDraggable = false;
       }
       const config = {
@@ -69,14 +92,19 @@ export abstract class FieldParser {
         isDraggable,
         groupFactory: () => {
           let model;
-          if ((arrayCounter === 0)) {
+          if (arrayCounter === 0) {
             model = this.modelFactory();
             arrayCounter++;
           } else {
-            const fieldArrayOfValueLength = this.getInitValueCount(arrayCounter - 1);
+            const fieldArrayOfValueLength = this.getInitValueCount(
+              arrayCounter - 1
+            );
             let fieldValue = null;
             if (fieldArrayOfValueLength > 0) {
-              fieldValue = this.getInitFieldValue(arrayCounter - 1, fieldArrayCounter++);
+              fieldValue = this.getInitFieldValue(
+                arrayCounter - 1,
+                fieldArrayCounter++
+              );
               if (fieldArrayCounter === fieldArrayOfValueLength) {
                 fieldArrayCounter = 0;
                 arrayCounter++;
@@ -89,17 +117,16 @@ export abstract class FieldParser {
             setLayout(model, 'grid', 'control', 'col');
           }
           return [model];
-        }
+        },
       } as DynamicRowArrayModelConfig;
 
       const layout: DynamicFormControlLayout = {
         grid: {
-          group: 'form-row'
-        }
+          group: 'form-row',
+        },
       };
 
       return new DynamicRowArrayModel(config, layout);
-
     } else {
       const model = this.modelFactory(this.getInitFieldValue());
       model.submissionId = this.submissionId;
@@ -111,7 +138,10 @@ export abstract class FieldParser {
   }
 
   public setVocabularyOptions(controlModel) {
-    if (isNotEmpty(this.configData.selectableMetadata) && isNotEmpty(this.configData.selectableMetadata[0].controlledVocabulary)) {
+    if (
+      isNotEmpty(this.configData.selectableMetadata) &&
+      isNotEmpty(this.configData.selectableMetadata[0].controlledVocabulary)
+    ) {
       controlModel.vocabularyOptions = new VocabularyOptions(
         this.configData.selectableMetadata[0].controlledVocabulary,
         this.configData.selectableMetadata[0].closed
@@ -119,12 +149,21 @@ export abstract class FieldParser {
     }
   }
 
-  public setValues(modelConfig: DsDynamicInputModelConfig, fieldValue: any, forceValueAsObj: boolean = false, groupModel?: boolean) {
+  public setValues(
+    modelConfig: DsDynamicInputModelConfig,
+    fieldValue: any,
+    forceValueAsObj: boolean = false,
+    groupModel?: boolean
+  ) {
     if (isNotEmpty(fieldValue)) {
       if (groupModel) {
         // Array, values is an array
         modelConfig.value = this.getInitGroupValues();
-        if (Array.isArray(modelConfig.value) && modelConfig.value.length > 0 && modelConfig.value[0].language) {
+        if (
+          Array.isArray(modelConfig.value) &&
+          modelConfig.value.length > 0 &&
+          modelConfig.value[0].language
+        ) {
           // Array Item has language, ex. AuthorityModel
           modelConfig.language = modelConfig.value[0].language;
         }
@@ -160,9 +199,18 @@ export abstract class FieldParser {
 
   protected getInitValueCount(index = 0, fieldId?): number {
     const fieldIds = fieldId || this.getAllFieldIds();
-    if (isNotEmpty(this.initFormValues) && isNotNull(fieldIds) && fieldIds.length === 1 && this.initFormValues.hasOwnProperty(fieldIds[0])) {
+    if (
+      isNotEmpty(this.initFormValues) &&
+      isNotNull(fieldIds) &&
+      fieldIds.length === 1 &&
+      this.initFormValues.hasOwnProperty(fieldIds[0])
+    ) {
       return this.initFormValues[fieldIds[0]].length;
-    } else if (isNotEmpty(this.initFormValues) && isNotNull(fieldIds) && fieldIds.length > 1) {
+    } else if (
+      isNotEmpty(this.initFormValues) &&
+      isNotNull(fieldIds) &&
+      fieldIds.length > 1
+    ) {
       const values = [];
       fieldIds.forEach((id) => {
         if (this.initFormValues.hasOwnProperty(id)) {
@@ -177,30 +225,52 @@ export abstract class FieldParser {
 
   protected getInitGroupValues(): FormFieldMetadataValueObject[] {
     const fieldIds = this.getAllFieldIds();
-    if (isNotEmpty(this.initFormValues) && isNotNull(fieldIds) && fieldIds.length === 1 && this.initFormValues.hasOwnProperty(fieldIds[0])) {
+    if (
+      isNotEmpty(this.initFormValues) &&
+      isNotNull(fieldIds) &&
+      fieldIds.length === 1 &&
+      this.initFormValues.hasOwnProperty(fieldIds[0])
+    ) {
       return this.initFormValues[fieldIds[0]];
     }
   }
 
   protected getInitFieldValues(fieldId): FormFieldMetadataValueObject[] {
-    if (isNotEmpty(this.initFormValues) && isNotNull(fieldId) && this.initFormValues.hasOwnProperty(fieldId)) {
+    if (
+      isNotEmpty(this.initFormValues) &&
+      isNotNull(fieldId) &&
+      this.initFormValues.hasOwnProperty(fieldId)
+    ) {
       return this.initFormValues[fieldId];
     }
   }
 
-  protected getInitFieldValue(outerIndex = 0, innerIndex = 0, fieldId?): FormFieldMetadataValueObject {
+  protected getInitFieldValue(
+    outerIndex = 0,
+    innerIndex = 0,
+    fieldId?
+  ): FormFieldMetadataValueObject {
     const fieldIds = fieldId || this.getAllFieldIds();
-    if (isNotEmpty(this.initFormValues)
-      && isNotNull(fieldIds)
-      && fieldIds.length === 1
-      && this.initFormValues.hasOwnProperty(fieldIds[outerIndex])
-      && this.initFormValues[fieldIds[outerIndex]].length > innerIndex) {
+    if (
+      isNotEmpty(this.initFormValues) &&
+      isNotNull(fieldIds) &&
+      fieldIds.length === 1 &&
+      this.initFormValues.hasOwnProperty(fieldIds[outerIndex]) &&
+      this.initFormValues[fieldIds[outerIndex]].length > innerIndex
+    ) {
       return this.initFormValues[fieldIds[outerIndex]][innerIndex];
-    } else if (isNotEmpty(this.initFormValues) && isNotNull(fieldIds) && fieldIds.length > 1) {
+    } else if (
+      isNotEmpty(this.initFormValues) &&
+      isNotNull(fieldIds) &&
+      fieldIds.length > 1
+    ) {
       const values: FormFieldMetadataValueObject[] = [];
       fieldIds.forEach((id) => {
         if (this.initFormValues.hasOwnProperty(id)) {
-          const valueObj: FormFieldMetadataValueObject = Object.assign(new FormFieldMetadataValueObject(), this.initFormValues[id][innerIndex]);
+          const valueObj: FormFieldMetadataValueObject = Object.assign(
+            new FormFieldMetadataValueObject(),
+            this.initFormValues[id][innerIndex]
+          );
           // Set metadata name, used for Qualdrop fields
           valueObj.metadata = id;
           values.push(valueObj);
@@ -214,16 +284,25 @@ export abstract class FieldParser {
 
   protected getInitArrayIndex() {
     const fieldIds: any = this.getAllFieldIds();
-    if (isNotEmpty(this.initFormValues) && isNotNull(fieldIds) && fieldIds.length === 1 && this.initFormValues.hasOwnProperty(fieldIds)) {
+    if (
+      isNotEmpty(this.initFormValues) &&
+      isNotNull(fieldIds) &&
+      fieldIds.length === 1 &&
+      this.initFormValues.hasOwnProperty(fieldIds)
+    ) {
       return this.initFormValues[fieldIds].length;
-    } else if (isNotEmpty(this.initFormValues) && isNotNull(fieldIds) && fieldIds.length > 1) {
+    } else if (
+      isNotEmpty(this.initFormValues) &&
+      isNotNull(fieldIds) &&
+      fieldIds.length > 1
+    ) {
       let counter = 0;
       fieldIds.forEach((id) => {
         if (this.initFormValues.hasOwnProperty(id)) {
           counter = counter + this.initFormValues[id].length;
         }
       });
-      return (counter === 0) ? 1 : counter;
+      return counter === 0 ? 1 : counter;
     } else {
       return 1;
     }
@@ -240,16 +319,25 @@ export abstract class FieldParser {
         return [this.configData.selectableMetadata[0].metadata];
       } else {
         const ids = [];
-        this.configData.selectableMetadata.forEach((entry) => ids.push(entry.metadata));
+        this.configData.selectableMetadata.forEach((entry) =>
+          ids.push(entry.metadata)
+        );
         return ids;
       }
     } else {
-      return ['relation.' + this.configData.selectableRelationship.relationshipType];
+      return [
+        'relation.' + this.configData.selectableRelationship.relationshipType,
+      ];
     }
   }
 
-  protected initModel(id?: string, label = true, labelEmpty = false, setErrors = true, hint = true) {
-
+  protected initModel(
+    id?: string,
+    label = true,
+    labelEmpty = false,
+    setErrors = true,
+    hint = true
+  ) {
     const controlModel = Object.create(null);
 
     // Sets input ID
@@ -259,17 +347,22 @@ export abstract class FieldParser {
     controlModel.name = this.fieldId;
 
     // input ID doesn't allow dots, so replace them
-    controlModel.id = (this.fieldId).replace(/\./g, '_');
+    controlModel.id = this.fieldId.replace(/\./g, '_');
 
     // Set read only option
     controlModel.readOnly = this.parserOptions.readOnly;
     controlModel.disabled = this.parserOptions.readOnly;
     if (hasValue(this.configData.selectableRelationship)) {
-      controlModel.relationship = Object.assign(new RelationshipOptions(), this.configData.selectableRelationship);
+      controlModel.relationship = Object.assign(
+        new RelationshipOptions(),
+        this.configData.selectableRelationship
+      );
     }
     controlModel.repeatable = this.configData.repeatable;
     controlModel.metadataFields = this.getAllFieldIds() || [];
-    controlModel.hasSelectableMetadata = isNotEmpty(this.configData.selectableMetadata);
+    controlModel.hasSelectableMetadata = isNotEmpty(
+      this.configData.selectableMetadata
+    );
     controlModel.submissionId = this.submissionId;
 
     // Set label
@@ -288,8 +381,12 @@ export abstract class FieldParser {
     }
 
     // Available Languages
-    if (this.configData.languageCodes && this.configData.languageCodes.length > 0) {
-      (controlModel as DsDynamicInputModel).languageCodes = this.configData.languageCodes;
+    if (
+      this.configData.languageCodes &&
+      this.configData.languageCodes.length > 0
+    ) {
+      (controlModel as DsDynamicInputModel).languageCodes =
+        this.configData.languageCodes;
     }
 
     return controlModel;
@@ -301,39 +398,46 @@ export abstract class FieldParser {
 
   protected addPatternValidator(controlModel) {
     const regex = new RegExp(this.configData.input.regex);
-    controlModel.validators = Object.assign({}, controlModel.validators, { pattern: regex });
-    controlModel.errorMessages = Object.assign(
-      {},
-      controlModel.errorMessages,
-      { pattern: 'error.validation.pattern' });
+    controlModel.validators = Object.assign({}, controlModel.validators, {
+      pattern: regex,
+    });
+    controlModel.errorMessages = Object.assign({}, controlModel.errorMessages, {
+      pattern: 'error.validation.pattern',
+    });
   }
 
   protected markAsRequired(controlModel) {
     controlModel.required = true;
-    controlModel.validators = Object.assign({}, controlModel.validators, { required: null });
-    controlModel.errorMessages = Object.assign(
-      {},
-      controlModel.errorMessages,
-      { required: this.configData.mandatoryMessage });
+    controlModel.validators = Object.assign({}, controlModel.validators, {
+      required: null,
+    });
+    controlModel.errorMessages = Object.assign({}, controlModel.errorMessages, {
+      required: this.configData.mandatoryMessage,
+    });
   }
 
   protected setLabel(controlModel, label = true, labelEmpty = false) {
     if (label) {
-      controlModel.label = (labelEmpty) ? '&nbsp;' : this.configData.label;
+      controlModel.label = labelEmpty ? '&nbsp;' : this.configData.label;
     }
   }
 
   protected setOptions(controlModel) {
     // Checks if field has multiple values and sets options available
-    if (isNotUndefined(this.configData.selectableMetadata) && this.configData.selectableMetadata.length > 1) {
+    if (
+      isNotUndefined(this.configData.selectableMetadata) &&
+      this.configData.selectableMetadata.length > 1
+    ) {
       controlModel.options = [];
       this.configData.selectableMetadata.forEach((option, key) => {
         if (key === 0) {
           controlModel.value = option.metadata;
         }
-        controlModel.options.push({ label: option.label, value: option.metadata });
+        controlModel.options.push({
+          label: option.label,
+          value: option.metadata,
+        });
       });
     }
   }
-
 }

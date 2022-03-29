@@ -18,7 +18,7 @@ import { ItemMoveComponent } from './item-move.component';
 import {
   createFailedRemoteDataObject$,
   createSuccessfulRemoteDataObject,
-  createSuccessfulRemoteDataObject$
+  createSuccessfulRemoteDataObject$,
 } from '../../../shared/remote-data.utils';
 import { createPaginatedList } from '../../../shared/testing/utils.test';
 import { RequestService } from '../../../core/data/request.service';
@@ -31,22 +31,22 @@ describe('ItemMoveComponent', () => {
   const mockItem = Object.assign(new Item(), {
     id: 'fake-id',
     handle: 'fake/handle',
-    lastModified: '2018'
+    lastModified: '2018',
   });
 
   const itemPageUrl = `fake-url/${mockItem.id}`;
   const routerStub = Object.assign(new RouterStub(), {
-    url: `${itemPageUrl}/edit`
+    url: `${itemPageUrl}/edit`,
   });
 
   const collection1 = Object.assign(new Collection(), {
     uuid: 'collection-uuid-1',
-    name: 'Test collection 1'
+    name: 'Test collection 1',
   });
 
   const collection2 = Object.assign(new Collection(), {
     uuid: 'collection-uuid-2',
-    name: 'Test collection 2'
+    name: 'Test collection 2',
   });
 
   let itemDataService;
@@ -57,33 +57,43 @@ describe('ItemMoveComponent', () => {
   });
 
   const mockItemDataServiceFail = jasmine.createSpyObj({
-    moveToCollection: createFailedRemoteDataObject$('Internal server error', 500),
+    moveToCollection: createFailedRemoteDataObject$(
+      'Internal server error',
+      500
+    ),
     findById: createSuccessfulRemoteDataObject$(mockItem),
   });
 
   const routeStub = {
     data: observableOf({
-      dso: createSuccessfulRemoteDataObject(Object.assign(new Item(), {
-        id: 'item1',
-        owningCollection: createSuccessfulRemoteDataObject$(Object.assign(new Collection(), {
-          id: 'originalOwningCollection',
-        }))
-      }))
-    })
+      dso: createSuccessfulRemoteDataObject(
+        Object.assign(new Item(), {
+          id: 'item1',
+          owningCollection: createSuccessfulRemoteDataObject$(
+            Object.assign(new Collection(), {
+              id: 'originalOwningCollection',
+            })
+          ),
+        })
+      ),
+    }),
   };
 
   const mockSearchService = {
     search: () => {
-      return createSuccessfulRemoteDataObject$(createPaginatedList([
-        {
-          indexableObject: collection1,
-          hitHighlights: {}
-        }, {
-          indexableObject: collection2,
-          hitHighlights: {}
-        }
-      ]));
-    }
+      return createSuccessfulRemoteDataObject$(
+        createPaginatedList([
+          {
+            indexableObject: collection1,
+            hitHighlights: {},
+          },
+          {
+            indexableObject: collection2,
+            hitHighlights: {},
+          },
+        ])
+      );
+    },
   };
 
   const notificationsServiceStub = new NotificationsServiceStub();
@@ -92,7 +102,13 @@ describe('ItemMoveComponent', () => {
     itemDataService = mockItemDataService;
 
     TestBed.configureTestingModule({
-      imports: [CommonModule, FormsModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), NgbModule],
+      imports: [
+        CommonModule,
+        FormsModule,
+        RouterTestingModule.withRoutes([]),
+        TranslateModule.forRoot(),
+        NgbModule,
+      ],
       declarations: [ItemMoveComponent],
       providers: [
         { provide: ActivatedRoute, useValue: routeStub },
@@ -101,9 +117,8 @@ describe('ItemMoveComponent', () => {
         { provide: NotificationsService, useValue: notificationsServiceStub },
         { provide: SearchService, useValue: mockSearchService },
         { provide: RequestService, useValue: getMockRequestService() },
-      ], schemas: [
-        CUSTOM_ELEMENTS_SCHEMA
-      ]
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
     fixture = TestBed.createComponent(ItemMoveComponent);
     comp = fixture.componentInstance;
@@ -136,7 +151,10 @@ describe('ItemMoveComponent', () => {
         comp.selectedCollection = collection1;
         comp.moveToCollection();
 
-        expect(itemDataService.moveToCollection).toHaveBeenCalledWith('item-id', collection1);
+        expect(itemDataService.moveToCollection).toHaveBeenCalledWith(
+          'item-id',
+          collection1
+        );
       });
       it('should call notificationsService success message on success', () => {
         comp.moveToCollection();

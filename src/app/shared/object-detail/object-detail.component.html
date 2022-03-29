@@ -10,13 +10,23 @@
   (pageSizeChange)="onPageSizeChange($event)"
   (sortDirectionChange)="onSortDirectionChange($event)"
   (sortFieldChange)="onSortFieldChange($event)"
-  (paginationChange)="onPaginationChange($event)">
-    <div class="row mt-2" *ngIf="objects?.hasSucceeded" @fadeIn>
-      <div class="col"
-           *ngFor="let object of objects?.payload?.page">
-        <ds-listable-object-component-loader [object]="object" [viewMode]="viewMode" [context]="context"></ds-listable-object-component-loader>
-      </div>
+  (paginationChange)="onPaginationChange($event)"
+>
+  <div class="row mt-2" *ngIf="objects?.hasSucceeded" @fadeIn>
+    <div class="col" *ngFor="let object of objects?.payload?.page">
+      <ds-listable-object-component-loader
+        [object]="object"
+        [viewMode]="viewMode"
+        [context]="context"
+      ></ds-listable-object-component-loader>
     </div>
-  <ds-error *ngIf="objects.hasFailed" message="{{'error.objects' | translate}}"></ds-error>
-  <ds-loading *ngIf="objects.isLoading" message="{{'loading.objects' | translate}}"></ds-loading>
+  </div>
+  <ds-error
+    *ngIf="objects.hasFailed"
+    message="{{ 'error.objects' | translate }}"
+  ></ds-error>
+  <ds-loading
+    *ngIf="objects.isLoading"
+    message="{{ 'loading.objects' | translate }}"
+  ></ds-loading>
 </ds-pagination>

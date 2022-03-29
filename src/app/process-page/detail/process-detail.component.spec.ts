@@ -11,7 +11,7 @@ import {
   flush,
   flushMicrotasks,
   TestBed,
-  tick
+  tick,
 } from '@angular/core/testing';
 import { VarDirective } from '../../shared/utils/var.directive';
 import { TranslateModule } from '@ngx-translate/core';
@@ -26,7 +26,10 @@ import { FileSizePipe } from '../../shared/utils/file-size-pipe';
 import { Bitstream } from '../../core/shared/bitstream.model';
 import { ProcessDataService } from '../../core/data/processes/process-data.service';
 import { DSONameService } from '../../core/breadcrumbs/dso-name.service';
-import { createSuccessfulRemoteDataObject, createSuccessfulRemoteDataObject$ } from '../../shared/remote-data.utils';
+import {
+  createSuccessfulRemoteDataObject,
+  createSuccessfulRemoteDataObject$,
+} from '../../shared/remote-data.utils';
 import { createPaginatedList } from '../../shared/testing/utils.test';
 
 describe('ProcessDetailComponent', () => {
@@ -53,21 +56,21 @@ describe('ProcessDetailComponent', () => {
       parameters: [
         {
           name: '-f',
-          value: 'file.xml'
+          value: 'file.xml',
         },
         {
           name: '-i',
-          value: 'identifier'
-        }
+          value: 'identifier',
+        },
       ],
       _links: {
         self: {
-          href: 'https://rest.api/processes/1'
+          href: 'https://rest.api/processes/1',
         },
         output: {
-          href: 'https://rest.api/processes/1/output'
-        }
-      }
+          href: 'https://rest.api/processes/1/output',
+        },
+      },
     });
     fileName = 'fake-file-name';
     files = [
@@ -77,44 +80,53 @@ describe('ProcessDetailComponent', () => {
           'dc.title': [
             {
               value: fileName,
-              language: null
-            }
-          ]
+              language: null,
+            },
+          ],
         },
         _links: {
-          content: { href: 'file-selflink' }
-        }
-      })
+          content: { href: 'file-selflink' },
+        },
+      }),
     ];
     const logBitstream = Object.assign(new Bitstream(), {
       id: 'output.log',
       _links: {
-        content: { href: 'log-selflink' }
-      }
+        content: { href: 'log-selflink' },
+      },
     });
     processService = jasmine.createSpyObj('processService', {
-      getFiles: createSuccessfulRemoteDataObject$(createPaginatedList(files))
+      getFiles: createSuccessfulRemoteDataObject$(createPaginatedList(files)),
     });
     bitstreamDataService = jasmine.createSpyObj('bitstreamDataService', {
-      findByHref: createSuccessfulRemoteDataObject$(logBitstream)
+      findByHref: createSuccessfulRemoteDataObject$(logBitstream),
     });
     nameService = jasmine.createSpyObj('nameService', {
-      getName: fileName
+      getName: fileName,
     });
     httpClient = jasmine.createSpyObj('httpClient', {
-      get: observableOf(processOutput)
+      get: observableOf(processOutput),
     });
   }
 
   beforeEach(waitForAsync(() => {
     init();
     TestBed.configureTestingModule({
-      declarations: [ProcessDetailComponent, ProcessDetailFieldComponent, VarDirective, FileSizePipe],
+      declarations: [
+        ProcessDetailComponent,
+        ProcessDetailFieldComponent,
+        VarDirective,
+        FileSizePipe,
+      ],
       imports: [TranslateModule.forRoot(), RouterTestingModule.withRoutes([])],
       providers: [
         {
           provide: ActivatedRoute,
-          useValue: { data: observableOf({ process: createSuccessfulRemoteDataObject(process) }) }
+          useValue: {
+            data: observableOf({
+              process: createSuccessfulRemoteDataObject(process),
+            }),
+          },
         },
         { provide: ProcessDataService, useValue: processService },
         { provide: BitstreamDataService, useValue: bitstreamDataService },
@@ -122,7 +134,7 @@ describe('ProcessDetailComponent', () => {
         { provide: AuthService, useValue: new AuthServiceMock() },
         { provide: HttpClient, useValue: httpClient },
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -139,23 +151,29 @@ describe('ProcessDetailComponent', () => {
     component = null;
   }));
 
-  it('should display the script\'s name', () => {
+  it("should display the script's name", () => {
     fixture.detectChanges();
-    const name = fixture.debugElement.query(By.css('#process-name')).nativeElement;
+    const name = fixture.debugElement.query(
+      By.css('#process-name')
+    ).nativeElement;
     expect(name.textContent).toContain(process.scriptName);
   });
 
-  it('should display the process\'s parameters', () => {
+  it("should display the process's parameters", () => {
     fixture.detectChanges();
-    const args = fixture.debugElement.query(By.css('#process-arguments')).nativeElement;
+    const args = fixture.debugElement.query(
+      By.css('#process-arguments')
+    ).nativeElement;
     process.parameters.forEach((param) => {
       expect(args.textContent).toContain(`${param.name} ${param.value}`);
     });
   });
 
-  it('should display the process\'s output files', () => {
+  it("should display the process's output files", () => {
     fixture.detectChanges();
-    const processFiles = fixture.debugElement.query(By.css('#process-files')).nativeElement;
+    const processFiles = fixture.debugElement.query(
+      By.css('#process-files')
+    ).nativeElement;
     expect(processFiles.textContent).toContain(fileName);
   });
 
@@ -164,19 +182,24 @@ describe('ProcessDetailComponent', () => {
       spyOn(component, 'showProcessOutputLogs').and.callThrough();
       fixture.detectChanges();
 
-      const showOutputButton = fixture.debugElement.query(By.css('#showOutputButton'));
+      const showOutputButton = fixture.debugElement.query(
+        By.css('#showOutputButton')
+      );
       showOutputButton.triggerEventHandler('click', {
-        preventDefault: () => {/**/
-        }
+        preventDefault: () => {
+          /**/
+        },
       });
       tick();
     }));
     it('should trigger showProcessOutputLogs', () => {
       expect(component.showProcessOutputLogs).toHaveBeenCalled();
     });
-    it('should display the process\'s output logs', () => {
+    it("should display the process's output logs", () => {
       fixture.detectChanges();
-      const outputProcess = fixture.debugElement.query(By.css('#process-output pre'));
+      const outputProcess = fixture.debugElement.query(
+        By.css('#process-output pre')
+      );
       expect(outputProcess.nativeElement.textContent).toContain(processOutput);
     });
   });
@@ -189,22 +212,28 @@ describe('ProcessDetailComponent', () => {
       component = fixture.componentInstance;
       spyOn(component, 'showProcessOutputLogs').and.callThrough();
       fixture.detectChanges();
-      const showOutputButton = fixture.debugElement.query(By.css('#showOutputButton'));
+      const showOutputButton = fixture.debugElement.query(
+        By.css('#showOutputButton')
+      );
       showOutputButton.triggerEventHandler('click', {
-        preventDefault: () => {/**/
-        }
+        preventDefault: () => {
+          /**/
+        },
       });
       tick();
       fixture.detectChanges();
     }));
-    it('should not display the process\'s output logs', () => {
-      const outputProcess = fixture.debugElement.query(By.css('#process-output pre'));
+    it("should not display the process's output logs", () => {
+      const outputProcess = fixture.debugElement.query(
+        By.css('#process-output pre')
+      );
       expect(outputProcess).toBeNull();
     });
     it('should display message saying there are no output logs', () => {
-      const noOutputProcess = fixture.debugElement.query(By.css('#no-output-logs-message')).nativeElement;
+      const noOutputProcess = fixture.debugElement.query(
+        By.css('#no-output-logs-message')
+      ).nativeElement;
       expect(noOutputProcess).toBeDefined();
     });
   });
-
 });

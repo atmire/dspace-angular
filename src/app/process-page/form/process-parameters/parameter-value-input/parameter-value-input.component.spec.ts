@@ -25,11 +25,21 @@ describe('ParameterValueInputComponent', () => {
   let outputParameter;
 
   function init() {
-    booleanParameter = Object.assign(new ScriptParameter(), { type: ScriptParameterType.BOOLEAN });
-    stringParameter = Object.assign(new ScriptParameter(), { type: ScriptParameterType.STRING });
-    fileParameter = Object.assign(new ScriptParameter(), { type: ScriptParameterType.FILE });
-    dateParameter = Object.assign(new ScriptParameter(), { type: ScriptParameterType.DATE });
-    outputParameter = Object.assign(new ScriptParameter(), { type: ScriptParameterType.OUTPUT });
+    booleanParameter = Object.assign(new ScriptParameter(), {
+      type: ScriptParameterType.BOOLEAN,
+    });
+    stringParameter = Object.assign(new ScriptParameter(), {
+      type: ScriptParameterType.STRING,
+    });
+    fileParameter = Object.assign(new ScriptParameter(), {
+      type: ScriptParameterType.FILE,
+    });
+    dateParameter = Object.assign(new ScriptParameter(), {
+      type: ScriptParameterType.DATE,
+    });
+    outputParameter = Object.assign(new ScriptParameter(), {
+      type: ScriptParameterType.OUTPUT,
+    });
   }
 
   beforeEach(waitForAsync(() => {
@@ -40,9 +50,10 @@ describe('ParameterValueInputComponent', () => {
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
-            useClass: TranslateLoaderMock
-          }
-        })],
+            useClass: TranslateLoaderMock,
+          },
+        }),
+      ],
       declarations: [
         ParameterValueInputComponent,
         BooleanValueInputComponent,
@@ -50,11 +61,10 @@ describe('ParameterValueInputComponent', () => {
         FileValueInputComponent,
         DateValueInputComponent,
         FileValueAccessorDirective,
-        FileValidator
+        FileValidator,
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
-      .compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -71,35 +81,45 @@ describe('ParameterValueInputComponent', () => {
   it('should show a BooleanValueInputComponent when the parameter type is boolean', () => {
     component.parameter = booleanParameter;
     fixture.detectChanges();
-    const valueInput = fixture.debugElement.query(By.directive(BooleanValueInputComponent));
+    const valueInput = fixture.debugElement.query(
+      By.directive(BooleanValueInputComponent)
+    );
     expect(valueInput).toBeTruthy();
   });
 
   it('should show a StringValueInputComponent when the parameter type is string', () => {
     component.parameter = stringParameter;
     fixture.detectChanges();
-    const valueInput = fixture.debugElement.query(By.directive(StringValueInputComponent));
+    const valueInput = fixture.debugElement.query(
+      By.directive(StringValueInputComponent)
+    );
     expect(valueInput).toBeTruthy();
   });
 
   it('should show a FileValueInputComponent when the parameter type is file', () => {
     component.parameter = fileParameter;
     fixture.detectChanges();
-    const valueInput = fixture.debugElement.query(By.directive(FileValueInputComponent));
+    const valueInput = fixture.debugElement.query(
+      By.directive(FileValueInputComponent)
+    );
     expect(valueInput).toBeTruthy();
   });
 
   it('should show a DateValueInputComponent when the parameter type is date', () => {
     component.parameter = dateParameter;
     fixture.detectChanges();
-    const valueInput = fixture.debugElement.query(By.directive(DateValueInputComponent));
+    const valueInput = fixture.debugElement.query(
+      By.directive(DateValueInputComponent)
+    );
     expect(valueInput).toBeTruthy();
   });
 
   it('should show a StringValueInputComponent when the parameter type is output', () => {
     component.parameter = outputParameter;
     fixture.detectChanges();
-    const valueInput = fixture.debugElement.query(By.directive(StringValueInputComponent));
+    const valueInput = fixture.debugElement.query(
+      By.directive(StringValueInputComponent)
+    );
     expect(valueInput).toBeTruthy();
   });
 });

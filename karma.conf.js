@@ -15,17 +15,17 @@ module.exports = function (config) {
     ],
     client: {
       clearContext: false, // leave Jasmine Spec Runner output visible in browser
-      captureConsole: false
+      captureConsole: false,
     },
     coverageIstanbulReporter: {
       dir: require('path').join(__dirname, './coverage/dspace-angular'),
       reports: ['html', 'lcovonly', 'text-summary'],
-      fixWebpackSourcePaths: true
+      fixWebpackSourcePaths: true,
     },
     reporters: ['mocha', 'kjhtml', 'coverage-istanbul'],
     mochaReporter: {
       ignoreSkipped: true,
-      output: 'autowatch'
+      output: 'autowatch',
     },
     port: 9876,
     colors: true,
@@ -33,6 +33,6 @@ module.exports = function (config) {
     autoWatch: true,
     browsers: ['Chrome'],
     singleRun: false,
-    restartOnFileChange: true
+    restartOnFileChange: true,
   });
 };

@@ -6,13 +6,21 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EffectsModule } from '@ngrx/effects';
-import { RouterStateSerializer, StoreRouterConnectingModule } from '@ngrx/router-store';
-import { MetaReducer, Store, StoreModule, USER_PROVIDED_META_REDUCERS } from '@ngrx/store';
+import {
+  RouterStateSerializer,
+  StoreRouterConnectingModule,
+} from '@ngrx/router-store';
+import {
+  MetaReducer,
+  Store,
+  StoreModule,
+  USER_PROVIDED_META_REDUCERS,
+} from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import {
   DYNAMIC_ERROR_MESSAGES_MATCHER,
   DYNAMIC_MATCHER_PROVIDERS,
-  DynamicErrorMessagesMatcher
+  DynamicErrorMessagesMatcher,
 } from '@ng-dynamic-forms/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
@@ -70,16 +78,23 @@ export function getBase(appConfig: AppConfig) {
 }
 
 export function getMetaReducers(appConfig: AppConfig): MetaReducer<AppState>[] {
-  return appConfig.debug ? [...appMetaReducers, ...debugMetaReducers] : appMetaReducers;
+  return appConfig.debug
+    ? [...appMetaReducers, ...debugMetaReducers]
+    : appMetaReducers;
 }
 
 /**
  * Condition for displaying error messages on email form field
  */
-export const ValidateEmailErrorStateMatcher: DynamicErrorMessagesMatcher =
-  (control: AbstractControl, model: any, hasFocus: boolean) => {
-    return (control.touched && !hasFocus) || (control.errors?.emailTaken && hasFocus);
-  };
+export const ValidateEmailErrorStateMatcher: DynamicErrorMessagesMatcher = (
+  control: AbstractControl,
+  model: any,
+  hasFocus: boolean
+) => {
+  return (
+    (control.touched && !hasFocus) || (control.errors?.emailTaken && hasFocus)
+  );
+};
 
 const IMPORTS = [
   CommonModule,
@@ -108,59 +123,59 @@ IMPORTS.push(
 const PROVIDERS = [
   {
     provide: APP_CONFIG,
-    useFactory: getConfig
+    useFactory: getConfig,
   },
   {
     provide: APP_BASE_HREF,
     useFactory: getBase,
-    deps: [APP_CONFIG]
+    deps: [APP_CONFIG],
   },
   {
     provide: USER_PROVIDED_META_REDUCERS,
     useFactory: getMetaReducers,
-    deps: [APP_CONFIG]
+    deps: [APP_CONFIG],
   },
   {
     provide: RouterStateSerializer,
-    useClass: DSpaceRouterStateSerializer
+    useClass: DSpaceRouterStateSerializer,
   },
   ClientCookieService,
   // Check the authentication token when the app initializes
   {
     provide: APP_INITIALIZER,
-    useFactory: (store: Store<AppState>,) => {
+    useFactory: (store: Store<AppState>) => {
       return () => store.dispatch(new CheckAuthenticationTokenAction());
     },
     deps: [Store],
-    multi: true
+    multi: true,
   },
   // register AuthInterceptor as HttpInterceptor
   {
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,
-    multi: true
+    multi: true,
   },
   // register LocaleInterceptor as HttpInterceptor
   {
     provide: HTTP_INTERCEPTORS,
     useClass: LocaleInterceptor,
-    multi: true
+    multi: true,
   },
   // register XsrfInterceptor as HttpInterceptor
   {
     provide: HTTP_INTERCEPTORS,
     useClass: XsrfInterceptor,
-    multi: true
+    multi: true,
   },
   // register LogInterceptor as HttpInterceptor
   {
     provide: HTTP_INTERCEPTORS,
     useClass: LogInterceptor,
-    multi: true
+    multi: true,
   },
   {
     provide: DYNAMIC_ERROR_MESSAGES_MATCHER,
-    useValue: ValidateEmailErrorStateMatcher
+    useValue: ValidateEmailErrorStateMatcher,
   },
   ...DYNAMIC_MATCHER_PROVIDERS,
 ];
@@ -189,28 +204,18 @@ const DECLARATIONS = [
   ThemedForbiddenComponent,
   IdleModalComponent,
   ThemedPageInternalServerErrorComponent,
-  PageInternalServerErrorComponent
+  PageInternalServerErrorComponent,
 ];
 
-const EXPORTS = [
-];
+const EXPORTS = [];
 
 @NgModule({
   imports: [
     BrowserModule.withServerTransition({ appId: 'dspace-angular' }),
-    ...IMPORTS
+    ...IMPORTS,
   ],
-  providers: [
-    ...PROVIDERS
-  ],
-  declarations: [
-    ...DECLARATIONS,
-  ],
-  exports: [
-    ...EXPORTS,
-    ...DECLARATIONS,
-  ]
+  providers: [...PROVIDERS],
+  declarations: [...DECLARATIONS],
+  exports: [...EXPORTS, ...DECLARATIONS],
 })
-export class AppModule {
-
-}
+export class AppModule {}

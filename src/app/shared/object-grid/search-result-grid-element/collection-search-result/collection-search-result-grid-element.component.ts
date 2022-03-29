@@ -12,14 +12,20 @@ import { BitstreamDataService } from '../../../../core/data/bitstream-data.servi
 
 @Component({
   selector: 'ds-collection-search-result-grid-element',
-  styleUrls: ['../search-result-grid-element.component.scss', 'collection-search-result-grid-element.component.scss'],
-  templateUrl: 'collection-search-result-grid-element.component.html'
+  styleUrls: [
+    '../search-result-grid-element.component.scss',
+    'collection-search-result-grid-element.component.scss',
+  ],
+  templateUrl: 'collection-search-result-grid-element.component.html',
 })
 /**
  * Component representing a grid element for a collection search result
  */
 @listableObjectComponent(CollectionSearchResult, ViewMode.GridElement)
-export class CollectionSearchResultGridElementComponent extends SearchResultGridElementComponent< CollectionSearchResult, Collection > {
+export class CollectionSearchResultGridElementComponent extends SearchResultGridElementComponent<
+  CollectionSearchResult,
+  Collection
+> {
   private _dso: Collection;
 
   constructor(
@@ -34,10 +40,7 @@ export class CollectionSearchResultGridElementComponent extends SearchResultGrid
   @Input() set dso(dso: Collection) {
     this._dso = dso;
     if (hasValue(this._dso) && hasNoValue(this._dso.logo)) {
-      this.linkService.resolveLink<Collection>(
-        this._dso,
-        followLink('logo')
-      );
+      this.linkService.resolveLink<Collection>(this._dso, followLink('logo'));
     }
   }
 

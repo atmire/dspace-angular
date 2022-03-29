@@ -1,4 +1,7 @@
-import { RemoveNameVariantAction, SetNameVariantAction } from './name-variant.actions';
+import {
+  RemoveNameVariantAction,
+  SetNameVariantAction,
+} from './name-variant.actions';
 import { Action } from '@ngrx/store';
 import { nameVariantReducer } from './name-variant.reducer';
 
@@ -46,47 +49,67 @@ describe('nameVariantReducer', () => {
     expect(initialState).toEqual(state);
   });
 
-  it('should set add a new name variant in response to the SET_NAME_VARIANT' +
-    ' action with a combination of list and item ID that does not exist yet', () => {
-    const state = {};
-    state[listID1] = { [itemID1]: variantList1Item1 };
-    const action = new SetNameVariantAction(listID1, itemID2, variantList1Item2);
-    const newState = nameVariantReducer(state, action);
+  it(
+    'should set add a new name variant in response to the SET_NAME_VARIANT' +
+      ' action with a combination of list and item ID that does not exist yet',
+    () => {
+      const state = {};
+      state[listID1] = { [itemID1]: variantList1Item1 };
+      const action = new SetNameVariantAction(
+        listID1,
+        itemID2,
+        variantList1Item2
+      );
+      const newState = nameVariantReducer(state, action);
 
-    expect(newState[listID1][itemID1]).toEqual(variantList1Item1);
-    expect(newState[listID1][itemID2]).toEqual(variantList1Item2);
-  });
+      expect(newState[listID1][itemID1]).toEqual(variantList1Item1);
+      expect(newState[listID1][itemID2]).toEqual(variantList1Item2);
+    }
+  );
 
-  it('should set a name variant in response to the SET_NAME_VARIANT' +
-    ' action with a combination of list and item ID that already exists', () => {
-    const state = {};
-    state[listID1] = { [itemID1]: variantList1Item1 };
-    const action = new SetNameVariantAction(listID1, itemID1, variantList1Item1Update);
-    const newState = nameVariantReducer(state, action);
+  it(
+    'should set a name variant in response to the SET_NAME_VARIANT' +
+      ' action with a combination of list and item ID that already exists',
+    () => {
+      const state = {};
+      state[listID1] = { [itemID1]: variantList1Item1 };
+      const action = new SetNameVariantAction(
+        listID1,
+        itemID1,
+        variantList1Item1Update
+      );
+      const newState = nameVariantReducer(state, action);
 
-    expect(newState[listID1][itemID1]).toEqual(variantList1Item1Update);
-  });
+      expect(newState[listID1][itemID1]).toEqual(variantList1Item1Update);
+    }
+  );
 
-  it('should remove a name variant in response to the REMOVE_NAME_VARIANT' +
-    ' action with a combination of list and item ID that already exists', () => {
-    const state = {};
-    state[listID1] = { [itemID1]: variantList1Item1 };
-    expect(state[listID1][itemID1]).toEqual(variantList1Item1);
+  it(
+    'should remove a name variant in response to the REMOVE_NAME_VARIANT' +
+      ' action with a combination of list and item ID that already exists',
+    () => {
+      const state = {};
+      state[listID1] = { [itemID1]: variantList1Item1 };
+      expect(state[listID1][itemID1]).toEqual(variantList1Item1);
 
-    const action = new RemoveNameVariantAction(listID1, itemID1);
-    const newState = nameVariantReducer(state, action);
+      const action = new RemoveNameVariantAction(listID1, itemID1);
+      const newState = nameVariantReducer(state, action);
 
-    expect(newState[listID1][itemID1]).toBeUndefined();
-  });
+      expect(newState[listID1][itemID1]).toBeUndefined();
+    }
+  );
 
-  it('should do nothing in response to the REMOVE_NAME_VARIANT' +
-    ' action with a combination of list and item ID that does not exists', () => {
-    const state = {};
-    state[listID1] = { [itemID1]: variantList1Item1 };
+  it(
+    'should do nothing in response to the REMOVE_NAME_VARIANT' +
+      ' action with a combination of list and item ID that does not exists',
+    () => {
+      const state = {};
+      state[listID1] = { [itemID1]: variantList1Item1 };
 
-    const action = new RemoveNameVariantAction(listID2, itemID1);
-    const newState = nameVariantReducer(state, action);
+      const action = new RemoveNameVariantAction(listID2, itemID1);
+      const newState = nameVariantReducer(state, action);
 
-    expect(newState).toEqual(state);
-  });
+      expect(newState).toEqual(state);
+    }
+  );
 });

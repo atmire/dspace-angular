@@ -13,12 +13,15 @@ import { getItemPageRoute } from '../../../../../item-page/item-page-routing-pat
   selector: 'ds-item-search-result-grid-element',
   styleUrls: ['./item-search-result-grid-element.component.scss'],
   templateUrl: './item-search-result-grid-element.component.html',
-  animations: [focusShadow]
+  animations: [focusShadow],
 })
 /**
  * The component for displaying a grid element for an item search result of the type Publication
  */
-export class ItemSearchResultGridElementComponent extends SearchResultGridElementComponent<ItemSearchResult, Item> {
+export class ItemSearchResultGridElementComponent extends SearchResultGridElementComponent<
+  ItemSearchResult,
+  Item
+> {
   /**
    * Route to the item's page
    */

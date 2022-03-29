@@ -10,7 +10,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationsService } from '../../../shared/notifications/notifications.service';
 import { ChangeDetectorRef, NO_ERRORS_SCHEMA } from '@angular/core';
 import { FieldChangeType } from '../../../core/data/object-updates/object-updates.actions';
-import { INotification, Notification } from '../../../shared/notifications/models/notification.model';
+import {
+  INotification,
+  Notification,
+} from '../../../shared/notifications/models/notification.model';
 import { NotificationType } from '../../../shared/notifications/models/notification-type';
 import { BitstreamDataService } from '../../../core/data/bitstream-data.service';
 import { ObjectCacheService } from '../../../core/cache/object-cache.service';
@@ -23,45 +26,62 @@ import { RestResponse } from '../../../core/cache/response.models';
 import { SearchConfigurationService } from '../../../core/shared/search/search-configuration.service';
 import { RouterStub } from '../../../shared/testing/router.stub';
 import { getMockRequestService } from '../../../shared/mocks/request.service.mock';
-import { createSuccessfulRemoteDataObject, createSuccessfulRemoteDataObject$ } from '../../../shared/remote-data.utils';
+import {
+  createSuccessfulRemoteDataObject,
+  createSuccessfulRemoteDataObject$,
+} from '../../../shared/remote-data.utils';
 import { createPaginatedList } from '../../../shared/testing/utils.test';
 
 let comp: ItemBitstreamsComponent;
 let fixture: ComponentFixture<ItemBitstreamsComponent>;
 
-const infoNotification: INotification = new Notification('id', NotificationType.Info, 'info');
-const warningNotification: INotification = new Notification('id', NotificationType.Warning, 'warning');
-const successNotification: INotification = new Notification('id', NotificationType.Success, 'success');
+const infoNotification: INotification = new Notification(
+  'id',
+  NotificationType.Info,
+  'info'
+);
+const warningNotification: INotification = new Notification(
+  'id',
+  NotificationType.Warning,
+  'warning'
+);
+const successNotification: INotification = new Notification(
+  'id',
+  NotificationType.Success,
+  'success'
+);
 const bitstream1 = Object.assign(new Bitstream(), {
   id: 'bitstream1',
-  uuid: 'bitstream1'
+  uuid: 'bitstream1',
 });
 const bitstream2 = Object.assign(new Bitstream(), {
   id: 'bitstream2',
-  uuid: 'bitstream2'
+  uuid: 'bitstream2',
 });
 const fieldUpdate1 = {
   field: bitstream1,
-  changeType: undefined
+  changeType: undefined,
 };
 const fieldUpdate2 = {
   field: bitstream2,
-  changeType: FieldChangeType.REMOVE
+  changeType: FieldChangeType.REMOVE,
 };
 const bundle = Object.assign(new Bundle(), {
   id: 'bundle1',
   uuid: 'bundle1',
   _links: {
-    self: { href: 'bundle1-selflink' }
+    self: { href: 'bundle1-selflink' },
   },
-  bitstreams: createSuccessfulRemoteDataObject$(createPaginatedList([bitstream1, bitstream2]))
+  bitstreams: createSuccessfulRemoteDataObject$(
+    createPaginatedList([bitstream1, bitstream2])
+  ),
 });
 const moveOperations = [
   {
     op: 'move',
     from: '/0',
-    path: '/1'
-  }
+    path: '/1',
+  },
 ];
 const date = new Date();
 const url = 'thisUrl';
@@ -79,74 +99,74 @@ let bundleService: BundleDataService;
 
 describe('ItemBitstreamsComponent', () => {
   beforeEach(waitForAsync(() => {
-    objectUpdatesService = jasmine.createSpyObj('objectUpdatesService',
-      {
-        getFieldUpdates: observableOf({
-          [bitstream1.uuid]: fieldUpdate1,
-          [bitstream2.uuid]: fieldUpdate2,
-        }),
-        getFieldUpdatesExclusive: observableOf({
-          [bitstream1.uuid]: fieldUpdate1,
-          [bitstream2.uuid]: fieldUpdate2,
-        }),
-        saveAddFieldUpdate: {},
-        discardFieldUpdates: {},
-        discardAllFieldUpdates: {},
-        reinstateFieldUpdates: observableOf(true),
-        initialize: {},
-        getUpdatedFields: observableOf([bitstream1, bitstream2]),
-        getLastModified: observableOf(date),
-        hasUpdates: observableOf(true),
-        isReinstatable: observableOf(false),
-        isValidPage: observableOf(true),
-        getMoveOperations: observableOf(moveOperations)
-      }
-    );
-    router = Object.assign(new RouterStub(), {
-      url: url
+    objectUpdatesService = jasmine.createSpyObj('objectUpdatesService', {
+      getFieldUpdates: observableOf({
+        [bitstream1.uuid]: fieldUpdate1,
+        [bitstream2.uuid]: fieldUpdate2,
+      }),
+      getFieldUpdatesExclusive: observableOf({
+        [bitstream1.uuid]: fieldUpdate1,
+        [bitstream2.uuid]: fieldUpdate2,
+      }),
+      saveAddFieldUpdate: {},
+      discardFieldUpdates: {},
+      discardAllFieldUpdates: {},
+      reinstateFieldUpdates: observableOf(true),
+      initialize: {},
+      getUpdatedFields: observableOf([bitstream1, bitstream2]),
+      getLastModified: observableOf(date),
+      hasUpdates: observableOf(true),
+      isReinstatable: observableOf(false),
+      isValidPage: observableOf(true),
+      getMoveOperations: observableOf(moveOperations),
     });
-    notificationsService = jasmine.createSpyObj('notificationsService',
-      {
-        info: infoNotification,
-        warning: warningNotification,
-        success: successNotification
-      }
-    );
+    router = Object.assign(new RouterStub(), {
+      url: url,
+    });
+    notificationsService = jasmine.createSpyObj('notificationsService', {
+      info: infoNotification,
+      warning: warningNotification,
+      success: successNotification,
+    });
     bitstreamService = jasmine.createSpyObj('bitstreamService', {
-      delete: jasmine.createSpy('delete')
+      delete: jasmine.createSpy('delete'),
     });
     objectCache = jasmine.createSpyObj('objectCache', {
-      remove: jasmine.createSpy('remove')
+      remove: jasmine.createSpy('remove'),
     });
     requestService = getMockRequestService();
     searchConfig = Object.assign({
-      paginatedSearchOptions: observableOf({})
+      paginatedSearchOptions: observableOf({}),
     });
 
     item = Object.assign(new Item(), {
       uuid: 'item',
       id: 'item',
       _links: {
-        self: { href: 'item-selflink' }
+        self: { href: 'item-selflink' },
       },
       bundles: createSuccessfulRemoteDataObject$(createPaginatedList([bundle])),
-      lastModified: date
+      lastModified: date,
     });
     itemService = Object.assign({
-      getBitstreams: () => createSuccessfulRemoteDataObject$(createPaginatedList([bitstream1, bitstream2])),
+      getBitstreams: () =>
+        createSuccessfulRemoteDataObject$(
+          createPaginatedList([bitstream1, bitstream2])
+        ),
       findByHref: () => createSuccessfulRemoteDataObject$(item),
       findById: () => createSuccessfulRemoteDataObject$(item),
-      getBundles: () => createSuccessfulRemoteDataObject$(createPaginatedList([bundle]))
+      getBundles: () =>
+        createSuccessfulRemoteDataObject$(createPaginatedList([bundle])),
     });
     route = Object.assign({
       parent: {
-        data: observableOf({ dso: createSuccessfulRemoteDataObject(item) })
+        data: observableOf({ dso: createSuccessfulRemoteDataObject(item) }),
       },
       data: observableOf({}),
-      url: url
+      url: url,
     });
     bundleService = jasmine.createSpyObj('bundleService', {
-      patch: observableOf(new RestResponse(true, 200, 'OK'))
+      patch: observableOf(new RestResponse(true, 200, 'OK')),
     });
 
     TestBed.configureTestingModule({
@@ -163,10 +183,9 @@ describe('ItemBitstreamsComponent', () => {
         { provide: RequestService, useValue: requestService },
         { provide: SearchConfigurationService, useValue: searchConfig },
         { provide: BundleDataService, useValue: bundleService },
-        ChangeDetectorRef
-      ], schemas: [
-        NO_ERRORS_SCHEMA
-      ]
+        ChangeDetectorRef,
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -196,8 +215,7 @@ describe('ItemBitstreamsComponent', () => {
       fromIndex: 0,
       toIndex: 50,
       // eslint-disable-next-line no-empty,@typescript-eslint/no-empty-function
-      finish: () => {
-      }
+      finish: () => {},
     };
 
     beforeEach(() => {
@@ -213,7 +231,7 @@ describe('ItemBitstreamsComponent', () => {
         // eslint-disable-next-line no-empty, @typescript-eslint/no-empty-function
         finish: () => {
           done();
-        }
+        },
       });
     });
 
@@ -232,7 +250,9 @@ describe('ItemBitstreamsComponent', () => {
   describe('reinstate', () => {
     it('should reinstate field updates on the bundle', () => {
       comp.reinstate();
-      expect(objectUpdatesService.reinstateFieldUpdates).toHaveBeenCalledWith(bundle.self);
+      expect(objectUpdatesService.reinstateFieldUpdates).toHaveBeenCalledWith(
+        bundle.self
+      );
     });
   });
 });

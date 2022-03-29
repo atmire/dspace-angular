@@ -1,4 +1,9 @@
-import { autoserialize, autoserializeAs, deserialize, deserializeAs } from 'cerialize';
+import {
+  autoserialize,
+  autoserializeAs,
+  deserialize,
+  deserializeAs,
+} from 'cerialize';
 import { hasNoValue, hasValue, isUndefined } from '../../shared/empty.util';
 import { ListableObject } from '../../shared/object-collection/shared/listable-object.model';
 import { typedObject } from '../cache/builders/build-decorators';
@@ -12,7 +17,7 @@ import {
   MetadataMapSerializer,
   MetadataValue,
   MetadataValueFilter,
-  MetadatumViewModel
+  MetadatumViewModel,
 } from './metadata.models';
 import { Metadata } from './metadata.utils';
 import { ResourceType } from './resource-type';
@@ -63,7 +68,7 @@ export class DSpaceObject extends ListableObject implements CacheableObject {
    */
   set self(v: string) {
     this._links.self = {
-      href: v
+      href: v,
     };
   }
 
@@ -72,7 +77,9 @@ export class DSpaceObject extends ListableObject implements CacheableObject {
    * @deprecated use {@link DSONameService} instead
    */
   get name(): string {
-    return (isUndefined(this._name)) ? this.firstMetadataValue('dc.title') : this._name;
+    return isUndefined(this._name)
+      ? this.firstMetadataValue('dc.title')
+      : this._name;
   }
 
   /**
@@ -111,7 +118,10 @@ export class DSpaceObject extends ListableObject implements CacheableObject {
    * @param {MetadataValueFilter} filter The value filter to use. If unspecified, no filtering will be done.
    * @returns {MetadataValue[]} the matching values or an empty array.
    */
-  allMetadata(keyOrKeys: string | string[], valueFilter?: MetadataValueFilter): MetadataValue[] {
+  allMetadata(
+    keyOrKeys: string | string[],
+    valueFilter?: MetadataValueFilter
+  ): MetadataValue[] {
     return Metadata.all(this.metadata, keyOrKeys, valueFilter);
   }
 
@@ -122,7 +132,10 @@ export class DSpaceObject extends ListableObject implements CacheableObject {
    * @param {MetadataValueFilter} filter The value filter to use. If unspecified, no filtering will be done.
    * @returns {string[]} the matching string values or an empty array.
    */
-  allMetadataValues(keyOrKeys: string | string[], valueFilter?: MetadataValueFilter): string[] {
+  allMetadataValues(
+    keyOrKeys: string | string[],
+    valueFilter?: MetadataValueFilter
+  ): string[] {
     return Metadata.allValues(this.metadata, keyOrKeys, valueFilter);
   }
 
@@ -133,7 +146,10 @@ export class DSpaceObject extends ListableObject implements CacheableObject {
    * @param {MetadataValueFilter} filter The value filter to use. If unspecified, no filtering will be done.
    * @returns {MetadataValue} the first matching value, or `undefined`.
    */
-  firstMetadata(keyOrKeys: string | string[], valueFilter?: MetadataValueFilter): MetadataValue {
+  firstMetadata(
+    keyOrKeys: string | string[],
+    valueFilter?: MetadataValueFilter
+  ): MetadataValue {
     return Metadata.first(this.metadata, keyOrKeys, valueFilter);
   }
 
@@ -144,7 +160,10 @@ export class DSpaceObject extends ListableObject implements CacheableObject {
    * @param {MetadataValueFilter} valueFilter The value filter to use. If unspecified, no filtering will be done.
    * @returns {string} the first matching string value, or `undefined`.
    */
-  firstMetadataValue(keyOrKeys: string | string[], valueFilter?: MetadataValueFilter): string {
+  firstMetadataValue(
+    keyOrKeys: string | string[],
+    valueFilter?: MetadataValueFilter
+  ): string {
     return Metadata.firstValue(this.metadata, keyOrKeys, valueFilter);
   }
 
@@ -155,7 +174,10 @@ export class DSpaceObject extends ListableObject implements CacheableObject {
    * @param {MetadataValueFilter} filter The value filter to use. If unspecified, no filtering will be done.
    * @returns {boolean} whether a match is found.
    */
-  hasMetadata(keyOrKeys: string | string[], valueFilter?: MetadataValueFilter): boolean {
+  hasMetadata(
+    keyOrKeys: string | string[],
+    valueFilter?: MetadataValueFilter
+  ): boolean {
     return Metadata.has(this.metadata, keyOrKeys, valueFilter);
   }
 
@@ -164,18 +186,20 @@ export class DSpaceObject extends ListableObject implements CacheableObject {
    * @param key
    */
   findMetadataSortedByPlace(keyOrKeys: string | string[]): MetadataValue[] {
-    return this.allMetadata(keyOrKeys).sort((a: MetadataValue, b: MetadataValue) => {
-      if (hasNoValue(a.place) && hasNoValue(b.place)) {
-        return 0;
+    return this.allMetadata(keyOrKeys).sort(
+      (a: MetadataValue, b: MetadataValue) => {
+        if (hasNoValue(a.place) && hasNoValue(b.place)) {
+          return 0;
+        }
+        if (hasNoValue(a.place)) {
+          return -1;
+        }
+        if (hasNoValue(b.place)) {
+          return 1;
+        }
+        return a.place - b.place;
       }
-      if (hasNoValue(a.place)) {
-        return -1;
-      }
-      if (hasNoValue(b.place)) {
-        return 1;
-      }
-      return a.place - b.place;
-    });
+    );
   }
 
   /**
@@ -186,15 +210,17 @@ export class DSpaceObject extends ListableObject implements CacheableObject {
   }
 
   setMetadata(key: string, language?: string, ...values: string[]) {
-    const mdValues: MetadataValue[] = values.map((value: string, index: number) => {
-      const md = new MetadataValue();
-      md.value = value;
-      md.authority = null;
-      md.confidence = -1;
-      md.language = language || null;
-      md.place = index;
-      return md;
-    });
+    const mdValues: MetadataValue[] = values.map(
+      (value: string, index: number) => {
+        const md = new MetadataValue();
+        md.value = value;
+        md.authority = null;
+        md.confidence = -1;
+        md.language = language || null;
+        md.place = index;
+        return md;
+      }
+    );
     if (hasNoValue(this.metadata)) {
       this.metadata = Object.create({});
     }
@@ -204,5 +230,4 @@ export class DSpaceObject extends ListableObject implements CacheableObject {
   removeMetadata(key: string) {
     delete this.metadata[key];
   }
-
 }

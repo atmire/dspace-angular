@@ -35,11 +35,10 @@ import { VersionPageComponent } from './version-page/version-page/version-page.c
 import { VersionedItemComponent } from './simple/item-types/versioned-item/versioned-item.component';
 import { ThemedFileSectionComponent } from './simple/field-components/file-section/themed-file-section.component';
 
-
 const ENTRY_COMPONENTS = [
   // put only entry components that use custom decorator
   PublicationComponent,
-  UntypedItemComponent
+  UntypedItemComponent,
 ];
 
 const DECLARATIONS = [
@@ -80,13 +79,8 @@ const DECLARATIONS = [
     ResearchEntitiesModule.withEntryComponents(),
     NgxGalleryModule,
   ],
-  declarations: [
-    ...DECLARATIONS,
-    VersionedItemComponent
-  ],
-  exports: [
-    ...DECLARATIONS
-  ]
+  declarations: [...DECLARATIONS, VersionedItemComponent],
+  exports: [...DECLARATIONS],
 })
 export class ItemPageModule {
   /**
@@ -96,8 +90,7 @@ export class ItemPageModule {
   static withEntryComponents() {
     return {
       ngModule: ItemPageModule,
-      providers: ENTRY_COMPONENTS.map((component) => ({provide: component}))
+      providers: ENTRY_COMPONENTS.map((component) => ({ provide: component })),
     };
   }
-
 }

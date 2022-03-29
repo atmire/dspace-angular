@@ -16,9 +16,9 @@ import { hasValue } from '../../empty.util';
       // Usage of forwardRef necessary https://github.com/angular/angular.io/issues/1151
       // eslint-disable-next-line @angular-eslint/no-forward-ref
       useExisting: forwardRef(() => DsoInputSuggestionsComponent),
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+  ],
 })
 
 /**

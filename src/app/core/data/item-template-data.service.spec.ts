@@ -21,7 +21,8 @@ describe('ItemTemplateDataService', () => {
   let itemService: any;
 
   const item = new Item();
-  const collectionEndpoint = 'https://rest.api/core/collections/4af28e99-6a9c-4036-a199-e1b587046d39';
+  const collectionEndpoint =
+    'https://rest.api/core/collections/4af28e99-6a9c-4036-a199-e1b587046d39';
   const itemEndpoint = `${collectionEndpoint}/itemtemplate`;
   const scopeID = '4af28e99-6a9c-4036-a199-e1b587046d39';
   const requestService = {
@@ -43,7 +44,7 @@ describe('ItemTemplateDataService', () => {
     },
     commit(method?: RestRequestMethod) {
       // Do nothing
-    }
+    },
   } as RequestService;
   const rdbService = {} as RemoteDataBuildService;
   const store = {} as Store<CoreState>;
@@ -54,24 +55,24 @@ describe('ItemTemplateDataService', () => {
     },
     addPatch(self, operations) {
       // Do nothing
-    }
+    },
   } as any;
   const halEndpointService = {
     getEndpoint(linkPath: string): Observable<string> {
       return cold('a', { a: itemEndpoint });
-    }
+    },
   } as HALEndpointService;
   const notificationsService = {} as NotificationsService;
   const http = {} as HttpClient;
   const comparator = {
     diff(first, second) {
       return [{}];
-    }
+    },
   } as any;
   const collectionService = {
     getIDHrefObs(id): Observable<string> {
       return observableOf(collectionEndpoint);
-    }
+    },
   } as CollectionDataService;
 
   function initTestService() {

@@ -6,7 +6,7 @@ import { distinctUntilChanged, map, tap } from 'rxjs/operators';
 import {
   BitstreamFormatsRegistryDeselectAction,
   BitstreamFormatsRegistryDeselectAllAction,
-  BitstreamFormatsRegistrySelectAction
+  BitstreamFormatsRegistrySelectAction,
 } from '../../admin/admin-registries/bitstream-formats/bitstream-format.actions';
 import { BitstreamFormatRegistryState } from '../../admin/admin-registries/bitstream-formats/bitstream-format.reducers';
 import { NotificationsService } from '../../shared/notifications/notifications.service';
@@ -30,8 +30,11 @@ const bitstreamFormatsStateSelector = createSelector(
   coreSelector,
   (state: CoreState) => state.bitstreamFormats
 );
-const selectedBitstreamFormatSelector = createSelector(bitstreamFormatsStateSelector,
-  (bitstreamFormatRegistryState: BitstreamFormatRegistryState) => bitstreamFormatRegistryState.selectedBitstreamFormats);
+const selectedBitstreamFormatSelector = createSelector(
+  bitstreamFormatsStateSelector,
+  (bitstreamFormatRegistryState: BitstreamFormatRegistryState) =>
+    bitstreamFormatRegistryState.selectedBitstreamFormats
+);
 
 /**
  * A service responsible for fetching/sending data from/to the REST API on the bitstreamformats endpoint
@@ -39,7 +42,6 @@ const selectedBitstreamFormatSelector = createSelector(bitstreamFormatsStateSele
 @Injectable()
 @dataService(BITSTREAM_FORMAT)
 export class BitstreamFormatDataService extends DataService<BitstreamFormat> {
-
   protected linkPath = 'bitstreamformats';
 
   constructor(
@@ -50,7 +52,8 @@ export class BitstreamFormatDataService extends DataService<BitstreamFormat> {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DefaultChangeAnalyzer<BitstreamFormat>) {
+    protected comparator: DefaultChangeAnalyzer<BitstreamFormat>
+  ) {
     super();
   }
 
@@ -75,32 +78,42 @@ export class BitstreamFormatDataService extends DataService<BitstreamFormat> {
    * Update an existing bitstreamFormat
    * @param bitstreamFormat
    */
-  updateBitstreamFormat(bitstreamFormat: BitstreamFormat): Observable<RemoteData<BitstreamFormat>> {
+  updateBitstreamFormat(
+    bitstreamFormat: BitstreamFormat
+  ): Observable<RemoteData<BitstreamFormat>> {
     const requestId = this.requestService.generateRequestId();
 
-    this.getUpdateEndpoint(bitstreamFormat.id).pipe(
-      distinctUntilChanged(),
-      map((endpointURL: string) =>
-        new PutRequest(requestId, endpointURL, bitstreamFormat)),
-      sendRequest(this.requestService)).subscribe();
+    this.getUpdateEndpoint(bitstreamFormat.id)
+      .pipe(
+        distinctUntilChanged(),
+        map(
+          (endpointURL: string) =>
+            new PutRequest(requestId, endpointURL, bitstreamFormat)
+        ),
+        sendRequest(this.requestService)
+      )
+      .subscribe();
 
     return this.rdbService.buildFromRequestUUID(requestId);
-
   }
 
   /**
    * Create a new BitstreamFormat
    * @param {BitstreamFormat} bitstreamFormat
    */
-  public createBitstreamFormat(bitstreamFormat: BitstreamFormat): Observable<RemoteData<BitstreamFormat>> {
+  public createBitstreamFormat(
+    bitstreamFormat: BitstreamFormat
+  ): Observable<RemoteData<BitstreamFormat>> {
     const requestId = this.requestService.generateRequestId();
 
-    this.getCreateEndpoint().pipe(
-      map((endpointURL: string) => {
-        return new PostRequest(requestId, endpointURL, bitstreamFormat);
-      }),
-      sendRequest(this.requestService)
-    ).subscribe();
+    this.getCreateEndpoint()
+      .pipe(
+        map((endpointURL: string) => {
+          return new PostRequest(requestId, endpointURL, bitstreamFormat);
+        }),
+        sendRequest(this.requestService)
+      )
+      .subscribe();
 
     return this.rdbService.buildFromRequestUUID(requestId);
   }
@@ -126,7 +139,9 @@ export class BitstreamFormatDataService extends DataService<BitstreamFormat> {
    * @param bitstreamFormat
    */
   public selectBitstreamFormat(bitstreamFormat: BitstreamFormat) {
-    this.store.dispatch(new BitstreamFormatsRegistrySelectAction(bitstreamFormat));
+    this.store.dispatch(
+      new BitstreamFormatsRegistrySelectAction(bitstreamFormat)
+    );
   }
 
   /**
@@ -134,7 +149,9 @@ export class BitstreamFormatDataService extends DataService<BitstreamFormat> {
    * @param bitstreamFormat
    */
   public deselectBitstreamFormat(bitstreamFormat: BitstreamFormat) {
-    this.store.dispatch(new BitstreamFormatsRegistryDeselectAction(bitstreamFormat));
+    this.store.dispatch(
+      new BitstreamFormatsRegistryDeselectAction(bitstreamFormat)
+    );
   }
 
   /**
@@ -144,7 +161,9 @@ export class BitstreamFormatDataService extends DataService<BitstreamFormat> {
     this.store.dispatch(new BitstreamFormatsRegistryDeselectAllAction());
   }
 
-  findByBitstream(bitstream: Bitstream): Observable<RemoteData<BitstreamFormat>> {
+  findByBitstream(
+    bitstream: Bitstream
+  ): Observable<RemoteData<BitstreamFormat>> {
     return this.findByHref(bitstream._links.format.href);
   }
 }

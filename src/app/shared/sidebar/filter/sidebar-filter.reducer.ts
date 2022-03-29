@@ -1,7 +1,7 @@
 import {
   FilterInitializeAction,
   SidebarFilterAction,
-  SidebarFilterActionTypes
+  SidebarFilterActionTypes,
 } from './sidebar-filter.actions';
 
 /**
@@ -26,16 +26,17 @@ const initialState: SidebarFiltersState = Object.create(null);
  * @param {SidebarFilterAction} action The action that should be performed
  * @returns {SidebarFiltersState} The state after the action is performed
  */
-export function sidebarFilterReducer(state = initialState, action: SidebarFilterAction): SidebarFiltersState {
-
+export function sidebarFilterReducer(
+  state = initialState,
+  action: SidebarFilterAction
+): SidebarFiltersState {
   switch (action.type) {
-
     case SidebarFilterActionTypes.INITIALIZE: {
-      const initAction = (action as FilterInitializeAction);
+      const initAction = action as FilterInitializeAction;
       return Object.assign({}, state, {
         [action.filterName]: {
           filterCollapsed: !initAction.initiallyExpanded,
-        }
+        },
       });
     }
 
@@ -43,7 +44,7 @@ export function sidebarFilterReducer(state = initialState, action: SidebarFilter
       return Object.assign({}, state, {
         [action.filterName]: {
           filterCollapsed: true,
-        }
+        },
       });
     }
 
@@ -51,7 +52,7 @@ export function sidebarFilterReducer(state = initialState, action: SidebarFilter
       return Object.assign({}, state, {
         [action.filterName]: {
           filterCollapsed: false,
-        }
+        },
       });
     }
 
@@ -59,7 +60,7 @@ export function sidebarFilterReducer(state = initialState, action: SidebarFilter
       return Object.assign({}, state, {
         [action.filterName]: {
           filterCollapsed: !state[action.filterName].filterCollapsed,
-        }
+        },
       });
     }
 

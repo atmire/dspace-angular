@@ -9,7 +9,10 @@ import { Observable } from 'rxjs';
 import { getFirstSucceededRemoteData } from '../../../core/shared/operators';
 import { first, map } from 'rxjs/operators';
 import { findSuccessfulAccordingTo } from '../edit-item-operators';
-import { getItemEditRoute, getItemPageRoute } from '../../item-page-routing-paths';
+import {
+  getItemEditRoute,
+  getItemPageRoute,
+} from '../../item-page-routing-paths';
 
 /**
  * Component to render and handle simple item edit actions such as withdrawal and reinstatement.
@@ -17,10 +20,9 @@ import { getItemEditRoute, getItemPageRoute } from '../../item-page-routing-path
  */
 @Component({
   selector: 'ds-simple-action',
-  templateUrl: './abstract-simple-item-action.component.html'
+  templateUrl: './abstract-simple-item-action.component.html',
 })
 export class AbstractSimpleItemActionComponent implements OnInit {
-
   itemRD$: Observable<RemoteData<Item>>;
   item: Item;
 
@@ -37,24 +39,24 @@ export class AbstractSimpleItemActionComponent implements OnInit {
 
   protected predicate: Predicate<RemoteData<Item>>;
 
-  constructor(protected route: ActivatedRoute,
-              protected router: Router,
-              protected notificationsService: NotificationsService,
-              protected itemDataService: ItemDataService,
-              protected translateService: TranslateService) {
-  }
+  constructor(
+    protected route: ActivatedRoute,
+    protected router: Router,
+    protected notificationsService: NotificationsService,
+    protected itemDataService: ItemDataService,
+    protected translateService: TranslateService
+  ) {}
 
   ngOnInit(): void {
     this.itemRD$ = this.route.data.pipe(
       map((data) => data.dso),
       getFirstSucceededRemoteData()
-    )as Observable<RemoteData<Item>>;
+    ) as Observable<RemoteData<Item>>;
 
     this.itemRD$.pipe(first()).subscribe((rd) => {
-        this.item = rd.payload;
-        this.itemPageRoute = getItemPageRoute(this.item);
-      }
-    );
+      this.item = rd.payload;
+      this.itemPageRoute = getItemPageRoute(this.item);
+    });
 
     this.confirmMessage = 'item.edit.' + this.messageKey + '.confirm';
     this.cancelMessage = 'item.edit.' + this.messageKey + '.cancel';
@@ -74,15 +76,22 @@ export class AbstractSimpleItemActionComponent implements OnInit {
    */
   processRestResponse(response: RemoteData<any>) {
     if (response.hasSucceeded) {
-      this.itemDataService.findById(this.item.id).pipe(
-        findSuccessfulAccordingTo(this.predicate)).subscribe(() => {
-        this.notificationsService.success(this.translateService.get('item.edit.' + this.messageKey + '.success'));
-        this.router.navigate([getItemEditRoute(this.item)]);
-      });
+      this.itemDataService
+        .findById(this.item.id)
+        .pipe(findSuccessfulAccordingTo(this.predicate))
+        .subscribe(() => {
+          this.notificationsService.success(
+            this.translateService.get(
+              'item.edit.' + this.messageKey + '.success'
+            )
+          );
+          this.router.navigate([getItemEditRoute(this.item)]);
+        });
     } else {
-      this.notificationsService.error(this.translateService.get('item.edit.' + this.messageKey + '.error'));
+      this.notificationsService.error(
+        this.translateService.get('item.edit.' + this.messageKey + '.error')
+      );
       this.router.navigate([getItemEditRoute(this.item)]);
     }
   }
-
 }

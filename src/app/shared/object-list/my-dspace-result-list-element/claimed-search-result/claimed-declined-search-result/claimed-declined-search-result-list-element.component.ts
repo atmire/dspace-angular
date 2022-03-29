@@ -20,12 +20,16 @@ import { DSONameService } from '../../../../../core/breadcrumbs/dso-name.service
  */
 @Component({
   selector: 'ds-claimed-declined-search-result-list-element',
-  styleUrls: ['../../../search-result-list-element/search-result-list-element.component.scss'],
-  templateUrl: './claimed-declined-search-result-list-element.component.html'
+  styleUrls: [
+    '../../../search-result-list-element/search-result-list-element.component.scss',
+  ],
+  templateUrl: './claimed-declined-search-result-list-element.component.html',
 })
 @listableObjectComponent(ClaimedDeclinedTaskSearchResult, ViewMode.ListElement)
-export class ClaimedDeclinedSearchResultListElementComponent extends SearchResultListElementComponent<ClaimedTaskSearchResult, ClaimedTask> {
-
+export class ClaimedDeclinedSearchResultListElementComponent extends SearchResultListElementComponent<
+  ClaimedTaskSearchResult,
+  ClaimedTask
+> {
   /**
    * A boolean representing if to show submitter information
    */
@@ -54,14 +58,18 @@ export class ClaimedDeclinedSearchResultListElementComponent extends SearchResul
    */
   ngOnInit() {
     super.ngOnInit();
-    this.linkService.resolveLinks(this.dso,
-      followLink('workflowitem',
+    this.linkService.resolveLinks(
+      this.dso,
+      followLink(
+        'workflowitem',
         { useCachedVersionIfAvailable: false },
         followLink('item'),
         followLink('submitter')
       ),
-      followLink('action'));
-    this.workflowitemRD$ = this.dso.workflowitem as Observable<RemoteData<WorkflowItem>>;
+      followLink('action')
+    );
+    this.workflowitemRD$ = this.dso.workflowitem as Observable<
+      RemoteData<WorkflowItem>
+    >;
   }
-
 }

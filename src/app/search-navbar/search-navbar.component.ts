@@ -11,10 +11,9 @@ import { expandSearchInput } from '../shared/animations/slide';
   selector: 'ds-search-navbar',
   templateUrl: './search-navbar.component.html',
   styleUrls: ['./search-navbar.component.scss'],
-  animations: [expandSearchInput]
+  animations: [expandSearchInput],
 })
 export class SearchNavbarComponent {
-
   // The search form
   searchForm;
   // Whether or not the search bar is expanded, boolean for html ngIf, string fo AngularAnimation state change
@@ -24,10 +23,14 @@ export class SearchNavbarComponent {
   // Search input field
   @ViewChild('searchInput') searchField: ElementRef;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private searchService: SearchService) {
-    this.searchForm = this.formBuilder.group(({
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private searchService: SearchService
+  ) {
+    this.searchForm = this.formBuilder.group({
       query: '',
-    }));
+    });
   }
 
   /**
@@ -62,12 +65,14 @@ export class SearchNavbarComponent {
   onSubmit(data: any) {
     this.collapse();
     const queryParams = Object.assign({}, data);
-    const linkToNavigateTo = [this.searchService.getSearchLink().replace('/', '')];
+    const linkToNavigateTo = [
+      this.searchService.getSearchLink().replace('/', ''),
+    ];
     this.searchForm.reset();
 
     this.router.navigate(linkToNavigateTo, {
       queryParams: queryParams,
-      queryParamsHandling: 'merge'
+      queryParamsHandling: 'merge',
     });
   }
 }

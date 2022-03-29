@@ -16,11 +16,12 @@ import { Router } from '@angular/router';
   selector: 'li[ds-admin-sidebar-section]',
   templateUrl: './admin-sidebar-section.component.html',
   styleUrls: ['./admin-sidebar-section.component.scss'],
-
 })
 @rendersSectionForMenu(MenuID.ADMIN, false)
-export class AdminSidebarSectionComponent extends MenuSectionComponent implements OnInit {
-
+export class AdminSidebarSectionComponent
+  extends MenuSectionComponent
+  implements OnInit
+{
   /**
    * This section resides in the Admin Sidebar
    */
@@ -31,7 +32,7 @@ export class AdminSidebarSectionComponent extends MenuSectionComponent implement
     @Inject('sectionDataProvider') menuSection: MenuSection,
     protected menuService: MenuService,
     protected injector: Injector,
-    protected router: Router,
+    protected router: Router
   ) {
     super(menuSection, menuService, injector);
     this.itemModel = menuSection.model as LinkMenuItemModel;

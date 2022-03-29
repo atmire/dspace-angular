@@ -20,10 +20,11 @@ import { LinkService } from '../../../../core/cache/builders/link.service';
   styleUrls: ['../search-result-detail-element.component.scss'],
   templateUrl: './pool-search-result-detail-element.component.html',
 })
-
 @listableObjectComponent(PoolTaskSearchResult, ViewMode.DetailedListElement)
-export class PoolSearchResultDetailElementComponent extends SearchResultDetailElementComponent<PoolTaskSearchResult, PoolTask> {
-
+export class PoolSearchResultDetailElementComponent extends SearchResultDetailElementComponent<
+  PoolTaskSearchResult,
+  PoolTask
+> {
   /**
    * A boolean representing if to show submitter information
    */
@@ -48,11 +49,18 @@ export class PoolSearchResultDetailElementComponent extends SearchResultDetailEl
    */
   ngOnInit() {
     super.ngOnInit();
-    this.linkService.resolveLinks(this.dso, followLink('workflowitem', {},
-      followLink('item', {}, followLink('bundles')),
-      followLink('submitter')
-    ), followLink('action'));
-    this.workflowitemRD$ = this.dso.workflowitem as Observable<RemoteData<WorkflowItem>>;
+    this.linkService.resolveLinks(
+      this.dso,
+      followLink(
+        'workflowitem',
+        {},
+        followLink('item', {}, followLink('bundles')),
+        followLink('submitter')
+      ),
+      followLink('action')
+    );
+    this.workflowitemRD$ = this.dso.workflowitem as Observable<
+      RemoteData<WorkflowItem>
+    >;
   }
-
 }

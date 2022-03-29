@@ -17,16 +17,12 @@ import { ThemedBrowseBySwitcherComponent } from './browse-by-switcher/themed-bro
             component: ThemedBrowseBySwitcherComponent,
             canActivate: [BrowseByGuard],
             resolve: { breadcrumb: BrowseByI18nBreadcrumbResolver },
-            data: { title: 'browse.title', breadcrumbKey: 'browse.metadata' }
-          }
-        ]
-      }])
+            data: { title: 'browse.title', breadcrumbKey: 'browse.metadata' },
+          },
+        ],
+      },
+    ]),
   ],
-  providers: [
-    BrowseByI18nBreadcrumbResolver,
-    BrowseByDSOBreadcrumbResolver
-  ]
+  providers: [BrowseByI18nBreadcrumbResolver, BrowseByDSOBreadcrumbResolver],
 })
-export class BrowseByRoutingModule {
-
-}
+export class BrowseByRoutingModule {}

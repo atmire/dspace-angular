@@ -11,16 +11,25 @@ import { DSONameService } from '../../../core/breadcrumbs/dso-name.service';
 
 @Component({
   selector: 'ds-search-result-list-element',
-  template: ``
+  template: ``,
 })
-export class SearchResultListElementComponent<T extends SearchResult<K>, K extends DSpaceObject> extends AbstractListableElementComponent<T> implements OnInit {
+export class SearchResultListElementComponent<
+    T extends SearchResult<K>,
+    K extends DSpaceObject
+  >
+  extends AbstractListableElementComponent<T>
+  implements OnInit
+{
   /**
    * The DSpaceObject of the search result
    */
   dso: K;
   dsoTitle: string;
 
-  public constructor(protected truncatableService: TruncatableService, protected dsoNameService: DSONameService) {
+  public constructor(
+    protected truncatableService: TruncatableService,
+    protected dsoNameService: DSONameService
+  ) {
     super();
   }
 
@@ -41,7 +50,10 @@ export class SearchResultListElementComponent<T extends SearchResult<K>, K exten
    * @returns {string[]} the matching string values or an empty array.
    */
   allMetadataValues(keyOrKeys: string | string[]): string[] {
-    return Metadata.allValues([this.object.hitHighlights, this.dso.metadata], keyOrKeys);
+    return Metadata.allValues(
+      [this.object.hitHighlights, this.dso.metadata],
+      keyOrKeys
+    );
   }
 
   /**
@@ -51,7 +63,10 @@ export class SearchResultListElementComponent<T extends SearchResult<K>, K exten
    * @returns {string} the first matching string value, or `undefined`.
    */
   firstMetadataValue(keyOrKeys: string | string[]): string {
-    return Metadata.firstValue([this.object.hitHighlights, this.dso.metadata], keyOrKeys);
+    return Metadata.firstValue(
+      [this.object.hitHighlights, this.dso.metadata],
+      keyOrKeys
+    );
   }
 
   /**
@@ -60,5 +75,4 @@ export class SearchResultListElementComponent<T extends SearchResult<K>, K exten
   isCollapsed(): Observable<boolean> {
     return this.truncatableService.isCollapsed(this.dso.id);
   }
-
 }

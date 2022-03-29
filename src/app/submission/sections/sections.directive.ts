@@ -1,4 +1,10 @@
-import { ChangeDetectorRef, Directive, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Directive,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -7,7 +13,9 @@ import { uniq } from 'lodash';
 import { SectionsService } from './sections.service';
 import { hasValue, isNotEmpty, isNotNull } from '../../shared/empty.util';
 import { SubmissionSectionError } from '../objects/submission-objects.reducer';
-import parseSectionErrorPaths, { SectionErrorPath } from '../utils/parseSectionErrorPaths';
+import parseSectionErrorPaths, {
+  SectionErrorPath,
+} from '../utils/parseSectionErrorPaths';
 import { SubmissionService } from '../submission.service';
 import { SectionsType } from './sections-type';
 
@@ -16,10 +24,9 @@ import { SectionsType } from './sections-type';
  */
 @Directive({
   selector: '[dsSection]',
-  exportAs: 'sectionRef'
+  exportAs: 'sectionRef',
 })
 export class SectionsDirective implements OnDestroy, OnInit {
-
   /**
    * A boolean representing if section is mandatory
    * @type {boolean}
@@ -93,33 +100,46 @@ export class SectionsDirective implements OnDestroy, OnInit {
    * @param {SubmissionService} submissionService
    * @param {SectionsService} sectionService
    */
-  constructor(private changeDetectorRef: ChangeDetectorRef,
-              private submissionService: SubmissionService,
-              private sectionService: SectionsService) {
-  }
+  constructor(
+    private changeDetectorRef: ChangeDetectorRef,
+    private submissionService: SubmissionService,
+    private sectionService: SectionsService
+  ) {}
 
   /**
    * Initialize instance variables
    */
   ngOnInit() {
-    this.valid = this.sectionService.isSectionValid(this.submissionId, this.sectionId).pipe(
-      map((valid: boolean) => {
-        if (valid) {
-          this.resetErrors();
-        }
-        return valid;
-      }));
+    this.valid = this.sectionService
+      .isSectionValid(this.submissionId, this.sectionId)
+      .pipe(
+        map((valid: boolean) => {
+          if (valid) {
+            this.resetErrors();
+          }
+          return valid;
+        })
+      );
 
     this.subs.push(
-      this.sectionService.getShownSectionErrors(this.submissionId, this.sectionId, this.sectionType)
+      this.sectionService
+        .getShownSectionErrors(
+          this.submissionId,
+          this.sectionId,
+          this.sectionType
+        )
         .subscribe((errors: SubmissionSectionError[]) => {
           if (isNotEmpty(errors)) {
             errors.forEach((errorItem: SubmissionSectionError) => {
-              const parsedErrors: SectionErrorPath[] = parseSectionErrorPaths(errorItem.path);
+              const parsedErrors: SectionErrorPath[] = parseSectionErrorPaths(
+                errorItem.path
+              );
 
               parsedErrors.forEach((error: SectionErrorPath) => {
                 if (!error.fieldId) {
-                  this.genericSectionErrors = uniq(this.genericSectionErrors.concat(errorItem.message));
+                  this.genericSectionErrors = uniq(
+                    this.genericSectionErrors.concat(errorItem.message)
+                  );
                 } else {
                   this.allSectionErrors.push(errorItem.message);
                 }
@@ -129,10 +149,11 @@ export class SectionsDirective implements OnDestroy, OnInit {
             this.resetErrors();
           }
         }),
-      this.submissionService.getActiveSectionId(this.submissionId)
+      this.submissionService
+        .getActiveSectionId(this.submissionId)
         .subscribe((activeSectionId) => {
           const previousActive = this.active;
-          this.active = (activeSectionId === this.sectionId);
+          this.active = activeSectionId === this.sectionId;
           if (previousActive !== this.active) {
             this.changeDetectorRef.detectChanges();
             // If section is no longer active dispatch save action
@@ -143,7 +164,10 @@ export class SectionsDirective implements OnDestroy, OnInit {
         })
     );
 
-    this.enabled = this.sectionService.isSectionEnabled(this.submissionId, this.sectionId);
+    this.enabled = this.sectionService.isSectionEnabled(
+      this.submissionId,
+      this.sectionId
+    );
   }
 
   /**
@@ -246,8 +270,10 @@ export class SectionsDirective implements OnDestroy, OnInit {
    *    Returns true when section has errors
    */
   public hasErrors(): boolean {
-    return (this.genericSectionErrors && this.genericSectionErrors.length > 0) ||
-      (this.allSectionErrors && this.allSectionErrors.length > 0);
+    return (
+      (this.genericSectionErrors && this.genericSectionErrors.length > 0) ||
+      (this.allSectionErrors && this.allSectionErrors.length > 0)
+    );
   }
 
   /**
@@ -268,7 +294,10 @@ export class SectionsDirective implements OnDestroy, OnInit {
    */
   public setFocus(event): void {
     if (!this.active) {
-      this.submissionService.setActiveSection(this.submissionId, this.sectionId);
+      this.submissionService.setActiveSection(
+        this.submissionId,
+        this.sectionId
+      );
     }
   }
 
@@ -287,10 +316,12 @@ export class SectionsDirective implements OnDestroy, OnInit {
    */
   public resetErrors() {
     if (isNotEmpty(this.genericSectionErrors)) {
-      this.sectionService.dispatchRemoveSectionErrors(this.submissionId, this.sectionId);
+      this.sectionService.dispatchRemoveSectionErrors(
+        this.submissionId,
+        this.sectionId
+      );
     }
     this.genericSectionErrors = [];
     this.allSectionErrors = [];
-
   }
 }

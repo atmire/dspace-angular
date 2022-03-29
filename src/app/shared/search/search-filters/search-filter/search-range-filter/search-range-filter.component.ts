@@ -1,16 +1,25 @@
 import { combineLatest as observableCombineLatest, Subscription } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
-import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
+import {
+  Component,
+  Inject,
+  OnDestroy,
+  OnInit,
+  PLATFORM_ID,
+} from '@angular/core';
 import { RemoteDataBuildService } from '../../../../../core/cache/builders/remote-data-build.service';
 import { FilterType } from '../../../models/filter-type.model';
 import { renderFacetFor } from '../search-filter-type-decorator';
-import { facetLoad, SearchFacetFilterComponent } from '../search-facet-filter/search-facet-filter.component';
+import {
+  facetLoad,
+  SearchFacetFilterComponent,
+} from '../search-facet-filter/search-facet-filter.component';
 import { SearchFilterConfig } from '../../../models/search-filter-config.model';
 import {
   FILTER_CONFIG,
   IN_PLACE_SEARCH,
-  SearchFilterService
+  SearchFilterService,
 } from '../../../../../core/shared/search/search-filter.service';
 import { SearchService } from '../../../../../core/shared/search/search.service';
 import { Router } from '@angular/router';
@@ -44,14 +53,16 @@ const dateFormats = ['YYYY', 'YYYY-MM', 'YYYY-MM-DD'];
   selector: 'ds-search-range-filter',
   styleUrls: ['./search-range-filter.component.scss'],
   templateUrl: './search-range-filter.component.html',
-  animations: [facetLoad]
+  animations: [facetLoad],
 })
-
 /**
  * Component that represents a range facet for a specific filter configuration
  */
 @renderFacetFor(FilterType.range)
-export class SearchRangeFilterComponent extends SearchFacetFilterComponent implements OnInit, OnDestroy {
+export class SearchRangeFilterComponent
+  extends SearchFacetFilterComponent
+  implements OnInit, OnDestroy
+{
   /**
    * Fallback minimum for the range
    */
@@ -78,17 +89,27 @@ export class SearchRangeFilterComponent extends SearchFacetFilterComponent imple
    */
   keyboardControl: boolean;
 
-  constructor(protected searchService: SearchService,
-              protected filterService: SearchFilterService,
-              protected router: Router,
-              protected rdbs: RemoteDataBuildService,
-              @Inject(SEARCH_CONFIG_SERVICE) public searchConfigService: SearchConfigurationService,
-              @Inject(IN_PLACE_SEARCH) public inPlaceSearch: boolean,
-              @Inject(FILTER_CONFIG) public filterConfig: SearchFilterConfig,
-              @Inject(PLATFORM_ID) private platformId: any,
-              private route: RouteService) {
-    super(searchService, filterService, rdbs, router, searchConfigService, inPlaceSearch, filterConfig);
-
+  constructor(
+    protected searchService: SearchService,
+    protected filterService: SearchFilterService,
+    protected router: Router,
+    protected rdbs: RemoteDataBuildService,
+    @Inject(SEARCH_CONFIG_SERVICE)
+    public searchConfigService: SearchConfigurationService,
+    @Inject(IN_PLACE_SEARCH) public inPlaceSearch: boolean,
+    @Inject(FILTER_CONFIG) public filterConfig: SearchFilterConfig,
+    @Inject(PLATFORM_ID) private platformId: any,
+    private route: RouteService
+  ) {
+    super(
+      searchService,
+      filterService,
+      rdbs,
+      router,
+      searchConfigService,
+      inPlaceSearch,
+      filterConfig
+    );
   }
 
   /**
@@ -97,17 +118,29 @@ export class SearchRangeFilterComponent extends SearchFacetFilterComponent imple
    */
   ngOnInit(): void {
     super.ngOnInit();
-    this.min = moment(this.filterConfig.minValue, dateFormats).year() || this.min;
-    this.max = moment(this.filterConfig.maxValue, dateFormats).year() || this.max;
-    const iniMin = this.route.getQueryParameterValue(this.filterConfig.paramName + RANGE_FILTER_MIN_SUFFIX).pipe(startWith(undefined));
-    const iniMax = this.route.getQueryParameterValue(this.filterConfig.paramName + RANGE_FILTER_MAX_SUFFIX).pipe(startWith(undefined));
-    this.sub = observableCombineLatest(iniMin, iniMax).pipe(
-      map(([min, max]) => {
-        const minimum = hasValue(min) ? min : this.min;
-        const maximum = hasValue(max) ? max : this.max;
-        return [minimum, maximum];
-      })
-    ).subscribe((minmax) => this.range = minmax);
+    this.min =
+      moment(this.filterConfig.minValue, dateFormats).year() || this.min;
+    this.max =
+      moment(this.filterConfig.maxValue, dateFormats).year() || this.max;
+    const iniMin = this.route
+      .getQueryParameterValue(
+        this.filterConfig.paramName + RANGE_FILTER_MIN_SUFFIX
+      )
+      .pipe(startWith(undefined));
+    const iniMax = this.route
+      .getQueryParameterValue(
+        this.filterConfig.paramName + RANGE_FILTER_MAX_SUFFIX
+      )
+      .pipe(startWith(undefined));
+    this.sub = observableCombineLatest(iniMin, iniMax)
+      .pipe(
+        map(([min, max]) => {
+          const minimum = hasValue(min) ? min : this.min;
+          const maximum = hasValue(max) ? max : this.max;
+          return [minimum, maximum];
+        })
+      )
+      .subscribe((minmax) => (this.range = minmax));
   }
 
   /**
@@ -115,18 +148,17 @@ export class SearchRangeFilterComponent extends SearchFacetFilterComponent imple
    */
   onSubmit() {
     if (this.keyboardControl) {
-      return;  // don't submit if a key is being held down
+      return; // don't submit if a key is being held down
     }
 
     const newMin = this.range[0] !== this.min ? [this.range[0]] : null;
     const newMax = this.range[1] !== this.max ? [this.range[1]] : null;
     this.router.navigate(this.getSearchLinkParts(), {
-      queryParams:
-        {
-          [this.filterConfig.paramName + RANGE_FILTER_MIN_SUFFIX]: newMin,
-          [this.filterConfig.paramName + RANGE_FILTER_MAX_SUFFIX]: newMax
-        },
-      queryParamsHandling: 'merge'
+      queryParams: {
+        [this.filterConfig.paramName + RANGE_FILTER_MIN_SUFFIX]: newMin,
+        [this.filterConfig.paramName + RANGE_FILTER_MAX_SUFFIX]: newMax,
+      },
+      queryParamsHandling: 'merge',
     });
     this.filter = '';
   }

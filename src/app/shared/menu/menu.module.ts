@@ -13,36 +13,20 @@ const COMPONENTS = [
   MenuComponent,
   LinkMenuItemComponent,
   TextMenuItemComponent,
-  OnClickMenuItemComponent
+  OnClickMenuItemComponent,
 ];
 
-const MODULES = [
-  TranslateModule,
-  RouterModule,
-  CommonModule
-];
-const PROVIDERS = [
-
-];
+const MODULES = [TranslateModule, RouterModule, CommonModule];
+const PROVIDERS = [];
 
 @NgModule({
-  imports: [
-    ...MODULES
-  ],
-  declarations: [
-    ...COMPONENTS
-  ],
-  providers: [
-    ...PROVIDERS
-  ],
-  exports: [
-    ...COMPONENTS
-  ]
+  imports: [...MODULES],
+  declarations: [...COMPONENTS],
+  providers: [...PROVIDERS],
+  exports: [...COMPONENTS],
 })
 
 /**
  * This module handles all components, providers and modules that are needed for the menu
  */
-export class MenuModule {
-
-}
+export class MenuModule {}

@@ -20,17 +20,49 @@ describe(`LegacyBitstreamUrlResolver`, () => {
 
     route = {
       params: {},
-      queryParams: {}
+      queryParams: {},
     };
     state = {};
     remoteDataMocks = {
-      RequestPending: new RemoteData(undefined, 0, 0, RequestEntryState.RequestPending, undefined, undefined, undefined),
-      ResponsePending: new RemoteData(undefined, 0, 0, RequestEntryState.ResponsePending, undefined, undefined, undefined),
-      Success: new RemoteData(0, 0, 0, RequestEntryState.Success, undefined, {}, 200),
-      Error: new RemoteData(0, 0, 0, RequestEntryState.Error, 'Internal server error', undefined, 500),
+      RequestPending: new RemoteData(
+        undefined,
+        0,
+        0,
+        RequestEntryState.RequestPending,
+        undefined,
+        undefined,
+        undefined
+      ),
+      ResponsePending: new RemoteData(
+        undefined,
+        0,
+        0,
+        RequestEntryState.ResponsePending,
+        undefined,
+        undefined,
+        undefined
+      ),
+      Success: new RemoteData(
+        0,
+        0,
+        0,
+        RequestEntryState.Success,
+        undefined,
+        {},
+        200
+      ),
+      Error: new RemoteData(
+        0,
+        0,
+        0,
+        RequestEntryState.Error,
+        'Internal server error',
+        undefined,
+        500
+      ),
     };
     bitstreamDataService = {
-      findByItemHandle: () => undefined
+      findByItemHandle: () => undefined,
     } as any;
     resolver = new LegacyBitstreamUrlResolver(bitstreamDataService);
   });
@@ -44,8 +76,8 @@ describe(`LegacyBitstreamUrlResolver`, () => {
             prefix: '123456789',
             suffix: '1234',
             filename: 'some-file.pdf',
-            sequence_id: '5'
-          }
+            sequence_id: '5',
+          },
         });
       });
       it(`should call findByItemHandle with the handle, sequence id, and filename from the route`, () => {
@@ -63,7 +95,9 @@ describe(`LegacyBitstreamUrlResolver`, () => {
     describe(`For XMLUI-style URLs`, () => {
       describe(`when there is a sequenceId query parameter`, () => {
         beforeEach(() => {
-          spyOn(bitstreamDataService, 'findByItemHandle').and.returnValue(EMPTY);
+          spyOn(bitstreamDataService, 'findByItemHandle').and.returnValue(
+            EMPTY
+          );
           route = Object.assign({}, route, {
             params: {
               prefix: '123456789',
@@ -71,8 +105,8 @@ describe(`LegacyBitstreamUrlResolver`, () => {
               filename: 'some-file.pdf',
             },
             queryParams: {
-              sequenceId: '5'
-            }
+              sequenceId: '5',
+            },
           });
         });
         it(`should call findByItemHandle with the handle and filename from the route, and the sequence ID from the queryParams`, () => {
@@ -88,7 +122,9 @@ describe(`LegacyBitstreamUrlResolver`, () => {
       });
       describe(`when there's no sequenceId query parameter`, () => {
         beforeEach(() => {
-          spyOn(bitstreamDataService, 'findByItemHandle').and.returnValue(EMPTY);
+          spyOn(bitstreamDataService, 'findByItemHandle').and.returnValue(
+            EMPTY
+          );
           route = Object.assign({}, route, {
             params: {
               prefix: '123456789',
@@ -112,32 +148,42 @@ describe(`LegacyBitstreamUrlResolver`, () => {
     describe(`should return and complete after the remotedata has...`, () => {
       it(`...failed`, () => {
         testScheduler.run(({ cold, expectObservable }) => {
-          spyOn(bitstreamDataService, 'findByItemHandle').and.returnValue(cold('a-b-c', {
-            a: remoteDataMocks.RequestPending,
-            b: remoteDataMocks.ResponsePending,
-            c: remoteDataMocks.Error,
-          }));
+          spyOn(bitstreamDataService, 'findByItemHandle').and.returnValue(
+            cold('a-b-c', {
+              a: remoteDataMocks.RequestPending,
+              b: remoteDataMocks.ResponsePending,
+              c: remoteDataMocks.Error,
+            })
+          );
           const expected = '----(c|)';
           const values = {
             c: remoteDataMocks.Error,
           };
 
-          expectObservable(resolver.resolve(route, state)).toBe(expected, values);
+          expectObservable(resolver.resolve(route, state)).toBe(
+            expected,
+            values
+          );
         });
       });
       it(`...succeeded`, () => {
         testScheduler.run(({ cold, expectObservable }) => {
-          spyOn(bitstreamDataService, 'findByItemHandle').and.returnValue(cold('a-b-c', {
-            a: remoteDataMocks.RequestPending,
-            b: remoteDataMocks.ResponsePending,
-            c: remoteDataMocks.Success,
-          }));
+          spyOn(bitstreamDataService, 'findByItemHandle').and.returnValue(
+            cold('a-b-c', {
+              a: remoteDataMocks.RequestPending,
+              b: remoteDataMocks.ResponsePending,
+              c: remoteDataMocks.Success,
+            })
+          );
           const expected = '----(c|)';
           const values = {
             c: remoteDataMocks.Success,
           };
 
-          expectObservable(resolver.resolve(route, state)).toBe(expected, values);
+          expectObservable(resolver.resolve(route, state)).toBe(
+            expected,
+            values
+          );
         });
       });
     });

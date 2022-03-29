@@ -22,7 +22,10 @@ import { followLink } from '../../../utils/follow-link-config.model';
  * Component representing a grid element for a community search result
  */
 @listableObjectComponent(CommunitySearchResult, ViewMode.GridElement)
-export class CommunitySearchResultGridElementComponent extends SearchResultGridElementComponent<CommunitySearchResult,Community> {
+export class CommunitySearchResultGridElementComponent extends SearchResultGridElementComponent<
+  CommunitySearchResult,
+  Community
+> {
   private _dso: Community;
 
   constructor(

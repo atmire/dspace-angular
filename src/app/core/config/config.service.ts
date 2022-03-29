@@ -49,19 +49,41 @@ export abstract class ConfigService {
     protected comparator: DefaultChangeAnalyzer<ConfigObject>,
     protected linkPath: string
   ) {
-    this.dataService = new DataServiceImpl(requestService, rdbService, null, objectCache, halService, notificationsService, http, comparator, this.linkPath);
+    this.dataService = new DataServiceImpl(
+      requestService,
+      rdbService,
+      null,
+      objectCache,
+      halService,
+      notificationsService,
+      http,
+      comparator,
+      this.linkPath
+    );
   }
 
-  public findByHref(href: string, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<ConfigObject>[]): Observable<RemoteData<ConfigObject>> {
-    return this.dataService.findByHref(href, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow).pipe(
-      getFirstCompletedRemoteData(),
-      map((rd: RemoteData<ConfigObject>) => {
-        if (rd.hasFailed) {
-          throw new Error(`Couldn't retrieve the config`);
-        } else {
-          return rd;
-        }
-      })
-    );
+  public findByHref(
+    href: string,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<ConfigObject>[]
+  ): Observable<RemoteData<ConfigObject>> {
+    return this.dataService
+      .findByHref(
+        href,
+        useCachedVersionIfAvailable,
+        reRequestOnStale,
+        ...linksToFollow
+      )
+      .pipe(
+        getFirstCompletedRemoteData(),
+        map((rd: RemoteData<ConfigObject>) => {
+          if (rd.hasFailed) {
+            throw new Error(`Couldn't retrieve the config`);
+          } else {
+            return rd;
+          }
+        })
+      );
   }
 }

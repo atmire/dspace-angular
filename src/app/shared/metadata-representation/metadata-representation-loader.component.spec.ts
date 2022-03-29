@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
 import { Context } from '../../core/shared/context.model';
 import {
   MetadataRepresentation,
-  MetadataRepresentationType
+  MetadataRepresentationType,
 } from '../../core/shared/metadata-representation/metadata-representation.model';
 import { MetadataRepresentationLoaderComponent } from './metadata-representation-loader.component';
 import { MetadataRepresentationDirective } from './metadata-representation.directive';
@@ -41,24 +41,32 @@ describe('MetadataRepresentationLoaderComponent', () => {
     });
     TestBed.configureTestingModule({
       imports: [],
-      declarations: [MetadataRepresentationLoaderComponent, PlainTextMetadataListElementComponent, MetadataRepresentationDirective],
+      declarations: [
+        MetadataRepresentationLoaderComponent,
+        PlainTextMetadataListElementComponent,
+        MetadataRepresentationDirective,
+      ],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
         {
           provide: METADATA_REPRESENTATION_COMPONENT_FACTORY,
-          useValue: jasmine.createSpy('getMetadataRepresentationComponent').and.returnValue(PlainTextMetadataListElementComponent)
+          useValue: jasmine
+            .createSpy('getMetadataRepresentationComponent')
+            .and.returnValue(PlainTextMetadataListElementComponent),
         },
         {
           provide: ThemeService,
           useValue: themeService,
-        }
-      ]
-    }).overrideComponent(MetadataRepresentationLoaderComponent, {
-      set: {
-        changeDetection: ChangeDetectionStrategy.Default,
-        entryComponents: [PlainTextMetadataListElementComponent]
-      }
-    }).compileComponents();
+        },
+      ],
+    })
+      .overrideComponent(MetadataRepresentationLoaderComponent, {
+        set: {
+          changeDetection: ChangeDetectionStrategy.Default,
+          entryComponents: [PlainTextMetadataListElementComponent],
+        },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -72,7 +80,14 @@ describe('MetadataRepresentationLoaderComponent', () => {
 
   describe('When the component is rendered', () => {
     it('should call the getMetadataRepresentationComponent function with the right entity type, representation type and context', () => {
-      expect((comp as any).getMetadataRepresentationComponent).toHaveBeenCalledWith(testType, testRepresentationType, testContext, themeName);
+      expect(
+        (comp as any).getMetadataRepresentationComponent
+      ).toHaveBeenCalledWith(
+        testType,
+        testRepresentationType,
+        testContext,
+        themeName
+      );
     });
   });
 });

@@ -11,7 +11,7 @@ describe('AdminCurationTasksComponent', () => {
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
       declarations: [AdminCurationTasksComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -22,7 +22,9 @@ describe('AdminCurationTasksComponent', () => {
   describe('init', () => {
     it('should initialise the comp', () => {
       expect(comp).toBeDefined();
-      expect(fixture.debugElement.nativeElement.innerHTML).toContain('ds-curation-form');
+      expect(fixture.debugElement.nativeElement.innerHTML).toContain(
+        'ds-curation-form'
+      );
     });
   });
 });

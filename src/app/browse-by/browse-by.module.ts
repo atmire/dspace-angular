@@ -12,23 +12,17 @@ const ENTRY_COMPONENTS = [
   // put only entry components that use custom decorator
   BrowseByTitlePageComponent,
   BrowseByMetadataPageComponent,
-  BrowseByDatePageComponent
+  BrowseByDatePageComponent,
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    ComcolModule,
-    SharedModule
-  ],
+  imports: [CommonModule, ComcolModule, SharedModule],
   declarations: [
     BrowseBySwitcherComponent,
     ThemedBrowseBySwitcherComponent,
-    ...ENTRY_COMPONENTS
+    ...ENTRY_COMPONENTS,
   ],
-  exports: [
-    BrowseBySwitcherComponent
-  ]
+  exports: [BrowseBySwitcherComponent],
 })
 export class BrowseByModule {
   /**
@@ -38,7 +32,7 @@ export class BrowseByModule {
   static withEntryComponents() {
     return {
       ngModule: SharedModule,
-      providers: ENTRY_COMPONENTS.map((component) => ({provide: component}))
+      providers: ENTRY_COMPONENTS.map((component) => ({ provide: component })),
     };
   }
 }

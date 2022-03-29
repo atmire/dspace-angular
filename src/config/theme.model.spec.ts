@@ -13,7 +13,7 @@ describe('Theme Models', () => {
   let theme: Theme;
 
   describe('RegExTheme', () => {
-    it('should return true when the regex matches the community\'s DSO route', () => {
+    it("should return true when the regex matches the community's DSO route", () => {
       theme = new RegExTheme({
         name: 'community',
         regex: getCommunityModuleRoute() + '/.*',
@@ -25,7 +25,7 @@ describe('Theme Models', () => {
       expect(theme.matches('', dso)).toEqual(true);
     });
 
-    it('should return true when the regex matches the collection\'s DSO route', () => {
+    it("should return true when the regex matches the collection's DSO route", () => {
       theme = new RegExTheme({
         name: 'collection',
         regex: getCollectionModuleRoute() + '/.*',
@@ -37,7 +37,7 @@ describe('Theme Models', () => {
       expect(theme.matches('', dso)).toEqual(true);
     });
 
-    it('should return true when the regex matches the item\'s DSO route', () => {
+    it("should return true when the regex matches the item's DSO route", () => {
       theme = new RegExTheme({
         name: 'item',
         regex: getItemModuleRoute() + '/.*',
@@ -67,7 +67,7 @@ describe('Theme Models', () => {
   });
 
   describe('HandleTheme', () => {
-    it('should return true when the DSO\'s handle matches the theme\'s handle', () => {
+    it("should return true when the DSO's handle matches the theme's handle", () => {
       theme = new HandleTheme({
         name: 'matching-handle',
         handle: '1234/5678',
@@ -80,7 +80,7 @@ describe('Theme Models', () => {
       expect(theme.matches('', dso)).toEqual(true);
     });
 
-    it('should return false when the handles don\'t match', () => {
+    it("should return false when the handles don't match", () => {
       theme = new HandleTheme({
         name: 'no-matching-handle',
         handle: '1234/5678',
@@ -95,7 +95,7 @@ describe('Theme Models', () => {
   });
 
   describe('UUIDTheme', () => {
-    it('should return true when the DSO\'s UUID matches the theme\'s UUID', () => {
+    it("should return true when the DSO's UUID matches the theme's UUID", () => {
       theme = new UUIDTheme({
         name: 'matching-uuid',
         uuid: 'item-uuid',
@@ -107,7 +107,7 @@ describe('Theme Models', () => {
       expect(theme.matches('', dso)).toEqual(true);
     });
 
-    it('should return true when the UUIDs don\'t match', () => {
+    it("should return true when the UUIDs don't match", () => {
       theme = new UUIDTheme({
         name: 'matching-uuid',
         uuid: 'item-uuid',

@@ -20,14 +20,17 @@ describe('FileValueInputComponent', () => {
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
-            useClass: TranslateLoaderMock
-          }
-        })],
-      declarations: [FileValueInputComponent, FileValueAccessorDirective, FileValidator],
-      schemas: [NO_ERRORS_SCHEMA]
-
-    })
-      .compileComponents();
+            useClass: TranslateLoaderMock,
+          },
+        }),
+      ],
+      declarations: [
+        FileValueInputComponent,
+        FileValueAccessorDirective,
+        FileValidator,
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -41,17 +44,21 @@ describe('FileValueInputComponent', () => {
   });
 
   it('should not show a validation error if the input field was left untouched but left empty', () => {
-    const validationError = fixture.debugElement.query(By.css('.validation-error'));
+    const validationError = fixture.debugElement.query(
+      By.css('.validation-error')
+    );
     expect(validationError).toBeFalsy();
   });
 
-  it('should show a validation error if the input field was touched but left empty',  () => {
+  it('should show a validation error if the input field was touched but left empty', () => {
     const input = fixture.debugElement.query(By.css('input'));
     input.triggerEventHandler('blur', null);
 
     fixture.detectChanges();
 
-    const validationError = fixture.debugElement.query(By.css('.validation-error'));
+    const validationError = fixture.debugElement.query(
+      By.css('.validation-error')
+    );
     expect(validationError).toBeTruthy();
   });
 });

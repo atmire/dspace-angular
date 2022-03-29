@@ -21,12 +21,13 @@ export class ChipsItem {
   private fieldToDisplay: string;
   private objToDisplay: string;
 
-  constructor(item: any,
-              fieldToDisplay: string = 'display',
-              objToDisplay?: string,
-              icons?: ChipsItemIcon[],
-              editMode?: boolean) {
-
+  constructor(
+    item: any,
+    fieldToDisplay: string = 'display',
+    objToDisplay?: string,
+    icons?: ChipsItemIcon[],
+    editMode?: boolean
+  ) {
     this.id = uniqueId();
     this._item = item;
     this.fieldToDisplay = fieldToDisplay;
@@ -45,14 +46,16 @@ export class ChipsItem {
   }
 
   isNestedItem(): boolean {
-    return (isNotEmpty(this.item)
-      && isObject(this.item)
-      && isNotEmpty(this.objToDisplay)
-      && this.item[this.objToDisplay]);
+    return (
+      isNotEmpty(this.item) &&
+      isObject(this.item) &&
+      isNotEmpty(this.objToDisplay) &&
+      this.item[this.objToDisplay]
+    );
   }
 
   hasIcons(): boolean {
-     return isNotEmpty(this.icons);
+    return isNotEmpty(this.icons);
   }
 
   hasVisibleIcons(): boolean {
@@ -60,13 +63,21 @@ export class ChipsItem {
       let hasVisible = false;
       // check if it has at least one visible icon
       for (const icon of this.icons) {
-        if (this._item.hasOwnProperty(icon.metadata)
-          && (((typeof this._item[icon.metadata] === 'string') && hasValue(this._item[icon.metadata]))
-            || (this._item[icon.metadata] as FormFieldMetadataValueObject).hasValue())
-          && !this.hasPlaceholder(this._item[icon.metadata])) {
-          if ((icon.visibleWhenAuthorityEmpty
-            || (this._item[icon.metadata] as FormFieldMetadataValueObject).confidence !== ConfidenceType.CF_UNSET)
-            && isNotEmpty(icon.style)) {
+        if (
+          this._item.hasOwnProperty(icon.metadata) &&
+          ((typeof this._item[icon.metadata] === 'string' &&
+            hasValue(this._item[icon.metadata])) ||
+            (
+              this._item[icon.metadata] as FormFieldMetadataValueObject
+            ).hasValue()) &&
+          !this.hasPlaceholder(this._item[icon.metadata])
+        ) {
+          if (
+            (icon.visibleWhenAuthorityEmpty ||
+              (this._item[icon.metadata] as FormFieldMetadataValueObject)
+                .confidence !== ConfidenceType.CF_UNSET) &&
+            isNotEmpty(icon.style)
+          ) {
             hasVisible = true;
             break;
           }
@@ -99,7 +110,9 @@ export class ChipsItem {
     let value = this._item;
     if (isObject(this._item)) {
       // Check If displayField is in an internal object
-      const obj = this.objToDisplay ? this._item[this.objToDisplay] : this._item;
+      const obj = this.objToDisplay
+        ? this._item[this.objToDisplay]
+        : this._item;
 
       if (isObject(obj) && obj) {
         value = obj[this.fieldToDisplay] || (obj as any).value;
@@ -112,7 +125,8 @@ export class ChipsItem {
   }
 
   private hasPlaceholder(value: any) {
-    return (typeof value === 'string') ? (value === PLACEHOLDER_PARENT_METADATA) :
-      (value as FormFieldMetadataValueObject).hasPlaceholder();
+    return typeof value === 'string'
+      ? value === PLACEHOLDER_PARENT_METADATA
+      : (value as FormFieldMetadataValueObject).hasPlaceholder();
   }
 }

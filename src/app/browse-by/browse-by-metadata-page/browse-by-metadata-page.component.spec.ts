@@ -1,4 +1,7 @@
-import { BrowseByMetadataPageComponent, browseParamsToOptions } from './browse-by-metadata-page.component';
+import {
+  BrowseByMetadataPageComponent,
+  browseParamsToOptions,
+} from './browse-by-metadata-page.component';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { BrowseService } from '../../core/browse/browse.service';
 import { CommonModule } from '@angular/common';
@@ -11,10 +14,16 @@ import { ActivatedRouteStub } from '../../shared/testing/active-router.stub';
 import { Observable, of as observableOf } from 'rxjs';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { RemoteData } from '../../core/data/remote-data';
-import { buildPaginatedList, PaginatedList } from '../../core/data/paginated-list.model';
+import {
+  buildPaginatedList,
+  PaginatedList,
+} from '../../core/data/paginated-list.model';
 import { PageInfo } from '../../core/shared/page-info.model';
 import { BrowseEntrySearchOptions } from '../../core/browse/browse-entry-search-options.model';
-import { SortDirection, SortOptions } from '../../core/cache/models/sort-options.model';
+import {
+  SortDirection,
+  SortOptions,
+} from '../../core/cache/models/sort-options.model';
 import { Item } from '../../core/shared/item.model';
 import { DSpaceObjectDataService } from '../../core/data/dspace-object-data.service';
 import { Community } from '../../core/shared/community.model';
@@ -38,9 +47,9 @@ describe('BrowseByMetadataPageComponent', () => {
     metadata: [
       {
         key: 'dc.title',
-        value: 'test community'
-      }
-    ]
+        value: 'test community',
+      },
+    ],
   });
 
   const mockEntries = [
@@ -49,57 +58,64 @@ describe('BrowseByMetadataPageComponent', () => {
       authority: null,
       value: 'John Doe',
       language: 'en',
-      count: 1
+      count: 1,
     },
     {
       type: BrowseEntry.type,
       authority: null,
       value: 'James Doe',
       language: 'en',
-      count: 3
+      count: 3,
     },
     {
       type: BrowseEntry.type,
       authority: null,
       value: 'Fake subject',
       language: 'en',
-      count: 2
-    }
+      count: 2,
+    },
   ];
 
   const mockItems = [
     Object.assign(new Item(), {
-      id: 'fakeId'
-    })
+      id: 'fakeId',
+    }),
   ];
 
   const mockBrowseService = {
-    getBrowseEntriesFor: (options: BrowseEntrySearchOptions) => toRemoteData(mockEntries),
-    getBrowseItemsFor: (value: string, options: BrowseEntrySearchOptions) => toRemoteData(mockItems)
+    getBrowseEntriesFor: (options: BrowseEntrySearchOptions) =>
+      toRemoteData(mockEntries),
+    getBrowseItemsFor: (value: string, options: BrowseEntrySearchOptions) =>
+      toRemoteData(mockItems),
   };
 
   const mockDsoService = {
-    findById: () => createSuccessfulRemoteDataObject$(mockCommunity)
+    findById: () => createSuccessfulRemoteDataObject$(mockCommunity),
   };
 
   const activatedRouteStub = Object.assign(new ActivatedRouteStub(), {
-    params: observableOf({})
+    params: observableOf({}),
   });
 
   paginationService = new PaginationServiceStub();
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [CommonModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), NgbModule],
+      imports: [
+        CommonModule,
+        RouterTestingModule.withRoutes([]),
+        TranslateModule.forRoot(),
+        NgbModule,
+      ],
       declarations: [BrowseByMetadataPageComponent, EnumKeysPipe, VarDirective],
       providers: [
         { provide: ActivatedRoute, useValue: activatedRouteStub },
         { provide: BrowseService, useValue: mockBrowseService },
         { provide: DSpaceObjectDataService, useValue: mockDsoService },
         { provide: PaginationService, useValue: paginationService },
-        { provide: Router, useValue: new RouterMock() }
+        { provide: Router, useValue: new RouterMock() },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -122,7 +138,7 @@ describe('BrowseByMetadataPageComponent', () => {
     beforeEach(() => {
       const paramsWithValue = {
         metadata: 'author',
-        value: 'John Doe'
+        value: 'John Doe',
       };
 
       route.params = observableOf(paramsWithValue);
@@ -141,22 +157,29 @@ describe('BrowseByMetadataPageComponent', () => {
 
     beforeEach(() => {
       const paramsScope = {
-        scope: 'fake-scope'
+        scope: 'fake-scope',
       };
-      const paginationOptions = Object.assign(new PaginationComponentOptions(), {
-        currentPage: 5,
-        pageSize: 10,
-      });
+      const paginationOptions = Object.assign(
+        new PaginationComponentOptions(),
+        {
+          currentPage: 5,
+          pageSize: 10,
+        }
+      );
       const sortOptions = {
         direction: SortDirection.ASC,
         field: 'fake-field',
       };
 
-      result = browseParamsToOptions(paramsScope, paginationOptions, sortOptions, 'author');
+      result = browseParamsToOptions(
+        paramsScope,
+        paginationOptions,
+        sortOptions,
+        'author'
+      );
     });
 
     it('should return BrowseEntrySearchOptions with the correct properties', () => {
-
       expect(result.metadataDefinition).toEqual('author');
       expect(result.pagination.currentPage).toEqual(5);
       expect(result.pagination.pageSize).toEqual(10);
@@ -167,6 +190,10 @@ describe('BrowseByMetadataPageComponent', () => {
   });
 });
 
-export function toRemoteData(objects: any[]): Observable<RemoteData<PaginatedList<any>>> {
-  return createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), objects));
+export function toRemoteData(
+  objects: any[]
+): Observable<RemoteData<PaginatedList<any>>> {
+  return createSuccessfulRemoteDataObject$(
+    buildPaginatedList(new PageInfo(), objects)
+  );
 }

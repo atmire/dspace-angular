@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  CanActivate,
+  Router,
+  RouterStateSnapshot,
+} from '@angular/router';
 
 import { hasNoValue, hasValue } from '../../shared/empty.util';
 import { CommunityDataService } from '../../core/data/community-data.service';
@@ -15,30 +20,38 @@ import { getFirstCompletedRemoteData } from '../../core/shared/operators';
  */
 @Injectable()
 export class CreateCommunityPageGuard implements CanActivate {
-  public constructor(private router: Router, private communityService: CommunityDataService) {
-  }
+  public constructor(
+    private router: Router,
+    private communityService: CommunityDataService
+  ) {}
 
   /**
    * True when either NO parent ID query parameter has been provided, or the parent ID resolves to a valid parent community
    * Reroutes to a 404 page when the page cannot be activated
    * @method canActivate
    */
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<boolean> {
     const parentID = route.queryParams.parent;
     if (hasNoValue(parentID)) {
       return observableOf(true);
     }
 
-    return this.communityService.findById(parentID)
-      .pipe(
-        getFirstCompletedRemoteData(),
-        map((communityRD: RemoteData<Community>) => hasValue(communityRD) && communityRD.hasSucceeded && hasValue(communityRD.payload)),
-        tap((isValid: boolean) => {
-          if (!isValid) {
-            this.router.navigate(['/404']);
-          }
+    return this.communityService.findById(parentID).pipe(
+      getFirstCompletedRemoteData(),
+      map(
+        (communityRD: RemoteData<Community>) =>
+          hasValue(communityRD) &&
+          communityRD.hasSucceeded &&
+          hasValue(communityRD.payload)
+      ),
+      tap((isValid: boolean) => {
+        if (!isValid) {
+          this.router.navigate(['/404']);
         }
-      )
+      })
     );
   }
 }

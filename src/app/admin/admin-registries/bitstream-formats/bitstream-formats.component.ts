@@ -1,5 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { combineLatest as observableCombineLatest, Observable, zip } from 'rxjs';
+import {
+  combineLatest as observableCombineLatest,
+  Observable,
+  zip,
+} from 'rxjs';
 import { RemoteData } from '../../../core/data/remote-data';
 import { PaginatedList } from '../../../core/data/paginated-list.model';
 import { PaginationComponentOptions } from '../../../shared/pagination/pagination-component-options.model';
@@ -19,10 +23,9 @@ import { PaginationService } from '../../../core/pagination/pagination.service';
  */
 @Component({
   selector: 'ds-bitstream-formats',
-  templateUrl: './bitstream-formats.component.html'
+  templateUrl: './bitstream-formats.component.html',
 })
 export class BitstreamFormatsComponent implements OnInit, OnDestroy {
-
   /**
    * A paginated list of bitstream formats to be shown on the page
    */
@@ -33,38 +36,50 @@ export class BitstreamFormatsComponent implements OnInit, OnDestroy {
    * Currently simply renders all bitstream formats
    */
   config: FindListOptions = Object.assign(new FindListOptions(), {
-    elementsPerPage: 20
+    elementsPerPage: 20,
   });
 
   /**
    * The current pagination configuration for the page
    * Currently simply renders all bitstream formats
    */
-  pageConfig: PaginationComponentOptions = Object.assign(new PaginationComponentOptions(), {
-    id: 'rbp',
-    pageSize: 20
-  });
+  pageConfig: PaginationComponentOptions = Object.assign(
+    new PaginationComponentOptions(),
+    {
+      id: 'rbp',
+      pageSize: 20,
+    }
+  );
 
-  constructor(private notificationsService: NotificationsService,
-              private router: Router,
-              private translateService: TranslateService,
-              private bitstreamFormatService: BitstreamFormatDataService,
-              private paginationService: PaginationService,
-              ) {
-  }
-
+  constructor(
+    private notificationsService: NotificationsService,
+    private router: Router,
+    private translateService: TranslateService,
+    private bitstreamFormatService: BitstreamFormatDataService,
+    private paginationService: PaginationService
+  ) {}
 
   /**
    * Deletes the currently selected formats from the registry and updates the presented list
    */
   deleteFormats() {
     this.bitstreamFormatService.clearBitStreamFormatRequests().subscribe();
-    this.bitstreamFormatService.getSelectedBitstreamFormats().pipe(take(1)).subscribe(
-      (formats) => {
+    this.bitstreamFormatService
+      .getSelectedBitstreamFormats()
+      .pipe(take(1))
+      .subscribe((formats) => {
         const tasks$ = [];
         for (const format of formats) {
           if (hasValue(format.id)) {
-            tasks$.push(this.bitstreamFormatService.delete(format.id).pipe(map((response: RemoteData<NoContent>) => response.hasSucceeded)));
+            tasks$.push(
+              this.bitstreamFormatService
+                .delete(format.id)
+                .pipe(
+                  map(
+                    (response: RemoteData<NoContent>) => response.hasSucceeded
+                  )
+                )
+            );
           }
         }
         zip(...tasks$).subscribe((results: boolean[]) => {
@@ -81,8 +96,7 @@ export class BitstreamFormatsComponent implements OnInit, OnDestroy {
 
           this.paginationService.resetPage(this.pageConfig.id);
         });
-      }
-    );
+      });
   }
 
   /**
@@ -99,7 +113,11 @@ export class BitstreamFormatsComponent implements OnInit, OnDestroy {
   isSelected(bitstreamFormat: BitstreamFormat): Observable<boolean> {
     return this.bitstreamFormatService.getSelectedBitstreamFormats().pipe(
       map((bitstreamFormats: BitstreamFormat[]) => {
-        return bitstreamFormats.find((selectedFormat) => selectedFormat.id === bitstreamFormat.id) != null;
+        return (
+          bitstreamFormats.find(
+            (selectedFormat) => selectedFormat.id === bitstreamFormat.id
+          ) != null
+        );
       })
     );
   }
@@ -110,9 +128,9 @@ export class BitstreamFormatsComponent implements OnInit, OnDestroy {
    * @param event
    */
   selectBitStreamFormat(bitstreamFormat: BitstreamFormat, event) {
-    event.target.checked ?
-      this.bitstreamFormatService.selectBitstreamFormat(bitstreamFormat) :
-      this.bitstreamFormatService.deselectBitstreamFormat(bitstreamFormat);
+    event.target.checked
+      ? this.bitstreamFormatService.selectBitstreamFormat(bitstreamFormat)
+      : this.bitstreamFormatService.deselectBitstreamFormat(bitstreamFormat);
   }
 
   /**
@@ -126,10 +144,11 @@ export class BitstreamFormatsComponent implements OnInit, OnDestroy {
 
     const messages = observableCombineLatest(
       this.translateService.get(`${prefix}.${suffix}.head`),
-      this.translateService.get(`${prefix}.${suffix}.amount`, {amount: amount})
+      this.translateService.get(`${prefix}.${suffix}.amount`, {
+        amount: amount,
+      })
     );
     messages.subscribe(([head, content]) => {
-
       if (success) {
         this.notificationsService.success(head, content);
       } else {
@@ -139,14 +158,14 @@ export class BitstreamFormatsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-
-    this.bitstreamFormats = this.paginationService.getFindListOptions(this.pageConfig.id, this.config).pipe(
-      switchMap((findListOptions: FindListOptions) => {
-        return this.bitstreamFormatService.findAll(findListOptions);
-      })
-    );
+    this.bitstreamFormats = this.paginationService
+      .getFindListOptions(this.pageConfig.id, this.config)
+      .pipe(
+        switchMap((findListOptions: FindListOptions) => {
+          return this.bitstreamFormatService.findAll(findListOptions);
+        })
+      );
   }
-
 
   ngOnDestroy(): void {
     this.paginationService.clearPagination(this.pageConfig.id);

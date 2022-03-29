@@ -6,4 +6,6 @@ import { ResourceType } from '../../shared/resource-type';
  * Needs to be in a separate file to prevent circular
  * dependencies in webpack.
  */
-export const SUBMISSION_CC_LICENSE_URL = new ResourceType('submissioncclicenseUrl');
+export const SUBMISSION_CC_LICENSE_URL = new ResourceType(
+  'submissioncclicenseUrl'
+);

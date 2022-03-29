@@ -37,7 +37,6 @@
   --bs-light: #{$light};
   --bs-dark: #{$dark};
 
-
   // Set a specific jump point for requesting color jumps
   --bs-theme-color-interval: #{$theme-color-interval};
 
@@ -47,7 +46,6 @@
   // Customize the light and dark text colors for use in our YIQ color contrast function.
   --bs-yiq-text-dark: #{$yiq-text-dark};
   --bs-yiq-text-light: #{$yiq-text-light};
-
 
   // Options
   //
@@ -83,7 +81,6 @@
   --bsbody-bg: #{$body-bg};
   --bs-body-color: #{$body-color};
 
-
   // Links
   //
   // Style anchor elements.
@@ -98,7 +95,6 @@
   //
   // Style p element.
   --bs-paragraph-margin-bottom: #{$paragraph-margin-bottom};
-
 
   // Grid breakpoints
   //
@@ -122,7 +118,6 @@
   // Set the number of columns and specify the width of the gutters.
   --bs-grid-columns: #{$grid-columns};
   --bs-grid-gutter-width: #{$grid-gutter-width};
-
 
   // Components
   //
@@ -198,7 +193,6 @@
   --bs-mark-bg: #{$mark-bg};
   --bs-hr-margin-y: #{$hr-margin-y};
 
-
   // Tables
   //
   // Customizes the `.table` component with basic values, each used across all table variations.
@@ -226,7 +220,6 @@
   --bs-table-bg-level: #{$table-bg-level};
   --bs-table-border-level: #{$table-border-level};
 
-
   // Buttons + Forms
   //
   // Shared variables that are reassigned to `$input-` and `$btn-` specific variables.
@@ -247,7 +240,6 @@
   --bs-input-btn-font-size-lg: #{$input-btn-font-size-lg};
   --bs-input-btn-line-height-lg: #{$input-btn-line-height-lg};
   --bs-input-btn-border-width: #{$input-btn-border-width};
-
 
   // Buttons
   //
@@ -280,7 +272,6 @@
   --bs-btn-border-radius-lg: #{$btn-border-radius-lg};
   --bs-btn-border-radius-sm: #{$btn-border-radius-sm};
   --bs-btn-transition: #{$btn-transition};
-
 
   // Forms
   --bs-label-margin-bottom: #{$label-margin-bottom};
@@ -437,7 +428,6 @@
   --bs-custom-file-button-bg: #{$custom-file-button-bg};
   //--bs-custom-file-text: #{$custom-file-text}; //mapping doesn't work
 
-
   // Form validation
   --bs-form-feedback-margin-top: #{$form-feedback-margin-top};
   --bs-form-feedback-font-size: #{$form-feedback-font-size};
@@ -459,7 +449,6 @@
   --bs-zindex-popover: #{$zindex-popover};
   --bs-zindex-tooltip: #{$zindex-tooltip};
 
-
   // Navs
   --bs-nav-link-padding-y: #{$nav-link-padding-y};
   --bs-nav-link-padding-x: #{$nav-link-padding-x};
@@ -476,7 +465,6 @@
   --bs-nav-pills-link-active-bg: #{$nav-pills-link-active-bg};
   --bs-nav-divider-color: #{$nav-divider-color};
   --bs-nav-divider-margin-y: #{$nav-divider-margin-y};
-
 
   // Navbar
   --bs-navbar-padding-y: #{$navbar-padding-y};
@@ -508,7 +496,6 @@
   --bs-navbar-dark-brand-color: #{$navbar-dark-brand-color};
   --bs-navbar-dark-brand-hover-color: #{$navbar-dark-brand-hover-color};
 
-
   // Dropdowns
   //
   // Dropdown menu container and contents.
@@ -535,7 +522,6 @@
   --bs-dropdown-item-padding-x: #{$dropdown-item-padding-x};
   --bs-dropdown-header-color: #{$dropdown-header-color};
 
-
   // Pagination
   --bs-pagination-padding-y: #{$pagination-padding-y};
   --bs-pagination-padding-x: #{$pagination-padding-x};
@@ -560,12 +546,10 @@
   --bs-pagination-disabled-bg: #{$pagination-disabled-bg};
   --bs-pagination-disabled-border-color: #{$pagination-disabled-border-color};
 
-
   // Jumbotron
   --bs-jumbotron-padding: #{$jumbotron-padding};
   --bs-jumbotron-color: #{$jumbotron-color};
   --bs-jumbotron-bg: #{$jumbotron-bg};
-
 
   // Cards
   --bs-card-spacer-y: #{$card-spacer-y};
@@ -584,7 +568,6 @@
   --bs-card-columns-count: #{$card-columns-count};
   --bs-card-columns-gap: #{$card-columns-gap};
   --bs-card-columns-margin: #{$card-columns-margin};
-
 
   // Tooltips
   --bs-tooltip-font-size: #{$tooltip-font-size};
@@ -608,7 +591,6 @@
   --bs-form-feedback-tooltip-opacity: #{$form-feedback-tooltip-opacity};
   --bs-form-feedback-tooltip-border-radius: #{$form-feedback-tooltip-border-radius};
 
-
   // Popovers
   --bs-popover-font-size: #{$popover-font-size};
   --bs-popover-bg: #{$popover-bg};
@@ -629,7 +611,6 @@
   --bs-popover-arrow-color: #{$popover-arrow-color};
   --bs-popover-arrow-outer-color: #{$popover-arrow-outer-color};
 
-
   // Toasts
   --bs-toast-max-width: #{$toast-max-width};
   --bs-toast-padding-x: #{$toast-padding-x};
@@ -645,7 +626,6 @@
   --bs-toast-header-background-color: #{$toast-header-background-color};
   --bs-toast-header-border-color: #{$toast-header-border-color};
 
-
   // Badges
   --bs-badge-font-size: #{$badge-font-size};
   --bs-badge-font-weight: #{$badge-font-weight};
@@ -658,7 +638,6 @@
   // Use a higher than normal value to ensure completely rounded edges when
   // customizing padding or font-size on labels.
   --bs-badge-pill-border-radius: #{$badge-pill-border-radius};
-
 
   // Modals
 
@@ -691,7 +670,6 @@
   --bs-modal-show-transform: #{$modal-show-transform};
   --bs-modal-transition: #{$modal-transition};
 
-
   // Alerts
   //
   // Define alert colors, border radius, and padding.
@@ -705,7 +683,6 @@
   --bs-alert-border-level: #{$alert-border-level};
   --bs-alert-color-level: #{$alert-color-level};
 
-
   // Progress bars
   --bs-progress-height: #{$progress-height};
   --bs-progress-font-size: #{$progress-font-size};
@@ -716,7 +693,6 @@
   --bs-progress-bar-bg: #{$progress-bar-bg};
   --bs-progress-bar-animation-timing: #{$progress-bar-animation-timing};
   --bs-progress-bar-transition: #{$progress-bar-transition};
-
 
   // List group
   --bs-list-group-color: #{$list-group-color};
@@ -737,7 +713,6 @@
   --bs-list-group-action-active-color: #{$list-group-action-active-color};
   --bs-list-group-action-active-bg: #{$list-group-action-active-bg};
 
-
   // Image thumbnails
   --bs-thumbnail-padding: #{$thumbnail-padding};
   --bs-thumbnail-bg: #{$thumbnail-bg};
@@ -746,11 +721,9 @@
   --bs-thumbnail-border-radius: #{$thumbnail-border-radius};
   --bs-thumbnail-box-shadow: #{$thumbnail-box-shadow};
 
-
   // Figures
   --bs-figure-caption-font-size: #{$figure-caption-font-size};
   --bs-figure-caption-color: #{$figure-caption-color};
-
 
   // Breadcrumbs
   --bs-breadcrumb-padding-y: #{$breadcrumb-padding-y};
@@ -762,7 +735,6 @@
   --bs-breadcrumb-active-color: #{$breadcrumb-active-color};
   --bs-breadcrumb-divider: #{$breadcrumb-divider};
   --bs-breadcrumb-border-radius: #{$breadcrumb-border-radius};
-
 
   // Carousel
   --bs-carousel-control-color: #{$carousel-control-color};
@@ -784,7 +756,6 @@
   --bs-carousel-transition-duration: #{$carousel-transition-duration};
   --bs-carousel-transition: #{$carousel-transition};
 
-
   // Spinners
   --bs-spinner-width: #{$spinner-width};
   --bs-spinner-height: #{$spinner-height};
@@ -793,13 +764,11 @@
   --bs-spinner-height-sm: #{$spinner-height-sm};
   --bs-spinner-border-width-sm: #{$spinner-border-width-sm};
 
-
   // Close
   --bs-close-font-size: #{$close-font-size};
   --bs-close-font-weight: #{$close-font-weight};
   --bs-close-color: #{$close-color};
   --bs-close-text-shadow: #{$close-text-shadow};
-
 
   // Code
   --bs-code-font-size: #{$code-font-size};
@@ -812,15 +781,12 @@
   --bs-pre-color: #{$pre-color};
   --bs-pre-scrollable-max-height: #{$pre-scrollable-max-height};
 
-
   // Utilities
   --bs-displays: #{$displays};
   --bs-overflows: #{$overflows};
   --bs-positions: #{$positions};
 
-
   // Printing
   --bs-print-page-size: #{$print-page-size};
   --bs-print-body-min-width: #{$print-body-min-width};
-
 }

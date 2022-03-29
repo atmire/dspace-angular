@@ -10,14 +10,9 @@
   ],
   "overrides": [
     {
-      "files": [
-        "*.ts"
-      ],
+      "files": ["*.ts"],
       "parserOptions": {
-        "project": [
-          "./tsconfig.json",
-          "./cypress/tsconfig.json"
-        ],
+        "project": ["./tsconfig.json", "./cypress/tsconfig.json"],
         "createDefaultProgram": true
       },
       "extends": [
@@ -29,18 +24,9 @@
         "prettier"
       ],
       "rules": {
-        "max-classes-per-file": [
-          "error",
-          1
-        ],
-        "comma-dangle": [
-          "off",
-          "always-multiline"
-        ],
-        "eol-last": [
-          "error",
-          "always"
-        ],
+        "max-classes-per-file": ["error", 1],
+        "comma-dangle": ["off", "always-multiline"],
+        "eol-last": ["error", "always"],
         "no-console": [
           "error",
           {
@@ -96,7 +82,7 @@
             "allowTernary": true
           }
         ],
-        "prefer-const": "off",            // todo: re-enable & fix errors (more strict than it used to be in TSLint)
+        "prefer-const": "off", // todo: re-enable & fix errors (more strict than it used to be in TSLint)
         "prefer-spread": "off",
         "no-underscore-dangle": "off",
 
@@ -125,9 +111,7 @@
         "@angular-eslint/pipe-prefix": [
           "error",
           {
-            "prefixes": [
-              "ds"
-            ]
+            "prefixes": ["ds"]
           }
         ],
         "@angular-eslint/no-attribute-decorator": "error",
@@ -136,7 +120,7 @@
         "@angular-eslint/no-output-on-prefix": "warn",
         "@angular-eslint/no-conflicting-lifecycle": "warn",
 
-        "@typescript-eslint/no-inferrable-types":[
+        "@typescript-eslint/no-inferrable-types": [
           "error",
           {
             "ignoreParameters": true
@@ -175,7 +159,7 @@
         ],
         "@typescript-eslint/type-annotation-spacing": "error",
         "@typescript-eslint/unified-signatures": "error",
-        "@typescript-eslint/ban-types": "warn",  // todo: deal with {} type issues & re-enable
+        "@typescript-eslint/ban-types": "warn", // todo: deal with {} type issues & re-enable
         "@typescript-eslint/no-floating-promises": "warn",
         "@typescript-eslint/no-misused-promises": "warn",
         "@typescript-eslint/restrict-plus-operands": "warn",
@@ -200,12 +184,8 @@
       }
     },
     {
-      "files": [
-        "*.html"
-      ],
-      "extends": [
-        "plugin:@angular-eslint/template/recommended"
-      ],
+      "files": ["*.html"],
+      "extends": ["plugin:@angular-eslint/template/recommended"],
       "rules": {
         // todo: re-enable & fix errors
         "@angular-eslint/template/no-negated-async": "off",

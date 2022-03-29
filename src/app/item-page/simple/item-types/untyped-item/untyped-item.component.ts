@@ -15,6 +15,4 @@ import { VersionedItemComponent } from '../versioned-item/versioned-item.compone
   templateUrl: './untyped-item.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UntypedItemComponent extends VersionedItemComponent {
-
-}
+export class UntypedItemComponent extends VersionedItemComponent {}

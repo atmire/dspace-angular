@@ -1,4 +1,9 @@
-import { autoserializeAs, deserialize, deserializeAs, serializeAs } from 'cerialize';
+import {
+  autoserializeAs,
+  deserialize,
+  deserializeAs,
+  serializeAs,
+} from 'cerialize';
 import { HALLink } from './hal-link.model';
 import { MetadataConfig } from './metadata-config.model';
 import { CacheableObject } from '../cache/object-cache.reducer';
@@ -15,7 +20,7 @@ export enum ContentSourceHarvestType {
   None = 'NONE',
   Metadata = 'METADATA_ONLY',
   MetadataAndRef = 'METADATA_AND_REF',
-  MetadataAndBitstreams = 'METADATA_AND_BITSTREAMS'
+  MetadataAndBitstreams = 'METADATA_AND_BITSTREAMS',
 }
 
 /**
@@ -101,6 +106,6 @@ export class ContentSource extends CacheableObject {
    */
   @deserialize
   _links: {
-    self: HALLink
+    self: HALLink;
   };
 }

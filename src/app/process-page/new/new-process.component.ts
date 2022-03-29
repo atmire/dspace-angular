@@ -27,8 +27,11 @@ export class NewProcessComponent implements OnInit {
    */
   script$?: Observable<Script>;
 
-  constructor(private route: ActivatedRoute, private processService: ProcessDataService, private linkService: LinkService) {
-  }
+  constructor(
+    private route: ActivatedRoute,
+    private processService: ProcessDataService,
+    private linkService: LinkService
+  ) {}
 
   /**
    * If there's an id parameter, use this the process with this identifier as presets for the form
@@ -36,9 +39,13 @@ export class NewProcessComponent implements OnInit {
   ngOnInit() {
     const id = this.route.snapshot.queryParams.id;
     if (id) {
-      this.fromExisting$ = this.processService.findById(id).pipe(getFirstSucceededRemoteDataPayload());
+      this.fromExisting$ = this.processService
+        .findById(id)
+        .pipe(getFirstSucceededRemoteDataPayload());
       this.script$ = this.fromExisting$.pipe(
-        map((process: Process) => this.linkService.resolveLink<Process>(process, followLink('script'))),
+        map((process: Process) =>
+          this.linkService.resolveLink<Process>(process, followLink('script'))
+        ),
         switchMap((process: Process) => process.script),
         getFirstSucceededRemoteDataPayload()
       );

@@ -21,20 +21,18 @@ describe('AuthBlockingGuard', () => {
         loaded: false,
         blocking: undefined,
         loading: false,
-        authMethods: []
-      }
-    }
+        authMethods: [],
+      },
+    },
   };
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        StoreModule.forRoot(authReducer, storeModuleConfig),
-      ],
+      imports: [StoreModule.forRoot(authReducer, storeModuleConfig)],
       providers: [
         provideMockStore({ initialState }),
-        { provide: AuthBlockingGuard, useValue: guard }
-      ]
+        { provide: AuthBlockingGuard, useValue: guard },
+      ],
     }).compileComponents();
   }));
 
@@ -45,7 +43,6 @@ describe('AuthBlockingGuard', () => {
   });
 
   describe(`canActivate`, () => {
-
     describe(`when authState.blocking is undefined`, () => {
       it(`should not emit anything`, (done) => {
         expect(guard.canActivate()).toBeObservable(cold('-'));
@@ -57,10 +54,10 @@ describe('AuthBlockingGuard', () => {
       beforeEach(() => {
         const state = Object.assign({}, initialState, {
           core: Object.assign({}, initialState.core, {
-            'auth': {
-              blocking: true
-            }
-          })
+            auth: {
+              blocking: true,
+            },
+          }),
         });
         mockStore.setState(state);
       });
@@ -75,10 +72,10 @@ describe('AuthBlockingGuard', () => {
       beforeEach(() => {
         const state = Object.assign({}, initialState, {
           core: Object.assign({}, initialState.core, {
-            'auth': {
-              blocking: false
-            }
-          })
+            auth: {
+              blocking: false,
+            },
+          }),
         });
         mockStore.setState(state);
       });
@@ -89,5 +86,4 @@ describe('AuthBlockingGuard', () => {
       });
     });
   });
-
 });

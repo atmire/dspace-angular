@@ -1,6 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, fakeAsync, inject, TestBed, tick, waitForAsync } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  fakeAsync,
+  inject,
+  TestBed,
+  tick,
+  waitForAsync,
+} from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule, By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -9,7 +16,10 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { Observable, of as observableOf } from 'rxjs';
 import { DSpaceObjectDataService } from '../../core/data/dspace-object-data.service';
 import { AuthorizationDataService } from '../../core/data/feature-authorization/authorization-data.service';
-import { buildPaginatedList, PaginatedList } from '../../core/data/paginated-list.model';
+import {
+  buildPaginatedList,
+  PaginatedList,
+} from '../../core/data/paginated-list.model';
 import { RemoteData } from '../../core/data/remote-data';
 import { RequestService } from '../../core/data/request.service';
 import { EPersonDataService } from '../../core/eperson/eperson-data.service';
@@ -50,75 +60,113 @@ describe('GroupRegistryComponent', () => {
    * @param canManageGroup whether or not the current user can manage all groups.
    */
   const setIsAuthorized = (isAdmin: boolean, canManageGroup: boolean) => {
-    (authorizationService as any).isAuthorized.and.callFake((featureId?: FeatureID) => {
-      switch (featureId) {
-        case FeatureID.AdministratorOf:
-          return observableOf(isAdmin);
-        case FeatureID.CanManageGroup:
-          return observableOf(canManageGroup);
-        case FeatureID.CanDelete:
-          return observableOf(true);
-        default:
-          throw new Error(`setIsAuthorized: this fake implementation does not support ${featureId}.`);
+    (authorizationService as any).isAuthorized.and.callFake(
+      (featureId?: FeatureID) => {
+        switch (featureId) {
+          case FeatureID.AdministratorOf:
+            return observableOf(isAdmin);
+          case FeatureID.CanManageGroup:
+            return observableOf(canManageGroup);
+          case FeatureID.CanDelete:
+            return observableOf(true);
+          default:
+            throw new Error(
+              `setIsAuthorized: this fake implementation does not support ${featureId}.`
+            );
+        }
       }
-    });
+    );
   };
 
   beforeEach(waitForAsync(() => {
     mockGroups = [GroupMock, GroupMock2];
     mockEPeople = [EPersonMock, EPersonMock2];
     ePersonDataServiceStub = {
-      findAllByHref(href: string): Observable<RemoteData<PaginatedList<EPerson>>> {
+      findAllByHref(
+        href: string
+      ): Observable<RemoteData<PaginatedList<EPerson>>> {
         switch (href) {
           case 'https://dspace.4science.it/dspace-spring-rest/api/eperson/groups/testgroupid2/epersons':
-            return createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo({
-              elementsPerPage: 1,
-              totalElements: 0,
-              totalPages: 0,
-              currentPage: 1
-            }), []));
+            return createSuccessfulRemoteDataObject$(
+              buildPaginatedList(
+                new PageInfo({
+                  elementsPerPage: 1,
+                  totalElements: 0,
+                  totalPages: 0,
+                  currentPage: 1,
+                }),
+                []
+              )
+            );
           case 'https://dspace.4science.it/dspace-spring-rest/api/eperson/groups/testgroupid/epersons':
-            return createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo({
-              elementsPerPage: 1,
-              totalElements: 1,
-              totalPages: 1,
-              currentPage: 1
-            }), [EPersonMock]));
+            return createSuccessfulRemoteDataObject$(
+              buildPaginatedList(
+                new PageInfo({
+                  elementsPerPage: 1,
+                  totalElements: 1,
+                  totalPages: 1,
+                  currentPage: 1,
+                }),
+                [EPersonMock]
+              )
+            );
           default:
-            return createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo({
-              elementsPerPage: 1,
-              totalElements: 0,
-              totalPages: 0,
-              currentPage: 1
-            }), []));
+            return createSuccessfulRemoteDataObject$(
+              buildPaginatedList(
+                new PageInfo({
+                  elementsPerPage: 1,
+                  totalElements: 0,
+                  totalPages: 0,
+                  currentPage: 1,
+                }),
+                []
+              )
+            );
         }
-      }
+      },
     };
     groupsDataServiceStub = {
       allGroups: mockGroups,
-      findAllByHref(href: string): Observable<RemoteData<PaginatedList<Group>>> {
+      findAllByHref(
+        href: string
+      ): Observable<RemoteData<PaginatedList<Group>>> {
         switch (href) {
           case 'https://dspace.4science.it/dspace-spring-rest/api/eperson/groups/testgroupid2/groups':
-            return createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo({
-              elementsPerPage: 1,
-              totalElements: 0,
-              totalPages: 0,
-              currentPage: 1
-            }), []));
+            return createSuccessfulRemoteDataObject$(
+              buildPaginatedList(
+                new PageInfo({
+                  elementsPerPage: 1,
+                  totalElements: 0,
+                  totalPages: 0,
+                  currentPage: 1,
+                }),
+                []
+              )
+            );
           case 'https://dspace.4science.it/dspace-spring-rest/api/eperson/groups/testgroupid/groups':
-            return createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo({
-              elementsPerPage: 1,
-              totalElements: 1,
-              totalPages: 1,
-              currentPage: 1
-            }), [GroupMock2]));
+            return createSuccessfulRemoteDataObject$(
+              buildPaginatedList(
+                new PageInfo({
+                  elementsPerPage: 1,
+                  totalElements: 1,
+                  totalPages: 1,
+                  currentPage: 1,
+                }),
+                [GroupMock2]
+              )
+            );
           default:
-            return createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo({
-              elementsPerPage: 1,
-              totalElements: 0,
-              totalPages: 0,
-              currentPage: 1
-            }), []));
+            return createSuccessfulRemoteDataObject$(
+              buildPaginatedList(
+                new PageInfo({
+                  elementsPerPage: 1,
+                  totalElements: 0,
+                  totalPages: 0,
+                  currentPage: 1,
+                }),
+                []
+              )
+            );
         }
       },
       getGroupEditPageRouterLink(group: Group): string {
@@ -127,57 +175,85 @@ describe('GroupRegistryComponent', () => {
       getGroupRegistryRouterLink(): string {
         return '/access-control/groups';
       },
-      searchGroups(query: string): Observable<RemoteData<PaginatedList<Group>>> {
+      searchGroups(
+        query: string
+      ): Observable<RemoteData<PaginatedList<Group>>> {
         if (query === '') {
-          return createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo({
-            elementsPerPage: this.allGroups.length,
-            totalElements: this.allGroups.length,
-            totalPages: 1,
-            currentPage: 1
-          }), this.allGroups));
+          return createSuccessfulRemoteDataObject$(
+            buildPaginatedList(
+              new PageInfo({
+                elementsPerPage: this.allGroups.length,
+                totalElements: this.allGroups.length,
+                totalPages: 1,
+                currentPage: 1,
+              }),
+              this.allGroups
+            )
+          );
         }
         const result = this.allGroups.find((group: Group) => {
-          return (group.id.includes(query));
+          return group.id.includes(query);
         });
-        return createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo({
-          elementsPerPage: [result].length,
-          totalElements: [result].length,
-          totalPages: 1,
-          currentPage: 1
-        }), [result]));
-      }
+        return createSuccessfulRemoteDataObject$(
+          buildPaginatedList(
+            new PageInfo({
+              elementsPerPage: [result].length,
+              totalElements: [result].length,
+              totalPages: 1,
+              currentPage: 1,
+            }),
+            [result]
+          )
+        );
+      },
     };
     dsoDataServiceStub = {
       findByHref(href: string): Observable<RemoteData<DSpaceObject>> {
         return createSuccessfulRemoteDataObject$(undefined);
-      }
+      },
     };
 
-    authorizationService = jasmine.createSpyObj('authorizationService', ['isAuthorized']);
+    authorizationService = jasmine.createSpyObj('authorizationService', [
+      'isAuthorized',
+    ]);
     setIsAuthorized(true, true);
     paginationService = new PaginationServiceStub();
     TestBed.configureTestingModule({
-      imports: [CommonModule, NgbModule, FormsModule, ReactiveFormsModule, BrowserModule,
+      imports: [
+        CommonModule,
+        NgbModule,
+        FormsModule,
+        ReactiveFormsModule,
+        BrowserModule,
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
-            useClass: TranslateLoaderMock
-          }
+            useClass: TranslateLoaderMock,
+          },
         }),
       ],
       declarations: [GroupsRegistryComponent],
-      providers: [GroupsRegistryComponent,
+      providers: [
+        GroupsRegistryComponent,
         { provide: EPersonDataService, useValue: ePersonDataServiceStub },
         { provide: GroupDataService, useValue: groupsDataServiceStub },
         { provide: DSpaceObjectDataService, useValue: dsoDataServiceStub },
-        { provide: NotificationsService, useValue: new NotificationsServiceStub() },
+        {
+          provide: NotificationsService,
+          useValue: new NotificationsServiceStub(),
+        },
         { provide: RouteService, useValue: routeServiceStub },
         { provide: Router, useValue: new RouterMock() },
         { provide: AuthorizationDataService, useValue: authorizationService },
         { provide: PaginationService, useValue: paginationService },
-        { provide: RequestService, useValue: jasmine.createSpyObj('requestService', ['removeByHrefSubstring']) }
+        {
+          provide: RequestService,
+          useValue: jasmine.createSpyObj('requestService', [
+            'removeByHrefSubstring',
+          ]),
+        },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -187,25 +263,36 @@ describe('GroupRegistryComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create GroupRegistryComponent', inject([GroupsRegistryComponent], (comp: GroupsRegistryComponent) => {
-    expect(comp).toBeDefined();
-  }));
+  it('should create GroupRegistryComponent', inject(
+    [GroupsRegistryComponent],
+    (comp: GroupsRegistryComponent) => {
+      expect(comp).toBeDefined();
+    }
+  ));
 
   it('should display list of groups', () => {
-    const groupIdsFound = fixture.debugElement.queryAll(By.css('#groups tr td:first-child'));
+    const groupIdsFound = fixture.debugElement.queryAll(
+      By.css('#groups tr td:first-child')
+    );
     expect(groupIdsFound.length).toEqual(2);
     mockGroups.map((group: Group) => {
-      expect(groupIdsFound.find((foundEl) => {
-        return (foundEl.nativeElement.textContent.trim() === group.uuid);
-      })).toBeTruthy();
+      expect(
+        groupIdsFound.find((foundEl) => {
+          return foundEl.nativeElement.textContent.trim() === group.uuid;
+        })
+      ).toBeTruthy();
     });
   });
 
   it('should display community/collection name if present', () => {
-    const collectionNamesFound = fixture.debugElement.queryAll(By.css('#groups tr td:nth-child(3)'));
+    const collectionNamesFound = fixture.debugElement.queryAll(
+      By.css('#groups tr td:nth-child(3)')
+    );
     expect(collectionNamesFound.length).toEqual(2);
     expect(collectionNamesFound[0].nativeElement.textContent).toEqual('');
-    expect(collectionNamesFound[1].nativeElement.textContent).toEqual('testgroupid2objectName');
+    expect(collectionNamesFound[1].nativeElement.textContent).toEqual(
+      'testgroupid2objectName'
+    );
   });
 
   describe('edit buttons', () => {
@@ -221,7 +308,9 @@ describe('GroupRegistryComponent', () => {
       }));
 
       it('should be active', () => {
-        const editButtonsFound = fixture.debugElement.queryAll(By.css('#groups tr td:nth-child(5) button.btn-edit'));
+        const editButtonsFound = fixture.debugElement.queryAll(
+          By.css('#groups tr td:nth-child(5) button.btn-edit')
+        );
         expect(editButtonsFound.length).toEqual(2);
         editButtonsFound.forEach((editButtonFound) => {
           expect(editButtonFound.nativeElement.disabled).toBeFalse();
@@ -230,16 +319,22 @@ describe('GroupRegistryComponent', () => {
 
       it('should not check the canManageGroup permissions', () => {
         expect(authorizationService.isAuthorized).not.toHaveBeenCalledWith(
-          FeatureID.CanManageGroup, mockGroups[0].self
+          FeatureID.CanManageGroup,
+          mockGroups[0].self
         );
         expect(authorizationService.isAuthorized).not.toHaveBeenCalledWith(
-          FeatureID.CanManageGroup, mockGroups[0].self, undefined // treated differently
+          FeatureID.CanManageGroup,
+          mockGroups[0].self,
+          undefined // treated differently
         );
         expect(authorizationService.isAuthorized).not.toHaveBeenCalledWith(
-          FeatureID.CanManageGroup, mockGroups[1].self
+          FeatureID.CanManageGroup,
+          mockGroups[1].self
         );
         expect(authorizationService.isAuthorized).not.toHaveBeenCalledWith(
-          FeatureID.CanManageGroup, mockGroups[1].self, undefined // treated differently
+          FeatureID.CanManageGroup,
+          mockGroups[1].self,
+          undefined // treated differently
         );
       });
     });
@@ -255,7 +350,9 @@ describe('GroupRegistryComponent', () => {
       }));
 
       it('should be active', () => {
-        const editButtonsFound = fixture.debugElement.queryAll(By.css('#groups tr td:nth-child(5) button.btn-edit'));
+        const editButtonsFound = fixture.debugElement.queryAll(
+          By.css('#groups tr td:nth-child(5) button.btn-edit')
+        );
         expect(editButtonsFound.length).toEqual(2);
         editButtonsFound.forEach((editButtonFound) => {
           expect(editButtonFound.nativeElement.disabled).toBeFalse();
@@ -274,7 +371,9 @@ describe('GroupRegistryComponent', () => {
       }));
 
       it('should not be active', () => {
-        const editButtonsFound = fixture.debugElement.queryAll(By.css('#groups tr td:nth-child(5) button.btn-edit'));
+        const editButtonsFound = fixture.debugElement.queryAll(
+          By.css('#groups tr td:nth-child(5) button.btn-edit')
+        );
         expect(editButtonsFound.length).toEqual(2);
         editButtonsFound.forEach((editButtonFound) => {
           expect(editButtonFound.nativeElement.disabled).toBeTrue();
@@ -290,14 +389,18 @@ describe('GroupRegistryComponent', () => {
         component.search({ query: GroupMock2.id });
         tick();
         fixture.detectChanges();
-        groupIdsFound = fixture.debugElement.queryAll(By.css('#groups tr td:first-child'));
+        groupIdsFound = fixture.debugElement.queryAll(
+          By.css('#groups tr td:first-child')
+        );
       }));
 
       it('should display search result', () => {
         expect(groupIdsFound.length).toEqual(1);
-        expect(groupIdsFound.find((foundEl) => {
-          return (foundEl.nativeElement.textContent.trim() === GroupMock2.uuid);
-        })).toBeTruthy();
+        expect(
+          groupIdsFound.find((foundEl) => {
+            return foundEl.nativeElement.textContent.trim() === GroupMock2.uuid;
+          })
+        ).toBeTruthy();
       });
     });
   });

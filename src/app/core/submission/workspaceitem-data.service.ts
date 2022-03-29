@@ -35,7 +35,8 @@ export class WorkspaceitemDataService extends DataService<WorkspaceItem> {
     protected requestService: RequestService,
     protected rdbService: RemoteDataBuildService,
     protected objectCache: ObjectCacheService,
-    protected store: Store<CoreState>) {
+    protected store: Store<CoreState>
+  ) {
     super();
   }
 
@@ -50,11 +51,27 @@ export class WorkspaceitemDataService extends DataService<WorkspaceItem> {
    * @param options        The {@link FindListOptions} object
    * @param linksToFollow  List of {@link FollowLinkConfig} that indicate which {@link HALLink}s should be automatically resolved
    */
-  public findByItem(uuid: string, useCachedVersionIfAvailable = false, reRequestOnStale = true, options: FindListOptions = {}, ...linksToFollow: FollowLinkConfig<WorkspaceItem>[]): Observable<RemoteData<WorkspaceItem>> {
+  public findByItem(
+    uuid: string,
+    useCachedVersionIfAvailable = false,
+    reRequestOnStale = true,
+    options: FindListOptions = {},
+    ...linksToFollow: FollowLinkConfig<WorkspaceItem>[]
+  ): Observable<RemoteData<WorkspaceItem>> {
     const findListOptions = new FindListOptions();
-    findListOptions.searchParams = [new RequestParam('uuid', encodeURIComponent(uuid))];
-    const href$ = this.getSearchByHref(this.searchByItemLinkPath, findListOptions, ...linksToFollow);
-    return this.findByHref(href$, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+    findListOptions.searchParams = [
+      new RequestParam('uuid', encodeURIComponent(uuid)),
+    ];
+    const href$ = this.getSearchByHref(
+      this.searchByItemLinkPath,
+      findListOptions,
+      ...linksToFollow
+    );
+    return this.findByHref(
+      href$,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow
+    );
   }
-
 }

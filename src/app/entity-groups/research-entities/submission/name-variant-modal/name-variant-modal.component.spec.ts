@@ -19,9 +19,8 @@ describe('NameVariantModalComponent', () => {
     TestBed.configureTestingModule({
       declarations: [NameVariantModalComponent],
       imports: [NgbModule, TranslateModule.forRoot()],
-      providers: [{ provide: NgbActiveModal, useValue: modal }]
-    })
-      .compileComponents();
+      providers: [{ provide: NgbActiveModal, useValue: modal }],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -29,7 +28,6 @@ describe('NameVariantModalComponent', () => {
     component = fixture.componentInstance;
     debugElement = fixture.debugElement;
     fixture.detectChanges();
-
   });
 
   it('should create', () => {
@@ -42,12 +40,16 @@ describe('NameVariantModalComponent', () => {
   });
 
   it('when confirm button is clicked, close should be called on the modal', () => {
-    debugElement.query(By.css('button.confirm-button')).triggerEventHandler('click', {});
+    debugElement
+      .query(By.css('button.confirm-button'))
+      .triggerEventHandler('click', {});
     expect(modal.close).toHaveBeenCalled();
   });
 
   it('when decline button is clicked, dismiss should be called on the modal', () => {
-    debugElement.query(By.css('button.decline-button')).triggerEventHandler('click', {});
+    debugElement
+      .query(By.css('button.decline-button'))
+      .triggerEventHandler('click', {});
     expect(modal.dismiss).toHaveBeenCalled();
   });
 });

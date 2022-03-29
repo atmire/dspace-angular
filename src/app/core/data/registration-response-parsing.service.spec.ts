@@ -4,19 +4,28 @@ import { ParsedResponse } from '../cache/response.models';
 
 describe('RegistrationResponseParsingService', () => {
   describe('parse', () => {
-    const registration = Object.assign(new Registration(), { email: 'test@email.org', token: 'test-token' });
-    const registrationResponseParsingService = new RegistrationResponseParsingService();
+    const registration = Object.assign(new Registration(), {
+      email: 'test@email.org',
+      token: 'test-token',
+    });
+    const registrationResponseParsingService =
+      new RegistrationResponseParsingService();
 
     const data = {
       payload: { email: 'test@email.org', token: 'test-token' },
       statusCode: 200,
-      statusText: 'Success'
+      statusText: 'Success',
     };
 
     it('should parse a registration response', () => {
-      const expected = registrationResponseParsingService.parse({} as any, data);
+      const expected = registrationResponseParsingService.parse(
+        {} as any,
+        data
+      );
 
-      expect(expected).toEqual(new ParsedResponse(200, undefined, registration));
+      expect(expected).toEqual(
+        new ParsedResponse(200, undefined, registration)
+      );
     });
   });
 });

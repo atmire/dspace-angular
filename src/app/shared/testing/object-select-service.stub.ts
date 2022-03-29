@@ -1,7 +1,6 @@
 import { Observable, of } from 'rxjs';
 
 export class ObjectSelectServiceStub {
-
   ids: string[] = [];
 
   constructor(ids?: string[]) {

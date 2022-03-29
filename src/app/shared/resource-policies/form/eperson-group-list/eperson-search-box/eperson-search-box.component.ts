@@ -14,7 +14,6 @@ import { isNotNull } from '../../../../empty.util';
   templateUrl: './eperson-search-box.component.html',
 })
 export class EpersonSearchBoxComponent {
-
   labelPrefix = 'admin.access-control.epeople.';
 
   /**
@@ -34,20 +33,20 @@ export class EpersonSearchBoxComponent {
   @Output() search: EventEmitter<SearchEvent> = new EventEmitter<SearchEvent>();
 
   constructor(private formBuilder: FormBuilder) {
-    this.searchForm = this.formBuilder.group(({
+    this.searchForm = this.formBuilder.group({
       scope: 'metadata',
       query: '',
-    }));
+    });
   }
 
   /**
    * Reset the search form
    */
   reset() {
-    this.searchForm = this.formBuilder.group(({
+    this.searchForm = this.formBuilder.group({
       scope: 'metadata',
       query: '',
-    }));
+    });
   }
 
   /**
@@ -57,7 +56,7 @@ export class EpersonSearchBoxComponent {
   submit(data: any) {
     const event: SearchEvent = {
       scope: isNotNull(data) ? data.scope : 'metadata',
-      query: isNotNull(data) ? data.query : ''
+      query: isNotNull(data) ? data.query : '',
     };
 
     this.search.emit(event);

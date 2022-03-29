@@ -19,11 +19,13 @@ import { Community } from '../../core/shared/community.model';
 import { FindListOptions } from '../../core/data/request.models';
 import { FollowLinkConfig } from '../../shared/utils/follow-link-config.model';
 import { PaginatedList } from '../../core/data/paginated-list.model';
-import { createSuccessfulRemoteDataObject, createSuccessfulRemoteDataObject$ } from '../../shared/remote-data.utils';
+import {
+  createSuccessfulRemoteDataObject,
+  createSuccessfulRemoteDataObject$,
+} from '../../shared/remote-data.utils';
 import { TranslateLoaderMock } from '../../shared/mocks/translate-loader.mock';
 import { CollectionDataService } from '../../core/data/collection-data.service';
 import { MockElementRef } from '../../shared/testing/element-ref.mock';
-
 
 describe('CollectionSelectorComponent', () => {
   let component: CollectionSelectorComponent;
@@ -34,7 +36,7 @@ describe('CollectionSelectorComponent', () => {
   const community: Community = Object.assign(new Community(), {
     id: 'ce64f48e-2c9b-411a-ac36-ee429c0e6a88',
     uuid: 'ce64f48e-2c9b-411a-ac36-ee429c0e6a88',
-    name: 'Community 1'
+    name: 'Community 1',
   });
 
   const collections: Collection[] = [
@@ -45,9 +47,10 @@ describe('CollectionSelectorComponent', () => {
         {
           key: 'dc.title',
           language: 'en_US',
-          value: 'Community 1-Collection 1'
-        }],
-      parentCommunity: createSuccessfulRemoteDataObject$(community)
+          value: 'Community 1-Collection 1',
+        },
+      ],
+      parentCommunity: createSuccessfulRemoteDataObject$(community),
     }),
     Object.assign(new Collection(), {
       id: '59ee713b-ee53-4220-8c3f-9860dc84fe33',
@@ -56,9 +59,10 @@ describe('CollectionSelectorComponent', () => {
         {
           key: 'dc.title',
           language: 'en_US',
-          value: 'Community 1-Collection 2'
-        }],
-      parentCommunity: createSuccessfulRemoteDataObject$(community)
+          value: 'Community 1-Collection 2',
+        },
+      ],
+      parentCommunity: createSuccessfulRemoteDataObject$(community),
     }),
     Object.assign(new Collection(), {
       id: 'e9dbf393-7127-415f-8919-55be34a6e9ed',
@@ -67,9 +71,10 @@ describe('CollectionSelectorComponent', () => {
         {
           key: 'dc.title',
           language: 'en_US',
-          value: 'Community 1-Collection 3'
-        }],
-      parentCommunity: createSuccessfulRemoteDataObject$(community)
+          value: 'Community 1-Collection 3',
+        },
+      ],
+      parentCommunity: createSuccessfulRemoteDataObject$(community),
     }),
     Object.assign(new Collection(), {
       id: '59da2ff0-9bf4-45bf-88be-e35abd33f304',
@@ -78,9 +83,10 @@ describe('CollectionSelectorComponent', () => {
         {
           key: 'dc.title',
           language: 'en_US',
-          value: 'Community 1-Collection 4'
-        }],
-      parentCommunity: createSuccessfulRemoteDataObject$(community)
+          value: 'Community 1-Collection 4',
+        },
+      ],
+      parentCommunity: createSuccessfulRemoteDataObject$(community),
     }),
     Object.assign(new Collection(), {
       id: 'a5159760-f362-4659-9e81-e3253ad91ede',
@@ -89,18 +95,23 @@ describe('CollectionSelectorComponent', () => {
         {
           key: 'dc.title',
           language: 'en_US',
-          value: 'Community 1-Collection 5'
-        }],
-      parentCommunity: createSuccessfulRemoteDataObject$(community)
-    })
+          value: 'Community 1-Collection 5',
+        },
+      ],
+      parentCommunity: createSuccessfulRemoteDataObject$(community),
+    }),
   ];
 
   const collectionDataServiceMock = {
-    getAuthorizedCollection(query: string, options: FindListOptions = {}, ...linksToFollow: FollowLinkConfig<Collection>[]): Observable<RemoteData<PaginatedList<Collection>>> {
-      return hot( 'a|', {
-        a: createSuccessfulRemoteDataObject(createPaginatedList(collections))
+    getAuthorizedCollection(
+      query: string,
+      options: FindListOptions = {},
+      ...linksToFollow: FollowLinkConfig<Collection>[]
+    ): Observable<RemoteData<PaginatedList<Collection>>> {
+      return hot('a|', {
+        a: createSuccessfulRemoteDataObject(createPaginatedList(collections)),
       });
-    }
+    },
   };
 
   beforeEach(waitForAsync(() => {
@@ -109,21 +120,20 @@ describe('CollectionSelectorComponent', () => {
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
-            useClass: TranslateLoaderMock
-          }
-        })
+            useClass: TranslateLoaderMock,
+          },
+        }),
       ],
-      declarations: [ CollectionSelectorComponent, CollectionDropdownComponent ],
+      declarations: [CollectionSelectorComponent, CollectionDropdownComponent],
       providers: [
-        {provide: CollectionDataService, useValue: collectionDataServiceMock},
-        {provide: ElementRef, useClass: MockElementRef},
-        {provide: NgbActiveModal, useValue: modal},
-        {provide: ActivatedRoute, useValue: {}},
-        ChangeDetectorRef
+        { provide: CollectionDataService, useValue: collectionDataServiceMock },
+        { provide: ElementRef, useClass: MockElementRef },
+        { provide: NgbActiveModal, useValue: modal },
+        { provide: ActivatedRoute, useValue: {} },
+        ChangeDetectorRef,
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
-    .compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -131,7 +141,6 @@ describe('CollectionSelectorComponent', () => {
     fixture = TestBed.createComponent(CollectionSelectorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-
   });
 
   it('should create', () => {
@@ -142,7 +151,9 @@ describe('CollectionSelectorComponent', () => {
     spyOn(component, 'selectObject');
     scheduler.schedule(() => fixture.detectChanges());
     scheduler.flush();
-    const collectionItem = fixture.debugElement.query(By.css('.collection-item:nth-child(2)'));
+    const collectionItem = fixture.debugElement.query(
+      By.css('.collection-item:nth-child(2)')
+    );
     collectionItem.triggerEventHandler('click', null);
     expect(component.selectObject).toHaveBeenCalled();
   });

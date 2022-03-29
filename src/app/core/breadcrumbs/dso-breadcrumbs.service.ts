@@ -16,15 +16,15 @@ import { getDSORoute } from '../../app-routing-paths';
  * Service to calculate DSpaceObject breadcrumbs for a single part of the route
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class DSOBreadcrumbsService implements BreadcrumbsProviderService<ChildHALResource & DSpaceObject> {
+export class DSOBreadcrumbsService
+  implements BreadcrumbsProviderService<ChildHALResource & DSpaceObject>
+{
   constructor(
     private linkService: LinkService,
     private dsoNameService: DSONameService
-  ) {
-
-  }
+  ) {}
 
   /**
    * Method to recursively calculate the breadcrumbs
@@ -32,21 +32,28 @@ export class DSOBreadcrumbsService implements BreadcrumbsProviderService<ChildHA
    * @param key The key (a DSpaceObject) used to resolve the breadcrumb
    * @param url The url to use as a link for this breadcrumb
    */
-  getBreadcrumbs(key: ChildHALResource & DSpaceObject, url: string): Observable<Breadcrumb[]> {
+  getBreadcrumbs(
+    key: ChildHALResource & DSpaceObject,
+    url: string
+  ): Observable<Breadcrumb[]> {
     const label = this.dsoNameService.getName(key);
     const crumb = new Breadcrumb(label, url);
     const propertyName = key.getParentLinkKey();
-    return this.linkService.resolveLink(key, followLink(propertyName))[propertyName].pipe(
-      find((parentRD: RemoteData<ChildHALResource & DSpaceObject>) => parentRD.hasSucceeded || parentRD.statusCode === 204),
-      switchMap((parentRD: RemoteData<ChildHALResource & DSpaceObject>) => {
-        if (hasValue(parentRD.payload)) {
-          const parent = parentRD.payload;
-          return this.getBreadcrumbs(parent, getDSORoute(parent));
-        }
-        return observableOf([]);
-
-      }),
-      map((breadcrumbs: Breadcrumb[]) => [...breadcrumbs, crumb])
-    );
+    return this.linkService
+      .resolveLink(key, followLink(propertyName))
+      [propertyName].pipe(
+        find(
+          (parentRD: RemoteData<ChildHALResource & DSpaceObject>) =>
+            parentRD.hasSucceeded || parentRD.statusCode === 204
+        ),
+        switchMap((parentRD: RemoteData<ChildHALResource & DSpaceObject>) => {
+          if (hasValue(parentRD.payload)) {
+            const parent = parentRD.payload;
+            return this.getBreadcrumbs(parent, getDSORoute(parent));
+          }
+          return observableOf([]);
+        }),
+        map((breadcrumbs: Breadcrumb[]) => [...breadcrumbs, crumb])
+      );
   }
 }

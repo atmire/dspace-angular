@@ -20,13 +20,20 @@ import { LinkService } from '../../../../core/cache/builders/link.service';
  */
 @Component({
   selector: 'ds-workspace-item-search-result-detail-element',
-  styleUrls: ['../search-result-detail-element.component.scss', './workspace-item-search-result-detail-element.component.scss'],
+  styleUrls: [
+    '../search-result-detail-element.component.scss',
+    './workspace-item-search-result-detail-element.component.scss',
+  ],
   templateUrl: './workspace-item-search-result-detail-element.component.html',
 })
-
-@listableObjectComponent(WorkspaceItemSearchResult, ViewMode.DetailedListElement)
-export class WorkspaceItemSearchResultDetailElementComponent extends SearchResultDetailElementComponent<WorkspaceItemSearchResult, WorkspaceItem> {
-
+@listableObjectComponent(
+  WorkspaceItemSearchResult,
+  ViewMode.DetailedListElement
+)
+export class WorkspaceItemSearchResultDetailElementComponent extends SearchResultDetailElementComponent<
+  WorkspaceItemSearchResult,
+  WorkspaceItem
+> {
   /**
    * The item object that belonging to the result object
    */
@@ -37,9 +44,7 @@ export class WorkspaceItemSearchResultDetailElementComponent extends SearchResul
    */
   status = MyDspaceItemStatusType.WORKSPACE;
 
-  constructor(
-    protected linkService: LinkService
-  ) {
+  constructor(protected linkService: LinkService) {
     super();
   }
 
@@ -56,10 +61,15 @@ export class WorkspaceItemSearchResultDetailElementComponent extends SearchResul
    * Retrieve item from result object
    */
   initItem(item$: Observable<RemoteData<Item>>) {
-    item$.pipe(
-      find((rd: RemoteData<Item>) => rd.hasSucceeded && isNotUndefined(rd.payload))
-    ).subscribe((rd: RemoteData<Item>) => {
-      this.item = rd.payload;
-    });
+    item$
+      .pipe(
+        find(
+          (rd: RemoteData<Item>) =>
+            rd.hasSucceeded && isNotUndefined(rd.payload)
+        )
+      )
+      .subscribe((rd: RemoteData<Item>) => {
+        this.item = rd.payload;
+      });
   }
 }

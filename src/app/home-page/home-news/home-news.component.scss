@@ -1,11 +1,11 @@
 :host {
-    display: block;
-    margin-top: calc(-1 * var(--ds-content-spacing));
-    margin-bottom: calc(-1 * var(--ds-content-spacing));
+  display: block;
+  margin-top: calc(-1 * var(--ds-content-spacing));
+  margin-bottom: calc(-1 * var(--ds-content-spacing));
 }
 
 .display-3 {
-    word-break: break-word;
+  word-break: break-word;
 }
 
 .jumbotron {

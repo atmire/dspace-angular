@@ -10,7 +10,7 @@ import {
   isNotNull,
   isNotUndefined,
   isNull,
-  isUndefined
+  isUndefined,
 } from './empty.util';
 
 describe('Empty Utils', () => {
@@ -63,11 +63,9 @@ describe('Empty Utils', () => {
     it('should return false for an empty Object', () => {
       expect(isNull({})).toBe(false);
     });
-
   });
 
   describe('isNotNull', () => {
-
     it('should return false for null', () => {
       expect(isNotNull(null)).toBe(false);
     });
@@ -107,7 +105,6 @@ describe('Empty Utils', () => {
     it('should return true for an empty Object', () => {
       expect(isNotNull({})).toBe(true);
     });
-
   });
 
   describe('isUndefined', () => {
@@ -150,11 +147,9 @@ describe('Empty Utils', () => {
     it('should return false for an empty Object', () => {
       expect(isUndefined({})).toBe(false);
     });
-
   });
 
   describe('isNotUndefined', () => {
-
     it('should return true for null', () => {
       expect(isNotUndefined(null)).toBe(true);
     });
@@ -194,7 +189,6 @@ describe('Empty Utils', () => {
     it('should return true for an empty Object', () => {
       expect(isNotUndefined({})).toBe(true);
     });
-
   });
 
   describe('hasNoValue', () => {
@@ -237,11 +231,9 @@ describe('Empty Utils', () => {
     it('should return false for an empty Object', () => {
       expect(hasNoValue({})).toBe(false);
     });
-
   });
 
   describe('hasValue', () => {
-
     it('should return false for null', () => {
       expect(hasValue(null)).toBe(false);
     });
@@ -281,7 +273,6 @@ describe('Empty Utils', () => {
     it('should return true for an empty Object', () => {
       expect(hasValue({})).toBe(true);
     });
-
   });
 
   describe('hasValueOperator', () => {
@@ -292,7 +283,7 @@ describe('Empty Utils', () => {
         c: true,
         d: undefined,
         e: 1,
-        f: {}
+        f: {},
       };
 
       const source$ = hot('abcdef', testData);
@@ -349,7 +340,7 @@ describe('Empty Utils', () => {
       expect(isEmpty({})).toBe(true);
     });
 
-    it('should return true for an Object that has zero \'length\'', () => {
+    it("should return true for an Object that has zero 'length'", () => {
       expect(isEmpty(object)).toBe(true);
     });
 
@@ -360,7 +351,6 @@ describe('Empty Utils', () => {
     it('should return false for a Map that is not empty', () => {
       expect(isEmpty(fullMap)).toBe(false);
     });
-
   });
 
   describe('isNotEmpty', () => {
@@ -420,7 +410,6 @@ describe('Empty Utils', () => {
     it('should return true for a Map that is not empty', () => {
       expect(isNotEmpty(fullMap)).toBe(true);
     });
-
   });
 
   describe('isNotEmptyOperator', () => {
@@ -433,7 +422,7 @@ describe('Empty Utils', () => {
         e: 1,
         f: {},
         g: '',
-        h: ' '
+        h: ' ',
       };
 
       const source$ = hot('abcdefgh', testData);
@@ -455,7 +444,7 @@ describe('Empty Utils', () => {
         f: [],
         g: () => true,
         h: {},
-        i: ''
+        i: '',
       };
 
       const expectedData = Object.assign({}, sourceData, {
@@ -464,7 +453,7 @@ describe('Empty Utils', () => {
         e: [],
         g: [],
         h: [],
-        i: []
+        i: [],
       });
 
       const source$ = hot('abcdefghi', sourceData);

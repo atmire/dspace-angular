@@ -1,9 +1,14 @@
-import { Component, ComponentFactoryResolver, ElementRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  ComponentFactoryResolver,
+  ElementRef,
+  ViewChild,
+} from '@angular/core';
 import { Item } from '../../../../../core/shared/item.model';
 import { ViewMode } from '../../../../../core/shared/view-mode.model';
 import {
   getListableObjectComponent,
-  listableObjectComponent
+  listableObjectComponent,
 } from '../../../../../shared/object-collection/shared/listable-object/listable-object.decorator';
 import { Context } from '../../../../../core/shared/context.model';
 import { SearchResultGridElementComponent } from '../../../../../shared/object-grid/search-result-grid-element/search-result-grid-element.component';
@@ -18,26 +23,37 @@ import { followLink } from '../../../../../shared/utils/follow-link-config.model
 import { RemoteData } from '../../../../../core/data/remote-data';
 import {
   getAllSucceededRemoteData,
-  getRemoteDataPayload
+  getRemoteDataPayload,
 } from '../../../../../core/shared/operators';
 import { take } from 'rxjs/operators';
 import { WorkflowItemSearchResult } from '../../../../../shared/object-collection/shared/workflow-item-search-result.model';
 import { ThemeService } from '../../../../../shared/theme-support/theme.service';
 
-@listableObjectComponent(WorkflowItemSearchResult, ViewMode.GridElement, Context.AdminWorkflowSearch)
+@listableObjectComponent(
+  WorkflowItemSearchResult,
+  ViewMode.GridElement,
+  Context.AdminWorkflowSearch
+)
 @Component({
   selector: 'ds-workflow-item-search-result-admin-workflow-grid-element',
-  styleUrls: ['./workflow-item-search-result-admin-workflow-grid-element.component.scss'],
-  templateUrl: './workflow-item-search-result-admin-workflow-grid-element.component.html'
+  styleUrls: [
+    './workflow-item-search-result-admin-workflow-grid-element.component.scss',
+  ],
+  templateUrl:
+    './workflow-item-search-result-admin-workflow-grid-element.component.html',
 })
 /**
  * The component for displaying a grid element for an workflow item on the admin workflow search page
  */
-export class WorkflowItemSearchResultAdminWorkflowGridElementComponent extends SearchResultGridElementComponent<WorkflowItemSearchResult, WorkflowItem> {
+export class WorkflowItemSearchResultAdminWorkflowGridElementComponent extends SearchResultGridElementComponent<
+  WorkflowItemSearchResult,
+  WorkflowItem
+> {
   /**
    * Directive used to render the dynamic component in
    */
-  @ViewChild(ListableObjectDirective, { static: true }) listableObjectDirective: ListableObjectDirective;
+  @ViewChild(ListableObjectDirective, { static: true })
+  listableObjectDirective: ListableObjectDirective;
 
   /**
    * The html child that contains the badges html
@@ -71,28 +87,31 @@ export class WorkflowItemSearchResultAdminWorkflowGridElementComponent extends S
   ngOnInit(): void {
     super.ngOnInit();
     this.dso = this.linkService.resolveLink(this.dso, followLink('item'));
-    this.item$ = (this.dso.item as Observable<RemoteData<Item>>).pipe(getAllSucceededRemoteData(), getRemoteDataPayload());
-    this.item$.pipe(take(1)).subscribe((item: Item) => {
-        const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.getComponent(item));
-
-        const viewContainerRef = this.listableObjectDirective.viewContainerRef;
-        viewContainerRef.clear();
-
-        const componentRef = viewContainerRef.createComponent(
-          componentFactory,
-          0,
-          undefined,
-          [
-            [this.badges.nativeElement],
-            [this.buttons.nativeElement]
-          ]);
-        (componentRef.instance as any).object = item;
-        (componentRef.instance as any).index = this.index;
-        (componentRef.instance as any).linkType = this.linkType;
-        (componentRef.instance as any).listID = this.listID;
-        componentRef.changeDetectorRef.detectChanges();
-      }
+    this.item$ = (this.dso.item as Observable<RemoteData<Item>>).pipe(
+      getAllSucceededRemoteData(),
+      getRemoteDataPayload()
     );
+    this.item$.pipe(take(1)).subscribe((item: Item) => {
+      const componentFactory =
+        this.componentFactoryResolver.resolveComponentFactory(
+          this.getComponent(item)
+        );
+
+      const viewContainerRef = this.listableObjectDirective.viewContainerRef;
+      viewContainerRef.clear();
+
+      const componentRef = viewContainerRef.createComponent(
+        componentFactory,
+        0,
+        undefined,
+        [[this.badges.nativeElement], [this.buttons.nativeElement]]
+      );
+      (componentRef.instance as any).object = item;
+      (componentRef.instance as any).index = this.index;
+      (componentRef.instance as any).linkType = this.linkType;
+      (componentRef.instance as any).listID = this.listID;
+      componentRef.changeDetectorRef.detectChanges();
+    });
   }
 
   /**
@@ -100,7 +119,11 @@ export class WorkflowItemSearchResultAdminWorkflowGridElementComponent extends S
    * @returns {GenericConstructor<Component>}
    */
   private getComponent(item: Item): GenericConstructor<Component> {
-    return getListableObjectComponent(item.getRenderTypes(), ViewMode.GridElement, undefined, this.themeService.getThemeName());
+    return getListableObjectComponent(
+      item.getRenderTypes(),
+      ViewMode.GridElement,
+      undefined,
+      this.themeService.getThemeName()
+    );
   }
-
 }

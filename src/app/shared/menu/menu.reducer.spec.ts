@@ -13,7 +13,7 @@ import {
   ShowMenuAction,
   ShowMenuSectionAction,
   ToggleActiveMenuSectionAction,
-  ToggleMenuAction
+  ToggleMenuAction,
 } from './menu.actions';
 import { MenuSectionIndex, menusReducer } from './menu.reducer';
 import { initialMenusState, MenuID } from './initial-menus-state';
@@ -54,10 +54,10 @@ describe('menusReducer', () => {
             visible: true,
             model: {
               type: 0,
-              text: 'menu.section.new'
+              text: 'menu.section.new',
             },
             icon: 'plus-circle',
-            index: 0
+            index: 0,
           },
           new_item: {
             id: 'new_item',
@@ -67,8 +67,8 @@ describe('menusReducer', () => {
             model: {
               type: 1,
               text: 'menu.section.new_item',
-              link: '/items/submission'
-            }
+              link: '/items/submission',
+            },
           },
           new_community: {
             id: 'new_community',
@@ -78,8 +78,8 @@ describe('menusReducer', () => {
             model: {
               type: 1,
               text: 'menu.section.new_community',
-              link: '/communities/submission'
-            }
+              link: '/communities/submission',
+            },
           },
           access_control: {
             id: 'access_control',
@@ -87,10 +87,10 @@ describe('menusReducer', () => {
             visible: true,
             model: {
               type: 0,
-              text: 'menu.section.access_control'
+              text: 'menu.section.access_control',
             },
             icon: 'key',
-            index: 4
+            index: 4,
           },
           access_control_people: {
             id: 'access_control_people',
@@ -100,8 +100,8 @@ describe('menusReducer', () => {
             model: {
               type: 1,
               text: 'menu.section.access_control_people',
-              link: '#'
-            }
+              link: '#',
+            },
           },
           access_control_groups: {
             id: 'access_control_groups',
@@ -111,8 +111,8 @@ describe('menusReducer', () => {
             model: {
               type: 1,
               text: 'menu.section.access_control_groups',
-              link: '#'
-            }
+              link: '#',
+            },
           },
           new_collection: {
             id: 'new_collection',
@@ -122,22 +122,15 @@ describe('menusReducer', () => {
             model: {
               type: 1,
               text: 'menu.section.new_collection',
-              link: '/collections/submission'
-            }
-          }
+              link: '/collections/submission',
+            },
+          },
         },
         sectionToSubsectionIndex: {
-          access_control: [
-            'access_control_people',
-            'access_control_groups',
-          ],
-          new: [
-            'new_collection',
-            'new_item',
-            'new_community'
-          ]
-        }
-      }
+          access_control: ['access_control_people', 'access_control_groups'],
+          new: ['new_collection', 'new_item', 'new_community'],
+        },
+      },
     };
   });
 
@@ -325,14 +318,18 @@ describe('menusReducer', () => {
     const state = dummyState;
     const action = new AddMenuSectionAction(menuID, visibleSection1);
     const newState = menusReducer(state, action);
-    expect(Object.values(newState[menuID].sections)[0]).toEqual(visibleSection1);
+    expect(Object.values(newState[menuID].sections)[0]).toEqual(
+      visibleSection1
+    );
   });
 
   it('should add the new section to the sectionToSubsectionIndex when it has a parentID in response to the ADD_SECTION action', () => {
     const state = dummyState;
     const action = new AddMenuSectionAction(menuID, visibleSection1);
     const newState = menusReducer(state, action);
-    expect(newState[menuID].sectionToSubsectionIndex[visibleSection1.parentID]).toContain(visibleSection1.id);
+    expect(
+      newState[menuID].sectionToSubsectionIndex[visibleSection1.parentID]
+    ).toContain(visibleSection1.id);
   });
 
   it('should perform the ADD_SECTION action without affecting the previous state', () => {
@@ -361,7 +358,9 @@ describe('menusReducer', () => {
     const state = dummyState;
     const action = new RemoveMenuSectionAction(menuID, childID);
     const newState = menusReducer(state, action);
-    expect(newState[menuID].sectionToSubsectionIndex[parentID]).not.toContain(childID);
+    expect(newState[menuID].sectionToSubsectionIndex[parentID]).not.toContain(
+      childID
+    );
   });
 
   it('should set active to true for the correct menu section in response to the ACTIVATE_SECTION action', () => {

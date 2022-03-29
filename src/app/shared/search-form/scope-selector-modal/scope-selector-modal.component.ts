@@ -2,7 +2,10 @@ import { Component, EventEmitter, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { DSpaceObjectType } from '../../../core/shared/dspace-object-type.model';
-import { DSOSelectorModalWrapperComponent, SelectorActionType } from '../../dso-selector/modal-wrappers/dso-selector-modal-wrapper.component';
+import {
+  DSOSelectorModalWrapperComponent,
+  SelectorActionType,
+} from '../../dso-selector/modal-wrappers/dso-selector-modal-wrapper.component';
 import { DSpaceObject } from '../../../core/shared/dspace-object.model';
 
 /**
@@ -16,7 +19,10 @@ import { DSpaceObject } from '../../../core/shared/dspace-object.model';
   styleUrls: ['./scope-selector-modal.component.scss'],
   templateUrl: './scope-selector-modal.component.html',
 })
-export class ScopeSelectorModalComponent extends DSOSelectorModalWrapperComponent implements OnInit {
+export class ScopeSelectorModalComponent
+  extends DSOSelectorModalWrapperComponent
+  implements OnInit
+{
   objectType = DSpaceObjectType.COMMUNITY;
   /**
    * The types of DSO that can be selected from this list
@@ -33,7 +39,10 @@ export class ScopeSelectorModalComponent extends DSOSelectorModalWrapperComponen
    */
   scopeChange = new EventEmitter<DSpaceObject>();
 
-  constructor(protected activeModal: NgbActiveModal, protected route: ActivatedRoute) {
+  constructor(
+    protected activeModal: NgbActiveModal,
+    protected route: ActivatedRoute
+  ) {
     super(activeModal, route);
   }
 

@@ -19,14 +19,13 @@ import {
   createFailedRemoteDataObject$,
   createSuccessfulRemoteDataObject$,
   createFailedRemoteDataObject,
-  createSuccessfulRemoteDataObject
+  createSuccessfulRemoteDataObject,
 } from '../../shared/remote-data.utils';
 import { BitstreamDataService } from './bitstream-data.service';
 
 const LINK_NAME = 'test';
 
 class TestService extends ComColDataService<any> {
-
   constructor(
     protected requestService: RequestService,
     protected rdbService: RemoteDataBuildService,
@@ -68,32 +67,32 @@ describe('ComColDataService', () => {
 
   const scopeID = 'd9d30c0c-69b7-4369-8397-ca67c888974d';
   const options = Object.assign(new FindListOptions(), {
-    scopeID: scopeID
+    scopeID: scopeID,
   });
   const communitiesEndpoint = 'https://rest.api/core/communities';
   const communityEndpoint = `${communitiesEndpoint}/${scopeID}`;
   const scopedEndpoint = `${communityEndpoint}/${LINK_NAME}`;
 
   const mockHalService = {
-    getEndpoint: (linkPath) => observableOf(communitiesEndpoint)
+    getEndpoint: (linkPath) => observableOf(communitiesEndpoint),
   };
 
   function initRdbService(): RemoteDataBuildService {
     return jasmine.createSpyObj('rdbService', {
-      buildSingle : createFailedRemoteDataObject$('Error', 500)
+      buildSingle: createFailedRemoteDataObject$('Error', 500),
     });
   }
 
   function initBitstreamDataService(): BitstreamDataService {
     return jasmine.createSpyObj('bitstreamDataService', {
-      deleteByHref: createSuccessfulRemoteDataObject$({})
+      deleteByHref: createSuccessfulRemoteDataObject$({}),
     });
   }
 
   function initMockCommunityDataService(): CommunityDataService {
     return jasmine.createSpyObj('cds', {
       getEndpoint: cold('--a-', { a: communitiesEndpoint }),
-      getIDHref: communityEndpoint
+      getIDHref: communityEndpoint,
     });
   }
 
@@ -103,11 +102,11 @@ describe('ComColDataService', () => {
         d: {
           _links: {
             [LINK_NAME]: {
-              href: scopedEndpoint
-            }
-          }
-        }
-      })
+              href: scopedEndpoint,
+            },
+          },
+        },
+      }),
     });
   }
 
@@ -148,30 +147,47 @@ describe('ComColDataService', () => {
   describe('getBrowseEndpoint', () => {
     it(`should call createAndSendGetRequest with the scope Community's self link`, () => {
       testScheduler.run(({ cold, flush, expectObservable }) => {
-        (cds.getEndpoint as jasmine.Spy).and.returnValue(cold('a', { a: communitiesEndpoint }));
-        (rdbService.buildSingle as jasmine.Spy).and.returnValue(cold('a', { a: createFailedRemoteDataObject() }));
+        (cds.getEndpoint as jasmine.Spy).and.returnValue(
+          cold('a', { a: communitiesEndpoint })
+        );
+        (rdbService.buildSingle as jasmine.Spy).and.returnValue(
+          cold('a', { a: createFailedRemoteDataObject() })
+        );
         spyOn(service as any, 'createAndSendGetRequest');
         service.getBrowseEndpoint(options);
         flush();
-        expectObservable((service as any).createAndSendGetRequest.calls.argsFor(0)[0]).toBe('(a|)', { a: communityEndpoint });
-        expect((service as any).createAndSendGetRequest.calls.argsFor(0)[1]).toBeTrue();
+        expectObservable(
+          (service as any).createAndSendGetRequest.calls.argsFor(0)[0]
+        ).toBe('(a|)', { a: communityEndpoint });
+        expect(
+          (service as any).createAndSendGetRequest.calls.argsFor(0)[1]
+        ).toBeTrue();
       });
     });
 
-    describe('if the scope Community can\'t be found', () => {
+    describe("if the scope Community can't be found", () => {
       it('should throw an error', () => {
         testScheduler.run(({ cold, expectObservable }) => {
           // spies re-defined here to use the "cold" function from rxjs's TestScheduler
           // rather than the one imported from jasmine-marbles.
           // Mixing the two seems to lead to unpredictable results
-          (cds.getEndpoint as jasmine.Spy).and.returnValue(cold('a', { a: communitiesEndpoint }));
-          (rdbService.buildSingle as jasmine.Spy).and.returnValue(cold('a', { a: createFailedRemoteDataObject() }));
-          const expectedError = new Error(`The Community with scope ${scopeID} couldn't be retrieved`);
-          expectObservable(service.getBrowseEndpoint(options)).toBe('#', undefined, expectedError);
+          (cds.getEndpoint as jasmine.Spy).and.returnValue(
+            cold('a', { a: communitiesEndpoint })
+          );
+          (rdbService.buildSingle as jasmine.Spy).and.returnValue(
+            cold('a', { a: createFailedRemoteDataObject() })
+          );
+          const expectedError = new Error(
+            `The Community with scope ${scopeID} couldn't be retrieved`
+          );
+          expectObservable(service.getBrowseEndpoint(options)).toBe(
+            '#',
+            undefined,
+            expectedError
+          );
         });
       });
     });
-
   });
 
   describe('cache refresh', () => {
@@ -182,29 +198,39 @@ describe('ComColDataService', () => {
       communityWithParentHref = {
         _links: {
           parentCommunity: {
-            href: 'topLevel/parentCommunity'
-          }
-        }
+            href: 'topLevel/parentCommunity',
+          },
+        },
       } as Community;
       communityWithoutParentHref = {
-        _links: {}
+        _links: {},
       } as Community;
     });
 
     describe('cache refreshed top level community', () => {
       it(`should refresh the top level community cache when the dso has a parent link that can't be resolved`, () => {
         testScheduler.run(({ flush, cold }) => {
-          spyOn(halService, 'getEndpoint').and.returnValue(cold('a', { a: topEndpoint }));
-          spyOn(service, 'findByHref').and.returnValue(cold('a', { a: createSuccessfulRemoteDataObject({}) }));
+          spyOn(halService, 'getEndpoint').and.returnValue(
+            cold('a', { a: topEndpoint })
+          );
+          spyOn(service, 'findByHref').and.returnValue(
+            cold('a', { a: createSuccessfulRemoteDataObject({}) })
+          );
           service.refreshCache(communityWithParentHref);
           flush();
-          expect(requestService.setStaleByHrefSubstring).toHaveBeenCalledWith(topEndpoint);
+          expect(requestService.setStaleByHrefSubstring).toHaveBeenCalledWith(
+            topEndpoint
+          );
         });
       });
       it(`shouldn't do anything when the dso doesn't have a parent link`, () => {
         testScheduler.run(({ flush, cold }) => {
-          spyOn(halService, 'getEndpoint').and.returnValue(cold('a', { a: topEndpoint }));
-          spyOn(service, 'findByHref').and.returnValue(cold('a', { a: createSuccessfulRemoteDataObject({}) }));
+          spyOn(halService, 'getEndpoint').and.returnValue(
+            cold('a', { a: topEndpoint })
+          );
+          spyOn(service, 'findByHref').and.returnValue(
+            cold('a', { a: createSuccessfulRemoteDataObject({}) })
+          );
           service.refreshCache(communityWithoutParentHref);
           flush();
           expect(requestService.setStaleByHrefSubstring).not.toHaveBeenCalled();
@@ -218,20 +244,28 @@ describe('ComColDataService', () => {
         parentCommunity = Object.assign(new Community(), {
           uuid: 'a20da287-e174-466a-9926-f66as300d399',
           id: 'a20da287-e174-466a-9926-f66as300d399',
-          metadata: [{
-            key: 'dc.title',
-            value: 'parent community'
-          }],
-          _links: {}
+          metadata: [
+            {
+              key: 'dc.title',
+              value: 'parent community',
+            },
+          ],
+          _links: {},
         });
       });
       it('should refresh a specific cached community when the parent link can be resolved', () => {
         testScheduler.run(({ flush, cold }) => {
-          spyOn(halService, 'getEndpoint').and.returnValue(cold('a', { a: topEndpoint }));
-          spyOn(service, 'findByHref').and.returnValue(cold('a', { a: createSuccessfulRemoteDataObject(parentCommunity) }));
+          spyOn(halService, 'getEndpoint').and.returnValue(
+            cold('a', { a: topEndpoint })
+          );
+          spyOn(service, 'findByHref').and.returnValue(
+            cold('a', { a: createSuccessfulRemoteDataObject(parentCommunity) })
+          );
           service.refreshCache(communityWithParentHref);
           flush();
-          expect(requestService.setStaleByHrefSubstring).toHaveBeenCalledWith('a20da287-e174-466a-9926-f66as300d399');
+          expect(requestService.setStaleByHrefSubstring).toHaveBeenCalledWith(
+            'a20da287-e174-466a-9926-f66as300d399'
+          );
         });
       });
     });

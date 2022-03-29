@@ -36,7 +36,6 @@ import { ItemAuthorizationsComponent } from './item-authorizations/item-authoriz
 import { ObjectValuesPipe } from '../../shared/utils/object-values-pipe';
 import { ResourcePoliciesModule } from '../../shared/resource-policies/resource-policies.module';
 
-
 /**
  * Module that contains all components related to the Edit Item page administrator functionality
  */
@@ -48,7 +47,7 @@ import { ResourcePoliciesModule } from '../../shared/resource-policies/resource-
     EditItemPageRoutingModule,
     SearchPageModule,
     DragDropModule,
-    ResourcePoliciesModule
+    ResourcePoliciesModule,
   ],
   declarations: [
     EditItemPageComponent,
@@ -76,16 +75,9 @@ import { ResourcePoliciesModule } from '../../shared/resource-policies/resource-
     ItemMoveComponent,
     ItemEditBitstreamDragHandleComponent,
     VirtualMetadataComponent,
-    ItemAuthorizationsComponent
+    ItemAuthorizationsComponent,
   ],
-  providers: [
-    BundleDataService,
-    ObjectValuesPipe
-  ],
-  exports: [
-    ItemMetadataComponent
-  ]
+  providers: [BundleDataService, ObjectValuesPipe],
+  exports: [ItemMetadataComponent],
 })
-export class EditItemPageModule {
-
-}
+export class EditItemPageModule {}

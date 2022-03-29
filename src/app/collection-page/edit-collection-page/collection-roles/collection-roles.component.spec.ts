@@ -10,18 +10,19 @@ import { SharedModule } from '../../../shared/shared.module';
 import { GroupDataService } from '../../../core/eperson/group-data.service';
 import { RequestService } from '../../../core/data/request.service';
 import { RouterTestingModule } from '@angular/router/testing';
-import { createSuccessfulRemoteDataObject, createSuccessfulRemoteDataObject$ } from '../../../shared/remote-data.utils';
+import {
+  createSuccessfulRemoteDataObject,
+  createSuccessfulRemoteDataObject$,
+} from '../../../shared/remote-data.utils';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ComcolModule } from '../../../shared/comcol/comcol.module';
 
 describe('CollectionRolesComponent', () => {
-
   let fixture: ComponentFixture<CollectionRolesComponent>;
   let comp: CollectionRolesComponent;
   let de: DebugElement;
 
   beforeEach(() => {
-
     const route = {
       parent: {
         data: observableOf({
@@ -52,8 +53,8 @@ describe('CollectionRolesComponent', () => {
               },
             })
           ),
-        })
-      }
+        }),
+      },
     };
 
     const requestService = {
@@ -70,17 +71,15 @@ describe('CollectionRolesComponent', () => {
         SharedModule,
         RouterTestingModule.withRoutes([]),
         TranslateModule.forRoot(),
-        NoopAnimationsModule
+        NoopAnimationsModule,
       ],
-      declarations: [
-        CollectionRolesComponent,
-      ],
+      declarations: [CollectionRolesComponent],
       providers: [
         { provide: ActivatedRoute, useValue: route },
         { provide: RequestService, useValue: requestService },
         { provide: GroupDataService, useValue: groupDataService },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
 
     fixture = TestBed.createComponent(CollectionRolesComponent);
@@ -91,32 +90,27 @@ describe('CollectionRolesComponent', () => {
   });
 
   it('should display a collection admin role component', (done) => {
-    expect(de.query(By.css('ds-comcol-role .collection-admin')))
-      .toBeTruthy();
+    expect(de.query(By.css('ds-comcol-role .collection-admin'))).toBeTruthy();
     done();
   });
 
   it('should display a submitters role component', (done) => {
-    expect(de.query(By.css('ds-comcol-role .submitters')))
-      .toBeTruthy();
+    expect(de.query(By.css('ds-comcol-role .submitters'))).toBeTruthy();
     done();
   });
 
   it('should display a default item read role component', (done) => {
-    expect(de.query(By.css('ds-comcol-role .item_read')))
-      .toBeTruthy();
+    expect(de.query(By.css('ds-comcol-role .item_read'))).toBeTruthy();
     done();
   });
 
   it('should display a default bitstream read role component', (done) => {
-    expect(de.query(By.css('ds-comcol-role .bitstream_read')))
-      .toBeTruthy();
+    expect(de.query(By.css('ds-comcol-role .bitstream_read'))).toBeTruthy();
     done();
   });
 
   it('should display a test workflow role component', (done) => {
-    expect(de.query(By.css('ds-comcol-role .test')))
-      .toBeTruthy();
+    expect(de.query(By.css('ds-comcol-role .test'))).toBeTruthy();
     done();
   });
 });

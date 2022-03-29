@@ -10,12 +10,9 @@ export function locationProvider(): Location {
 /**
  * Service for performing hard redirects within the browser app module
  */
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class BrowserHardRedirectService extends HardRedirectService {
-
-  constructor(
-    @Inject(LocationToken) protected location: Location,
-  ) {
+  constructor(@Inject(LocationToken) protected location: Location) {
     super();
   }
 

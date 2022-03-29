@@ -8,7 +8,7 @@ import { SearchService } from '../../../../../../core/shared/search/search.servi
 import { SearchFilterService } from '../../../../../../core/shared/search/search-filter.service';
 import {
   RANGE_FILTER_MAX_SUFFIX,
-  RANGE_FILTER_MIN_SUFFIX
+  RANGE_FILTER_MIN_SUFFIX,
 } from '../../search-range-filter/search-range-filter.component';
 import { SearchConfigurationService } from '../../../../../../core/shared/search/search-configuration.service';
 import { hasValue } from '../../../../../empty.util';
@@ -63,13 +63,13 @@ export class SearchFacetRangeOptionComponent implements OnInit, OnDestroy {
    */
   searchLink: string;
 
-  constructor(protected searchService: SearchService,
-              protected filterService: SearchFilterService,
-              protected searchConfigService: SearchConfigurationService,
-              protected router: Router,
-              protected paginationService: PaginationService
-  ) {
-  }
+  constructor(
+    protected searchService: SearchService,
+    protected filterService: SearchFilterService,
+    protected searchConfigService: SearchConfigurationService,
+    protected router: Router,
+    protected paginationService: PaginationService
+  ) {}
 
   /**
    * Initializes all observable instance variables and starts listening to them
@@ -86,7 +86,10 @@ export class SearchFacetRangeOptionComponent implements OnInit, OnDestroy {
    * Checks if a value for this filter is currently active
    */
   private isChecked(): Observable<boolean> {
-    return this.filterService.isFilterActiveWithValue(this.filterConfig.paramName, this.filterValue.value);
+    return this.filterService.isFilterActiveWithValue(
+      this.filterConfig.paramName,
+      this.filterValue.value
+    );
   }
 
   /**
@@ -106,11 +109,13 @@ export class SearchFacetRangeOptionComponent implements OnInit, OnDestroy {
     const parts = this.filterValue.value.split(rangeDelimiter);
     const min = parts.length > 1 ? parts[0].trim() : this.filterValue.value;
     const max = parts.length > 1 ? parts[1].trim() : this.filterValue.value;
-    const page = this.paginationService.getPageParam(this.searchConfigService.paginationID);
+    const page = this.paginationService.getPageParam(
+      this.searchConfigService.paginationID
+    );
     this.changeQueryParams = {
       [this.filterConfig.paramName + RANGE_FILTER_MIN_SUFFIX]: [min],
       [this.filterConfig.paramName + RANGE_FILTER_MAX_SUFFIX]: [max],
-      [page]: 1
+      [page]: 1,
     };
   }
 

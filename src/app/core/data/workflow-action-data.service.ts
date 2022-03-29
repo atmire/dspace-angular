@@ -31,11 +31,15 @@ export class WorkflowActionDataService extends DataService<WorkflowAction> {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DefaultChangeAnalyzer<WorkflowAction>) {
+    protected comparator: DefaultChangeAnalyzer<WorkflowAction>
+  ) {
     super();
   }
 
-  getBrowseEndpoint(options: FindListOptions, linkPath?: string): Observable<string> {
+  getBrowseEndpoint(
+    options: FindListOptions,
+    linkPath?: string
+  ): Observable<string> {
     return this.halService.getEndpoint(this.linkPath);
   }
 }

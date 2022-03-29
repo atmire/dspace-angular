@@ -10,7 +10,7 @@ import {
   isSuccess,
   isError,
   isResponsePending,
-  isRequestPending
+  isRequestPending,
 } from './request.reducer';
 
 /**
@@ -24,9 +24,8 @@ export class RemoteData<T> {
     public state: RequestEntryState,
     public errorMessage?: string,
     public payload?: T,
-    public statusCode?: number,
-  ) {
-  }
+    public statusCode?: number
+  ) {}
 
   /**
    * Returns true if this.state is RequestPending, false otherwise
@@ -114,5 +113,4 @@ export class RemoteData<T> {
   get hasNoContent(): boolean {
     return this.statusCode === 204;
   }
-
 }

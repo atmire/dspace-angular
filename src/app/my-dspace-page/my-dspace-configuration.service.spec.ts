@@ -3,7 +3,10 @@ import { of as observableOf } from 'rxjs';
 import { MyDSpaceConfigurationService } from './my-dspace-configuration.service';
 import { PaginatedSearchOptions } from '../shared/search/models/paginated-search-options.model';
 import { PaginationComponentOptions } from '../shared/pagination/pagination-component-options.model';
-import { SortDirection, SortOptions } from '../core/cache/models/sort-options.model';
+import {
+  SortDirection,
+  SortOptions,
+} from '../core/cache/models/sort-options.model';
 import { SearchFilter } from '../shared/search/models/search-filter.model';
 import { ActivatedRouteStub } from '../shared/testing/active-router.stub';
 import { RoleServiceMock } from '../shared/mocks/role-service.mock';
@@ -18,25 +21,28 @@ describe('MyDSpaceConfigurationService', () => {
   const prefixFilter = {
     'f.namedresourcetype': ['another value'],
     'f.dateSubmitted.min': ['2013'],
-    'f.dateSubmitted.max': ['2018']
+    'f.dateSubmitted.max': ['2018'],
   };
   const defaults = new PaginatedSearchOptions({
-    pagination: Object.assign(new PaginationComponentOptions(), { currentPage: 1, pageSize: 20 }),
+    pagination: Object.assign(new PaginationComponentOptions(), {
+      currentPage: 1,
+      pageSize: 20,
+    }),
     sort: new SortOptions('score', SortDirection.DESC),
     query: '',
-    scope: ''
+    scope: '',
   });
 
   const backendFilters = [
     new SearchFilter('f.namedresourcetype', ['another value']),
-    new SearchFilter('f.dateSubmitted', ['[2013 TO 2018]'], 'equals')
+    new SearchFilter('f.dateSubmitted', ['[2013 TO 2018]'], 'equals'),
   ];
 
   const spy = jasmine.createSpyObj('RouteService', {
     getQueryParameterValue: observableOf(value1),
     getQueryParamsWithPrefix: observableOf(prefixFilter),
     getRouteParameterValue: observableOf(''),
-    getRouteDataValue: observableOf({})
+    getRouteDataValue: observableOf({}),
   });
 
   const paginationService = new PaginationServiceStub();
@@ -45,15 +51,22 @@ describe('MyDSpaceConfigurationService', () => {
   const roleService: any = new RoleServiceMock();
 
   beforeEach(() => {
-    service = new MyDSpaceConfigurationService(roleService, spy, paginationService as any, activatedRoute);
+    service = new MyDSpaceConfigurationService(
+      roleService,
+      spy,
+      paginationService as any,
+      activatedRoute
+    );
   });
 
   describe('when the scope is called', () => {
     beforeEach(() => {
       service.getCurrentScope('');
     });
-    it('should call getQueryParameterValue on the routeService with parameter name \'scope\'', () => {
-      expect((service as any).routeService.getQueryParameterValue).toHaveBeenCalledWith('scope');
+    it("should call getQueryParameterValue on the routeService with parameter name 'scope'", () => {
+      expect(
+        (service as any).routeService.getQueryParameterValue
+      ).toHaveBeenCalledWith('scope');
     });
   });
 
@@ -61,8 +74,10 @@ describe('MyDSpaceConfigurationService', () => {
     beforeEach(() => {
       service.getCurrentConfiguration('');
     });
-    it('should call getQueryParameterValue on the routeService with parameter name \'configuration\'', () => {
-      expect((service as any).routeService.getQueryParameterValue).toHaveBeenCalledWith('configuration');
+    it("should call getQueryParameterValue on the routeService with parameter name 'configuration'", () => {
+      expect(
+        (service as any).routeService.getQueryParameterValue
+      ).toHaveBeenCalledWith('configuration');
     });
   });
 
@@ -70,8 +85,10 @@ describe('MyDSpaceConfigurationService', () => {
     beforeEach(() => {
       service.getCurrentQuery('');
     });
-    it('should call getQueryParameterValue on the routeService with parameter name \'query\'', () => {
-      expect((service as any).routeService.getQueryParameterValue).toHaveBeenCalledWith('query');
+    it("should call getQueryParameterValue on the routeService with parameter name 'query'", () => {
+      expect(
+        (service as any).routeService.getQueryParameterValue
+      ).toHaveBeenCalledWith('query');
     });
   });
 
@@ -79,8 +96,10 @@ describe('MyDSpaceConfigurationService', () => {
     beforeEach(() => {
       service.getCurrentDSOType();
     });
-    it('should call getQueryParameterValue on the routeService with parameter name \'dsoType\'', () => {
-      expect((service as any).routeService.getQueryParameterValue).toHaveBeenCalledWith('dsoType');
+    it("should call getQueryParameterValue on the routeService with parameter name 'dsoType'", () => {
+      expect(
+        (service as any).routeService.getQueryParameterValue
+      ).toHaveBeenCalledWith('dsoType');
     });
   });
 
@@ -88,8 +107,10 @@ describe('MyDSpaceConfigurationService', () => {
     beforeEach(() => {
       service.getCurrentFrontendFilters();
     });
-    it('should call getQueryParamsWithPrefix on the routeService with parameter prefix \'f.\'', () => {
-      expect((service as any).routeService.getQueryParamsWithPrefix).toHaveBeenCalledWith('f.');
+    it("should call getQueryParamsWithPrefix on the routeService with parameter prefix 'f.'", () => {
+      expect(
+        (service as any).routeService.getQueryParamsWithPrefix
+      ).toHaveBeenCalledWith('f.');
     });
   });
 
@@ -98,8 +119,10 @@ describe('MyDSpaceConfigurationService', () => {
     beforeEach(() => {
       parsedValues$ = service.getCurrentFilters();
     });
-    it('should call getQueryParamsWithPrefix on the routeService with parameter prefix \'f.\'', () => {
-      expect((service as any).routeService.getQueryParamsWithPrefix).toHaveBeenCalledWith('f.');
+    it("should call getQueryParamsWithPrefix on the routeService with parameter prefix 'f.'", () => {
+      expect(
+        (service as any).routeService.getQueryParamsWithPrefix
+      ).toHaveBeenCalledWith('f.');
       parsedValues$.subscribe((values) => {
         expect(values).toEqual(backendFilters);
       });
@@ -111,7 +134,9 @@ describe('MyDSpaceConfigurationService', () => {
       service.getCurrentSort('page-id', defaults.sort);
     });
     it('should call getCurrentSort on the paginationService with the provided id and sort options', () => {
-      expect((service as any).paginationService.getCurrentSort).toHaveBeenCalledWith('page-id', defaults.sort);
+      expect(
+        (service as any).paginationService.getCurrentSort
+      ).toHaveBeenCalledWith('page-id', defaults.sort);
     });
   });
 
@@ -120,7 +145,9 @@ describe('MyDSpaceConfigurationService', () => {
       service.getCurrentPagination('page-id', defaults.pagination);
     });
     it('should call getCurrentPagination on the paginationService with the provided id and sort options', () => {
-      expect((service as any).paginationService.getCurrentPagination).toHaveBeenCalledWith('page-id', defaults.pagination);
+      expect(
+        (service as any).paginationService.getCurrentPagination
+      ).toHaveBeenCalledWith('page-id', defaults.pagination);
     });
   });
 
@@ -167,7 +194,6 @@ describe('MyDSpaceConfigurationService', () => {
   });
 
   describe('when getAvailableConfigurationTypes is called', () => {
-
     it('should return properly list when user is submitter', () => {
       roleService.setSubmitter(true);
       roleService.setController(false);
@@ -175,11 +201,11 @@ describe('MyDSpaceConfigurationService', () => {
 
       const list$ = service.getAvailableConfigurationTypes();
 
-      expect(list$).toBeObservable(cold('(b|)', {
-        b: [
-          MyDSpaceConfigurationValueType.Workspace
-        ]
-      }));
+      expect(list$).toBeObservable(
+        cold('(b|)', {
+          b: [MyDSpaceConfigurationValueType.Workspace],
+        })
+      );
     });
 
     it('should return properly list when user is controller', () => {
@@ -189,11 +215,11 @@ describe('MyDSpaceConfigurationService', () => {
 
       const list$ = service.getAvailableConfigurationTypes();
 
-      expect(list$).toBeObservable(cold('(b|)', {
-        b: [
-          MyDSpaceConfigurationValueType.Workflow
-        ]
-      }));
+      expect(list$).toBeObservable(
+        cold('(b|)', {
+          b: [MyDSpaceConfigurationValueType.Workflow],
+        })
+      );
     });
 
     it('should return properly list when user is admin', () => {
@@ -203,11 +229,11 @@ describe('MyDSpaceConfigurationService', () => {
 
       const list$ = service.getAvailableConfigurationTypes();
 
-      expect(list$).toBeObservable(cold('(b|)', {
-        b: [
-          MyDSpaceConfigurationValueType.Workflow
-        ]
-      }));
+      expect(list$).toBeObservable(
+        cold('(b|)', {
+          b: [MyDSpaceConfigurationValueType.Workflow],
+        })
+      );
     });
 
     it('should return properly list when user is submitter and controller', () => {
@@ -217,41 +243,46 @@ describe('MyDSpaceConfigurationService', () => {
 
       const list$ = service.getAvailableConfigurationTypes();
 
-      expect(list$).toBeObservable(cold('(b|)', {
-        b: [
-          MyDSpaceConfigurationValueType.Workspace,
-          MyDSpaceConfigurationValueType.Workflow
-        ]
-      }));
+      expect(list$).toBeObservable(
+        cold('(b|)', {
+          b: [
+            MyDSpaceConfigurationValueType.Workspace,
+            MyDSpaceConfigurationValueType.Workflow,
+          ],
+        })
+      );
     });
   });
 
   describe('when getAvailableConfigurationOptions is called', () => {
-
     it('should return properly options list', () => {
-      spyOn(service, 'getAvailableConfigurationTypes').and.returnValue(hot('a', {
-        a: [
-          MyDSpaceConfigurationValueType.Workspace,
-          MyDSpaceConfigurationValueType.Workflow
-        ]
-      }));
+      spyOn(service, 'getAvailableConfigurationTypes').and.returnValue(
+        hot('a', {
+          a: [
+            MyDSpaceConfigurationValueType.Workspace,
+            MyDSpaceConfigurationValueType.Workflow,
+          ],
+        })
+      );
 
       const list$ = service.getAvailableConfigurationOptions();
 
-      expect(list$).toBeObservable(cold('(b|)', {
-        b: [
-          {
-            value: MyDSpaceConfigurationValueType.Workspace,
-            label: `mydspace.show.${MyDSpaceConfigurationValueType.Workspace}`,
-            context: Context.Workspace
-          },
-          {
-            value: MyDSpaceConfigurationValueType.Workflow,
-            label: `mydspace.show.${MyDSpaceConfigurationValueType.Workflow}`,
-            context: Context.Workflow
-          }
-        ]
-      }));
+      expect(list$).toBeObservable(
+        cold('(b|)', {
+          b: [
+            {
+              value: MyDSpaceConfigurationValueType.Workspace,
+              label: `mydspace.show.${MyDSpaceConfigurationValueType.Workspace}`,
+              context: Context.Workspace,
+            },
+            {
+              value: MyDSpaceConfigurationValueType.Workflow,
+              label: `mydspace.show.${MyDSpaceConfigurationValueType.Workflow}`,
+              context: Context.Workflow,
+            },
+          ],
+        })
+      );
     });
   });
 });

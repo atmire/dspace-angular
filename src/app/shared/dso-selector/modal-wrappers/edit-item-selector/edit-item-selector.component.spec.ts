@@ -16,7 +16,14 @@ describe('EditItemSelectorComponent', () => {
 
   const item = new Item();
   item.uuid = '1234-1234-1234-1234';
-  item.metadata = { 'dc.title': [Object.assign(new MetadataValue(), { value: 'Item title', language: undefined })] };
+  item.metadata = {
+    'dc.title': [
+      Object.assign(new MetadataValue(), {
+        value: 'Item title',
+        language: undefined,
+      }),
+    ],
+  };
   const router = new RouterStub();
   const itemRD = createSuccessfulRemoteDataObject(item);
   const modalStub = jasmine.createSpyObj('modalStub', ['close']);
@@ -37,16 +44,16 @@ describe('EditItemSelectorComponent', () => {
                   dso: itemRD,
                 },
               },
-            }
+            },
           },
         },
         {
-          provide: Router, useValue: router
-        }
+          provide: Router,
+          useValue: router,
+        },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
-
   }));
 
   beforeEach(() => {
@@ -64,5 +71,4 @@ describe('EditItemSelectorComponent', () => {
     component.navigate(item);
     expect(router.navigate).toHaveBeenCalledWith([editPath]);
   });
-
 });

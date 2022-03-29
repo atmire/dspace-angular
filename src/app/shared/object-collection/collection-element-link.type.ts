@@ -5,5 +5,7 @@
  * ExternalLink: Render the link as a link that opens in a new tab
  */
 export enum CollectionElementLinkType {
-  None, Link, ExternalLink
+  None,
+  Link,
+  ExternalLink,
 }

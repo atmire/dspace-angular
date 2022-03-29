@@ -8,17 +8,19 @@ import { ServerResponseService } from '../core/services/server-response.service'
 @Component({
   selector: 'ds-forbidden',
   templateUrl: './forbidden.component.html',
-  styleUrls: ['./forbidden.component.scss']
+  styleUrls: ['./forbidden.component.scss'],
 })
 export class ForbiddenComponent implements OnInit {
-
   /**
    * Initialize instance variables
    *
    * @param {AuthService} authService
    * @param {ServerResponseService} responseService
    */
-  constructor(private authService: AuthService, private responseService: ServerResponseService) {
+  constructor(
+    private authService: AuthService,
+    private responseService: ServerResponseService
+  ) {
     this.responseService.setForbidden();
   }
 
@@ -28,5 +30,4 @@ export class ForbiddenComponent implements OnInit {
   ngOnInit(): void {
     this.authService.clearRedirectUrl();
   }
-
 }

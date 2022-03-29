@@ -50,6 +50,6 @@ export class Script implements CacheableObject {
    */
   @deserialize
   _links: {
-    self: HALLink,
+    self: HALLink;
   };
 }

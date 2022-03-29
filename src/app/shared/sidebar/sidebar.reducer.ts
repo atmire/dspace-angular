@@ -8,7 +8,7 @@ export interface SidebarState {
 }
 
 const initialState: SidebarState = {
-  sidebarCollapsed: true
+  sidebarCollapsed: true,
 };
 
 /**
@@ -17,27 +17,27 @@ const initialState: SidebarState = {
  * @param {SidebarAction} action The action that should be performed
  * @returns {SidebarState} The state after the action is performed
  */
-export function sidebarReducer(state = initialState, action: SidebarAction): SidebarState {
+export function sidebarReducer(
+  state = initialState,
+  action: SidebarAction
+): SidebarState {
   switch (action.type) {
-
     case SidebarActionTypes.COLLAPSE: {
       return Object.assign({}, state, {
-        sidebarCollapsed: true
+        sidebarCollapsed: true,
       });
     }
 
     case SidebarActionTypes.EXPAND: {
       return Object.assign({}, state, {
-        sidebarCollapsed: false
+        sidebarCollapsed: false,
       });
-
     }
 
     case SidebarActionTypes.TOGGLE: {
       return Object.assign({}, state, {
-        sidebarCollapsed: !state.sidebarCollapsed
+        sidebarCollapsed: !state.sidebarCollapsed,
       });
-
     }
 
     default: {

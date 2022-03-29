@@ -5,14 +5,10 @@ describe('Route Utils', () => {
     root: {
       children: {
         primary: {
-          segments: [
-            { path: 'test' },
-            { path: 'path' }
-          ]
-        }
-
-      }
-    }
+          segments: [{ path: 'test' }, { path: 'path' }],
+        },
+      },
+    },
   };
   const router = { parseUrl: () => urlTree } as any;
   it('Should return the correct current path based on the router', () => {

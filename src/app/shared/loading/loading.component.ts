@@ -8,24 +8,23 @@ import { hasValue } from '../empty.util';
 @Component({
   selector: 'ds-loading',
   styleUrls: ['./loading.component.scss'],
-  templateUrl: './loading.component.html'
+  templateUrl: './loading.component.html',
 })
 export class LoadingComponent implements OnDestroy, OnInit {
-
   @Input() message: string;
   @Input() showMessage = true;
 
   private subscription: Subscription;
 
-  constructor(private translate: TranslateService) {
-
-  }
+  constructor(private translate: TranslateService) {}
 
   ngOnInit() {
     if (this.message === undefined) {
-      this.subscription = this.translate.get('loading.default').subscribe((message: string) => {
-        this.message = message;
-      });
+      this.subscription = this.translate
+        .get('loading.default')
+        .subscribe((message: string) => {
+          this.message = message;
+        });
     }
   }
 
@@ -34,5 +33,4 @@ export class LoadingComponent implements OnDestroy, OnInit {
       this.subscription.unsubscribe();
     }
   }
-
 }

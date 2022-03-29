@@ -1,13 +1,10 @@
-import {
-  Component, Input
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { TruncatableService } from './truncatable.service';
 
 @Component({
   selector: 'ds-truncatable',
   templateUrl: './truncatable.component.html',
   styleUrls: ['./truncatable.component.scss'],
-
 })
 
 /**
@@ -29,8 +26,7 @@ export class TruncatableComponent {
    */
   @Input() onHover = false;
 
-  public constructor(private service: TruncatableService) {
-  }
+  public constructor(private service: TruncatableService) {}
 
   /**
    * Set the initial state
@@ -67,5 +63,4 @@ export class TruncatableComponent {
   public toggle() {
     this.service.toggle(this.id);
   }
-
 }

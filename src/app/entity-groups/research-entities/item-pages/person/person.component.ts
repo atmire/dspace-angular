@@ -7,10 +7,9 @@ import { listableObjectComponent } from '../../../../shared/object-collection/sh
 @Component({
   selector: 'ds-person',
   styleUrls: ['./person.component.scss'],
-  templateUrl: './person.component.html'
+  templateUrl: './person.component.html',
 })
 /**
  * The component for displaying metadata and relations of an item of the type Person
  */
-export class PersonComponent extends ItemComponent {
-}
+export class PersonComponent extends ItemComponent {}

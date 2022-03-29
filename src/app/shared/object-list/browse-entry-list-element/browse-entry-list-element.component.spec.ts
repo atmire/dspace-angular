@@ -10,7 +10,7 @@ let fixture: ComponentFixture<BrowseEntryListElementComponent>;
 
 const mockValue: BrowseEntry = Object.assign(new BrowseEntry(), {
   type: 'browseEntry',
-  value: 'De Langhe Kristof'
+  value: 'De Langhe Kristof',
 });
 
 describe('MetadataListElementComponent', () => {
@@ -18,13 +18,15 @@ describe('MetadataListElementComponent', () => {
     TestBed.configureTestingModule({
       declarations: [BrowseEntryListElementComponent, TruncatePipe],
       providers: [
-        { provide: 'objectElementProvider', useValue: { mockValue } }
+        { provide: 'objectElementProvider', useValue: { mockValue } },
       ],
 
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(BrowseEntryListElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(BrowseEntryListElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -40,7 +42,9 @@ describe('MetadataListElementComponent', () => {
 
     it('should show the value as a link', () => {
       const browseEntryLink = fixture.debugElement.query(By.css('a.lead'));
-      expect(browseEntryLink.nativeElement.textContent.trim()).toBe(mockValue.value);
+      expect(browseEntryLink.nativeElement.textContent.trim()).toBe(
+        mockValue.value
+      );
     });
   });
 });

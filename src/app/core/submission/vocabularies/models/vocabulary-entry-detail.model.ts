@@ -33,7 +33,6 @@ export class VocabularyEntryDetail extends VocabularyEntry {
     self: HALLink;
     vocabulary: HALLink;
     parent: HALLink;
-    children
+    children;
   };
-
 }

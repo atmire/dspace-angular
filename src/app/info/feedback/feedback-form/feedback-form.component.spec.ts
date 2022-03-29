@@ -19,19 +19,18 @@ import { RouterMock } from '../../../shared/mocks/router.mock';
 import { NativeWindowService } from '../../../core/services/window.service';
 import { NativeWindowMockFactory } from '../../../shared/mocks/mock-native-window-ref';
 
-
 describe('FeedbackFormComponent', () => {
   let component: FeedbackFormComponent;
   let fixture: ComponentFixture<FeedbackFormComponent>;
   let de: DebugElement;
   const notificationService = new NotificationsServiceStub();
   const feedbackDataServiceStub = jasmine.createSpyObj('feedbackDataService', {
-    create: of(new Feedback())
+    create: of(new Feedback()),
   });
   const authService: AuthServiceStub = Object.assign(new AuthServiceStub(), {
     getAuthenticatedUserFromStore: () => {
       return of(EPersonMock);
-    }
+    },
   });
   const routerStub = new RouterMock();
 
@@ -48,7 +47,7 @@ describe('FeedbackFormComponent', () => {
         { provide: NativeWindowService, useFactory: NativeWindowMockFactory },
         { provide: Router, useValue: routerStub },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -64,11 +63,15 @@ describe('FeedbackFormComponent', () => {
   });
 
   it('should have page value', () => {
-    expect(component.feedbackForm.controls.page.value).toEqual('http://localhost/home');
+    expect(component.feedbackForm.controls.page.value).toEqual(
+      'http://localhost/home'
+    );
   });
 
   it('should have email if ePerson', () => {
-    expect(component.feedbackForm.controls.email.value).toEqual('test@test.com');
+    expect(component.feedbackForm.controls.email.value).toEqual(
+      'test@test.com'
+    );
   });
 
   it('should have disabled button', () => {
@@ -76,7 +79,6 @@ describe('FeedbackFormComponent', () => {
   });
 
   describe('when message is inserted', () => {
-
     beforeEach(() => {
       component.feedbackForm.patchValue({ message: 'new feedback' });
       fixture.detectChanges();
@@ -92,6 +94,4 @@ describe('FeedbackFormComponent', () => {
       expect(feedbackDataServiceStub.create).toHaveBeenCalled();
     });
   });
-
-
 });

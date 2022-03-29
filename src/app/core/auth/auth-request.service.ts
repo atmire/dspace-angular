@@ -1,9 +1,16 @@
 import { Observable } from 'rxjs';
-import { distinctUntilChanged, filter, map, mergeMap, switchMap, tap } from 'rxjs/operators';
+import {
+  distinctUntilChanged,
+  filter,
+  map,
+  mergeMap,
+  switchMap,
+  tap,
+} from 'rxjs/operators';
 import { HALEndpointService } from '../shared/hal-endpoint.service';
 import { RequestService } from '../data/request.service';
 import { isNotEmpty } from '../../shared/empty.util';
-import { GetRequest, PostRequest, RestRequest, } from '../data/request.models';
+import { GetRequest, PostRequest, RestRequest } from '../data/request.models';
 import { HttpOptions } from '../dspace-rest/dspace-rest.service';
 import { getFirstCompletedRemoteData } from '../shared/operators';
 import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
@@ -20,42 +27,69 @@ export abstract class AuthRequestService {
   protected browseEndpoint = '';
   protected shortlivedtokensEndpoint = 'shortlivedtokens';
 
-  constructor(protected halService: HALEndpointService,
-              protected requestService: RequestService,
-              private rdbService: RemoteDataBuildService
-              ) {
-  }
+  constructor(
+    protected halService: HALEndpointService,
+    protected requestService: RequestService,
+    private rdbService: RemoteDataBuildService
+  ) {}
 
-  protected fetchRequest(request: RestRequest): Observable<RemoteData<AuthStatus>> {
-    return this.rdbService.buildFromRequestUUID<AuthStatus>(request.uuid).pipe(
-      getFirstCompletedRemoteData(),
-    );
+  protected fetchRequest(
+    request: RestRequest
+  ): Observable<RemoteData<AuthStatus>> {
+    return this.rdbService
+      .buildFromRequestUUID<AuthStatus>(request.uuid)
+      .pipe(getFirstCompletedRemoteData());
   }
 
   protected getEndpointByMethod(endpoint: string, method: string): string {
     return isNotEmpty(method) ? `${endpoint}/${method}` : `${endpoint}`;
   }
 
-  public postToEndpoint(method: string, body?: any, options?: HttpOptions): Observable<RemoteData<AuthStatus>> {
+  public postToEndpoint(
+    method: string,
+    body?: any,
+    options?: HttpOptions
+  ): Observable<RemoteData<AuthStatus>> {
     return this.halService.getEndpoint(this.linkName).pipe(
       filter((href: string) => isNotEmpty(href)),
       map((endpointURL) => this.getEndpointByMethod(endpointURL, method)),
       distinctUntilChanged(),
-      map((endpointURL: string) => new PostRequest(this.requestService.generateRequestId(), endpointURL, body, options)),
+      map(
+        (endpointURL: string) =>
+          new PostRequest(
+            this.requestService.generateRequestId(),
+            endpointURL,
+            body,
+            options
+          )
+      ),
       tap((request: PostRequest) => this.requestService.send(request)),
       mergeMap((request: PostRequest) => this.fetchRequest(request)),
-      distinctUntilChanged());
+      distinctUntilChanged()
+    );
   }
 
-  public getRequest(method: string, options?: HttpOptions): Observable<RemoteData<AuthStatus>> {
+  public getRequest(
+    method: string,
+    options?: HttpOptions
+  ): Observable<RemoteData<AuthStatus>> {
     return this.halService.getEndpoint(this.linkName).pipe(
       filter((href: string) => isNotEmpty(href)),
       map((endpointURL) => this.getEndpointByMethod(endpointURL, method)),
       distinctUntilChanged(),
-      map((endpointURL: string) => new GetRequest(this.requestService.generateRequestId(), endpointURL, undefined, options)),
+      map(
+        (endpointURL: string) =>
+          new GetRequest(
+            this.requestService.generateRequestId(),
+            endpointURL,
+            undefined,
+            options
+          )
+      ),
       tap((request: GetRequest) => this.requestService.send(request)),
       mergeMap((request: GetRequest) => this.fetchRequest(request)),
-      distinctUntilChanged());
+      distinctUntilChanged()
+    );
   }
 
   /**
@@ -66,7 +100,9 @@ export abstract class AuthRequestService {
    * @param href The href to send the request to
    * @protected
    */
-  protected abstract createShortLivedTokenRequest(href: string): GetRequest | PostRequest;
+  protected abstract createShortLivedTokenRequest(
+    href: string
+  ): GetRequest | PostRequest;
 
   /**
    * Send a request to retrieve a short-lived token which provides download access of restricted files
@@ -75,10 +111,16 @@ export abstract class AuthRequestService {
     return this.halService.getEndpoint(this.linkName).pipe(
       filter((href: string) => isNotEmpty(href)),
       distinctUntilChanged(),
-      map((href: string) => new URLCombiner(href, this.shortlivedtokensEndpoint).toString()),
-      map((endpointURL: string) => this.createShortLivedTokenRequest(endpointURL)),
+      map((href: string) =>
+        new URLCombiner(href, this.shortlivedtokensEndpoint).toString()
+      ),
+      map((endpointURL: string) =>
+        this.createShortLivedTokenRequest(endpointURL)
+      ),
       tap((request: RestRequest) => this.requestService.send(request)),
-      switchMap((request: RestRequest) => this.rdbService.buildFromRequestUUID<ShortLivedToken>(request.uuid)),
+      switchMap((request: RestRequest) =>
+        this.rdbService.buildFromRequestUUID<ShortLivedToken>(request.uuid)
+      ),
       getFirstCompletedRemoteData(),
       map((response: RemoteData<ShortLivedToken>) => {
         if (response.hasSucceeded) {

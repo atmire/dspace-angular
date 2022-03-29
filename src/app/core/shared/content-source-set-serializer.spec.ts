@@ -16,10 +16,10 @@ describe('ContentSourceSetSerializer', () => {
     });
   });
   describe('Deserialize', () => {
-    it('should return an empty value when the value is \'all\'', () => {
+    it("should return an empty value when the value is 'all'", () => {
       expect(serializer.Deserialize('all')).toEqual('');
     });
-    it('should return the value when it is not \'all\'', () => {
+    it("should return the value when it is not 'all'", () => {
       expect(serializer.Deserialize('test-value')).toEqual('test-value');
     });
   });

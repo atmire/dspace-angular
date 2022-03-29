@@ -12,21 +12,23 @@ import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 const mockItem = Object.assign(new Item(), {
-  bundles: createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), [])),
+  bundles: createSuccessfulRemoteDataObject$(
+    buildPaginatedList(new PageInfo(), [])
+  ),
   metadata: {
     'dc.title': [
       {
         language: 'en_US',
-        value: 'This is just another title'
-      }
+        value: 'This is just another title',
+      },
     ],
     'dc.description': [
       {
         language: 'en_US',
-        value: 'The project description'
-      }
-    ]
-  }
+        value: 'The project description',
+      },
+    ],
+  },
 });
 
 describe('ProjectGridElementComponent', () => {
@@ -44,10 +46,12 @@ describe('ProjectGridElementComponent', () => {
       providers: [
         { provide: TruncatableService, useValue: truncatableServiceStub },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(ProjectGridElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(ProjectGridElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -62,7 +66,9 @@ describe('ProjectGridElementComponent', () => {
     });
 
     it(`should contain a ProjectGridElementComponent`, () => {
-      const projectGridElement = fixture.debugElement.query(By.css(`ds-project-search-result-grid-element`));
+      const projectGridElement = fixture.debugElement.query(
+        By.css(`ds-project-search-result-grid-element`)
+      );
       expect(projectGridElement).not.toBeNull();
     });
   });

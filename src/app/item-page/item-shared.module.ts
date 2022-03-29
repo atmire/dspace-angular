@@ -10,27 +10,18 @@ import { TabbedRelatedEntitiesSearchComponent } from './simple/related-entities/
 
 const COMPONENTS = [
   RelatedEntitiesSearchComponent,
-  TabbedRelatedEntitiesSearchComponent
+  TabbedRelatedEntitiesSearchComponent,
 ];
 
 @NgModule({
-  declarations: [
-    ...COMPONENTS
-  ],
-  imports: [
-    CommonModule,
-    SearchModule,
-    SharedModule,
-    TranslateModule
-  ],
-  exports: [
-    ...COMPONENTS
-  ],
+  declarations: [...COMPONENTS],
+  imports: [CommonModule, SearchModule, SharedModule, TranslateModule],
+  exports: [...COMPONENTS],
   providers: [
     {
       provide: DYNAMIC_FORM_CONTROL_MAP_FN,
-      useValue: dsDynamicFormControlMapFn
-    }
-  ]
+      useValue: dsDynamicFormControlMapFn,
+    },
+  ],
 })
-export class ItemSharedModule { }
+export class ItemSharedModule {}

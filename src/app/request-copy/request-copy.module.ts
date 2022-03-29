@@ -8,23 +8,17 @@ import { EmailRequestCopyComponent } from './email-request-copy/email-request-co
 import { GrantRequestCopyComponent } from './grant-request-copy/grant-request-copy.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    SharedModule,
-    RequestCopyRoutingModule
-  ],
+  imports: [CommonModule, SharedModule, RequestCopyRoutingModule],
   declarations: [
     GrantDenyRequestCopyComponent,
     DenyRequestCopyComponent,
     EmailRequestCopyComponent,
     GrantRequestCopyComponent,
   ],
-  providers: []
+  providers: [],
 })
 
 /**
  * Module related to components used to grant or deny an item request
  */
-export class RequestCopyModule {
-
-}
+export class RequestCopyModule {}

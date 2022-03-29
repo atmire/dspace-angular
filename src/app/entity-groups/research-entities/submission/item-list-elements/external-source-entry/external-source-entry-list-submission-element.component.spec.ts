@@ -16,32 +16,34 @@ describe('ExternalSourceEntryListSubmissionElementComponent', () => {
     metadata: {
       'dc.identifier.uri': [
         {
-          value: uri
-        }
-      ]
-    }
+          value: uri,
+        },
+      ],
+    },
   });
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ExternalSourceEntryListSubmissionElementComponent],
       imports: [TranslateModule.forRoot()],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ExternalSourceEntryListSubmissionElementComponent);
+    fixture = TestBed.createComponent(
+      ExternalSourceEntryListSubmissionElementComponent
+    );
     component = fixture.componentInstance;
     component.object = entry;
     fixture.detectChanges();
   });
 
-  it('should display the entry\'s display value', () => {
+  it("should display the entry's display value", () => {
     expect(fixture.nativeElement.textContent).toContain(entry.display);
   });
 
-  it('should display the entry\'s uri', () => {
+  it("should display the entry's uri", () => {
     expect(fixture.nativeElement.textContent).toContain(uri);
   });
 });

@@ -49,8 +49,7 @@ export interface UUIDThemeConfig extends NamedThemeConfig {
 }
 
 export class Theme {
-  constructor(public config: NamedThemeConfig) {
-  }
+  constructor(public config: NamedThemeConfig) {}
 
   matches(url: string, dso: DSpaceObject): boolean {
     return true;
@@ -87,7 +86,11 @@ export class HandleTheme extends Theme {
   }
 
   matches(url: string, dso: any): boolean {
-    return hasValue(dso) && hasValue(dso.handle) && dso.handle.includes(this.config.handle);
+    return (
+      hasValue(dso) &&
+      hasValue(dso.handle) &&
+      dso.handle.includes(this.config.handle)
+    );
   }
 }
 
@@ -113,8 +116,8 @@ export const themeFactory = (config: ThemeConfig): Theme => {
   }
 };
 
-export type ThemeConfig
-  = NamedThemeConfig
+export type ThemeConfig =
+  | NamedThemeConfig
   | RegExThemeConfig
   | HandleThemeConfig
   | UUIDThemeConfig;

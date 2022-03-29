@@ -1,5 +1,17 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, SimpleChanges, } from '@angular/core';
-import { ControlValueAccessor, FormBuilder, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
+import {
+  ControlValueAccessor,
+  FormBuilder,
+  NG_VALUE_ACCESSOR,
+} from '@angular/forms';
 import { isEmpty } from '../empty.util';
 
 @Component({
@@ -7,10 +19,13 @@ import { isEmpty } from '../empty.util';
   styleUrls: ['./number-picker.component.scss'],
   templateUrl: './number-picker.component.html',
   providers: [
-    {provide: NG_VALUE_ACCESSOR, useExisting: NumberPickerComponent, multi: true}
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: NumberPickerComponent,
+      multi: true,
+    },
   ],
 })
-
 export class NumberPickerComponent implements OnInit, ControlValueAccessor {
   @Input() id: string;
   @Input() step: number;
@@ -31,8 +46,7 @@ export class NumberPickerComponent implements OnInit, ControlValueAccessor {
 
   startValue: number;
 
-  constructor(private fb: FormBuilder, private cd: ChangeDetectorRef) {
-  }
+  constructor(private fb: FormBuilder, private cd: ChangeDetectorRef) {}
 
   ngOnInit() {
     // this.startValue = this.value;
@@ -51,17 +65,15 @@ export class NumberPickerComponent implements OnInit, ControlValueAccessor {
         // When the user select a month with < # of days
         this.value = this.value > this.max ? this.max : this.value;
       }
-
     } else if (changes.value && changes.value.currentValue === null) {
       // When the user delete the inserted value
-        this.value = null;
+      this.value = null;
     } else if (changes.invalid) {
       this.invalid = changes.invalid.currentValue;
     }
   }
 
   private changeValue(reverse: boolean = false) {
-
     // First after init
     if (isEmpty(this.value)) {
       this.value = this.startValue;
@@ -139,6 +151,6 @@ export class NumberPickerComponent implements OnInit, ControlValueAccessor {
   }
 
   emitChange() {
-    this.change.emit({field: this.name, value: this.value});
+    this.change.emit({ field: this.name, value: this.value });
   }
 }

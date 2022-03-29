@@ -13,7 +13,6 @@ import { LogOutAction } from '../../core/auth/auth.actions';
   templateUrl: 'idle-modal.component.html',
 })
 export class IdleModalComponent implements OnInit {
-
   /**
    * Total time of idleness before session expires (in minutes)
    * (environment.auth.ui.timeUntilIdle + environment.auth.ui.idleGracePeriod / 1000 / 60)
@@ -31,10 +30,16 @@ export class IdleModalComponent implements OnInit {
   @Output()
   response: Subject<boolean> = new Subject();
 
-  constructor(private activeModal: NgbActiveModal,
-              private authService: AuthService,
-              private store: Store<AppState>) {
-    this.timeToExpire = (environment.auth.ui.timeUntilIdle + environment.auth.ui.idleGracePeriod) / 1000 / 60; // ms => min
+  constructor(
+    private activeModal: NgbActiveModal,
+    private authService: AuthService,
+    private store: Store<AppState>
+  ) {
+    this.timeToExpire =
+      (environment.auth.ui.timeUntilIdle +
+        environment.auth.ui.idleGracePeriod) /
+      1000 /
+      60; // ms => min
   }
 
   ngOnInit() {

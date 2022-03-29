@@ -45,37 +45,46 @@ describe('WorkflowItemAdminWorkflowGridElementComponent', () => {
 
   beforeEach(waitForAsync(() => {
     init();
-    TestBed.configureTestingModule(
-      {
-        declarations: [WorkflowItemSearchResultAdminWorkflowGridElementComponent, ItemGridElementComponent, ListableObjectDirective],
-        imports: [
-          NoopAnimationsModule,
-          TranslateModule.forRoot(),
-          RouterTestingModule.withRoutes([]),
-        ],
-        providers: [
-          { provide: LinkService, useValue: linkService },
-          { provide: ThemeService, useValue: themeService },
-          {
-            provide: TruncatableService, useValue: {
-              isCollapsed: () => observableOf(true),
-            }
+    TestBed.configureTestingModule({
+      declarations: [
+        WorkflowItemSearchResultAdminWorkflowGridElementComponent,
+        ItemGridElementComponent,
+        ListableObjectDirective,
+      ],
+      imports: [
+        NoopAnimationsModule,
+        TranslateModule.forRoot(),
+        RouterTestingModule.withRoutes([]),
+      ],
+      providers: [
+        { provide: LinkService, useValue: linkService },
+        { provide: ThemeService, useValue: themeService },
+        {
+          provide: TruncatableService,
+          useValue: {
+            isCollapsed: () => observableOf(true),
           },
-          { provide: BitstreamDataService, useValue: {} },
-        ],
-        schemas: [NO_ERRORS_SCHEMA]
-      })
-      .overrideComponent(WorkflowItemSearchResultAdminWorkflowGridElementComponent, {
-        set: {
-          entryComponents: [ItemGridElementComponent]
+        },
+        { provide: BitstreamDataService, useValue: {} },
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(
+        WorkflowItemSearchResultAdminWorkflowGridElementComponent,
+        {
+          set: {
+            entryComponents: [ItemGridElementComponent],
+          },
         }
-      })
+      )
       .compileComponents();
   }));
 
   beforeEach(() => {
     linkService.resolveLink.and.callFake((a) => a);
-    fixture = TestBed.createComponent(WorkflowItemSearchResultAdminWorkflowGridElementComponent);
+    fixture = TestBed.createComponent(
+      WorkflowItemSearchResultAdminWorkflowGridElementComponent
+    );
     component = fixture.componentInstance;
     component.object = object;
     component.linkTypes = CollectionElementLinkType;
@@ -89,6 +98,9 @@ describe('WorkflowItemAdminWorkflowGridElementComponent', () => {
   });
 
   it('should retrieve the item using the link service', () => {
-    expect(linkService.resolveLink).toHaveBeenCalledWith(wfi, followLink('item'));
+    expect(linkService.resolveLink).toHaveBeenCalledWith(
+      wfi,
+      followLink('item')
+    );
   });
 });

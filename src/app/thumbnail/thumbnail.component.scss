@@ -6,13 +6,14 @@ img {
   max-width: 100%;
 }
 
-.outer {  // .outer/.inner generated ~ https://ratiobuddy.com/
+.outer {
+  // .outer/.inner generated ~ https://ratiobuddy.com/
   position: relative;
   &:before {
     display: block;
-    content: "";
+    content: '';
     width: 100%;
-    padding-top: (297 / 210) * 100%;  // A4 ratio
+    padding-top: (297 / 210) * 100%; // A4 ratio
   }
   > .inner {
     position: absolute;

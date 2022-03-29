@@ -3,13 +3,12 @@ import { isNotEmpty } from '../empty.util';
 
 @Pipe({
   name: 'dsObjectValues',
-  pure: true
+  pure: true,
 })
 /**
  * Pipe for parsing all values of an object to an array of values
  */
 export class ObjectValuesPipe implements PipeTransform {
-
   /**
    * @param value An object
    * @returns {any} Array with all values of the input object

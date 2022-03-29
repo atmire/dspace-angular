@@ -9,25 +9,19 @@ import { DSpaceObjectDataService } from '../../core/data/dspace-object-data.serv
 import { DSONameService } from '../../core/breadcrumbs/dso-name.service';
 
 describe('StatisticsTableComponent', () => {
-
   let component: StatisticsTableComponent;
   let de: DebugElement;
   let fixture: ComponentFixture<StatisticsTableComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        TranslateModule.forRoot(),
-      ],
-      declarations: [
-        StatisticsTableComponent,
-      ],
+      imports: [TranslateModule.forRoot()],
+      declarations: [StatisticsTableComponent],
       providers: [
         { provide: DSpaceObjectDataService, useValue: {} },
         { provide: DSONameService, useValue: {} },
       ],
-    })
-    .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -45,14 +39,12 @@ describe('StatisticsTableComponent', () => {
   });
 
   describe('when the storage report is empty', () => {
-
-    it ('should not display a table', () => {
+    it('should not display a table', () => {
       expect(de.query(By.css('table'))).toBeNull();
     });
   });
 
   describe('when the storage report has data', () => {
-
     beforeEach(() => {
       component.report = Object.assign(new UsageReport(), {
         points: [
@@ -69,30 +61,35 @@ describe('StatisticsTableComponent', () => {
               views: 8,
               downloads: 8,
             },
-          }
-        ]
+          },
+        ],
       });
       component.ngOnInit();
       fixture.detectChanges();
     });
 
-    it ('should display a table with the correct data', () => {
-
+    it('should display a table with the correct data', () => {
       expect(de.query(By.css('table'))).toBeTruthy();
 
-      expect(de.query(By.css('th.views-header')).nativeElement.innerText)
-        .toEqual('views');
-      expect(de.query(By.css('th.downloads-header')).nativeElement.innerText)
-        .toEqual('downloads');
+      expect(
+        de.query(By.css('th.views-header')).nativeElement.innerText
+      ).toEqual('views');
+      expect(
+        de.query(By.css('th.downloads-header')).nativeElement.innerText
+      ).toEqual('downloads');
 
-      expect(de.query(By.css('td.item_1-views-data')).nativeElement.innerText)
-        .toEqual('7');
-      expect(de.query(By.css('td.item_1-downloads-data')).nativeElement.innerText)
-        .toEqual('4');
-      expect(de.query(By.css('td.item_2-views-data')).nativeElement.innerText)
-        .toEqual('8');
-      expect(de.query(By.css('td.item_2-downloads-data')).nativeElement.innerText)
-        .toEqual('8');
+      expect(
+        de.query(By.css('td.item_1-views-data')).nativeElement.innerText
+      ).toEqual('7');
+      expect(
+        de.query(By.css('td.item_1-downloads-data')).nativeElement.innerText
+      ).toEqual('4');
+      expect(
+        de.query(By.css('td.item_2-views-data')).nativeElement.innerText
+      ).toEqual('8');
+      expect(
+        de.query(By.css('td.item_2-downloads-data')).nativeElement.innerText
+      ).toEqual('8');
     });
   });
 });

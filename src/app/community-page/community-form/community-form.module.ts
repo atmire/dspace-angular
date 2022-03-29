@@ -6,18 +6,8 @@ import { ComcolModule } from '../../shared/comcol/comcol.module';
 import { FormModule } from '../../shared/form/form.module';
 
 @NgModule({
-  imports: [
-    ComcolModule,
-    FormModule,
-    SharedModule
-  ],
-  declarations: [
-    CommunityFormComponent,
-  ],
-  exports: [
-    CommunityFormComponent
-  ]
+  imports: [ComcolModule, FormModule, SharedModule],
+  declarations: [CommunityFormComponent],
+  exports: [CommunityFormComponent],
 })
-export class CommunityFormModule {
-
-}
+export class CommunityFormModule {}

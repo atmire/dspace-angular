@@ -12,27 +12,29 @@ import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 const mockItem = Object.assign(new Item(), {
-  bundles: createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), [])),
+  bundles: createSuccessfulRemoteDataObject$(
+    buildPaginatedList(new PageInfo(), [])
+  ),
   metadata: {
     'dc.title': [
       {
         language: 'en_US',
-        value: 'This is just another title'
-      }
+        value: 'This is just another title',
+      },
     ],
     'creativework.datePublished': [
       {
         language: null,
-        value: '2015-06-26'
-      }
+        value: '2015-06-26',
+      },
     ],
     'journal.title': [
       {
         language: 'en_US',
-        value: 'The journal title'
-      }
-    ]
-  }
+        value: 'The journal title',
+      },
+    ],
+  },
 });
 
 describe('JournalIssueGridElementComponent', () => {
@@ -50,10 +52,12 @@ describe('JournalIssueGridElementComponent', () => {
       providers: [
         { provide: TruncatableService, useValue: truncatableServiceStub },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(JournalIssueGridElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(JournalIssueGridElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -68,7 +72,9 @@ describe('JournalIssueGridElementComponent', () => {
     });
 
     it(`should contain a JournalIssueSearchResultGridElementComponent`, () => {
-      const journalIssueGridElement = fixture.debugElement.query(By.css(`ds-journal-issue-search-result-grid-element`));
+      const journalIssueGridElement = fixture.debugElement.query(
+        By.css(`ds-journal-issue-search-result-grid-element`)
+      );
       expect(journalIssueGridElement).not.toBeNull();
     });
   });

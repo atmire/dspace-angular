@@ -6,7 +6,7 @@ import {
   OnDestroy,
   OnInit,
   Output,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 import { getComponentByWorkflowTaskOption } from './claimed-task-actions-decorator';
 import { ClaimedTask } from '../../../../core/tasks/models/claimed-task-object.model';
@@ -18,7 +18,7 @@ import { MyDSpaceActionsResult } from '../../mydspace-actions';
 
 @Component({
   selector: 'ds-claimed-task-actions-loader',
-  templateUrl: './claimed-task-actions-loader.component.html'
+  templateUrl: './claimed-task-actions-loader.component.html',
 })
 /**
  * Component for loading a ClaimedTaskAction component depending on the "option" input
@@ -44,7 +44,8 @@ export class ClaimedTaskActionsLoaderComponent implements OnInit, OnDestroy {
   /**
    * Directive to determine where the dynamic child component is located
    */
-  @ViewChild(ClaimedTaskActionsDirective, {static: true}) claimedTaskActionsDirective: ClaimedTaskActionsDirective;
+  @ViewChild(ClaimedTaskActionsDirective, { static: true })
+  claimedTaskActionsDirective: ClaimedTaskActionsDirective;
 
   /**
    * Array to track all subscriptions and unsubscribe them onDestroy
@@ -52,26 +53,31 @@ export class ClaimedTaskActionsLoaderComponent implements OnInit, OnDestroy {
    */
   protected subs: Subscription[] = [];
 
-  constructor(private componentFactoryResolver: ComponentFactoryResolver) {
-  }
+  constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
   /**
    * Fetch, create and initialize the relevant component
    */
   ngOnInit(): void {
-
     const comp = this.getComponentByWorkflowTaskOption(this.option);
     if (hasValue(comp)) {
-      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(comp);
+      const componentFactory =
+        this.componentFactoryResolver.resolveComponentFactory(comp);
 
-      const viewContainerRef = this.claimedTaskActionsDirective.viewContainerRef;
+      const viewContainerRef =
+        this.claimedTaskActionsDirective.viewContainerRef;
       viewContainerRef.clear();
 
       const componentRef = viewContainerRef.createComponent(componentFactory);
-      const componentInstance = (componentRef.instance as ClaimedTaskActionsAbstractComponent);
+      const componentInstance =
+        componentRef.instance as ClaimedTaskActionsAbstractComponent;
       componentInstance.object = this.object;
       if (hasValue(componentInstance.processCompleted)) {
-        this.subs.push(componentInstance.processCompleted.subscribe((result) => this.processCompleted.emit(result)));
+        this.subs.push(
+          componentInstance.processCompleted.subscribe((result) =>
+            this.processCompleted.emit(result)
+          )
+        );
       }
     }
   }

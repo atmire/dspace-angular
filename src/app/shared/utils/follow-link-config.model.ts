@@ -75,24 +75,28 @@ export const followLink = <R extends HALResource>(
     shouldEmbed,
     useCachedVersionIfAvailable,
     reRequestOnStale,
-    isOptional
+    isOptional,
   }: {
-    findListOptions?: FindListOptions,
-    shouldEmbed?: boolean,
-    useCachedVersionIfAvailable?: boolean,
-    reRequestOnStale?: boolean,
-    isOptional?: boolean,
+    findListOptions?: FindListOptions;
+    shouldEmbed?: boolean;
+    useCachedVersionIfAvailable?: boolean;
+    reRequestOnStale?: boolean;
+    isOptional?: boolean;
   } = {},
   ...linksToFollow: FollowLinkConfig<any>[]
 ): FollowLinkConfig<R> => {
   const followLinkConfig = {
     name: linkName,
-    findListOptions: hasValue(findListOptions) ? findListOptions : new FindListOptions(),
+    findListOptions: hasValue(findListOptions)
+      ? findListOptions
+      : new FindListOptions(),
     shouldEmbed: hasValue(shouldEmbed) ? shouldEmbed : true,
-    useCachedVersionIfAvailable: hasValue(useCachedVersionIfAvailable) ? useCachedVersionIfAvailable : true,
+    useCachedVersionIfAvailable: hasValue(useCachedVersionIfAvailable)
+      ? useCachedVersionIfAvailable
+      : true,
     reRequestOnStale: hasValue(reRequestOnStale) ? reRequestOnStale : true,
     isOptional: hasValue(isOptional) ? isOptional : false,
-    linksToFollow
+    linksToFollow,
   };
   return followLinkConfig;
 };

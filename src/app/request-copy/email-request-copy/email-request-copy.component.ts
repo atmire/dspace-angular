@@ -5,7 +5,7 @@ import { Location } from '@angular/common';
 @Component({
   selector: 'ds-email-request-copy',
   styleUrls: ['./email-request-copy.component.scss'],
-  templateUrl: './email-request-copy.component.html'
+  templateUrl: './email-request-copy.component.html',
 })
 /**
  * A form component for an email to send back to the user requesting an item
@@ -14,7 +14,8 @@ export class EmailRequestCopyComponent {
   /**
    * Event emitter for sending the email
    */
-  @Output() send: EventEmitter<RequestCopyEmail> = new EventEmitter<RequestCopyEmail>();
+  @Output() send: EventEmitter<RequestCopyEmail> =
+    new EventEmitter<RequestCopyEmail>();
 
   /**
    * The subject of the email
@@ -26,8 +27,7 @@ export class EmailRequestCopyComponent {
    */
   @Input() message: string;
 
-  constructor(protected location: Location) {
-  }
+  constructor(protected location: Location) {}
 
   /**
    * Submit the email

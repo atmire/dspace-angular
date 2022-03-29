@@ -1,12 +1,17 @@
-import { MetadataRepresentation, MetadataRepresentationType } from '../metadata-representation.model';
+import {
+  MetadataRepresentation,
+  MetadataRepresentationType,
+} from '../metadata-representation.model';
 import { hasValue } from '../../../../shared/empty.util';
 import { MetadataValue } from '../../metadata.models';
 
 /**
  * This class defines the way the metadatum it extends should be represented
  */
-export class MetadatumRepresentation extends MetadataValue implements MetadataRepresentation {
-
+export class MetadatumRepresentation
+  extends MetadataValue
+  implements MetadataRepresentation
+{
   /**
    * The type of item this metadatum can be represented as
    */
@@ -34,5 +39,4 @@ export class MetadatumRepresentation extends MetadataValue implements MetadataRe
   getValue(): string {
     return this.value;
   }
-
 }

@@ -11,7 +11,6 @@ import { RemoteData } from '../core/data/remote-data';
  */
 @Injectable()
 export class ServerSubmissionService extends SubmissionService {
-
   /**
    * Override createSubmission parent method to return an empty observable
    *

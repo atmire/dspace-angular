@@ -11,10 +11,13 @@ export class NotificationOptions implements INotificationOptions {
   public clickToClose: boolean;
   public animate: any;
 
-  constructor(timeOut = 5000,
-              clickToClose = true,
-              animate: NotificationAnimationsType | string = NotificationAnimationsType.Scale) {
-
+  constructor(
+    timeOut = 5000,
+    clickToClose = true,
+    animate:
+      | NotificationAnimationsType
+      | string = NotificationAnimationsType.Scale
+  ) {
     this.timeOut = timeOut;
     this.clickToClose = clickToClose;
     this.animate = animate;

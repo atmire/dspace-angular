@@ -1,4 +1,12 @@
-import { ChangeDetectorRef, Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 
 import { Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
@@ -24,7 +32,7 @@ import { UploaderError } from '../../shared/uploader/uploader-error.model';
 @Component({
   selector: 'ds-my-dspace-new-submission',
   styleUrls: ['./my-dspace-new-submission.component.scss'],
-  templateUrl: './my-dspace-new-submission.component.html'
+  templateUrl: './my-dspace-new-submission.component.html',
 })
 export class MyDSpaceNewSubmissionComponent implements OnDestroy, OnInit {
   /**
@@ -57,32 +65,40 @@ export class MyDSpaceNewSubmissionComponent implements OnDestroy, OnInit {
    * @param {TranslateService} translate
    * @param {NgbModal} modalService
    */
-  constructor(private authService: AuthService,
-              private changeDetectorRef: ChangeDetectorRef,
-              private halService: HALEndpointService,
-              private notificationsService: NotificationsService,
-              private translate: TranslateService,
-              private modalService: NgbModal) {
-  }
+  constructor(
+    private authService: AuthService,
+    private changeDetectorRef: ChangeDetectorRef,
+    private halService: HALEndpointService,
+    private notificationsService: NotificationsService,
+    private translate: TranslateService,
+    private modalService: NgbModal
+  ) {}
 
   /**
    * Initialize url and Bearer token
    */
   ngOnInit() {
     this.uploadFilesOptions.autoUpload = false;
-    this.sub = this.halService.getEndpoint('workspaceitems').pipe(first()).subscribe((url) => {
+    this.sub = this.halService
+      .getEndpoint('workspaceitems')
+      .pipe(first())
+      .subscribe((url) => {
         this.uploadFilesOptions.url = url;
         this.uploadFilesOptions.authToken = this.authService.buildAuthHeader();
         this.changeDetectorRef.detectChanges();
-      }
-    );
+      });
   }
 
   /**
    * Method called when file upload is completed to notify upload status
    */
   public onCompleteItem(res) {
-    if (res && res._embedded && res._embedded.workspaceitems && res._embedded.workspaceitems.length > 0) {
+    if (
+      res &&
+      res._embedded &&
+      res._embedded.workspaceitems &&
+      res._embedded.workspaceitems.length > 0
+    ) {
       const workspaceitems = res._embedded.workspaceitems;
       this.uploadEnd.emit(workspaceitems);
 
@@ -96,13 +112,21 @@ export class MyDSpaceNewSubmissionComponent implements OnDestroy, OnInit {
           link,
           'mydspace.general.text-here',
           'mydspace.upload.upload-successful',
-          'here');
+          'here'
+        );
       } else if (workspaceitems.length > 1) {
-        this.notificationsService.success(null, this.translate.get('mydspace.upload.upload-multiple-successful', {qty: workspaceitems.length}));
+        this.notificationsService.success(
+          null,
+          this.translate.get('mydspace.upload.upload-multiple-successful', {
+            qty: workspaceitems.length,
+          })
+        );
       }
-
     } else {
-      this.notificationsService.error(null, this.translate.get('mydspace.upload.upload-failed'));
+      this.notificationsService.error(
+        null,
+        this.translate.get('mydspace.upload.upload-failed')
+      );
     }
   }
 
@@ -123,14 +147,17 @@ export class MyDSpaceNewSubmissionComponent implements OnDestroy, OnInit {
   afterFileLoaded(items) {
     const uploader = this.uploaderComponent.uploader;
     if (hasValue(items) && items.length > 1) {
-      this.notificationsService.error(null, this.translate.get('mydspace.upload.upload-failed-moreonefile'));
+      this.notificationsService.error(
+        null,
+        this.translate.get('mydspace.upload.upload-failed-moreonefile')
+      );
       uploader.clearQueue();
       this.changeDetectorRef.detectChanges();
     } else {
       const modalRef = this.modalService.open(CollectionSelectorComponent);
       // When the dialog are closes its takes the collection selected and
       // uploads choosed file after adds owningCollection parameter
-      modalRef.result.then( (result) => {
+      modalRef.result.then((result) => {
         uploader.onBuildItemForm = (fileItem: any, form: any) => {
           form.append('owningCollection', result.uuid);
         };

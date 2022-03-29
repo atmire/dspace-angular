@@ -8,9 +8,8 @@ describe('BooleanValueInputComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [BooleanValueInputComponent]
-    })
-      .compileComponents();
+      declarations: [BooleanValueInputComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

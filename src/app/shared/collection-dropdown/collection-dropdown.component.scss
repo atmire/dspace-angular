@@ -5,7 +5,8 @@
 }
 
 .collection-item {
-  border-bottom: var(--bs-dropdown-border-width) solid var(--bs-dropdown-border-color);
+  border-bottom: var(--bs-dropdown-border-width) solid
+    var(--bs-dropdown-border-color);
 }
 
 #collectionControlsDropdownMenu {

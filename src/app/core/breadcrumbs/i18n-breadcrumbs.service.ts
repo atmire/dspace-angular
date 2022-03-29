@@ -12,16 +12,19 @@ export const BREADCRUMB_MESSAGE_POSTFIX = '.breadcrumbs';
  * Service to calculate i18n breadcrumbs for a single part of the route
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class I18nBreadcrumbsService implements BreadcrumbsProviderService<string> {
-
+export class I18nBreadcrumbsService
+  implements BreadcrumbsProviderService<string>
+{
   /**
    * Method to calculate the breadcrumbs
    * @param key The key used to resolve the breadcrumb
    * @param url The url to use as a link for this breadcrumb
    */
   getBreadcrumbs(key: string, url: string): Observable<Breadcrumb[]> {
-    return observableOf([new Breadcrumb(key + BREADCRUMB_MESSAGE_POSTFIX, url)]);
+    return observableOf([
+      new Breadcrumb(key + BREADCRUMB_MESSAGE_POSTFIX, url),
+    ]);
   }
 }

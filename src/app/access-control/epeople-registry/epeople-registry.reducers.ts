@@ -2,7 +2,7 @@ import { EPerson } from '../../core/eperson/models/eperson.model';
 import {
   EPeopleRegistryAction,
   EPeopleRegistryActionTypes,
-  EPeopleRegistryEditEPersonAction
+  EPeopleRegistryEditEPersonAction,
 } from './epeople-registry.actions';
 
 /**
@@ -25,18 +25,20 @@ const initialState: EPeopleRegistryState = {
  * @param state   The current EPeopleRegistryState
  * @param action  The EPeopleRegistryAction to perform on the state
  */
-export function ePeopleRegistryReducer(state = initialState, action: EPeopleRegistryAction): EPeopleRegistryState {
+export function ePeopleRegistryReducer(
+  state = initialState,
+  action: EPeopleRegistryAction
+): EPeopleRegistryState {
   switch (action.type) {
-
     case EPeopleRegistryActionTypes.EDIT_EPERSON: {
       return Object.assign({}, state, {
-        editEPerson: (action as EPeopleRegistryEditEPersonAction).eperson
+        editEPerson: (action as EPeopleRegistryEditEPersonAction).eperson,
       });
     }
 
     case EPeopleRegistryActionTypes.CANCEL_EDIT_EPERSON: {
       return Object.assign({}, state, {
-        editEPerson: null
+        editEPerson: null,
       });
     }
 

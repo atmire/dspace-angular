@@ -56,4 +56,3 @@ export class TruncatableCollapseAction extends TruncatableAction {
 export class TruncatableExpandAction extends TruncatableAction {
   type = TruncatableActionTypes.EXPAND;
 }
-

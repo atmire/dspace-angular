@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
  */
 @Component({
   selector: 'ds-link-menu-item',
-  templateUrl: './link-menu-item.component.html'
+  templateUrl: './link-menu-item.component.html',
 })
 @rendersMenuItemForType(MenuItemType.LINK)
 export class LinkMenuItemComponent implements OnInit {
@@ -19,7 +19,7 @@ export class LinkMenuItemComponent implements OnInit {
   hasLink: boolean;
   constructor(
     @Inject('itemModelProvider') item: LinkMenuItemModel,
-    private router: Router,
+    private router: Router
   ) {
     this.item = item;
   }
@@ -42,5 +42,4 @@ export class LinkMenuItemComponent implements OnInit {
     }
     event.stopPropagation();
   }
-
 }

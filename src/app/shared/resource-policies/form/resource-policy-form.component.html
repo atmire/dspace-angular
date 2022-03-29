@@ -1,50 +1,74 @@
 <div>
-  <ds-form *ngIf="formModel"
-           #formRef="formComponent"
-           [formId]="formId"
-           [formModel]="formModel"
-           [displaySubmit]="false"
-           [displayCancel]="false"></ds-form>
+  <ds-form
+    *ngIf="formModel"
+    #formRef="formComponent"
+    [formId]="formId"
+    [formModel]="formModel"
+    [displaySubmit]="false"
+    [displayCancel]="false"
+  ></ds-form>
   <div class="container-fluid">
-    <label for="ResourcePolicyObject">{{'resource-policies.form.eperson-group-list.label' | translate}}</label>
-    <input id="ResourcePolicyObject" class="form-control mb-3" type="text" readonly [value]="resourcePolicyTargetName$ | async">
+    <label for="ResourcePolicyObject">{{
+      'resource-policies.form.eperson-group-list.label' | translate
+    }}</label>
+    <input
+      id="ResourcePolicyObject"
+      class="form-control mb-3"
+      type="text"
+      readonly
+      [value]="resourcePolicyTargetName$ | async"
+    />
     <ng-container *ngIf="canSetGrant()">
       <ul ngbNav #nav="ngbNav" class="nav-pills">
         <li ngbNavItem>
-          <a ngbNavLink>{{'resource-policies.form.eperson-group-list.tab.eperson' | translate}}</a>
+          <a ngbNavLink>{{
+            'resource-policies.form.eperson-group-list.tab.eperson' | translate
+          }}</a>
           <ng-template ngbNavContent>
-            <ds-eperson-group-list (select)="updateObjectSelected($event, true)"></ds-eperson-group-list>
+            <ds-eperson-group-list
+              (select)="updateObjectSelected($event, true)"
+            ></ds-eperson-group-list>
           </ng-template>
         </li>
         <li ngbNavItem>
-          <a ngbNavLink>{{'resource-policies.form.eperson-group-list.tab.group' | translate}}</a>
+          <a ngbNavLink>{{
+            'resource-policies.form.eperson-group-list.tab.group' | translate
+          }}</a>
           <ng-template ngbNavContent>
-            <ds-eperson-group-list [isListOfEPerson]="false"
-                                  (select)="updateObjectSelected($event, false)"></ds-eperson-group-list>
+            <ds-eperson-group-list
+              [isListOfEPerson]="false"
+              (select)="updateObjectSelected($event, false)"
+            ></ds-eperson-group-list>
           </ng-template>
         </li>
       </ul>
       <div [ngbNavOutlet]="nav"></div>
     </ng-container>
     <div>
-      <hr>
+      <hr />
       <div class="form-group row">
-
         <div class="col text-right">
-          <button type="reset"
-                  class="btn btn-default"
-                  [disabled]="(isProcessing | async)"
-                  (click)="onReset()">{{'form.cancel' | translate}}</button>
-          <button type="button"
-                  class="btn btn-primary"
-                  [disabled]="!(isFormValid() | async) || (isProcessing | async)"
-                  (click)="onSubmit()">
-            <span *ngIf="(isProcessing | async)">
-                  <i class='fas fa-circle-notch fa-spin'></i> {{'submission.workflow.tasks.generic.processing' | translate}}
-                </span>
+          <button
+            type="reset"
+            class="btn btn-default"
+            [disabled]="isProcessing | async"
+            (click)="onReset()"
+          >
+            {{ 'form.cancel' | translate }}
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            [disabled]="!(isFormValid() | async) || (isProcessing | async)"
+            (click)="onSubmit()"
+          >
+            <span *ngIf="isProcessing | async">
+              <i class="fas fa-circle-notch fa-spin"></i>
+              {{ 'submission.workflow.tasks.generic.processing' | translate }}
+            </span>
             <span *ngIf="!(isProcessing | async)">
-                  {{'form.submit' | translate}}
-                </span>
+              {{ 'form.submit' | translate }}
+            </span>
           </button>
         </div>
       </div>

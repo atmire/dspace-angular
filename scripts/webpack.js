@@ -7,7 +7,7 @@ const webpackPath = path.join('node_modules', 'webpack', 'bin', 'webpack.js');
 const params = [
   '--max_old_space_size=' + heapSize,
   webpackPath,
-  ...process.argv.slice(2)
+  ...process.argv.slice(2),
 ];
 
-child_process.spawn('node', params, { stdio:'inherit' });
+child_process.spawn('node', params, { stdio: 'inherit' });

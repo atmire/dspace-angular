@@ -35,7 +35,7 @@ describe('SiteDataService', () => {
     scheduler = getTestScheduler();
 
     halService = jasmine.createSpyObj('halService', {
-      getEndpoint: cold('a', { a: siteLink })
+      getEndpoint: cold('a', { a: siteLink }),
     });
     requestService = jasmine.createSpyObj('requestService', {
       generateRequestId: requestUUID,
@@ -43,8 +43,8 @@ describe('SiteDataService', () => {
     });
     rdbService = jasmine.createSpyObj('rdbService', {
       buildList: cold('a', {
-        a: createSuccessfulRemoteDataObject(createPaginatedList([testObject]))
-      })
+        a: createSuccessfulRemoteDataObject(createPaginatedList([testObject])),
+      }),
     });
 
     const store = {} as Store<CoreState>;
@@ -67,7 +67,6 @@ describe('SiteDataService', () => {
 
   describe('getBrowseEndpoint', () => {
     it('should return the Static Page endpoint', () => {
-
       const result = service.getBrowseEndpoint(options);
       const expected = cold('b', { b: siteLink });
 
@@ -77,10 +76,13 @@ describe('SiteDataService', () => {
 
   describe('find', () => {
     it('should return the Site object', () => {
-
-      spyOn(service, 'findAll').and.returnValue(cold('a', {
-        a: createSuccessfulRemoteDataObject(createPaginatedList([testObject]))
-      }));
+      spyOn(service, 'findAll').and.returnValue(
+        cold('a', {
+          a: createSuccessfulRemoteDataObject(
+            createPaginatedList([testObject])
+          ),
+        })
+      );
 
       const expected = cold('(b|)', { b: testObject });
       const result = service.find();

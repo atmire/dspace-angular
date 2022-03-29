@@ -5,14 +5,12 @@ import { AppState } from '../../app/app.reducer';
 
 @Injectable()
 export abstract class DSpaceTransferState {
-
   protected static NGRX_STATE = makeStateKey('NGRX_STATE');
 
   constructor(
     protected transferState: TransferState,
     protected store: Store<AppState>
-  ) {
-  }
+  ) {}
 
   abstract transfer(): void;
 }

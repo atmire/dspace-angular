@@ -13,11 +13,10 @@ import { PaginationService } from '../../../core/pagination/pagination.service';
 @Component({
   selector: 'ds-starts-with-date',
   styleUrls: ['./starts-with-date.component.scss'],
-  templateUrl: './starts-with-date.component.html'
+  templateUrl: './starts-with-date.component.html',
 })
 @renderStartsWithFor(StartsWithType.date)
 export class StartsWithDateComponent extends StartsWithAbstractComponent {
-
   /**
    * A list of options for months to select from
    */
@@ -33,11 +32,13 @@ export class StartsWithDateComponent extends StartsWithAbstractComponent {
    */
   startsWithYear: number;
 
-  public constructor(@Inject('startsWithOptions') public startsWithOptions: any[],
-                     @Inject('paginationId') public paginationId: string,
-                     protected paginationService: PaginationService,
-                     protected route: ActivatedRoute,
-                     protected router: Router) {
+  public constructor(
+    @Inject('startsWithOptions') public startsWithOptions: any[],
+    @Inject('paginationId') public paginationId: string,
+    protected paginationService: PaginationService,
+    protected route: ActivatedRoute,
+    protected router: Router
+  ) {
     super(startsWithOptions, paginationId, paginationService, route, router);
   }
 
@@ -55,7 +56,7 @@ export class StartsWithDateComponent extends StartsWithAbstractComponent {
       'september',
       'october',
       'november',
-      'december'
+      'december',
     ];
 
     super.ngOnInit();
@@ -87,7 +88,11 @@ export class StartsWithDateComponent extends StartsWithAbstractComponent {
    */
   getStartsWith() {
     const month = this.getStartsWithMonth();
-    if (month > 0 && hasValue(this.startsWithYear) && this.startsWithYear !== -1) {
+    if (
+      month > 0 &&
+      hasValue(this.startsWithYear) &&
+      this.startsWithYear !== -1
+    ) {
       let twoDigitMonth = '' + month;
       if (month < 10) {
         twoDigitMonth = `0${month}`;
@@ -147,5 +152,4 @@ export class StartsWithDateComponent extends StartsWithAbstractComponent {
   getStartsWithMonth() {
     return this.monthOptions.indexOf(this.startsWithMonth);
   }
-
 }

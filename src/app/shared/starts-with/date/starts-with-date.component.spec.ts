@@ -12,7 +12,10 @@ import { ActivatedRouteStub } from '../../testing/active-router.stub';
 import { EnumKeysPipe } from '../../utils/enum-keys-pipe';
 import { RouterStub } from '../../testing/router.stub';
 import { PaginationComponentOptions } from '../../pagination/pagination-component-options.model';
-import { SortDirection, SortOptions } from '../../../core/cache/models/sort-options.model';
+import {
+  SortDirection,
+  SortOptions,
+} from '../../../core/cache/models/sort-options.model';
 import { FindListOptions } from '../../../core/data/request.models';
 import { PaginationService } from '../../../core/pagination/pagination.service';
 import { PaginationServiceStub } from '../../testing/pagination-service.stub';
@@ -28,23 +31,28 @@ describe('StartsWithDateComponent', () => {
 
   const activatedRouteStub = Object.assign(new ActivatedRouteStub(), {
     params: observableOf({}),
-    queryParams: observableOf({})
+    queryParams: observableOf({}),
   });
 
   paginationService = new PaginationServiceStub();
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [CommonModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), NgbModule],
+      imports: [
+        CommonModule,
+        RouterTestingModule.withRoutes([]),
+        TranslateModule.forRoot(),
+        NgbModule,
+      ],
       declarations: [StartsWithDateComponent, EnumKeysPipe],
       providers: [
         { provide: 'startsWithOptions', useValue: options },
         { provide: 'paginationId', useValue: 'page-id' },
         { provide: ActivatedRoute, useValue: activatedRouteStub },
         { provide: PaginationService, useValue: paginationService },
-        { provide: Router, useValue: new RouterStub() }
+        { provide: Router, useValue: new RouterStub() },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -64,7 +72,9 @@ describe('StartsWithDateComponent', () => {
     let select;
 
     beforeEach(() => {
-      select = fixture.debugElement.query(By.css('select#year-select')).nativeElement;
+      select = fixture.debugElement.query(
+        By.css('select#year-select')
+      ).nativeElement;
       select.value = select.options[0].value;
       select.dispatchEvent(new Event('change'));
       fixture.detectChanges();
@@ -91,10 +101,12 @@ describe('StartsWithDateComponent', () => {
       expectedValue = '' + options[0];
       extras = {
         queryParams: Object.assign({ startsWith: expectedValue }),
-        queryParamsHandling: 'merge'
+        queryParamsHandling: 'merge',
       };
 
-      select = fixture.debugElement.query(By.css('select#year-select')).nativeElement;
+      select = fixture.debugElement.query(
+        By.css('select#year-select')
+      ).nativeElement;
       input = fixture.debugElement.query(By.css('input')).nativeElement;
       select.value = select.options[1].value;
       select.dispatchEvent(new Event('change'));
@@ -117,7 +129,9 @@ describe('StartsWithDateComponent', () => {
       let monthSelect;
 
       beforeEach(() => {
-        monthSelect = fixture.debugElement.query(By.css('select#month-select')).nativeElement;
+        monthSelect = fixture.debugElement.query(
+          By.css('select#month-select')
+        ).nativeElement;
         monthSelect.value = monthSelect.options[0].value;
         monthSelect.dispatchEvent(new Event('change'));
         fixture.detectChanges();
@@ -143,10 +157,12 @@ describe('StartsWithDateComponent', () => {
         expectedValue = `${options[0]}-01`;
         extras = {
           queryParams: Object.assign({ startsWith: expectedValue }),
-          queryParamsHandling: 'merge'
+          queryParamsHandling: 'merge',
         };
 
-        monthSelect = fixture.debugElement.query(By.css('select#month-select')).nativeElement;
+        monthSelect = fixture.debugElement.query(
+          By.css('select#month-select')
+        ).nativeElement;
         monthSelect.value = monthSelect.options[1].value;
         monthSelect.dispatchEvent(new Event('change'));
         fixture.detectChanges();
@@ -171,7 +187,7 @@ describe('StartsWithDateComponent', () => {
     const expectedValue = '2015';
     const extras: NavigationExtras = {
       queryParams: Object.assign({ startsWith: expectedValue }),
-      queryParamsHandling: 'merge'
+      queryParamsHandling: 'merge',
     };
 
     beforeEach(() => {
@@ -189,5 +205,4 @@ describe('StartsWithDateComponent', () => {
       expect(router.navigate).toHaveBeenCalledWith([], extras);
     });
   });
-
 });

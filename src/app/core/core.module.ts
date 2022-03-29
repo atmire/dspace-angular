@@ -1,8 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
+import {
+  ModuleWithProviders,
+  NgModule,
+  Optional,
+  SkipSelf,
+} from '@angular/core';
 
-import { DynamicFormLayoutService, DynamicFormService, DynamicFormValidationService } from '@ng-dynamic-forms/core';
+import {
+  DynamicFormLayoutService,
+  DynamicFormService,
+  DynamicFormValidationService,
+} from '@ng-dynamic-forms/core';
 import { EffectsModule } from '@ngrx/effects';
 
 import { Action, StoreConfig, StoreModule } from '@ngrx/store';
@@ -17,7 +26,7 @@ import { EndpointMockingRestService } from '../shared/mocks/dspace-rest/endpoint
 import {
   MOCK_RESPONSE_MAP,
   mockResponseMap,
-  ResponseMapMock
+  ResponseMapMock,
 } from '../shared/mocks/dspace-rest/mocks/response-map.mock';
 import { NotificationsService } from '../shared/notifications/notifications.service';
 import { SelectableListService } from '../shared/object-list/selectable-list/selectable-list.service';
@@ -77,7 +86,10 @@ import { FeedbackDataService } from './feedback/feedback-data.service';
 
 import { ApiService } from './services/api.service';
 import { ServerResponseService } from './services/server-response.service';
-import { NativeWindowFactory, NativeWindowService } from './services/window.service';
+import {
+  NativeWindowFactory,
+  NativeWindowService,
+} from './services/window.service';
 import { BitstreamFormat } from './shared/bitstream-format.model';
 import { Bitstream } from './shared/bitstream.model';
 import { BrowseDefinition } from './shared/browse-definition.model';
@@ -167,7 +179,10 @@ import { SubmissionAccessesModel } from './config/models/config-submission-acces
  * When not in production, endpoint responses can be mocked for testing purposes
  * If there is no mock version available for the endpoint, the actual REST response will be used just like in production mode
  */
-export const restServiceFactory = (mocks: ResponseMapMock, http: HttpClient) => {
+export const restServiceFactory = (
+  mocks: ResponseMapMock,
+  http: HttpClient
+) => {
   if (environment.production) {
     return new DspaceRestService(http);
   } else {
@@ -177,8 +192,12 @@ export const restServiceFactory = (mocks: ResponseMapMock, http: HttpClient) => 
 
 const IMPORTS = [
   CommonModule,
-  StoreModule.forFeature('core', coreReducers, storeModuleConfig as StoreConfig<CoreState, Action>),
-  EffectsModule.forFeature(coreEffects)
+  StoreModule.forFeature(
+    'core',
+    coreReducers,
+    storeModuleConfig as StoreConfig<CoreState, Action>
+  ),
+  EffectsModule.forFeature(coreEffects),
 ];
 
 const DECLARATIONS = [];
@@ -193,7 +212,11 @@ const PROVIDERS = [
   SiteDataService,
   DSOResponseParsingService,
   { provide: MOCK_RESPONSE_MAP, useValue: mockResponseMap },
-  { provide: DspaceRestService, useFactory: restServiceFactory, deps: [MOCK_RESPONSE_MAP, HttpClient] },
+  {
+    provide: DspaceRestService,
+    useFactory: restServiceFactory,
+    deps: [MOCK_RESPONSE_MAP, HttpClient],
+  },
   DynamicFormLayoutService,
   DynamicFormService,
   DynamicFormValidationService,
@@ -291,91 +314,81 @@ const PROVIDERS = [
 /**
  * Declaration needed to make sure all decorator functions are called in time
  */
-export const models =
-  [
-    Root,
-    DSpaceObject,
-    Bundle,
-    Bitstream,
-    BitstreamFormat,
-    Item,
-    Site,
-    Collection,
-    Community,
-    EPerson,
-    Group,
-    ResourcePolicy,
-    MetadataSchema,
-    MetadataField,
-    License,
-    WorkflowItem,
-    WorkspaceItem,
-    SubmissionCcLicence,
-    SubmissionCcLicenceUrl,
-    SubmissionDefinitionsModel,
-    SubmissionFormsModel,
-    SubmissionSectionModel,
-    SubmissionUploadsModel,
-    AuthStatus,
-    BrowseEntry,
-    BrowseDefinition,
-    ClaimedTask,
-    TaskObject,
-    PoolTask,
-    Relationship,
-    RelationshipType,
-    ItemType,
-    ExternalSource,
-    ExternalSourceEntry,
-    Script,
-    Process,
-    Version,
-    VersionHistory,
-    WorkflowAction,
-    TemplateItem,
-    Feature,
-    Authorization,
-    Registration,
-    Vocabulary,
-    VocabularyEntry,
-    VocabularyEntryDetail,
-    ConfigurationProperty,
-    ShortLivedToken,
-    Registration,
-    UsageReport,
-    Root,
-    SearchConfig,
-    SubmissionAccessesModel
-  ];
+export const models = [
+  Root,
+  DSpaceObject,
+  Bundle,
+  Bitstream,
+  BitstreamFormat,
+  Item,
+  Site,
+  Collection,
+  Community,
+  EPerson,
+  Group,
+  ResourcePolicy,
+  MetadataSchema,
+  MetadataField,
+  License,
+  WorkflowItem,
+  WorkspaceItem,
+  SubmissionCcLicence,
+  SubmissionCcLicenceUrl,
+  SubmissionDefinitionsModel,
+  SubmissionFormsModel,
+  SubmissionSectionModel,
+  SubmissionUploadsModel,
+  AuthStatus,
+  BrowseEntry,
+  BrowseDefinition,
+  ClaimedTask,
+  TaskObject,
+  PoolTask,
+  Relationship,
+  RelationshipType,
+  ItemType,
+  ExternalSource,
+  ExternalSourceEntry,
+  Script,
+  Process,
+  Version,
+  VersionHistory,
+  WorkflowAction,
+  TemplateItem,
+  Feature,
+  Authorization,
+  Registration,
+  Vocabulary,
+  VocabularyEntry,
+  VocabularyEntryDetail,
+  ConfigurationProperty,
+  ShortLivedToken,
+  Registration,
+  UsageReport,
+  Root,
+  SearchConfig,
+  SubmissionAccessesModel,
+];
 
 @NgModule({
-  imports: [
-    ...IMPORTS
-  ],
-  declarations: [
-    ...DECLARATIONS
-  ],
-  exports: [
-    ...EXPORTS
-  ],
-  providers: [
-    ...PROVIDERS
-  ]
+  imports: [...IMPORTS],
+  declarations: [...DECLARATIONS],
+  exports: [...EXPORTS],
+  providers: [...PROVIDERS],
 })
-
 export class CoreModule {
   static forRoot(): ModuleWithProviders<CoreModule> {
     return {
       ngModule: CoreModule,
-      providers: [
-        ...PROVIDERS
-      ]
+      providers: [...PROVIDERS],
     };
   }
 
   constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
     if (isNotEmpty(parentModule)) {
-      throw new Error('CoreModule is already loaded. Import it in the AppModule only');
+      throw new Error(
+        'CoreModule is already loaded. Import it in the AppModule only'
+      );
     }
   }
 }

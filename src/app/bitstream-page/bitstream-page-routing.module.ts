@@ -25,7 +25,7 @@ const EDIT_BITSTREAM_AUTHORIZATIONS_PATH = ':id/authorizations';
         path: 'handle/:prefix/:suffix/:filename',
         component: BitstreamDownloadPageComponent,
         resolve: {
-          bitstream: LegacyBitstreamUrlResolver
+          bitstream: LegacyBitstreamUrlResolver,
         },
       },
       {
@@ -33,7 +33,7 @@ const EDIT_BITSTREAM_AUTHORIZATIONS_PATH = ':id/authorizations';
         path: ':prefix/:suffix/:sequence_id/:filename',
         component: BitstreamDownloadPageComponent,
         resolve: {
-          bitstream: LegacyBitstreamUrlResolver
+          bitstream: LegacyBitstreamUrlResolver,
         },
       },
       {
@@ -41,16 +41,16 @@ const EDIT_BITSTREAM_AUTHORIZATIONS_PATH = ':id/authorizations';
         path: ':id/download',
         component: BitstreamDownloadPageComponent,
         resolve: {
-          bitstream: BitstreamPageResolver
+          bitstream: BitstreamPageResolver,
         },
       },
       {
         path: EDIT_BITSTREAM_PATH,
         component: EditBitstreamPageComponent,
         resolve: {
-          bitstream: BitstreamPageResolver
+          bitstream: BitstreamPageResolver,
         },
-        canActivate: [AuthenticatedGuard]
+        canActivate: [AuthenticatedGuard],
       },
       {
         path: EDIT_BITSTREAM_AUTHORIZATIONS_PATH,
@@ -59,34 +59,40 @@ const EDIT_BITSTREAM_AUTHORIZATIONS_PATH = ':id/authorizations';
           {
             path: 'create',
             resolve: {
-              resourcePolicyTarget: ResourcePolicyTargetResolver
+              resourcePolicyTarget: ResourcePolicyTargetResolver,
             },
             component: ResourcePolicyCreateComponent,
-            data: { title: 'resource-policies.create.page.title', showBreadcrumbs: true }
+            data: {
+              title: 'resource-policies.create.page.title',
+              showBreadcrumbs: true,
+            },
           },
           {
             path: 'edit',
             resolve: {
-              resourcePolicy: ResourcePolicyResolver
+              resourcePolicy: ResourcePolicyResolver,
             },
             component: ResourcePolicyEditComponent,
-            data: { title: 'resource-policies.edit.page.title', showBreadcrumbs: true }
+            data: {
+              title: 'resource-policies.edit.page.title',
+              showBreadcrumbs: true,
+            },
           },
           {
             path: '',
             resolve: {
-              bitstream: BitstreamPageResolver
+              bitstream: BitstreamPageResolver,
             },
             component: BitstreamAuthorizationsComponent,
-            data: { title: 'bitstream.edit.authorizations.title', showBreadcrumbs: true }
-          }
-        ]
-      }
-    ])
+            data: {
+              title: 'bitstream.edit.authorizations.title',
+              showBreadcrumbs: true,
+            },
+          },
+        ],
+      },
+    ]),
   ],
-  providers: [
-    BitstreamPageResolver,
-  ]
+  providers: [BitstreamPageResolver],
 })
-export class BitstreamPageRoutingModule {
-}
+export class BitstreamPageRoutingModule {}

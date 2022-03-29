@@ -10,25 +10,24 @@ import { FacetConfigResponse } from '../../shared/search/models/facet-config-res
 @Injectable()
 export class FacetConfigResponseParsingService extends DspaceRestResponseParsingService {
   parse(request: RestRequest, data: RawRestResponse): ParsedResponse {
-
     const config = data.payload._embedded.facets;
     const serializer = new DSpaceSerializer(SearchFilterConfig);
     const filters = serializer.deserializeArray(config);
 
     const _links = {
-      self: data.payload._links.self
+      self: data.payload._links.self,
     };
 
     // fill in the missing links section
     filters.forEach((filterConfig: SearchFilterConfig) => {
       _links[filterConfig.name] = {
-        href: filterConfig._links.self.href
+        href: filterConfig._links.self.href,
       };
     });
 
     const facetConfigResponse = Object.assign(new FacetConfigResponse(), {
       filters,
-      _links
+      _links,
     });
 
     this.addToObjectCache(facetConfigResponse, request, data);

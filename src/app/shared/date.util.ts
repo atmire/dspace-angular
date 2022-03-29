@@ -14,8 +14,12 @@ import { isNull, isUndefined } from './empty.util';
  *    true if the passed value is a NgbDateStruct, false otherwise
  */
 export function isNgbDateStruct(value: object): boolean {
-  return isObject(value) && value.hasOwnProperty('day')
-    && value.hasOwnProperty('month') && value.hasOwnProperty('year');
+  return (
+    isObject(value) &&
+    value.hasOwnProperty('day') &&
+    value.hasOwnProperty('month') &&
+    value.hasOwnProperty('year')
+  );
 }
 
 /**
@@ -28,8 +32,12 @@ export function isNgbDateStruct(value: object): boolean {
  *    the formatted date
  */
 export function dateToISOFormat(date: Date | NgbDateStruct | string): string {
-  const dateObj: Date = (date instanceof Date) ? date :
-    ((typeof date === 'string') ? ngbDateStructToDate(stringToNgbDateStruct(date)) : ngbDateStructToDate(date));
+  const dateObj: Date =
+    date instanceof Date
+      ? date
+      : typeof date === 'string'
+      ? ngbDateStructToDate(stringToNgbDateStruct(date))
+      : ngbDateStructToDate(date);
 
   let year = dateObj.getUTCFullYear().toString();
   let month = (dateObj.getUTCMonth() + 1).toString();
@@ -38,12 +46,12 @@ export function dateToISOFormat(date: Date | NgbDateStruct | string): string {
   let min = dateObj.getMinutes().toString();
   let sec = dateObj.getSeconds().toString();
 
-  year = (year.length === 1) ? '0' + year : year;
-  month = (month.length === 1) ? '0' + month : month;
-  day = (day.length === 1) ? '0' + day : day;
-  hour = (hour.length === 1) ? '0' + hour : hour;
-  min = (min.length === 1) ? '0' + min : min;
-  sec = (sec.length === 1) ? '0' + sec : sec;
+  year = year.length === 1 ? '0' + year : year;
+  month = month.length === 1 ? '0' + month : month;
+  day = day.length === 1 ? '0' + day : day;
+  hour = hour.length === 1 ? '0' + hour : hour;
+  min = min.length === 1 ? '0' + min : min;
+  sec = sec.length === 1 ? '0' + sec : sec;
   const dateStr = `${year}${month}${day}${hour}${min}${sec}`;
   return moment.utc(dateStr, 'YYYYMMDDhhmmss').format();
 }
@@ -57,7 +65,7 @@ export function dateToISOFormat(date: Date | NgbDateStruct | string): string {
  *    the Date object
  */
 export function ngbDateStructToDate(date: NgbDateStruct): Date {
-  return new Date(Date.UTC(date.year, (date.month - 1), date.day));
+  return new Date(Date.UTC(date.year, date.month - 1, date.day));
 }
 
 /**
@@ -88,7 +96,7 @@ export function dateToNgbDateStruct(date?: Date): NgbDateStruct {
   return {
     year: date.getUTCFullYear(),
     month: date.getUTCMonth() + 1,
-    day: date.getUTCDate()
+    day: date.getUTCDate(),
   };
 }
 
@@ -101,15 +109,15 @@ export function dateToNgbDateStruct(date?: Date): NgbDateStruct {
  *    the formatted date
  */
 export function dateToString(date: Date | NgbDateStruct): string {
-  const dateObj: Date = (date instanceof Date) ? date : ngbDateStructToDate(date);
+  const dateObj: Date = date instanceof Date ? date : ngbDateStructToDate(date);
 
   let year = dateObj.getUTCFullYear().toString();
   let month = (dateObj.getUTCMonth() + 1).toString();
   let day = dateObj.getUTCDate().toString();
 
-  year = (year.length === 1) ? '0' + year : year;
-  month = (month.length === 1) ? '0' + month : month;
-  day = (day.length === 1) ? '0' + day : day;
+  year = year.length === 1 ? '0' + year : year;
+  month = month.length === 1 ? '0' + month : month;
+  day = day.length === 1 ? '0' + day : day;
   const dateStr = `${year}-${month}-${day}`;
   return moment.utc(dateStr, 'YYYYMMDD').format('YYYY-MM-DD');
 }

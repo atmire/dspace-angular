@@ -5,14 +5,19 @@ import { FeatureID } from '../../../core/data/feature-authorization/feature-id';
  *  when performing the action and an option to disable the operation.
  */
 export class ItemOperation {
-
   operationKey: string;
   operationUrl: string;
   disabled: boolean;
   authorized: boolean;
   featureID: FeatureID;
 
-  constructor(operationKey: string, operationUrl: string, featureID?: FeatureID, disabled = false, authorized = true) {
+  constructor(
+    operationKey: string,
+    operationUrl: string,
+    featureID?: FeatureID,
+    disabled = false,
+    authorized = true
+  ) {
     this.operationKey = operationKey;
     this.operationUrl = operationUrl;
     this.featureID = featureID;
@@ -27,5 +32,4 @@ export class ItemOperation {
   setDisabled(disabled: boolean): void {
     this.disabled = disabled;
   }
-
 }

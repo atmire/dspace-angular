@@ -4,13 +4,9 @@ import { DSpaceServerTransferState } from './dspace-server-transfer-state.servic
 import { DSpaceTransferState } from './dspace-transfer-state.service';
 
 @NgModule({
-  imports: [
-    ServerTransferStateModule
-  ],
+  imports: [ServerTransferStateModule],
   providers: [
-    { provide: DSpaceTransferState, useClass: DSpaceServerTransferState }
-  ]
+    { provide: DSpaceTransferState, useClass: DSpaceServerTransferState },
+  ],
 })
-export class DSpaceServerTransferStateModule {
-
-}
+export class DSpaceServerTransferStateModule {}

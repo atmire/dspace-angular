@@ -16,7 +16,8 @@
       "description": "Object of links with the rels as the keys",
       "type": "object",
       "additionalProperties": {
-        "oneOf": [{
+        "oneOf": [
+          {
             "$ref": "#/definitions/linkObject"
           },
           {
@@ -42,7 +43,8 @@
           "$ref": "http://hyperschema.org/core/base#/definitions/name"
         },
         "href": {
-          "anyOf": [{
+          "anyOf": [
+            {
               "$ref": "http://hyperschema.org/core/link#/definitions/href"
             },
             {
@@ -60,16 +62,15 @@
           "$ref": "http://hyperschema.org/core/link#/definitions/isDeprecated"
         }
       },
-      "required": [
-        "href"
-      ]
+      "required": ["href"]
     },
     "embedded": {
       "title": "HAL Embedded Resource",
       "description": "An embedded HAL resource",
       "type": "object",
       "additionalProperties": {
-        "oneOf": [{
+        "oneOf": [
+          {
             "$ref": "#"
           },
           {

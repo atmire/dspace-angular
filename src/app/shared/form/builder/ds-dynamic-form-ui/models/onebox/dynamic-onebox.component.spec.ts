@@ -1,8 +1,23 @@
 /* eslint-disable max-classes-per-file */
 // Load the implementations that should be tested
-import { ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ComponentFixture, fakeAsync, inject, TestBed, tick, } from '@angular/core/testing';
+import {
+  ChangeDetectorRef,
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+} from '@angular/core';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import {
+  ComponentFixture,
+  fakeAsync,
+  inject,
+  TestBed,
+  tick,
+} from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { CdkTreeModule } from '@angular/cdk/tree';
 
@@ -10,7 +25,11 @@ import { TestScheduler } from 'rxjs/testing';
 import { getTestScheduler } from 'jasmine-marbles';
 import { of as observableOf } from 'rxjs';
 import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { DynamicFormLayoutService, DynamicFormsCoreModule, DynamicFormValidationService } from '@ng-dynamic-forms/core';
+import {
+  DynamicFormLayoutService,
+  DynamicFormsCoreModule,
+  DynamicFormValidationService,
+} from '@ng-dynamic-forms/core';
 import { DynamicFormsNGBootstrapUIModule } from '@ng-dynamic-forms/ui-ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -28,20 +47,19 @@ import { createSuccessfulRemoteDataObject$ } from '../../../../../remote-data.ut
 import { VocabularyTreeviewComponent } from '../../../../../vocabulary-treeview/vocabulary-treeview.component';
 import {
   mockDynamicFormLayoutService,
-  mockDynamicFormValidationService
+  mockDynamicFormValidationService,
 } from '../../../../../testing/dynamic-form-mock-services';
 
 export let ONEBOX_TEST_GROUP;
 
 export let ONEBOX_TEST_MODEL_CONFIG;
 
-
 // Mock class for NgbModalRef
 export class MockNgbModalRef {
   componentInstance = {
     vocabularyOptions: undefined,
     preloadLevel: undefined,
-    selectedItem: undefined
+    selectedItem: undefined,
   };
   result: Promise<any> = new Promise((resolve, reject) => resolve(true));
 }
@@ -54,7 +72,7 @@ function init() {
   ONEBOX_TEST_MODEL_CONFIG = {
     vocabularyOptions: {
       closed: false,
-      name: 'vocabulary'
+      name: 'vocabulary',
     } as VocabularyOptions,
     disabled: false,
     id: 'onebox',
@@ -65,12 +83,11 @@ function init() {
     readOnly: false,
     required: false,
     repeatable: false,
-    value: undefined
+    value: undefined,
   };
 }
 
 describe('DsDynamicOneboxComponent test suite', () => {
-
   let scheduler: TestScheduler;
   let testComp: TestComponent;
   let oneboxComponent: DsDynamicOneboxComponent;
@@ -89,12 +106,12 @@ describe('DsDynamicOneboxComponent test suite', () => {
     type: 'vocabulary',
     _links: {
       self: {
-        url: 'self'
+        url: 'self',
       },
       entries: {
-        url: 'entries'
-      }
-    }
+        url: 'entries',
+      },
+    },
   };
 
   const hierarchicalVocabulary = {
@@ -106,25 +123,23 @@ describe('DsDynamicOneboxComponent test suite', () => {
     type: 'vocabulary',
     _links: {
       self: {
-        url: 'self'
+        url: 'self',
       },
       entries: {
-        url: 'entries'
-      }
-    }
+        url: 'entries',
+      },
+    },
   };
 
   // waitForAsync beforeEach
   beforeEach(() => {
     vocabularyServiceStub = new VocabularyServiceStub();
 
-    modal = jasmine.createSpyObj('modal',
-      {
-        open: jasmine.createSpy('open'),
-        close: jasmine.createSpy('close'),
-        dismiss: jasmine.createSpy('dismiss'),
-      }
-    );
+    modal = jasmine.createSpyObj('modal', {
+      open: jasmine.createSpy('open'),
+      close: jasmine.createSpy('close'),
+      dismiss: jasmine.createSpy('dismiss'),
+    });
     init();
     TestBed.configureTestingModule({
       imports: [
@@ -134,26 +149,31 @@ describe('DsDynamicOneboxComponent test suite', () => {
         NgbModule,
         ReactiveFormsModule,
         TranslateModule.forRoot(),
-        CdkTreeModule
+        CdkTreeModule,
       ],
       declarations: [
         DsDynamicOneboxComponent,
         TestComponent,
         AuthorityConfidenceStateDirective,
         ObjNgFor,
-        VocabularyTreeviewComponent
+        VocabularyTreeviewComponent,
       ], // declare the test component
       providers: [
         ChangeDetectorRef,
         DsDynamicOneboxComponent,
         { provide: VocabularyService, useValue: vocabularyServiceStub },
-        { provide: DynamicFormLayoutService, useValue: mockDynamicFormLayoutService },
-        { provide: DynamicFormValidationService, useValue: mockDynamicFormValidationService },
-        { provide: NgbModal, useValue: modal }
+        {
+          provide: DynamicFormLayoutService,
+          useValue: mockDynamicFormLayoutService,
+        },
+        {
+          provide: DynamicFormValidationService,
+          useValue: mockDynamicFormValidationService,
+        },
+        { provide: NgbModal, useValue: modal },
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
-
   });
 
   describe('', () => {
@@ -167,31 +187,42 @@ describe('DsDynamicOneboxComponent test suite', () => {
                             (change)="onValueChange($event)"
                             (focus)="onFocus($event)"></ds-dynamic-onebox>`;
 
-      spyOn(vocabularyServiceStub, 'findVocabularyById').and.returnValue(createSuccessfulRemoteDataObject$(vocabulary));
-      testFixture = createTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
+      spyOn(vocabularyServiceStub, 'findVocabularyById').and.returnValue(
+        createSuccessfulRemoteDataObject$(vocabulary)
+      );
+      testFixture = createTestComponent(
+        html,
+        TestComponent
+      ) as ComponentFixture<TestComponent>;
       testComp = testFixture.componentInstance;
     });
 
     afterEach(() => {
       testFixture.destroy();
     });
-    it('should create DsDynamicOneboxComponent', inject([DsDynamicOneboxComponent], (app: DsDynamicOneboxComponent) => {
-      expect(app).toBeDefined();
-    }));
+    it('should create DsDynamicOneboxComponent', inject(
+      [DsDynamicOneboxComponent],
+      (app: DsDynamicOneboxComponent) => {
+        expect(app).toBeDefined();
+      }
+    ));
   });
 
   describe('Has not hierarchical vocabulary', () => {
     beforeEach(() => {
-      spyOn(vocabularyServiceStub, 'findVocabularyById').and.returnValue(createSuccessfulRemoteDataObject$(vocabulary));
+      spyOn(vocabularyServiceStub, 'findVocabularyById').and.returnValue(
+        createSuccessfulRemoteDataObject$(vocabulary)
+      );
     });
 
     describe('when init model value is empty', () => {
       beforeEach(() => {
-
         oneboxCompFixture = TestBed.createComponent(DsDynamicOneboxComponent);
         oneboxComponent = oneboxCompFixture.componentInstance; // FormComponent test instance
         oneboxComponent.group = ONEBOX_TEST_GROUP;
-        oneboxComponent.model = new DynamicOneboxModel(ONEBOX_TEST_MODEL_CONFIG);
+        oneboxComponent.model = new DynamicOneboxModel(
+          ONEBOX_TEST_MODEL_CONFIG
+        );
         oneboxCompFixture.detectChanges();
       });
 
@@ -205,39 +236,47 @@ describe('DsDynamicOneboxComponent test suite', () => {
       });
 
       it('should search when 3+ characters typed', fakeAsync(() => {
-
-        spyOn((oneboxComponent as any).vocabularyService, 'getVocabularyEntriesByValue').and.callThrough();
+        spyOn(
+          (oneboxComponent as any).vocabularyService,
+          'getVocabularyEntriesByValue'
+        ).and.callThrough();
 
         oneboxComponent.search(observableOf('test')).subscribe();
 
         tick(300);
         oneboxCompFixture.detectChanges();
 
-        expect((oneboxComponent as any).vocabularyService.getVocabularyEntriesByValue).toHaveBeenCalled();
+        expect(
+          (oneboxComponent as any).vocabularyService.getVocabularyEntriesByValue
+        ).toHaveBeenCalled();
       }));
 
       it('should set model.value on input type when VocabularyOptions.closed is false', () => {
-        const inputDe = oneboxCompFixture.debugElement.query(By.css('input.form-control'));
+        const inputDe = oneboxCompFixture.debugElement.query(
+          By.css('input.form-control')
+        );
         const inputElement = inputDe.nativeElement;
 
         inputElement.value = 'test value';
         inputElement.dispatchEvent(new Event('input'));
 
-        expect(oneboxComponent.inputValue).toEqual(new FormFieldMetadataValueObject('test value'));
-
+        expect(oneboxComponent.inputValue).toEqual(
+          new FormFieldMetadataValueObject('test value')
+        );
       });
 
       it('should not set model.value on input type when VocabularyOptions.closed is true', () => {
         oneboxComponent.model.vocabularyOptions.closed = true;
         oneboxCompFixture.detectChanges();
-        const inputDe = oneboxCompFixture.debugElement.query(By.css('input.form-control'));
+        const inputDe = oneboxCompFixture.debugElement.query(
+          By.css('input.form-control')
+        );
         const inputElement = inputDe.nativeElement;
 
         inputElement.value = 'test value';
         inputElement.dispatchEvent(new Event('input'));
 
         expect(oneboxComponent.model.value).not.toBeDefined();
-
       });
 
       it('should emit blur Event onBlur when popup is closed', () => {
@@ -262,33 +301,37 @@ describe('DsDynamicOneboxComponent test suite', () => {
         spyOn(oneboxComponent.blur, 'emit');
         spyOn(oneboxComponent.change, 'emit');
         spyOn(oneboxComponent.instance, 'isPopupOpen').and.returnValue(false);
-        oneboxComponent.onBlur(new Event('blur',));
+        oneboxComponent.onBlur(new Event('blur'));
         expect(oneboxComponent.change.emit).toHaveBeenCalled();
         expect(oneboxComponent.blur.emit).toHaveBeenCalled();
       });
 
       it('should not emit change Event onBlur when VocabularyOptions.closed is false and inputValue is not changed', () => {
         oneboxComponent.inputValue = 'test value';
-        oneboxComponent.model = new DynamicOneboxModel(ONEBOX_TEST_MODEL_CONFIG);
+        oneboxComponent.model = new DynamicOneboxModel(
+          ONEBOX_TEST_MODEL_CONFIG
+        );
         (oneboxComponent.model as any).value = 'test value';
         oneboxCompFixture.detectChanges();
         spyOn(oneboxComponent.blur, 'emit');
         spyOn(oneboxComponent.change, 'emit');
         spyOn(oneboxComponent.instance, 'isPopupOpen').and.returnValue(false);
-        oneboxComponent.onBlur(new Event('blur',));
+        oneboxComponent.onBlur(new Event('blur'));
         expect(oneboxComponent.change.emit).not.toHaveBeenCalled();
         expect(oneboxComponent.blur.emit).toHaveBeenCalled();
       });
 
       it('should not emit change Event onBlur when VocabularyOptions.closed is false and inputValue is null', () => {
         oneboxComponent.inputValue = null;
-        oneboxComponent.model = new DynamicOneboxModel(ONEBOX_TEST_MODEL_CONFIG);
+        oneboxComponent.model = new DynamicOneboxModel(
+          ONEBOX_TEST_MODEL_CONFIG
+        );
         (oneboxComponent.model as any).value = 'test value';
         oneboxCompFixture.detectChanges();
         spyOn(oneboxComponent.blur, 'emit');
         spyOn(oneboxComponent.change, 'emit');
         spyOn(oneboxComponent.instance, 'isPopupOpen').and.returnValue(false);
-        oneboxComponent.onBlur(new Event('blur',));
+        oneboxComponent.onBlur(new Event('blur'));
         expect(oneboxComponent.change.emit).not.toHaveBeenCalled();
         expect(oneboxComponent.blur.emit).toHaveBeenCalled();
       });
@@ -298,7 +341,6 @@ describe('DsDynamicOneboxComponent test suite', () => {
         oneboxComponent.onFocus(new Event('focus'));
         expect(oneboxComponent.focus.emit).toHaveBeenCalled();
       });
-
     });
 
     describe('when init model value is not empty', () => {
@@ -306,15 +348,30 @@ describe('DsDynamicOneboxComponent test suite', () => {
         oneboxCompFixture = TestBed.createComponent(DsDynamicOneboxComponent);
         oneboxComponent = oneboxCompFixture.componentInstance; // FormComponent test instance
         oneboxComponent.group = ONEBOX_TEST_GROUP;
-        oneboxComponent.model = new DynamicOneboxModel(ONEBOX_TEST_MODEL_CONFIG);
-        const entry = observableOf(Object.assign(new VocabularyEntry(), {
-          authority: null,
-          value: 'test',
-          display: 'testDisplay'
-        }));
-        spyOn((oneboxComponent as any).vocabularyService, 'getVocabularyEntryByValue').and.returnValue(entry);
-        spyOn((oneboxComponent as any).vocabularyService, 'getVocabularyEntryByID').and.returnValue(entry);
-        (oneboxComponent.model as any).value = new FormFieldMetadataValueObject('test', null, null, 'testDisplay');
+        oneboxComponent.model = new DynamicOneboxModel(
+          ONEBOX_TEST_MODEL_CONFIG
+        );
+        const entry = observableOf(
+          Object.assign(new VocabularyEntry(), {
+            authority: null,
+            value: 'test',
+            display: 'testDisplay',
+          })
+        );
+        spyOn(
+          (oneboxComponent as any).vocabularyService,
+          'getVocabularyEntryByValue'
+        ).and.returnValue(entry);
+        spyOn(
+          (oneboxComponent as any).vocabularyService,
+          'getVocabularyEntryByID'
+        ).and.returnValue(entry);
+        (oneboxComponent.model as any).value = new FormFieldMetadataValueObject(
+          'test',
+          null,
+          null,
+          'testDisplay'
+        );
         oneboxCompFixture.detectChanges();
       });
 
@@ -325,8 +382,12 @@ describe('DsDynamicOneboxComponent test suite', () => {
 
       it('should init component properly', fakeAsync(() => {
         tick();
-        expect(oneboxComponent.currentValue).toEqual(new FormFieldMetadataValueObject('test', null, null, 'testDisplay'));
-        expect((oneboxComponent as any).vocabularyService.getVocabularyEntryByValue).toHaveBeenCalled();
+        expect(oneboxComponent.currentValue).toEqual(
+          new FormFieldMetadataValueObject('test', null, null, 'testDisplay')
+        );
+        expect(
+          (oneboxComponent as any).vocabularyService.getVocabularyEntryByValue
+        ).toHaveBeenCalled();
       }));
 
       it('should emit change Event onChange and currentValue is empty', () => {
@@ -343,15 +404,29 @@ describe('DsDynamicOneboxComponent test suite', () => {
         oneboxCompFixture = TestBed.createComponent(DsDynamicOneboxComponent);
         oneboxComponent = oneboxCompFixture.componentInstance; // FormComponent test instance
         oneboxComponent.group = ONEBOX_TEST_GROUP;
-        oneboxComponent.model = new DynamicOneboxModel(ONEBOX_TEST_MODEL_CONFIG);
-        const entry = observableOf(Object.assign(new VocabularyEntry(), {
-          authority: 'test001',
-          value: 'test001',
-          display: 'test'
-        }));
-        spyOn((oneboxComponent as any).vocabularyService, 'getVocabularyEntryByValue').and.returnValue(entry);
-        spyOn((oneboxComponent as any).vocabularyService, 'getVocabularyEntryByID').and.returnValue(entry);
-        (oneboxComponent.model as any).value = new FormFieldMetadataValueObject('test', null, 'test001');
+        oneboxComponent.model = new DynamicOneboxModel(
+          ONEBOX_TEST_MODEL_CONFIG
+        );
+        const entry = observableOf(
+          Object.assign(new VocabularyEntry(), {
+            authority: 'test001',
+            value: 'test001',
+            display: 'test',
+          })
+        );
+        spyOn(
+          (oneboxComponent as any).vocabularyService,
+          'getVocabularyEntryByValue'
+        ).and.returnValue(entry);
+        spyOn(
+          (oneboxComponent as any).vocabularyService,
+          'getVocabularyEntryByID'
+        ).and.returnValue(entry);
+        (oneboxComponent.model as any).value = new FormFieldMetadataValueObject(
+          'test',
+          null,
+          'test001'
+        );
         oneboxCompFixture.detectChanges();
       });
 
@@ -362,8 +437,12 @@ describe('DsDynamicOneboxComponent test suite', () => {
 
       it('should init component properly', fakeAsync(() => {
         tick();
-        expect(oneboxComponent.currentValue).toEqual(new FormFieldMetadataValueObject('test001', null, 'test001', 'test'));
-        expect((oneboxComponent as any).vocabularyService.getVocabularyEntryByID).toHaveBeenCalled();
+        expect(oneboxComponent.currentValue).toEqual(
+          new FormFieldMetadataValueObject('test001', null, 'test001', 'test')
+        );
+        expect(
+          (oneboxComponent as any).vocabularyService.getVocabularyEntryByID
+        ).toHaveBeenCalled();
       }));
 
       it('should emit change Event onChange and currentValue is empty', () => {
@@ -379,7 +458,9 @@ describe('DsDynamicOneboxComponent test suite', () => {
   describe('Has hierarchical vocabulary', () => {
     beforeEach(() => {
       scheduler = getTestScheduler();
-      spyOn(vocabularyServiceStub, 'findVocabularyById').and.returnValue(createSuccessfulRemoteDataObject$(hierarchicalVocabulary));
+      spyOn(vocabularyServiceStub, 'findVocabularyById').and.returnValue(
+        createSuccessfulRemoteDataObject$(hierarchicalVocabulary)
+      );
       oneboxCompFixture = TestBed.createComponent(DsDynamicOneboxComponent);
       oneboxComponent = oneboxCompFixture.componentInstance; // FormComponent test instance
       modalService = TestBed.inject(NgbModal);
@@ -389,7 +470,9 @@ describe('DsDynamicOneboxComponent test suite', () => {
     describe('when init model value is empty', () => {
       beforeEach(() => {
         oneboxComponent.group = ONEBOX_TEST_GROUP;
-        oneboxComponent.model = new DynamicOneboxModel(ONEBOX_TEST_MODEL_CONFIG);
+        oneboxComponent.model = new DynamicOneboxModel(
+          ONEBOX_TEST_MODEL_CONFIG
+        );
         oneboxCompFixture.detectChanges();
       });
 
@@ -415,15 +498,30 @@ describe('DsDynamicOneboxComponent test suite', () => {
     describe('when init model value is not empty', () => {
       beforeEach(() => {
         oneboxComponent.group = ONEBOX_TEST_GROUP;
-        oneboxComponent.model = new DynamicOneboxModel(ONEBOX_TEST_MODEL_CONFIG);
-        const entry = observableOf(Object.assign(new VocabularyEntry(), {
-          authority: null,
-          value: 'test',
-          display: 'testDisplay'
-        }));
-        spyOn((oneboxComponent as any).vocabularyService, 'getVocabularyEntryByValue').and.returnValue(entry);
-        spyOn((oneboxComponent as any).vocabularyService, 'getVocabularyEntryByID').and.returnValue(entry);
-        (oneboxComponent.model as any).value = new FormFieldMetadataValueObject('test', null, null, 'testDisplay');
+        oneboxComponent.model = new DynamicOneboxModel(
+          ONEBOX_TEST_MODEL_CONFIG
+        );
+        const entry = observableOf(
+          Object.assign(new VocabularyEntry(), {
+            authority: null,
+            value: 'test',
+            display: 'testDisplay',
+          })
+        );
+        spyOn(
+          (oneboxComponent as any).vocabularyService,
+          'getVocabularyEntryByValue'
+        ).and.returnValue(entry);
+        spyOn(
+          (oneboxComponent as any).vocabularyService,
+          'getVocabularyEntryByID'
+        ).and.returnValue(entry);
+        (oneboxComponent.model as any).value = new FormFieldMetadataValueObject(
+          'test',
+          null,
+          null,
+          'testDisplay'
+        );
         oneboxCompFixture.detectChanges();
       });
 
@@ -434,8 +532,12 @@ describe('DsDynamicOneboxComponent test suite', () => {
 
       it('should init component properly', fakeAsync(() => {
         tick();
-        expect(oneboxComponent.currentValue).toEqual(new FormFieldMetadataValueObject('test', null, null, 'testDisplay'));
-        expect((oneboxComponent as any).vocabularyService.getVocabularyEntryByValue).toHaveBeenCalled();
+        expect(oneboxComponent.currentValue).toEqual(
+          new FormFieldMetadataValueObject('test', null, null, 'testDisplay')
+        );
+        expect(
+          (oneboxComponent as any).vocabularyService.getVocabularyEntryByValue
+        ).toHaveBeenCalled();
       }));
 
       it('should open tree properly', (done) => {
@@ -446,20 +548,16 @@ describe('DsDynamicOneboxComponent test suite', () => {
         done();
       });
     });
-
   });
 });
 
 // declare a test component
 @Component({
   selector: 'ds-test-cmp',
-  template: ``
+  template: ``,
 })
 class TestComponent {
-
   group: FormGroup = ONEBOX_TEST_GROUP;
 
   model = new DynamicOneboxModel(ONEBOX_TEST_MODEL_CONFIG);
-
 }
-

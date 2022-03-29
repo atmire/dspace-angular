@@ -10,9 +10,13 @@ import { controlContainerFactory } from '../../../process-form.component';
   selector: 'ds-file-value-input',
   templateUrl: './file-value-input.component.html',
   styleUrls: ['./file-value-input.component.scss'],
-  viewProviders: [ { provide: ControlContainer,
-    useFactory: controlContainerFactory,
-    deps: [[new Optional(), NgForm]] } ]
+  viewProviders: [
+    {
+      provide: ControlContainer,
+      useFactory: controlContainerFactory,
+      deps: [[new Optional(), NgForm]],
+    },
+  ],
 })
 export class FileValueInputComponent extends ValueInputComponent<File> {
   /**

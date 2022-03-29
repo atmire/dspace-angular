@@ -23,12 +23,13 @@ export class HeaderNavbarWrapperComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<AppState>,
     private menuService: MenuService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.isNavBarCollapsed = this.menuService.isMenuCollapsed(this.menuID);
-    this.sub = this.isNavBarCollapsed.subscribe((isCollapsed) => this.isOpen = !isCollapsed);
+    this.sub = this.isNavBarCollapsed.subscribe(
+      (isCollapsed) => (this.isOpen = !isCollapsed)
+    );
   }
 
   ngOnDestroy() {

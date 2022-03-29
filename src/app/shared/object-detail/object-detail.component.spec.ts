@@ -1,4 +1,10 @@
-import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+  waitForAsync,
+} from '@angular/core/testing';
 import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { ObjectDetailComponent } from './object-detail.component';
@@ -31,9 +37,11 @@ describe('ObjectDetailComponent', () => {
     elementsPerPage: 1,
     totalElements: 10,
     totalPages: 10,
-    currentPage: 1
+    currentPage: 1,
   });
-  const mockRD = createSuccessfulRemoteDataObject(buildPaginatedList(pageInfo, testObjects));
+  const mockRD = createSuccessfulRemoteDataObject(
+    buildPaginatedList(pageInfo, testObjects)
+  );
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -42,15 +50,17 @@ describe('ObjectDetailComponent', () => {
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
-            useClass: TranslateLoaderMock
-          }
-        })
+            useClass: TranslateLoaderMock,
+          },
+        }),
       ],
       declarations: [ObjectDetailComponent],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(ObjectDetailComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(ObjectDetailComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {

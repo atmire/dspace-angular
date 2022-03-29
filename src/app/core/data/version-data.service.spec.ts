@@ -8,7 +8,10 @@ import { ObjectCacheService } from '../cache/object-cache.service';
 import { HALEndpointService } from '../shared/hal-endpoint.service';
 import { RequestService } from './request.service';
 import { PageInfo } from '../shared/page-info.model';
-import { createSuccessfulRemoteDataObject, createSuccessfulRemoteDataObject$ } from '../../shared/remote-data.utils';
+import {
+  createSuccessfulRemoteDataObject,
+  createSuccessfulRemoteDataObject$,
+} from '../../shared/remote-data.utils';
 import { RequestEntry } from './request.reducer';
 import { HrefOnlyDataService } from './href-only-data.service';
 import { getMockHrefOnlyDataService } from '../../shared/mocks/href-only-data.service.mock';
@@ -22,7 +25,6 @@ import { VersionDataService } from './version-data.service';
 import { Version } from '../shared/version.model';
 import { VersionHistory } from '../shared/version-history.model';
 import { followLink } from '../../shared/utils/follow-link-config.model';
-
 
 describe('VersionDataService test', () => {
   let scheduler: TestScheduler;
@@ -42,28 +44,28 @@ describe('VersionDataService test', () => {
       'dc.title': [
         {
           language: 'en_US',
-          value: 'This is just another title'
-        }
+          value: 'This is just another title',
+        },
       ],
       'dc.type': [
         {
           language: null,
-          value: 'Article'
-        }
+          value: 'Article',
+        },
       ],
       'dc.contributor.author': [
         {
           language: 'en_US',
-          value: 'Smith, Donald'
-        }
+          value: 'Smith, Donald',
+        },
       ],
       'dc.date.issued': [
         {
           language: null,
-          value: '2015-06-26'
-        }
-      ]
-    }
+          value: '2015-06-26',
+        },
+      ],
+    },
   });
   const itemRD = createSuccessfulRemoteDataObject(item);
 
@@ -109,11 +111,10 @@ describe('VersionDataService test', () => {
 
   describe('', () => {
     beforeEach(() => {
-
       scheduler = getTestScheduler();
 
       halService = jasmine.createSpyObj('halService', {
-        getEndpoint: cold('a', { a: endpointURL })
+        getEndpoint: cold('a', { a: endpointURL }),
       });
       responseCacheEntry = new RequestEntry();
       responseCacheEntry.request = { href: 'https://rest.api/' } as any;
@@ -128,14 +129,16 @@ describe('VersionDataService test', () => {
       });
       rdbService = jasmine.createSpyObj('rdbService', {
         buildSingle: hot('(a|)', {
-          a: mockVersionRD
-        })
+          a: mockVersionRD,
+        }),
       });
 
       service = initTestService();
 
-      spyOn((service as any), 'findByHref').and.callThrough();
-      spyOn((service as any), 'getIDHrefObs').and.returnValue(findByIdRequestURL$);
+      spyOn(service as any, 'findByHref').and.callThrough();
+      spyOn(service as any, 'getIDHrefObs').and.returnValue(
+        findByIdRequestURL$
+      );
     });
 
     afterEach(() => {
@@ -144,16 +147,23 @@ describe('VersionDataService test', () => {
 
     describe('getHistoryFromVersion', () => {
       it('should proxy the call to DataService.findByHref', () => {
-        scheduler.schedule(() => service.getHistoryFromVersion(mockVersion, true, true));
+        scheduler.schedule(() =>
+          service.getHistoryFromVersion(mockVersion, true, true)
+        );
         scheduler.flush();
 
-        expect((service as any).findByHref).toHaveBeenCalledWith(findByIdRequestURL$, true, true, followLink('versionhistory'));
+        expect((service as any).findByHref).toHaveBeenCalledWith(
+          findByIdRequestURL$,
+          true,
+          true,
+          followLink('versionhistory')
+        );
       });
 
       it('should return a VersionHistory', () => {
         const result = service.getHistoryFromVersion(mockVersion, true, true);
         const expected = cold('(a|)', {
-          a: versionHistory
+          a: versionHistory,
         });
         expect(result).toBeObservable(expected);
       });
@@ -167,15 +177,16 @@ describe('VersionDataService test', () => {
 
     describe('getHistoryIdFromVersion', () => {
       it('should return the version history id', () => {
-        spyOn((service as any), 'getHistoryFromVersion').and.returnValue(observableOf(versionHistory));
+        spyOn(service as any, 'getHistoryFromVersion').and.returnValue(
+          observableOf(versionHistory)
+        );
 
         const result = service.getHistoryIdFromVersion(mockVersion);
         const expected = cold('(a|)', {
-          a: versionHistory.id
+          a: versionHistory.id,
         });
         expect(result).toBeObservable(expected);
       });
     });
   });
-
 });

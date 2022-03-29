@@ -28,10 +28,6 @@ export function universalMetaReducer(reducer) {
   };
 }
 
-export const debugMetaReducers = [
-  debugMetaReducer
-];
+export const debugMetaReducers = [debugMetaReducer];
 
-export const appMetaReducers = [
-  universalMetaReducer
-];
+export const appMetaReducers = [universalMetaReducer];

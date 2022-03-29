@@ -13,9 +13,11 @@ import { DSpaceObject } from '../../../../core/shared/dspace-object.model';
  */
 @Component({
   selector: 'ds-edit-comcol',
-  template: ''
+  template: '',
 })
-export class EditComColPageComponent<TDomain extends DSpaceObject> implements OnInit {
+export class EditComColPageComponent<TDomain extends DSpaceObject>
+  implements OnInit
+{
   /**
    * The type of DSpaceObject (used to create i18n messages)
    */
@@ -53,7 +55,10 @@ export class EditComColPageComponent<TDomain extends DSpaceObject> implements On
     this.pages = this.route.routeConfig.children
       .map((child: any) => child.path)
       .filter((path: string) => isNotEmpty(path)); // ignore reroutes
-    this.dsoRD$ = this.route.data.pipe(first(), map((data) => data.dso));
+    this.dsoRD$ = this.route.data.pipe(
+      first(),
+      map((data) => data.dso)
+    );
   }
 
   /**
@@ -70,7 +75,8 @@ export class EditComColPageComponent<TDomain extends DSpaceObject> implements On
    */
   initPageParamsByRoute() {
     this.currentPage = this.route.snapshot.firstChild.routeConfig.path;
-    this.hideReturnButton = this.route.routeConfig.children
-      .find((child: any) => child.path === this.currentPage).data.hideReturnButton;
+    this.hideReturnButton = this.route.routeConfig.children.find(
+      (child: any) => child.path === this.currentPage
+    ).data.hideReturnButton;
   }
 }

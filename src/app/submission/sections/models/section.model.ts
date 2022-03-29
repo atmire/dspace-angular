@@ -16,9 +16,11 @@ export interface SectionDataModel {
  */
 @Component({
   selector: 'ds-section-model',
-  template: ''
+  template: '',
 })
-export abstract class SectionModelComponent implements OnDestroy, OnInit, SectionDataModel {
+export abstract class SectionModelComponent
+  implements OnDestroy, OnInit, SectionDataModel
+{
   protected abstract sectionService: SectionsService;
 
   /**
@@ -58,9 +60,12 @@ export abstract class SectionModelComponent implements OnDestroy, OnInit, Sectio
    * @param {SectionDataObject} injectedSectionData
    * @param {string} injectedSubmissionId
    */
-  public constructor(@Inject('collectionIdProvider') public injectedCollectionId: string,
-    @Inject('sectionDataProvider') public injectedSectionData: SectionDataObject,
-    @Inject('submissionIdProvider') public injectedSubmissionId: string) {
+  public constructor(
+    @Inject('collectionIdProvider') public injectedCollectionId: string,
+    @Inject('sectionDataProvider')
+    public injectedSectionData: SectionDataObject,
+    @Inject('submissionIdProvider') public injectedSubmissionId: string
+  ) {
     this.collectionId = injectedCollectionId;
     this.sectionData = injectedSectionData;
     this.submissionId = injectedSubmissionId;
@@ -104,11 +109,17 @@ export abstract class SectionModelComponent implements OnDestroy, OnInit, Sectio
    * Subscribe to section status
    */
   protected updateSectionStatus(): void {
-    this.sectionStatusSub = this.getSectionStatus().pipe(
-      filter((sectionStatus: boolean) => isNotUndefined(sectionStatus)),
-      startWith(true))
+    this.sectionStatusSub = this.getSectionStatus()
+      .pipe(
+        filter((sectionStatus: boolean) => isNotUndefined(sectionStatus)),
+        startWith(true)
+      )
       .subscribe((sectionStatus: boolean) => {
-        this.sectionService.setSectionStatus(this.submissionId, this.sectionData.id, sectionStatus);
+        this.sectionService.setSectionStatus(
+          this.submissionId,
+          this.sectionData.id,
+          sectionStatus
+        );
       });
   }
 

@@ -1,7 +1,17 @@
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  CanActivate,
+  Router,
+  RouterStateSnapshot,
+  UrlTree,
+} from '@angular/router';
 import { AuthorizationDataService } from '../authorization-data.service';
 import { FeatureID } from '../feature-id';
-import { combineLatest as observableCombineLatest, Observable, of as observableOf } from 'rxjs';
+import {
+  combineLatest as observableCombineLatest,
+  Observable,
+  of as observableOf,
+} from 'rxjs';
 import { returnForbiddenUrlTreeOrLoginOnAllFalse } from '../../../shared/operators';
 import { switchMap } from 'rxjs/operators';
 import { AuthService } from '../../../auth/auth.service';
@@ -12,21 +22,41 @@ import { AuthService } from '../../../auth/auth.service';
  * Override the desired getters in the parent class for checking specific authorization on a list of features and/or object.
  */
 export abstract class SomeFeatureAuthorizationGuard implements CanActivate {
-  constructor(protected authorizationService: AuthorizationDataService,
-              protected router: Router,
-              protected authService: AuthService) {
-  }
+  constructor(
+    protected authorizationService: AuthorizationDataService,
+    protected router: Router,
+    protected authService: AuthService
+  ) {}
 
   /**
    * True when user has authorization rights for the feature and object provided
    * Redirect the user to the unauthorized page when he/she's not authorized for the given feature
    */
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> {
-    return observableCombineLatest(this.getFeatureIDs(route, state), this.getObjectUrl(route, state), this.getEPersonUuid(route, state)).pipe(
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<boolean | UrlTree> {
+    return observableCombineLatest(
+      this.getFeatureIDs(route, state),
+      this.getObjectUrl(route, state),
+      this.getEPersonUuid(route, state)
+    ).pipe(
       switchMap(([featureIDs, objectUrl, ePersonUuid]) =>
-        observableCombineLatest(...featureIDs.map((featureID) => this.authorizationService.isAuthorized(featureID, objectUrl, ePersonUuid)))
+        observableCombineLatest(
+          ...featureIDs.map((featureID) =>
+            this.authorizationService.isAuthorized(
+              featureID,
+              objectUrl,
+              ePersonUuid
+            )
+          )
+        )
       ),
-      returnForbiddenUrlTreeOrLoginOnAllFalse(this.router, this.authService, state.url)
+      returnForbiddenUrlTreeOrLoginOnAllFalse(
+        this.router,
+        this.authService,
+        state.url
+      )
     );
   }
 
@@ -34,13 +64,19 @@ export abstract class SomeFeatureAuthorizationGuard implements CanActivate {
    * The features to check authorization for
    * Override this method to define a list of features
    */
-  abstract getFeatureIDs(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<FeatureID[]>;
+  abstract getFeatureIDs(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<FeatureID[]>;
 
   /**
    * The URL of the object to check if the user has authorized rights for
    * Override this method to define an object URL. If not provided, the {@link Site}'s URL will be used
    */
-  getObjectUrl(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<string> {
+  getObjectUrl(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<string> {
     return observableOf(undefined);
   }
 
@@ -48,7 +84,10 @@ export abstract class SomeFeatureAuthorizationGuard implements CanActivate {
    * The UUID of the user to check authorization rights for
    * Override this method to define an {@link EPerson} UUID. If not provided, the authenticated user's UUID will be used.
    */
-  getEPersonUuid(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<string> {
+  getEPersonUuid(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<string> {
     return observableOf(undefined);
   }
 }

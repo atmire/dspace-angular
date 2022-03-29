@@ -1,10 +1,7 @@
 import { NgModule } from '@angular/core';
 import { ENTRY_COMPONENTS as CUSTOM } from './custom/entry-components';
 
-const ENTRY_COMPONENTS = [
-  ...CUSTOM,
-];
-
+const ENTRY_COMPONENTS = [...CUSTOM];
 
 /**
  * This module only serves to ensure themed entry components are discoverable. It's kept separate
@@ -16,8 +13,7 @@ export class ThemedEntryComponentModule {
   static withEntryComponents() {
     return {
       ngModule: ThemedEntryComponentModule,
-      providers: ENTRY_COMPONENTS.map((component) => ({provide: component}))
+      providers: ENTRY_COMPONENTS.map((component) => ({ provide: component })),
     };
   }
-
 }

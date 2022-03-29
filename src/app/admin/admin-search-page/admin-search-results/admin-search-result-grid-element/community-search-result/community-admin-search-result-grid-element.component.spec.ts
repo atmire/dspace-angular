@@ -31,7 +31,7 @@ describe('CommunityAdminSearchResultGridElementComponent', () => {
   }
 
   const linkService = jasmine.createSpyObj('linkService', {
-    resolveLink: {}
+    resolveLink: {},
   });
 
   beforeEach(waitForAsync(() => {
@@ -41,21 +41,22 @@ describe('CommunityAdminSearchResultGridElementComponent', () => {
         NoopAnimationsModule,
         TranslateModule.forRoot(),
         RouterTestingModule.withRoutes([]),
-        SharedModule
+        SharedModule,
       ],
       declarations: [CommunityAdminSearchResultGridElementComponent],
       providers: [
         { provide: TruncatableService, useValue: mockTruncatableService },
         { provide: BitstreamDataService, useValue: {} },
-        { provide: LinkService, useValue: linkService }
+        { provide: LinkService, useValue: linkService },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
-      .compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CommunityAdminSearchResultGridElementComponent);
+    fixture = TestBed.createComponent(
+      CommunityAdminSearchResultGridElementComponent
+    );
     component = fixture.componentInstance;
     component.object = searchResult;
     component.linkTypes = CollectionElementLinkType;

@@ -20,28 +20,28 @@ const mockItemWithAuthorAndDate: Item = Object.assign(new Item(), {
     'dc.contributor.author': [
       {
         language: 'en_US',
-        value: 'Smith, Donald'
-      }
+        value: 'Smith, Donald',
+      },
     ],
     'dc.date.issued': [
       {
         language: null,
-        value: '2015-06-26'
-      }
+        value: '2015-06-26',
+      },
     ],
     'dc.title': [
       {
         language: 'en_US',
-        value: 'This is just another title'
-      }
+        value: 'This is just another title',
+      },
     ],
     'dc.type': [
       {
         language: null,
-        value: 'Article'
-      }
-    ]
-  }
+        value: 'Article',
+      },
+    ],
+  },
 });
 
 describe('ItemDetailPreviewFieldComponent', () => {
@@ -52,26 +52,29 @@ describe('ItemDetailPreviewFieldComponent', () => {
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
-            useClass: TranslateLoaderMock
-          }
+            useClass: TranslateLoaderMock,
+          },
         }),
       ],
       declarations: [ItemDetailPreviewFieldComponent, TruncatePipe],
       providers: [
-        { provide: 'objectElementProvider', useValue: { mockItemWithAuthorAndDate } }
-
+        {
+          provide: 'objectElementProvider',
+          useValue: { mockItemWithAuthorAndDate },
+        },
       ],
 
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(ItemDetailPreviewFieldComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(ItemDetailPreviewFieldComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
     fixture = TestBed.createComponent(ItemDetailPreviewFieldComponent);
     component = fixture.componentInstance;
-
   }));
 
   beforeEach(() => {
@@ -85,7 +88,9 @@ describe('ItemDetailPreviewFieldComponent', () => {
 
   it('should display dc.title value', () => {
     const span = fixture.debugElement.query(By.css('span'));
-    expect(span.nativeElement.innerHTML).toContain('This is just another title');
+    expect(span.nativeElement.innerHTML).toContain(
+      'This is just another title'
+    );
   });
 
   it('should display placeholder when metadata has no value', () => {

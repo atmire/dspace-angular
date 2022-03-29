@@ -7,15 +7,15 @@ import { isNotEmpty } from '../../../../shared/empty.util';
  * Representing properties used to build a vocabulary find request
  */
 export class VocabularyFindOptions extends FindListOptions {
-
-  constructor(public query: string = '',
-              public filter?: string,
-              public exact?: boolean,
-              public entryID?: string,
-              public elementsPerPage?: number,
-              public currentPage?: number,
-              public sort?: SortOptions
-              ) {
+  constructor(
+    public query: string = '',
+    public filter?: string,
+    public exact?: boolean,
+    public entryID?: string,
+    public elementsPerPage?: number,
+    public currentPage?: number,
+    public sort?: SortOptions
+  ) {
     super();
 
     const searchParams = [];

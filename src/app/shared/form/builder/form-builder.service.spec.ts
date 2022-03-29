@@ -5,7 +5,7 @@ import {
   FormGroup,
   NG_ASYNC_VALIDATORS,
   NG_VALIDATORS,
-  ReactiveFormsModule
+  ReactiveFormsModule,
 } from '@angular/forms';
 import {
   DynamicCheckboxGroupModel,
@@ -26,7 +26,7 @@ import {
   DynamicSliderModel,
   DynamicSwitchModel,
   DynamicTextAreaModel,
-  DynamicTimePickerModel
+  DynamicTimePickerModel,
 } from '@ng-dynamic-forms/core';
 import { DynamicTagModel } from './ds-dynamic-form-ui/models/tag/dynamic-tag.model';
 import { DynamicListCheckboxGroupModel } from './ds-dynamic-form-ui/models/list/dynamic-list-checkbox-group.model';
@@ -50,7 +50,6 @@ import { DynamicRowArrayModel } from './ds-dynamic-form-ui/models/ds-dynamic-row
 import { FormRowModel } from '../../../core/config/models/config-submission-form.model';
 
 describe('FormBuilderService test suite', () => {
-
   let testModel: DynamicFormControlModel[];
   let testFormConfiguration: SubmissionFormsModel;
   let service: FormBuilderService;
@@ -62,119 +61,108 @@ describe('FormBuilderService test suite', () => {
   }
 
   function testAsyncValidator() {
-    return new Promise<boolean>((resolve) => setTimeout(() => resolve(true), 0));
+    return new Promise<boolean>((resolve) =>
+      setTimeout(() => resolve(true), 0)
+    );
   }
 
   beforeEach(() => {
-
     TestBed.configureTestingModule({
       imports: [ReactiveFormsModule],
       providers: [
         { provide: FormBuilderService, useClass: FormBuilderService },
         { provide: DynamicFormValidationService, useValue: {} },
         { provide: NG_VALIDATORS, useValue: testValidator, multi: true },
-        { provide: NG_ASYNC_VALIDATORS, useValue: testAsyncValidator, multi: true }
-      ]
+        {
+          provide: NG_ASYNC_VALIDATORS,
+          useValue: testAsyncValidator,
+          multi: true,
+        },
+      ],
     });
 
     const vocabularyOptions: VocabularyOptions = {
       name: 'type_programme',
-      closed: false
+      closed: false,
     };
 
     testModel = [
+      new DynamicSelectModel<string>({
+        id: 'testSelect',
+        options: [
+          {
+            label: 'Option 1',
+            value: 'option-1',
+          },
+          {
+            label: 'Option 2',
+            value: 'option-2',
+          },
+        ],
+        value: 'option-3',
+      }),
 
-      new DynamicSelectModel<string>(
-        {
-          id: 'testSelect',
-          options: [
-            {
-              label: 'Option 1',
-              value: 'option-1'
-            },
-            {
-              label: 'Option 2',
-              value: 'option-2'
-            }
-          ],
-          value: 'option-3'
-        }
-      ),
+      new DynamicInputModel({
+        id: 'testInput',
+        mask: '(000) 000-0000',
+      }),
 
-      new DynamicInputModel(
-        {
-          id: 'testInput',
-          mask: '(000) 000-0000',
-        }
-      ),
+      new DynamicCheckboxGroupModel({
+        id: 'testCheckboxGroup',
+        group: [
+          new DynamicCheckboxModel({
+            id: 'testCheckboxGroup1',
+            value: true,
+          }),
+          new DynamicCheckboxModel({
+            id: 'testCheckboxGroup2',
+            value: true,
+          }),
+        ],
+      }),
 
-      new DynamicCheckboxGroupModel(
-        {
-          id: 'testCheckboxGroup',
-          group: [
-            new DynamicCheckboxModel(
-              {
-                id: 'testCheckboxGroup1',
-                value: true
-              }
-            ),
-            new DynamicCheckboxModel(
-              {
-                id: 'testCheckboxGroup2',
-                value: true
-              }
-            )
-          ]
-        }
-      ),
-
-      new DynamicRadioGroupModel<string>(
-        {
-          id: 'testRadioGroup',
-          options: [
-            {
-              label: 'Option 1',
-              value: 'option-1'
-            },
-            {
-              label: 'Option 2',
-              value: 'option-2'
-            }
-          ],
-          value: 'option-3'
-        }
-      ),
+      new DynamicRadioGroupModel<string>({
+        id: 'testRadioGroup',
+        options: [
+          {
+            label: 'Option 1',
+            value: 'option-1',
+          },
+          {
+            label: 'Option 2',
+            value: 'option-2',
+          },
+        ],
+        value: 'option-3',
+      }),
 
       new DynamicTextAreaModel({ id: 'testTextArea' }),
 
       new DynamicCheckboxModel({ id: 'testCheckbox' }),
 
-      new DynamicFormArrayModel(
-        {
-          id: 'testFormArray',
-          initialCount: 5,
-          groupFactory: () => {
-            return [
-              new DynamicInputModel({ id: 'testFormArrayGroupInput' }),
-              new DynamicFormArrayModel({
-                id: 'testNestedFormArray', groupFactory: () => [
-                  new DynamicInputModel({ id: 'testNestedFormArrayGroupInput' })
-                ]
-              })
-            ];
-          }
-        }
-      ),
+      new DynamicFormArrayModel({
+        id: 'testFormArray',
+        initialCount: 5,
+        groupFactory: () => {
+          return [
+            new DynamicInputModel({ id: 'testFormArrayGroupInput' }),
+            new DynamicFormArrayModel({
+              id: 'testNestedFormArray',
+              groupFactory: () => [
+                new DynamicInputModel({ id: 'testNestedFormArrayGroupInput' }),
+              ],
+            }),
+          ];
+        },
+      }),
 
-      new DynamicFormGroupModel(
-        {
-          id: 'testFormGroup',
-          group: [
-            new DynamicInputModel({ id: 'nestedTestInput' }),
-            new DynamicTextAreaModel({ id: 'nestedTestTextArea' })
-          ]
-        }
-      ),
+      new DynamicFormGroupModel({
+        id: 'testFormGroup',
+        group: [
+          new DynamicInputModel({ id: 'nestedTestInput' }),
+          new DynamicTextAreaModel({ id: 'nestedTestTextArea' }),
+        ],
+      }),
 
       new DynamicSliderModel({ id: 'testSlider' }),
 
@@ -197,7 +185,7 @@ describe('FormBuilderService test suite', () => {
         repeatable: false,
         metadataFields: [],
         submissionId: '1234',
-        hasSelectableMetadata: false
+        hasSelectableMetadata: false,
       }),
 
       new DynamicScrollableDropdownModel({
@@ -206,7 +194,7 @@ describe('FormBuilderService test suite', () => {
         repeatable: false,
         metadataFields: [],
         submissionId: '1234',
-        hasSelectableMetadata: false
+        hasSelectableMetadata: false,
       }),
 
       new DynamicTagModel({
@@ -214,50 +202,65 @@ describe('FormBuilderService test suite', () => {
         repeatable: false,
         metadataFields: [],
         submissionId: '1234',
-        hasSelectableMetadata: false
+        hasSelectableMetadata: false,
       }),
 
       new DynamicListCheckboxGroupModel({
         id: 'testCheckboxList',
         vocabularyOptions: vocabularyOptions,
-        repeatable: true
+        repeatable: true,
       }),
 
-      new DynamicListRadioGroupModel({ id: 'testRadioList', vocabularyOptions: vocabularyOptions, repeatable: false }),
+      new DynamicListRadioGroupModel({
+        id: 'testRadioList',
+        vocabularyOptions: vocabularyOptions,
+        repeatable: false,
+      }),
 
       new DynamicRelationGroupModel({
         submissionId,
         id: 'testRelationGroup',
-        formConfiguration: [{
-          fields: [{
-            hints: 'Enter the name of the author.',
-            input: { type: 'onebox' },
-            label: 'Authors',
-            languageCodes: [],
-            mandatory: 'true',
-            mandatoryMessage: 'Required field!',
-            repeatable: false,
-            selectableMetadata: [{
-              controlledVocabulary: 'RPAuthority',
-              closed: false,
-              metadata: 'dc.contributor.author'
-            }]
-          } as FormFieldModel]
-        } as FormRowModel, {
-          fields: [{
-            hints: 'Enter the affiliation of the author.',
-            input: { type: 'onebox' },
-            label: 'Affiliation',
-            languageCodes: [],
-            mandatory: 'false',
-            repeatable: false,
-            selectableMetadata: [{
-              controlledVocabulary: 'OUAuthority',
-              closed: false,
-              metadata: 'local.contributor.affiliation'
-            }]
-          } as FormFieldModel]
-        } as FormRowModel],
+        formConfiguration: [
+          {
+            fields: [
+              {
+                hints: 'Enter the name of the author.',
+                input: { type: 'onebox' },
+                label: 'Authors',
+                languageCodes: [],
+                mandatory: 'true',
+                mandatoryMessage: 'Required field!',
+                repeatable: false,
+                selectableMetadata: [
+                  {
+                    controlledVocabulary: 'RPAuthority',
+                    closed: false,
+                    metadata: 'dc.contributor.author',
+                  },
+                ],
+              } as FormFieldModel,
+            ],
+          } as FormRowModel,
+          {
+            fields: [
+              {
+                hints: 'Enter the affiliation of the author.',
+                input: { type: 'onebox' },
+                label: 'Affiliation',
+                languageCodes: [],
+                mandatory: 'false',
+                repeatable: false,
+                selectableMetadata: [
+                  {
+                    controlledVocabulary: 'OUAuthority',
+                    closed: false,
+                    metadata: 'local.contributor.affiliation',
+                  },
+                ],
+              } as FormFieldModel,
+            ],
+          } as FormRowModel,
+        ],
         mandatoryField: '',
         name: 'testRelationGroup',
         relationFields: [],
@@ -265,7 +268,7 @@ describe('FormBuilderService test suite', () => {
         submissionScope: '',
         repeatable: false,
         metadataFields: [],
-        hasSelectableMetadata: true
+        hasSelectableMetadata: true,
       }),
 
       new DynamicDsDatePickerModel({ id: 'testDate' }),
@@ -275,7 +278,7 @@ describe('FormBuilderService test suite', () => {
         repeatable: false,
         metadataFields: [],
         submissionId: '1234',
-        hasSelectableMetadata: true
+        hasSelectableMetadata: true,
       }),
 
       new DynamicLookupNameModel({
@@ -283,30 +286,30 @@ describe('FormBuilderService test suite', () => {
         repeatable: false,
         metadataFields: [],
         submissionId: '1234',
-        hasSelectableMetadata: true
+        hasSelectableMetadata: true,
       }),
 
-      new DynamicQualdropModel({ id: 'testCombobox', readOnly: false, required: false }),
+      new DynamicQualdropModel({
+        id: 'testCombobox',
+        readOnly: false,
+        required: false,
+      }),
 
-      new DynamicRowArrayModel(
-        {
-          id: 'testFormRowArray',
-          initialCount: 5,
-          notRepeatable: false,
-          relationshipConfig: undefined,
-          submissionId: '1234',
-          isDraggable: true,
-          groupFactory: () => {
-            return [
-              new DynamicInputModel({ id: 'testFormRowArrayGroupInput' })
-            ];
-          },
-          required: false,
-          metadataKey: 'dc.contributor.author',
-          metadataFields: ['dc.contributor.author'],
-          hasSelectableMetadata: true
+      new DynamicRowArrayModel({
+        id: 'testFormRowArray',
+        initialCount: 5,
+        notRepeatable: false,
+        relationshipConfig: undefined,
+        submissionId: '1234',
+        isDraggable: true,
+        groupFactory: () => {
+          return [new DynamicInputModel({ id: 'testFormRowArrayGroupInput' })];
         },
-      ),
+        required: false,
+        metadataKey: 'dc.contributor.author',
+        metadataFields: ['dc.contributor.author'],
+        hasSelectableMetadata: true,
+      }),
     ];
 
     testFormConfiguration = {
@@ -319,15 +322,16 @@ describe('FormBuilderService test suite', () => {
               label: 'Journal',
               mandatory: 'false',
               repeatable: false,
-              hints: 'Enter the name of the journal where the item has been\n\t\t\t\t\tpublished, if any.',
+              hints:
+                'Enter the name of the journal where the item has been\n\t\t\t\t\tpublished, if any.',
               selectableMetadata: [
                 {
                   metadata: 'journal',
                   controlledVocabulary: 'JOURNALAuthority',
-                  closed: false
-                }
+                  closed: false,
+                },
               ],
-              languageCodes: []
+              languageCodes: [],
             } as FormFieldModel,
             {
               input: { type: 'onebox' },
@@ -337,10 +341,10 @@ describe('FormBuilderService test suite', () => {
               hints: ' Enter issue number.',
               selectableMetadata: [
                 {
-                  metadata: 'issue'
-                }
+                  metadata: 'issue',
+                },
               ],
-              languageCodes: []
+              languageCodes: [],
             } as FormFieldModel,
             {
               input: { type: 'name' },
@@ -350,17 +354,18 @@ describe('FormBuilderService test suite', () => {
               hints: 'Enter full name.',
               selectableMetadata: [
                 {
-                  metadata: 'name'
-                }
+                  metadata: 'name',
+                },
               ],
-              languageCodes: []
-            } as FormFieldModel
-          ]
+              languageCodes: [],
+            } as FormFieldModel,
+          ],
         } as FormRowModel,
         {
           fields: [
             {
-              hints: 'If the item has any identification numbers or codes associated with↵	it, please enter the types and the actual numbers or codes.',
+              hints:
+                'If the item has any identification numbers or codes associated with↵	it, please enter the types and the actual numbers or codes.',
               input: { type: 'onebox' },
               label: 'Identifiers',
               languageCodes: [],
@@ -370,27 +375,29 @@ describe('FormBuilderService test suite', () => {
                 { metadata: 'dc.identifier.issn', label: 'ISSN' },
                 { metadata: 'dc.identifier.other', label: 'Other' },
                 { metadata: 'dc.identifier.ismn', label: 'ISMN' },
-                { metadata: 'dc.identifier.govdoc', label: 'Gov\'t Doc #' },
+                { metadata: 'dc.identifier.govdoc', label: "Gov't Doc #" },
                 { metadata: 'dc.identifier.uri', label: 'URI' },
                 { metadata: 'dc.identifier.isbn', label: 'ISBN' },
                 { metadata: 'dc.identifier.doi', label: 'DOI' },
                 { metadata: 'dc.identifier.pmid', label: 'PubMed ID' },
-                { metadata: 'dc.identifier.arxiv', label: 'arXiv' }
-              ]
-            }, {
+                { metadata: 'dc.identifier.arxiv', label: 'arXiv' },
+              ],
+            },
+            {
               input: { type: 'onebox' },
               label: 'Publisher',
               mandatory: 'false',
               repeatable: false,
-              hints: 'Enter the name of the publisher of the previously issued instance of this item.',
+              hints:
+                'Enter the name of the publisher of the previously issued instance of this item.',
               selectableMetadata: [
                 {
-                  metadata: 'publisher'
-                }
+                  metadata: 'publisher',
+                },
               ],
-              languageCodes: []
-            }
-          ]
+              languageCodes: [],
+            },
+          ],
         } as FormRowModel,
         {
           fields: [
@@ -404,114 +411,232 @@ describe('FormBuilderService test suite', () => {
                 {
                   metadata: 'conference',
                   controlledVocabulary: 'EVENTAuthority',
-                  closed: false
-                }
+                  closed: false,
+                },
               ],
-              languageCodes: []
-            }
-          ]
-        } as FormRowModel
+              languageCodes: [],
+            },
+          ],
+        } as FormRowModel,
       ],
       self: {
-        href: 'testFormConfiguration.url'
+        href: 'testFormConfiguration.url',
       },
       type: 'submissionform',
       _links: {
         self: {
-          href: 'testFormConfiguration.url'
-        }
-      }
+          href: 'testFormConfiguration.url',
+        },
+      },
     } as any;
   });
 
-  beforeEach(inject([FormBuilderService], (formService: FormBuilderService) => service = formService));
+  beforeEach(inject(
+    [FormBuilderService],
+    (formService: FormBuilderService) => (service = formService)
+  ));
 
   it('should find a dynamic form control model by id', () => {
-
-    expect(service.findById('testCheckbox', testModel) instanceof DynamicFormControlModel).toBe(true);
-    expect(service.findById('testCheckboxGroup', testModel) instanceof DynamicFormControlModel).toBe(true);
-    expect(service.findById('testDatepicker', testModel) instanceof DynamicFormControlModel).toBe(true);
-    expect(service.findById('testFormArray', testModel) instanceof DynamicFormControlModel).toBe(true);
-    expect(service.findById('testInput', testModel) instanceof DynamicFormControlModel).toBe(true);
-    expect(service.findById('testRadioGroup', testModel) instanceof DynamicFormControlModel).toBe(true);
-    expect(service.findById('testSelect', testModel) instanceof DynamicFormControlModel).toBe(true);
-    expect(service.findById('testSlider', testModel) instanceof DynamicFormControlModel).toBe(true);
-    expect(service.findById('testSwitch', testModel) instanceof DynamicFormControlModel).toBe(true);
-    expect(service.findById('testTextArea', testModel) instanceof DynamicFormControlModel).toBe(true);
-    expect(service.findById('testFileUpload', testModel) instanceof DynamicFormControlModel).toBe(true);
-    expect(service.findById('testEditor', testModel) instanceof DynamicEditorModel).toBe(true);
-    expect(service.findById('testTimePicker', testModel) instanceof DynamicTimePickerModel).toBe(true);
-    expect(service.findById('testRating', testModel) instanceof DynamicRatingModel).toBe(true);
-    expect(service.findById('testColorPicker', testModel) instanceof DynamicColorPickerModel).toBe(true);
+    expect(
+      service.findById('testCheckbox', testModel) instanceof
+        DynamicFormControlModel
+    ).toBe(true);
+    expect(
+      service.findById('testCheckboxGroup', testModel) instanceof
+        DynamicFormControlModel
+    ).toBe(true);
+    expect(
+      service.findById('testDatepicker', testModel) instanceof
+        DynamicFormControlModel
+    ).toBe(true);
+    expect(
+      service.findById('testFormArray', testModel) instanceof
+        DynamicFormControlModel
+    ).toBe(true);
+    expect(
+      service.findById('testInput', testModel) instanceof
+        DynamicFormControlModel
+    ).toBe(true);
+    expect(
+      service.findById('testRadioGroup', testModel) instanceof
+        DynamicFormControlModel
+    ).toBe(true);
+    expect(
+      service.findById('testSelect', testModel) instanceof
+        DynamicFormControlModel
+    ).toBe(true);
+    expect(
+      service.findById('testSlider', testModel) instanceof
+        DynamicFormControlModel
+    ).toBe(true);
+    expect(
+      service.findById('testSwitch', testModel) instanceof
+        DynamicFormControlModel
+    ).toBe(true);
+    expect(
+      service.findById('testTextArea', testModel) instanceof
+        DynamicFormControlModel
+    ).toBe(true);
+    expect(
+      service.findById('testFileUpload', testModel) instanceof
+        DynamicFormControlModel
+    ).toBe(true);
+    expect(
+      service.findById('testEditor', testModel) instanceof DynamicEditorModel
+    ).toBe(true);
+    expect(
+      service.findById('testTimePicker', testModel) instanceof
+        DynamicTimePickerModel
+    ).toBe(true);
+    expect(
+      service.findById('testRating', testModel) instanceof DynamicRatingModel
+    ).toBe(true);
+    expect(
+      service.findById('testColorPicker', testModel) instanceof
+        DynamicColorPickerModel
+    ).toBe(true);
   });
 
   it('should find a nested dynamic form control model by id', () => {
-
-    expect(service.findById('testCheckboxGroup1', testModel) instanceof DynamicFormControlModel).toBe(true);
-    expect(service.findById('testCheckboxGroup2', testModel) instanceof DynamicFormControlModel).toBe(true);
-    expect(service.findById('nestedTestInput', testModel) instanceof DynamicFormControlModel).toBe(true);
-    expect(service.findById('testFormRowArrayGroupInput', testModel) instanceof DynamicFormControlModel).toBe(true);
-    expect(service.findById('testFormRowArrayGroupInput', testModel, 2) instanceof DynamicFormControlModel).toBe(true);
+    expect(
+      service.findById('testCheckboxGroup1', testModel) instanceof
+        DynamicFormControlModel
+    ).toBe(true);
+    expect(
+      service.findById('testCheckboxGroup2', testModel) instanceof
+        DynamicFormControlModel
+    ).toBe(true);
+    expect(
+      service.findById('nestedTestInput', testModel) instanceof
+        DynamicFormControlModel
+    ).toBe(true);
+    expect(
+      service.findById('testFormRowArrayGroupInput', testModel) instanceof
+        DynamicFormControlModel
+    ).toBe(true);
+    expect(
+      service.findById('testFormRowArrayGroupInput', testModel, 2) instanceof
+        DynamicFormControlModel
+    ).toBe(true);
   });
 
   it('should create an array of form models', () => {
-    const formModel = service.modelFromConfiguration(submissionId, testFormConfiguration, 'testScopeUUID');
+    const formModel = service.modelFromConfiguration(
+      submissionId,
+      testFormConfiguration,
+      'testScopeUUID'
+    );
 
     expect(formModel[0] instanceof DynamicRowGroupModel).toBe(true);
     expect((formModel[0] as DynamicRowGroupModel).group.length).toBe(3);
-    expect((formModel[0] as DynamicRowGroupModel).get(0) instanceof DynamicLookupModel).toBe(true);
-    expect((formModel[0] as DynamicRowGroupModel).get(1) instanceof DsDynamicInputModel).toBe(true);
-    expect((formModel[0] as DynamicRowGroupModel).get(2) instanceof DynamicConcatModel).toBe(true);
+    expect(
+      (formModel[0] as DynamicRowGroupModel).get(0) instanceof
+        DynamicLookupModel
+    ).toBe(true);
+    expect(
+      (formModel[0] as DynamicRowGroupModel).get(1) instanceof
+        DsDynamicInputModel
+    ).toBe(true);
+    expect(
+      (formModel[0] as DynamicRowGroupModel).get(2) instanceof
+        DynamicConcatModel
+    ).toBe(true);
 
     expect(formModel[1] instanceof DynamicRowGroupModel).toBe(true);
     expect((formModel[1] as DynamicRowGroupModel).group.length).toBe(2);
-    expect((formModel[1] as DynamicRowGroupModel).get(0) instanceof DynamicQualdropModel).toBe(true);
-    expect(((formModel[1] as DynamicRowGroupModel).get(0) as DynamicQualdropModel).get(0) instanceof DynamicSelectModel).toBe(true);
-    expect(((formModel[1] as DynamicRowGroupModel).get(0) as DynamicQualdropModel).get(1) instanceof DsDynamicInputModel).toBe(true);
-    expect((formModel[1] as DynamicRowGroupModel).get(1) instanceof DsDynamicInputModel).toBe(true);
+    expect(
+      (formModel[1] as DynamicRowGroupModel).get(0) instanceof
+        DynamicQualdropModel
+    ).toBe(true);
+    expect(
+      (
+        (formModel[1] as DynamicRowGroupModel).get(0) as DynamicQualdropModel
+      ).get(0) instanceof DynamicSelectModel
+    ).toBe(true);
+    expect(
+      (
+        (formModel[1] as DynamicRowGroupModel).get(0) as DynamicQualdropModel
+      ).get(1) instanceof DsDynamicInputModel
+    ).toBe(true);
+    expect(
+      (formModel[1] as DynamicRowGroupModel).get(1) instanceof
+        DsDynamicInputModel
+    ).toBe(true);
 
     expect(formModel[2] instanceof DynamicRowGroupModel).toBe(true);
     expect((formModel[2] as DynamicRowGroupModel).group.length).toBe(1);
-    expect((formModel[2] as DynamicRowGroupModel).get(0) instanceof DynamicOneboxModel).toBe(true);
+    expect(
+      (formModel[2] as DynamicRowGroupModel).get(0) instanceof
+        DynamicOneboxModel
+    ).toBe(true);
   });
 
-  it('should return form\'s fields value from form model', () => {
-    const formModel = service.modelFromConfiguration(submissionId, testFormConfiguration, 'testScopeUUID');
+  it("should return form's fields value from form model", () => {
+    const formModel = service.modelFromConfiguration(
+      submissionId,
+      testFormConfiguration,
+      'testScopeUUID'
+    );
     let value = {} as any;
 
     expect(service.getValueFromModel(formModel)).toEqual(value);
 
-    ((formModel[0] as DynamicRowGroupModel).get(1) as DsDynamicInputModel).value = 'test';
+    (
+      (formModel[0] as DynamicRowGroupModel).get(1) as DsDynamicInputModel
+    ).value = 'test';
 
     value = {
-      issue: [new FormFieldMetadataValueObject('test')]
+      issue: [new FormFieldMetadataValueObject('test')],
     };
     expect(service.getValueFromModel(formModel)).toEqual(value);
 
-    ((formModel[2] as DynamicRowGroupModel).get(0) as DynamicOneboxModel).value = 'test one';
+    (
+      (formModel[2] as DynamicRowGroupModel).get(0) as DynamicOneboxModel
+    ).value = 'test one';
     value = {
       issue: [new FormFieldMetadataValueObject('test')],
-      conference: [new FormFieldMetadataValueObject('test one')]
+      conference: [new FormFieldMetadataValueObject('test one')],
     };
     expect(service.getValueFromModel(formModel)).toEqual(value);
   });
 
-  it('should clear all form\'s fields value', () => {
-    const formModel = service.modelFromConfiguration(submissionId, testFormConfiguration, 'testScopeUUID');
+  it("should clear all form's fields value", () => {
+    const formModel = service.modelFromConfiguration(
+      submissionId,
+      testFormConfiguration,
+      'testScopeUUID'
+    );
     const value = {} as any;
 
-    ((formModel[0] as DynamicRowGroupModel).get(1) as DsDynamicInputModel).value = 'test';
-    ((formModel[2] as DynamicRowGroupModel).get(0) as DynamicOneboxModel).value = 'test one';
+    (
+      (formModel[0] as DynamicRowGroupModel).get(1) as DsDynamicInputModel
+    ).value = 'test';
+    (
+      (formModel[2] as DynamicRowGroupModel).get(0) as DynamicOneboxModel
+    ).value = 'test one';
 
     service.clearAllModelsValue(formModel);
-    expect(((formModel[0] as DynamicRowGroupModel).get(1) as DynamicOneboxModel).value).toEqual(undefined);
-    expect(((formModel[2] as DynamicRowGroupModel).get(0) as DynamicOneboxModel).value).toEqual(undefined);
+    expect(
+      ((formModel[0] as DynamicRowGroupModel).get(1) as DynamicOneboxModel)
+        .value
+    ).toEqual(undefined);
+    expect(
+      ((formModel[2] as DynamicRowGroupModel).get(0) as DynamicOneboxModel)
+        .value
+    ).toEqual(undefined);
   });
 
   it('should return true when model has a custom group model as parent', () => {
-    const formModel = service.modelFromConfiguration(submissionId, testFormConfiguration, 'testScopeUUID');
+    const formModel = service.modelFromConfiguration(
+      submissionId,
+      testFormConfiguration,
+      'testScopeUUID'
+    );
     let model = service.findById('dc_identifier_QUALDROP_VALUE', formModel);
-    let modelParent = service.findById('dc_identifier_QUALDROP_GROUP', formModel);
+    let modelParent = service.findById(
+      'dc_identifier_QUALDROP_GROUP',
+      formModel
+    );
     model.parent = modelParent;
 
     expect(service.isModelInCustomGroup(model)).toBe(true);
@@ -524,11 +649,17 @@ describe('FormBuilderService test suite', () => {
   });
 
   it('should return true when model value is an array', () => {
-    let model = service.findById('testCheckboxList', testModel) as DynamicFormArrayModel;
+    let model = service.findById(
+      'testCheckboxList',
+      testModel
+    ) as DynamicFormArrayModel;
 
     expect(service.hasArrayGroupValue(model)).toBe(true);
 
-    model = service.findById('testRadioList', testModel) as DynamicFormArrayModel;
+    model = service.findById(
+      'testRadioList',
+      testModel
+    ) as DynamicFormArrayModel;
 
     expect(service.hasArrayGroupValue(model)).toBe(true);
 
@@ -538,16 +669,27 @@ describe('FormBuilderService test suite', () => {
   });
 
   it('should return true when model value is a map', () => {
-    const formModel = service.modelFromConfiguration(submissionId, testFormConfiguration, 'testScopeUUID');
+    const formModel = service.modelFromConfiguration(
+      submissionId,
+      testFormConfiguration,
+      'testScopeUUID'
+    );
     const model = service.findById('dc_identifier_QUALDROP_VALUE', formModel);
-    const modelParent = service.findById('dc_identifier_QUALDROP_GROUP', formModel);
+    const modelParent = service.findById(
+      'dc_identifier_QUALDROP_GROUP',
+      formModel
+    );
     model.parent = modelParent;
 
     expect(service.hasMappedGroupValue(model)).toBe(true);
   });
 
   it('should return true when model is a Qualdrop Group', () => {
-    const formModel = service.modelFromConfiguration(submissionId, testFormConfiguration, 'testScopeUUID');
+    const formModel = service.modelFromConfiguration(
+      submissionId,
+      testFormConfiguration,
+      'testScopeUUID'
+    );
     let model = service.findById('dc_identifier_QUALDROP_GROUP', formModel);
 
     expect(service.isQualdropGroup(model)).toBe(true);
@@ -558,7 +700,11 @@ describe('FormBuilderService test suite', () => {
   });
 
   it('should return true when model is a Custom or List Group', () => {
-    const formModel = service.modelFromConfiguration(submissionId, testFormConfiguration, 'testScopeUUID');
+    const formModel = service.modelFromConfiguration(
+      submissionId,
+      testFormConfiguration,
+      'testScopeUUID'
+    );
     let model = service.findById('dc_identifier_QUALDROP_GROUP', formModel);
 
     expect(service.isCustomOrListGroup(model)).toBe(true);
@@ -577,7 +723,11 @@ describe('FormBuilderService test suite', () => {
   });
 
   it('should return true when model is a Custom Group', () => {
-    const formModel = service.modelFromConfiguration(submissionId, testFormConfiguration, 'testScopeUUID');
+    const formModel = service.modelFromConfiguration(
+      submissionId,
+      testFormConfiguration,
+      'testScopeUUID'
+    );
     let model = service.findById('dc_identifier_QUALDROP_GROUP', formModel);
 
     expect(service.isCustomGroup(model)).toBe(true);
@@ -622,11 +772,17 @@ describe('FormBuilderService test suite', () => {
   });
 
   it('should return true when model is a Array Group', () => {
-    let model = service.findById('testFormRowArray', testModel) as DynamicFormArrayModel;
+    let model = service.findById(
+      'testFormRowArray',
+      testModel
+    ) as DynamicFormArrayModel;
 
     expect(service.isArrayGroup(model)).toBe(true);
 
-    model = service.findById('testFormArray', testModel) as DynamicFormArrayModel;
+    model = service.findById(
+      'testFormArray',
+      testModel
+    ) as DynamicFormArrayModel;
 
     expect(service.isArrayGroup(model)).toBe(true);
   });
@@ -635,7 +791,9 @@ describe('FormBuilderService test suite', () => {
     const group = service.createFormGroup(testModel);
     const control = group.controls.testLookup;
 
-    expect(service.getFormControlById('testLookup', group, testModel)).toEqual(control);
+    expect(service.getFormControlById('testLookup', group, testModel)).toEqual(
+      control
+    );
   });
 
   it('should return field id from model', () => {
@@ -645,7 +803,6 @@ describe('FormBuilderService test suite', () => {
   });
 
   it('should create a form group', () => {
-
     const formGroup = service.createFormGroup(testModel);
 
     expect(formGroup instanceof FormGroup).toBe(true);
@@ -666,24 +823,32 @@ describe('FormBuilderService test suite', () => {
   });
 
   it('should throw when unknown DynamicFormControlModel id is specified in JSON', () => {
-
-    expect(() => service.fromJSON([{ id: 'test' }]))
-      .toThrow(new Error(`unknown form control model type defined on JSON object with id "test"`));
+    expect(() => service.fromJSON([{ id: 'test' }])).toThrow(
+      new Error(
+        `unknown form control model type defined on JSON object with id "test"`
+      )
+    );
   });
 
   it('should resolve array group path', () => {
-
     service.createFormGroup(testModel);
 
-    const model = service.findById('testFormArray', testModel) as DynamicFormArrayModel;
+    const model = service.findById(
+      'testFormArray',
+      testModel
+    ) as DynamicFormArrayModel;
     const nestedModel = (model.get(0).get(1) as DynamicFormArrayModel).get(0);
 
     expect(service.getPath(model)).toEqual(['testFormArray']);
-    expect(service.getPath(nestedModel)).toEqual(['testFormArray', '0', 'testNestedFormArray', '0']);
+    expect(service.getPath(nestedModel)).toEqual([
+      'testFormArray',
+      '0',
+      'testNestedFormArray',
+      '0',
+    ]);
   });
 
   it('should add a form control to an existing form group', () => {
-
     const formGroup = service.createFormGroup(testModel);
     const nestedFormGroup = formGroup.controls.testFormGroup as FormGroup;
     const nestedFormGroupModel = testModel[7] as DynamicFormGroupModel;
@@ -691,17 +856,25 @@ describe('FormBuilderService test suite', () => {
     const newModel2 = new DynamicInputModel({ id: 'newInput2' });
 
     service.addFormGroupControl(formGroup, testModel, newModel1);
-    service.addFormGroupControl(nestedFormGroup, nestedFormGroupModel, newModel2);
+    service.addFormGroupControl(
+      nestedFormGroup,
+      nestedFormGroupModel,
+      newModel2
+    );
 
     expect(formGroup.controls[newModel1.id]).toBeTruthy();
     expect(testModel[testModel.length - 1] === newModel1).toBe(true);
 
-    expect((formGroup.controls.testFormGroup as FormGroup).controls[newModel2.id]).toBeTruthy();
-    expect(nestedFormGroupModel.get(nestedFormGroupModel.group.length - 1) === newModel2).toBe(true);
+    expect(
+      (formGroup.controls.testFormGroup as FormGroup).controls[newModel2.id]
+    ).toBeTruthy();
+    expect(
+      nestedFormGroupModel.get(nestedFormGroupModel.group.length - 1) ===
+        newModel2
+    ).toBe(true);
   });
 
   it('should insert a form control to an existing form group', () => {
-
     const formGroup = service.createFormGroup(testModel);
     const nestedFormGroup = formGroup.controls.testFormGroup as FormGroup;
     const nestedFormGroupModel = testModel[7] as DynamicFormGroupModel;
@@ -709,19 +882,28 @@ describe('FormBuilderService test suite', () => {
     const newModel2 = new DynamicInputModel({ id: 'newInput2' });
 
     service.insertFormGroupControl(4, formGroup, testModel, newModel1);
-    service.insertFormGroupControl(0, nestedFormGroup, nestedFormGroupModel, newModel2);
+    service.insertFormGroupControl(
+      0,
+      nestedFormGroup,
+      nestedFormGroupModel,
+      newModel2
+    );
 
     expect(formGroup.controls[newModel1.id]).toBeTruthy();
     expect(testModel[4] === newModel1).toBe(true);
     expect(service.getPath(testModel[4])).toEqual(['newInput1']);
 
-    expect((formGroup.controls.testFormGroup as FormGroup).controls[newModel2.id]).toBeTruthy();
+    expect(
+      (formGroup.controls.testFormGroup as FormGroup).controls[newModel2.id]
+    ).toBeTruthy();
     expect(nestedFormGroupModel.get(0) === newModel2).toBe(true);
-    expect(service.getPath(nestedFormGroupModel.get(0))).toEqual(['testFormGroup', 'newInput2']);
+    expect(service.getPath(nestedFormGroupModel.get(0))).toEqual([
+      'testFormGroup',
+      'newInput2',
+    ]);
   });
 
   it('should move an existing form control to a different group position', () => {
-
     const formGroup = service.createFormGroup(testModel);
     const nestedFormGroupModel = testModel[7] as DynamicFormGroupModel;
     const model1 = testModel[0];
@@ -734,12 +916,13 @@ describe('FormBuilderService test suite', () => {
 
     service.moveFormGroupControl(0, 1, nestedFormGroupModel);
 
-    expect((formGroup.controls.testFormGroup as FormGroup).controls[model2.id]).toBeTruthy();
+    expect(
+      (formGroup.controls.testFormGroup as FormGroup).controls[model2.id]
+    ).toBeTruthy();
     expect(nestedFormGroupModel.get(1) === model2).toBe(true);
   });
 
   it('should remove a form control from an existing form group', () => {
-
     const formGroup = service.createFormGroup(testModel);
     const nestedFormGroup = formGroup.controls.testFormGroup as FormGroup;
     const nestedFormGroupModel = testModel[7] as DynamicFormGroupModel;
@@ -757,7 +940,11 @@ describe('FormBuilderService test suite', () => {
     expect(testModel.length).toBe(length - 1);
     expect(service.findById(id1, testModel)).toBeNull();
 
-    service.removeFormGroupControl(index, nestedFormGroup, nestedFormGroupModel);
+    service.removeFormGroupControl(
+      index,
+      nestedFormGroup,
+      nestedFormGroupModel
+    );
 
     expect(Object.keys(nestedFormGroup.controls).length).toBe(size - 1);
     expect(nestedFormGroup.controls[id2]).toBeUndefined();
@@ -767,8 +954,10 @@ describe('FormBuilderService test suite', () => {
   });
 
   it('should create a form array', () => {
-
-    const model = service.findById('testFormArray', testModel) as DynamicFormArrayModel;
+    const model = service.findById(
+      'testFormArray',
+      testModel
+    ) as DynamicFormArrayModel;
     let formArray;
 
     expect(service.createFormArray).toBeTruthy();
@@ -780,8 +969,10 @@ describe('FormBuilderService test suite', () => {
   });
 
   it('should add a form array group', () => {
-
-    const model = service.findById('testFormArray', testModel) as DynamicFormArrayModel;
+    const model = service.findById(
+      'testFormArray',
+      testModel
+    ) as DynamicFormArrayModel;
     const formArray = service.createFormArray(model);
 
     service.addFormArrayGroup(formArray, model);
@@ -790,8 +981,10 @@ describe('FormBuilderService test suite', () => {
   });
 
   it('should insert a form array group', () => {
-
-    const model = service.findById('testFormArray', testModel) as DynamicFormArrayModel;
+    const model = service.findById(
+      'testFormArray',
+      testModel
+    ) as DynamicFormArrayModel;
     const formArray = service.createFormArray(model);
 
     service.insertFormArrayGroup(0, formArray, model);
@@ -800,65 +993,110 @@ describe('FormBuilderService test suite', () => {
   });
 
   it('should move up a form array group', () => {
-
-    const model = service.findById('testFormArray', testModel) as DynamicFormArrayModel;
+    const model = service.findById(
+      'testFormArray',
+      testModel
+    ) as DynamicFormArrayModel;
     const formArray = service.createFormArray(model);
     const index = 3;
     const step = 1;
 
-    (formArray.at(index) as FormGroup).controls.testFormArrayGroupInput.setValue('next test value 1');
-    (formArray.at(index + step) as FormGroup).controls.testFormArrayGroupInput.setValue('next test value 2');
+    (
+      formArray.at(index) as FormGroup
+    ).controls.testFormArrayGroupInput.setValue('next test value 1');
+    (
+      formArray.at(index + step) as FormGroup
+    ).controls.testFormArrayGroupInput.setValue('next test value 2');
 
-    (model.get(index).get(0) as DynamicFormValueControlModel<any>).value = 'next test value 1';
-    (model.get(index + step).get(0) as DynamicFormValueControlModel<any>).value = 'next test value 2';
+    (model.get(index).get(0) as DynamicFormValueControlModel<any>).value =
+      'next test value 1';
+    (
+      model.get(index + step).get(0) as DynamicFormValueControlModel<any>
+    ).value = 'next test value 2';
 
     service.moveFormArrayGroup(index, step, formArray, model);
 
     expect(formArray.length).toBe(model.initialCount);
 
-    expect((formArray.at(index) as FormGroup).controls.testFormArrayGroupInput.value).toEqual('next test value 2');
-    expect((formArray.at(index + step) as FormGroup).controls.testFormArrayGroupInput.value).toEqual('next test value 1');
+    expect(
+      (formArray.at(index) as FormGroup).controls.testFormArrayGroupInput.value
+    ).toEqual('next test value 2');
+    expect(
+      (formArray.at(index + step) as FormGroup).controls.testFormArrayGroupInput
+        .value
+    ).toEqual('next test value 1');
 
-    expect((model.get(index).get(0) as DynamicFormValueControlModel<any>).value).toEqual('next test value 2');
-    expect((model.get(index + step).get(0) as DynamicFormValueControlModel<any>).value).toEqual('next test value 1');
+    expect(
+      (model.get(index).get(0) as DynamicFormValueControlModel<any>).value
+    ).toEqual('next test value 2');
+    expect(
+      (model.get(index + step).get(0) as DynamicFormValueControlModel<any>)
+        .value
+    ).toEqual('next test value 1');
   });
 
   it('should move down a form array group', () => {
-
-    const model = service.findById('testFormArray', testModel) as DynamicFormArrayModel;
+    const model = service.findById(
+      'testFormArray',
+      testModel
+    ) as DynamicFormArrayModel;
     const formArray = service.createFormArray(model);
     const index = 3;
     const step = -1;
 
-    (formArray.at(index) as FormGroup).controls.testFormArrayGroupInput.setValue('next test value 1');
-    (formArray.at(index + step) as FormGroup).controls.testFormArrayGroupInput.setValue('next test value 2');
+    (
+      formArray.at(index) as FormGroup
+    ).controls.testFormArrayGroupInput.setValue('next test value 1');
+    (
+      formArray.at(index + step) as FormGroup
+    ).controls.testFormArrayGroupInput.setValue('next test value 2');
 
-    (model.get(index).get(0) as DynamicFormValueControlModel<any>).value = 'next test value 1';
-    (model.get(index + step).get(0) as DynamicFormValueControlModel<any>).value = 'next test value 2';
+    (model.get(index).get(0) as DynamicFormValueControlModel<any>).value =
+      'next test value 1';
+    (
+      model.get(index + step).get(0) as DynamicFormValueControlModel<any>
+    ).value = 'next test value 2';
 
     service.moveFormArrayGroup(index, step, formArray, model);
 
     expect(formArray.length).toBe(model.initialCount);
 
-    expect((formArray.at(index) as FormGroup).controls.testFormArrayGroupInput.value).toEqual('next test value 2');
-    expect((formArray.at(index + step) as FormGroup).controls.testFormArrayGroupInput.value).toEqual('next test value 1');
+    expect(
+      (formArray.at(index) as FormGroup).controls.testFormArrayGroupInput.value
+    ).toEqual('next test value 2');
+    expect(
+      (formArray.at(index + step) as FormGroup).controls.testFormArrayGroupInput
+        .value
+    ).toEqual('next test value 1');
 
-    expect((model.get(index).get(0) as DynamicFormValueControlModel<any>).value).toEqual('next test value 2');
-    expect((model.get(index + step).get(0) as DynamicFormValueControlModel<any>).value).toEqual('next test value 1');
+    expect(
+      (model.get(index).get(0) as DynamicFormValueControlModel<any>).value
+    ).toEqual('next test value 2');
+    expect(
+      (model.get(index + step).get(0) as DynamicFormValueControlModel<any>)
+        .value
+    ).toEqual('next test value 1');
   });
 
   it('should throw when form array group is to be moved out of bounds', () => {
-
-    const model = service.findById('testFormArray', testModel) as DynamicFormArrayModel;
+    const model = service.findById(
+      'testFormArray',
+      testModel
+    ) as DynamicFormArrayModel;
     const formArray = service.createFormArray(model);
 
-    expect(() => service.moveFormArrayGroup(2, -5, formArray, model))
-      .toThrow(new Error(`form array group cannot be moved due to index or new index being out of bounds`));
+    expect(() => service.moveFormArrayGroup(2, -5, formArray, model)).toThrow(
+      new Error(
+        `form array group cannot be moved due to index or new index being out of bounds`
+      )
+    );
   });
 
   it('should remove a form array group', () => {
-
-    const model = service.findById('testFormArray', testModel) as DynamicFormArrayModel;
+    const model = service.findById(
+      'testFormArray',
+      testModel
+    ) as DynamicFormArrayModel;
     const formArray = service.createFormArray(model);
 
     service.removeFormArrayGroup(0, formArray, model);
@@ -867,8 +1105,10 @@ describe('FormBuilderService test suite', () => {
   });
 
   it('should clear a form array', () => {
-
-    const model = service.findById('testFormArray', testModel) as DynamicFormArrayModel;
+    const model = service.findById(
+      'testFormArray',
+      testModel
+    ) as DynamicFormArrayModel;
     const formArray = service.createFormArray(model);
 
     service.clearFormArray(formArray, model);

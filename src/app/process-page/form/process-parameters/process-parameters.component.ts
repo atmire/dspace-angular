@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnChanges, Optional, Output, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Optional,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { Script } from '../../scripts/script.model';
 import { ProcessParameter } from '../../processes/process-parameter.model';
 import { hasValue } from '../../../shared/empty.util';
@@ -13,11 +21,13 @@ import { controlContainerFactory } from '../process-form.component';
   selector: 'ds-process-parameters',
   templateUrl: './process-parameters.component.html',
   styleUrls: ['./process-parameters.component.scss'],
-  viewProviders: [{
-    provide: ControlContainer,
-    useFactory: controlContainerFactory,
-    deps: [[new Optional(), NgForm]]
-  }]
+  viewProviders: [
+    {
+      provide: ControlContainer,
+      useFactory: controlContainerFactory,
+      deps: [[new Optional(), NgForm]],
+    },
+  ],
 })
 export class ProcessParametersComponent implements OnChanges {
   /**
@@ -32,7 +42,8 @@ export class ProcessParametersComponent implements OnChanges {
   /**
    * Emits the parameter values when they're updated
    */
-  @Output() updateParameters: EventEmitter<ProcessParameter[]> = new EventEmitter();
+  @Output() updateParameters: EventEmitter<ProcessParameter[]> =
+    new EventEmitter();
 
   /**
    * The current parameter values
@@ -79,7 +90,11 @@ export class ProcessParametersComponent implements OnChanges {
     if (index === this.parameterValues.length - 1) {
       this.addParameter();
     }
-    this.updateParameters.emit(this.parameterValues.filter((param: ProcessParameter) => hasValue(param.name)));
+    this.updateParameters.emit(
+      this.parameterValues.filter((param: ProcessParameter) =>
+        hasValue(param.name)
+      )
+    );
   }
 
   /**
@@ -87,8 +102,14 @@ export class ProcessParametersComponent implements OnChanges {
    * @param index The index of the parameter to remove
    */
   removeParameter(index: number) {
-    this.parameterValues = this.parameterValues.filter((value, i) => i !== index);
-    this.updateParameters.emit(this.parameterValues.filter((param: ProcessParameter) => hasValue(param.name)));
+    this.parameterValues = this.parameterValues.filter(
+      (value, i) => i !== index
+    );
+    this.updateParameters.emit(
+      this.parameterValues.filter((param: ProcessParameter) =>
+        hasValue(param.name)
+      )
+    );
   }
 
   /**
@@ -98,8 +119,8 @@ export class ProcessParametersComponent implements OnChanges {
     if (hasValue(this.script)) {
       this.parameterValues = this.script.parameters
         .filter((param) => param.mandatory)
-        .map(
-          (parameter: ScriptParameter) => Object.assign(new ProcessParameter(), { name: parameter.name })
+        .map((parameter: ScriptParameter) =>
+          Object.assign(new ProcessParameter(), { name: parameter.name })
         );
     }
     this.addParameter();

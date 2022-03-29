@@ -14,16 +14,13 @@ import { AuthService } from '../../core/auth/auth.service';
 @Component({
   selector: 'ds-site-statistics-page',
   templateUrl: '../statistics-page/statistics-page.component.html',
-  styleUrls: ['./site-statistics-page.component.scss']
+  styleUrls: ['./site-statistics-page.component.scss'],
 })
 export class SiteStatisticsPageComponent extends StatisticsPageComponent<Site> {
-
   /**
    * The report types to show on this statistics page.
    */
-  types: string[] = [
-    'TotalVisits',
-  ];
+  types: string[] = ['TotalVisits'];
 
   constructor(
     protected route: ActivatedRoute,
@@ -31,15 +28,9 @@ export class SiteStatisticsPageComponent extends StatisticsPageComponent<Site> {
     protected usageReportService: UsageReportService,
     protected nameService: DSONameService,
     protected siteService: SiteDataService,
-    protected authService: AuthService,
+    protected authService: AuthService
   ) {
-    super(
-      route,
-      router,
-      usageReportService,
-      nameService,
-      authService,
-    );
+    super(route, router, usageReportService, nameService, authService);
   }
 
   protected getScope$() {
@@ -49,8 +40,8 @@ export class SiteStatisticsPageComponent extends StatisticsPageComponent<Site> {
   protected getReports$() {
     return this.scope$.pipe(
       switchMap((scope) =>
-        this.usageReportService.searchStatistics(scope._links.self.href, 0, 10),
-      ),
+        this.usageReportService.searchStatistics(scope._links.self.href, 0, 10)
+      )
     );
   }
 }

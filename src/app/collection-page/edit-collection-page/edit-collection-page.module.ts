@@ -25,7 +25,7 @@ import { ComcolModule } from '../../shared/comcol/comcol.module';
     CollectionFormModule,
     ResourcePoliciesModule,
     FormModule,
-    ComcolModule
+    ComcolModule,
   ],
   declarations: [
     EditCollectionPageComponent,
@@ -35,9 +35,7 @@ import { ComcolModule } from '../../shared/comcol/comcol.module';
     CollectionSourceComponent,
 
     CollectionSourceControlsComponent,
-    CollectionAuthorizationsComponent
-  ]
+    CollectionAuthorizationsComponent,
+  ],
 })
-export class EditCollectionPageModule {
-
-}
+export class EditCollectionPageModule {}

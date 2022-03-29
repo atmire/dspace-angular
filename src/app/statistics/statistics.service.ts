@@ -11,21 +11,25 @@ import { SearchOptions } from '../shared/search/models/search-options.model';
 /**
  * The statistics service
  */
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class StatisticsService {
-
   constructor(
     protected requestService: RequestService,
-    protected halService: HALEndpointService,
-  ) {
-  }
+    protected halService: HALEndpointService
+  ) {}
 
   private sendEvent(linkPath: string, body: any) {
     const requestId = this.requestService.generateRequestId();
-    this.halService.getEndpoint(linkPath).pipe(
-      map((endpoint: string) => new TrackRequest(requestId, endpoint, JSON.stringify(body))),
-      take(1) // otherwise the previous events will fire again
-    ).subscribe((request: RestRequest) => this.requestService.send(request));
+    this.halService
+      .getEndpoint(linkPath)
+      .pipe(
+        map(
+          (endpoint: string) =>
+            new TrackRequest(requestId, endpoint, JSON.stringify(body))
+        ),
+        take(1) // otherwise the previous events will fire again
+      )
+      .subscribe((request: RestRequest) => this.requestService.send(request));
   }
 
   /**
@@ -35,7 +39,7 @@ export class StatisticsService {
   trackViewEvent(dso: DSpaceObject) {
     this.sendEvent('/statistics/viewevents', {
       targetId: dso.uuid,
-      targetType: (dso as any).type
+      targetType: (dso as any).type,
     });
   }
 
@@ -48,9 +52,19 @@ export class StatisticsService {
    */
   trackSearchEvent(
     searchOptions: SearchOptions,
-    page: { size: number, totalElements: number, totalPages: number, number: number },
-    sort: { by: string, order: string },
-    filters?: { filter: string, operator: string, value: string, label: string }[]
+    page: {
+      size: number;
+      totalElements: number;
+      totalPages: number;
+      number: number;
+    },
+    sort: { by: string; order: string },
+    filters?: {
+      filter: string;
+      operator: string;
+      value: string;
+      label: string;
+    }[]
   ) {
     const body = {
       query: searchOptions.query,
@@ -58,18 +72,18 @@ export class StatisticsService {
         size: page.size,
         totalElements: page.totalElements,
         totalPages: page.totalPages,
-        number: page.number
+        number: page.number,
       },
       sort: {
         by: sort.by,
-        order: sort.order.toLowerCase()
+        order: sort.order.toLowerCase(),
       },
     };
     if (hasValue(searchOptions.configuration)) {
       Object.assign(body, { configuration: searchOptions.configuration });
     }
     if (isNotEmpty(searchOptions.dsoTypes)) {
-      Object.assign(body, { dsoType: searchOptions.dsoTypes[0].toLowerCase()  });
+      Object.assign(body, { dsoType: searchOptions.dsoTypes[0].toLowerCase() });
     }
     if (hasValue(searchOptions.scope)) {
       Object.assign(body, { scope: searchOptions.scope });
@@ -82,12 +96,11 @@ export class StatisticsService {
           filter: filter.filter,
           operator: filter.operator,
           value: filter.value,
-          label: filter.label
+          label: filter.label,
         });
       }
       Object.assign(body, { appliedFilters: bodyFilters });
     }
     this.sendEvent('/statistics/searchevents', body);
   }
-
 }

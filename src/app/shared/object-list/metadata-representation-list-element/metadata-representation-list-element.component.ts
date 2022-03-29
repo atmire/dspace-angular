@@ -3,7 +3,7 @@ import { MetadataRepresentation } from '../../../core/shared/metadata-representa
 
 @Component({
   selector: 'ds-metadata-representation-list-element',
-  template: ''
+  template: '',
 })
 /**
  * An abstract class for displaying a single MetadataRepresentation

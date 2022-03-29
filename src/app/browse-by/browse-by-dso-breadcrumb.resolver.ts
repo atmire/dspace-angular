@@ -6,7 +6,10 @@ import { Collection } from '../core/shared/collection.model';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { BreadcrumbConfig } from '../breadcrumbs/breadcrumb/breadcrumb-config.model';
 import { Observable } from 'rxjs';
-import { getRemoteDataPayload, getFirstSucceededRemoteData } from '../core/shared/operators';
+import {
+  getRemoteDataPayload,
+  getFirstSucceededRemoteData,
+} from '../core/shared/operators';
 import { map } from 'rxjs/operators';
 import { hasValue } from '../shared/empty.util';
 import { getDSORoute } from '../app-routing-paths';
@@ -16,8 +19,10 @@ import { getDSORoute } from '../app-routing-paths';
  */
 @Injectable()
 export class BrowseByDSOBreadcrumbResolver {
-  constructor(protected breadcrumbService: DSOBreadcrumbsService, protected dataService: DSpaceObjectDataService) {
-  }
+  constructor(
+    protected breadcrumbService: DSOBreadcrumbsService,
+    protected dataService: DSpaceObjectDataService
+  ) {}
 
   /**
    * Method for resolving a breadcrumb config object
@@ -25,14 +30,21 @@ export class BrowseByDSOBreadcrumbResolver {
    * @param {RouterStateSnapshot} state The current RouterStateSnapshot
    * @returns BreadcrumbConfig object
    */
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<BreadcrumbConfig<Community | Collection>> {
+  resolve(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<BreadcrumbConfig<Community | Collection>> {
     const uuid = route.queryParams.scope;
     if (hasValue(uuid)) {
       return this.dataService.findById(uuid).pipe(
         getFirstSucceededRemoteData(),
         getRemoteDataPayload(),
         map((object: Community | Collection) => {
-          return { provider: this.breadcrumbService, key: object, url: getDSORoute(object) };
+          return {
+            provider: this.breadcrumbService,
+            key: object,
+            url: getDSORoute(object),
+          };
         })
       );
     }

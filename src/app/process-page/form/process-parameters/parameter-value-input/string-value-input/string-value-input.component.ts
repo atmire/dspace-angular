@@ -10,9 +10,13 @@ import { controlContainerFactory } from '../../../process-form.component';
   selector: 'ds-string-value-input',
   templateUrl: './string-value-input.component.html',
   styleUrls: ['./string-value-input.component.scss'],
-  viewProviders: [ { provide: ControlContainer,
-    useFactory: controlContainerFactory,
-    deps: [[new Optional(), NgForm]] } ]
+  viewProviders: [
+    {
+      provide: ControlContainer,
+      useFactory: controlContainerFactory,
+      deps: [[new Optional(), NgForm]],
+    },
+  ],
 })
 export class StringValueInputComponent extends ValueInputComponent<string> {
   /**

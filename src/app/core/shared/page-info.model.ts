@@ -7,7 +7,6 @@ import { HALResource } from './hal-resource.model';
  * Represents the state of a paginated response
  */
 export class PageInfo implements HALResource {
-
   /**
    * The number of elements on a page
    */
@@ -44,14 +43,12 @@ export class PageInfo implements HALResource {
     self: HALLink;
   };
 
-  constructor(
-    options?: {
-      elementsPerPage: number,
-      totalElements: number,
-      totalPages: number,
-      currentPage: number
-    }
-  ) {
+  constructor(options?: {
+    elementsPerPage: number;
+    totalElements: number;
+    totalPages: number;
+    currentPage: number;
+  }) {
     if (hasValue(options)) {
       this.elementsPerPage = options.elementsPerPage;
       this.totalElements = options.totalElements;
@@ -95,5 +92,4 @@ export class PageInfo implements HALResource {
       return undefined;
     }
   }
-
 }

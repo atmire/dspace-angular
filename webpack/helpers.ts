@@ -11,8 +11,7 @@ export const globalCSSImports = () => {
   ];
 };
 
-
 module.exports = {
   projectRoot,
-  globalCSSImports
+  globalCSSImports,
 };

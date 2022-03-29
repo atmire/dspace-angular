@@ -1,4 +1,7 @@
-import { ExternalSourceEntryImportModalComponent, ImportType } from './external-source-entry-import-modal.component';
+import {
+  ExternalSourceEntryImportModalComponent,
+  ImportType,
+} from './external-source-entry-import-modal.component';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -33,33 +36,58 @@ describe('DsDynamicLookupRelationExternalSourceTabComponent', () => {
     metadata: {
       'dc.identifier.uri': [
         {
-          value: uri
-        }
-      ]
-    }
+          value: uri,
+        },
+      ],
+    },
   });
 
   const label = 'Author';
-  const relationship = Object.assign(new RelationshipOptions(), { relationshipType: 'isAuthorOfPublication' });
-  const submissionCollection = Object.assign(new Collection(), { uuid: '9398affe-a977-4992-9a1d-6f00908a259f' });
-  const submissionItem = Object.assign(new Item(), { uuid: '26224069-5f99-412a-9e9b-7912a7e35cb1' });
-  const item1 = Object.assign(new Item(), { uuid: 'e1c51c69-896d-42dc-8221-1d5f2ad5516e' });
-  const item2 = Object.assign(new Item(), { uuid: 'c8279647-1acc-41ae-b036-951d5f65649b' });
-  const item3 = Object.assign(new Item(), { uuid: 'c3bcbff5-ec0c-4831-8e4c-94b9c933ccac' });
-  const searchResult1 = Object.assign(new ItemSearchResult(), { indexableObject: item1 });
-  const searchResult2 = Object.assign(new ItemSearchResult(), { indexableObject: item2 });
-  const searchResult3 = Object.assign(new ItemSearchResult(), { indexableObject: item3 });
-  const importedItem = Object.assign(new Item(), { uuid: '5d0098fc-344a-4067-a57d-457092b72e82' });
+  const relationship = Object.assign(new RelationshipOptions(), {
+    relationshipType: 'isAuthorOfPublication',
+  });
+  const submissionCollection = Object.assign(new Collection(), {
+    uuid: '9398affe-a977-4992-9a1d-6f00908a259f',
+  });
+  const submissionItem = Object.assign(new Item(), {
+    uuid: '26224069-5f99-412a-9e9b-7912a7e35cb1',
+  });
+  const item1 = Object.assign(new Item(), {
+    uuid: 'e1c51c69-896d-42dc-8221-1d5f2ad5516e',
+  });
+  const item2 = Object.assign(new Item(), {
+    uuid: 'c8279647-1acc-41ae-b036-951d5f65649b',
+  });
+  const item3 = Object.assign(new Item(), {
+    uuid: 'c3bcbff5-ec0c-4831-8e4c-94b9c933ccac',
+  });
+  const searchResult1 = Object.assign(new ItemSearchResult(), {
+    indexableObject: item1,
+  });
+  const searchResult2 = Object.assign(new ItemSearchResult(), {
+    indexableObject: item2,
+  });
+  const searchResult3 = Object.assign(new ItemSearchResult(), {
+    indexableObject: item3,
+  });
+  const importedItem = Object.assign(new Item(), {
+    uuid: '5d0098fc-344a-4067-a57d-457092b72e82',
+  });
 
   function init() {
     lookupRelationService = jasmine.createSpyObj('lookupRelationService', {
-      getLocalResults: createSuccessfulRemoteDataObject$(createPaginatedList([searchResult1, searchResult2, searchResult3])),
-      removeLocalResultsCache: {}
+      getLocalResults: createSuccessfulRemoteDataObject$(
+        createPaginatedList([searchResult1, searchResult2, searchResult3])
+      ),
+      removeLocalResultsCache: {},
     });
     selectService = jasmine.createSpyObj('selectService', ['deselectAll']);
-    notificationsService = jasmine.createSpyObj('notificationsService', ['success']);
+    notificationsService = jasmine.createSpyObj('notificationsService', [
+      'success',
+    ]);
     itemService = jasmine.createSpyObj('itemService', {
-      importExternalSourceEntry: createSuccessfulRemoteDataObject$(importedItem)
+      importExternalSourceEntry:
+        createSuccessfulRemoteDataObject$(importedItem),
     });
     modalStub = jasmine.createSpyObj('modal', ['close']);
   }
@@ -68,15 +96,19 @@ describe('DsDynamicLookupRelationExternalSourceTabComponent', () => {
     init();
     TestBed.configureTestingModule({
       declarations: [ExternalSourceEntryImportModalComponent],
-      imports: [TranslateModule.forRoot(), RouterTestingModule.withRoutes([]), NgbModule],
+      imports: [
+        TranslateModule.forRoot(),
+        RouterTestingModule.withRoutes([]),
+        NgbModule,
+      ],
       providers: [
         { provide: LookupRelationService, useValue: lookupRelationService },
         { provide: SelectableListService, useValue: selectService },
         { provide: NotificationsService, useValue: notificationsService },
         { provide: ItemDataService, useValue: itemService },
-        { provide: NgbActiveModal, useValue: modalStub }
+        { provide: NgbActiveModal, useValue: modalStub },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -101,7 +133,9 @@ describe('DsDynamicLookupRelationExternalSourceTabComponent', () => {
   });
 
   describe('selectEntity', () => {
-    const entity = Object.assign(new Item(), { uuid: 'd8698de5-5b05-4ea4-9d02-da73803a50f9' });
+    const entity = Object.assign(new Item(), {
+      uuid: 'd8698de5-5b05-4ea4-9d02-da73803a50f9',
+    });
 
     beforeEach(() => {
       component.selectEntity(entity);
@@ -117,7 +151,9 @@ describe('DsDynamicLookupRelationExternalSourceTabComponent', () => {
   });
 
   describe('deselectEntity', () => {
-    const entity = Object.assign(new Item(), { uuid: 'd8698de5-5b05-4ea4-9d02-da73803a50f9' });
+    const entity = Object.assign(new Item(), {
+      uuid: 'd8698de5-5b05-4ea4-9d02-da73803a50f9',
+    });
 
     beforeEach(() => {
       component.selectedImportType = ImportType.LocalEntity;
@@ -157,8 +193,12 @@ describe('DsDynamicLookupRelationExternalSourceTabComponent', () => {
       });
 
       it('should deselect the entity and authority list', () => {
-        expect(selectService.deselectAll).toHaveBeenCalledWith(component.entityListId);
-        expect(selectService.deselectAll).toHaveBeenCalledWith(component.authorityListId);
+        expect(selectService.deselectAll).toHaveBeenCalledWith(
+          component.entityListId
+        );
+        expect(selectService.deselectAll).toHaveBeenCalledWith(
+          component.authorityListId
+        );
       });
     });
   });
@@ -186,8 +226,12 @@ describe('DsDynamicLookupRelationExternalSourceTabComponent', () => {
       });
 
       it('should deselect the entity and authority list', () => {
-        expect(selectService.deselectAll).toHaveBeenCalledWith(component.entityListId);
-        expect(selectService.deselectAll).toHaveBeenCalledWith(component.authorityListId);
+        expect(selectService.deselectAll).toHaveBeenCalledWith(
+          component.entityListId
+        );
+        expect(selectService.deselectAll).toHaveBeenCalledWith(
+          component.authorityListId
+        );
       });
     });
   });

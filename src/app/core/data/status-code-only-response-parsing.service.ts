@@ -9,10 +9,11 @@ import { RestRequest } from './request.models';
  * text of the response, and ignore anything else that might be there
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class StatusCodeOnlyResponseParsingService implements ResponseParsingService {
-
+export class StatusCodeOnlyResponseParsingService
+  implements ResponseParsingService
+{
   /**
    * Parse the response and only extract the status code and status text
    *

@@ -8,7 +8,7 @@ import {
   ResetResponseTimestampsAction,
   RequestSuccessAction,
   RequestErrorAction,
-  RequestStaleAction
+  RequestStaleAction,
 } from './request.actions';
 import { RestRequest } from './request.models';
 import { HALLink } from '../shared/hal-link.model';
@@ -21,7 +21,7 @@ export enum RequestEntryState {
   Error = 'Error',
   Success = 'Success',
   ErrorStale = 'ErrorStale',
-  SuccessStale = 'SuccessStale'
+  SuccessStale = 'SuccessStale',
 }
 
 /**
@@ -96,8 +96,7 @@ export const hasSucceeded = (state: RequestEntryState) => {
 /**
  * Returns true if the given state is not loading, false otherwise
  */
-export const hasCompleted = (state: RequestEntryState) =>
-  !isLoading(state);
+export const hasCompleted = (state: RequestEntryState) => !isLoading(state);
 
 /**
  * Returns true if the given state is SuccessStale or ErrorStale, false otherwise
@@ -127,9 +126,11 @@ export interface RequestState {
 // Object.create(null) ensures the object has no default js properties (e.g. `__proto__`)
 const initialState = Object.create(null);
 
-export function requestReducer(storeState = initialState, action: RequestAction): RequestState {
+export function requestReducer(
+  storeState = initialState,
+  action: RequestAction
+): RequestState {
   switch (action.type) {
-
     case RequestActionTypes.CONFIGURE: {
       return configureRequest(storeState, action as RequestConfigureAction);
     }
@@ -151,7 +152,10 @@ export function requestReducer(storeState = initialState, action: RequestAction)
     }
 
     case RequestActionTypes.RESET_TIMESTAMPS: {
-      return resetResponseTimestamps(storeState, action as ResetResponseTimestampsAction);
+      return resetResponseTimestamps(
+        storeState,
+        action as ResetResponseTimestampsAction
+      );
     }
 
     case RequestActionTypes.REMOVE: {
@@ -164,18 +168,24 @@ export function requestReducer(storeState = initialState, action: RequestAction)
   }
 }
 
-function configureRequest(storeState: RequestState, action: RequestConfigureAction): RequestState {
+function configureRequest(
+  storeState: RequestState,
+  action: RequestConfigureAction
+): RequestState {
   return Object.assign({}, storeState, {
     [action.payload.uuid]: {
       request: action.payload,
       state: RequestEntryState.RequestPending,
       response: null,
-      lastUpdated: action.lastUpdated
-    }
+      lastUpdated: action.lastUpdated,
+    },
   });
 }
 
-function executeRequest(storeState: RequestState, action: RequestExecuteAction): RequestState {
+function executeRequest(
+  storeState: RequestState,
+  action: RequestExecuteAction
+): RequestState {
   if (isNull(storeState[action.payload])) {
     // after a request has been removed it's possible pending changes still come in.
     // Don't store them
@@ -184,8 +194,8 @@ function executeRequest(storeState: RequestState, action: RequestExecuteAction):
     return Object.assign({}, storeState, {
       [action.payload]: Object.assign({}, storeState[action.payload], {
         state: RequestEntryState.ResponsePending,
-        lastUpdated: action.lastUpdated
-      })
+        lastUpdated: action.lastUpdated,
+      }),
     });
   }
 }
@@ -200,25 +210,32 @@ function executeRequest(storeState: RequestState, action: RequestExecuteAction):
  * @return RequestState
  *    the new storeState, with the response added to the request
  */
-function completeSuccessRequest(storeState: RequestState, action: RequestSuccessAction): RequestState {
+function completeSuccessRequest(
+  storeState: RequestState,
+  action: RequestSuccessAction
+): RequestState {
   if (isNull(storeState[action.payload.uuid])) {
     // after a request has been removed it's possible pending changes still come in.
     // Don't store them
     return storeState;
   } else {
     return Object.assign({}, storeState, {
-      [action.payload.uuid]: Object.assign({}, storeState[action.payload.uuid], {
-        state: RequestEntryState.Success,
-        response: {
-          timeCompleted: action.payload.timeCompleted,
-          lastUpdated: action.payload.timeCompleted,
-          statusCode: action.payload.statusCode,
-          payloadLink: action.payload.link,
-          unCacheableObject: action.payload.unCacheableObject,
-          errorMessage: null
-        },
-        lastUpdated: action.lastUpdated
-      })
+      [action.payload.uuid]: Object.assign(
+        {},
+        storeState[action.payload.uuid],
+        {
+          state: RequestEntryState.Success,
+          response: {
+            timeCompleted: action.payload.timeCompleted,
+            lastUpdated: action.payload.timeCompleted,
+            statusCode: action.payload.statusCode,
+            payloadLink: action.payload.link,
+            unCacheableObject: action.payload.unCacheableObject,
+            errorMessage: null,
+          },
+          lastUpdated: action.lastUpdated,
+        }
+      ),
     });
   }
 }
@@ -233,24 +250,31 @@ function completeSuccessRequest(storeState: RequestState, action: RequestSuccess
  * @return RequestState
  *    the new storeState, with the response added to the request
  */
-function completeFailedRequest(storeState: RequestState, action: RequestErrorAction): RequestState {
+function completeFailedRequest(
+  storeState: RequestState,
+  action: RequestErrorAction
+): RequestState {
   if (isNull(storeState[action.payload.uuid])) {
     // after a request has been removed it's possible pending changes still come in.
     // Don't store them
     return storeState;
   } else {
     return Object.assign({}, storeState, {
-      [action.payload.uuid]: Object.assign({}, storeState[action.payload.uuid], {
-        state: RequestEntryState.Error,
-        response: {
-          timeCompleted: action.payload.timeCompleted,
-          lastUpdated: action.payload.timeCompleted,
-          statusCode: action.payload.statusCode,
-          payloadLink: null,
-          errorMessage: action.payload.errorMessage,
-        },
-        lastUpdated: action.lastUpdated
-      })
+      [action.payload.uuid]: Object.assign(
+        {},
+        storeState[action.payload.uuid],
+        {
+          state: RequestEntryState.Error,
+          response: {
+            timeCompleted: action.payload.timeCompleted,
+            lastUpdated: action.payload.timeCompleted,
+            statusCode: action.payload.statusCode,
+            payloadLink: null,
+            errorMessage: action.payload.errorMessage,
+          },
+          lastUpdated: action.lastUpdated,
+        }
+      ),
     });
   }
 }
@@ -264,7 +288,10 @@ function completeFailedRequest(storeState: RequestState, action: RequestErrorAct
  * @return RequestState
  *    the new storeState, set to stale
  */
-function expireRequest(storeState: RequestState, action: RequestStaleAction): RequestState {
+function expireRequest(
+  storeState: RequestState,
+  action: RequestStaleAction
+): RequestState {
   if (isNull(storeState[action.payload.uuid])) {
     // after a request has been removed it's possible pending changes still come in.
     // Don't store them
@@ -276,9 +303,11 @@ function expireRequest(storeState: RequestState, action: RequestStaleAction): Re
     } else {
       return Object.assign({}, storeState, {
         [action.payload.uuid]: Object.assign({}, prevEntry, {
-          state: hasSucceeded(prevEntry.state) ? RequestEntryState.SuccessStale : RequestEntryState.ErrorStale,
-          lastUpdated: action.lastUpdated
-        })
+          state: hasSucceeded(prevEntry.state)
+            ? RequestEntryState.SuccessStale
+            : RequestEntryState.ErrorStale,
+          lastUpdated: action.lastUpdated,
+        }),
       });
     }
   }
@@ -294,17 +323,18 @@ function expireRequest(storeState: RequestState, action: RequestStaleAction): Re
  * @return RequestState
  *    the new storeState, with the timeCompleted property reset
  */
-function resetResponseTimestamps(storeState: RequestState, action: ResetResponseTimestampsAction): RequestState {
+function resetResponseTimestamps(
+  storeState: RequestState,
+  action: ResetResponseTimestampsAction
+): RequestState {
   const newState = Object.create(null);
   Object.keys(storeState).forEach((key) => {
-    newState[key] = Object.assign({}, storeState[key],
-      {
-        response: Object.assign({}, storeState[key].response, {
-          timeCompleted: action.payload
-        }),
-        lastUpdated: action.payload
-      }
-    );
+    newState[key] = Object.assign({}, storeState[key], {
+      response: Object.assign({}, storeState[key].response, {
+        timeCompleted: action.payload,
+      }),
+      lastUpdated: action.payload,
+    });
   });
   return newState;
 }
@@ -314,7 +344,10 @@ function resetResponseTimestamps(storeState: RequestState, action: ResetResponse
  * @param storeState The current RequestState
  * @param action  The RequestRemoveAction to perform
  */
-function removeRequest(storeState: RequestState, action: RequestRemoveAction): RequestState {
+function removeRequest(
+  storeState: RequestState,
+  action: RequestRemoveAction
+): RequestState {
   const newState = Object.assign({}, storeState);
   newState[action.uuid] = null;
   return newState;

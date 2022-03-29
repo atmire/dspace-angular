@@ -7,29 +7,18 @@ import { CommunityListComponent } from './community-list/community-list.componen
 import { ThemedCommunityListPageComponent } from './themed-community-list-page.component';
 import { ThemedCommunityListComponent } from './community-list/themed-community-list.component';
 
-
 const DECLARATIONS = [
   CommunityListPageComponent,
   CommunityListComponent,
   ThemedCommunityListPageComponent,
-  ThemedCommunityListComponent
+  ThemedCommunityListComponent,
 ];
 /**
  * The page which houses a title and the community list, as described in community-list.component
  */
 @NgModule({
-  imports: [
-    CommonModule,
-    SharedModule,
-    CommunityListPageRoutingModule
-  ],
-  declarations: [
-    ...DECLARATIONS
-  ],
-  exports: [
-    ...DECLARATIONS,
-  ],
+  imports: [CommonModule, SharedModule, CommunityListPageRoutingModule],
+  declarations: [...DECLARATIONS],
+  exports: [...DECLARATIONS],
 })
-export class CommunityListPageModule {
-
-}
+export class CommunityListPageModule {}

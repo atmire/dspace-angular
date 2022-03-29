@@ -18,4 +18,3 @@ export const RouterActionTypes = {
 export class RouteUpdateAction implements Action {
   type = RouterActionTypes.ROUTE_UPDATE;
 }
-

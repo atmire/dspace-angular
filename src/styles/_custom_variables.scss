@@ -1,16 +1,17 @@
 :root {
   --ds-content-spacing: #{$spacer * 1.5};
 
-  --ds-button-height: #{$input-btn-padding-y * 2 + $input-btn-line-height + calculateRem($input-btn-border-width*2)};
+  --ds-button-height: #{$input-btn-padding-y * 2 + $input-btn-line-height +
+    calculateRem($input-btn-border-width * 2)};
 
-  --ds-card-height-percentage:98%;
-  --ds-card-thumbnail-height:240px;
+  --ds-card-height-percentage: 98%;
+  --ds-card-thumbnail-height: 240px;
   --ds-dropdown-menu-max-height: 200px;
   --ds-drop-zone-area-height: 44px;
   --ds-drop-zone-area-z-index: 1025;
   --ds-drop-zone-area-inner-z-index: 1021;
-  --ds-login-logo-height:72px;
-  --ds-login-logo-width:72px;
+  --ds-login-logo-height: 72px;
+  --ds-login-logo-width: 72px;
   --ds-submission-header-z-index: 1001;
   --ds-submission-footer-z-index: 999;
 
@@ -29,7 +30,7 @@
   --ds-navbar-link-color: #{$cyan};
   --ds-navbar-link-color-hover: #{darken($cyan, 15%)};
 
-  $admin-sidebar-bg: darken(#2B4E72, 17%);
+  $admin-sidebar-bg: darken(#2b4e72, 17%);
   $admin-sidebar-active-bg: darken($admin-sidebar-bg, 3%);
   --ds-admin-sidebar-bg: #{$admin-sidebar-bg};
   --ds-admin-sidebar-active-bg: #{$admin-sidebar-active-bg};
@@ -39,7 +40,7 @@
   --ds-dark-scrollbar-alt-bg: #{lighten($admin-sidebar-active-bg, 2%)};
   --ds-dark-scrollbar-fg: #47495d;
 
-  --ds-submission-sections-margin-bottom: .5rem;
+  --ds-submission-sections-margin-bottom: 0.5rem;
 
   --ds-edit-item-button-min-width: 100px;
   --ds-edit-item-metadata-field-width: 190px;

@@ -16,7 +16,6 @@ import { RemoteData } from '../data/remote-data';
  */
 @Injectable()
 export class ServerAuthService extends AuthService {
-
   /**
    * Returns the authenticated user
    * @returns {User}
@@ -36,9 +35,10 @@ export class ServerAuthService extends AuthService {
         if (hasValue(status) && status.authenticated) {
           return status._links.eperson.href;
         } else {
-          throw (new Error('Not authenticated'));
+          throw new Error('Not authenticated');
         }
-      }));
+      })
+    );
   }
 
   /**
@@ -50,14 +50,19 @@ export class ServerAuthService extends AuthService {
     let headers = new HttpHeaders();
     headers = headers.append('Accept', 'application/json');
     if (isNotEmpty(this.req.protocol) && isNotEmpty(this.req.header('host'))) {
-      const referer = this.req.protocol + '://' + this.req.header('host') + this.req.path;
+      const referer =
+        this.req.protocol + '://' + this.req.header('host') + this.req.path;
       // use to allow the rest server to identify the real origin on SSR
       headers = headers.append('X-Requested-With', referer);
     }
     options.headers = headers;
     options.withCredentials = true;
-    return this.authRequestService.getRequest('status', options).pipe(
-      map((rd: RemoteData<AuthStatus>) => Object.assign(new AuthStatus(), rd.payload))
-    );
+    return this.authRequestService
+      .getRequest('status', options)
+      .pipe(
+        map((rd: RemoteData<AuthStatus>) =>
+          Object.assign(new AuthStatus(), rd.payload)
+        )
+      );
   }
 }

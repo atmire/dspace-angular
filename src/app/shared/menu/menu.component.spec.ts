@@ -1,7 +1,17 @@
-import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+  waitForAsync,
+} from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
-import { ChangeDetectionStrategy, Injector, NO_ERRORS_SCHEMA } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Injector,
+  NO_ERRORS_SCHEMA,
+} from '@angular/core';
 import { MenuService } from './menu.service';
 import { MenuComponent } from './menu.component';
 import { MenuServiceStub } from '../testing/menu-service.stub';
@@ -22,7 +32,14 @@ describe('MenuComponent', () => {
 
   const mockMenuID = 'mock-menuID' as MenuID;
 
-  const mockStatisticSection = { 'id': 'statistics_site', 'active': true, 'visible': true, 'index': 2, 'type': 'statistics', 'model': { 'type': 1, 'text': 'menu.section.statistics', 'link': 'statistics' } };
+  const mockStatisticSection = {
+    id: 'statistics_site',
+    active: true,
+    visible: true,
+    index: 2,
+    type: 'statistics',
+    model: { type: 1, text: 'menu.section.statistics', link: 'statistics' },
+  };
 
   let authorizationService: AuthorizationDataService;
 
@@ -33,27 +50,29 @@ describe('MenuComponent', () => {
     lastModified: '2018',
     _links: {
       self: {
-        href: 'https://localhost:8000/items/fake-id'
-      }
-    }
+        href: 'https://localhost:8000/items/fake-id',
+      },
+    },
   });
-
 
   const routeStub = {
     data: observableOf({
-      dso: createSuccessfulRemoteDataObject(mockItem)
+      dso: createSuccessfulRemoteDataObject(mockItem),
     }),
-    children: []
+    children: [],
   };
 
   beforeEach(waitForAsync(() => {
-
     authorizationService = jasmine.createSpyObj('authorizationService', {
-      isAuthorized: observableOf(false)
+      isAuthorized: observableOf(false),
     });
 
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), NoopAnimationsModule, RouterTestingModule],
+      imports: [
+        TranslateModule.forRoot(),
+        NoopAnimationsModule,
+        RouterTestingModule,
+      ],
       declarations: [MenuComponent],
       providers: [
         Injector,
@@ -61,10 +80,12 @@ describe('MenuComponent', () => {
         { provide: AuthorizationDataService, useValue: authorizationService },
         { provide: ActivatedRoute, useValue: routeStub },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(MenuComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(MenuComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -131,13 +152,14 @@ describe('MenuComponent', () => {
   });
 
   describe('when unauthorized statistics', () => {
-
     beforeEach(() => {
-      (authorizationService as any).isAuthorized.and.returnValue(observableOf(false));
+      (authorizationService as any).isAuthorized.and.returnValue(
+        observableOf(false)
+      );
       fixture.detectChanges();
     });
 
-    it('should return observable of empty object', done => {
+    it('should return observable of empty object', (done) => {
       comp.getAuthorizedStatistics(mockStatisticSection).subscribe((res) => {
         expect(res).toEqual({});
         done();
@@ -146,18 +168,18 @@ describe('MenuComponent', () => {
   });
 
   describe('get authorized statistics', () => {
-
     beforeEach(() => {
-      (authorizationService as any).isAuthorized.and.returnValue(observableOf(true));
+      (authorizationService as any).isAuthorized.and.returnValue(
+        observableOf(true)
+      );
       fixture.detectChanges();
     });
 
-    it('should return observable of statistics section menu', done => {
+    it('should return observable of statistics section menu', (done) => {
       comp.getAuthorizedStatistics(mockStatisticSection).subscribe((res) => {
         expect(res).toEqual(mockStatisticSection);
         done();
       });
     });
   });
-
 });

@@ -1,5 +1,6 @@
 {
-  "bitstreams": [{
+  "bitstreams": [
+    {
       "_links": {
         "self": {
           "href": "/bitstreams/3678"
@@ -20,7 +21,8 @@
         "value": "063dfbbbac873aa3fca479b878eccff3",
         "algorithm": "MD5"
       },
-      "metadata": [{
+      "metadata": [
+        {
           "key": "dc.title",
           "value": "do_open_access_CRL.pdf",
           "language": null
@@ -55,7 +57,8 @@
         "value": "a8ad475e86f9645c60e13e06f1427814",
         "algorithm": "MD5"
       },
-      "metadata": [{
+      "metadata": [
+        {
           "key": "dc.title",
           "value": "do_open_access_CRL.pdf.jpg",
           "language": null
@@ -90,7 +93,8 @@
         "value": "8ad416e8a39e645020e13e06f1427814",
         "algorithm": "MD5"
       },
-      "metadata": [{
+      "metadata": [
+        {
           "key": "dc.title",
           "value": "license.txt",
           "language": null

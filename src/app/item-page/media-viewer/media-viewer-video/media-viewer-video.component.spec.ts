@@ -46,12 +46,10 @@ describe('MediaViewerVideoComponent', () => {
     bundleName: 'ORIGINAL',
     _links: {
       self: {
-        href:
-          'https://dspace7.4science.it/dspace-spring-rest/api/core/bitstreams/cf9b0c8e-a1eb-4b65-afd0-567366448713',
+        href: 'https://dspace7.4science.it/dspace-spring-rest/api/core/bitstreams/cf9b0c8e-a1eb-4b65-afd0-567366448713',
       },
       content: {
-        href:
-          'https://dspace7.4science.it/dspace-spring-rest/api/core/bitstreams/cf9b0c8e-a1eb-4b65-afd0-567366448713/content',
+        href: 'https://dspace7.4science.it/dspace-spring-rest/api/core/bitstreams/cf9b0c8e-a1eb-4b65-afd0-567366448713/content',
       },
     },
     id: 'cf9b0c8e-a1eb-4b65-afd0-567366448713',

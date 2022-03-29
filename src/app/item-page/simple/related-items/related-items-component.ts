@@ -11,13 +11,15 @@ import { AbstractIncrementalListComponent } from '../abstract-incremental-list/a
 @Component({
   selector: 'ds-related-items',
   styleUrls: ['./related-items.component.scss'],
-  templateUrl: './related-items.component.html'
+  templateUrl: './related-items.component.html',
 })
 /**
  * This component is used for displaying relations between items
  * It expects a parent item and relationship type, as well as a label to display on top
  */
-export class RelatedItemsComponent extends AbstractIncrementalListComponent<Observable<RemoteData<PaginatedList<Item>>>> {
+export class RelatedItemsComponent extends AbstractIncrementalListComponent<
+  Observable<RemoteData<PaginatedList<Item>>>
+> {
   /**
    * The parent of the list of related items to display
    */
@@ -62,6 +64,13 @@ export class RelatedItemsComponent extends AbstractIncrementalListComponent<Obse
    * @param page  The page to fetch
    */
   getPage(page: number): Observable<RemoteData<PaginatedList<Item>>> {
-    return this.relationshipService.getRelatedItemsByLabel(this.parentItem, this.relationType, Object.assign(this.options, { elementsPerPage: this.incrementBy, currentPage: page }));
+    return this.relationshipService.getRelatedItemsByLabel(
+      this.parentItem,
+      this.relationType,
+      Object.assign(this.options, {
+        elementsPerPage: this.incrementBy,
+        currentPage: page,
+      })
+    );
   }
 }

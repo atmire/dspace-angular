@@ -14,7 +14,10 @@ import { MenuServiceStub } from '../shared/testing/menu-service.stub';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BrowseService } from '../core/browse/browse.service';
-import { createSuccessfulRemoteDataObject, createSuccessfulRemoteDataObject$ } from '../shared/remote-data.utils';
+import {
+  createSuccessfulRemoteDataObject,
+  createSuccessfulRemoteDataObject$,
+} from '../shared/remote-data.utils';
 import { buildPaginatedList } from '../core/data/paginated-list.model';
 import { BrowseDefinition } from '../core/shared/browse-definition.model';
 import { BrowseByDataType } from '../browse-by/browse-by-switcher/browse-by-decorator';
@@ -25,7 +28,7 @@ let comp: NavbarComponent;
 let fixture: ComponentFixture<NavbarComponent>;
 
 const authorizationService = jasmine.createSpyObj('authorizationService', {
-  isAuthorized: observableOf(true)
+  isAuthorized: observableOf(true),
 });
 
 const mockItem = Object.assign(new Item(), {
@@ -35,19 +38,17 @@ const mockItem = Object.assign(new Item(), {
   lastModified: '2018',
   _links: {
     self: {
-      href: 'https://localhost:8000/items/fake-id'
-    }
-  }
+      href: 'https://localhost:8000/items/fake-id',
+    },
+  },
 });
 
 const routeStub = {
   data: observableOf({
-    dso: createSuccessfulRemoteDataObject(mockItem)
+    dso: createSuccessfulRemoteDataObject(mockItem),
   }),
-  children: []
+  children: [],
 };
-
-
 
 describe('NavbarComponent', () => {
   const menuService = new MenuServiceStub();
@@ -55,31 +56,23 @@ describe('NavbarComponent', () => {
   // waitForAsync beforeEach
   beforeEach(waitForAsync(() => {
     browseDefinitions = [
-      Object.assign(
-        new BrowseDefinition(), {
-          id: 'title',
-          dataType: BrowseByDataType.Title,
-        }
-      ),
-      Object.assign(
-        new BrowseDefinition(), {
-          id: 'dateissued',
-          dataType: BrowseByDataType.Date,
-          metadataKeys: ['dc.date.issued']
-        }
-      ),
-      Object.assign(
-        new BrowseDefinition(), {
-          id: 'author',
-          dataType: BrowseByDataType.Metadata,
-        }
-      ),
-      Object.assign(
-        new BrowseDefinition(), {
-          id: 'subject',
-          dataType: BrowseByDataType.Metadata,
-        }
-      ),
+      Object.assign(new BrowseDefinition(), {
+        id: 'title',
+        dataType: BrowseByDataType.Title,
+      }),
+      Object.assign(new BrowseDefinition(), {
+        id: 'dateissued',
+        dataType: BrowseByDataType.Date,
+        metadataKeys: ['dc.date.issued'],
+      }),
+      Object.assign(new BrowseDefinition(), {
+        id: 'author',
+        dataType: BrowseByDataType.Metadata,
+      }),
+      Object.assign(new BrowseDefinition(), {
+        id: 'subject',
+        dataType: BrowseByDataType.Metadata,
+      }),
     ];
 
     TestBed.configureTestingModule({
@@ -87,33 +80,39 @@ describe('NavbarComponent', () => {
         TranslateModule.forRoot(),
         NoopAnimationsModule,
         ReactiveFormsModule,
-        RouterTestingModule],
+        RouterTestingModule,
+      ],
       declarations: [NavbarComponent],
       providers: [
         Injector,
         { provide: MenuService, useValue: menuService },
-        { provide: HostWindowService, useValue: new HostWindowServiceStub(800) },
+        {
+          provide: HostWindowService,
+          useValue: new HostWindowServiceStub(800),
+        },
         { provide: ActivatedRoute, useValue: routeStub },
-        { provide: BrowseService, useValue: { getBrowseDefinitions: createSuccessfulRemoteDataObject$(buildPaginatedList(undefined, browseDefinitions)) } },
+        {
+          provide: BrowseService,
+          useValue: {
+            getBrowseDefinitions: createSuccessfulRemoteDataObject$(
+              buildPaginatedList(undefined, browseDefinitions)
+            ),
+          },
+        },
         { provide: AuthorizationDataService, useValue: authorizationService },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
-      .compileComponents();  // compile template and css
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents(); // compile template and css
   }));
 
   // synchronous beforeEach
   beforeEach(() => {
-
     fixture = TestBed.createComponent(NavbarComponent);
 
     comp = fixture.componentInstance;
-
   });
 
   it('should create', () => {
     expect(comp).toBeTruthy();
   });
-
-
 });

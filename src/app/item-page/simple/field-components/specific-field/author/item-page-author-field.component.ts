@@ -5,7 +5,7 @@ import { ItemPageFieldComponent } from '../item-page-field.component';
 
 @Component({
   selector: 'ds-item-page-author-field',
-  templateUrl: '../item-page-field.component.html'
+  templateUrl: '../item-page-field.component.html',
 })
 /**
  * This component is used for displaying the author (dc.contributor.author, dc.creator and
@@ -15,7 +15,6 @@ import { ItemPageFieldComponent } from '../item-page-field.component';
  * item page. For that use a {@link MetadataRepresentationListComponent} instead.
  */
 export class ItemPageAuthorFieldComponent extends ItemPageFieldComponent {
-
   /**
    * The item to display metadata for
    */
@@ -31,15 +30,10 @@ export class ItemPageAuthorFieldComponent extends ItemPageFieldComponent {
    * Fields (schema.element.qualifier) used to render their values.
    * In this component, we want to display values for metadata 'dc.contributor.author', 'dc.creator' and 'dc.contributor'
    */
-  fields: string[] = [
-    'dc.contributor.author',
-    'dc.creator',
-    'dc.contributor'
-  ];
+  fields: string[] = ['dc.contributor.author', 'dc.creator', 'dc.contributor'];
 
   /**
    * Label i18n key for the rendered metadata
    */
   label = 'item.page.author';
-
 }

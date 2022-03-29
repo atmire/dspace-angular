@@ -10,24 +10,29 @@ import { HostWindowResizeAction } from './shared/host-window.actions';
 
 @Injectable()
 export class StoreEffects {
+  replay = createEffect(
+    () =>
+      this.actions.pipe(
+        ofType(StoreActionTypes.REPLAY),
+        map((replayAction: Action) => {
+          // TODO: should be able to replay all actions before the browser attempts to
+          // replayAction.payload.forEach((action: Action) => {
+          //   this.store.dispatch(action);
+          // });
+          return observableOf({});
+        })
+      ),
+    { dispatch: false }
+  );
 
-   replay = createEffect(() => this.actions.pipe(
-    ofType(StoreActionTypes.REPLAY),
-    map((replayAction: Action) => {
-      // TODO: should be able to replay all actions before the browser attempts to
-      // replayAction.payload.forEach((action: Action) => {
-      //   this.store.dispatch(action);
-      // });
-      return observableOf({});
-    })), { dispatch: false });
+  resize = createEffect(() =>
+    this.actions.pipe(
+      ofType(StoreActionTypes.REPLAY, StoreActionTypes.REHYDRATE),
+      map(
+        () => new HostWindowResizeAction(window.innerWidth, window.innerHeight)
+      )
+    )
+  );
 
-   resize = createEffect(() => this.actions.pipe(
-    ofType(StoreActionTypes.REPLAY, StoreActionTypes.REHYDRATE),
-    map(() => new HostWindowResizeAction(window.innerWidth, window.innerHeight))
-  ));
-
-  constructor(private actions: Actions, private store: Store<AppState>) {
-
-  }
-
+  constructor(private actions: Actions, private store: Store<AppState>) {}
 }

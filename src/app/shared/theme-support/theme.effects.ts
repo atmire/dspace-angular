@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
-import { createEffect, Actions, ofType, ROOT_EFFECTS_INIT } from '@ngrx/effects';
+import {
+  createEffect,
+  Actions,
+  ofType,
+  ROOT_EFFECTS_INIT,
+} from '@ngrx/effects';
 import { map } from 'rxjs/operators';
 import { SetThemeAction } from './theme.actions';
 import { hasValue } from '../empty.util';
@@ -25,8 +30,5 @@ export class ThemeEffects {
     )
   );
 
-  constructor(
-    private actions$: Actions,
-  ) {
-  }
+  constructor(private actions$: Actions) {}
 }

@@ -7,10 +7,10 @@ export enum NotificationAnimationsType {
   FromBottom = 'fromBottom',
   FromLeft = 'fromLeft',
   Rotate = 'rotate',
-  Scale = 'scale'
+  Scale = 'scale',
 }
 
 export enum NotificationAnimationsStatus {
   In = 'In',
-  Out = 'Out'
+  Out = 'Out',
 }

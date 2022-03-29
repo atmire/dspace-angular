@@ -11,5 +11,4 @@ import { HeaderComponent as BaseComponent } from '../../../../app/header/header.
   // templateUrl: 'header.component.html',
   templateUrl: '../../../../app/header/header.component.html',
 })
-export class HeaderComponent extends BaseComponent {
-}
+export class HeaderComponent extends BaseComponent {}

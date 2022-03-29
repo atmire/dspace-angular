@@ -10,7 +10,7 @@ import { PaginationService } from '../../core/pagination/pagination.service';
  */
 @Component({
   selector: 'ds-start-with-abstract',
-  template: ''
+  template: '',
 })
 export abstract class StartsWithAbstractComponent implements OnInit, OnDestroy {
   /**
@@ -28,12 +28,13 @@ export abstract class StartsWithAbstractComponent implements OnInit, OnDestroy {
    */
   subs: Subscription[] = [];
 
-  public constructor(@Inject('startsWithOptions') public startsWithOptions: any[],
-                     @Inject('paginationId') public paginationId: string,
-                     protected paginationService: PaginationService,
-                     protected route: ActivatedRoute,
-                     protected router: Router) {
-  }
+  public constructor(
+    @Inject('startsWithOptions') public startsWithOptions: any[],
+    @Inject('paginationId') public paginationId: string,
+    protected paginationService: PaginationService,
+    protected route: ActivatedRoute,
+    protected router: Router
+  ) {}
 
   ngOnInit(): void {
     this.subs.push(
@@ -44,7 +45,7 @@ export abstract class StartsWithAbstractComponent implements OnInit, OnDestroy {
       })
     );
     this.formData = new FormGroup({
-      startsWith: new FormControl()
+      startsWith: new FormControl(),
     });
   }
 
@@ -82,7 +83,7 @@ export abstract class StartsWithAbstractComponent implements OnInit, OnDestroy {
     }
     this.router.navigate([], {
       queryParams: Object.assign({ startsWith: this.startsWith }),
-      queryParamsHandling: 'merge'
+      queryParamsHandling: 'merge',
     });
   }
 
@@ -96,6 +97,8 @@ export abstract class StartsWithAbstractComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subs.filter((sub) => hasValue(sub)).forEach((sub) => sub.unsubscribe());
+    this.subs
+      .filter((sub) => hasValue(sub))
+      .forEach((sub) => sub.unsubscribe());
   }
 }

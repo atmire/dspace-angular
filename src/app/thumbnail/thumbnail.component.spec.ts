@@ -7,7 +7,9 @@ import { SafeUrlPipe } from '../shared/utils/safe-url-pipe';
 import { ThumbnailComponent } from './thumbnail.component';
 import { RemoteData } from '../core/data/remote-data';
 import {
-  createFailedRemoteDataObject, createPendingRemoteDataObject, createSuccessfulRemoteDataObject,
+  createFailedRemoteDataObject,
+  createPendingRemoteDataObject,
+  createSuccessfulRemoteDataObject,
 } from '../shared/remote-data.utils';
 
 // eslint-disable-next-line @angular-eslint/pipe-prefix
@@ -63,7 +65,9 @@ describe('ThumbnailComponent', () => {
 
         comp.ngOnChanges();
         fixture.detectChanges();
-        const placeholder = fixture.debugElement.query(By.css('div.thumbnail-placeholder')).nativeElement;
+        const placeholder = fixture.debugElement.query(
+          By.css('div.thumbnail-placeholder')
+        ).nativeElement;
         expect(placeholder.innerHTML).toBe('TRANSLATED ' + comp.placeholder);
       });
     });
@@ -87,7 +91,9 @@ describe('ThumbnailComponent', () => {
       comp.ngOnChanges();
       fixture.detectChanges();
       const image: HTMLElement = de.query(By.css('img')).nativeElement;
-      expect(image.getAttribute('src')).toBe(comp.thumbnail._links.content.href);
+      expect(image.getAttribute('src')).toBe(
+        comp.thumbnail._links.content.href
+      );
     });
 
     it('should include the alt text', () => {
@@ -137,7 +143,9 @@ describe('ThumbnailComponent', () => {
         comp.ngOnChanges();
         fixture.detectChanges();
         const image: HTMLElement = de.query(By.css('img')).nativeElement;
-        expect(image.getAttribute('src')).toBe(comp.thumbnail.payload._links.content.href);
+        expect(image.getAttribute('src')).toBe(
+          comp.thumbnail.payload._links.content.href
+        );
       });
 
       it('should display the alt text', () => {

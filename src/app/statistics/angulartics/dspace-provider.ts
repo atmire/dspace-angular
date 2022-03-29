@@ -5,14 +5,12 @@ import { StatisticsService } from '../statistics.service';
 /**
  * Angulartics2DSpace is a angulartics2 plugin that provides DSpace with the events.
  */
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class Angulartics2DSpace {
-
   constructor(
     private angulartics2: Angulartics2,
-    private statisticsService: StatisticsService,
-  ) {
-  }
+    private statisticsService: StatisticsService
+  ) {}
 
   /**
    * Activates this plugin

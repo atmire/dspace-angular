@@ -5,12 +5,11 @@ import { AppState } from '../../app.reducer';
 
 @Injectable()
 export class NotificationsEffects {
-
   /**
    * Authenticate user.
    * @method authenticate
    */
- /* @Effect()
+  /* @Effect()
   public timer: Observable<Action> = this.actions$
     .pipe(ofType(NotificationsActionTypes.NEW_NOTIFICATION_WITH_TIMER),
     // .debounceTime((action: any) => action.payload.options.timeOut)
@@ -26,7 +25,5 @@ export class NotificationsEffects {
    * @param {Actions} actions$
    * @param {Store} store
    */
-  constructor(private actions$: Actions,
-              private store: Store<AppState>) {
-  }
+  constructor(private actions$: Actions, private store: Store<AppState>) {}
 }

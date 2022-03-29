@@ -1,5 +1,10 @@
 import { ChangeDetectorRef, Component, NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, inject, TestBed, waitForAsync } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  inject,
+  TestBed,
+  waitForAsync,
+} from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -28,11 +33,10 @@ import { getMockEntityTypeService } from './my-dspace-new-submission-dropdown/my
 import { EntityTypeService } from '../../core/data/entity-type.service';
 
 describe('MyDSpaceNewSubmissionComponent test', () => {
-
   const uploader: any = jasmine.createSpyObj('uploader', {
     clearQueue: jasmine.createSpy('clearQueue').and.stub(),
     onBuildItemForm: jasmine.createSpy('onBuildItemForm').and.stub(),
-    uploadAll: jasmine.createSpy('uploadAll').and.stub()
+    uploadAll: jasmine.createSpy('uploadAll').and.stub(),
   });
 
   beforeEach(waitForAsync(() => {
@@ -41,31 +45,40 @@ describe('MyDSpaceNewSubmissionComponent test', () => {
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
-            useClass: TranslateLoaderMock
-          }
+            useClass: TranslateLoaderMock,
+          },
         }),
         NgbModule,
-        RouterTestingModule
+        RouterTestingModule,
       ],
-      declarations: [
-        MyDSpaceNewSubmissionComponent,
-        TestComponent
-      ],
+      declarations: [MyDSpaceNewSubmissionComponent, TestComponent],
       providers: [
         { provide: AuthService, useClass: AuthServiceStub },
-        { provide: HALEndpointService, useValue: new HALEndpointServiceStub('workspaceitems') },
-        { provide: NotificationsService, useValue: new NotificationsServiceStub() },
+        {
+          provide: HALEndpointService,
+          useValue: new HALEndpointServiceStub('workspaceitems'),
+        },
+        {
+          provide: NotificationsService,
+          useValue: new NotificationsServiceStub(),
+        },
         { provide: ScrollToService, useValue: getMockScrollToService() },
         NgbModal,
         ChangeDetectorRef,
         MyDSpaceNewSubmissionComponent,
         UploaderService,
-        { provide: HttpXsrfTokenExtractor, useValue: new HttpXsrfTokenExtractorMock('mock-token') },
+        {
+          provide: HttpXsrfTokenExtractor,
+          useValue: new HttpXsrfTokenExtractorMock('mock-token'),
+        },
         { provide: CookieService, useValue: new CookieServiceMock() },
-        { provide: HostWindowService, useValue: new HostWindowServiceStub(800) },
+        {
+          provide: HostWindowService,
+          useValue: new HostWindowServiceStub(800),
+        },
         { provide: EntityTypeService, useValue: getMockEntityTypeService() },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -78,7 +91,10 @@ describe('MyDSpaceNewSubmissionComponent test', () => {
       const html = `
         <ds-my-dspace-new-submission (uploadEnd)="reload($event)"></ds-my-dspace-new-submission>`;
 
-      testFixture = createTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
+      testFixture = createTestComponent(
+        html,
+        TestComponent
+      ) as ComponentFixture<TestComponent>;
       testComp = testFixture.componentInstance;
     });
 
@@ -86,11 +102,12 @@ describe('MyDSpaceNewSubmissionComponent test', () => {
       testFixture.destroy();
     });
 
-    it('should create MyDSpaceNewSubmissionComponent', inject([MyDSpaceNewSubmissionComponent], (app: MyDSpaceNewSubmissionComponent) => {
-
-      expect(app).toBeDefined();
-
-    }));
+    it('should create MyDSpaceNewSubmissionComponent', inject(
+      [MyDSpaceNewSubmissionComponent],
+      (app: MyDSpaceNewSubmissionComponent) => {
+        expect(app).toBeDefined();
+      }
+    ));
   });
 
   describe('', () => {
@@ -102,12 +119,17 @@ describe('MyDSpaceNewSubmissionComponent test', () => {
       comp = fixture.componentInstance;
       comp.uploadFilesOptions.authToken = 'user-auth-token';
       comp.uploadFilesOptions.url = 'https://fake.upload-api.url';
-      comp.uploaderComponent = TestBed.createComponent(UploaderComponent).componentInstance;
+      comp.uploaderComponent =
+        TestBed.createComponent(UploaderComponent).componentInstance;
       comp.uploaderComponent.uploader = uploader;
     });
 
     it('should show a collection selector if only one file are uploaded', (done) => {
-      spyOn((comp as any).modalService, 'open').and.returnValue({ result: new Promise((res, rej) => {/****/}) });
+      spyOn((comp as any).modalService, 'open').and.returnValue({
+        result: new Promise((res, rej) => {
+          /****/
+        }),
+      });
       comp.afterFileLoaded(['']);
       expect((comp as any).modalService.open).toHaveBeenCalled();
       done();
@@ -118,10 +140,9 @@ describe('MyDSpaceNewSubmissionComponent test', () => {
 // declare a test component
 @Component({
   selector: 'ds-test-cmp',
-  template: ``
+  template: ``,
 })
 class TestComponent {
-
   reload = (event) => {
     return;
   };

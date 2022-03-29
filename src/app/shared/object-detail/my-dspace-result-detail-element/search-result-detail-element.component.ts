@@ -11,10 +11,15 @@ import { SearchResult } from '../../search/models/search-result.model';
  */
 @Component({
   selector: 'ds-search-result-detail-element',
-  template: ``
+  template: ``,
 })
-export class SearchResultDetailElementComponent<T extends SearchResult<K>, K extends DSpaceObject> extends AbstractListableElementComponent<T> implements OnInit {
-
+export class SearchResultDetailElementComponent<
+    T extends SearchResult<K>,
+    K extends DSpaceObject
+  >
+  extends AbstractListableElementComponent<T>
+  implements OnInit
+{
   /**
    * The result element object
    */
@@ -36,7 +41,10 @@ export class SearchResultDetailElementComponent<T extends SearchResult<K>, K ext
    * @returns {string[]} the matching string values or an empty array.
    */
   allMetadataValues(keyOrKeys: string | string[]): string[] {
-    return Metadata.allValues([this.object.hitHighlights, this.dso.metadata], keyOrKeys);
+    return Metadata.allValues(
+      [this.object.hitHighlights, this.dso.metadata],
+      keyOrKeys
+    );
   }
 
   /**
@@ -46,6 +54,9 @@ export class SearchResultDetailElementComponent<T extends SearchResult<K>, K ext
    * @returns {string} the first matching string value, or `undefined`.
    */
   firstMetadataValue(keyOrKeys: string | string[]): string {
-    return Metadata.firstValue([this.object.hitHighlights, this.dso.metadata], keyOrKeys);
+    return Metadata.firstValue(
+      [this.object.hitHighlights, this.dso.metadata],
+      keyOrKeys
+    );
   }
 }

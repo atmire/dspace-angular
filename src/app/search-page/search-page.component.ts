@@ -8,13 +8,12 @@ import { SearchConfigurationService } from '../core/shared/search/search-configu
   providers: [
     {
       provide: SEARCH_CONFIG_SERVICE,
-      useClass: SearchConfigurationService
-    }
-  ]
+      useClass: SearchConfigurationService,
+    },
+  ],
 })
 /**
  * This component represents the whole search page
  * It renders search results depending on the current search options
  */
-export class SearchPageComponent {
-}
+export class SearchPageComponent {}

@@ -4,7 +4,10 @@ import { DSpaceObject } from '../../../core/shared/dspace-object.model';
 import { GenericConstructor } from '../../../core/shared/generic-constructor';
 import { HALLink } from '../../../core/shared/hal-link.model';
 import { MetadataMap } from '../../../core/shared/metadata.models';
-import { excludeFromEquals, fieldsForEquals } from '../../../core/utilities/equals.decorators';
+import {
+  excludeFromEquals,
+  fieldsForEquals,
+} from '../../../core/utilities/equals.decorators';
 import { ListableObject } from '../../object-collection/shared/listable-object.model';
 import { HALResource } from '../../../core/shared/hal-resource.model';
 import { SEARCH_RESULT } from './types/search-result.resource-type';
@@ -13,7 +16,10 @@ import { SEARCH_RESULT } from './types/search-result.resource-type';
  * Represents a search result object of a certain (<T>) DSpaceObject
  */
 @typedObject
-export class SearchResult<T extends DSpaceObject> extends ListableObject implements HALResource {
+export class SearchResult<T extends DSpaceObject>
+  extends ListableObject
+  implements HALResource
+{
   static type = SEARCH_RESULT;
 
   /**

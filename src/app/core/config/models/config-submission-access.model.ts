@@ -36,7 +36,6 @@ export class SubmissionAccessModel extends ConfigObject {
    */
   @deserialize
   _links: {
-    self: HALLink
+    self: HALLink;
   };
-
 }

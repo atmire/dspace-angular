@@ -3,8 +3,15 @@ import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 import { Observable, of } from 'rxjs';
-import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import {
+  TranslateLoader,
+  TranslateModule,
+  TranslateService,
+} from '@ngx-translate/core';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing';
 
 import { LangSwitchComponent } from './lang-switch.component';
 import { LangConfig } from '../../../config/lang-config.interface';
@@ -20,11 +27,11 @@ import { LocaleService } from '../../core/locale/locale.service';
 class CustomLoader implements TranslateLoader {
   getTranslation(lang: string): Observable<any> {
     return of({
-      'footer': {
-        'copyright': 'copyright © 2002-{{ year }}',
+      footer: {
+        copyright: 'copyright © 2002-{{ year }}',
         'link.dspace': 'DSpace software',
-        'link.lyrasis': 'LYRASIS'
-      }
+        'link.lyrasis': 'LYRASIS',
+      },
     });
   }
 }
@@ -35,11 +42,12 @@ class CustomLoader implements TranslateLoader {
 let localService: any;
 
 describe('LangSwitchComponent', () => {
-
   function getMockLocaleService(): LocaleService {
     return jasmine.createSpyObj('LocaleService', {
       setCurrentLanguageCode: jasmine.createSpy('setCurrentLanguageCode'),
-      refreshAfterChangeLanguage: jasmine.createSpy('refreshAfterChangeLanguage')
+      refreshAfterChangeLanguage: jasmine.createSpy(
+        'refreshAfterChangeLanguage'
+      ),
     });
   }
 
@@ -53,35 +61,43 @@ describe('LangSwitchComponent', () => {
     let http: HttpTestingController;
 
     beforeEach(waitForAsync(() => {
-
       const mockConfig = {
-        languages: [{
-          code: 'en',
-          label: 'English',
-          active: true,
-        }, {
-          code: 'de',
-          label: 'Deutsch',
-          active: true,
-        }]
+        languages: [
+          {
+            code: 'en',
+            label: 'English',
+            active: true,
+          },
+          {
+            code: 'de',
+            label: 'Deutsch',
+            active: true,
+          },
+        ],
       };
 
       TestBed.configureTestingModule({
-        imports: [HttpClientTestingModule, TranslateModule.forRoot(
-          {
-            loader: { provide: TranslateLoader, useClass: CustomLoader }
-          }
-        )],
+        imports: [
+          HttpClientTestingModule,
+          TranslateModule.forRoot({
+            loader: { provide: TranslateLoader, useClass: CustomLoader },
+          }),
+        ],
         declarations: [LangSwitchComponent],
         schemas: [NO_ERRORS_SCHEMA],
         providers: [
           TranslateService,
           { provide: LocaleService, useValue: getMockLocaleService() },
-        ]
-      }).compileComponents()
+        ],
+      })
+        .compileComponents()
         .then(() => {
           translate = TestBed.inject(TranslateService);
-          translate.addLangs(mockConfig.languages.filter((langConfig: LangConfig) => langConfig.active === true).map((a) => a.code));
+          translate.addLangs(
+            mockConfig.languages
+              .filter((langConfig: LangConfig) => langConfig.active === true)
+              .map((a) => a.code)
+          );
           translate.setDefaultLang('en');
           translate.use('en');
           http = TestBed.inject(HttpTestingController);
@@ -108,28 +124,28 @@ describe('LangSwitchComponent', () => {
       expect(component.moreThanOneLanguage).toBeTruthy();
     }));
 
-    it('should define the main A HREF in the UI', (() => {
+    it('should define the main A HREF in the UI', () => {
       expect(langSwitchElement.querySelector('a')).toBeDefined();
-    }));
+    });
 
     describe('when selecting a language', () => {
       beforeEach(() => {
         spyOn(translate, 'use');
-        const langItem = fixture.debugElement.query(By.css('.dropdown-item')).nativeElement;
+        const langItem = fixture.debugElement.query(
+          By.css('.dropdown-item')
+        ).nativeElement;
         langItem.click();
         fixture.detectChanges();
       });
 
-      it('should translate the app and set the client\'s language cookie', () => {
+      it("should translate the app and set the client's language cookie", () => {
         expect(localService.setCurrentLanguageCode).toHaveBeenCalled();
         expect(localService.refreshAfterChangeLanguage).toHaveBeenCalled();
       });
-
     });
   });
 
   describe('with English as the only active and also default language', () => {
-
     let component: LangSwitchComponent;
     let fixture: ComponentFixture<LangSwitchComponent>;
     let de: DebugElement;
@@ -139,34 +155,41 @@ describe('LangSwitchComponent', () => {
     let http: HttpTestingController;
 
     beforeEach(waitForAsync(() => {
-
       const mockConfig = {
-        languages: [{
-          code: 'en',
-          label: 'English',
-          active: true,
-        }, {
-          code: 'de',
-          label: 'Deutsch',
-          active: false
-        }]
+        languages: [
+          {
+            code: 'en',
+            label: 'English',
+            active: true,
+          },
+          {
+            code: 'de',
+            label: 'Deutsch',
+            active: false,
+          },
+        ],
       };
 
       TestBed.configureTestingModule({
-        imports: [HttpClientTestingModule, TranslateModule.forRoot(
-          {
-            loader: { provide: TranslateLoader, useClass: CustomLoader }
-          }
-        )],
+        imports: [
+          HttpClientTestingModule,
+          TranslateModule.forRoot({
+            loader: { provide: TranslateLoader, useClass: CustomLoader },
+          }),
+        ],
         declarations: [LangSwitchComponent],
         schemas: [NO_ERRORS_SCHEMA],
         providers: [
           TranslateService,
-          { provide: LocaleService, useValue: getMockLocaleService() }
-        ]
+          { provide: LocaleService, useValue: getMockLocaleService() },
+        ],
       }).compileComponents();
       translate = TestBed.inject(TranslateService);
-      translate.addLangs(mockConfig.languages.filter((MyLangConfig) => MyLangConfig.active === true).map((a) => a.code));
+      translate.addLangs(
+        mockConfig.languages
+          .filter((MyLangConfig) => MyLangConfig.active === true)
+          .map((a) => a.code)
+      );
       translate.setDefaultLang('en');
       translate.use('en');
       http = TestBed.inject(HttpTestingController);
@@ -183,10 +206,8 @@ describe('LangSwitchComponent', () => {
       expect(component).toBeDefined();
     });
 
-    it('should not define the main header for the language switch, as it should be invisible', (() => {
+    it('should not define the main header for the language switch, as it should be invisible', () => {
       expect(langSwitchElement.querySelector('a')).toBeNull();
-    }));
-
+    });
   });
-
 });

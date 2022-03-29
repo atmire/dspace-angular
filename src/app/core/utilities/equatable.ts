@@ -1,4 +1,7 @@
-import { getExcludedFromEqualsFor, getFieldsForEquals } from './equals.decorators';
+import {
+  getExcludedFromEqualsFor,
+  getFieldsForEquals,
+} from './equals.decorators';
 import { hasNoValue, hasValue } from '../../shared/empty.util';
 
 /**
@@ -42,7 +45,7 @@ export abstract class EquatableObject<T> {
     if (hasNoValue(other)) {
       return false;
     }
-    if (this as any === other) {
+    if ((this as any) === other) {
       return true;
     }
     const excludedKeys = getExcludedFromEqualsFor(this.constructor);

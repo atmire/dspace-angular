@@ -12,12 +12,10 @@ import { isAuthenticationBlocking } from './selectors';
  * To ensure all rest requests get the correct auth header.
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthBlockingGuard implements CanActivate {
-
-  constructor(private store: Store<AppState>) {
-  }
+  constructor(private store: Store<AppState>) {}
 
   /**
    * True when the authentication isn't blocking everything
@@ -27,8 +25,7 @@ export class AuthBlockingGuard implements CanActivate {
       map((isBlocking: boolean) => isBlocking === false),
       distinctUntilChanged(),
       filter((finished: boolean) => finished === true),
-      take(1),
+      take(1)
     );
   }
-
 }

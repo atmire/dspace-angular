@@ -1,5 +1,15 @@
-import { ComponentFixture, inject, TestBed, waitForAsync } from '@angular/core/testing';
-import { ChangeDetectorRef, Component, Injector, NO_ERRORS_SCHEMA } from '@angular/core';
+import {
+  ComponentFixture,
+  inject,
+  TestBed,
+  waitForAsync,
+} from '@angular/core/testing';
+import {
+  ChangeDetectorRef,
+  Component,
+  Injector,
+  NO_ERRORS_SCHEMA,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { cold, getTestScheduler } from 'jasmine-marbles';
@@ -10,9 +20,12 @@ import { TranslateModule } from '@ngx-translate/core';
 import {
   createFailedRemoteDataObject,
   createSuccessfulRemoteDataObject,
-  createSuccessfulRemoteDataObject$
+  createSuccessfulRemoteDataObject$,
 } from '../../remote-data.utils';
-import { createPaginatedList, createTestComponent } from '../../testing/utils.test';
+import {
+  createPaginatedList,
+  createTestComponent,
+} from '../../testing/utils.test';
 import { ResourcePolicyCreateComponent } from './resource-policy-create.component';
 import { LinkService } from '../../../core/cache/builders/link.service';
 import { NotificationsService } from '../../notifications/notifications.service';
@@ -49,66 +62,64 @@ describe('ResourcePolicyCreateComponent test suite', () => {
     uuid: 'resource-policy-1',
     _links: {
       eperson: {
-        href: 'https://rest.api/rest/api/eperson'
+        href: 'https://rest.api/rest/api/eperson',
       },
       group: {
-        href: 'https://rest.api/rest/api/group'
+        href: 'https://rest.api/rest/api/group',
       },
       self: {
-        href: 'https://rest.api/rest/api/resourcepolicies/1'
+        href: 'https://rest.api/rest/api/resourcepolicies/1',
       },
     },
     eperson: observableOf(createSuccessfulRemoteDataObject({})),
-    group: observableOf(createSuccessfulRemoteDataObject(GroupMock))
+    group: observableOf(createSuccessfulRemoteDataObject(GroupMock)),
   };
 
   const item = Object.assign(new Item(), {
     uuid: 'itemUUID',
     id: 'itemUUID',
     metadata: {
-      'dc.title': [{
-        value: 'test item'
-      }]
+      'dc.title': [
+        {
+          value: 'test item',
+        },
+      ],
     },
     _links: {
-      self: { href: 'item-selflink' }
+      self: { href: 'item-selflink' },
     },
-    bundles: createSuccessfulRemoteDataObject$(createPaginatedList([]))
+    bundles: createSuccessfulRemoteDataObject$(createPaginatedList([])),
   });
 
   const resourcePolicyService: any = getMockResourcePolicyService();
   const linkService: any = getMockLinkService();
   const routeStub = {
     data: observableOf({
-      resourcePolicyTarget: createSuccessfulRemoteDataObject(item)
-    })
+      resourcePolicyTarget: createSuccessfulRemoteDataObject(item),
+    }),
   };
   const routerStub = Object.assign(new RouterStub(), {
-    url: `url/edit`
+    url: `url/edit`,
   });
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        TranslateModule.forRoot()
-      ],
-      declarations: [
-        ResourcePolicyCreateComponent,
-        TestComponent
-      ],
+      imports: [TranslateModule.forRoot()],
+      declarations: [ResourcePolicyCreateComponent, TestComponent],
       providers: [
         { provide: LinkService, useValue: linkService },
         { provide: ActivatedRoute, useValue: routeStub },
-        { provide: NotificationsService, useValue: new NotificationsServiceStub() },
+        {
+          provide: NotificationsService,
+          useValue: new NotificationsServiceStub(),
+        },
         { provide: ResourcePolicyService, useValue: resourcePolicyService },
         { provide: Router, useValue: routerStub },
         ResourcePolicyCreateComponent,
         ChangeDetectorRef,
-        Injector
+        Injector,
       ],
-      schemas: [
-        NO_ERRORS_SCHEMA
-      ]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -121,7 +132,10 @@ describe('ResourcePolicyCreateComponent test suite', () => {
       const html = `
         <ds-resource-policy-create></ds-resource-policy-create>`;
 
-      testFixture = createTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
+      testFixture = createTestComponent(
+        html,
+        TestComponent
+      ) as ComponentFixture<TestComponent>;
       testComp = testFixture.componentInstance;
     });
 
@@ -129,15 +143,15 @@ describe('ResourcePolicyCreateComponent test suite', () => {
       testFixture.destroy();
     });
 
-    it('should create ResourcePolicyCreateComponent', inject([ResourcePolicyCreateComponent], (app: ResourcePolicyCreateComponent) => {
-
-      expect(app).toBeDefined();
-
-    }));
+    it('should create ResourcePolicyCreateComponent', inject(
+      [ResourcePolicyCreateComponent],
+      (app: ResourcePolicyCreateComponent) => {
+        expect(app).toBeDefined();
+      }
+    ));
   });
 
   describe('', () => {
-
     beforeEach(() => {
       // initTestScheduler();
       fixture = TestBed.createComponent(ResourcePolicyCreateComponent);
@@ -167,17 +181,21 @@ describe('ResourcePolicyCreateComponent test suite', () => {
 
     it('should return true when is Processing', (done) => {
       compAsAny.processing$.next(true);
-      expect(comp.isProcessing()).toBeObservable(cold('a', {
-        a: true
-      }));
+      expect(comp.isProcessing()).toBeObservable(
+        cold('a', {
+          a: true,
+        })
+      );
       done();
     });
 
     it('should return false when is not Processing', (done) => {
       compAsAny.processing$.next(false);
-      expect(comp.isProcessing()).toBeObservable(cold('a', {
-        a: false
-      }));
+      expect(comp.isProcessing()).toBeObservable(
+        cold('a', {
+          a: false,
+        })
+      );
       done();
     });
 
@@ -191,35 +209,48 @@ describe('ResourcePolicyCreateComponent test suite', () => {
         eventPayload.object = submittedResourcePolicy;
         eventPayload.target = {
           type: 'group',
-          uuid: GroupMock.id
+          uuid: GroupMock.id,
         };
       });
 
       it('should notify success when creation is successful', () => {
-        compAsAny.resourcePolicyService.create.and.returnValue(observableOf(createSuccessfulRemoteDataObject(resourcePolicy)));
+        compAsAny.resourcePolicyService.create.and.returnValue(
+          observableOf(createSuccessfulRemoteDataObject(resourcePolicy))
+        );
 
         scheduler = getTestScheduler();
         scheduler.schedule(() => comp.createResourcePolicy(eventPayload));
         scheduler.flush();
 
-        expect(compAsAny.resourcePolicyService.create).toHaveBeenCalledWith(eventPayload.object, 'itemUUID', null, eventPayload.target.uuid);
+        expect(compAsAny.resourcePolicyService.create).toHaveBeenCalledWith(
+          eventPayload.object,
+          'itemUUID',
+          null,
+          eventPayload.target.uuid
+        );
         expect(comp.redirectToAuthorizationsPage).toHaveBeenCalled();
       });
 
       it('should notify error when creation is not successful', () => {
-        compAsAny.resourcePolicyService.create.and.returnValue(observableOf(createFailedRemoteDataObject()));
+        compAsAny.resourcePolicyService.create.and.returnValue(
+          observableOf(createFailedRemoteDataObject())
+        );
 
         scheduler = getTestScheduler();
         scheduler.schedule(() => comp.createResourcePolicy(eventPayload));
         scheduler.flush();
 
-        expect(compAsAny.resourcePolicyService.create).toHaveBeenCalledWith(eventPayload.object, 'itemUUID', null, eventPayload.target.uuid);
+        expect(compAsAny.resourcePolicyService.create).toHaveBeenCalledWith(
+          eventPayload.object,
+          'itemUUID',
+          null,
+          eventPayload.target.uuid
+        );
         expect(comp.redirectToAuthorizationsPage).not.toHaveBeenCalled();
       });
     });
 
     describe('when target type of created policy is eperson', () => {
-
       beforeEach(() => {
         spyOn(comp, 'redirectToAuthorizationsPage').and.callThrough();
 
@@ -229,41 +260,50 @@ describe('ResourcePolicyCreateComponent test suite', () => {
         eventPayload.object = submittedResourcePolicy;
         eventPayload.target = {
           type: 'eperson',
-          uuid: EPersonMock.id
+          uuid: EPersonMock.id,
         };
       });
 
       it('should notify success when creation is successful', () => {
-        compAsAny.resourcePolicyService.create.and.returnValue(observableOf(createSuccessfulRemoteDataObject(resourcePolicy)));
+        compAsAny.resourcePolicyService.create.and.returnValue(
+          observableOf(createSuccessfulRemoteDataObject(resourcePolicy))
+        );
 
         scheduler = getTestScheduler();
         scheduler.schedule(() => comp.createResourcePolicy(eventPayload));
         scheduler.flush();
 
-        expect(compAsAny.resourcePolicyService.create).toHaveBeenCalledWith(eventPayload.object, 'itemUUID', eventPayload.target.uuid);
+        expect(compAsAny.resourcePolicyService.create).toHaveBeenCalledWith(
+          eventPayload.object,
+          'itemUUID',
+          eventPayload.target.uuid
+        );
         expect(comp.redirectToAuthorizationsPage).toHaveBeenCalled();
       });
 
       it('should notify error when creation is not successful', () => {
-        compAsAny.resourcePolicyService.create.and.returnValue(observableOf(createFailedRemoteDataObject()));
+        compAsAny.resourcePolicyService.create.and.returnValue(
+          observableOf(createFailedRemoteDataObject())
+        );
 
         scheduler = getTestScheduler();
         scheduler.schedule(() => comp.createResourcePolicy(eventPayload));
         scheduler.flush();
 
-        expect(compAsAny.resourcePolicyService.create).toHaveBeenCalledWith(eventPayload.object, 'itemUUID', eventPayload.target.uuid);
+        expect(compAsAny.resourcePolicyService.create).toHaveBeenCalledWith(
+          eventPayload.object,
+          'itemUUID',
+          eventPayload.target.uuid
+        );
         expect(comp.redirectToAuthorizationsPage).not.toHaveBeenCalled();
       });
     });
   });
-
 });
 
 // declare a test component
 @Component({
   selector: 'ds-test-cmp',
-  template: ``
+  template: ``,
 })
-class TestComponent {
-
-}
+class TestComponent {}

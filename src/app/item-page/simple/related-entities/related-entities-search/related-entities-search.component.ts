@@ -5,7 +5,7 @@ import { getFilterByRelation } from '../../../../shared/utils/relation-query.uti
 
 @Component({
   selector: 'ds-related-entities-search',
-  templateUrl: './related-entities-search.component.html'
+  templateUrl: './related-entities-search.component.html',
 })
 /**
  * A component to show related items as search results.
@@ -13,7 +13,6 @@ import { getFilterByRelation } from '../../../../shared/utils/relation-query.uti
  * optional search box.
  */
 export class RelatedEntitiesSearchComponent implements OnInit {
-
   /**
    * The type of relationship to fetch items for
    * e.g. 'isAuthorOfPublication'
@@ -49,5 +48,4 @@ export class RelatedEntitiesSearchComponent implements OnInit {
       this.fixedFilter = getFilterByRelation(this.relationType, this.item.id);
     }
   }
-
 }

@@ -75,10 +75,10 @@ export class Process implements CacheableObject {
    */
   @deserialize
   _links: {
-    self: HALLink,
-    script: HALLink,
-    output: HALLink,
-    files: HALLink
+    self: HALLink;
+    script: HALLink;
+    output: HALLink;
+    files: HALLink;
   };
 
   /**

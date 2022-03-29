@@ -1,6 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { take } from 'rxjs/operators';
-import { SortDirection, SortOptions } from '../../core/cache/models/sort-options.model';
+import {
+  SortDirection,
+  SortOptions,
+} from '../../core/cache/models/sort-options.model';
 import { FindListOptions } from '../../core/data/request.models';
 import { CommunityListService, FlatNode } from '../community-list-service';
 import { CommunityListDatasource } from '../community-list-datasource';
@@ -19,12 +22,12 @@ import { isEmpty } from '../../shared/empty.util';
   templateUrl: './community-list.component.html',
 })
 export class CommunityListComponent implements OnInit, OnDestroy {
-
   private expandedNodes: FlatNode[] = [];
   public loadingNode: FlatNode;
 
   treeControl = new FlatTreeControl<FlatNode>(
-    (node: FlatNode) => node.level, (node: FlatNode) => true
+    (node: FlatNode) => node.level,
+    (node: FlatNode) => true
   );
 
   dataSource: CommunityListDatasource;
@@ -40,17 +43,29 @@ export class CommunityListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.dataSource = new CommunityListDatasource(this.communityListService);
-    this.communityListService.getLoadingNodeFromStore().pipe(take(1)).subscribe((result) => {
-      this.loadingNode = result;
-    });
-    this.communityListService.getExpandedNodesFromStore().pipe(take(1)).subscribe((result) => {
-      this.expandedNodes = [...result];
-      this.dataSource.loadCommunities(this.paginationConfig, this.expandedNodes);
-    });
+    this.communityListService
+      .getLoadingNodeFromStore()
+      .pipe(take(1))
+      .subscribe((result) => {
+        this.loadingNode = result;
+      });
+    this.communityListService
+      .getExpandedNodesFromStore()
+      .pipe(take(1))
+      .subscribe((result) => {
+        this.expandedNodes = [...result];
+        this.dataSource.loadCommunities(
+          this.paginationConfig,
+          this.expandedNodes
+        );
+      });
   }
 
   ngOnDestroy(): void {
-    this.communityListService.saveCommunityListStateToStore(this.expandedNodes, this.loadingNode);
+    this.communityListService.saveCommunityListStateToStore(
+      this.expandedNodes,
+      this.loadingNode
+    );
   }
 
   // whether or not this node has children (subcommunities or collections)
@@ -70,7 +85,9 @@ export class CommunityListComponent implements OnInit, OnDestroy {
   toggleExpanded(node: FlatNode) {
     this.loadingNode = node;
     if (node.isExpanded) {
-      this.expandedNodes = this.expandedNodes.filter((node2) => node2.name !== node.name);
+      this.expandedNodes = this.expandedNodes.filter(
+        (node2) => node2.name !== node.name
+      );
       node.isExpanded = false;
     } else {
       this.expandedNodes.push(node);
@@ -95,18 +112,27 @@ export class CommunityListComponent implements OnInit, OnDestroy {
     this.loadingNode = node;
     if (node.parent != null) {
       if (node.id === 'collection') {
-        const parentNodeInExpandedNodes = this.expandedNodes.find((node2: FlatNode) => node.parent.id === node2.id);
+        const parentNodeInExpandedNodes = this.expandedNodes.find(
+          (node2: FlatNode) => node.parent.id === node2.id
+        );
         parentNodeInExpandedNodes.currentCollectionPage++;
       }
       if (node.id === 'community') {
-        const parentNodeInExpandedNodes = this.expandedNodes.find((node2: FlatNode) => node.parent.id === node2.id);
+        const parentNodeInExpandedNodes = this.expandedNodes.find(
+          (node2: FlatNode) => node.parent.id === node2.id
+        );
         parentNodeInExpandedNodes.currentCommunityPage++;
       }
-      this.dataSource.loadCommunities(this.paginationConfig, this.expandedNodes);
+      this.dataSource.loadCommunities(
+        this.paginationConfig,
+        this.expandedNodes
+      );
     } else {
       this.paginationConfig.currentPage++;
-      this.dataSource.loadCommunities(this.paginationConfig, this.expandedNodes);
+      this.dataSource.loadCommunities(
+        this.paginationConfig,
+        this.expandedNodes
+      );
     }
   }
-
 }

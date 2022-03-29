@@ -17,9 +17,11 @@ import { Collection } from '../../../../core/shared/collection.model';
  */
 @Component({
   selector: 'ds-delete-comcol',
-  template: ''
+  template: '',
 })
-export class DeleteComColPageComponent<TDomain extends Community | Collection> implements OnInit {
+export class DeleteComColPageComponent<TDomain extends Community | Collection>
+  implements OnInit
+{
   /**
    * Frontend endpoint for this type of DSO
    */
@@ -33,7 +35,9 @@ export class DeleteComColPageComponent<TDomain extends Community | Collection> i
    * A boolean representing if a delete operation is pending
    * @type {BehaviorSubject<boolean>}
    */
-  public processing$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public processing$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
 
   public constructor(
     protected dsoDataService: ComColDataService<TDomain>,
@@ -42,11 +46,13 @@ export class DeleteComColPageComponent<TDomain extends Community | Collection> i
     protected notifications: NotificationsService,
     protected translate: TranslateService,
     protected requestService: RequestService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.dsoRD$ = this.route.data.pipe(first(), map((data) => data.dso));
+    this.dsoRD$ = this.route.data.pipe(
+      first(),
+      map((data) => data.dso)
+    );
   }
 
   /**
@@ -55,15 +61,20 @@ export class DeleteComColPageComponent<TDomain extends Community | Collection> i
    */
   onConfirm(dso: TDomain) {
     this.processing$.next(true);
-    this.dsoDataService.delete(dso.id)
+    this.dsoDataService
+      .delete(dso.id)
       .pipe(getFirstCompletedRemoteData())
       .subscribe((response: RemoteData<NoContent>) => {
         if (response.hasSucceeded) {
-          const successMessage = this.translate.instant((dso as any).type + '.delete.notification.success');
+          const successMessage = this.translate.instant(
+            (dso as any).type + '.delete.notification.success'
+          );
           this.notifications.success(successMessage);
           this.dsoDataService.refreshCache(dso);
         } else {
-          const errorMessage = this.translate.instant((dso as any).type + '.delete.notification.fail');
+          const errorMessage = this.translate.instant(
+            (dso as any).type + '.delete.notification.fail'
+          );
           this.notifications.error(errorMessage);
         }
         this.router.navigate(['/']);

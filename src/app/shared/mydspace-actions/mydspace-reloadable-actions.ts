@@ -23,11 +23,15 @@ import { MyDSpaceActionsComponent } from './mydspace-actions';
  */
 @Component({
   selector: 'ds-mydspace-reloadable-actions',
-  template: ''
+  template: '',
 })
-export abstract class MyDSpaceReloadableActionsComponent<T extends DSpaceObject, TService extends DataService<T>>
-  extends MyDSpaceActionsComponent<T, TService> implements OnInit {
-
+export abstract class MyDSpaceReloadableActionsComponent<
+    T extends DSpaceObject,
+    TService extends DataService<T>
+  >
+  extends MyDSpaceActionsComponent<T, TService>
+  implements OnInit
+{
   protected constructor(
     protected objectType: ResourceType,
     protected injector: Injector,
@@ -35,8 +39,17 @@ export abstract class MyDSpaceReloadableActionsComponent<T extends DSpaceObject,
     protected notificationsService: NotificationsService,
     protected translate: TranslateService,
     protected searchService: SearchService,
-    protected requestService: RequestService) {
-    super(objectType, injector, router, notificationsService, translate, searchService, requestService);
+    protected requestService: RequestService
+  ) {
+    super(
+      objectType,
+      injector,
+      router,
+      notificationsService,
+      translate,
+      searchService,
+      requestService
+    );
   }
 
   /**
@@ -47,7 +60,9 @@ export abstract class MyDSpaceReloadableActionsComponent<T extends DSpaceObject,
   /**
    * Reload the object (typically by a remote call).
    */
-  abstract reloadObjectExecution(): Observable<RemoteData<DSpaceObject> | DSpaceObject>;
+  abstract reloadObjectExecution(): Observable<
+    RemoteData<DSpaceObject> | DSpaceObject
+  >;
 
   ngOnInit() {
     this.initReloadAnchor();
@@ -67,18 +82,21 @@ export abstract class MyDSpaceReloadableActionsComponent<T extends DSpaceObject,
       switchMap((res: ProcessTaskResponse) => {
         if (res.hasSucceeded) {
           return this._reloadObject().pipe(
-            tap(
-              (reloadedObject) => {
-                this.processing$.next(false);
-                this.handleReloadableActionResponse(res.hasSucceeded, reloadedObject);
-              })
+            tap((reloadedObject) => {
+              this.processing$.next(false);
+              this.handleReloadableActionResponse(
+                res.hasSucceeded,
+                reloadedObject
+              );
+            })
           );
         } else {
           this.processing$.next(false);
           this.handleReloadableActionResponse(res.hasSucceeded, null);
           return of(null);
         }
-      }));
+      })
+    );
   }
 
   /**
@@ -89,20 +107,27 @@ export abstract class MyDSpaceReloadableActionsComponent<T extends DSpaceObject,
    * @param reloadedObject
    *    the reloadedObject
    */
-  handleReloadableActionResponse(result: boolean, reloadedObject: DSpaceObject): void {
+  handleReloadableActionResponse(
+    result: boolean,
+    reloadedObject: DSpaceObject
+  ): void {
     if (result) {
       if (reloadedObject) {
-        this.processCompleted.emit({result, reloadedObject});
+        this.processCompleted.emit({ result, reloadedObject });
       } else {
         this.reload();
       }
-      this.notificationsService.success(null,
+      this.notificationsService.success(
+        null,
         this.translate.get('submission.workflow.tasks.generic.success'),
-        new NotificationOptions(5000, false));
+        new NotificationOptions(5000, false)
+      );
     } else {
-      this.notificationsService.error(null,
+      this.notificationsService.error(
+        null,
         this.translate.get('submission.workflow.tasks.generic.error'),
-        new NotificationOptions(20000, true));
+        new NotificationOptions(20000, true)
+      );
     }
   }
 
@@ -119,7 +144,7 @@ export abstract class MyDSpaceReloadableActionsComponent<T extends DSpaceObject,
   convertReloadedObject(dso: DSpaceObject): DSpaceObject {
     const constructor = getSearchResultFor((dso as any).constructor);
     const reloadedObject = Object.assign(new constructor(), dso, {
-      indexableObject: dso
+      indexableObject: dso,
     });
     return reloadedObject;
   }
@@ -129,16 +154,23 @@ export abstract class MyDSpaceReloadableActionsComponent<T extends DSpaceObject,
    * @param dso
    */
   private _reloadObject(): Observable<DSpaceObject> {
-    return this.reloadObjectExecution().pipe(
-      switchMap((res) => {
-        if (res instanceof RemoteData) {
-          return of(res).pipe(getFirstCompletedRemoteData(), map((completed) => completed.payload));
-        } else {
-          return of(res);
-        }
-      })).pipe(map((dso) => {
+    return this.reloadObjectExecution()
+      .pipe(
+        switchMap((res) => {
+          if (res instanceof RemoteData) {
+            return of(res).pipe(
+              getFirstCompletedRemoteData(),
+              map((completed) => completed.payload)
+            );
+          } else {
+            return of(res);
+          }
+        })
+      )
+      .pipe(
+        map((dso) => {
           return dso ? this.convertReloadedObject(dso) : dso;
-    }));
+        })
+      );
   }
-
 }

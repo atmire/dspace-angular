@@ -1,6 +1,17 @@
 // Load the implementations that should be tested
-import { ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ComponentFixture, fakeAsync, inject, TestBed, tick, waitForAsync, } from '@angular/core/testing';
+import {
+  ChangeDetectorRef,
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+} from '@angular/core';
+import {
+  ComponentFixture,
+  fakeAsync,
+  inject,
+  TestBed,
+  tick,
+  waitForAsync,
+} from '@angular/core/testing';
 
 import { Chips } from './models/chips.model';
 import { UploaderService } from '../uploader/uploader.service';
@@ -16,7 +27,6 @@ import { SortablejsModule } from 'ngx-sortablejs';
 import { environment } from '../../../environments/environment';
 
 describe('ChipsComponent test suite', () => {
-
   let testComp: TestComponent;
   let chipsComp: ChipsComponent;
   let testFixture: ComponentFixture<TestComponent>;
@@ -26,26 +36,20 @@ describe('ChipsComponent test suite', () => {
 
   // waitForAsync beforeEach
   beforeEach(waitForAsync(() => {
-
     TestBed.configureTestingModule({
       imports: [
         NgbModule,
         SortablejsModule.forRoot({ animation: 150 }),
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
       ],
       declarations: [
         ChipsComponent,
         TestComponent,
-        AuthorityConfidenceStateDirective
+        AuthorityConfidenceStateDirective,
       ], // declare the test component
-      providers: [
-        ChangeDetectorRef,
-        ChipsComponent,
-        UploaderService
-      ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      providers: [ChangeDetectorRef, ChipsComponent, UploaderService],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     });
-
   }));
 
   describe('', () => {
@@ -58,13 +62,19 @@ describe('ChipsComponent test suite', () => {
         [editable]="editable"
         (selected)="onChipSelected($event)"></ds-chips>`;
 
-      testFixture = createTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
+      testFixture = createTestComponent(
+        html,
+        TestComponent
+      ) as ComponentFixture<TestComponent>;
       testComp = testFixture.componentInstance;
     });
 
-    it('should create Chips Component', inject([ChipsComponent], (app: ChipsComponent) => {
-      expect(app).toBeDefined();
-    }));
+    it('should create Chips Component', inject(
+      [ChipsComponent],
+      (app: ChipsComponent) => {
+        expect(app).toBeDefined();
+      }
+    ));
   });
 
   describe('when has items as string', () => {
@@ -83,7 +93,6 @@ describe('ChipsComponent test suite', () => {
     });
 
     it('should set edit mode when a chip item is selected', fakeAsync(() => {
-
       spyOn(chipsComp.selected, 'emit');
 
       chipsComp.chipsSelected(new Event('click'), 1);
@@ -111,7 +120,6 @@ describe('ChipsComponent test suite', () => {
     }));
 
     it('should emit when a chip item is removed and editable is true', fakeAsync(() => {
-
       spyOn(chipsComp.chips, 'remove');
 
       const item = chipsComp.chips.getChipByIndex(1);
@@ -145,12 +153,33 @@ describe('ChipsComponent test suite', () => {
   describe('when has items as object', () => {
     beforeEach(() => {
       const item = {
-        mainField: new FormFieldMetadataValueObject('main test', null, 'test001', 'main test', 0, ConfidenceType.CF_ACCEPTED),
-        relatedField: new FormFieldMetadataValueObject('related test', null, 'test002', 'related test', 0, ConfidenceType.CF_ACCEPTED),
-        otherRelatedField: new FormFieldMetadataValueObject('other related test')
+        mainField: new FormFieldMetadataValueObject(
+          'main test',
+          null,
+          'test001',
+          'main test',
+          0,
+          ConfidenceType.CF_ACCEPTED
+        ),
+        relatedField: new FormFieldMetadataValueObject(
+          'related test',
+          null,
+          'test002',
+          'related test',
+          0,
+          ConfidenceType.CF_ACCEPTED
+        ),
+        otherRelatedField: new FormFieldMetadataValueObject(
+          'other related test'
+        ),
       };
 
-      chips = new Chips([item], 'display', 'mainField', environment.submission.icons.metadata);
+      chips = new Chips(
+        [item],
+        'display',
+        'mainField',
+        environment.submission.icons.metadata
+      );
       chipsFixture = TestBed.createComponent(ChipsComponent);
       chipsComp = chipsFixture.componentInstance; // TruncatableComponent test instance
       chipsComp.editable = true;
@@ -164,7 +193,6 @@ describe('ChipsComponent test suite', () => {
       const icons = de.queryAll(By.css('i.fas'));
 
       expect(icons.length).toBe(4);
-
     });
 
     it('should show tooltip on mouse over an icon', () => {
@@ -181,10 +209,9 @@ describe('ChipsComponent test suite', () => {
 // declare a test component
 @Component({
   selector: 'ds-test-cmp',
-  template: ``
+  template: ``,
 })
 class TestComponent {
-
   public chips = new Chips(['a', 'b', 'c']);
   public editable = true;
 }

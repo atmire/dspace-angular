@@ -7,11 +7,10 @@ import {
   FormInitAction,
   FormRemoveAction,
   FormRemoveErrorAction,
-  FormStatusChangeAction
+  FormStatusChangeAction,
 } from './form.actions';
 
 describe('formReducer', () => {
-
   it('should set init state of the form', () => {
     const state = {
       testForm: {
@@ -19,19 +18,19 @@ describe('formReducer', () => {
           author: null,
           title: null,
           date: null,
-          description: null
+          description: null,
         },
         valid: false,
         errors: [],
-        touched: {}
-      }
+        touched: {},
+      },
     };
     const formId = 'testForm';
     const formData = {
       author: null,
       title: null,
       date: null,
-      description: null
+      description: null,
     };
     const valid = false;
     const action = new FormInitAction(formId, formData, valid);
@@ -40,26 +39,26 @@ describe('formReducer', () => {
     expect(newState).toEqual(state);
   });
 
-  it('should update state of the form when it\'s already present', () => {
+  it("should update state of the form when it's already present", () => {
     const initState = {
       testForm: {
         data: {
           author: null,
           title: null,
           date: null,
-          description: null
+          description: null,
         },
         valid: false,
         errors: [],
-        touched: {}
-      }
+        touched: {},
+      },
     };
     const formId = 'testForm';
     const formData = {
       author: null,
       title: 'title',
       date: null,
-      description: null
+      description: null,
     };
     const state = {
       testForm: {
@@ -67,12 +66,12 @@ describe('formReducer', () => {
           author: null,
           title: 'title',
           date: null,
-          description: null
+          description: null,
         },
         valid: false,
         errors: [],
-        touched: {}
-      }
+        touched: {},
+      },
     };
 
     const valid = false;
@@ -89,12 +88,12 @@ describe('formReducer', () => {
           author: null,
           title: null,
           date: null,
-          description: null
+          description: null,
         },
         valid: false,
         errors: [],
-        touched: {}
-      }
+        touched: {},
+      },
     };
     const state = {
       testForm: {
@@ -102,19 +101,19 @@ describe('formReducer', () => {
           author: null,
           title: ['test'],
           date: null,
-          description: null
+          description: null,
         },
         valid: false,
         errors: [],
-        touched: {}
-      }
+        touched: {},
+      },
     };
     const formId = 'testForm';
     const formData = {
       author: null,
       title: ['test'],
       date: null,
-      description: null
+      description: null,
     };
 
     const action = new FormChangeAction(formId, formData);
@@ -130,12 +129,12 @@ describe('formReducer', () => {
           author: null,
           title: ['test'],
           date: null,
-          description: null
+          description: null,
         },
         valid: false,
         errors: [],
-        touched: {}
-      }
+        touched: {},
+      },
     };
     const state = {
       testForm: {
@@ -143,12 +142,12 @@ describe('formReducer', () => {
           author: null,
           title: ['test'],
           date: null,
-          description: null
+          description: null,
         },
         valid: true,
         errors: [],
-        touched: {}
-      }
+        touched: {},
+      },
     };
     const formId = 'testForm';
 
@@ -165,20 +164,20 @@ describe('formReducer', () => {
           author: null,
           title: ['test'],
           date: null,
-          description: null
+          description: null,
         },
         valid: true,
         errors: [],
-        touched: {}
-      }
+        touched: {},
+      },
     };
 
     const expectedErrors = [
       {
         fieldId: 'title',
         fieldIndex: 0,
-        message: 'Not valid'
-      }
+        message: 'Not valid',
+      },
     ];
 
     const formId = 'testForm';
@@ -199,31 +198,31 @@ describe('formReducer', () => {
           author: null,
           title: ['test'],
           date: null,
-          description: null
+          description: null,
         },
         valid: true,
         errors: [
           {
             fieldId: 'author',
             fieldIndex: 0,
-            message: 'error.validation.required'
+            message: 'error.validation.required',
           },
           {
             fieldId: 'title',
             fieldIndex: 0,
-            message: 'error.validation.required'
-          }
+            message: 'error.validation.required',
+          },
         ],
-        touched: {}
-      }
+        touched: {},
+      },
     };
 
     const expectedErrors = [
       {
         fieldId: 'title',
         fieldIndex: 0,
-        message: 'error.validation.required'
-      }
+        message: 'error.validation.required',
+      },
     ];
 
     const formId = 'testForm';
@@ -243,12 +242,12 @@ describe('formReducer', () => {
           author: null,
           title: ['test'],
           date: null,
-          description: null
+          description: null,
         },
         valid: true,
         errors: [],
-        touched: {}
-      }
+        touched: {},
+      },
     };
 
     const formId = 'testForm';
@@ -266,18 +265,18 @@ describe('formReducer', () => {
           author: null,
           title: ['test'],
           date: null,
-          description: null
+          description: null,
         },
         valid: true,
         errors: [
           {
             fieldId: 'author',
             fieldIndex: 0,
-            message: 'error.validation.required'
-          }
+            message: 'error.validation.required',
+          },
         ],
-        touched: {}
-      }
+        touched: {},
+      },
     };
 
     const formId = 'testForm';
@@ -295,12 +294,12 @@ describe('formReducer', () => {
           author: null,
           title: ['test'],
           date: null,
-          description: null
+          description: null,
         },
         valid: false,
         errors: [],
-        touched: {}
-      }
+        touched: {},
+      },
     };
     const state = {
       testForm: {
@@ -308,14 +307,14 @@ describe('formReducer', () => {
           author: null,
           title: ['test'],
           date: null,
-          description: null
+          description: null,
         },
         valid: false,
         errors: [],
         touched: {
-          title: true
-        }
-      }
+          title: true,
+        },
+      },
     };
     const formId = 'testForm';
     const touched = ['title'];
@@ -333,14 +332,14 @@ describe('formReducer', () => {
           author: null,
           title: ['test'],
           date: null,
-          description: null
+          description: null,
         },
         valid: false,
         errors: [],
         touched: {
-          title: true
-        }
-      }
+          title: true,
+        },
+      },
     };
     const state = {
       testForm: {
@@ -348,15 +347,15 @@ describe('formReducer', () => {
           author: null,
           title: ['test'],
           date: null,
-          description: null
+          description: null,
         },
         valid: false,
         errors: [],
         touched: {
           title: true,
-          author: true
-        }
-      }
+          author: true,
+        },
+      },
     };
     const formId = 'testForm';
     const touched = ['author'];
@@ -366,5 +365,4 @@ describe('formReducer', () => {
 
     expect(newState).toEqual(state);
   });
-
 });

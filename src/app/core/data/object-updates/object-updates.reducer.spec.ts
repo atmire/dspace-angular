@@ -10,9 +10,12 @@ import {
   RemoveObjectUpdatesAction,
   SelectVirtualMetadataAction,
   SetEditableFieldUpdateAction,
-  SetValidFieldUpdateAction
+  SetValidFieldUpdateAction,
 } from './object-updates.actions';
-import { OBJECT_UPDATES_TRASH_PATH, objectUpdatesReducer } from './object-updates.reducer';
+import {
+  OBJECT_UPDATES_TRASH_PATH,
+  objectUpdatesReducer,
+} from './object-updates.reducer';
 import { Relationship } from '../../shared/item-relationships/relationship.model';
 
 class NullAction extends RemoveFieldUpdateAction {
@@ -28,28 +31,30 @@ const identifiable1 = {
   uuid: '8222b07e-330d-417b-8d7f-3b82aeaf2320',
   key: 'dc.contributor.author',
   language: null,
-  value: 'Smith, John'
+  value: 'Smith, John',
 };
 
 const identifiable1update = {
   uuid: '8222b07e-330d-417b-8d7f-3b82aeaf2320',
   key: 'dc.contributor.author',
   language: null,
-  value: 'Smith, James'
+  value: 'Smith, James',
 };
 const identifiable2 = {
   uuid: '26cbb5ce-5786-4e57-a394-b9fcf8eaf241',
   key: 'dc.title',
   language: null,
-  value: 'New title'
+  value: 'New title',
 };
 const identifiable3 = {
   uuid: 'c5d2c2f7-d757-48bf-84cc-8c9229c8407e',
   key: 'dc.description.abstract',
   language: null,
-  value: 'Unchanged value'
+  value: 'Unchanged value',
 };
-const relationship: Relationship = Object.assign(new Relationship(), { uuid: 'test relationship uuid' });
+const relationship: Relationship = Object.assign(new Relationship(), {
+  uuid: 'test relationship uuid',
+});
 
 const modDate = new Date(2010, 2, 11);
 const uuid = identifiable1.uuid;
@@ -61,17 +66,17 @@ describe('objectUpdatesReducer', () => {
         [identifiable1.uuid]: {
           editable: true,
           isNew: false,
-          isValid: true
+          isValid: true,
         },
         [identifiable2.uuid]: {
           editable: false,
           isNew: true,
-          isValid: true
+          isValid: true,
         },
         [identifiable3.uuid]: {
           editable: false,
           isNew: false,
-          isValid: false
+          isValid: false,
         },
       },
       fieldUpdates: {
@@ -80,16 +85,16 @@ describe('objectUpdatesReducer', () => {
             uuid: identifiable2.uuid,
             key: 'dc.titl',
             language: null,
-            value: 'New title'
+            value: 'New title',
           },
-          changeType: FieldChangeType.ADD
-        }
+          changeType: FieldChangeType.ADD,
+        },
       },
       lastModified: modDate,
       virtualMetadataSources: {
-        [relationship.uuid]: { [identifiable1.uuid]: true }
+        [relationship.uuid]: { [identifiable1.uuid]: true },
       },
-    }
+    },
   };
 
   const discardedTestState = {
@@ -98,22 +103,22 @@ describe('objectUpdatesReducer', () => {
         [identifiable1.uuid]: {
           editable: true,
           isNew: false,
-          isValid: true
+          isValid: true,
         },
         [identifiable2.uuid]: {
           editable: false,
           isNew: true,
-          isValid: true
+          isValid: true,
         },
         [identifiable3.uuid]: {
           editable: false,
           isNew: false,
-          isValid: true
+          isValid: true,
         },
       },
       lastModified: modDate,
       virtualMetadataSources: {
-        [relationship.uuid]: { [identifiable1.uuid]: true }
+        [relationship.uuid]: { [identifiable1.uuid]: true },
       },
     },
     [url + OBJECT_UPDATES_TRASH_PATH]: {
@@ -121,17 +126,17 @@ describe('objectUpdatesReducer', () => {
         [identifiable1.uuid]: {
           editable: true,
           isNew: false,
-          isValid: true
+          isValid: true,
         },
         [identifiable2.uuid]: {
           editable: false,
           isNew: true,
-          isValid: true
+          isValid: true,
         },
         [identifiable3.uuid]: {
           editable: false,
           isNew: false,
-          isValid: false
+          isValid: false,
         },
       },
       fieldUpdates: {
@@ -140,16 +145,16 @@ describe('objectUpdatesReducer', () => {
             uuid: identifiable2.uuid,
             key: 'dc.titl',
             language: null,
-            value: 'New title'
+            value: 'New title',
           },
-          changeType: FieldChangeType.ADD
-        }
+          changeType: FieldChangeType.ADD,
+        },
       },
       lastModified: modDate,
       virtualMetadataSources: {
-        [relationship.uuid]: { [identifiable1.uuid]: true }
+        [relationship.uuid]: { [identifiable1.uuid]: true },
       },
-    }
+    },
   };
 
   deepFreeze(testState);
@@ -169,7 +174,11 @@ describe('objectUpdatesReducer', () => {
   });
 
   it('should perform the INITIALIZE_FIELDS action without affecting the previous state', () => {
-    const action = new InitializeFieldsAction(url, [identifiable1, identifiable2], modDate);
+    const action = new InitializeFieldsAction(
+      url,
+      [identifiable1, identifiable2],
+      modDate
+    );
     // testState has already been frozen above
     objectUpdatesReducer(testState, action);
   });
@@ -181,7 +190,11 @@ describe('objectUpdatesReducer', () => {
   });
 
   it('should perform the ADD_FIELD action without affecting the previous state', () => {
-    const action = new AddFieldUpdateAction(url, identifiable1update, FieldChangeType.UPDATE);
+    const action = new AddFieldUpdateAction(
+      url,
+      identifiable1update,
+      FieldChangeType.UPDATE
+    );
     // testState has already been frozen above
     objectUpdatesReducer(testState, action);
   });
@@ -211,13 +224,22 @@ describe('objectUpdatesReducer', () => {
   });
 
   it('should perform the SELECT_VIRTUAL_METADATA action without affecting the previous state', () => {
-    const action = new SelectVirtualMetadataAction(url, relationship.uuid, identifiable1.uuid, true);
+    const action = new SelectVirtualMetadataAction(
+      url,
+      relationship.uuid,
+      identifiable1.uuid,
+      true
+    );
     // testState has already been frozen above
     objectUpdatesReducer(testState, action);
   });
 
   it('should initialize all fields when the INITIALIZE action is dispatched, based on the payload', () => {
-    const action = new InitializeFieldsAction(url, [identifiable1, identifiable3], modDate);
+    const action = new InitializeFieldsAction(
+      url,
+      [identifiable1, identifiable3],
+      modDate
+    );
 
     const expectedState = {
       [url]: {
@@ -225,47 +247,63 @@ describe('objectUpdatesReducer', () => {
           [identifiable1.uuid]: {
             editable: false,
             isNew: false,
-            isValid: true
+            isValid: true,
           },
           [identifiable3.uuid]: {
             editable: false,
             isNew: false,
-            isValid: true
+            isValid: true,
           },
         },
         fieldUpdates: {},
         virtualMetadataSources: {},
         lastModified: modDate,
-        patchOperationService: undefined
-      }
+        patchOperationService: undefined,
+      },
     };
     const newState = objectUpdatesReducer(testState, action);
     expect(newState).toEqual(expectedState);
   });
 
-  it('should set the given field\'s fieldStates when the SET_EDITABLE_FIELD action is dispatched, based on the payload', () => {
-    const action = new SetEditableFieldUpdateAction(url, identifiable3.uuid, true);
+  it("should set the given field's fieldStates when the SET_EDITABLE_FIELD action is dispatched, based on the payload", () => {
+    const action = new SetEditableFieldUpdateAction(
+      url,
+      identifiable3.uuid,
+      true
+    );
 
     const newState = objectUpdatesReducer(testState, action);
     expect(newState[url].fieldStates[identifiable3.uuid].editable).toBeTruthy();
   });
 
-  it('should set the given field\'s fieldStates when the SET_VALID_FIELD action is dispatched, based on the payload', () => {
-    const action = new SetValidFieldUpdateAction(url, identifiable3.uuid, false);
+  it("should set the given field's fieldStates when the SET_VALID_FIELD action is dispatched, based on the payload", () => {
+    const action = new SetValidFieldUpdateAction(
+      url,
+      identifiable3.uuid,
+      false
+    );
 
     const newState = objectUpdatesReducer(testState, action);
     expect(newState[url].fieldStates[identifiable3.uuid].isValid).toBeFalsy();
   });
 
-  it('should add a given field\'s update to the state when the ADD_FIELD action is dispatched, based on the payload', () => {
-    const action = new AddFieldUpdateAction(url, identifiable1update, FieldChangeType.UPDATE);
+  it("should add a given field's update to the state when the ADD_FIELD action is dispatched, based on the payload", () => {
+    const action = new AddFieldUpdateAction(
+      url,
+      identifiable1update,
+      FieldChangeType.UPDATE
+    );
 
     const newState = objectUpdatesReducer(testState, action);
-    expect(newState[url].fieldUpdates[identifiable1.uuid].field).toEqual(identifiable1update);
-    expect(newState[url].fieldUpdates[identifiable1.uuid].changeType).toEqual(FieldChangeType.UPDATE);
+    expect(newState[url].fieldUpdates[identifiable1.uuid].field).toEqual(
+      identifiable1update
+    );
+    expect(newState[url].fieldUpdates[identifiable1.uuid].changeType).toEqual(
+      FieldChangeType.UPDATE
+    );
   });
 
-  it('should discard a given url\'s updates from the state when the DISCARD action is dispatched, based on the payload', () => {
+  it("should discard a given url's updates from the state when the DISCARD action is dispatched, based on the payload", () => {
     const action = new DiscardObjectUpdatesAction(url, null);
 
     const newState = objectUpdatesReducer(testState, action);
@@ -273,14 +311,14 @@ describe('objectUpdatesReducer', () => {
     expect(newState[url + OBJECT_UPDATES_TRASH_PATH]).toEqual(testState[url]);
   });
 
-  it('should reinstate a given url\'s updates from the state when the REINSTATE action is dispatched, based on the payload', () => {
+  it("should reinstate a given url's updates from the state when the REINSTATE action is dispatched, based on the payload", () => {
     const action = new ReinstateObjectUpdatesAction(url);
 
     const newState = objectUpdatesReducer(discardedTestState, action);
     expect(newState).toEqual(testState);
   });
 
-  it('should remove a given url\'s updates from the state when the REMOVE action is dispatched, based on the payload', () => {
+  it("should remove a given url's updates from the state when the REMOVE action is dispatched, based on the payload", () => {
     const action = new RemoveObjectUpdatesAction(url);
 
     const newState = objectUpdatesReducer(discardedTestState, action);
@@ -296,7 +334,7 @@ describe('objectUpdatesReducer', () => {
     expect(newState[url + OBJECT_UPDATES_TRASH_PATH]).toBeUndefined();
   });
 
-  it('should remove a given field\'s update from the state when the REMOVE_FIELD action is dispatched, based on the payload', () => {
+  it("should remove a given field's update from the state when the REMOVE_FIELD action is dispatched, based on the payload", () => {
     const action = new RemoveFieldUpdateAction(url, uuid);
 
     const newState = objectUpdatesReducer(testState, action);

@@ -10,6 +10,4 @@ import { RootComponent as BaseComponent } from '../../../../app/root/root.compon
   templateUrl: '../../../../app/root/root.component.html',
   animations: [slideSidebarPadding],
 })
-export class RootComponent extends BaseComponent {
-
-}
+export class RootComponent extends BaseComponent {}

@@ -4,13 +4,16 @@ import { FormControl, FormGroup, FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
 import { TranslateModule } from '@ngx-translate/core';
-import { DynamicFormLayoutService, DynamicFormValidationService } from '@ng-dynamic-forms/core';
+import {
+  DynamicFormLayoutService,
+  DynamicFormValidationService,
+} from '@ng-dynamic-forms/core';
 
 import { DsDynamicDisabledComponent } from './dynamic-disabled.component';
 import { DynamicDisabledModel } from './dynamic-disabled.model';
 import {
   mockDynamicFormLayoutService,
-  mockDynamicFormValidationService
+  mockDynamicFormValidationService,
 } from '../../../../../testing/dynamic-form-mock-services';
 
 describe('DsDynamicDisabledComponent', () => {
@@ -29,7 +32,7 @@ describe('DsDynamicDisabledComponent', () => {
       submissionId: '1234',
       id: 'disabledInput',
       name: 'disabledInput',
-      hasSelectableMetadata: false
+      hasSelectableMetadata: false,
     });
     group = new FormGroup({
       disabledInput: new FormControl(),
@@ -42,10 +45,16 @@ describe('DsDynamicDisabledComponent', () => {
       declarations: [DsDynamicDisabledComponent],
       imports: [FormsModule, TranslateModule.forRoot()],
       providers: [
-        { provide: DynamicFormLayoutService, useValue: mockDynamicFormLayoutService },
-        { provide: DynamicFormValidationService, useValue: mockDynamicFormValidationService },
+        {
+          provide: DynamicFormLayoutService,
+          useValue: mockDynamicFormLayoutService,
+        },
+        {
+          provide: DynamicFormValidationService,
+          useValue: mockDynamicFormValidationService,
+        },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 

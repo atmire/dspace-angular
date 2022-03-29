@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 @typedObject
 @inheritSerialization(ConfigObject)
 export class SubmissionUploadModel extends ConfigObject {
-  static type =  SUBMISSION_UPLOAD_TYPE;
+  static type = SUBMISSION_UPLOAD_TYPE;
   /**
    * A list of available bitstream access conditions
    */
@@ -32,8 +32,7 @@ export class SubmissionUploadModel extends ConfigObject {
 
   @deserialize
   _links: {
-    metadata: HALLink
-    self: HALLink
+    metadata: HALLink;
+    self: HALLink;
   };
-
 }

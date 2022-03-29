@@ -6,59 +6,72 @@ export class MenuServiceStub {
   visibleSection1 = {
     id: 'section',
     visible: true,
-    active: false
+    active: false,
   } as any;
   visibleSection2 = {
     id: 'section_2',
-    visible: true
+    visible: true,
   } as any;
   hiddenSection3 = {
     id: 'section_3',
-    visible: false
+    visible: false,
   } as any;
   subSection4 = {
     id: 'section_4',
     visible: true,
-    parentID: 'section1'
+    parentID: 'section1',
   } as any;
 
-  toggleMenu(): void { /***/
+  toggleMenu(): void {
+    /***/
   }
 
-  expandMenu(): void { /***/
+  expandMenu(): void {
+    /***/
   }
 
-  collapseMenu(): void { /***/
+  collapseMenu(): void {
+    /***/
   }
 
-  showMenu(): void { /***/
+  showMenu(): void {
+    /***/
   }
 
-  hideMenu(): void { /***/
+  hideMenu(): void {
+    /***/
   }
 
-  expandMenuPreview(): void { /***/
+  expandMenuPreview(): void {
+    /***/
   }
 
-  collapseMenuPreview(): void { /***/
+  collapseMenuPreview(): void {
+    /***/
   }
 
-  toggleActiveSection(): void { /***/
+  toggleActiveSection(): void {
+    /***/
   }
 
-  activateSection(): void { /***/
+  activateSection(): void {
+    /***/
   }
 
-  deactivateSection(): void { /***/
+  deactivateSection(): void {
+    /***/
   }
 
-  addSection(menuID: MenuID, section: MenuSection): void { /***/
+  addSection(menuID: MenuID, section: MenuSection): void {
+    /***/
   }
 
-  removeSection(): void { /***/
+  removeSection(): void {
+    /***/
   }
 
-  resetSections(): void { /***/
+  resetSections(): void {
+    /***/
   }
 
   isMenuVisible(id: MenuID): Observable<boolean> {

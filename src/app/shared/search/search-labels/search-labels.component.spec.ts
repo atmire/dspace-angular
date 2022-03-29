@@ -24,23 +24,32 @@ describe('SearchLabelsComponent', () => {
   const value2 = 'TestSubject';
   const filter1 = [field1, value1];
   const filter2 = [field2, value2];
-  const mockFilters = [
-    filter1,
-    filter2
-  ];
+  const mockFilters = [filter1, filter2];
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), NoopAnimationsModule, FormsModule, RouterTestingModule],
+      imports: [
+        TranslateModule.forRoot(),
+        NoopAnimationsModule,
+        FormsModule,
+        RouterTestingModule,
+      ],
       declarations: [SearchLabelsComponent, ObjectKeysPipe],
       providers: [
         { provide: SearchService, useValue: new SearchServiceStub(searchLink) },
-        { provide: SEARCH_CONFIG_SERVICE, useValue: { getCurrentFrontendFilters: () => observableOf(mockFilters) } }
+        {
+          provide: SEARCH_CONFIG_SERVICE,
+          useValue: {
+            getCurrentFrontendFilters: () => observableOf(mockFilters),
+          },
+        },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(SearchLabelsComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(SearchLabelsComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {

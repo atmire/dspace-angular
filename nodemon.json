@@ -1,6 +1,4 @@
 {
-  "watch": [
-    "config"
-  ],
+  "watch": ["config"],
   "ext": "json"
 }

@@ -10,21 +10,21 @@ import {
   SelectableListDeselectAllAction,
   SelectableListDeselectSingleAction,
   SelectableListSelectAction,
-  SelectableListSelectSingleAction
+  SelectableListSelectSingleAction,
 } from './selectable-list.actions';
 import { hasValue, isNotEmpty } from '../../empty.util';
 
 const selectableListsStateSelector = (state: AppState) => state.selectableLists;
 
-const menuByIDSelector = (id: string): MemoizedSelector<AppState, SelectableListState> => {
+const menuByIDSelector = (
+  id: string
+): MemoizedSelector<AppState, SelectableListState> => {
   return keySelector<SelectableListState>(id, selectableListsStateSelector);
 };
 
 @Injectable()
 export class SelectableListService {
-
-  constructor(private store: Store<AppState>) {
-  }
+  constructor(private store: Store<AppState>) {}
 
   /**
    * Retrieve a selectable list's state by its ID
@@ -87,7 +87,12 @@ export class SelectableListService {
    */
   isObjectSelected(id: string, object: ListableObject): Observable<boolean> {
     return this.getSelectableList(id).pipe(
-      map((state: SelectableListState) => hasValue(state) && isNotEmpty(state.selection) && hasValue(state.selection.find((selected) => selected.equals(object)))),
+      map(
+        (state: SelectableListState) =>
+          hasValue(state) &&
+          isNotEmpty(state.selection) &&
+          hasValue(state.selection.find((selected) => selected.equals(object)))
+      ),
       distinctUntilChanged()
     );
   }
@@ -97,9 +102,16 @@ export class SelectableListService {
    * @param id        The ID of the selectable list to search in
    * @param condition The condition that the required object has to match
    */
-  findSelectedByCondition(id: string, condition: (object: ListableObject) => boolean): Observable<ListableObject> {
+  findSelectedByCondition(
+    id: string,
+    condition: (object: ListableObject) => boolean
+  ): Observable<ListableObject> {
     return this.getSelectableList(id).pipe(
-      map((state: SelectableListState) => (hasValue(state) && isNotEmpty(state.selection)) ? state.selection.find((selected) => condition(selected)) : undefined)
+      map((state: SelectableListState) =>
+        hasValue(state) && isNotEmpty(state.selection)
+          ? state.selection.find((selected) => condition(selected))
+          : undefined
+      )
     );
   }
 }

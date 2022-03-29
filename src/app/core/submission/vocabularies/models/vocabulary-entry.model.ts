@@ -99,5 +99,4 @@ export class VocabularyEntry extends ListableObject {
   getRenderTypes(): (string | GenericConstructor<ListableObject>)[] {
     return [this.constructor as GenericConstructor<ListableObject>];
   }
-
 }

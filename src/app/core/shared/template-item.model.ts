@@ -20,5 +20,4 @@ export class TemplateItem extends Item {
    */
   @link(COLLECTION)
   templateItemOf: Observable<RemoteData<Collection>>;
-
 }

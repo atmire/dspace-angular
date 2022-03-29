@@ -1,5 +1,10 @@
 import { AuthorizationDataService } from '../authorization-data.service';
-import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  Resolve,
+  Router,
+  RouterStateSnapshot,
+} from '@angular/router';
 import { RemoteData } from '../../remote-data';
 import { Observable, of as observableOf } from 'rxjs';
 import { createSuccessfulRemoteDataObject$ } from '../../../../shared/remote-data.utils';
@@ -12,15 +17,20 @@ import { AuthService } from '../../../auth/auth.service';
  * Test implementation of abstract class DsoPageSingleFeatureGuard
  */
 class DsoPageSingleFeatureGuardImpl extends DsoPageSingleFeatureGuard<any> {
-  constructor(protected resolver: Resolve<RemoteData<any>>,
-              protected authorizationService: AuthorizationDataService,
-              protected router: Router,
-              protected authService: AuthService,
-              protected featureID: FeatureID) {
+  constructor(
+    protected resolver: Resolve<RemoteData<any>>,
+    protected authorizationService: AuthorizationDataService,
+    protected router: Router,
+    protected authService: AuthService,
+    protected featureID: FeatureID
+  ) {
     super(resolver, authorizationService, router, authService);
   }
 
-  getFeatureID(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<FeatureID> {
+  getFeatureID(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<FeatureID> {
     return observableOf(this.featureID);
   }
 }
@@ -37,32 +47,37 @@ describe('DsoPageSingleFeatureGuard', () => {
 
   function init() {
     object = {
-      self: 'test-selflink'
+      self: 'test-selflink',
     } as DSpaceObject;
 
     authorizationService = jasmine.createSpyObj('authorizationService', {
-      isAuthorized: observableOf(true)
+      isAuthorized: observableOf(true),
     });
     router = jasmine.createSpyObj('router', {
-      parseUrl: {}
+      parseUrl: {},
     });
     resolver = jasmine.createSpyObj('resolver', {
-      resolve: createSuccessfulRemoteDataObject$(object)
+      resolve: createSuccessfulRemoteDataObject$(object),
     });
     authService = jasmine.createSpyObj('authService', {
-      isAuthenticated: observableOf(true)
+      isAuthenticated: observableOf(true),
     });
     parentRoute = {
       params: {
-        id: '3e1a5327-dabb-41ff-af93-e6cab9d032f0'
-      }
+        id: '3e1a5327-dabb-41ff-af93-e6cab9d032f0',
+      },
     };
     route = {
-      params: {
-      },
-      parent: parentRoute
+      params: {},
+      parent: parentRoute,
     };
-    guard = new DsoPageSingleFeatureGuardImpl(resolver, authorizationService, router, authService, undefined);
+    guard = new DsoPageSingleFeatureGuardImpl(
+      resolver,
+      authorizationService,
+      router,
+      authService,
+      undefined
+    );
   }
 
   beforeEach(() => {
@@ -70,7 +85,7 @@ describe('DsoPageSingleFeatureGuard', () => {
   });
 
   describe('getObjectUrl', () => {
-    it('should return the resolved object\'s selflink', (done) => {
+    it("should return the resolved object's selflink", (done) => {
       guard.getObjectUrl(route, undefined).subscribe((selflink) => {
         expect(selflink).toEqual(object.self);
         done();

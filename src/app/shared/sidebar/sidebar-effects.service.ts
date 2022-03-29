@@ -12,24 +12,22 @@ import { URLBaser } from '../../core/url-baser/url-baser';
 @Injectable()
 export class SidebarEffects {
   private previousPath: string;
-   routeChange$ = createEffect(() => this.actions$
-    .pipe(
+  routeChange$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(fromRouter.ROUTER_NAVIGATION),
       filter((action) => this.previousPath !== this.getBaseUrl(action)),
       tap((action) => {
         this.previousPath = this.getBaseUrl(action);
       }),
       map(() => new SidebarCollapseAction())
-    ));
+    )
+  );
 
-  constructor(private actions$: Actions) {
-
-  }
+  constructor(private actions$: Actions) {}
 
   getBaseUrl(action: any): string {
     /* eslint-disable-next-line @typescript-eslint/dot-notation */
     const url: string = action['payload'].routerState.url;
     return new URLBaser(url).toString();
   }
-
 }

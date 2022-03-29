@@ -17,7 +17,7 @@ import {
   createFailedRemoteDataObject$,
   createPendingRemoteDataObject$,
   createSuccessfulRemoteDataObject,
-  createSuccessfulRemoteDataObject$
+  createSuccessfulRemoteDataObject$,
 } from '../../shared/remote-data.utils';
 import { AuthService } from '../../core/auth/auth.service';
 import { createPaginatedList } from '../../shared/testing/utils.test';
@@ -25,7 +25,7 @@ import { createPaginatedList } from '../../shared/testing/utils.test';
 const mockItem: Item = Object.assign(new Item(), {
   bundles: createSuccessfulRemoteDataObject$(createPaginatedList([])),
   metadata: [],
-  relationships: createRelationshipsObservable()
+  relationships: createRelationshipsObservable(),
 });
 
 describe('ItemPageComponent', () => {
@@ -35,27 +35,29 @@ describe('ItemPageComponent', () => {
 
   const mockMetadataService = {
     /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
-    processRemoteData: () => {
-    }
+    processRemoteData: () => {},
     /* eslint-enable no-empty, @typescript-eslint/no-empty-function */
   };
   const mockRoute = Object.assign(new ActivatedRouteStub(), {
-    data: observableOf({ dso: createSuccessfulRemoteDataObject(mockItem) })
+    data: observableOf({ dso: createSuccessfulRemoteDataObject(mockItem) }),
   });
 
   beforeEach(waitForAsync(() => {
     authService = jasmine.createSpyObj('authService', {
       isAuthenticated: observableOf(true),
-      setRedirectUrl: {}
+      setRedirectUrl: {},
     });
 
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot({
-        loader: {
-          provide: TranslateLoader,
-          useClass: TranslateLoaderMock
-        }
-      }), BrowserAnimationsModule],
+      imports: [
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useClass: TranslateLoaderMock,
+          },
+        }),
+        BrowserAnimationsModule,
+      ],
       declarations: [ItemPageComponent, VarDirective],
       providers: [
         { provide: ActivatedRoute, useValue: mockRoute },
@@ -65,10 +67,12 @@ describe('ItemPageComponent', () => {
         { provide: AuthService, useValue: authService },
       ],
 
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(ItemPageComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(ItemPageComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -101,5 +105,4 @@ describe('ItemPageComponent', () => {
       expect(error.nativeElement).toBeDefined();
     });
   });
-
 });

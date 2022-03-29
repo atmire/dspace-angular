@@ -1,4 +1,3 @@
-
 /**
  * An interface to represent submission's license section data.
  */

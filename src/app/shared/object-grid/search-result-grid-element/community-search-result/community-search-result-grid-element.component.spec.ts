@@ -29,45 +29,48 @@ const truncatableServiceStub: any = {
   isCollapsed: (id: number) => observableOf(true),
 };
 
-const mockCommunityWithAbstract: CommunitySearchResult = new CommunitySearchResult();
+const mockCommunityWithAbstract: CommunitySearchResult =
+  new CommunitySearchResult();
 mockCommunityWithAbstract.hitHighlights = {};
 mockCommunityWithAbstract.indexableObject = Object.assign(new Community(), {
   metadata: {
     'dc.description.abstract': [
       {
         language: 'en_US',
-        value: 'Short description'
-      }
-    ]
-  }
+        value: 'Short description',
+      },
+    ],
+  },
 });
 
-const mockCommunityWithoutAbstract: CommunitySearchResult = new CommunitySearchResult();
+const mockCommunityWithoutAbstract: CommunitySearchResult =
+  new CommunitySearchResult();
 mockCommunityWithoutAbstract.hitHighlights = {};
 mockCommunityWithoutAbstract.indexableObject = Object.assign(new Community(), {
   metadata: {
     'dc.title': [
       {
         language: 'en_US',
-        value: 'Test title'
-      }
-    ]
-  }
+        value: 'Test title',
+      },
+    ],
+  },
 });
 const linkService = jasmine.createSpyObj('linkService', {
-  resolveLink: mockCommunityWithAbstract
+  resolveLink: mockCommunityWithAbstract,
 });
 
 describe('CommunitySearchResultGridElementComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        TranslateModule.forRoot()
-      ],
+      imports: [TranslateModule.forRoot()],
       declarations: [CommunitySearchResultGridElementComponent, TruncatePipe],
       providers: [
         { provide: TruncatableService, useValue: truncatableServiceStub },
-        { provide: 'objectElementProvider', useValue: (mockCommunityWithAbstract) },
+        {
+          provide: 'objectElementProvider',
+          useValue: mockCommunityWithAbstract,
+        },
         { provide: ObjectCacheService, useValue: {} },
         { provide: UUIDService, useValue: {} },
         { provide: Store, useValue: {} },
@@ -80,40 +83,50 @@ describe('CommunitySearchResultGridElementComponent', () => {
         { provide: DSOChangeAnalyzer, useValue: {} },
         { provide: DefaultChangeAnalyzer, useValue: {} },
         { provide: BitstreamFormatDataService, useValue: {} },
-        { provide: LinkService, useValue: linkService }
+        { provide: LinkService, useValue: linkService },
       ],
 
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(CommunitySearchResultGridElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(CommunitySearchResultGridElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
-    fixture = TestBed.createComponent(CommunitySearchResultGridElementComponent);
+    fixture = TestBed.createComponent(
+      CommunitySearchResultGridElementComponent
+    );
     communitySearchResultGridElementComponent = fixture.componentInstance;
   }));
 
   describe('When the community has an abstract', () => {
     beforeEach(() => {
-      communitySearchResultGridElementComponent.dso = mockCommunityWithAbstract.indexableObject;
+      communitySearchResultGridElementComponent.dso =
+        mockCommunityWithAbstract.indexableObject;
       fixture.detectChanges();
     });
 
     it('should show the description paragraph', () => {
-      const communityAbstractField = fixture.debugElement.query(By.css('p.card-text'));
+      const communityAbstractField = fixture.debugElement.query(
+        By.css('p.card-text')
+      );
       expect(communityAbstractField).not.toBeNull();
     });
   });
 
   describe('When the community has no abstract', () => {
     beforeEach(() => {
-      communitySearchResultGridElementComponent.dso = mockCommunityWithoutAbstract.indexableObject;
+      communitySearchResultGridElementComponent.dso =
+        mockCommunityWithoutAbstract.indexableObject;
       fixture.detectChanges();
     });
 
     it('should not show the description paragraph', () => {
-      const communityAbstractField = fixture.debugElement.query(By.css('p.card-text'));
+      const communityAbstractField = fixture.debugElement.query(
+        By.css('p.card-text')
+      );
       expect(communityAbstractField).toBeNull();
     });
   });

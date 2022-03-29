@@ -34,7 +34,7 @@ export class SiteDataService extends DataService<Site> {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DSOChangeAnalyzer<Site>,
+    protected comparator: DSOChangeAnalyzer<Site>
   ) {
     super();
   }

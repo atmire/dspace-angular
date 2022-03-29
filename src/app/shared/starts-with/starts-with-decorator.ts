@@ -5,7 +5,7 @@ const startsWithMap = new Map();
  */
 export enum StartsWithType {
   text = 'Text',
-  date = 'Date'
+  date = 'Date',
 }
 
 /**

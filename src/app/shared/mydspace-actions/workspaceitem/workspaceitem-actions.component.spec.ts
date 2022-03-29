@@ -1,4 +1,8 @@
-import { ChangeDetectionStrategy, Injector, NO_ERRORS_SCHEMA } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Injector,
+  NO_ERRORS_SCHEMA,
+} from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { By } from '@angular/platform-browser';
@@ -18,7 +22,7 @@ import { WorkspaceitemDataService } from '../../../core/submission/workspaceitem
 import {
   createFailedRemoteDataObject$,
   createSuccessfulRemoteDataObject,
-  createSuccessfulRemoteDataObject$
+  createSuccessfulRemoteDataObject$,
 } from '../../remote-data.utils';
 import { RequestService } from '../../../core/data/request.service';
 import { getMockRequestService } from '../../mocks/request.service.mock';
@@ -32,7 +36,7 @@ let mockObject: WorkspaceItem;
 let notificationsServiceStub: NotificationsServiceStub;
 
 const mockDataService = jasmine.createSpyObj('WorkspaceitemDataService', {
-  delete: jasmine.createSpy('delete')
+  delete: jasmine.createSpy('delete'),
 });
 
 const searchService = getMockSearchService();
@@ -45,59 +49,67 @@ const item = Object.assign(new Item(), {
     'dc.title': [
       {
         language: 'en_US',
-        value: 'This is just another title'
-      }
+        value: 'This is just another title',
+      },
     ],
     'dc.type': [
       {
         language: null,
-        value: 'Article'
-      }
+        value: 'Article',
+      },
     ],
     'dc.contributor.author': [
       {
         language: 'en_US',
-        value: 'Smith, Donald'
-      }
+        value: 'Smith, Donald',
+      },
     ],
     'dc.date.issued': [
       {
         language: null,
-        value: '2015-06-26'
-      }
-    ]
-  }
+        value: '2015-06-26',
+      },
+    ],
+  },
 });
 const rd = createSuccessfulRemoteDataObject(item);
-mockObject = Object.assign(new WorkspaceItem(), { item: observableOf(rd), id: '1234', uuid: '1234' });
+mockObject = Object.assign(new WorkspaceItem(), {
+  item: observableOf(rd),
+  id: '1234',
+  uuid: '1234',
+});
 
 describe('WorkspaceitemActionsComponent', () => {
   beforeEach(waitForAsync(() => {
-
     TestBed.configureTestingModule({
       imports: [
         NgbModule,
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
-            useClass: TranslateLoaderMock
-          }
-        })
+            useClass: TranslateLoaderMock,
+          },
+        }),
       ],
       declarations: [WorkspaceitemActionsComponent],
       providers: [
         Injector,
-        { provide: NotificationsService, useValue: new NotificationsServiceStub() },
+        {
+          provide: NotificationsService,
+          useValue: new NotificationsServiceStub(),
+        },
         { provide: Router, useValue: new RouterStub() },
         { provide: WorkspaceitemDataService, useValue: mockDataService },
         { provide: SearchService, useValue: searchService },
         { provide: RequestService, useValue: requestServce },
-        NgbModal
+        NgbModal,
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(WorkspaceitemActionsComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(WorkspaceitemActionsComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -140,7 +152,9 @@ describe('WorkspaceitemActionsComponent', () => {
       btn.nativeElement.click();
       fixture.detectChanges();
 
-      const confirmBtn: any = ((document as any).querySelector('.modal-footer .btn-danger'));
+      const confirmBtn: any = (document as any).querySelector(
+        '.modal-footer .btn-danger'
+      );
       confirmBtn.click();
 
       fixture.detectChanges();
@@ -156,8 +170,12 @@ describe('WorkspaceitemActionsComponent', () => {
   });
 
   it('should display a success notification on delete success', waitForAsync(() => {
-    spyOn((component as any).modalService, 'open').and.returnValue({ result: Promise.resolve('ok') });
-    mockDataService.delete.and.returnValue(createSuccessfulRemoteDataObject$({}));
+    spyOn((component as any).modalService, 'open').and.returnValue({
+      result: Promise.resolve('ok'),
+    });
+    mockDataService.delete.and.returnValue(
+      createSuccessfulRemoteDataObject$({})
+    );
     spyOn(component, 'reload');
 
     component.confirmDiscard('ok');
@@ -169,8 +187,12 @@ describe('WorkspaceitemActionsComponent', () => {
   }));
 
   it('should display an error notification on delete failure', waitForAsync(() => {
-    spyOn((component as any).modalService, 'open').and.returnValue({ result: Promise.resolve('ok') });
-    mockDataService.delete.and.returnValue(createFailedRemoteDataObject$('Error', 500));
+    spyOn((component as any).modalService, 'open').and.returnValue({
+      result: Promise.resolve('ok'),
+    });
+    mockDataService.delete.and.returnValue(
+      createFailedRemoteDataObject$('Error', 500)
+    );
     spyOn(component, 'reload');
 
     component.confirmDiscard('ok');
@@ -187,7 +209,9 @@ describe('WorkspaceitemActionsComponent', () => {
 
     fixture.whenStable().then(() => {
       expect(searchService.getEndpoint).toHaveBeenCalled();
-      expect(requestServce.removeByHrefSubstring).toHaveBeenCalledWith('discover/search/objects');
+      expect(requestServce.removeByHrefSubstring).toHaveBeenCalledWith(
+        'discover/search/objects'
+      );
     });
   }));
 });

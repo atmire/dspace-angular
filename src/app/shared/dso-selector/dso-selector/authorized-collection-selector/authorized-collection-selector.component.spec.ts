@@ -23,13 +23,19 @@ describe('AuthorizedCollectionSelectorComponent', () => {
 
   beforeEach(waitForAsync(() => {
     collection = Object.assign(new Collection(), {
-      id: 'authorized-collection'
+      id: 'authorized-collection',
     });
     collectionService = jasmine.createSpyObj('collectionService', {
-      getAuthorizedCollection: createSuccessfulRemoteDataObject$(createPaginatedList([collection])),
-      getAuthorizedCollectionByEntityType: createSuccessfulRemoteDataObject$(createPaginatedList([collection]))
+      getAuthorizedCollection: createSuccessfulRemoteDataObject$(
+        createPaginatedList([collection])
+      ),
+      getAuthorizedCollectionByEntityType: createSuccessfulRemoteDataObject$(
+        createPaginatedList([collection])
+      ),
     });
-    notificationsService = jasmine.createSpyObj('notificationsService', ['error']);
+    notificationsService = jasmine.createSpyObj('notificationsService', [
+      'error',
+    ]);
     TestBed.configureTestingModule({
       declarations: [AuthorizedCollectionSelectorComponent, VarDirective],
       imports: [TranslateModule.forRoot(), RouterTestingModule.withRoutes([])],
@@ -38,7 +44,7 @@ describe('AuthorizedCollectionSelectorComponent', () => {
         { provide: CollectionDataService, useValue: collectionService },
         { provide: NotificationsService, useValue: notificationsService },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -52,10 +58,10 @@ describe('AuthorizedCollectionSelectorComponent', () => {
   describe('search', () => {
     describe('when has no entity type', () => {
       it('should call getAuthorizedCollection and return the authorized collection in a SearchResult', (done) => {
-      component.search('', 1).subscribe((resultRD) => {
+        component.search('', 1).subscribe((resultRD) => {
           expect(collectionService.getAuthorizedCollection).toHaveBeenCalled();
-        expect(resultRD.payload.page.length).toEqual(1);
-        expect(resultRD.payload.page[0].indexableObject).toEqual(collection);
+          expect(resultRD.payload.page.length).toEqual(1);
+          expect(resultRD.payload.page[0].indexableObject).toEqual(collection);
           done();
         });
       });
@@ -66,7 +72,9 @@ describe('AuthorizedCollectionSelectorComponent', () => {
         component.entityType = 'test';
         fixture.detectChanges();
         component.search('', 1).subscribe((resultRD) => {
-          expect(collectionService.getAuthorizedCollectionByEntityType).toHaveBeenCalled();
+          expect(
+            collectionService.getAuthorizedCollectionByEntityType
+          ).toHaveBeenCalled();
           expect(resultRD.payload.page.length).toEqual(1);
           expect(resultRD.payload.page[0].indexableObject).toEqual(collection);
           done();

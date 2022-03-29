@@ -2,7 +2,7 @@ import {
   DynamicFormControlLayout,
   DynamicInputModel,
   DynamicInputModelConfig,
-  serializable
+  serializable,
 } from '@ng-dynamic-forms/core';
 import { Subject } from 'rxjs';
 
@@ -24,11 +24,9 @@ export interface DsDynamicInputModelConfig extends DynamicInputModelConfig {
   submissionId: string;
   hasSelectableMetadata: boolean;
   metadataValue?: FormFieldMetadataValueObject;
-
 }
 
 export class DsDynamicInputModel extends DynamicInputModel {
-
   @serializable() vocabularyOptions: VocabularyOptions;
   @serializable() private _languageCodes: LanguageCode[];
   @serializable() private _language: string;
@@ -40,7 +38,10 @@ export class DsDynamicInputModel extends DynamicInputModel {
   @serializable() hasSelectableMetadata: boolean;
   @serializable() metadataValue: FormFieldMetadataValueObject;
 
-  constructor(config: DsDynamicInputModelConfig, layout?: DynamicFormControlLayout) {
+  constructor(
+    config: DsDynamicInputModelConfig,
+    layout?: DynamicFormControlLayout
+  ) {
     super(config, layout);
     this.repeatable = config.repeatable;
     this.metadataFields = config.metadataFields;

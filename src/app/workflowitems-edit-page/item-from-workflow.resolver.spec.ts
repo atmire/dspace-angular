@@ -11,26 +11,24 @@ describe('ItemFromWorkflowResolver', () => {
     const itemUuid = '8888-8888-8888-8888';
     const wfi = {
       id: uuid,
-      item: createSuccessfulRemoteDataObject$({ id: itemUuid })
+      item: createSuccessfulRemoteDataObject$({ id: itemUuid }),
     };
-
 
     beforeEach(() => {
       wfiService = {
-        findById: (id: string) => createSuccessfulRemoteDataObject$(wfi)
+        findById: (id: string) => createSuccessfulRemoteDataObject$(wfi),
       } as any;
       resolver = new ItemFromWorkflowResolver(wfiService, null);
     });
 
     it('should resolve a an item from from the workflow item with the correct id', (done) => {
-      resolver.resolve({ params: { id: uuid } } as any, undefined)
+      resolver
+        .resolve({ params: { id: uuid } } as any, undefined)
         .pipe(first())
-        .subscribe(
-          (resolved) => {
-            expect(resolved.payload.id).toEqual(itemUuid);
-            done();
-          }
-        );
+        .subscribe((resolved) => {
+          expect(resolved.payload.id).toEqual(itemUuid);
+          done();
+        });
     });
   });
 });

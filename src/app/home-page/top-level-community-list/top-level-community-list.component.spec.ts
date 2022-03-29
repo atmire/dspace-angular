@@ -20,7 +20,10 @@ import { CommunityDataService } from '../../core/data/community-data.service';
 import { SelectableListService } from '../../shared/object-list/selectable-list/selectable-list.service';
 import { of as observableOf } from 'rxjs';
 import { PaginationComponentOptions } from '../../shared/pagination/pagination-component-options.model';
-import { SortDirection, SortOptions } from '../../core/cache/models/sort-options.model';
+import {
+  SortDirection,
+  SortOptions,
+} from '../../core/cache/models/sort-options.model';
 import { PaginationService } from '../../core/pagination/pagination.service';
 import { getMockThemeService } from '../../shared/mocks/theme-service.mock';
 import { ThemeService } from '../../shared/theme-support/theme.service';
@@ -33,62 +36,49 @@ describe('TopLevelCommunityList Component', () => {
   let paginationService;
   let themeService;
 
-  const topCommList = [Object.assign(new Community(), {
-    id: '123456789-1',
-    metadata: {
-      'dc.title': [
-        { language: 'en_US', value: 'TopCommunity 1' }
-      ]
-    }
-  }),
+  const topCommList = [
+    Object.assign(new Community(), {
+      id: '123456789-1',
+      metadata: {
+        'dc.title': [{ language: 'en_US', value: 'TopCommunity 1' }],
+      },
+    }),
     Object.assign(new Community(), {
       id: '123456789-2',
       metadata: {
-        'dc.title': [
-          { language: 'en_US', value: 'TopCommunity 2' }
-        ]
-      }
+        'dc.title': [{ language: 'en_US', value: 'TopCommunity 2' }],
+      },
     }),
     Object.assign(new Community(), {
       id: '123456789-3',
       metadata: {
-        'dc.title': [
-          { language: 'en_US', value: 'TopCommunity 3' }
-        ]
-      }
+        'dc.title': [{ language: 'en_US', value: 'TopCommunity 3' }],
+      },
     }),
     Object.assign(new Community(), {
       id: '12345678942',
       metadata: {
-        'dc.title': [
-          { language: 'en_US', value: 'TopCommunity 4' }
-        ]
-      }
+        'dc.title': [{ language: 'en_US', value: 'TopCommunity 4' }],
+      },
     }),
     Object.assign(new Community(), {
       id: '123456789-5',
       metadata: {
-        'dc.title': [
-          { language: 'en_US', value: 'TopCommunity 5' }
-        ]
-      }
+        'dc.title': [{ language: 'en_US', value: 'TopCommunity 5' }],
+      },
     }),
     Object.assign(new Community(), {
       id: '123456789-6',
       metadata: {
-        'dc.title': [
-          { language: 'en_US', value: 'TopCommunity 6' }
-        ]
-      }
+        'dc.title': [{ language: 'en_US', value: 'TopCommunity 6' }],
+      },
     }),
     Object.assign(new Community(), {
       id: '123456789-7',
       metadata: {
-        'dc.title': [
-          { language: 'en_US', value: 'TopCommunity 7' }
-        ]
-      }
-    })
+        'dc.title': [{ language: 'en_US', value: 'TopCommunity 7' }],
+      },
+    }),
   ];
 
   communityDataServiceStub = {
@@ -101,13 +91,17 @@ describe('TopLevelCommunityList Component', () => {
       elementsPerPage = 5;
 
       const startPageIndex = (currentPage - 1) * elementsPerPage;
-      let endPageIndex = (currentPage * elementsPerPage);
+      let endPageIndex = currentPage * elementsPerPage;
       if (endPageIndex > topCommList.length) {
         endPageIndex = topCommList.length;
       }
-      return createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), topCommList.slice(startPageIndex, endPageIndex)));
-
-    }
+      return createSuccessfulRemoteDataObject$(
+        buildPaginatedList(
+          new PageInfo(),
+          topCommList.slice(startPageIndex, endPageIndex)
+        )
+      );
+    },
   };
 
   paginationService = new PaginationServiceStub();
@@ -121,7 +115,7 @@ describe('TopLevelCommunityList Component', () => {
         SharedModule,
         RouterTestingModule.withRoutes([]),
         NgbModule,
-        NoopAnimationsModule
+        NoopAnimationsModule,
       ],
       declarations: [TopLevelCommunityListComponent],
       providers: [
@@ -131,7 +125,7 @@ describe('TopLevelCommunityList Component', () => {
         { provide: SelectableListService, useValue: {} },
         { provide: ThemeService, useValue: themeService },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -139,7 +133,6 @@ describe('TopLevelCommunityList Component', () => {
     fixture = TestBed.createComponent(TopLevelCommunityListComponent);
     comp = fixture.componentInstance;
     fixture.detectChanges();
-
   });
 
   it('should display a list of top-communities', () => {

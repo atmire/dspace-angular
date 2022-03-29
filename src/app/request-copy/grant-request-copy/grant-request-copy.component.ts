@@ -4,8 +4,9 @@ import { map, switchMap } from 'rxjs/operators';
 import { ItemRequest } from '../../core/shared/item-request.model';
 import { Observable } from 'rxjs';
 import {
-  getFirstCompletedRemoteData, getFirstSucceededRemoteDataPayload,
-  redirectOn4xx
+  getFirstCompletedRemoteData,
+  getFirstSucceededRemoteDataPayload,
+  redirectOn4xx,
 } from '../../core/shared/operators';
 import { RemoteData } from '../../core/data/remote-data';
 import { AuthService } from '../../core/auth/auth.service';
@@ -23,7 +24,7 @@ import { NotificationsService } from '../../shared/notifications/notifications.s
 @Component({
   selector: 'ds-grant-request-copy',
   styleUrls: ['./grant-request-copy.component.scss'],
-  templateUrl: './grant-request-copy.component.html'
+  templateUrl: './grant-request-copy.component.html',
 })
 /**
  * Component for granting an item request
@@ -57,21 +58,19 @@ export class GrantRequestCopyComponent implements OnInit {
     private itemDataService: ItemDataService,
     private nameService: DSONameService,
     private itemRequestService: ItemRequestDataService,
-    private notificationsService: NotificationsService,
-  ) {
-
-  }
+    private notificationsService: NotificationsService
+  ) {}
 
   ngOnInit(): void {
     this.itemRequestRD$ = this.route.data.pipe(
       map((data) => data.request as RemoteData<ItemRequest>),
       getFirstCompletedRemoteData(),
-      redirectOn4xx(this.router, this.authService),
+      redirectOn4xx(this.router, this.authService)
     );
 
     const msgParams$ = observableCombineLatest(
       this.itemRequestRD$.pipe(getFirstSucceededRemoteDataPayload()),
-      this.authService.getAuthenticatedUserFromStore(),
+      this.authService.getAuthenticatedUserFromStore()
     ).pipe(
       switchMap(([itemRequest, user]: [ItemRequest, EPerson]) => {
         return this.itemDataService.findById(itemRequest.itemId).pipe(
@@ -85,14 +84,18 @@ export class GrantRequestCopyComponent implements OnInit {
               authorName: user.name,
               authorEmail: user.email,
             });
-          }),
+          })
         );
-      }),
+      })
     );
 
-    this.subject$ = this.translateService.get('grant-request-copy.email.subject');
+    this.subject$ = this.translateService.get(
+      'grant-request-copy.email.subject'
+    );
     this.message$ = msgParams$.pipe(
-      switchMap((params) => this.translateService.get('grant-request-copy.email.message', params)),
+      switchMap((params) =>
+        this.translateService.get('grant-request-copy.email.message', params)
+      )
     );
   }
 
@@ -101,18 +104,30 @@ export class GrantRequestCopyComponent implements OnInit {
    * @param email Subject and contents of the message to send back to the user requesting the item
    */
   grant(email: RequestCopyEmail) {
-    this.itemRequestRD$.pipe(
-      getFirstSucceededRemoteDataPayload(),
-      switchMap((itemRequest: ItemRequest) => this.itemRequestService.grant(itemRequest.token, email, this.suggestOpenAccess)),
-      getFirstCompletedRemoteData()
-    ).subscribe((rd) => {
-      if (rd.hasSucceeded) {
-        this.notificationsService.success(this.translateService.get('grant-request-copy.success'));
-        this.router.navigateByUrl('/');
-      } else {
-        this.notificationsService.error(this.translateService.get('grant-request-copy.error'), rd.errorMessage);
-      }
-    });
+    this.itemRequestRD$
+      .pipe(
+        getFirstSucceededRemoteDataPayload(),
+        switchMap((itemRequest: ItemRequest) =>
+          this.itemRequestService.grant(
+            itemRequest.token,
+            email,
+            this.suggestOpenAccess
+          )
+        ),
+        getFirstCompletedRemoteData()
+      )
+      .subscribe((rd) => {
+        if (rd.hasSucceeded) {
+          this.notificationsService.success(
+            this.translateService.get('grant-request-copy.success')
+          );
+          this.router.navigateByUrl('/');
+        } else {
+          this.notificationsService.error(
+            this.translateService.get('grant-request-copy.error'),
+            rd.errorMessage
+          );
+        }
+      });
   }
-
 }

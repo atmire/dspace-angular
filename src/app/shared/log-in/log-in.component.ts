@@ -6,10 +6,13 @@ import {
   getAuthenticationError,
   getAuthenticationMethods,
   isAuthenticated,
-  isAuthenticationLoading
+  isAuthenticationLoading,
 } from '../../core/auth/selectors';
 import { CoreState } from '../../core/core.reducers';
-import { getForgotPasswordRoute, getRegisterRoute } from '../../app-routing-paths';
+import {
+  getForgotPasswordRoute,
+  getRegisterRoute,
+} from '../../app-routing-paths';
 import { hasValue } from '../empty.util';
 import { AuthService } from '../../core/auth/auth.service';
 import { AuthorizationDataService } from '../../core/data/feature-authorization/authorization-data.service';
@@ -22,10 +25,9 @@ import { FeatureID } from '../../core/data/feature-authorization/feature-id';
 @Component({
   selector: 'ds-log-in',
   templateUrl: './log-in.component.html',
-  styleUrls: ['./log-in.component.scss']
+  styleUrls: ['./log-in.component.scss'],
 })
 export class LogInComponent implements OnInit {
-
   /**
    * A boolean representing if LogInComponent is in a standalone page
    * @type {boolean}
@@ -55,16 +57,14 @@ export class LogInComponent implements OnInit {
    */
   canRegister$: Observable<boolean>;
 
-  constructor(private store: Store<CoreState>,
-              private authService: AuthService,
-              private authorizationService: AuthorizationDataService) {
-  }
+  constructor(
+    private store: Store<CoreState>,
+    private authService: AuthService,
+    private authorizationService: AuthorizationDataService
+  ) {}
 
   ngOnInit(): void {
-
-    this.authMethods = this.store.pipe(
-      select(getAuthenticationMethods),
-    );
+    this.authMethods = this.store.pipe(select(getAuthenticationMethods));
 
     // set loading
     this.loading = this.store.pipe(select(isAuthenticationLoading));
@@ -79,7 +79,9 @@ export class LogInComponent implements OnInit {
       }
     });
 
-    this.canRegister$ = this.authorizationService.isAuthorized(FeatureID.EPersonRegistration);
+    this.canRegister$ = this.authorizationService.isAuthorized(
+      FeatureID.EPersonRegistration
+    );
   }
 
   getRegisterRoute() {

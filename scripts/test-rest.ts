@@ -20,31 +20,31 @@ console.log(`...Testing connection to REST API at ${restUrl}...\n`);
 
 // If SSL enabled, test via HTTPS, else via HTTP
 if (appConfig.rest.ssl) {
-    const req = https.request(restUrl, (res) => {
-        console.log(`RESPONSE: ${res.statusCode} ${res.statusMessage} \n`);
-        res.on('data', (data) => {
-            checkJSONResponse(data);
-        });
+  const req = https.request(restUrl, (res) => {
+    console.log(`RESPONSE: ${res.statusCode} ${res.statusMessage} \n`);
+    res.on('data', (data) => {
+      checkJSONResponse(data);
     });
+  });
 
-    req.on('error', error => {
-        console.error('ERROR connecting to REST API\n' + error);
-    });
+  req.on('error', (error) => {
+    console.error('ERROR connecting to REST API\n' + error);
+  });
 
-    req.end();
+  req.end();
 } else {
-    const req = http.request(restUrl, (res) => {
-        console.log(`RESPONSE: ${res.statusCode} ${res.statusMessage} \n`);
-        res.on('data', (data) => {
-            checkJSONResponse(data);
-        });
+  const req = http.request(restUrl, (res) => {
+    console.log(`RESPONSE: ${res.statusCode} ${res.statusMessage} \n`);
+    res.on('data', (data) => {
+      checkJSONResponse(data);
     });
+  });
 
-    req.on('error', error => {
-        console.error('ERROR connecting to REST API\n' + error);
-    });
+  req.on('error', (error) => {
+    console.error('ERROR connecting to REST API\n' + error);
+  });
 
-    req.end();
+  req.end();
 }
 
 /**
@@ -52,19 +52,29 @@ if (appConfig.rest.ssl) {
  * @param responseData response data
  */
 function checkJSONResponse(responseData: any): any {
-    let parsedData;
-    try {
-        parsedData = JSON.parse(responseData);
-        console.log('Checking JSON returned for validity...');
-        console.log(`\t"dspaceVersion" = ${parsedData.dspaceVersion}`);
-        console.log(`\t"dspaceUI" = ${parsedData.dspaceUI}`);
-        console.log(`\t"dspaceServer" = ${parsedData.dspaceServer}`);
-        console.log(`\t"dspaceServer" property matches UI's "rest" config? ${(parsedData.dspaceServer === appConfig.rest.baseUrl)}`);
-        // Check for "authn" and "sites" in "_links" section as they should always exist (even if no data)!
-        const linksFound: string[] = Object.keys(parsedData._links);
-        console.log(`\tDoes "/api" endpoint have HAL links ("_links" section)? ${linksFound.includes('authn') && linksFound.includes('sites')}`);
-    } catch (err) {
-        console.error('ERROR: INVALID DSPACE REST API! Response is not valid JSON!');
-        console.error(`Response returned:\n${responseData}`);
-    }
+  let parsedData;
+  try {
+    parsedData = JSON.parse(responseData);
+    console.log('Checking JSON returned for validity...');
+    console.log(`\t"dspaceVersion" = ${parsedData.dspaceVersion}`);
+    console.log(`\t"dspaceUI" = ${parsedData.dspaceUI}`);
+    console.log(`\t"dspaceServer" = ${parsedData.dspaceServer}`);
+    console.log(
+      `\t"dspaceServer" property matches UI's "rest" config? ${
+        parsedData.dspaceServer === appConfig.rest.baseUrl
+      }`
+    );
+    // Check for "authn" and "sites" in "_links" section as they should always exist (even if no data)!
+    const linksFound: string[] = Object.keys(parsedData._links);
+    console.log(
+      `\tDoes "/api" endpoint have HAL links ("_links" section)? ${
+        linksFound.includes('authn') && linksFound.includes('sites')
+      }`
+    );
+  } catch (err) {
+    console.error(
+      'ERROR: INVALID DSPACE REST API! Response is not valid JSON!'
+    );
+    console.error(`Response returned:\n${responseData}`);
+  }
 }

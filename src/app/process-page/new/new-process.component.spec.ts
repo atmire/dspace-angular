@@ -34,17 +34,13 @@ describe('NewProcessComponent', () => {
       Object.assign(new ProcessParameter(), { name: '-b', value: '123' }),
       Object.assign(new ProcessParameter(), { name: '-c', value: 'value' }),
     ];
-    scriptService = jasmine.createSpyObj(
-      'scriptService',
-      {
-        invoke: observableOf({
-          response:
-            {
-              isSuccessful: true
-            }
-        })
-      }
-    );
+    scriptService = jasmine.createSpyObj('scriptService', {
+      invoke: observableOf({
+        response: {
+          isSuccessful: true,
+        },
+      }),
+    });
   }
 
   beforeEach(waitForAsync(() => {
@@ -55,21 +51,24 @@ describe('NewProcessComponent', () => {
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
-            useClass: TranslateLoaderMock
-          }
-        })],
+            useClass: TranslateLoaderMock,
+          },
+        }),
+      ],
       declarations: [NewProcessComponent, VarDirective],
       providers: [
         { provide: ScriptDataService, useValue: scriptService },
         { provide: NotificationsService, useClass: NotificationsServiceStub },
         { provide: RequestService, useValue: {} },
-        { provide: ActivatedRoute, useValue: { snapshot: { queryParams: {} } } },
+        {
+          provide: ActivatedRoute,
+          useValue: { snapshot: { queryParams: {} } },
+        },
         { provide: LinkService, useValue: {} },
         { provide: ProcessDataService, useValue: {} },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
-      .compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

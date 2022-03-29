@@ -5,7 +5,10 @@ import { CurationFormComponent } from './curation-form.component';
 import { ScriptDataService } from '../core/data/processes/script-data.service';
 import { ProcessDataService } from '../core/data/processes/process-data.service';
 import { Process } from '../process-page/processes/process.model';
-import { createFailedRemoteDataObject$, createSuccessfulRemoteDataObject$ } from '../shared/remote-data.utils';
+import {
+  createFailedRemoteDataObject$,
+  createSuccessfulRemoteDataObject$,
+} from '../shared/remote-data.utils';
 import { NotificationsServiceStub } from '../shared/testing/notifications-service.stub';
 import { RouterStub } from '../shared/testing/router.stub';
 import { NotificationsService } from '../shared/notifications/notifications.service';
@@ -26,30 +29,34 @@ describe('CurationFormComponent', () => {
   let notificationsService;
   let router;
 
-  const process = Object.assign(new Process(), {processId: 'process-id'});
+  const process = Object.assign(new Process(), { processId: 'process-id' });
 
   beforeEach(waitForAsync(() => {
-
     scriptDataService = jasmine.createSpyObj('scriptDataService', {
-      invoke: createSuccessfulRemoteDataObject$(process)
+      invoke: createSuccessfulRemoteDataObject$(process),
     });
 
     processDataService = jasmine.createSpyObj('processDataService', {
-      findByHref: createSuccessfulRemoteDataObject$(process)
+      findByHref: createSuccessfulRemoteDataObject$(process),
     });
 
-    configurationDataService = jasmine.createSpyObj('configurationDataService', {
-      findByPropertyName: createSuccessfulRemoteDataObject$(Object.assign(new ConfigurationProperty(), {
-        name: 'plugin.named.org.dspace.curate.CurationTask',
-        values: [
-          'org.dspace.ctask.general.ProfileFormats = profileformats',
-          '',
-          'org.dspace.ctask.general.RequiredMetadata = requiredmetadata',
-          'org.dspace.ctask.general.MetadataValueLinkChecker = checklinks',
-          'value-to-be-skipped'
-        ]
-      }))
-    });
+    configurationDataService = jasmine.createSpyObj(
+      'configurationDataService',
+      {
+        findByPropertyName: createSuccessfulRemoteDataObject$(
+          Object.assign(new ConfigurationProperty(), {
+            name: 'plugin.named.org.dspace.curate.CurationTask',
+            values: [
+              'org.dspace.ctask.general.ProfileFormats = profileformats',
+              '',
+              'org.dspace.ctask.general.RequiredMetadata = requiredmetadata',
+              'org.dspace.ctask.general.MetadataValueLinkChecker = checklinks',
+              'value-to-be-skipped',
+            ],
+          })
+        ),
+      }
+    );
 
     notificationsService = new NotificationsServiceStub();
     router = new RouterStub();
@@ -58,13 +65,16 @@ describe('CurationFormComponent', () => {
       imports: [TranslateModule.forRoot(), FormsModule, ReactiveFormsModule],
       declarations: [CurationFormComponent],
       providers: [
-        {provide: ScriptDataService, useValue: scriptDataService},
-        {provide: ProcessDataService, useValue: processDataService},
-        {provide: NotificationsService, useValue: notificationsService},
-        {provide: Router, useValue: router},
-        {provide: ConfigurationDataService, useValue: configurationDataService},
+        { provide: ScriptDataService, useValue: scriptDataService },
+        { provide: ProcessDataService, useValue: processDataService },
+        { provide: NotificationsService, useValue: notificationsService },
+        { provide: Router, useValue: router },
+        {
+          provide: ConfigurationDataService,
+          useValue: configurationDataService,
+        },
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -81,9 +91,15 @@ describe('CurationFormComponent', () => {
 
       const elements = fixture.debugElement.queryAll(By.css('option'));
       expect(elements.length).toEqual(3);
-      expect(elements[0].nativeElement.innerHTML).toContain('curation-task.task.profileformats.label');
-      expect(elements[1].nativeElement.innerHTML).toContain('curation-task.task.requiredmetadata.label');
-      expect(elements[2].nativeElement.innerHTML).toContain('curation-task.task.checklinks.label');
+      expect(elements[0].nativeElement.innerHTML).toContain(
+        'curation-task.task.profileformats.label'
+      );
+      expect(elements[1].nativeElement.innerHTML).toContain(
+        'curation-task.task.requiredmetadata.label'
+      );
+      expect(elements[2].nativeElement.innerHTML).toContain(
+        'curation-task.task.checklinks.label'
+      );
     });
   });
   describe('hasHandleValue', () => {
@@ -102,23 +118,35 @@ describe('CurationFormComponent', () => {
       comp.dsoHandle = 'test-handle';
       comp.submit();
 
-      expect(scriptDataService.invoke).toHaveBeenCalledWith('curate', [
-        {name: '-t', value: 'profileformats'},
-        {name: '-i', value: 'test-handle'},
-      ], []);
+      expect(scriptDataService.invoke).toHaveBeenCalledWith(
+        'curate',
+        [
+          { name: '-t', value: 'profileformats' },
+          { name: '-i', value: 'test-handle' },
+        ],
+        []
+      );
       expect(notificationsService.success).toHaveBeenCalled();
-      expect(router.navigateByUrl).toHaveBeenCalledWith(getProcessDetailRoute('process-id'));
+      expect(router.navigateByUrl).toHaveBeenCalledWith(
+        getProcessDetailRoute('process-id')
+      );
     });
     it('should the selected process and handle to the scriptservice and stay on the page on error', () => {
-      (scriptDataService.invoke as jasmine.Spy).and.returnValue(createFailedRemoteDataObject$('Error', 500));
+      (scriptDataService.invoke as jasmine.Spy).and.returnValue(
+        createFailedRemoteDataObject$('Error', 500)
+      );
 
       comp.dsoHandle = 'test-handle';
       comp.submit();
 
-      expect(scriptDataService.invoke).toHaveBeenCalledWith('curate', [
-        {name: '-t', value: 'profileformats'},
-        {name: '-i', value: 'test-handle'},
-      ], []);
+      expect(scriptDataService.invoke).toHaveBeenCalledWith(
+        'curate',
+        [
+          { name: '-t', value: 'profileformats' },
+          { name: '-i', value: 'test-handle' },
+        ],
+        []
+      );
       expect(notificationsService.error).toHaveBeenCalled();
       expect(processDataService.findByHref).not.toHaveBeenCalled();
       expect(router.navigateByUrl).not.toHaveBeenCalled();
@@ -129,18 +157,25 @@ describe('CurationFormComponent', () => {
 
     comp.submit();
 
-    expect(scriptDataService.invoke).toHaveBeenCalledWith('curate', [
-      {name: '-t', value: 'profileformats'},
-      {name: '-i', value: 'form-handle'},
-    ], []);
+    expect(scriptDataService.invoke).toHaveBeenCalledWith(
+      'curate',
+      [
+        { name: '-t', value: 'profileformats' },
+        { name: '-i', value: 'form-handle' },
+      ],
+      []
+    );
   });
   it('should use "all" when the handle provided by the form is empty and when no dsoHandle is provided', () => {
-
     comp.submit();
 
-    expect(scriptDataService.invoke).toHaveBeenCalledWith('curate', [
-      {name: '-t', value: 'profileformats'},
-      {name: '-i', value: 'all'},
-    ], []);
+    expect(scriptDataService.invoke).toHaveBeenCalledWith(
+      'curate',
+      [
+        { name: '-t', value: 'profileformats' },
+        { name: '-i', value: 'all' },
+      ],
+      []
+    );
   });
 });

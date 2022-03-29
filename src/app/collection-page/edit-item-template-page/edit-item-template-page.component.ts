@@ -18,7 +18,6 @@ import { AlertType } from '../../shared/alert/aletr-type';
  * Component for editing the item template of a collection
  */
 export class EditItemTemplatePageComponent implements OnInit {
-
   /**
    * The collection to edit the item template for
    */
@@ -35,15 +34,21 @@ export class EditItemTemplatePageComponent implements OnInit {
    */
   AlertTypeEnum = AlertType;
 
-  constructor(protected route: ActivatedRoute,
-              public itemTemplateService: ItemTemplateDataService) {
-  }
+  constructor(
+    protected route: ActivatedRoute,
+    public itemTemplateService: ItemTemplateDataService
+  ) {}
 
   ngOnInit(): void {
-    this.collectionRD$ = this.route.parent.data.pipe(first(), map((data) => data.dso));
+    this.collectionRD$ = this.route.parent.data.pipe(
+      first(),
+      map((data) => data.dso)
+    );
     this.itemRD$ = this.collectionRD$.pipe(
       getFirstSucceededRemoteDataPayload(),
-      switchMap((collection) => this.itemTemplateService.findByCollectionID(collection.id)),
+      switchMap((collection) =>
+        this.itemTemplateService.findByCollectionID(collection.id)
+      )
     );
   }
 
@@ -58,5 +63,4 @@ export class EditItemTemplatePageComponent implements OnInit {
       return '';
     }
   }
-
 }

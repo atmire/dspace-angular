@@ -1,5 +1,15 @@
-import { ComponentFixture, inject, TestBed, waitForAsync } from '@angular/core/testing';
-import { ChangeDetectorRef, Component, Injector, NO_ERRORS_SCHEMA } from '@angular/core';
+import {
+  ComponentFixture,
+  inject,
+  TestBed,
+  waitForAsync,
+} from '@angular/core/testing';
+import {
+  ChangeDetectorRef,
+  Component,
+  Injector,
+  NO_ERRORS_SCHEMA,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { cold, getTestScheduler } from 'jasmine-marbles';
@@ -7,7 +17,10 @@ import { of as observableOf } from 'rxjs';
 import { TestScheduler } from 'rxjs/testing';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { createFailedRemoteDataObject, createSuccessfulRemoteDataObject } from '../../remote-data.utils';
+import {
+  createFailedRemoteDataObject,
+  createSuccessfulRemoteDataObject,
+} from '../../remote-data.utils';
 import { createTestComponent } from '../../testing/utils.test';
 import { LinkService } from '../../../core/cache/builders/link.service';
 import { NotificationsService } from '../../notifications/notifications.service';
@@ -45,52 +58,48 @@ describe('ResourcePolicyEditComponent test suite', () => {
     uuid: 'resource-policy-1',
     _links: {
       eperson: {
-        href: 'https://rest.api/rest/api/eperson'
+        href: 'https://rest.api/rest/api/eperson',
       },
       group: {
-        href: 'https://rest.api/rest/api/group'
+        href: 'https://rest.api/rest/api/group',
       },
       self: {
-        href: 'https://rest.api/rest/api/resourcepolicies/1'
+        href: 'https://rest.api/rest/api/resourcepolicies/1',
       },
     },
     eperson: observableOf(createSuccessfulRemoteDataObject({})),
-    group: observableOf(createSuccessfulRemoteDataObject(GroupMock))
+    group: observableOf(createSuccessfulRemoteDataObject(GroupMock)),
   };
 
   const resourcePolicyService: any = getMockResourcePolicyService();
   const linkService: any = getMockLinkService();
   const routeStub = {
     data: observableOf({
-      resourcePolicy: createSuccessfulRemoteDataObject(resourcePolicy)
-    })
+      resourcePolicy: createSuccessfulRemoteDataObject(resourcePolicy),
+    }),
   };
   const routerStub = Object.assign(new RouterStub(), {
-    url: `url/edit`
+    url: `url/edit`,
   });
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        TranslateModule.forRoot()
-      ],
-      declarations: [
-        ResourcePolicyEditComponent,
-        TestComponent
-      ],
+      imports: [TranslateModule.forRoot()],
+      declarations: [ResourcePolicyEditComponent, TestComponent],
       providers: [
         { provide: LinkService, useValue: linkService },
         { provide: ActivatedRoute, useValue: routeStub },
-        { provide: NotificationsService, useValue: new NotificationsServiceStub() },
+        {
+          provide: NotificationsService,
+          useValue: new NotificationsServiceStub(),
+        },
         { provide: ResourcePolicyService, useValue: resourcePolicyService },
         { provide: Router, useValue: routerStub },
         ResourcePolicyEditComponent,
         ChangeDetectorRef,
-        Injector
+        Injector,
       ],
-      schemas: [
-        NO_ERRORS_SCHEMA
-      ]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -103,7 +112,10 @@ describe('ResourcePolicyEditComponent test suite', () => {
       const html = `
         <ds-resource-policy-edit></ds-resource-policy-edit>`;
 
-      testFixture = createTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
+      testFixture = createTestComponent(
+        html,
+        TestComponent
+      ) as ComponentFixture<TestComponent>;
       testComp = testFixture.componentInstance;
     });
 
@@ -111,15 +123,15 @@ describe('ResourcePolicyEditComponent test suite', () => {
       testFixture.destroy();
     });
 
-    it('should create ResourcePolicyEditComponent', inject([ResourcePolicyEditComponent], (app: ResourcePolicyEditComponent) => {
-
-      expect(app).toBeDefined();
-
-    }));
+    it('should create ResourcePolicyEditComponent', inject(
+      [ResourcePolicyEditComponent],
+      (app: ResourcePolicyEditComponent) => {
+        expect(app).toBeDefined();
+      }
+    ));
   });
 
   describe('', () => {
-
     beforeEach(() => {
       // initTestScheduler();
       fixture = TestBed.createComponent(ResourcePolicyEditComponent);
@@ -148,24 +160,30 @@ describe('ResourcePolicyEditComponent test suite', () => {
 
     it('should return true when is Processing', (done) => {
       compAsAny.processing$.next(true);
-      expect(comp.isProcessing()).toBeObservable(cold('a', {
-        a: true
-      }));
+      expect(comp.isProcessing()).toBeObservable(
+        cold('a', {
+          a: true,
+        })
+      );
       done();
     });
 
     it('should return false when is not Processing', (done) => {
       compAsAny.processing$.next(false);
-      expect(comp.isProcessing()).toBeObservable(cold('a', {
-        a: false
-      }));
+      expect(comp.isProcessing()).toBeObservable(
+        cold('a', {
+          a: false,
+        })
+      );
       done();
     });
 
     describe('', () => {
       beforeEach(() => {
         spyOn(comp, 'redirectToAuthorizationsPage').and.callThrough();
-        compAsAny.resourcePolicyService.update.and.returnValue(observableOf(createSuccessfulRemoteDataObject(resourcePolicy)));
+        compAsAny.resourcePolicyService.update.and.returnValue(
+          observableOf(createSuccessfulRemoteDataObject(resourcePolicy))
+        );
 
         compAsAny.targetResourceUUID = 'itemUUID';
 
@@ -173,7 +191,7 @@ describe('ResourcePolicyEditComponent test suite', () => {
         eventPayload.object = submittedResourcePolicy;
         eventPayload.target = {
           type: 'group',
-          uuid: GroupMock.id
+          uuid: GroupMock.id,
         };
 
         compAsAny.resourcePolicy = resourcePolicy;
@@ -181,41 +199,46 @@ describe('ResourcePolicyEditComponent test suite', () => {
         updatedObject = Object.assign({}, submittedResourcePolicy, {
           id: resourcePolicy.id,
           type: RESOURCE_POLICY.value,
-          _links: resourcePolicy._links
+          _links: resourcePolicy._links,
         });
       });
 
       it('should notify success when update is successful', () => {
-        compAsAny.resourcePolicyService.update.and.returnValue(observableOf(createSuccessfulRemoteDataObject(resourcePolicy)));
+        compAsAny.resourcePolicyService.update.and.returnValue(
+          observableOf(createSuccessfulRemoteDataObject(resourcePolicy))
+        );
 
         scheduler = getTestScheduler();
         scheduler.schedule(() => comp.updateResourcePolicy(eventPayload));
         scheduler.flush();
 
-        expect(compAsAny.resourcePolicyService.update).toHaveBeenCalledWith(updatedObject);
+        expect(compAsAny.resourcePolicyService.update).toHaveBeenCalledWith(
+          updatedObject
+        );
         expect(comp.redirectToAuthorizationsPage).toHaveBeenCalled();
       });
 
       it('should notify error when update is not successful', () => {
-        compAsAny.resourcePolicyService.update.and.returnValue(observableOf(createFailedRemoteDataObject()));
+        compAsAny.resourcePolicyService.update.and.returnValue(
+          observableOf(createFailedRemoteDataObject())
+        );
 
         scheduler = getTestScheduler();
         scheduler.schedule(() => comp.updateResourcePolicy(eventPayload));
         scheduler.flush();
 
-        expect(compAsAny.resourcePolicyService.update).toHaveBeenCalledWith(updatedObject);
+        expect(compAsAny.resourcePolicyService.update).toHaveBeenCalledWith(
+          updatedObject
+        );
         expect(comp.redirectToAuthorizationsPage).not.toHaveBeenCalled();
       });
     });
   });
-
 });
 
 // declare a test component
 @Component({
   selector: 'ds-test-cmp',
-  template: ``
+  template: ``,
 })
-class TestComponent {
-
-}
+class TestComponent {}

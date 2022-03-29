@@ -86,5 +86,4 @@ export class ItemRequest implements CacheableObject {
     item: HALLink;
     bitstream: HALLink;
   };
-
 }

@@ -14,13 +14,13 @@ describe('NameFieldParser test suite', () => {
   const parserOptions: ParserOptions = {
     readOnly: false,
     submissionScope: 'testScopeUUID',
-    collectionUUID: null
+    collectionUUID: null,
   };
 
   beforeEach(() => {
     field1 = {
       input: {
-        type: 'name'
+        type: 'name',
       },
       label: 'Name',
       mandatory: 'false',
@@ -29,13 +29,14 @@ describe('NameFieldParser test suite', () => {
       selectableMetadata: [
         {
           metadata: 'name',
-        }
+        },
       ],
-      languageCodes: []
+      languageCodes: [],
     } as FormFieldModel;
 
     field2 = {
-      hints: 'If the item has any identification numbers or codes associated with↵	it, please enter the types and the actual numbers or codes.',
+      hints:
+        'If the item has any identification numbers or codes associated with↵	it, please enter the types and the actual numbers or codes.',
       input: { type: 'onebox' },
       label: 'Identifiers',
       languageCodes: [],
@@ -45,13 +46,13 @@ describe('NameFieldParser test suite', () => {
         { metadata: 'dc.identifier.issn', label: 'ISSN' },
         { metadata: 'dc.identifier.other', label: 'Other' },
         { metadata: 'dc.identifier.ismn', label: 'ISMN' },
-        { metadata: 'dc.identifier.govdoc', label: 'Gov\'t Doc #' },
+        { metadata: 'dc.identifier.govdoc', label: "Gov't Doc #" },
         { metadata: 'dc.identifier.uri', label: 'URI' },
         { metadata: 'dc.identifier.isbn', label: 'ISBN' },
         { metadata: 'dc.identifier.doi', label: 'DOI' },
         { metadata: 'dc.identifier.pmid', label: 'PubMed ID' },
-        { metadata: 'dc.identifier.arxiv', label: 'arXiv' }
-      ]
+        { metadata: 'dc.identifier.arxiv', label: 'arXiv' },
+      ],
     } as FormFieldModel;
 
     field3 = {
@@ -63,20 +64,30 @@ describe('NameFieldParser test suite', () => {
       selectableMetadata: [
         {
           metadata: 'title',
-        }
+        },
       ],
-      languageCodes: []
+      languageCodes: [],
     } as FormFieldModel;
   });
 
   it('should init parser properly', () => {
-    const parser = new NameFieldParser(submissionId, field1, initFormValues, parserOptions);
+    const parser = new NameFieldParser(
+      submissionId,
+      field1,
+      initFormValues,
+      parserOptions
+    );
 
     expect(parser instanceof NameFieldParser).toBe(true);
   });
 
   it('should return a DynamicConcatModel object when repeatable option is false', () => {
-    const parser = new NameFieldParser(submissionId, field2, initFormValues, parserOptions);
+    const parser = new NameFieldParser(
+      submissionId,
+      field2,
+      initFormValues,
+      parserOptions
+    );
 
     const fieldModel = parser.parse();
 
@@ -84,7 +95,12 @@ describe('NameFieldParser test suite', () => {
   });
 
   it('should return a DynamicConcatModel object with the correct separator', () => {
-    const parser = new NameFieldParser(submissionId, field2, initFormValues, parserOptions);
+    const parser = new NameFieldParser(
+      submissionId,
+      field2,
+      initFormValues,
+      parserOptions
+    );
 
     const fieldModel = parser.parse();
 
@@ -95,13 +111,22 @@ describe('NameFieldParser test suite', () => {
     initFormValues = {
       name: [new FormFieldMetadataValueObject('test, name')],
     };
-    const expectedValue = new FormFieldMetadataValueObject('test, name', undefined, undefined, 'test');
+    const expectedValue = new FormFieldMetadataValueObject(
+      'test, name',
+      undefined,
+      undefined,
+      'test'
+    );
 
-    const parser = new NameFieldParser(submissionId, field1, initFormValues, parserOptions);
+    const parser = new NameFieldParser(
+      submissionId,
+      field1,
+      initFormValues,
+      parserOptions
+    );
 
     const fieldModel = parser.parse();
 
     expect(fieldModel.value).toEqual(expectedValue);
   });
-
 });

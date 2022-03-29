@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  Resolve,
+  RouterStateSnapshot,
+} from '@angular/router';
 import { RemoteData } from '../core/data/remote-data';
 import { Observable } from 'rxjs';
 import { Process } from './processes/process.model';
@@ -12,8 +16,7 @@ import { getFirstCompletedRemoteData } from '../core/shared/operators';
  */
 @Injectable()
 export class ProcessPageResolver implements Resolve<RemoteData<Process>> {
-  constructor(private processService: ProcessDataService) {
-  }
+  constructor(private processService: ProcessDataService) {}
 
   /**
    * Method for resolving a process based on the parameters in the current route
@@ -22,9 +25,12 @@ export class ProcessPageResolver implements Resolve<RemoteData<Process>> {
    * @returns Observable<<RemoteData<Process>> Emits the found process based on the parameters in the current route,
    * or an error if something went wrong
    */
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<RemoteData<Process>> {
-    return this.processService.findById(route.params.id, false, true, followLink('script')).pipe(
-      getFirstCompletedRemoteData(),
-    );
+  resolve(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<RemoteData<Process>> {
+    return this.processService
+      .findById(route.params.id, false, true, followLink('script'))
+      .pipe(getFirstCompletedRemoteData());
   }
 }

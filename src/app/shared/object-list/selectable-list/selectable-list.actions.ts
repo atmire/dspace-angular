@@ -17,7 +17,7 @@ export const SelectableListActionTypes = {
   DESELECT: type('dspace/selectable-lists/DESELECT'),
   DESELECT_SINGLE: type('dspace/selectable-lists/DESELECT_SINGLE'),
   SET_SELECTION: type('dspace/selectable-lists/SET_SELECTION'),
-  DESELECT_ALL: type('dspace/selectable-lists/DESELECT_ALL')
+  DESELECT_ALL: type('dspace/selectable-lists/DESELECT_ALL'),
 };
 
 /**
@@ -25,8 +25,7 @@ export const SelectableListActionTypes = {
  */
 export abstract class SelectableListAction implements Action {
   // eslint-disable-next-line @typescript-eslint/no-shadow
-  constructor(public type, public id: string) {
-  }
+  constructor(public type, public id: string) {}
 }
 
 /**
@@ -45,7 +44,7 @@ export class SelectableListSelectAction extends SelectableListAction {
  */
 export class SelectableListSelectSingleAction extends SelectableListAction {
   payload: {
-    object: ListableObject,
+    object: ListableObject;
   };
 
   constructor(id: string, object: ListableObject) {

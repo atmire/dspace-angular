@@ -13,10 +13,9 @@ import { MetadataValue } from '../../../core/shared/metadata.models';
 @Component({
   selector: 'ds-metadata-uri-values',
   styleUrls: ['./metadata-uri-values.component.scss'],
-  templateUrl: './metadata-uri-values.component.html'
+  templateUrl: './metadata-uri-values.component.html',
 })
 export class MetadataUriValuesComponent extends MetadataValuesComponent {
-
   /**
    * Optional text to replace the links with
    * If undefined, the metadata value (uri) is displayed

@@ -18,45 +18,49 @@ describe(`AuthRequestService`, () => {
   let service: AuthRequestService;
   let testScheduler;
 
-    class TestAuthRequestService extends AuthRequestService {
-      constructor(
-        hes: HALEndpointService,
-        rs: RequestService,
-        rdbs: RemoteDataBuildService
-      ) {
-        super(hes, rs, rdbs);
-      }
-
-      protected createShortLivedTokenRequest(href: string): PostRequest {
-        return new PostRequest(this.requestService.generateRequestId(), href);
-      }
+  class TestAuthRequestService extends AuthRequestService {
+    constructor(
+      hes: HALEndpointService,
+      rs: RequestService,
+      rdbs: RemoteDataBuildService
+    ) {
+      super(hes, rs, rdbs);
     }
 
-    const init = (cold: typeof TestScheduler.prototype.createColdObservable) => {
-      endpointURL = 'https://rest.api/auth';
-      shortLivedToken = Object.assign(new ShortLivedToken(), {
-        value: 'some-token'
-      });
-      shortLivedTokenRD = createSuccessfulRemoteDataObject(shortLivedToken);
+    protected createShortLivedTokenRequest(href: string): PostRequest {
+      return new PostRequest(this.requestService.generateRequestId(), href);
+    }
+  }
 
-      halService = jasmine.createSpyObj('halService', {
-        'getEndpoint': cold('a', { a: endpointURL })
-      });
-      requestService = jasmine.createSpyObj('requestService', {
-        'send': null
-      });
-      rdbService = jasmine.createSpyObj('rdbService', {
-        'buildFromRequestUUID': cold('a', { a: shortLivedTokenRD })
-      });
-
-      service = new TestAuthRequestService(halService, requestService, rdbService);
-    };
-
-    beforeEach(() => {
-      testScheduler = new TestScheduler((actual, expected) => {
-        expect(actual).toEqual(expected);
-      });
+  const init = (cold: typeof TestScheduler.prototype.createColdObservable) => {
+    endpointURL = 'https://rest.api/auth';
+    shortLivedToken = Object.assign(new ShortLivedToken(), {
+      value: 'some-token',
     });
+    shortLivedTokenRD = createSuccessfulRemoteDataObject(shortLivedToken);
+
+    halService = jasmine.createSpyObj('halService', {
+      getEndpoint: cold('a', { a: endpointURL }),
+    });
+    requestService = jasmine.createSpyObj('requestService', {
+      send: null,
+    });
+    rdbService = jasmine.createSpyObj('rdbService', {
+      buildFromRequestUUID: cold('a', { a: shortLivedTokenRD }),
+    });
+
+    service = new TestAuthRequestService(
+      halService,
+      requestService,
+      rdbService
+    );
+  };
+
+  beforeEach(() => {
+    testScheduler = new TestScheduler((actual, expected) => {
+      expect(actual).toEqual(expected);
+    });
+  });
 
   describe(`getShortlivedToken`, () => {
     it(`should call createShortLivedTokenRequest with the url for the endpoint`, () => {
@@ -67,7 +71,9 @@ describe(`AuthRequestService`, () => {
         // we're not testing the outcome in this test, a .toBe(…) isn't necessary
         expectObservable(service.getShortlivedToken());
         flush();
-        expect((service as any).createShortLivedTokenRequest).toHaveBeenCalledWith(`${endpointURL}/shortlivedtokens`);
+        expect(
+          (service as any).createShortLivedTokenRequest
+        ).toHaveBeenCalledWith(`${endpointURL}/shortlivedtokens`);
       });
     });
   });

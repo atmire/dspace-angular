@@ -7,10 +7,18 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { NouisliderModule } from 'ng2-nouislider';
 import {
-  NgbDatepickerModule, NgbDropdownModule, NgbNavModule, NgbPaginationModule, NgbTimepickerModule, NgbTooltipModule,
+  NgbDatepickerModule,
+  NgbDropdownModule,
+  NgbNavModule,
+  NgbPaginationModule,
+  NgbTimepickerModule,
+  NgbTooltipModule,
   NgbTypeaheadModule,
 } from '@ng-bootstrap/ng-bootstrap';
-import { MissingTranslationHandler, TranslateModule } from '@ngx-translate/core';
+import {
+  MissingTranslationHandler,
+  TranslateModule,
+} from '@ngx-translate/core';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FileUploadModule } from 'ng2-file-upload';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
@@ -193,14 +201,17 @@ const MODULES = [
   NouisliderModule,
   MomentModule,
   DragDropModule,
-  CdkTreeModule
+  CdkTreeModule,
 ];
 
 const ROOT_MODULES = [
   TranslateModule.forChild({
-    missingTranslationHandler: { provide: MissingTranslationHandler, useClass: MissingTranslationHelper },
-    useDefaultLang: true
-  })
+    missingTranslationHandler: {
+      provide: MissingTranslationHandler,
+      useClass: MissingTranslationHelper,
+    },
+    useDefaultLang: true,
+  }),
 ];
 
 const PIPES = [
@@ -214,7 +225,7 @@ const PIPES = [
   ObjectKeysPipe,
   ObjectValuesPipe,
   ConsolePipe,
-  ObjNgFor
+  ObjNgFor,
 ];
 
 const COMPONENTS = [
@@ -408,13 +419,12 @@ const SHARED_ITEM_PAGE_COMPONENTS = [
   GenericItemPageFieldComponent,
   MetadataRepresentationListComponent,
   RelatedItemsComponent,
-
 ];
 
 const PROVIDERS = [
   TruncatableService,
   MockAdminGuard,
-  AbstractTrackableComponent
+  AbstractTrackableComponent,
 ];
 
 const DIRECTIVES = [
@@ -434,14 +444,11 @@ const DIRECTIVES = [
   ClaimedTaskActionsDirective,
   NgForTrackByIdDirective,
   MetadataFieldValidator,
-  HoverClassDirective
+  HoverClassDirective,
 ];
 
 @NgModule({
-  imports: [
-    ...MODULES,
-    ...ROOT_MODULES
-  ],
+  imports: [...MODULES, ...ROOT_MODULES],
   declarations: [
     ...PIPES,
     ...COMPONENTS,
@@ -450,17 +457,15 @@ const DIRECTIVES = [
     ItemVersionsSummaryModalComponent,
     ItemVersionsDeleteModalComponent,
   ],
-  providers: [
-    ...PROVIDERS
-  ],
+  providers: [...PROVIDERS],
   exports: [
     ...MODULES,
     ...PIPES,
     ...COMPONENTS,
     ...SHARED_ITEM_PAGE_COMPONENTS,
     ...DIRECTIVES,
-    TranslateModule
-  ]
+    TranslateModule,
+  ],
 })
 
 /**
@@ -474,7 +479,7 @@ export class SharedModule {
   static withEntryComponents() {
     return {
       ngModule: SharedModule,
-      providers: ENTRY_COMPONENTS.map((component) => ({ provide: component }))
+      providers: ENTRY_COMPONENTS.map((component) => ({ provide: component })),
     };
   }
 }

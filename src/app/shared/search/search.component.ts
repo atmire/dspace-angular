@@ -1,8 +1,22 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Inject,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged, filter, map, switchMap } from 'rxjs/operators';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  filter,
+  map,
+  switchMap,
+} from 'rxjs/operators';
 import { uniqueId } from 'lodash';
 
 import { PaginatedList } from '../../core/data/paginated-list.model';
@@ -44,7 +58,6 @@ import { CollectionElementLinkType } from '../object-collection/collection-eleme
  * This component renders a sidebar, a search input bar and the search results.
  */
 export class SearchComponent implements OnInit {
-
   /**
    * The list of available configuration options
    */
@@ -142,12 +155,16 @@ export class SearchComponent implements OnInit {
   /**
    * The current configuration used during the search
    */
-  currentConfiguration$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  currentConfiguration$: BehaviorSubject<string> = new BehaviorSubject<string>(
+    ''
+  );
 
   /**
    * The current context used during the search
    */
-  currentContext$: BehaviorSubject<Context> = new BehaviorSubject<Context>(null);
+  currentContext$: BehaviorSubject<Context> = new BehaviorSubject<Context>(
+    null
+  );
 
   /**
    * The current sort options used
@@ -157,22 +174,28 @@ export class SearchComponent implements OnInit {
   /**
    * The current sort options used
    */
-  currentSortOptions$: BehaviorSubject<SortOptions> = new BehaviorSubject<SortOptions>(null);
+  currentSortOptions$: BehaviorSubject<SortOptions> =
+    new BehaviorSubject<SortOptions>(null);
 
   /**
    * The current search results
    */
-  resultsRD$: BehaviorSubject<RemoteData<PaginatedList<SearchResult<DSpaceObject>>>> = new BehaviorSubject(null);
+  resultsRD$: BehaviorSubject<
+    RemoteData<PaginatedList<SearchResult<DSpaceObject>>>
+  > = new BehaviorSubject(null);
 
   /**
    * The current paginated search options
    */
-  searchOptions$: BehaviorSubject<PaginatedSearchOptions> = new BehaviorSubject<PaginatedSearchOptions>(null);
+  searchOptions$: BehaviorSubject<PaginatedSearchOptions> =
+    new BehaviorSubject<PaginatedSearchOptions>(null);
 
   /**
    * The available sort options list
    */
-  sortOptionsList$: BehaviorSubject<SortOptions[]> = new BehaviorSubject<SortOptions[]>([]);
+  sortOptionsList$: BehaviorSubject<SortOptions[]> = new BehaviorSubject<
+    SortOptions[]
+  >([]);
 
   /**
    * TRUE if the search option are initialized
@@ -202,24 +225,30 @@ export class SearchComponent implements OnInit {
   /**
    * Emits an event with the current search result entries
    */
-  @Output() resultFound: EventEmitter<SearchObjects<DSpaceObject>> = new EventEmitter<SearchObjects<DSpaceObject>>();
+  @Output() resultFound: EventEmitter<SearchObjects<DSpaceObject>> =
+    new EventEmitter<SearchObjects<DSpaceObject>>();
 
   /**
    * Emits event when the user deselect result entry
    */
-  @Output() deselectObject: EventEmitter<ListableObject> = new EventEmitter<ListableObject>();
+  @Output() deselectObject: EventEmitter<ListableObject> =
+    new EventEmitter<ListableObject>();
 
   /**
    * Emits event when the user select result entry
    */
-  @Output() selectObject: EventEmitter<ListableObject> = new EventEmitter<ListableObject>();
+  @Output() selectObject: EventEmitter<ListableObject> =
+    new EventEmitter<ListableObject>();
 
-  constructor(protected service: SearchService,
-              protected sidebarService: SidebarService,
-              protected windowService: HostWindowService,
-              @Inject(SEARCH_CONFIG_SERVICE) public searchConfigService: SearchConfigurationService,
-              protected routeService: RouteService,
-              protected router: Router) {
+  constructor(
+    protected service: SearchService,
+    protected sidebarService: SidebarService,
+    protected windowService: HostWindowService,
+    @Inject(SEARCH_CONFIG_SERVICE)
+    public searchConfigService: SearchConfigurationService,
+    protected routeService: RouteService,
+    protected router: Router
+  ) {
     this.isXsOrSm$ = this.windowService.isXsOrSm();
   }
 
@@ -251,50 +280,84 @@ export class SearchComponent implements OnInit {
 
     // Determinate PaginatedSearchOptions and listen to any update on it
     const configuration$: Observable<string> = this.searchConfigService
-      .getCurrentConfiguration(this.configuration).pipe(distinctUntilChanged());
+      .getCurrentConfiguration(this.configuration)
+      .pipe(distinctUntilChanged());
     const searchSortOptions$: Observable<SortOptions[]> = configuration$.pipe(
-      switchMap((configuration: string) => this.searchConfigService
-        .getConfigurationSearchConfig(configuration, this.service)),
-      map((searchConfig: SearchConfig) => this.searchConfigService.getConfigurationSortOptions(searchConfig)),
+      switchMap((configuration: string) =>
+        this.searchConfigService.getConfigurationSearchConfig(
+          configuration,
+          this.service
+        )
+      ),
+      map((searchConfig: SearchConfig) =>
+        this.searchConfigService.getConfigurationSortOptions(searchConfig)
+      ),
       distinctUntilChanged()
     );
     const sortOption$: Observable<SortOptions> = searchSortOptions$.pipe(
       switchMap((searchSortOptions: SortOptions[]) => {
         const defaultSort: SortOptions = searchSortOptions[0];
-        return this.searchConfigService.getCurrentSort(this.paginationId, defaultSort);
+        return this.searchConfigService.getCurrentSort(
+          this.paginationId,
+          defaultSort
+        );
       }),
       distinctUntilChanged()
     );
-    const searchOptions$: Observable<PaginatedSearchOptions> = this.getSearchOptions().pipe(distinctUntilChanged());
+    const searchOptions$: Observable<PaginatedSearchOptions> =
+      this.getSearchOptions().pipe(distinctUntilChanged());
 
-    this.sub = combineLatest([configuration$, searchSortOptions$, searchOptions$, sortOption$]).pipe(
-      filter(([configuration, searchSortOptions, searchOptions, sortOption]: [string, SortOptions[], PaginatedSearchOptions, SortOptions]) => {
-        // filter for search options related to instanced paginated id
-        return searchOptions.pagination.id === this.paginationId;
-      }),
-      debounceTime(100)
-    ).subscribe(([configuration, searchSortOptions, searchOptions, sortOption]: [string, SortOptions[], PaginatedSearchOptions, SortOptions]) => {
-      // Build the PaginatedSearchOptions object
-      const combinedOptions = Object.assign({}, searchOptions,
-        {
-          configuration: searchOptions.configuration || configuration,
-          sort: sortOption || searchOptions.sort
-        });
-      const newSearchOptions = new PaginatedSearchOptions(combinedOptions);
-      // check if search options are changed
-      // if so retrieve new related results otherwise skip it
-      if (JSON.stringify(newSearchOptions) !== JSON.stringify(this.searchOptions$.value)) {
-        // Initialize variables
-        this.currentConfiguration$.next(configuration);
-        this.currentSortOptions$.next(newSearchOptions.sort);
-        this.currentScope$.next(newSearchOptions.scope);
-        this.sortOptionsList$.next(searchSortOptions);
-        this.searchOptions$.next(newSearchOptions);
-        this.initialized$.next(true);
-        // retrieve results
-        this.retrieveSearchResults(newSearchOptions);
-      }
-    });
+    this.sub = combineLatest([
+      configuration$,
+      searchSortOptions$,
+      searchOptions$,
+      sortOption$,
+    ])
+      .pipe(
+        filter(
+          ([configuration, searchSortOptions, searchOptions, sortOption]: [
+            string,
+            SortOptions[],
+            PaginatedSearchOptions,
+            SortOptions
+          ]) => {
+            // filter for search options related to instanced paginated id
+            return searchOptions.pagination.id === this.paginationId;
+          }
+        ),
+        debounceTime(100)
+      )
+      .subscribe(
+        ([configuration, searchSortOptions, searchOptions, sortOption]: [
+          string,
+          SortOptions[],
+          PaginatedSearchOptions,
+          SortOptions
+        ]) => {
+          // Build the PaginatedSearchOptions object
+          const combinedOptions = Object.assign({}, searchOptions, {
+            configuration: searchOptions.configuration || configuration,
+            sort: sortOption || searchOptions.sort,
+          });
+          const newSearchOptions = new PaginatedSearchOptions(combinedOptions);
+          // check if search options are changed
+          // if so retrieve new related results otherwise skip it
+          if (
+            JSON.stringify(newSearchOptions) !==
+            JSON.stringify(this.searchOptions$.value)
+          ) {
+            // Initialize variables
+            this.currentConfiguration$.next(configuration);
+            this.currentSortOptions$.next(newSearchOptions.sort);
+            this.currentScope$.next(newSearchOptions.scope);
+            this.sortOptionsList$.next(searchSortOptions);
+            this.searchOptions$.next(newSearchOptions);
+            this.initialized$.next(true);
+            // retrieve results
+            this.retrieveSearchResults(newSearchOptions);
+          }
+        }
+      );
   }
 
   /**
@@ -350,13 +413,15 @@ export class SearchComponent implements OnInit {
    */
   private retrieveSearchResults(searchOptions: PaginatedSearchOptions) {
     this.resultsRD$.next(null);
-    this.service.search(
-      searchOptions,
-      undefined,
-      this.useCachedVersionIfAvailable,
-      true,
-      followLink<Item>('thumbnail', { isOptional: true })
-    ).pipe(getFirstCompletedRemoteData())
+    this.service
+      .search(
+        searchOptions,
+        undefined,
+        this.useCachedVersionIfAvailable,
+        true,
+        followLink<Item>('thumbnail', { isOptional: true })
+      )
+      .pipe(getFirstCompletedRemoteData())
       .subscribe((results: RemoteData<SearchObjects<DSpaceObject>>) => {
         if (results.hasSucceeded && results.payload?.page?.length > 0) {
           this.resultFound.emit(results.payload);
@@ -382,6 +447,4 @@ export class SearchComponent implements OnInit {
     }
     return this.service.getSearchLink();
   }
-
-
 }

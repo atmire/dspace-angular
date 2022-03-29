@@ -15,7 +15,7 @@ describe('MediaViewerImageComponent', () => {
   let fixture: ComponentFixture<MediaViewerImageComponent>;
 
   const authService = jasmine.createSpyObj('authService', {
-    isAuthenticated: observableOf(false)
+    isAuthenticated: observableOf(false),
   });
 
   const mockBitstream: Bitstream = Object.assign(new Bitstream(), {
@@ -26,12 +26,10 @@ describe('MediaViewerImageComponent', () => {
     bundleName: 'ORIGINAL',
     _links: {
       self: {
-        href:
-          'https://dspace7.4science.it/dspace-spring-rest/api/core/bitstreams/cf9b0c8e-a1eb-4b65-afd0-567366448713',
+        href: 'https://dspace7.4science.it/dspace-spring-rest/api/core/bitstreams/cf9b0c8e-a1eb-4b65-afd0-567366448713',
       },
       content: {
-        href:
-          'https://dspace7.4science.it/dspace-spring-rest/api/core/bitstreams/cf9b0c8e-a1eb-4b65-afd0-567366448713/content',
+        href: 'https://dspace7.4science.it/dspace-spring-rest/api/core/bitstreams/cf9b0c8e-a1eb-4b65-afd0-567366448713/content',
       },
     },
     id: 'cf9b0c8e-a1eb-4b65-afd0-567366448713',
@@ -57,12 +55,10 @@ describe('MediaViewerImageComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports:[],
+      imports: [],
       declarations: [MediaViewerImageComponent],
       schemas: [NO_ERRORS_SCHEMA],
-      providers: [
-        { provide: AuthService, useValue: authService },
-      ],
+      providers: [{ provide: AuthService, useValue: authService }],
     }).compileComponents();
   }));
 
@@ -70,9 +66,8 @@ describe('MediaViewerImageComponent', () => {
     fixture = TestBed.createComponent(MediaViewerImageComponent);
     component = fixture.componentInstance;
     component.galleryOptions = [new NgxGalleryOptions({})];
-    component.galleryImages = component.convertToGalleryImage(
-      mockMediaViewerItems
-    );
+    component.galleryImages =
+      component.convertToGalleryImage(mockMediaViewerItems);
   });
 
   it('should create', () => {

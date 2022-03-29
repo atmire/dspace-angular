@@ -1,11 +1,16 @@
-import { DynamicFormControlModel, DynamicInputModel, DynamicTextAreaModel } from '@ng-dynamic-forms/core';
+import {
+  DynamicFormControlModel,
+  DynamicInputModel,
+  DynamicTextAreaModel,
+} from '@ng-dynamic-forms/core';
 import { DynamicSelectModelConfig } from '@ng-dynamic-forms/core/lib/model/select/dynamic-select.model';
 
-export const collectionFormEntityTypeSelectionConfig: DynamicSelectModelConfig<string> = {
-  id: 'entityType',
-  name: 'dspace.entity.type',
-  disabled: false
-};
+export const collectionFormEntityTypeSelectionConfig: DynamicSelectModelConfig<string> =
+  {
+    id: 'entityType',
+    name: 'dspace.entity.type',
+    disabled: false,
+  };
 
 /**
  * The dynamic form fields used for creating/editing a collection
@@ -17,10 +22,10 @@ export const collectionFormModels: DynamicFormControlModel[] = [
     name: 'dc.title',
     required: true,
     validators: {
-      required: null
+      required: null,
     },
     errorMessages: {
-      required: 'Please enter a name for this title'
+      required: 'Please enter a name for this title',
     },
   }),
   new DynamicTextAreaModel({
@@ -42,5 +47,5 @@ export const collectionFormModels: DynamicFormControlModel[] = [
   new DynamicTextAreaModel({
     id: 'license',
     name: 'dc.rights.license',
-  })
+  }),
 ];

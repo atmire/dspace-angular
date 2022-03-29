@@ -9,7 +9,10 @@ import { DeleteCommunityPageComponent } from './delete-community-page/delete-com
 import { CommunityBreadcrumbResolver } from '../core/breadcrumbs/community-breadcrumb.resolver';
 import { DSOBreadcrumbsService } from '../core/breadcrumbs/dso-breadcrumbs.service';
 import { LinkService } from '../core/cache/builders/link.service';
-import { COMMUNITY_EDIT_PATH, COMMUNITY_CREATE_PATH } from './community-page-routing-paths';
+import {
+  COMMUNITY_EDIT_PATH,
+  COMMUNITY_CREATE_PATH,
+} from './community-page-routing-paths';
 import { CommunityPageAdministratorGuard } from './community-page-administrator.guard';
 import { MenuItemType } from '../shared/menu/initial-menus-state';
 import { LinkMenuItemModel } from '../shared/menu/menu-item/models/link.model';
@@ -21,21 +24,23 @@ import { ThemedCommunityPageComponent } from './themed-community-page.component'
       {
         path: COMMUNITY_CREATE_PATH,
         component: CreateCommunityPageComponent,
-        canActivate: [AuthenticatedGuard, CreateCommunityPageGuard]
+        canActivate: [AuthenticatedGuard, CreateCommunityPageGuard],
       },
       {
         path: ':id',
         resolve: {
           dso: CommunityPageResolver,
-          breadcrumb: CommunityBreadcrumbResolver
+          breadcrumb: CommunityBreadcrumbResolver,
         },
         runGuardsAndResolvers: 'always',
         children: [
           {
             path: COMMUNITY_EDIT_PATH,
-            loadChildren: () => import('./edit-community-page/edit-community-page.module')
-              .then((m) => m.EditCommunityPageModule),
-            canActivate: [CommunityPageAdministratorGuard]
+            loadChildren: () =>
+              import('./edit-community-page/edit-community-page.module').then(
+                (m) => m.EditCommunityPageModule
+              ),
+            canActivate: [CommunityPageAdministratorGuard],
           },
           {
             path: 'delete',
@@ -47,24 +52,26 @@ import { ThemedCommunityPageComponent } from './themed-community-page.component'
             path: '',
             component: ThemedCommunityPageComponent,
             pathMatch: 'full',
-          }
+          },
         ],
         data: {
           menu: {
-            public: [{
-              id: 'statistics_community_:id',
-              active: true,
-              visible: true,
-              model: {
-                type: MenuItemType.LINK,
-                text: 'menu.section.statistics',
-                link: 'statistics/communities/:id/',
-              } as LinkMenuItemModel,
-            }],
+            public: [
+              {
+                id: 'statistics_community_:id',
+                active: true,
+                visible: true,
+                model: {
+                  type: MenuItemType.LINK,
+                  text: 'menu.section.statistics',
+                  link: 'statistics/communities/:id/',
+                } as LinkMenuItemModel,
+              },
+            ],
           },
         },
       },
-    ])
+    ]),
   ],
   providers: [
     CommunityPageResolver,
@@ -72,9 +79,7 @@ import { ThemedCommunityPageComponent } from './themed-community-page.component'
     DSOBreadcrumbsService,
     LinkService,
     CreateCommunityPageGuard,
-    CommunityPageAdministratorGuard
-  ]
+    CommunityPageAdministratorGuard,
+  ],
 })
-export class CommunityPageRoutingModule {
-
-}
+export class CommunityPageRoutingModule {}

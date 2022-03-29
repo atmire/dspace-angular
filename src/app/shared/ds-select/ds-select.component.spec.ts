@@ -8,14 +8,9 @@ describe('DsSelectComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        TranslateModule.forRoot(),
-      ],
-      declarations: [
-        DsSelectComponent,
-      ],
-    })
-      .compileComponents();
+      imports: [TranslateModule.forRoot()],
+      declarations: [DsSelectComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -22,7 +22,7 @@ import {
   DynamicFormGroupModel,
   DynamicSelectModel,
   MATCH_ENABLED,
-  OR_OPERATOR
+  OR_OPERATOR,
 } from '@ng-dynamic-forms/core';
 
 import { FormBuilderService } from '../../../shared/form/builder/form-builder.service';
@@ -38,7 +38,7 @@ import {
   FORM_ACCESS_CONDITION_START_DATE_CONFIG,
   FORM_ACCESS_CONDITION_START_DATE_LAYOUT,
   FORM_ACCESS_CONDITION_TYPE_CONFIG,
-  FORM_ACCESS_CONDITION_TYPE_LAYOUT
+  FORM_ACCESS_CONDITION_TYPE_LAYOUT,
 } from './section-accesses.model';
 import { hasValue, isNotEmpty, isNotNull } from '../../../shared/empty.util';
 import { WorkspaceitemSectionAccessesObject } from '../../../core/submission/models/workspaceitem-section-accesses.model';
@@ -59,11 +59,10 @@ import { dateToISOFormat } from '../../../shared/date.util';
 @Component({
   selector: 'ds-section-accesses',
   templateUrl: './section-accesses.component.html',
-  styleUrls: ['./section-accesses.component.scss']
+  styleUrls: ['./section-accesses.component.scss'],
 })
 @renderSectionFor(SectionsType.AccessesCondition)
 export class SubmissionSectionAccessesComponent extends SectionModelComponent {
-
   /**
    * The FormComponent reference
    */
@@ -72,7 +71,7 @@ export class SubmissionSectionAccessesComponent extends SectionModelComponent {
   /**
    * List of available access conditions that could be set to item
    */
-  public availableAccessConditionOptions: AccessesConditionOption[];  // List of accessConditions that an user can select
+  public availableAccessConditionOptions: AccessesConditionOption[]; // List of accessConditions that an user can select
 
   /**
    * The form id
@@ -134,8 +133,10 @@ export class SubmissionSectionAccessesComponent extends SectionModelComponent {
     private formService: FormService,
     private translate: TranslateService,
     private operationsService: SubmissionJsonPatchOperationsService,
-    @Inject('sectionDataProvider') public injectedSectionData: SectionDataObject,
-    @Inject('submissionIdProvider') public injectedSubmissionId: string) {
+    @Inject('sectionDataProvider')
+    public injectedSectionData: SectionDataObject,
+    @Inject('submissionIdProvider') public injectedSubmissionId: string
+  ) {
     super(undefined, injectedSectionData, injectedSubmissionId);
   }
 
@@ -148,16 +149,24 @@ export class SubmissionSectionAccessesComponent extends SectionModelComponent {
   public initModelData(formModel: DynamicFormControlModel[]) {
     this.accessesData.accessConditions.forEach((accessCondition, index) => {
       Array.of('name', 'startDate', 'endDate')
-        .filter((key) => accessCondition.hasOwnProperty(key) && isNotEmpty(accessCondition[key]))
+        .filter(
+          (key) =>
+            accessCondition.hasOwnProperty(key) &&
+            isNotEmpty(accessCondition[key])
+        )
         .forEach((key) => {
-          const metadataModel: any = this.formBuilderService.findById(key, formModel, index);
+          const metadataModel: any = this.formBuilderService.findById(
+            key,
+            formModel,
+            index
+          );
           if (metadataModel) {
             if (metadataModel.type === DYNAMIC_FORM_CONTROL_TYPE_DATEPICKER) {
               const date = new Date(accessCondition[key]);
               metadataModel.value = {
                 year: date.getUTCFullYear(),
                 month: date.getUTCMonth() + 1,
-                day: date.getUTCDate()
+                day: date.getUTCDate(),
               };
             } else {
               metadataModel.value = accessCondition[key];
@@ -173,15 +182,25 @@ export class SubmissionSectionAccessesComponent extends SectionModelComponent {
    */
   onChange(event: DynamicFormControlEvent) {
     if (event.model.type === DYNAMIC_FORM_CONTROL_TYPE_CHECKBOX) {
-      const path = this.formOperationsService.getFieldPathSegmentedFromChangeEvent(event);
-      const value = this.formOperationsService.getFieldValueFromChangeEvent(event);
-      this.operationsBuilder.replace(this.pathCombiner.getPath(path), value.value, true);
+      const path =
+        this.formOperationsService.getFieldPathSegmentedFromChangeEvent(event);
+      const value =
+        this.formOperationsService.getFieldValueFromChangeEvent(event);
+      this.operationsBuilder.replace(
+        this.pathCombiner.getPath(path),
+        value.value,
+        true
+      );
     } else {
       if (event.model.id === FORM_ACCESS_CONDITION_TYPE_CONFIG.id) {
         // Clear previous state when switching through different access conditions
 
-        const startDateControl: FormControl = event.control.parent.get('startDate') as FormControl;
-        const endDateControl: FormControl = event.control.parent.get('endDate') as FormControl;
+        const startDateControl: FormControl = event.control.parent.get(
+          'startDate'
+        ) as FormControl;
+        const endDateControl: FormControl = event.control.parent.get(
+          'endDate'
+        ) as FormControl;
 
         startDateControl?.markAsUntouched();
         endDateControl?.markAsUntouched();
@@ -193,47 +212,67 @@ export class SubmissionSectionAccessesComponent extends SectionModelComponent {
 
       // validate form
       this.formService.validateAllFormFields(this.formRef.formGroup);
-      this.formService.isValid(this.formId).pipe(
-        take(1),
-        filter((isValid) => isValid),
-        mergeMap(() => this.formService.getFormData(this.formId)),
-        take(1)
-      ).subscribe((formData: any) => {
-        const accessConditionsToSave = [];
-        formData.accessCondition
-          .map((accessConditions) => accessConditions.accessConditionGroup)
-          .filter((accessCondition) => isNotEmpty(accessCondition))
-          .forEach((accessCondition) => {
-            let accessConditionOpt;
+      this.formService
+        .isValid(this.formId)
+        .pipe(
+          take(1),
+          filter((isValid) => isValid),
+          mergeMap(() => this.formService.getFormData(this.formId)),
+          take(1)
+        )
+        .subscribe((formData: any) => {
+          const accessConditionsToSave = [];
+          formData.accessCondition
+            .map((accessConditions) => accessConditions.accessConditionGroup)
+            .filter((accessCondition) => isNotEmpty(accessCondition))
+            .forEach((accessCondition) => {
+              let accessConditionOpt;
 
-            this.availableAccessConditionOptions
-              .filter((element) => isNotNull(accessCondition.name) && element.name === accessCondition.name[0].value)
-              .forEach((element) => accessConditionOpt = element);
+              this.availableAccessConditionOptions
+                .filter(
+                  (element) =>
+                    isNotNull(accessCondition.name) &&
+                    element.name === accessCondition.name[0].value
+                )
+                .forEach((element) => (accessConditionOpt = element));
 
-            if (accessConditionOpt) {
-              const currentAccessCondition = Object.assign({}, accessCondition);
-              currentAccessCondition.name = this.retrieveValueFromField(accessCondition.name);
+              if (accessConditionOpt) {
+                const currentAccessCondition = Object.assign(
+                  {},
+                  accessCondition
+                );
+                currentAccessCondition.name = this.retrieveValueFromField(
+                  accessCondition.name
+                );
 
-              /* When start and end date fields are deactivated, their values may be still present in formData,
+                /* When start and end date fields are deactivated, their values may be still present in formData,
               therefore it is necessary to delete them if they're not allowed by the current access condition option. */
-              if (!accessConditionOpt.hasStartDate) {
-                delete currentAccessCondition.startDate;
-              } else if (accessCondition.startDate) {
-                const startDate = this.retrieveValueFromField(accessCondition.startDate);
-                currentAccessCondition.startDate = dateToISOFormat(startDate);
+                if (!accessConditionOpt.hasStartDate) {
+                  delete currentAccessCondition.startDate;
+                } else if (accessCondition.startDate) {
+                  const startDate = this.retrieveValueFromField(
+                    accessCondition.startDate
+                  );
+                  currentAccessCondition.startDate = dateToISOFormat(startDate);
+                }
+                if (!accessConditionOpt.hasEndDate) {
+                  delete currentAccessCondition.endDate;
+                } else if (accessCondition.endDate) {
+                  const endDate = this.retrieveValueFromField(
+                    accessCondition.endDate
+                  );
+                  currentAccessCondition.endDate = dateToISOFormat(endDate);
+                }
+                accessConditionsToSave.push(currentAccessCondition);
               }
-              if (!accessConditionOpt.hasEndDate) {
-                delete currentAccessCondition.endDate;
-              } else if (accessCondition.endDate) {
-                const endDate = this.retrieveValueFromField(accessCondition.endDate);
-                currentAccessCondition.endDate = dateToISOFormat(endDate);
-              }
-              accessConditionsToSave.push(currentAccessCondition);
-            }
-          });
+            });
 
-        this.operationsBuilder.add(this.pathCombiner.getPath('accessConditions'), accessConditionsToSave, true);
-      });
+          this.operationsBuilder.add(
+            this.pathCombiner.getPath('accessConditions'),
+            accessConditionsToSave,
+            true
+          );
+        });
     }
   }
 
@@ -261,24 +300,33 @@ export class SubmissionSectionAccessesComponent extends SectionModelComponent {
    * Initialize all instance variables and retrieve collection default access conditions
    */
   protected onSectionInit(): void {
-
-    this.pathCombiner = new JsonPatchOperationPathCombiner('sections', this.sectionData.id);
+    this.pathCombiner = new JsonPatchOperationPathCombiner(
+      'sections',
+      this.sectionData.id
+    );
     this.formId = this.formService.getUniqueId(this.sectionData.id);
-    const config$ = this.accessesConfigService.findByHref(this.sectionData.config, true, false).pipe(
-      getFirstSucceededRemoteData(),
-      map((config) => config.payload),
+    const config$ = this.accessesConfigService
+      .findByHref(this.sectionData.config, true, false)
+      .pipe(
+        getFirstSucceededRemoteData(),
+        map((config) => config.payload)
+      );
+
+    const accessData$ = this.accessesService.getAccessesData(
+      this.submissionId,
+      this.sectionData.id
     );
 
-    const accessData$ = this.accessesService.getAccessesData(this.submissionId, this.sectionData.id);
-
     combineLatest([config$, accessData$]).subscribe(([config, accessData]) => {
-      this.availableAccessConditionOptions = isNotEmpty(config.accessConditionOptions) ? config.accessConditionOptions : [];
+      this.availableAccessConditionOptions = isNotEmpty(
+        config.accessConditionOptions
+      )
+        ? config.accessConditionOptions
+        : [];
       this.canChangeDiscoverable = !!config.canChangeDiscoverable;
       this.accessesData = accessData;
       this.formModel = this.buildFileEditForm();
     });
-
-
   }
 
   /**
@@ -295,30 +343,44 @@ export class SubmissionSectionAccessesComponent extends SectionModelComponent {
    * Initialize form model
    */
   protected buildFileEditForm() {
-
     const formModel: DynamicFormControlModel[] = [];
     if (this.canChangeDiscoverable) {
-      const discoverableCheckboxConfig = Object.assign({}, ACCESS_FORM_CHECKBOX_CONFIG, {
-        label: this.translate.instant('submission.sections.accesses.form.discoverable-label'),
-        hint: this.translate.instant('submission.sections.accesses.form.discoverable-description'),
-        value: this.accessesData.discoverable
-      });
+      const discoverableCheckboxConfig = Object.assign(
+        {},
+        ACCESS_FORM_CHECKBOX_CONFIG,
+        {
+          label: this.translate.instant(
+            'submission.sections.accesses.form.discoverable-label'
+          ),
+          hint: this.translate.instant(
+            'submission.sections.accesses.form.discoverable-description'
+          ),
+          value: this.accessesData.discoverable,
+        }
+      );
       formModel.push(
-        new DynamicCheckboxModel(discoverableCheckboxConfig, ACCESS_FORM_CHECKBOX_LAYOUT)
+        new DynamicCheckboxModel(
+          discoverableCheckboxConfig,
+          ACCESS_FORM_CHECKBOX_LAYOUT
+        )
       );
     }
 
-    const accessConditionTypeModelConfig = Object.assign({}, FORM_ACCESS_CONDITION_TYPE_CONFIG);
-    const accessConditionsArrayConfig = Object.assign({}, ACCESS_CONDITIONS_FORM_ARRAY_CONFIG);
+    const accessConditionTypeModelConfig = Object.assign(
+      {},
+      FORM_ACCESS_CONDITION_TYPE_CONFIG
+    );
+    const accessConditionsArrayConfig = Object.assign(
+      {},
+      ACCESS_CONDITIONS_FORM_ARRAY_CONFIG
+    );
     const accessConditionTypeOptions = [];
 
     for (const accessCondition of this.availableAccessConditionOptions) {
-      accessConditionTypeOptions.push(
-        {
-          label: accessCondition.name,
-          value: accessCondition.name
-        }
-      );
+      accessConditionTypeOptions.push({
+        label: accessCondition.name,
+        value: accessCondition.name,
+      });
     }
     accessConditionTypeModelConfig.options = accessConditionTypeOptions;
 
@@ -340,17 +402,45 @@ export class SubmissionSectionAccessesComponent extends SectionModelComponent {
         hasGroups.push({ id: 'name', value: condition.name });
       }
     });
-    const confStart = { relations: [{ match: MATCH_ENABLED, operator: OR_OPERATOR, when: hasStart }] };
-    const confEnd = { relations: [{ match: MATCH_ENABLED, operator: OR_OPERATOR, when: hasEnd }] };
+    const confStart = {
+      relations: [
+        { match: MATCH_ENABLED, operator: OR_OPERATOR, when: hasStart },
+      ],
+    };
+    const confEnd = {
+      relations: [
+        { match: MATCH_ENABLED, operator: OR_OPERATOR, when: hasEnd },
+      ],
+    };
 
     accessConditionsArrayConfig.groupFactory = () => {
-      const type = new DynamicSelectModel(accessConditionTypeModelConfig, FORM_ACCESS_CONDITION_TYPE_LAYOUT);
-      const startDateConfig = Object.assign({}, FORM_ACCESS_CONDITION_START_DATE_CONFIG, confStart);
-      const endDateConfig = Object.assign({}, FORM_ACCESS_CONDITION_END_DATE_CONFIG, confEnd);
+      const type = new DynamicSelectModel(
+        accessConditionTypeModelConfig,
+        FORM_ACCESS_CONDITION_TYPE_LAYOUT
+      );
+      const startDateConfig = Object.assign(
+        {},
+        FORM_ACCESS_CONDITION_START_DATE_CONFIG,
+        confStart
+      );
+      const endDateConfig = Object.assign(
+        {},
+        FORM_ACCESS_CONDITION_END_DATE_CONFIG,
+        confEnd
+      );
 
-      const startDate = new DynamicDatePickerModel(startDateConfig, FORM_ACCESS_CONDITION_START_DATE_LAYOUT);
-      const endDate = new DynamicDatePickerModel(endDateConfig, FORM_ACCESS_CONDITION_END_DATE_LAYOUT);
-      const accessConditionGroupConfig = Object.assign({}, ACCESS_CONDITION_GROUP_CONFIG);
+      const startDate = new DynamicDatePickerModel(
+        startDateConfig,
+        FORM_ACCESS_CONDITION_START_DATE_LAYOUT
+      );
+      const endDate = new DynamicDatePickerModel(
+        endDateConfig,
+        FORM_ACCESS_CONDITION_END_DATE_LAYOUT
+      );
+      const accessConditionGroupConfig = Object.assign(
+        {},
+        ACCESS_CONDITION_GROUP_CONFIG
+      );
       accessConditionGroupConfig.group = [type];
       if (hasStart.length > 0) {
         accessConditionGroupConfig.group.push(startDate);
@@ -358,13 +448,25 @@ export class SubmissionSectionAccessesComponent extends SectionModelComponent {
       if (hasEnd.length > 0) {
         accessConditionGroupConfig.group.push(endDate);
       }
-      return [new DynamicFormGroupModel(accessConditionGroupConfig, ACCESS_CONDITION_GROUP_LAYOUT)];
+      return [
+        new DynamicFormGroupModel(
+          accessConditionGroupConfig,
+          ACCESS_CONDITION_GROUP_LAYOUT
+        ),
+      ];
     };
 
     // Number of access conditions blocks in form
-    accessConditionsArrayConfig.initialCount = isNotEmpty(this.accessesData.accessConditions) ? this.accessesData.accessConditions.length : 1;
+    accessConditionsArrayConfig.initialCount = isNotEmpty(
+      this.accessesData.accessConditions
+    )
+      ? this.accessesData.accessConditions.length
+      : 1;
     formModel.push(
-      new DynamicFormArrayModel(accessConditionsArrayConfig, ACCESS_CONDITIONS_FORM_ARRAY_LAYOUT)
+      new DynamicFormArrayModel(
+        accessConditionsArrayConfig,
+        ACCESS_CONDITIONS_FORM_ARRAY_LAYOUT
+      )
     );
 
     this.initModelData(formModel);
@@ -373,7 +475,6 @@ export class SubmissionSectionAccessesComponent extends SectionModelComponent {
 
   protected retrieveValueFromField(field: any) {
     const temp = Array.isArray(field) ? field[0] : field;
-    return (temp) ? temp.value : undefined;
+    return temp ? temp.value : undefined;
   }
-
 }

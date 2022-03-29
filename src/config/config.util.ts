@@ -13,7 +13,10 @@ import { ThemeConfig } from './theme.model';
  * @param env       environment object
  * @param appConfig app config
  */
-const extendEnvironmentWithAppConfig = (env: any, appConfig: AppConfig): void => {
+const extendEnvironmentWithAppConfig = (
+  env: any,
+  appConfig: AppConfig
+): void => {
   mergeConfig(env, appConfig);
   console.log(`Environment extended with app config`);
 };
@@ -26,12 +29,12 @@ const extendEnvironmentWithAppConfig = (env: any, appConfig: AppConfig): void =>
  */
 const mergeConfig = (destinationConfig: any, sourceConfig: AppConfig): void => {
   const mergeOptions = {
-    arrayMerge: (destinationArray, sourceArray, options) => sourceArray
+    arrayMerge: (destinationArray, sourceArray, options) => sourceArray,
   };
-  Object.assign(destinationConfig, merge.all([
+  Object.assign(
     destinationConfig,
-    sourceConfig
-  ], mergeOptions));
+    merge.all([destinationConfig, sourceConfig], mergeOptions)
+  );
 };
 
 /**
@@ -40,15 +43,12 @@ const mergeConfig = (destinationConfig: any, sourceConfig: AppConfig): void => {
  * @returns default theme config
  */
 const getDefaultThemeConfig = (): ThemeConfig => {
-  return environment.themes.find((themeConfig: any) =>
-    hasNoValue(themeConfig.regex) &&
-    hasNoValue(themeConfig.handle) &&
-    hasNoValue(themeConfig.uuid)
+  return environment.themes.find(
+    (themeConfig: any) =>
+      hasNoValue(themeConfig.regex) &&
+      hasNoValue(themeConfig.handle) &&
+      hasNoValue(themeConfig.uuid)
   );
 };
 
-export {
-  extendEnvironmentWithAppConfig,
-  mergeConfig,
-  getDefaultThemeConfig
-};
+export { extendEnvironmentWithAppConfig, mergeConfig, getDefaultThemeConfig };

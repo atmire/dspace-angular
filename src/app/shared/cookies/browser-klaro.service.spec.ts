@@ -32,17 +32,17 @@ describe('BrowserKlaroService', () => {
     translateService = getMockTranslateService();
     ePersonService = jasmine.createSpyObj('ePersonService', {
       createPatchFromCache: observableOf([]),
-      patch: observableOf(new RestResponse(true, 200, 'Ok'))
+      patch: observableOf(new RestResponse(true, 200, 'Ok')),
     });
     authService = jasmine.createSpyObj('authService', {
       isAuthenticated: observableOf(true),
-      getAuthenticatedUserFromStore: observableOf(user)
+      getAuthenticatedUserFromStore: observableOf(user),
     });
     cookieService = jasmine.createSpyObj('cookieService', {
       get: '{%22token_item%22:true%2C%22impersonation%22:true%2C%22redirect%22:true%2C%22language%22:true%2C%22klaro%22:true%2C%22has_agreed_end_user%22:true%2C%22google-analytics%22:true}',
       set: () => {
         /* empty */
-      }
+      },
     });
 
     TestBed.configureTestingModule({
@@ -50,7 +50,7 @@ describe('BrowserKlaroService', () => {
         BrowserKlaroService,
         {
           provide: TranslateService,
-          useValue: translateService
+          useValue: translateService,
         },
         {
           provide: EPersonDataService,
@@ -58,13 +58,13 @@ describe('BrowserKlaroService', () => {
         },
         {
           provide: AuthService,
-          useValue: authService
+          useValue: authService,
         },
         {
           provide: CookieService,
-          useValue: cookieService
-        }
-      ]
+          useValue: cookieService,
+        },
+      ],
     });
     service = TestBed.inject(BrowserKlaroService);
     appName = 'testName';
@@ -76,15 +76,16 @@ describe('BrowserKlaroService', () => {
         en: {
           purposes: {},
           test: {
-            testeritis: testKey
-          }
-        }
+            testeritis: testKey,
+          },
+        },
       },
-      services: [{
-        name: appName,
-        purposes: [purpose]
-      }],
-
+      services: [
+        {
+          name: appName,
+          purposes: [purpose],
+        },
+      ],
     };
 
     service.klaroConfig = mockConfig;
@@ -96,10 +97,10 @@ describe('BrowserKlaroService', () => {
 
   describe('initialize with user', () => {
     beforeEach(() => {
-      spyOn((service as any), 'getUser$').and.returnValue(observableOf(user));
+      spyOn(service as any, 'getUser$').and.returnValue(observableOf(user));
       translateService.get.and.returnValue(observableOf('loading...'));
       spyOn(service, 'addAppMessages');
-      spyOn((service as any), 'initializeUser');
+      spyOn(service as any, 'initializeUser');
       spyOn(service, 'translateConfiguration');
     });
     it('to call the initialize user method and other methods', () => {
@@ -112,10 +113,12 @@ describe('BrowserKlaroService', () => {
 
   describe('to not call the initialize user method, but the other methods', () => {
     beforeEach(() => {
-      spyOn((service as any), 'getUser$').and.returnValue(observableOf(undefined));
+      spyOn(service as any, 'getUser$').and.returnValue(
+        observableOf(undefined)
+      );
       translateService.get.and.returnValue(observableOf('loading...'));
       spyOn(service, 'addAppMessages');
-      spyOn((service as any), 'initializeUser');
+      spyOn(service as any, 'initializeUser');
       spyOn(service, 'translateConfiguration');
     });
     it('to call all ', () => {
@@ -134,7 +137,9 @@ describe('BrowserKlaroService', () => {
 
   it('translateConfiguration', () => {
     service.translateConfiguration();
-    expect((service as any).translateService.instant).toHaveBeenCalledWith(testKey);
+    expect((service as any).translateService.instant).toHaveBeenCalledWith(
+      testKey
+    );
   });
 
   describe('initializeUser when there is a metadata field value', () => {
@@ -150,7 +155,7 @@ describe('BrowserKlaroService', () => {
   });
 
   describe('initializeUser when there is no metadata field value but there is an anonymous cookie', () => {
-    const cookie = '{test: \'testt\'}';
+    const cookie = "{test: 'testt'}";
     beforeEach(() => {
       (service as any).cookieService.get.and.returnValue(cookie);
       spyOn(service, 'updateSettingsForUsers');
@@ -158,35 +163,52 @@ describe('BrowserKlaroService', () => {
 
     it('initializeUser', () => {
       (service as any).initializeUser(user);
-      expect((service as any).cookieService.set).toHaveBeenCalledWith(service.getStorageName(user.uuid), cookie);
+      expect((service as any).cookieService.set).toHaveBeenCalledWith(
+        service.getStorageName(user.uuid),
+        cookie
+      );
       expect(service.updateSettingsForUsers).toHaveBeenCalledWith(user);
     });
   });
 
   describe('getUser$ when there is no one authenticated', () => {
     beforeEach(() => {
-      (service as any).authService.isAuthenticated.and.returnValue(observableOf(false));
+      (service as any).authService.isAuthenticated.and.returnValue(
+        observableOf(false)
+      );
     });
     it('should return undefined', () => {
-      getTestScheduler().expectObservable((service as any).getUser$()).toBe('(a|)', { a: undefined });
+      getTestScheduler()
+        .expectObservable((service as any).getUser$())
+        .toBe('(a|)', { a: undefined });
     });
   });
 
   describe('getUser$ when there someone is authenticated', () => {
     beforeEach(() => {
-      (service as any).authService.isAuthenticated.and.returnValue(observableOf(true));
-      (service as any).authService.getAuthenticatedUserFromStore.and.returnValue(observableOf(user));
+      (service as any).authService.isAuthenticated.and.returnValue(
+        observableOf(true)
+      );
+      (
+        service as any
+      ).authService.getAuthenticatedUserFromStore.and.returnValue(
+        observableOf(user)
+      );
     });
     it('should return the user', () => {
-      getTestScheduler().expectObservable((service as any).getUser$()).toBe('(a|)', { a: user });
+      getTestScheduler()
+        .expectObservable((service as any).getUser$())
+        .toBe('(a|)', { a: user });
     });
   });
 
   describe('getSettingsForUser', () => {
-    const cookieConsentString = '{test: \'testt\'}';
+    const cookieConsentString = "{test: 'testt'}";
     beforeEach(() => {
       user.metadata = {};
-      user.metadata[COOKIE_MDFIELD] = [Object.assign(new MetadataValue(), { value: cookieConsentString })];
+      user.metadata[COOKIE_MDFIELD] = [
+        Object.assign(new MetadataValue(), { value: cookieConsentString }),
+      ];
       spyOn(JSON, 'parse');
     });
     it('should return the cookie consents object', () => {
@@ -197,8 +219,12 @@ describe('BrowserKlaroService', () => {
 
   describe('setSettingsForUser when there are changes', () => {
     const cookieConsent = { test: 'testt' };
-    const cookieConsentString = '{test: \'testt\'}';
-    const operation = { op: 'add', path: 'metadata/dc.agreements.cookie', value: cookieConsentString };
+    const cookieConsentString = "{test: 'testt'}";
+    const operation = {
+      op: 'add',
+      path: 'metadata/dc.agreements.cookie',
+      value: cookieConsentString,
+    };
     let updatedUser;
 
     beforeEach(() => {
@@ -206,18 +232,26 @@ describe('BrowserKlaroService', () => {
 
       spyOn(updatedUser, 'setMetadata');
       spyOn(JSON, 'stringify').and.returnValue(cookieConsentString);
-      ePersonService.createPatchFromCache.and.returnValue(observableOf([operation]));
+      ePersonService.createPatchFromCache.and.returnValue(
+        observableOf([operation])
+      );
     });
     it('should call patch on the data service', () => {
       service.setSettingsForUser(updatedUser, cookieConsent);
-      expect(updatedUser.setMetadata).toHaveBeenCalledWith(COOKIE_MDFIELD, undefined, cookieConsentString);
-      expect(ePersonService.patch).toHaveBeenCalledWith(updatedUser, [operation]);
+      expect(updatedUser.setMetadata).toHaveBeenCalledWith(
+        COOKIE_MDFIELD,
+        undefined,
+        cookieConsentString
+      );
+      expect(ePersonService.patch).toHaveBeenCalledWith(updatedUser, [
+        operation,
+      ]);
     });
   });
 
   describe('setSettingsForUser when there are no changes', () => {
     const cookieConsent = { test: 'testt' };
-    const cookieConsentString = '{test: \'testt\'}';
+    const cookieConsentString = "{test: 'testt'}";
     let updatedUser;
 
     beforeEach(() => {
@@ -229,7 +263,11 @@ describe('BrowserKlaroService', () => {
     });
     it('should not call patch on the data service', () => {
       service.setSettingsForUser(updatedUser, cookieConsent);
-      expect(updatedUser.setMetadata).toHaveBeenCalledWith(COOKIE_MDFIELD, undefined, cookieConsentString);
+      expect(updatedUser.setMetadata).toHaveBeenCalledWith(
+        COOKIE_MDFIELD,
+        undefined,
+        cookieConsentString
+      );
       expect(ePersonService.patch).not.toHaveBeenCalled();
     });
   });

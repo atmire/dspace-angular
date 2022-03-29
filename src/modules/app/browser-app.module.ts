@@ -1,6 +1,10 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
-import { BrowserModule, makeStateKey, TransferState } from '@angular/platform-browser';
+import {
+  BrowserModule,
+  makeStateKey,
+  TransferState,
+} from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, NoPreloading } from '@angular/router';
 import { REQUEST } from '@nguniversal/express-engine/tokens';
@@ -27,7 +31,7 @@ import { HardRedirectService } from '../../app/core/services/hard-redirect.servi
 import {
   BrowserHardRedirectService,
   locationProvider,
-  LocationToken
+  LocationToken,
 } from '../../app/core/services/browser-hard-redirect.service';
 import { LocaleService } from '../../app/core/locale/locale.service';
 import { GoogleAnalyticsService } from '../../app/statistics/google-analytics.service';
@@ -54,7 +58,7 @@ export function getRequest(transferState: TransferState): any {
   bootstrap: [AppComponent],
   imports: [
     BrowserModule.withServerTransition({
-      appId: 'dspace-angular'
+      appId: 'dspace-angular',
     }),
     HttpClientModule,
     // forRoot ensures the providers are only created once
@@ -64,7 +68,7 @@ export function getRequest(transferState: TransferState): any {
       useHash: false,
       scrollPositionRestoration: 'enabled',
       anchorScrolling: 'enabled',
-      preloadingStrategy: NoPreloading
+      preloadingStrategy: NoPreloading,
     }),
     StatisticsModule.forRoot(),
     Angulartics2RouterlessModule.forRoot(),
@@ -73,11 +77,11 @@ export function getRequest(transferState: TransferState): any {
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: (createTranslateLoader),
-        deps: [HttpClient]
-      }
+        useFactory: createTranslateLoader,
+        deps: [HttpClient],
+      },
     }),
-    AppModule
+    AppModule,
   ],
   providers: [
     {
@@ -88,7 +92,10 @@ export function getRequest(transferState: TransferState): any {
         correlationIdService: CorrelationIdService
       ) => {
         if (transferState.hasKey<AppConfig>(APP_CONFIG_STATE)) {
-          const appConfig = transferState.get<AppConfig>(APP_CONFIG_STATE, new DefaultAppConfig());
+          const appConfig = transferState.get<AppConfig>(
+            APP_CONFIG_STATE,
+            new DefaultAppConfig()
+          );
           // extend environment with app config for browser
           extendEnvironmentWithAppConfig(environment, appConfig);
         }
@@ -97,32 +104,32 @@ export function getRequest(transferState: TransferState): any {
         return () => true;
       },
       deps: [TransferState, DSpaceTransferState, CorrelationIdService],
-      multi: true
+      multi: true,
     },
     {
       provide: REQUEST,
       useFactory: getRequest,
-      deps: [TransferState]
+      deps: [TransferState],
     },
     {
       provide: AuthService,
-      useClass: AuthService
+      useClass: AuthService,
     },
     {
       provide: CookieService,
-      useClass: ClientCookieService
+      useClass: ClientCookieService,
     },
     {
       provide: KlaroService,
-      useClass: BrowserKlaroService
+      useClass: BrowserKlaroService,
     },
     {
       provide: SubmissionService,
-      useClass: SubmissionService
+      useClass: SubmissionService,
     },
     {
       provide: LocaleService,
-      useClass: LocaleService
+      useClass: LocaleService,
     },
     {
       provide: HardRedirectService,
@@ -140,7 +147,6 @@ export function getRequest(transferState: TransferState): any {
       provide: LocationToken,
       useFactory: locationProvider,
     },
-  ]
+  ],
 })
-export class BrowserAppModule {
-}
+export class BrowserAppModule {}

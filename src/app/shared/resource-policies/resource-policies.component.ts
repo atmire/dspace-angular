@@ -1,7 +1,18 @@
-import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { BehaviorSubject, from as observableFrom, Observable, Subscription } from 'rxjs';
+import {
+  BehaviorSubject,
+  from as observableFrom,
+  Observable,
+  Subscription,
+} from 'rxjs';
 import {
   concatMap,
   distinctUntilChanged,
@@ -10,7 +21,7 @@ import {
   reduce,
   scan,
   startWith,
-  take
+  take,
 } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -18,7 +29,7 @@ import { ResourcePolicyService } from '../../core/resource-policy/resource-polic
 import {
   getFirstSucceededRemoteDataPayload,
   getFirstSucceededRemoteDataWithNotEmptyPayload,
-  getAllSucceededRemoteData
+  getAllSucceededRemoteData,
 } from '../../core/shared/operators';
 import { ResourcePolicy } from '../../core/resource-policy/models/resource-policy.model';
 import { DSONameService } from '../../core/breadcrumbs/dso-name.service';
@@ -43,13 +54,12 @@ interface ResourcePolicyCheckboxEntry {
 @Component({
   selector: 'ds-resource-policies',
   styleUrls: ['./resource-policies.component.scss'],
-  templateUrl: './resource-policies.component.html'
+  templateUrl: './resource-policies.component.html',
 })
 /**
  * Component that shows the policies for given resource
  */
 export class ResourcePoliciesComponent implements OnInit, OnDestroy {
-
   /**
    * The resource UUID
    * @type {string}
@@ -78,8 +88,9 @@ export class ResourcePoliciesComponent implements OnInit, OnDestroy {
    * The list of policies for given resource
    * @type {BehaviorSubject<ResourcePolicyCheckboxEntry[]>}
    */
-  private resourcePoliciesEntries$: BehaviorSubject<ResourcePolicyCheckboxEntry[]> =
-    new BehaviorSubject<ResourcePolicyCheckboxEntry[]>([]);
+  private resourcePoliciesEntries$: BehaviorSubject<
+    ResourcePolicyCheckboxEntry[]
+  > = new BehaviorSubject<ResourcePolicyCheckboxEntry[]>([]);
 
   /**
    * Array to track all subscriptions and unsubscribe them onDestroy
@@ -112,8 +123,7 @@ export class ResourcePoliciesComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private translate: TranslateService
-  ) {
-  }
+  ) {}
 
   /**
    * Initialize the component, setting up the resource's policies
@@ -142,24 +152,38 @@ export class ResourcePoliciesComponent implements OnInit, OnDestroy {
    */
   deleteSelectedResourcePolicies(): void {
     this.processingDelete$.next(true);
-    const policiesToDelete: ResourcePolicyCheckboxEntry[] = this.resourcePoliciesEntries$.value
-      .filter((entry: ResourcePolicyCheckboxEntry) => entry.checked);
+    const policiesToDelete: ResourcePolicyCheckboxEntry[] =
+      this.resourcePoliciesEntries$.value.filter(
+        (entry: ResourcePolicyCheckboxEntry) => entry.checked
+      );
     this.subs.push(
-      observableFrom(policiesToDelete).pipe(
-        concatMap((entry: ResourcePolicyCheckboxEntry) => this.resourcePolicyService.delete(entry.policy.id)),
-        scan((acc: any, value: any) => [...acc, value], []),
-        filter((results: boolean[]) => results.length === policiesToDelete.length),
-        take(1),
-      ).subscribe((results: boolean[]) => {
-        const failureResults = results.filter((result: boolean) => !result);
-        if (isEmpty(failureResults)) {
-          this.notificationsService.success(null, this.translate.get('resource-policies.delete.success.content'));
-        } else {
-          this.notificationsService.error(null, this.translate.get('resource-policies.delete.failure.content'));
-        }
-        this.requestService.setStaleByHrefSubstring(this.resourceUUID);
-        this.processingDelete$.next(false);
-      })
+      observableFrom(policiesToDelete)
+        .pipe(
+          concatMap((entry: ResourcePolicyCheckboxEntry) =>
+            this.resourcePolicyService.delete(entry.policy.id)
+          ),
+          scan((acc: any, value: any) => [...acc, value], []),
+          filter(
+            (results: boolean[]) => results.length === policiesToDelete.length
+          ),
+          take(1)
+        )
+        .subscribe((results: boolean[]) => {
+          const failureResults = results.filter((result: boolean) => !result);
+          if (isEmpty(failureResults)) {
+            this.notificationsService.success(
+              null,
+              this.translate.get('resource-policies.delete.success.content')
+            );
+          } else {
+            this.notificationsService.error(
+              null,
+              this.translate.get('resource-policies.delete.failure.content')
+            );
+          }
+          this.requestService.setStaleByHrefSubstring(this.resourceUUID);
+          this.processingDelete$.next(false);
+        })
     );
   }
 
@@ -252,20 +276,31 @@ export class ResourcePoliciesComponent implements OnInit, OnDestroy {
    * Initialize the resource's policies list
    */
   initResourcePolicyLIst() {
-    this.subs.push(this.resourcePolicyService.searchByResource(this.resourceUUID, null, false, true,
-      followLink('eperson'), followLink('group')).pipe(
-      filter(() => this.isActive),
-      getAllSucceededRemoteData()
-    ).subscribe((result) => {
-      const entries = result.payload.page.map((policy: ResourcePolicy) => ({
-        id: policy.id,
-        policy: policy,
-        checked: false
-      }));
-      this.resourcePoliciesEntries$.next(entries);
-      // TODO detectChanges still needed?
-      this.cdr.detectChanges();
-    }));
+    this.subs.push(
+      this.resourcePolicyService
+        .searchByResource(
+          this.resourceUUID,
+          null,
+          false,
+          true,
+          followLink('eperson'),
+          followLink('group')
+        )
+        .pipe(
+          filter(() => this.isActive),
+          getAllSucceededRemoteData()
+        )
+        .subscribe((result) => {
+          const entries = result.payload.page.map((policy: ResourcePolicy) => ({
+            id: policy.id,
+            policy: policy,
+            checked: false,
+          }));
+          this.resourcePoliciesEntries$.next(entries);
+          // TODO detectChanges still needed?
+          this.cdr.detectChanges();
+        })
+    );
   }
 
   /**
@@ -285,8 +320,8 @@ export class ResourcePoliciesComponent implements OnInit, OnDestroy {
       relativeTo: this.route,
       queryParams: {
         policyTargetId: this.resourceUUID,
-        targetType: this.resourceType
-      }
+        targetType: this.resourceType,
+      },
     });
   }
 
@@ -299,8 +334,8 @@ export class ResourcePoliciesComponent implements OnInit, OnDestroy {
     this.router.navigate([`./edit`], {
       relativeTo: this.route,
       queryParams: {
-        policyId: policy.id
-      }
+        policyId: policy.id,
+      },
     });
   }
 
@@ -311,13 +346,20 @@ export class ResourcePoliciesComponent implements OnInit, OnDestroy {
    */
   redirectToGroupEditPage(policy: ResourcePolicy): void {
     this.subs.push(
-      this.groupService.findByHref(policy._links.group.href, false).pipe(
-        filter(() => this.isActive),
-        getFirstSucceededRemoteDataPayload(),
-        map((group: Group) => group.id)
-      ).subscribe((groupUUID) => {
-        this.router.navigate([ACCESS_CONTROL_MODULE_PATH, GROUP_EDIT_PATH, groupUUID]);
-      })
+      this.groupService
+        .findByHref(policy._links.group.href, false)
+        .pipe(
+          filter(() => this.isActive),
+          getFirstSucceededRemoteDataPayload(),
+          map((group: Group) => group.id)
+        )
+        .subscribe((groupUUID) => {
+          this.router.navigate([
+            ACCESS_CONTROL_MODULE_PATH,
+            GROUP_EDIT_PATH,
+            groupUUID,
+          ]);
+        })
     );
   }
 
@@ -326,7 +368,9 @@ export class ResourcePoliciesComponent implements OnInit, OnDestroy {
    */
   selectAllCheckbox(event: any): void {
     const checked = event.target.checked;
-    this.resourcePoliciesEntries$.value.forEach((entry: ResourcePolicyCheckboxEntry) => entry.checked = checked);
+    this.resourcePoliciesEntries$.value.forEach(
+      (entry: ResourcePolicyCheckboxEntry) => (entry.checked = checked)
+    );
   }
 
   /**
@@ -346,5 +390,4 @@ export class ResourcePoliciesComponent implements OnInit, OnDestroy {
       .filter((subscription) => hasValue(subscription))
       .forEach((subscription) => subscription.unsubscribe());
   }
-
 }

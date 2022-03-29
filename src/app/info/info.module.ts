@@ -13,7 +13,6 @@ import { FeedbackFormComponent } from './feedback/feedback-form/feedback-form.co
 import { ThemedFeedbackComponent } from './feedback/themed-feedback.component';
 import { FeedbackGuard } from '../core/feedback/feedback.guard';
 
-
 const DECLARATIONS = [
   EndUserAgreementComponent,
   ThemedEndUserAgreementComponent,
@@ -23,22 +22,13 @@ const DECLARATIONS = [
   ThemedPrivacyComponent,
   FeedbackComponent,
   FeedbackFormComponent,
-  ThemedFeedbackComponent
+  ThemedFeedbackComponent,
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    SharedModule,
-    InfoRoutingModule,
-  ],
-  declarations: [
-    ...DECLARATIONS
-  ],
-  exports: [
-    ...DECLARATIONS
-  ],
-  providers: [FeedbackGuard]
+  imports: [CommonModule, SharedModule, InfoRoutingModule],
+  declarations: [...DECLARATIONS],
+  exports: [...DECLARATIONS],
+  providers: [FeedbackGuard],
 })
-export class InfoModule {
-}
+export class InfoModule {}

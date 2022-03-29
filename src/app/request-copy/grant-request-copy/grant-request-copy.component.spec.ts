@@ -13,7 +13,7 @@ import { of as observableOf } from 'rxjs';
 import {
   createFailedRemoteDataObject$,
   createSuccessfulRemoteDataObject,
-  createSuccessfulRemoteDataObject$
+  createSuccessfulRemoteDataObject$,
 } from '../../shared/remote-data.utils';
 import { ItemRequest } from '../../core/shared/item-request.model';
 import { EPerson } from '../../core/eperson/models/eperson.model';
@@ -43,20 +43,20 @@ describe('GrantRequestCopyComponent', () => {
   beforeEach(waitForAsync(() => {
     itemRequest = Object.assign(new ItemRequest(), {
       token: 'item-request-token',
-      requestName: 'requester name'
+      requestName: 'requester name',
     });
     user = Object.assign(new EPerson(), {
       metadata: {
         'eperson.firstname': [
           {
-            value: 'first'
-          }
+            value: 'first',
+          },
         ],
         'eperson.lastname': [
           {
-            value: 'last'
-          }
-        ]
+            value: 'last',
+          },
+        ],
       },
       email: 'user-email',
     });
@@ -67,25 +67,29 @@ describe('GrantRequestCopyComponent', () => {
       metadata: {
         'dc.identifier.uri': [
           {
-            value: itemUrl
-          }
+            value: itemUrl,
+          },
         ],
         'dc.title': [
           {
-            value: itemName
-          }
-        ]
-      }
+            value: itemName,
+          },
+        ],
+      },
     });
 
     router = jasmine.createSpyObj('router', {
       navigateByUrl: jasmine.createSpy('navigateByUrl'),
     });
-    route = jasmine.createSpyObj('route', {}, {
-      data: observableOf({
-        request: createSuccessfulRemoteDataObject(itemRequest),
-      }),
-    });
+    route = jasmine.createSpyObj(
+      'route',
+      {},
+      {
+        data: observableOf({
+          request: createSuccessfulRemoteDataObject(itemRequest),
+        }),
+      }
+    );
     authService = jasmine.createSpyObj('authService', {
       isAuthenticated: observableOf(true),
       getAuthenticatedUserFromStore: observableOf(user),
@@ -99,7 +103,10 @@ describe('GrantRequestCopyComponent', () => {
     itemRequestService = jasmine.createSpyObj('itemRequestService', {
       grant: createSuccessfulRemoteDataObject$(itemRequest),
     });
-    notificationsService = jasmine.createSpyObj('notificationsService', ['success', 'error']);
+    notificationsService = jasmine.createSpyObj('notificationsService', [
+      'success',
+      'error',
+    ]);
 
     TestBed.configureTestingModule({
       declarations: [GrantRequestCopyComponent, VarDirective],
@@ -113,7 +120,7 @@ describe('GrantRequestCopyComponent', () => {
         { provide: ItemRequestDataService, useValue: itemRequestService },
         { provide: NotificationsService, useValue: notificationsService },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -123,18 +130,23 @@ describe('GrantRequestCopyComponent', () => {
     fixture.detectChanges();
 
     translateService = (component as any).translateService;
-    spyOn(translateService, 'get').and.returnValue(observableOf('translated-message'));
+    spyOn(translateService, 'get').and.returnValue(
+      observableOf('translated-message')
+    );
   });
 
   it('message$ should be parameterized correctly', (done) => {
     component.message$.subscribe(() => {
-      expect(translateService.get).toHaveBeenCalledWith(jasmine.anything(), Object.assign({
-        recipientName: itemRequest.requestName,
-        itemUrl: itemUrl,
-        itemName: itemName,
-        authorName: user.name,
-        authorEmail: user.email,
-      }));
+      expect(translateService.get).toHaveBeenCalledWith(
+        jasmine.anything(),
+        Object.assign({
+          recipientName: itemRequest.requestName,
+          itemUrl: itemUrl,
+          itemName: itemName,
+          authorName: user.name,
+          authorEmail: user.email,
+        })
+      );
       done();
     });
   });
@@ -145,7 +157,9 @@ describe('GrantRequestCopyComponent', () => {
     describe('when the request is successful', () => {
       beforeEach(() => {
         email = new RequestCopyEmail('subject', 'message');
-        (itemRequestService.grant as jasmine.Spy).and.returnValue(createSuccessfulRemoteDataObject$(itemRequest));
+        (itemRequestService.grant as jasmine.Spy).and.returnValue(
+          createSuccessfulRemoteDataObject$(itemRequest)
+        );
         component.grant(email);
       });
 
@@ -161,7 +175,9 @@ describe('GrantRequestCopyComponent', () => {
     describe('when the request is unsuccessful', () => {
       beforeEach(() => {
         email = new RequestCopyEmail('subject', 'message');
-        (itemRequestService.grant as jasmine.Spy).and.returnValue(createFailedRemoteDataObject$());
+        (itemRequestService.grant as jasmine.Spy).and.returnValue(
+          createFailedRemoteDataObject$()
+        );
         component.grant(email);
       });
 

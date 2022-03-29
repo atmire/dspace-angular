@@ -21,19 +21,17 @@ describe('ItemVersionHistoryComponent', () => {
   const activatedRoute = {
     parent: {
       parent: {
-        data: observableOf({dso: createSuccessfulRemoteDataObject(item)})
-      }
-    }
+        data: observableOf({ dso: createSuccessfulRemoteDataObject(item) }),
+      },
+    },
   };
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ItemVersionHistoryComponent, VarDirective],
       imports: [TranslateModule.forRoot(), RouterTestingModule.withRoutes([])],
-      providers: [
-        { provide: ActivatedRoute, useValue: activatedRoute }
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
+      providers: [{ provide: ActivatedRoute, useValue: activatedRoute }],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -43,7 +41,7 @@ describe('ItemVersionHistoryComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should initialize the itemRD$ from the route\'s data', (done) => {
+  it("should initialize the itemRD$ from the route's data", (done) => {
     component.itemRD$.subscribe((itemRD) => {
       expect(itemRD.payload).toBe(item);
       done();

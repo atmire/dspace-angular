@@ -20,9 +20,15 @@ export class BrowseByI18nBreadcrumbResolver extends I18nBreadcrumbResolver {
    * @param {RouterStateSnapshot} state The current RouterStateSnapshot
    * @returns BreadcrumbConfig object for a browse-by page
    */
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): BreadcrumbConfig<string> {
-    const extendedBreadcrumbKey = route.data.breadcrumbKey + '.' + route.params.id;
-    route.data = Object.assign({}, route.data, { breadcrumbKey: extendedBreadcrumbKey });
+  resolve(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): BreadcrumbConfig<string> {
+    const extendedBreadcrumbKey =
+      route.data.breadcrumbKey + '.' + route.params.id;
+    route.data = Object.assign({}, route.data, {
+      breadcrumbKey: extendedBreadcrumbKey,
+    });
     return super.resolve(route, state);
   }
 }

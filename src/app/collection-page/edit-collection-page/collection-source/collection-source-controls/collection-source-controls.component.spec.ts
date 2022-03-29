@@ -42,7 +42,6 @@ describe('CollectionSourceControlsComponent', () => {
   let bitstreamService: BitstreamDataService;
   let scheduler: TestScheduler;
 
-
   beforeEach(waitForAsync(() => {
     scheduler = getTestScheduler();
     contentSource = Object.assign(new ContentSource(), {
@@ -51,38 +50,41 @@ describe('CollectionSourceControlsComponent', () => {
         {
           id: 'dc',
           label: 'Simple Dublin Core',
-          nameSpace: 'http://www.openarchives.org/OAI/2.0/oai_dc/'
+          nameSpace: 'http://www.openarchives.org/OAI/2.0/oai_dc/',
         },
         {
           id: 'qdc',
           label: 'Qualified Dublin Core',
-          nameSpace: 'http://purl.org/dc/terms/'
+          nameSpace: 'http://purl.org/dc/terms/',
         },
         {
           id: 'dim',
           label: 'DSpace Intermediate Metadata',
-          nameSpace: 'http://www.dspace.org/xmlns/dspace/dim'
-        }
+          nameSpace: 'http://www.dspace.org/xmlns/dspace/dim',
+        },
       ],
       oaiSource: 'oai-harvest-source',
       oaiSetId: 'oai-set-id',
-      _links: {self: {href: 'contentsource-selflink'}}
+      _links: { self: { href: 'contentsource-selflink' } },
     });
     process = Object.assign(new Process(), {
-      processId: 'process-id', processStatus: 'COMPLETED',
-      _links: {output: {href: 'output-href'}}
+      processId: 'process-id',
+      processStatus: 'COMPLETED',
+      _links: { output: { href: 'output-href' } },
     });
 
-    bitstream = Object.assign(new Bitstream(), {_links: {content: {href: 'content-href'}}});
+    bitstream = Object.assign(new Bitstream(), {
+      _links: { content: { href: 'content-href' } },
+    });
 
     collection = Object.assign(new Collection(), {
       uuid: 'fake-collection-id',
-      _links: {self: {href: 'collection-selflink'}}
+      _links: { self: { href: 'collection-selflink' } },
     });
     notificationsService = new NotificationsServiceStub();
     collectionService = jasmine.createSpyObj('collectionService', {
       getContentSource: createSuccessfulRemoteDataObject$(contentSource),
-      findByHref: createSuccessfulRemoteDataObject$(collection)
+      findByHref: createSuccessfulRemoteDataObject$(collection),
     });
     scriptDataService = jasmine.createSpyObj('scriptDataService', {
       invoke: createSuccessfulRemoteDataObject$(process),
@@ -96,21 +98,24 @@ describe('CollectionSourceControlsComponent', () => {
     httpClient = jasmine.createSpyObj('httpClient', {
       get: observableOf('Script text'),
     });
-    requestService = jasmine.createSpyObj('requestService', ['removeByHrefSubstring', 'setStaleByHrefSubstring']);
+    requestService = jasmine.createSpyObj('requestService', [
+      'removeByHrefSubstring',
+      'setStaleByHrefSubstring',
+    ]);
 
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot(), RouterTestingModule],
       declarations: [CollectionSourceControlsComponent, VarDirective],
       providers: [
-        {provide: ScriptDataService, useValue: scriptDataService},
-        {provide: ProcessDataService, useValue: processDataService},
-        {provide: RequestService, useValue: requestService},
-        {provide: NotificationsService, useValue: notificationsService},
-        {provide: CollectionDataService, useValue: collectionService},
-        {provide: HttpClient, useValue: httpClient},
-        {provide: BitstreamDataService, useValue: bitstreamService}
+        { provide: ScriptDataService, useValue: scriptDataService },
+        { provide: ProcessDataService, useValue: processDataService },
+        { provide: RequestService, useValue: requestService },
+        { provide: NotificationsService, useValue: notificationsService },
+        { provide: CollectionDataService, useValue: collectionService },
+        { provide: HttpClient, useValue: httpClient },
+        { provide: BitstreamDataService, useValue: bitstreamService },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
   beforeEach(() => {
@@ -131,15 +136,32 @@ describe('CollectionSourceControlsComponent', () => {
       comp.testConfiguration(contentSource);
       scheduler.flush();
 
-      expect(scriptDataService.invoke).toHaveBeenCalledWith('harvest', [
-        {name: '-g', value: null},
-        {name: '-a', value: contentSource.oaiSource},
-        {name: '-i', value: new ContentSourceSetSerializer().Serialize(contentSource.oaiSetId)},
-      ], []);
+      expect(scriptDataService.invoke).toHaveBeenCalledWith(
+        'harvest',
+        [
+          { name: '-g', value: null },
+          { name: '-a', value: contentSource.oaiSource },
+          {
+            name: '-i',
+            value: new ContentSourceSetSerializer().Serialize(
+              contentSource.oaiSetId
+            ),
+          },
+        ],
+        []
+      );
 
-      expect(processDataService.findById).toHaveBeenCalledWith(process.processId, false);
-      expect(bitstreamService.findByHref).toHaveBeenCalledWith(process._links.output.href);
-      expect(notificationsService.info).toHaveBeenCalledWith(jasmine.anything() as any, 'Script text');
+      expect(processDataService.findById).toHaveBeenCalledWith(
+        process.processId,
+        false
+      );
+      expect(bitstreamService.findByHref).toHaveBeenCalledWith(
+        process._links.output.href
+      );
+      expect(notificationsService.info).toHaveBeenCalledWith(
+        jasmine.anything() as any,
+        'Script text'
+      );
     });
   });
   describe('importNow', () => {
@@ -147,11 +169,18 @@ describe('CollectionSourceControlsComponent', () => {
       comp.importNow();
       scheduler.flush();
 
-      expect(scriptDataService.invoke).toHaveBeenCalledWith('harvest', [
-        {name: '-r', value: null},
-        {name: '-c', value: collection.uuid},
-      ], []);
-      expect(processDataService.findById).toHaveBeenCalledWith(process.processId, false);
+      expect(scriptDataService.invoke).toHaveBeenCalledWith(
+        'harvest',
+        [
+          { name: '-r', value: null },
+          { name: '-c', value: collection.uuid },
+        ],
+        []
+      );
+      expect(processDataService.findById).toHaveBeenCalledWith(
+        process.processId,
+        false
+      );
       expect(notificationsService.success).toHaveBeenCalled();
     });
   });
@@ -160,11 +189,18 @@ describe('CollectionSourceControlsComponent', () => {
       comp.resetAndReimport();
       scheduler.flush();
 
-      expect(scriptDataService.invoke).toHaveBeenCalledWith('harvest', [
-        {name: '-o', value: null},
-        {name: '-c', value: collection.uuid},
-      ], []);
-      expect(processDataService.findById).toHaveBeenCalledWith(process.processId, false);
+      expect(scriptDataService.invoke).toHaveBeenCalledWith(
+        'harvest',
+        [
+          { name: '-o', value: null },
+          { name: '-c', value: collection.uuid },
+        ],
+        []
+      );
+      expect(processDataService.findById).toHaveBeenCalledWith(
+        process.processId,
+        false
+      );
       expect(notificationsService.success).toHaveBeenCalled();
     });
   });
@@ -227,6 +263,4 @@ describe('CollectionSourceControlsComponent', () => {
       expect(comp.resetAndReimport).toHaveBeenCalled();
     });
   });
-
-
 });

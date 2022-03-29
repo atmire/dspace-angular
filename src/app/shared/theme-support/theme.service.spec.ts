@@ -15,8 +15,9 @@ import { Item } from '../../core/shared/item.model';
 import { Collection } from '../../core/shared/collection.model';
 import { COLLECTION } from '../../core/shared/collection.resource-type';
 import {
-  createNoContentRemoteDataObject$, createSuccessfulRemoteDataObject,
-  createSuccessfulRemoteDataObject$
+  createNoContentRemoteDataObject$,
+  createSuccessfulRemoteDataObject,
+  createSuccessfulRemoteDataObject$,
 } from '../remote-data.utils';
 import { DSpaceObjectDataService } from '../../core/data/dspace-object-data.service';
 import { ThemeService } from './theme.service';
@@ -31,8 +32,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 class MockLinkService {
   index = -1;
 
-  constructor(private ancestorDSOs: DSpaceObject[]) {
-  }
+  constructor(private ancestorDSOs: DSpaceObject[]) {}
 
   resolveLinkWithoutAttaching() {
     if (this.index >= this.ancestorDSOs.length - 1) {
@@ -61,12 +61,12 @@ describe('ThemeService', () => {
       Object.assign(new Collection(), {
         type: COLLECTION.value,
         uuid: 'collection-uuid',
-        _links: { owningCommunity: { href: 'owning-community-link' } }
+        _links: { owningCommunity: { href: 'owning-community-link' } },
       }),
       Object.assign(new Community(), {
         type: COMMUNITY.value,
         uuid: 'sub-community-uuid',
-        _links: { parentCommunity: { href: 'parent-community-link' } }
+        _links: { parentCommunity: { href: 'parent-community-link' } },
       }),
       mockCommunity,
     ];
@@ -81,7 +81,7 @@ describe('ThemeService', () => {
   function setupServiceWithActions(mockActions) {
     init();
     const mockDsoService = {
-      findById: () => createSuccessfulRemoteDataObject$(mockCommunity)
+      findById: () => createSuccessfulRemoteDataObject$(mockCommunity),
     };
     TestBed.configureTestingModule({
       providers: [
@@ -89,8 +89,8 @@ describe('ThemeService', () => {
         { provide: LinkService, useValue: linkService },
         provideMockStore({ initialState }),
         provideMockActions(() => mockActions),
-        { provide: DSpaceObjectDataService, useValue: mockDsoService }
-      ]
+        { provide: DSpaceObjectDataService, useValue: mockDsoService },
+      ],
     });
 
     themeService = TestBed.inject(ThemeService);
@@ -105,9 +105,15 @@ describe('ThemeService', () => {
     });
 
     function spyOnPrivateMethods() {
-      spyOn((themeService as any), 'getAncestorDSOs').and.returnValue(() => observableOf([dso]));
-      spyOn((themeService as any), 'matchThemeToDSOs').and.returnValue(new Theme({ name: 'custom' }));
-      spyOn((themeService as any), 'getActionForMatch').and.returnValue(new SetThemeAction('custom'));
+      spyOn(themeService as any, 'getAncestorDSOs').and.returnValue(() =>
+        observableOf([dso])
+      );
+      spyOn(themeService as any, 'matchThemeToDSOs').and.returnValue(
+        new Theme({ name: 'custom' })
+      );
+      spyOn(themeService as any, 'getActionForMatch').and.returnValue(
+        new SetThemeAction('custom')
+      );
     }
 
     describe('when no resolved action is present', () => {
@@ -124,17 +130,23 @@ describe('ThemeService', () => {
       });
 
       it('should set the theme it receives from the route url', (done) => {
-        themeService.updateThemeOnRouteChange$(url, {} as ActivatedRouteSnapshot).subscribe(() => {
-          expect((themeService as any).store.dispatch).toHaveBeenCalledWith(new SetThemeAction('custom') as any);
-          done();
-        });
+        themeService
+          .updateThemeOnRouteChange$(url, {} as ActivatedRouteSnapshot)
+          .subscribe(() => {
+            expect((themeService as any).store.dispatch).toHaveBeenCalledWith(
+              new SetThemeAction('custom') as any
+            );
+            done();
+          });
       });
 
       it('should return true', (done) => {
-        themeService.updateThemeOnRouteChange$(url, {} as ActivatedRouteSnapshot).subscribe((result) => {
-          expect(result).toEqual(true);
-          done();
-        });
+        themeService
+          .updateThemeOnRouteChange$(url, {} as ActivatedRouteSnapshot)
+          .subscribe((result) => {
+            expect(result).toEqual(true);
+            done();
+          });
       });
     });
 
@@ -152,21 +164,25 @@ describe('ThemeService', () => {
       });
 
       it('should not dispatch any action', (done) => {
-        themeService.updateThemeOnRouteChange$(url, {} as ActivatedRouteSnapshot).subscribe(() => {
-          expect((themeService as any).store.dispatch).not.toHaveBeenCalled();
-          done();
-        });
+        themeService
+          .updateThemeOnRouteChange$(url, {} as ActivatedRouteSnapshot)
+          .subscribe(() => {
+            expect((themeService as any).store.dispatch).not.toHaveBeenCalled();
+            done();
+          });
       });
 
       it('should return false', (done) => {
-        themeService.updateThemeOnRouteChange$(url, {} as ActivatedRouteSnapshot).subscribe((result) => {
-          expect(result).toEqual(false);
-          done();
-        });
+        themeService
+          .updateThemeOnRouteChange$(url, {} as ActivatedRouteSnapshot)
+          .subscribe((result) => {
+            expect(result).toEqual(false);
+            done();
+          });
       });
     });
 
-    describe('when a dso is present in the snapshot\'s data', () => {
+    describe("when a dso is present in the snapshot's data", () => {
       let snapshot;
 
       beforeEach(() => {
@@ -181,8 +197,8 @@ describe('ThemeService', () => {
         spyOnPrivateMethods();
         snapshot = Object.assign({
           data: {
-            dso: createSuccessfulRemoteDataObject(dso)
-          }
+            dso: createSuccessfulRemoteDataObject(dso),
+          },
         });
       });
 
@@ -195,20 +211,24 @@ describe('ThemeService', () => {
 
       it('should set the theme it receives from the data dso', (done) => {
         themeService.updateThemeOnRouteChange$(url, snapshot).subscribe(() => {
-          expect((themeService as any).store.dispatch).toHaveBeenCalledWith(new SetThemeAction('custom') as any);
+          expect((themeService as any).store.dispatch).toHaveBeenCalledWith(
+            new SetThemeAction('custom') as any
+          );
           done();
         });
       });
 
       it('should return true', (done) => {
-        themeService.updateThemeOnRouteChange$(url, snapshot).subscribe((result) => {
-          expect(result).toEqual(true);
-          done();
-        });
+        themeService
+          .updateThemeOnRouteChange$(url, snapshot)
+          .subscribe((result) => {
+            expect(result).toEqual(true);
+            done();
+          });
       });
     });
 
-    describe('when a scope is present in the snapshot\'s parameters', () => {
+    describe("when a scope is present in the snapshot's parameters", () => {
       let snapshot;
 
       beforeEach(() => {
@@ -223,8 +243,8 @@ describe('ThemeService', () => {
         spyOnPrivateMethods();
         snapshot = Object.assign({
           queryParams: {
-            scope: mockCommunity.uuid
-          }
+            scope: mockCommunity.uuid,
+          },
         });
       });
 
@@ -237,16 +257,20 @@ describe('ThemeService', () => {
 
       it('should set the theme it receives from the dso found through the scope', (done) => {
         themeService.updateThemeOnRouteChange$(url, snapshot).subscribe(() => {
-          expect((themeService as any).store.dispatch).toHaveBeenCalledWith(new SetThemeAction('custom') as any);
+          expect((themeService as any).store.dispatch).toHaveBeenCalledWith(
+            new SetThemeAction('custom') as any
+          );
           done();
         });
       });
 
       it('should return true', (done) => {
-        themeService.updateThemeOnRouteChange$(url, snapshot).subscribe((result) => {
-          expect(result).toEqual(true);
-          done();
-        });
+        themeService
+          .updateThemeOnRouteChange$(url, snapshot)
+          .subscribe((result) => {
+            expect(result).toEqual(true);
+            done();
+          });
       });
     });
   });
@@ -259,12 +283,16 @@ describe('ThemeService', () => {
     describe('getActionForMatch', () => {
       it('should return a SET action if the new theme differs from the current theme', () => {
         const theme = new Theme({ name: 'new-theme' });
-        expect((themeService as any).getActionForMatch(theme, 'old-theme')).toEqual(new SetThemeAction('new-theme'));
+        expect(
+          (themeService as any).getActionForMatch(theme, 'old-theme')
+        ).toEqual(new SetThemeAction('new-theme'));
       });
 
       it('should return an empty action if the new theme equals the current theme', () => {
         const theme = new Theme({ name: 'old-theme' });
-        expect((themeService as any).getActionForMatch(theme, 'old-theme')).toEqual(new NoOpAction());
+        expect(
+          (themeService as any).getActionForMatch(theme, 'old-theme')
+        ).toEqual(new NoOpAction());
       });
     });
 
@@ -276,15 +304,24 @@ describe('ThemeService', () => {
       let dsos: DSpaceObject[];
 
       beforeEach(() => {
-        nonMatchingTheme = Object.assign(new Theme({ name: 'non-matching-theme' }), {
-          matches: () => false
-        });
-        itemMatchingTheme = Object.assign(new Theme({ name: 'item-matching-theme' }), {
-          matches: (url, dso) => (dso as any).type === ITEM.value
-        });
-        communityMatchingTheme = Object.assign(new Theme({ name: 'community-matching-theme' }), {
-          matches: (url, dso) => (dso as any).type === COMMUNITY.value
-        });
+        nonMatchingTheme = Object.assign(
+          new Theme({ name: 'non-matching-theme' }),
+          {
+            matches: () => false,
+          }
+        );
+        itemMatchingTheme = Object.assign(
+          new Theme({ name: 'item-matching-theme' }),
+          {
+            matches: (url, dso) => (dso as any).type === ITEM.value,
+          }
+        );
+        communityMatchingTheme = Object.assign(
+          new Theme({ name: 'community-matching-theme' }),
+          {
+            matches: (url, dso) => (dso as any).type === COMMUNITY.value,
+          }
+        );
         dsos = [
           Object.assign(new Item(), {
             type: ITEM.value,
@@ -303,35 +340,51 @@ describe('ThemeService', () => {
 
       describe('when no themes match any of the DSOs', () => {
         beforeEach(() => {
-          themes = [ nonMatchingTheme ];
+          themes = [nonMatchingTheme];
           themeService.themes = themes;
         });
 
         it('should return undefined', () => {
-          expect((themeService as any).matchThemeToDSOs(dsos, '')).toBeUndefined();
+          expect(
+            (themeService as any).matchThemeToDSOs(dsos, '')
+          ).toBeUndefined();
         });
       });
 
       describe('when one of the themes match a DSOs', () => {
         beforeEach(() => {
-          themes = [ nonMatchingTheme, itemMatchingTheme ];
+          themes = [nonMatchingTheme, itemMatchingTheme];
           themeService.themes = themes;
         });
 
         it('should return the matching theme', () => {
-          expect((themeService as any).matchThemeToDSOs(dsos, '')).toEqual(itemMatchingTheme);
+          expect((themeService as any).matchThemeToDSOs(dsos, '')).toEqual(
+            itemMatchingTheme
+          );
         });
       });
 
       describe('when multiple themes match some of the DSOs', () => {
         it('should return the first matching theme', () => {
-          themes = [ nonMatchingTheme, itemMatchingTheme, communityMatchingTheme ];
+          themes = [
+            nonMatchingTheme,
+            itemMatchingTheme,
+            communityMatchingTheme,
+          ];
           themeService.themes = themes;
-          expect((themeService as any).matchThemeToDSOs(dsos, '')).toEqual(itemMatchingTheme);
+          expect((themeService as any).matchThemeToDSOs(dsos, '')).toEqual(
+            itemMatchingTheme
+          );
 
-          themes = [ nonMatchingTheme, communityMatchingTheme, itemMatchingTheme ];
+          themes = [
+            nonMatchingTheme,
+            communityMatchingTheme,
+            itemMatchingTheme,
+          ];
           themeService.themes = themes;
-          expect((themeService as any).matchThemeToDSOs(dsos, '')).toEqual(communityMatchingTheme);
+          expect((themeService as any).matchThemeToDSOs(dsos, '')).toEqual(
+            communityMatchingTheme
+          );
         });
       });
     });
@@ -344,26 +397,26 @@ describe('ThemeService', () => {
           _links: { owningCollection: { href: 'owning-collection-link' } },
         });
 
-        observableOf(dso).pipe(
-          (themeService as any).getAncestorDSOs()
-        ).subscribe((result) => {
-          expect(result).toEqual([dso, ...ancestorDSOs]);
-          done();
-        });
+        observableOf(dso)
+          .pipe((themeService as any).getAncestorDSOs())
+          .subscribe((result) => {
+            expect(result).toEqual([dso, ...ancestorDSOs]);
+            done();
+          });
       });
 
-      it('should return an array of just the provided DSO if it doesn\'t have any parents', (done) => {
+      it("should return an array of just the provided DSO if it doesn't have any parents", (done) => {
         const dso = {
           type: ITEM.value,
           uuid: 'item-uuid',
         };
 
-        observableOf(dso).pipe(
-          (themeService as any).getAncestorDSOs()
-        ).subscribe((result) => {
-          expect(result).toEqual([dso]);
-          done();
-        });
+        observableOf(dso)
+          .pipe((themeService as any).getAncestorDSOs())
+          .subscribe((result) => {
+            expect(result).toEqual([dso]);
+            done();
+          });
       });
     });
   });

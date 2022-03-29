@@ -2,7 +2,7 @@ import {
   DynamicFormControlLayout,
   DynamicFormGroupModel,
   DynamicFormGroupModelConfig,
-  serializable
+  serializable,
 } from '@ng-dynamic-forms/core';
 import { DsDynamicInputModel } from './ds-dynamic-input.model';
 import { Subject } from 'rxjs';
@@ -13,7 +13,8 @@ export const QUALDROP_GROUP_SUFFIX = '_QUALDROP_GROUP';
 export const QUALDROP_METADATA_SUFFIX = '_QUALDROP_METADATA';
 export const QUALDROP_VALUE_SUFFIX = '_QUALDROP_VALUE';
 
-export interface DsDynamicQualdropModelConfig extends DynamicFormGroupModelConfig {
+export interface DsDynamicQualdropModelConfig
+  extends DynamicFormGroupModelConfig {
   languageCodes?: LanguageCode[];
   language?: string;
   readOnly: boolean;
@@ -31,7 +32,10 @@ export class DynamicQualdropModel extends DynamicFormGroupModel {
   @serializable() required: boolean;
   isCustomGroup = true;
 
-  constructor(config: DsDynamicQualdropModelConfig, layout?: DynamicFormControlLayout) {
+  constructor(
+    config: DsDynamicQualdropModelConfig,
+    layout?: DynamicFormControlLayout
+  ) {
     super(config, layout);
 
     this.readOnly = config.readOnly;
@@ -73,5 +77,4 @@ export class DynamicQualdropModel extends DynamicFormGroupModel {
       this.language = this.languageCodes ? this.languageCodes[0].code : null;
     }
   }
-
 }

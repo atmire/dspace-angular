@@ -35,7 +35,8 @@ export class VersionDataService extends DataService<Version> {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DefaultChangeAnalyzer<Version>) {
+    protected comparator: DefaultChangeAnalyzer<Version>
+  ) {
     super();
   }
 
@@ -47,12 +48,23 @@ export class VersionDataService extends DataService<Version> {
    * @param reRequestOnStale            Whether or not the request should automatically be re-
    *                                    requested after the response becomes stale
    */
-  getHistoryFromVersion(version: Version, useCachedVersionIfAvailable = false, reRequestOnStale = true): Observable<VersionHistory> {
-    return isNotEmpty(version) ? this.findById(version.id, useCachedVersionIfAvailable, reRequestOnStale, followLink('versionhistory')).pipe(
-      getFirstSucceededRemoteDataPayload(),
-      switchMap((res: Version) => res.versionhistory),
-      getFirstSucceededRemoteDataPayload(),
-    ) : EMPTY;
+  getHistoryFromVersion(
+    version: Version,
+    useCachedVersionIfAvailable = false,
+    reRequestOnStale = true
+  ): Observable<VersionHistory> {
+    return isNotEmpty(version)
+      ? this.findById(
+          version.id,
+          useCachedVersionIfAvailable,
+          reRequestOnStale,
+          followLink('versionhistory')
+        ).pipe(
+          getFirstSucceededRemoteDataPayload(),
+          switchMap((res: Version) => res.versionhistory),
+          getFirstSucceededRemoteDataPayload()
+        )
+      : EMPTY;
   }
 
   /**
@@ -61,8 +73,7 @@ export class VersionDataService extends DataService<Version> {
    */
   getHistoryIdFromVersion(version: Version): Observable<string> {
     return this.getHistoryFromVersion(version).pipe(
-      map((versionHistory: VersionHistory) => versionHistory.id),
+      map((versionHistory: VersionHistory) => versionHistory.id)
     );
   }
-
 }

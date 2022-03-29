@@ -5,7 +5,7 @@ import { hasValue } from '../../empty.util';
 @Component({
   selector: 'ds-truncatable-part',
   templateUrl: './truncatable-part.component.html',
-  styleUrls: ['./truncatable-part.component.scss']
+  styleUrls: ['./truncatable-part.component.scss'],
 })
 
 /**
@@ -50,8 +50,7 @@ export class TruncatablePartComponent implements OnInit, OnDestroy {
    */
   private sub;
 
-  public constructor(private service: TruncatableService) {
-  }
+  public constructor(private service: TruncatableService) {}
 
   /**
    * Initialize lines variable
@@ -64,13 +63,15 @@ export class TruncatablePartComponent implements OnInit, OnDestroy {
    * Subscribe to the current state to determine how much lines should be shown of this part
    */
   private setLines() {
-    this.sub = this.service.isCollapsed(this.id).subscribe((collapsed: boolean) => {
-      if (collapsed) {
-        this.lines = this.minLines.toString();
-      } else {
-        this.lines = this.maxLines < 0 ? 'none' : this.maxLines.toString();
-      }
-    });
+    this.sub = this.service
+      .isCollapsed(this.id)
+      .subscribe((collapsed: boolean) => {
+        if (collapsed) {
+          this.lines = this.minLines.toString();
+        } else {
+          this.lines = this.maxLines < 0 ? 'none' : this.maxLines.toString();
+        }
+      });
   }
 
   /**

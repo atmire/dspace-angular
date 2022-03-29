@@ -7,5 +7,4 @@ import { SUBMISSION_DEFINITIONS_TYPE } from './config-type';
 @inheritSerialization(SubmissionDefinitionModel)
 export class SubmissionDefinitionsModel extends SubmissionDefinitionModel {
   static type = SUBMISSION_DEFINITIONS_TYPE;
-
 }

@@ -40,7 +40,7 @@ describe('BundleDataService', () => {
     bundleHALLink.href = bundleLink;
     item = new Item();
     item._links = {
-      bundles: bundleHALLink
+      bundles: bundleHALLink,
     };
     requestService = getMockRequestService();
     halService = new HALEndpointServiceStub('url') as any;
@@ -49,13 +49,12 @@ describe('BundleDataService', () => {
     http = {} as HttpClient;
     comparator = new DummyChangeAnalyzer() as any;
     objectCache = {
-
       addPatch: () => {
         /* empty */
       },
       getObjectBySelfLink: () => {
         /* empty */
-      }
+      },
     } as any;
     store = {} as Store<CoreState>;
     return new BundleDataService(
@@ -66,7 +65,7 @@ describe('BundleDataService', () => {
       halService,
       notificationsService,
       http,
-      comparator,
+      comparator
     );
   }
 
@@ -80,8 +79,13 @@ describe('BundleDataService', () => {
       service.findAllByItem(item);
     });
 
-    it('should call findAllByHref with the item\'s bundles link', () => {
-      expect(service.findAllByHref).toHaveBeenCalledWith(bundleLink, undefined, true, true);
+    it("should call findAllByHref with the item's bundles link", () => {
+      expect(service.findAllByHref).toHaveBeenCalledWith(
+        bundleLink,
+        undefined,
+        true,
+        true
+      );
     });
   });
 
@@ -95,33 +99,35 @@ describe('BundleDataService', () => {
           metadata: {
             'dc.title': [
               {
-                value: 'ORIGINAL'
-              }
-            ]
-          }
+                value: 'ORIGINAL',
+              },
+            ],
+          },
         }),
         Object.assign(new Bundle(), {
           id: 'THUMBNAIL_BUNDLE',
           metadata: {
             'dc.title': [
               {
-                value: 'THUMBNAIL'
-              }
-            ]
-          }
+                value: 'THUMBNAIL',
+              },
+            ],
+          },
         }),
         Object.assign(new Bundle(), {
           id: 'EXTRA_BUNDLE',
           metadata: {
             'dc.title': [
               {
-                value: 'EXTRA'
-              }
-            ]
-          }
+                value: 'EXTRA',
+              },
+            ],
+          },
         }),
       ];
-      spyOn(service, 'findAllByItem').and.returnValue(createSuccessfulRemoteDataObject$(createPaginatedList(bundles)));
+      spyOn(service, 'findAllByItem').and.returnValue(
+        createSuccessfulRemoteDataObject$(createPaginatedList(bundles))
+      );
     });
 
     it('should only return the requested bundle by name', (done) => {

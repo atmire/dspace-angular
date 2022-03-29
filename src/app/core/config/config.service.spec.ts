@@ -19,8 +19,19 @@ class TestService extends ConfigService {
   constructor(
     protected requestService: RequestService,
     protected rdbService: RemoteDataBuildService,
-    protected halService: HALEndpointService) {
-    super(requestService, rdbService, null, null, halService, null, null, null, BROWSE);
+    protected halService: HALEndpointService
+  ) {
+    super(
+      requestService,
+      rdbService,
+      null,
+      null,
+      halService,
+      null,
+      null,
+      null,
+      BROWSE
+    );
   }
 }
 
@@ -41,11 +52,7 @@ describe('ConfigService', () => {
   const searchEndpoint = `${serviceEndpoint}/${BROWSE}?uuid=${scopeID}`;
 
   function initTestService(): TestService {
-    return new TestService(
-      requestService,
-      rdbService,
-      halService
-    );
+    return new TestService(requestService, rdbService, halService);
   }
 
   beforeEach(() => {
@@ -57,9 +64,11 @@ describe('ConfigService', () => {
   });
 
   describe('findByHref', () => {
-
     it('should send a new GetRequest', () => {
-      const expected = new GetRequest(requestService.generateRequestId(), scopedEndpoint);
+      const expected = new GetRequest(
+        requestService.generateRequestId(),
+        scopedEndpoint
+      );
       scheduler.schedule(() => service.findByHref(scopedEndpoint).subscribe());
       scheduler.flush();
 

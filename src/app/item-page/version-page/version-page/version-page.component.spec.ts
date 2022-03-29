@@ -3,7 +3,10 @@ import { VersionPageComponent } from './version-page.component';
 import { ActivatedRoute } from '@angular/router';
 import { ActivatedRouteStub } from '../../../shared/testing/active-router.stub';
 import { of as observableOf } from 'rxjs';
-import { createSuccessfulRemoteDataObject, createSuccessfulRemoteDataObject$ } from '../../../shared/remote-data.utils';
+import {
+  createSuccessfulRemoteDataObject,
+  createSuccessfulRemoteDataObject$,
+} from '../../../shared/remote-data.utils';
 import { Item } from '../../../core/shared/item.model';
 import { createPaginatedList } from '../../../shared/testing/utils.test';
 import { createRelationshipsObservable } from '../../simple/item-types/shared/item.component.spec';
@@ -26,8 +29,7 @@ const mockVersion: Version = Object.assign(new Version(), {
 });
 
 @Component({ template: '' })
-class DummyComponent {
-}
+class DummyComponent {}
 
 describe('VersionPageComponent', () => {
   let component: VersionPageComponent;
@@ -35,17 +37,25 @@ describe('VersionPageComponent', () => {
   let authService: AuthService;
 
   const mockRoute = Object.assign(new ActivatedRouteStub(), {
-    data: observableOf({dso: createSuccessfulRemoteDataObject(mockVersion)})
+    data: observableOf({ dso: createSuccessfulRemoteDataObject(mockVersion) }),
   });
 
   beforeEach(waitForAsync(() => {
     authService = jasmine.createSpyObj('authService', {
       isAuthenticated: observableOf(true),
-      setRedirectUrl: {}
+      setRedirectUrl: {},
     });
     TestBed.configureTestingModule({
       declarations: [VersionPageComponent, DummyComponent],
-      imports: [RouterTestingModule.withRoutes([{ path: 'items/item-uuid', component: DummyComponent, pathMatch: 'full' }])],
+      imports: [
+        RouterTestingModule.withRoutes([
+          {
+            path: 'items/item-uuid',
+            component: DummyComponent,
+            pathMatch: 'full',
+          },
+        ]),
+      ],
       providers: [
         { provide: ActivatedRoute, useValue: mockRoute },
         { provide: VersionDataService, useValue: {} },
@@ -53,8 +63,6 @@ describe('VersionPageComponent', () => {
       ],
     }).compileComponents();
   }));
-
-
 
   beforeEach(() => {
     fixture = TestBed.createComponent(VersionPageComponent);

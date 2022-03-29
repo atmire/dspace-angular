@@ -29,7 +29,6 @@ export const MenuActionTypes = {
   TOGGLE_ACTIVE_SECTION: type('dspace/menu-section/TOGGLE_ACTIVE_SECTION'),
 };
 
-
 // MENU STATE ACTIONS
 /**
  * Action used to collapse a single menu
@@ -151,7 +150,6 @@ export class RemoveMenuSectionAction extends MenuSectionAction {
 
   constructor(menuID: MenuID, id: string) {
     super(menuID, id);
-
   }
 }
 
@@ -211,7 +209,7 @@ export class ToggleActiveMenuSectionAction extends MenuSectionAction {
 }
 
 export type MenuAction =
-  CollapseMenuAction
+  | CollapseMenuAction
   | ExpandMenuAction
   | ToggleMenuAction
   | ShowMenuAction

@@ -14,14 +14,12 @@ import { WorkspaceitemSectionAccessesObject } from '../../../core/submission/mod
  */
 @Injectable()
 export class SectionAccessesService {
-
   /**
    * Initialize service variables
    *
    * @param {Store<SubmissionState>} store
    */
-  constructor(private store: Store<SubmissionState>) { }
-
+  constructor(private store: Store<SubmissionState>) {}
 
   /**
    * Return item's accesses condition state.
@@ -33,10 +31,15 @@ export class SectionAccessesService {
    * @returns {Observable}
    *    Emits bitstream's metadata
    */
-  public getAccessesData(submissionId: string, sectionId: string): Observable<WorkspaceitemSectionAccessesObject> {
-
-    return this.store.select(submissionSectionDataFromIdSelector(submissionId, sectionId)).pipe(
-      filter((state) => isNotUndefined(state)),
-      distinctUntilChanged());
+  public getAccessesData(
+    submissionId: string,
+    sectionId: string
+  ): Observable<WorkspaceitemSectionAccessesObject> {
+    return this.store
+      .select(submissionSectionDataFromIdSelector(submissionId, sectionId))
+      .pipe(
+        filter((state) => isNotUndefined(state)),
+        distinctUntilChanged()
+      );
   }
 }

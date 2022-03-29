@@ -14,7 +14,7 @@ import { DSpaceObject } from '../../core/shared/dspace-object.model';
 import {
   getFirstSucceededRemoteDataPayload,
   redirectOn4xx,
-  getFirstSucceededRemoteData
+  getFirstSucceededRemoteData,
 } from '../../core/shared/operators';
 import { URLCombiner } from '../../core/url-combiner/url-combiner';
 import { AlertType } from '../../shared/alert/aletr-type';
@@ -30,7 +30,6 @@ import { Process } from '../processes/process.model';
  * A component displaying detailed information about a DSpace Process
  */
 export class ProcessDetailComponent implements OnInit {
-
   /**
    * The AlertType enumeration
    * @type {AlertType}
@@ -71,15 +70,16 @@ export class ProcessDetailComponent implements OnInit {
    */
   dateFormat = 'yyyy-MM-dd HH:mm:ss ZZZZ';
 
-  constructor(protected route: ActivatedRoute,
-              protected router: Router,
-              protected processService: ProcessDataService,
-              protected bitstreamDataService: BitstreamDataService,
-              protected nameService: DSONameService,
-              private zone: NgZone,
-              protected authService: AuthService,
-              protected http: HttpClient) {
-  }
+  constructor(
+    protected route: ActivatedRoute,
+    protected router: Router,
+    protected processService: ProcessDataService,
+    protected bitstreamDataService: BitstreamDataService,
+    protected nameService: DSONameService,
+    private zone: NgZone,
+    protected authService: AuthService,
+    protected http: HttpClient
+  ) {}
 
   /**
    * Initialize component properties
@@ -97,7 +97,9 @@ export class ProcessDetailComponent implements OnInit {
 
     this.filesRD$ = this.processRD$.pipe(
       getFirstSucceededRemoteDataPayload(),
-      switchMap((process: Process) => this.processService.getFiles(process.processId))
+      switchMap((process: Process) =>
+        this.processService.getFiles(process.processId)
+      )
     );
   }
 
@@ -106,7 +108,9 @@ export class ProcessDetailComponent implements OnInit {
    * @param bitstream
    */
   getFileName(bitstream: Bitstream) {
-    return bitstream instanceof DSpaceObject ? this.nameService.getName(bitstream) : 'unknown';
+    return bitstream instanceof DSpaceObject
+      ? this.nameService.getName(bitstream)
+      : 'unknown';
   }
 
   /**
@@ -117,12 +121,16 @@ export class ProcessDetailComponent implements OnInit {
     console.log('showProcessOutputLogs');
     this.retrievingOutputLogs$.next(true);
     this.zone.runOutsideAngular(() => {
-      const processOutputRD$: Observable<RemoteData<Bitstream>> = this.processRD$.pipe(
-        getFirstSucceededRemoteDataPayload(),
-        switchMap((process: Process) => {
-          return this.bitstreamDataService.findByHref(process._links.output.href, false);
-        })
-      );
+      const processOutputRD$: Observable<RemoteData<Bitstream>> =
+        this.processRD$.pipe(
+          getFirstSucceededRemoteDataPayload(),
+          switchMap((process: Process) => {
+            return this.bitstreamDataService.findByHref(
+              process._links.output.href,
+              false
+            );
+          })
+        );
       this.outputLogFileUrl$ = processOutputRD$.pipe(
         getFirstSucceededRemoteData(),
         tap((processOutputFileRD: RemoteData<Bitstream>) => {
@@ -133,33 +141,44 @@ export class ProcessDetailComponent implements OnInit {
         }),
         switchMap((processOutput: RemoteData<Bitstream>) => {
           const url = processOutput.payload._links.content.href;
-          return this.authService.getShortlivedToken().pipe(take(1),
+          return this.authService.getShortlivedToken().pipe(
+            take(1),
             map((token: string) => {
-              return hasValue(token) ? new URLCombiner(url, `?authentication-token=${token}`).toString() : url;
-            }));
+              return hasValue(token)
+                ? new URLCombiner(
+                    url,
+                    `?authentication-token=${token}`
+                  ).toString()
+                : url;
+            })
+          );
         })
       );
     });
-     this.outputLogFileUrl$.pipe(take(1),
-      switchMap((url: string) => {
-        return this.getTextFile(url);
-      }),
-      finalize(() => this.zone.run(() => this.retrievingOutputLogs$.next(false)))
-    ).subscribe((logs: string) => {
-       this.outputLogs$.next(logs);
-     });
+    this.outputLogFileUrl$
+      .pipe(
+        take(1),
+        switchMap((url: string) => {
+          return this.getTextFile(url);
+        }),
+        finalize(() =>
+          this.zone.run(() => this.retrievingOutputLogs$.next(false))
+        )
+      )
+      .subscribe((logs: string) => {
+        this.outputLogs$.next(logs);
+      });
   }
 
   getTextFile(filename: string): Observable<string> {
     // The Observable returned by get() is of type Observable<string>
     // because a text response was specified.
     // There's no need to pass a <string> type parameter to get().
-    return this.http.get(filename, { responseType: 'text' })
-      .pipe(
-        finalize(() => {
-          this.showOutputLogs = true;
-        }),
-      );
+    return this.http.get(filename, { responseType: 'text' }).pipe(
+      finalize(() => {
+        this.showOutputLogs = true;
+      })
+    );
   }
 
   /**
@@ -167,9 +186,13 @@ export class ProcessDetailComponent implements OnInit {
    * @param process Process to check if completed or failed
    */
   isProcessFinished(process: Process): boolean {
-    return (hasValue(process) && hasValue(process.processStatus) &&
-      (process.processStatus.toString() === ProcessStatus[ProcessStatus.COMPLETED].toString()
-        || process.processStatus.toString() === ProcessStatus[ProcessStatus.FAILED].toString()));
+    return (
+      hasValue(process) &&
+      hasValue(process.processStatus) &&
+      (process.processStatus.toString() ===
+        ProcessStatus[ProcessStatus.COMPLETED].toString() ||
+        process.processStatus.toString() ===
+          ProcessStatus[ProcessStatus.FAILED].toString())
+    );
   }
-
 }

@@ -13,7 +13,8 @@
       position: relative;
       text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
 
-      &:before, &:after {
+      &:before,
+      &:after {
         content: '';
         display: block;
         width: var(--ds-banner-background-gradient-width);
@@ -23,19 +24,25 @@
       }
 
       &:before {
-        background: linear-gradient(to left, var(--ds-banner-text-background), transparent);
+        background: linear-gradient(
+          to left,
+          var(--ds-banner-text-background),
+          transparent
+        );
         left: calc(-1 * var(--ds-banner-background-gradient-width));
-
       }
 
       &:after {
-        background: linear-gradient(to right, var(--ds-banner-text-background), transparent);
+        background: linear-gradient(
+          to right,
+          var(--ds-banner-text-background),
+          transparent
+        );
         right: calc(-1 * var(--ds-banner-background-gradient-width));
       }
 
       background-color: var(--ds-banner-text-background);
     }
-
 
     small.credits {
       a {
@@ -61,5 +68,3 @@
     }
   }
 }
-
-

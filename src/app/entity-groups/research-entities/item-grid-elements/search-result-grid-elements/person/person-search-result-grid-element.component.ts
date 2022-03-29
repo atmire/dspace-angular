@@ -9,10 +9,9 @@ import { ItemSearchResultGridElementComponent } from '../../../../../shared/obje
   selector: 'ds-person-search-result-grid-element',
   styleUrls: ['./person-search-result-grid-element.component.scss'],
   templateUrl: './person-search-result-grid-element.component.html',
-  animations: [focusShadow]
+  animations: [focusShadow],
 })
 /**
  * The component for displaying a grid element for an item search result of the type Person
  */
-export class PersonSearchResultGridElementComponent extends ItemSearchResultGridElementComponent {
-}
+export class PersonSearchResultGridElementComponent extends ItemSearchResultGridElementComponent {}

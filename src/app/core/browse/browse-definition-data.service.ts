@@ -19,7 +19,6 @@ import { RemoteData } from '../data/remote-data';
 import { FindListOptions } from '../data/request.models';
 import { PaginatedList } from '../data/paginated-list.model';
 
-
 class DataServiceImpl extends DataService<BrowseDefinition> {
   protected linkPath = 'browses';
 
@@ -31,13 +30,14 @@ class DataServiceImpl extends DataService<BrowseDefinition> {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DefaultChangeAnalyzer<BrowseDefinition>) {
+    protected comparator: DefaultChangeAnalyzer<BrowseDefinition>
+  ) {
     super();
   }
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 @dataService(BROWSE_DEFINITION)
 export class BrowseDefinitionDataService {
@@ -54,8 +54,18 @@ export class BrowseDefinitionDataService {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DefaultChangeAnalyzer<BrowseDefinition>) {
-    this.dataService = new DataServiceImpl(requestService, rdbService, null, objectCache, halService, notificationsService, http, comparator);
+    protected comparator: DefaultChangeAnalyzer<BrowseDefinition>
+  ) {
+    this.dataService = new DataServiceImpl(
+      requestService,
+      rdbService,
+      null,
+      objectCache,
+      halService,
+      notificationsService,
+      http,
+      comparator
+    );
   }
 
   /**
@@ -72,8 +82,18 @@ export class BrowseDefinitionDataService {
    * @return {Observable<RemoteData<PaginatedList<BrowseDefinition>>>}
    *    Return an observable that emits object list
    */
-  findAll(options: FindListOptions = {}, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<BrowseDefinition>[]): Observable<RemoteData<PaginatedList<BrowseDefinition>>> {
-    return this.dataService.findAll(options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  findAll(
+    options: FindListOptions = {},
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<BrowseDefinition>[]
+  ): Observable<RemoteData<PaginatedList<BrowseDefinition>>> {
+    return this.dataService.findAll(
+      options,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow
+    );
   }
 
   /**
@@ -87,8 +107,18 @@ export class BrowseDefinitionDataService {
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  findByHref(href: string, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<BrowseDefinition>[]): Observable<RemoteData<BrowseDefinition>> {
-    return this.dataService.findByHref(href, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  findByHref(
+    href: string,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<BrowseDefinition>[]
+  ): Observable<RemoteData<BrowseDefinition>> {
+    return this.dataService.findByHref(
+      href,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow
+    );
   }
 
   /**
@@ -103,8 +133,20 @@ export class BrowseDefinitionDataService {
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  findAllByHref(href: string, findListOptions: FindListOptions = {}, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<BrowseDefinition>[]): Observable<RemoteData<PaginatedList<BrowseDefinition>>> {
-    return this.dataService.findAllByHref(href, findListOptions, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  findAllByHref(
+    href: string,
+    findListOptions: FindListOptions = {},
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<BrowseDefinition>[]
+  ): Observable<RemoteData<PaginatedList<BrowseDefinition>>> {
+    return this.dataService.findAllByHref(
+      href,
+      findListOptions,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow
+    );
   }
 
   /**
@@ -118,8 +160,17 @@ export class BrowseDefinitionDataService {
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  findById(id: string, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<BrowseDefinition>[]): Observable<RemoteData<BrowseDefinition>> {
-    return this.dataService.findById(id, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  findById(
+    id: string,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<BrowseDefinition>[]
+  ): Observable<RemoteData<BrowseDefinition>> {
+    return this.dataService.findById(
+      id,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow
+    );
   }
 }
-

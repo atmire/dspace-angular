@@ -27,7 +27,7 @@ import {
   ITEM_EDIT_PRIVATE_PATH,
   ITEM_EDIT_PUBLIC_PATH,
   ITEM_EDIT_REINSTATE_PATH,
-  ITEM_EDIT_WITHDRAW_PATH
+  ITEM_EDIT_WITHDRAW_PATH,
 } from './edit-item-page.routing-paths';
 import { ItemPageReinstateGuard } from './item-page-reinstate.guard';
 import { ItemPageWithdrawGuard } from './item-page-withdraw.guard';
@@ -48,7 +48,7 @@ import { ItemPageCollectionMapperGuard } from './item-page-collection-mapper.gua
       {
         path: '',
         resolve: {
-          breadcrumb: I18nBreadcrumbResolver
+          breadcrumb: I18nBreadcrumbResolver,
         },
         data: { breadcrumbKey: 'item.edit' },
         children: [
@@ -59,31 +59,43 @@ import { ItemPageCollectionMapperGuard } from './item-page-collection-mapper.gua
               {
                 path: '',
                 redirectTo: 'status',
-                pathMatch: 'full'
+                pathMatch: 'full',
               },
               {
                 path: 'status',
                 component: ItemStatusComponent,
-                data: { title: 'item.edit.tabs.status.title', showBreadcrumbs: true },
-                canActivate: [ItemPageStatusGuard]
+                data: {
+                  title: 'item.edit.tabs.status.title',
+                  showBreadcrumbs: true,
+                },
+                canActivate: [ItemPageStatusGuard],
               },
               {
                 path: 'bitstreams',
                 component: ItemBitstreamsComponent,
-                data: { title: 'item.edit.tabs.bitstreams.title', showBreadcrumbs: true },
-                canActivate: [ItemPageBitstreamsGuard]
+                data: {
+                  title: 'item.edit.tabs.bitstreams.title',
+                  showBreadcrumbs: true,
+                },
+                canActivate: [ItemPageBitstreamsGuard],
               },
               {
                 path: 'metadata',
                 component: ItemMetadataComponent,
-                data: { title: 'item.edit.tabs.metadata.title', showBreadcrumbs: true },
-                canActivate: [ItemPageMetadataGuard]
+                data: {
+                  title: 'item.edit.tabs.metadata.title',
+                  showBreadcrumbs: true,
+                },
+                canActivate: [ItemPageMetadataGuard],
               },
               {
                 path: 'relationships',
                 component: ItemRelationshipsComponent,
-                data: { title: 'item.edit.tabs.relationships.title', showBreadcrumbs: true },
-                canActivate: [ItemPageRelationshipsGuard]
+                data: {
+                  title: 'item.edit.tabs.relationships.title',
+                  showBreadcrumbs: true,
+                },
+                canActivate: [ItemPageRelationshipsGuard],
               },
               /* TODO - uncomment & fix when view page exists
               {
@@ -100,16 +112,22 @@ import { ItemPageCollectionMapperGuard } from './item-page-collection-mapper.gua
               {
                 path: 'versionhistory',
                 component: ItemVersionHistoryComponent,
-                data: { title: 'item.edit.tabs.versionhistory.title', showBreadcrumbs: true },
-                canActivate: [ItemPageVersionHistoryGuard]
+                data: {
+                  title: 'item.edit.tabs.versionhistory.title',
+                  showBreadcrumbs: true,
+                },
+                canActivate: [ItemPageVersionHistoryGuard],
               },
               {
                 path: 'mapper',
                 component: ItemCollectionMapperComponent,
-                data: { title: 'item.edit.tabs.item-mapper.title', showBreadcrumbs: true },
-                canActivate: [ItemPageCollectionMapperGuard]
-              }
-            ]
+                data: {
+                  title: 'item.edit.tabs.item-mapper.title',
+                  showBreadcrumbs: true,
+                },
+                canActivate: [ItemPageCollectionMapperGuard],
+              },
+            ],
           },
           {
             path: 'mapper',
@@ -118,12 +136,12 @@ import { ItemPageCollectionMapperGuard } from './item-page-collection-mapper.gua
           {
             path: ITEM_EDIT_WITHDRAW_PATH,
             component: ItemWithdrawComponent,
-            canActivate: [ItemPageWithdrawGuard]
+            canActivate: [ItemPageWithdrawGuard],
           },
           {
             path: ITEM_EDIT_REINSTATE_PATH,
             component: ItemReinstateComponent,
-            canActivate: [ItemPageReinstateGuard]
+            canActivate: [ItemPageReinstateGuard],
           },
           {
             path: ITEM_EDIT_PRIVATE_PATH,
@@ -148,29 +166,29 @@ import { ItemPageCollectionMapperGuard } from './item-page-collection-mapper.gua
               {
                 path: 'create',
                 resolve: {
-                  resourcePolicyTarget: ResourcePolicyTargetResolver
+                  resourcePolicyTarget: ResourcePolicyTargetResolver,
                 },
                 component: ResourcePolicyCreateComponent,
-                data: { title: 'resource-policies.create.page.title' }
+                data: { title: 'resource-policies.create.page.title' },
               },
               {
                 path: 'edit',
                 resolve: {
-                  resourcePolicy: ResourcePolicyResolver
+                  resourcePolicy: ResourcePolicyResolver,
                 },
                 component: ResourcePolicyEditComponent,
-                data: { title: 'resource-policies.edit.page.title' }
+                data: { title: 'resource-policies.edit.page.title' },
               },
               {
                 path: '',
                 component: ItemAuthorizationsComponent,
-                data: { title: 'item.edit.authorizations.title' }
-              }
-            ]
-          }
-        ]
-      }
-    ])
+                data: { title: 'item.edit.authorizations.title' },
+              },
+            ],
+          },
+        ],
+      },
+    ]),
   ],
   providers: [
     I18nBreadcrumbResolver,
@@ -186,8 +204,6 @@ import { ItemPageCollectionMapperGuard } from './item-page-collection-mapper.gua
     ItemPageRelationshipsGuard,
     ItemPageVersionHistoryGuard,
     ItemPageCollectionMapperGuard,
-  ]
+  ],
 })
-export class EditItemPageRoutingModule {
-
-}
+export class EditItemPageRoutingModule {}

@@ -9,5 +9,4 @@ import { HeaderComponent as BaseComponent } from '../../../../app/header/header.
   styleUrls: ['header.component.scss'],
   templateUrl: 'header.component.html',
 })
-export class HeaderComponent extends BaseComponent {
-}
+export class HeaderComponent extends BaseComponent {}

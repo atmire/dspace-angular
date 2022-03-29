@@ -4,7 +4,7 @@ import { DsDynamicInputModel } from '../form/builder/ds-dynamic-form-ui/models/d
 import { DynamicQualdropModel } from '../form/builder/ds-dynamic-form-ui/models/ds-dynamic-qualdrop.model';
 import {
   DynamicRowArrayModel,
-  DynamicRowArrayModelConfig
+  DynamicRowArrayModelConfig,
 } from '../form/builder/ds-dynamic-form-ui/models/ds-dynamic-row-array-model';
 import { SubmissionScopeType } from '../../core/submission/submission-scope-type';
 import { DynamicRelationGroupModel } from '../form/builder/ds-dynamic-form-ui/models/relation-group/dynamic-relation-group.model';
@@ -25,30 +25,30 @@ export const qualdropSelectConfig = {
   options: [
     {
       label: 'ISSN',
-      value: 'dc.identifier.issn'
+      value: 'dc.identifier.issn',
     },
     {
       label: 'Other',
-      value: 'dc.identifier.other'
+      value: 'dc.identifier.other',
     },
     {
       label: 'ISMN',
-      value: 'dc.identifier.ismn'
+      value: 'dc.identifier.ismn',
     },
     {
-      label: 'Gov\'t Doc #',
-      value: 'dc.identifier.govdoc'
+      label: "Gov't Doc #",
+      value: 'dc.identifier.govdoc',
     },
     {
       label: 'URI',
-      value: 'dc.identifier.uri'
+      value: 'dc.identifier.uri',
     },
     {
       label: 'ISBN',
-      value: 'dc.identifier.isbn'
-    }
+      value: 'dc.identifier.isbn',
+    },
   ],
-  value: 'dc.identifier.issn'
+  value: 'dc.identifier.issn',
 };
 
 export const qualdropInputConfig = {
@@ -60,18 +60,22 @@ export const qualdropInputConfig = {
   value: 'test',
   submissionId: '1234',
   metadataFields: [],
-  hasSelectableMetadata: false
+  hasSelectableMetadata: false,
 };
 
-export const mockQualdropSelectModel = new DynamicSelectModel(qualdropSelectConfig);
-export const mockQualdropInputModel = new DsDynamicInputModel(qualdropInputConfig);
+export const mockQualdropSelectModel = new DynamicSelectModel(
+  qualdropSelectConfig
+);
+export const mockQualdropInputModel = new DsDynamicInputModel(
+  qualdropInputConfig
+);
 
 export const qualdropConfig = {
   id: 'dc_identifier_QUALDROP_GROUP',
   legend: 'Identifiers',
   readOnly: false,
   group: [mockQualdropSelectModel, mockQualdropInputModel],
-  required: false
+  required: false,
 };
 
 export const MockQualdropModel = new DynamicQualdropModel(qualdropConfig);
@@ -89,10 +93,11 @@ const rowArrayQualdropConfig = {
   submissionId: '1234',
   metadataKey: 'dc.some.key',
   metadataFields: ['dc.some.key'],
-  hasSelectableMetadata: false
+  hasSelectableMetadata: false,
 } as DynamicRowArrayModelConfig;
 
-export const MockRowArrayQualdropModel: DynamicRowArrayModel = new DynamicRowArrayModel(rowArrayQualdropConfig);
+export const MockRowArrayQualdropModel: DynamicRowArrayModel =
+  new DynamicRowArrayModel(rowArrayQualdropConfig);
 
 const mockFormRowModel = {
   fields: [
@@ -101,15 +106,16 @@ const mockFormRowModel = {
       label: 'Journal',
       mandatory: 'false',
       repeatable: false,
-      hints: 'Enter the name of the journal where the item has been\n\t\t\t\t\tpublished, if any.',
+      hints:
+        'Enter the name of the journal where the item has been\n\t\t\t\t\tpublished, if any.',
       selectableMetadata: [
         {
           metadata: 'journal',
           controlledVocabulary: 'JOURNALAuthority',
-          closed: false
-        }
+          closed: false,
+        },
       ],
-      languageCodes: []
+      languageCodes: [],
     } as FormFieldModel,
     {
       input: { type: 'onebox' },
@@ -119,12 +125,12 @@ const mockFormRowModel = {
       hints: ' Enter issue number.',
       selectableMetadata: [
         {
-          metadata: 'issue'
-        }
+          metadata: 'issue',
+        },
       ],
-      languageCodes: []
-    } as FormFieldModel
-  ]
+      languageCodes: [],
+    } as FormFieldModel,
+  ],
 } as FormRowModel;
 
 const relationGroupConfig = {
@@ -137,32 +143,27 @@ const relationGroupConfig = {
   repeatable: false,
   submissionScope: SubmissionScopeType.WorkspaceItem,
   value: {
-    journal: [
-      'journal test 1',
-      'journal test 2'
-    ],
-    issue: [
-      'issue test 1',
-      'issue test 2'
-    ],
+    journal: ['journal test 1', 'journal test 2'],
+    issue: ['issue test 1', 'issue test 2'],
   },
   metadataFields: [],
-  hasSelectableMetadata: false
+  hasSelectableMetadata: false,
 };
 
-export const MockRelationModel: DynamicRelationGroupModel = new DynamicRelationGroupModel(relationGroupConfig);
+export const MockRelationModel: DynamicRelationGroupModel =
+  new DynamicRelationGroupModel(relationGroupConfig);
 
 export const inputWithLanguageAndAuthorityConfig = {
   vocabularyOptions: new VocabularyOptions('testAuthority', false),
   languageCodes: [
     {
       display: 'English',
-      code: 'en_US'
+      code: 'en_US',
     },
     {
       display: 'Italian',
-      code: 'it_IT'
-    }
+      code: 'it_IT',
+    },
   ],
   language: 'en_US',
   name: 'testWithAuthority',
@@ -177,21 +178,23 @@ export const inputWithLanguageAndAuthorityConfig = {
   },
   submissionId: '1234',
   metadataFields: [],
-  hasSelectableMetadata: false
+  hasSelectableMetadata: false,
 };
 
-export const mockInputWithLanguageAndAuthorityModel = new DsDynamicInputModel(inputWithLanguageAndAuthorityConfig);
+export const mockInputWithLanguageAndAuthorityModel = new DsDynamicInputModel(
+  inputWithLanguageAndAuthorityConfig
+);
 
 export const inputWithLanguageConfig = {
   languageCodes: [
     {
       display: 'English',
-      code: 'en_US'
+      code: 'en_US',
     },
     {
       display: 'Italian',
-      code: 'it_IT'
-    }
+      code: 'it_IT',
+    },
   ],
   language: 'en_US',
   name: 'testWithLanguage',
@@ -202,22 +205,24 @@ export const inputWithLanguageConfig = {
   value: 'testWithLanguage',
   submissionId: '1234',
   metadataFields: [],
-  hasSelectableMetadata: false
+  hasSelectableMetadata: false,
 };
 
-export const mockInputWithLanguageModel = new DsDynamicInputModel(inputWithLanguageConfig);
+export const mockInputWithLanguageModel = new DsDynamicInputModel(
+  inputWithLanguageConfig
+);
 
 export const inputWithLanguageAndAuthorityArrayConfig = {
   vocabularyOptions: new VocabularyOptions('testAuthority', false),
   languageCodes: [
     {
       display: 'English',
-      code: 'en_US'
+      code: 'en_US',
     },
     {
       display: 'Italian',
-      code: 'it_IT'
-    }
+      code: 'it_IT',
+    },
   ],
   language: 'en_US',
   name: 'testWithLanguageAndAuthorityArray',
@@ -225,17 +230,20 @@ export const inputWithLanguageAndAuthorityArrayConfig = {
   readOnly: false,
   disabled: false,
   repeatable: false,
-  value: [{
-    value: 'testLanguageAndAuthorityArray',
-    display: 'testLanguageAndAuthorityArray',
-    authority: 'testLanguageAndAuthorityArray',
-  }],
+  value: [
+    {
+      value: 'testLanguageAndAuthorityArray',
+      display: 'testLanguageAndAuthorityArray',
+      authority: 'testLanguageAndAuthorityArray',
+    },
+  ],
   submissionId: '1234',
   metadataFields: [],
-  hasSelectableMetadata: false
+  hasSelectableMetadata: false,
 };
 
-export const mockInputWithLanguageAndAuthorityArrayModel = new DsDynamicInputModel(inputWithLanguageAndAuthorityArrayConfig);
+export const mockInputWithLanguageAndAuthorityArrayModel =
+  new DsDynamicInputModel(inputWithLanguageAndAuthorityArrayConfig);
 
 export const inputWithFormFieldValueConfig = {
   name: 'testWithFormField',
@@ -246,10 +254,12 @@ export const inputWithFormFieldValueConfig = {
   value: new FormFieldMetadataValueObject('testWithFormFieldValue'),
   submissionId: '1234',
   metadataFields: [],
-  hasSelectableMetadata: false
+  hasSelectableMetadata: false,
 };
 
-export const mockInputWithFormFieldValueModel = new DsDynamicInputModel(inputWithFormFieldValueConfig);
+export const mockInputWithFormFieldValueModel = new DsDynamicInputModel(
+  inputWithFormFieldValueConfig
+);
 
 export const inputWithAuthorityValueConfig = {
   name: 'testWithAuthorityField',
@@ -260,14 +270,16 @@ export const inputWithAuthorityValueConfig = {
   value: Object.assign({}, new VocabularyEntry(), {
     value: 'testWithAuthorityValue',
     authority: 'testWithAuthorityValue',
-    display: 'testWithAuthorityValue'
+    display: 'testWithAuthorityValue',
   }),
   submissionId: '1234',
   metadataFields: [],
-  hasSelectableMetadata: false
+  hasSelectableMetadata: false,
 };
 
-export const mockInputWithAuthorityValueModel = new DsDynamicInputModel(inputWithAuthorityValueConfig);
+export const mockInputWithAuthorityValueModel = new DsDynamicInputModel(
+  inputWithAuthorityValueConfig
+);
 
 export const inputWithObjectValueConfig = {
   name: 'testWithObjectValue',
@@ -275,13 +287,19 @@ export const inputWithObjectValueConfig = {
   readOnly: false,
   disabled: false,
   repeatable: false,
-  value: { value: 'testWithObjectValue', authority: 'testWithObjectValue', display: 'testWithObjectValue' },
+  value: {
+    value: 'testWithObjectValue',
+    authority: 'testWithObjectValue',
+    display: 'testWithObjectValue',
+  },
   submissionId: '1234',
   metadataFields: [],
-  hasSelectableMetadata: false
+  hasSelectableMetadata: false,
 };
 
-export const mockInputWithObjectValueModel = new DsDynamicInputModel(inputWithObjectValueConfig);
+export const mockInputWithObjectValueModel = new DsDynamicInputModel(
+  inputWithObjectValueConfig
+);
 
 export const mockRowGroupModel = new DynamicRowGroupModel({
   id: 'mockRowGroupModel',
@@ -296,12 +314,14 @@ export const fileFormEditInputConfig = {
   repeatable: false,
   submissionId: '1234',
   metadataFields: [],
-  hasSelectableMetadata: false
+  hasSelectableMetadata: false,
 };
 
-export const mockFileFormEditInputModel = new DsDynamicInputModel(fileFormEditInputConfig);
+export const mockFileFormEditInputModel = new DsDynamicInputModel(
+  fileFormEditInputConfig
+);
 
 export const mockFileFormEditRowGroupModel = new DynamicRowGroupModel({
   id: 'mockRowGroupModel',
-  group: [mockFileFormEditInputModel]
+  group: [mockFileFormEditInputModel],
 });

@@ -8,15 +8,13 @@ import { GenericConstructor } from '../shared/generic-constructor';
  * to models and vice versa
  */
 export class DSpaceSerializer<T> implements Serializer<T> {
-
   /**
    * Create a new DSpaceSerializer instance
    *
    * @param modelType a class or interface to indicate
    * the kind of model this serializer should work with
    */
-  constructor(private modelType: GenericConstructor<T>) {
-  }
+  constructor(private modelType: GenericConstructor<T>) {}
 
   /**
    * Convert a model in to the format expected by the backend
@@ -46,7 +44,9 @@ export class DSpaceSerializer<T> implements Serializer<T> {
    */
   deserialize(response: any): T {
     if (Array.isArray(response)) {
-      throw new Error('Expected a single model, use deserializeArray() instead');
+      throw new Error(
+        'Expected a single model, use deserializeArray() instead'
+      );
     }
     return Deserialize(response, this.modelType) as T;
   }

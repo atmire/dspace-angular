@@ -13,40 +13,46 @@ import { REGISTRIES_MODULE_PATH } from './admin-routing-paths';
     RouterModule.forChild([
       {
         path: REGISTRIES_MODULE_PATH,
-        loadChildren: () => import('./admin-registries/admin-registries.module')
-          .then((m) => m.AdminRegistriesModule),
+        loadChildren: () =>
+          import('./admin-registries/admin-registries.module').then(
+            (m) => m.AdminRegistriesModule
+          ),
       },
       {
         path: 'search',
         resolve: { breadcrumb: I18nBreadcrumbResolver },
         component: AdminSearchPageComponent,
-        data: { title: 'admin.search.title', breadcrumbKey: 'admin.search' }
+        data: { title: 'admin.search.title', breadcrumbKey: 'admin.search' },
       },
       {
         path: 'workflow',
         resolve: { breadcrumb: I18nBreadcrumbResolver },
         component: AdminWorkflowPageComponent,
-        data: { title: 'admin.workflow.title', breadcrumbKey: 'admin.workflow' }
+        data: {
+          title: 'admin.workflow.title',
+          breadcrumbKey: 'admin.workflow',
+        },
       },
       {
         path: 'curation-tasks',
         resolve: { breadcrumb: I18nBreadcrumbResolver },
         component: AdminCurationTasksComponent,
-        data: { title: 'admin.curation-tasks.title', breadcrumbKey: 'admin.curation-tasks' }
+        data: {
+          title: 'admin.curation-tasks.title',
+          breadcrumbKey: 'admin.curation-tasks',
+        },
       },
       {
         path: 'metadata-import',
         resolve: { breadcrumb: I18nBreadcrumbResolver },
         component: MetadataImportPageComponent,
-        data: { title: 'admin.metadata-import.title', breadcrumbKey: 'admin.metadata-import' }
+        data: {
+          title: 'admin.metadata-import.title',
+          breadcrumbKey: 'admin.metadata-import',
+        },
       },
-    ])
+    ]),
   ],
-  providers: [
-    I18nBreadcrumbResolver,
-    I18nBreadcrumbsService
-  ]
+  providers: [I18nBreadcrumbResolver, I18nBreadcrumbsService],
 })
-export class AdminRoutingModule {
-
-}
+export class AdminRoutingModule {}

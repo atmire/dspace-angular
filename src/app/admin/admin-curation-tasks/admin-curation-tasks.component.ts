@@ -7,6 +7,4 @@ import { Component } from '@angular/core';
   selector: 'ds-admin-curation-task',
   templateUrl: './admin-curation-tasks.component.html',
 })
-export class AdminCurationTasksComponent {
-
-}
+export class AdminCurationTasksComponent {}

@@ -1,5 +1,8 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController, } from '@angular/common/http/testing';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Router } from '@angular/router';
 
@@ -23,7 +26,7 @@ describe(`AuthInterceptor`, () => {
     /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
     dispatch: {},
     /* eslint-enable no-empty, @typescript-eslint/no-empty-function */
-    select: observableOf(true)
+    select: observableOf(true),
   });
 
   beforeEach(() => {
@@ -47,45 +50,66 @@ describe(`AuthInterceptor`, () => {
   });
 
   describe('when has a valid token', () => {
+    it("should not add an Authorization header when we’re sending a HTTP request to 'authn' endpoint that is not the logout endpoint", () => {
+      service
+        .request(
+          RestRequestMethod.POST,
+          'dspace-spring-rest/api/authn/login',
+          'password=password&user=user'
+        )
+        .subscribe((response) => {
+          expect(response).toBeTruthy();
+        });
 
-    it('should not add an Authorization header when we’re sending a HTTP request to \'authn\' endpoint that is not the logout endpoint', () => {
-      service.request(RestRequestMethod.POST, 'dspace-spring-rest/api/authn/login', 'password=password&user=user').subscribe((response) => {
-        expect(response).toBeTruthy();
-      });
-
-      const httpRequest = httpMock.expectOne(`dspace-spring-rest/api/authn/login`);
+      const httpRequest = httpMock.expectOne(
+        `dspace-spring-rest/api/authn/login`
+      );
 
       const token = httpRequest.request.headers.get('authorization');
       expect(token).toBeNull();
     });
-    it('should add an Authorization header when we’re sending a HTTP request to the\'authn/logout\' endpoint', () => {
-      service.request(RestRequestMethod.POST, 'dspace-spring-rest/api/authn/logout', 'test').subscribe((response) => {
-        expect(response).toBeTruthy();
-      });
+    it("should add an Authorization header when we’re sending a HTTP request to the'authn/logout' endpoint", () => {
+      service
+        .request(
+          RestRequestMethod.POST,
+          'dspace-spring-rest/api/authn/logout',
+          'test'
+        )
+        .subscribe((response) => {
+          expect(response).toBeTruthy();
+        });
 
-      const httpRequest = httpMock.expectOne(`dspace-spring-rest/api/authn/logout`);
-
-      expect(httpRequest.request.headers.has('authorization'));
-      const token = httpRequest.request.headers.get('authorization');
-      expect(token).toBe('Bearer token_test');
-    });
-
-    it('should add an Authorization header when we’re sending a HTTP request to a non-\'authn\' endpoint', () => {
-      service.request(RestRequestMethod.POST, 'dspace-spring-rest/api/submission/workspaceitems', 'test').subscribe((response) => {
-        expect(response).toBeTruthy();
-      });
-
-      const httpRequest = httpMock.expectOne(`dspace-spring-rest/api/submission/workspaceitems`);
+      const httpRequest = httpMock.expectOne(
+        `dspace-spring-rest/api/authn/logout`
+      );
 
       expect(httpRequest.request.headers.has('authorization'));
       const token = httpRequest.request.headers.get('authorization');
       expect(token).toBe('Bearer token_test');
     });
 
+    it("should add an Authorization header when we’re sending a HTTP request to a non-'authn' endpoint", () => {
+      service
+        .request(
+          RestRequestMethod.POST,
+          'dspace-spring-rest/api/submission/workspaceitems',
+          'test'
+        )
+        .subscribe((response) => {
+          expect(response).toBeTruthy();
+        });
+
+      const httpRequest = httpMock.expectOne(
+        `dspace-spring-rest/api/submission/workspaceitems`
+      );
+
+      expect(httpRequest.request.headers.has('authorization'));
+      const token = httpRequest.request.headers.get('authorization');
+      expect(token).toBe('Bearer token_test');
+    });
   });
 
   describe('when has an expired token', () => {
-
     beforeEach(() => {
       authServiceStub.setTokenAsExpired();
     });
@@ -95,15 +119,23 @@ describe(`AuthInterceptor`, () => {
     });
 
     it('should redirect to login', () => {
+      service
+        .request(
+          RestRequestMethod.POST,
+          'dspace-spring-rest/api/submission/workspaceitems',
+          'password=password&user=user'
+        )
+        .subscribe((response) => {
+          expect(response).toBeTruthy();
+        });
 
-      service.request(RestRequestMethod.POST, 'dspace-spring-rest/api/submission/workspaceitems', 'password=password&user=user').subscribe((response) => {
-        expect(response).toBeTruthy();
-      });
-
-      service.request(RestRequestMethod.POST, 'dspace-spring-rest/api/submission/workspaceitems', 'password=password&user=user');
+      service.request(
+        RestRequestMethod.POST,
+        'dspace-spring-rest/api/submission/workspaceitems',
+        'password=password&user=user'
+      );
 
       httpMock.expectNone('dspace-spring-rest/api/submission/workspaceitems');
     });
   });
-
 });

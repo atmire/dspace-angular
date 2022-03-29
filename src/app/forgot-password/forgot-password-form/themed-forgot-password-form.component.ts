@@ -8,7 +8,7 @@ import { ForgotPasswordFormComponent } from './forgot-password-form.component';
 @Component({
   selector: 'ds-themed-forgot-password-form',
   styleUrls: [],
-  templateUrl: './../../shared/theme-support/themed.component.html'
+  templateUrl: './../../shared/theme-support/themed.component.html',
 })
 export class ThemedForgotPasswordFormComponent extends ThemedComponent<ForgotPasswordFormComponent> {
   protected getComponentName(): string {
@@ -16,7 +16,9 @@ export class ThemedForgotPasswordFormComponent extends ThemedComponent<ForgotPas
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../themes/${themeName}/app/forgot-password/forgot-password-form/forgot-password-form.component`);
+    return import(
+      `../../../themes/${themeName}/app/forgot-password/forgot-password-form/forgot-password-form.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

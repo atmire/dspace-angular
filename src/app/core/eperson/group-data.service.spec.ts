@@ -7,13 +7,17 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { compare, Operation } from 'fast-json-patch';
 import {
   GroupRegistryCancelGroupAction,
-  GroupRegistryEditGroupAction
+  GroupRegistryEditGroupAction,
 } from '../../access-control/group-registry/group-registry.actions';
 import { GroupMock, GroupMock2 } from '../../shared/testing/group-mock';
 import { RequestParam } from '../cache/models/request-param.model';
 import { CoreState } from '../core.reducers';
 import { ChangeAnalyzer } from '../data/change-analyzer';
-import { DeleteRequest, FindListOptions, PostRequest } from '../data/request.models';
+import {
+  DeleteRequest,
+  FindListOptions,
+  PostRequest,
+} from '../data/request.models';
 import { RequestService } from '../data/request.service';
 import { HttpOptions } from '../dspace-rest/dspace-rest.service';
 import { Item } from '../shared/item.model';
@@ -24,7 +28,10 @@ import { HALEndpointServiceStub } from '../../shared/testing/hal-endpoint-servic
 import { TranslateLoaderMock } from '../../shared/testing/translate-loader.mock';
 import { getMockRequestService } from '../../shared/mocks/request.service.mock';
 import { EPersonMock, EPersonMock2 } from '../../shared/testing/eperson.mock';
-import { createPaginatedList, createRequestEntry$ } from '../../shared/testing/utils.test';
+import {
+  createPaginatedList,
+  createRequestEntry$,
+} from '../../shared/testing/utils.test';
 
 describe('GroupDataService', () => {
   let service: GroupDataService;
@@ -39,11 +46,15 @@ describe('GroupDataService', () => {
   let rdbService;
 
   function init() {
-    restEndpointURL = 'https://dspace.4science.it/dspace-spring-rest/api/eperson';
+    restEndpointURL =
+      'https://dspace.4science.it/dspace-spring-rest/api/eperson';
     groupsEndpoint = `${restEndpointURL}/groups`;
     groups = [GroupMock, GroupMock2];
     groups$ = createSuccessfulRemoteDataObject$(createPaginatedList(groups));
-    rdbService = getMockRemoteDataBuildServiceHrefMap(undefined, { 'https://dspace.4science.it/dspace-spring-rest/api/eperson/groups': groups$ });
+    rdbService = getMockRemoteDataBuildServiceHrefMap(undefined, {
+      'https://dspace.4science.it/dspace-spring-rest/api/eperson/groups':
+        groups$,
+    });
     halService = new HALEndpointServiceStub(restEndpointURL);
     TestBed.configureTestingModule({
       imports: [
@@ -52,13 +63,13 @@ describe('GroupDataService', () => {
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
-            useClass: TranslateLoaderMock
-          }
+            useClass: TranslateLoaderMock,
+          },
         }),
       ],
       declarations: [],
       providers: [],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     });
   }
 
@@ -72,7 +83,7 @@ describe('GroupDataService', () => {
       store,
       null,
       halService,
-      null,
+      null
     );
   }
 
@@ -92,17 +103,27 @@ describe('GroupDataService', () => {
     it('search with empty query', () => {
       service.searchGroups('');
       const options = Object.assign(new FindListOptions(), {
-        searchParams: [Object.assign(new RequestParam('query', ''))]
+        searchParams: [Object.assign(new RequestParam('query', ''))],
       });
-      expect(service.searchBy).toHaveBeenCalledWith('byMetadata', options, true, true);
+      expect(service.searchBy).toHaveBeenCalledWith(
+        'byMetadata',
+        options,
+        true,
+        true
+      );
     });
 
     it('search with query', () => {
       service.searchGroups('test');
       const options = Object.assign(new FindListOptions(), {
-        searchParams: [Object.assign(new RequestParam('query', 'test'))]
+        searchParams: [Object.assign(new RequestParam('query', 'test'))],
       });
-      expect(service.searchBy).toHaveBeenCalledWith('byMetadata', options, true, true);
+      expect(service.searchBy).toHaveBeenCalledWith(
+        'byMetadata',
+        options,
+        true,
+        true
+      );
     });
   });
 
@@ -115,7 +136,12 @@ describe('GroupDataService', () => {
       const options: HttpOptions = Object.create({});
       headers = headers.append('Content-Type', 'text/uri-list');
       options.headers = headers;
-      const expected = new PostRequest(requestService.generateRequestId(), GroupMock.self + '/' + service.subgroupsEndpoint, GroupMock2.self, options);
+      const expected = new PostRequest(
+        requestService.generateRequestId(),
+        GroupMock.self + '/' + service.subgroupsEndpoint,
+        GroupMock2.self,
+        options
+      );
       expect(requestService.send).toHaveBeenCalledWith(expected);
     });
   });
@@ -125,7 +151,10 @@ describe('GroupDataService', () => {
       service.deleteSubGroupFromGroup(GroupMock, GroupMock2).subscribe();
     });
     it('should send DeleteRequest to eperson/groups/group-id/subgroups/group-id endpoint', () => {
-      const expected = new DeleteRequest(requestService.generateRequestId(), GroupMock.self + '/' + service.subgroupsEndpoint + '/' + GroupMock2.id);
+      const expected = new DeleteRequest(
+        requestService.generateRequestId(),
+        GroupMock.self + '/' + service.subgroupsEndpoint + '/' + GroupMock2.id
+      );
       expect(requestService.send).toHaveBeenCalledWith(expected);
     });
   });
@@ -139,7 +168,12 @@ describe('GroupDataService', () => {
       const options: HttpOptions = Object.create({});
       headers = headers.append('Content-Type', 'text/uri-list');
       options.headers = headers;
-      const expected = new PostRequest(requestService.generateRequestId(), GroupMock.self + '/' + service.ePersonsEndpoint, EPersonMock2.self, options);
+      const expected = new PostRequest(
+        requestService.generateRequestId(),
+        GroupMock.self + '/' + service.ePersonsEndpoint,
+        EPersonMock2.self,
+        options
+      );
       expect(requestService.send).toHaveBeenCalledWith(expected);
     });
   });
@@ -149,7 +183,10 @@ describe('GroupDataService', () => {
       service.deleteMemberFromGroup(GroupMock, EPersonMock).subscribe();
     });
     it('should send DeleteRequest to eperson/groups/group-id/epersons/eperson-id endpoint', () => {
-      const expected = new DeleteRequest(requestService.generateRequestId(), GroupMock.self + '/' + service.ePersonsEndpoint + '/' + EPersonMock.id);
+      const expected = new DeleteRequest(
+        requestService.generateRequestId(),
+        GroupMock.self + '/' + service.ePersonsEndpoint + '/' + EPersonMock.id
+      );
       expect(requestService.send).toHaveBeenCalledWith(expected);
     });
   });
@@ -157,14 +194,18 @@ describe('GroupDataService', () => {
   describe('editGroup', () => {
     it('should dispatch a EDIT_GROUP action with the groupp to start editing', () => {
       service.editGroup(GroupMock);
-      expect(store.dispatch).toHaveBeenCalledWith(new GroupRegistryEditGroupAction(GroupMock));
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new GroupRegistryEditGroupAction(GroupMock)
+      );
     });
   });
 
   describe('cancelEditGroup', () => {
     it('should dispatch a CANCEL_EDIT_GROUP action', () => {
       service.cancelEditGroup();
-      expect(store.dispatch).toHaveBeenCalledWith(new GroupRegistryCancelGroupAction());
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new GroupRegistryCancelGroupAction()
+      );
     });
   });
 });

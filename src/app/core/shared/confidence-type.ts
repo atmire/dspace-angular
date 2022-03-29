@@ -40,5 +40,5 @@ export enum ConfidenceType {
   /**
    * Value has not been set (DB default).
    */
-  CF_UNSET = -1
+  CF_UNSET = -1,
 }

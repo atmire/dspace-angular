@@ -13,7 +13,7 @@ import { RequestService } from '../../core/data/request.service';
 @Component({
   selector: 'ds-delete-collection',
   styleUrls: ['./delete-collection-page.component.scss'],
-  templateUrl: './delete-collection-page.component.html'
+  templateUrl: './delete-collection-page.component.html',
 })
 export class DeleteCollectionPageComponent extends DeleteComColPageComponent<Collection> {
   protected frontendURL = '/collections/';
@@ -26,6 +26,13 @@ export class DeleteCollectionPageComponent extends DeleteComColPageComponent<Col
     protected translate: TranslateService,
     protected requestService: RequestService
   ) {
-    super(dsoDataService, router, route, notifications, translate, requestService);
+    super(
+      dsoDataService,
+      router,
+      route,
+      notifications,
+      translate,
+      requestService
+    );
   }
 }

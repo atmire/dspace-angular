@@ -12,9 +12,8 @@ describe('ComcolPageHandleComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
-      declarations: [ComcolPageHandleComponent]
-    })
-      .compileComponents();
+      declarations: [ComcolPageHandleComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -35,14 +34,11 @@ describe('ComcolPageHandleComponent', () => {
   });
 
   it('should create a link pointing the handle when present', () => {
-
     component.content = handle;
     fixture.detectChanges();
 
     const link = fixture.debugElement.query(By.css('a'));
     expect(link.nativeElement.getAttribute('href')).toBe(handle);
     expect(link.nativeElement.innerHTML).toBe(handle);
-
   });
-
 });

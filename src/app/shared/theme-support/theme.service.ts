@@ -1,5 +1,10 @@
 import { Injectable, Inject } from '@angular/core';
-import { Store, createFeatureSelector, createSelector, select } from '@ngrx/store';
+import {
+  Store,
+  createFeatureSelector,
+  createSelector,
+  select,
+} from '@ngrx/store';
 import { EMPTY, Observable, of as observableOf } from 'rxjs';
 import { ThemeState } from './theme.reducer';
 import { SetThemeAction, ThemeActionTypes } from './theme.actions';
@@ -10,7 +15,7 @@ import { DSpaceObject } from '../../core/shared/dspace-object.model';
 import {
   getFirstCompletedRemoteData,
   getFirstSucceededRemoteData,
-  getRemoteDataPayload
+  getRemoteDataPayload,
 } from '../../core/shared/operators';
 import { Theme, ThemeConfig, themeFactory } from '../../../config/theme.model';
 import { NO_OP_ACTION_TYPE, NoOpAction } from '../ngrx/no-op.action';
@@ -25,11 +30,12 @@ export const themeStateSelector = createFeatureSelector<ThemeState>('theme');
 
 export const currentThemeSelector = createSelector(
   themeStateSelector,
-  (state: ThemeState): string => hasValue(state) ? state.currentTheme : undefined
+  (state: ThemeState): string =>
+    hasValue(state) ? state.currentTheme : undefined
 );
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ThemeService {
   /**
@@ -49,11 +55,14 @@ export class ThemeService {
     @Inject(GET_THEME_CONFIG_FOR_FACTORY) private gtcf: (str) => ThemeConfig
   ) {
     // Create objects from the theme configs in the environment file
-    this.themes = environment.themes.map((themeConfig: ThemeConfig) => themeFactory(themeConfig));
-    this.hasDynamicTheme = environment.themes.some((themeConfig: any) =>
-      hasValue(themeConfig.regex) ||
-      hasValue(themeConfig.handle) ||
-      hasValue(themeConfig.uuid)
+    this.themes = environment.themes.map((themeConfig: ThemeConfig) =>
+      themeFactory(themeConfig)
+    );
+    this.hasDynamicTheme = environment.themes.some(
+      (themeConfig: any) =>
+        hasValue(themeConfig.regex) ||
+        hasValue(themeConfig.handle) ||
+        hasValue(themeConfig.uuid)
     );
   }
 
@@ -63,19 +72,14 @@ export class ThemeService {
 
   getThemeName(): string {
     let currentTheme: string;
-    this.store.pipe(
-      select(currentThemeSelector),
-      take(1)
-    ).subscribe((name: string) =>
-      currentTheme = name
-    );
+    this.store
+      .pipe(select(currentThemeSelector), take(1))
+      .subscribe((name: string) => (currentTheme = name));
     return currentTheme;
   }
 
   getThemeName$(): Observable<string> {
-    return this.store.pipe(
-      select(currentThemeSelector)
-    );
+    return this.store.pipe(select(currentThemeSelector));
   }
 
   /**
@@ -88,15 +92,24 @@ export class ThemeService {
    * @param activatedRouteSnapshot
    * @return Observable boolean emitting whether or not the theme has been changed
    */
-  updateThemeOnRouteChange$(currentRouteUrl: string, activatedRouteSnapshot: ActivatedRouteSnapshot): Observable<boolean> {
+  updateThemeOnRouteChange$(
+    currentRouteUrl: string,
+    activatedRouteSnapshot: ActivatedRouteSnapshot
+  ): Observable<boolean> {
     // and the current theme from the store
-    const currentTheme$: Observable<string> = this.store.pipe(select(currentThemeSelector));
+    const currentTheme$: Observable<string> = this.store.pipe(
+      select(currentThemeSelector)
+    );
 
     const action$ = currentTheme$.pipe(
       switchMap((currentTheme: string) => {
         const snapshotWithData = this.findRouteData(activatedRouteSnapshot);
         if (this.hasDynamicTheme === true && isNotEmpty(this.themes)) {
-          if (hasValue(snapshotWithData) && hasValue(snapshotWithData.data) && hasValue(snapshotWithData.data.dso)) {
+          if (
+            hasValue(snapshotWithData) &&
+            hasValue(snapshotWithData.data) &&
+            hasValue(snapshotWithData.data.dso)
+          ) {
             const dsoRD: RemoteData<DSpaceObject> = snapshotWithData.data.dso;
             if (dsoRD.hasSucceeded) {
               // Start with the resolved dso and go recursively through its parents until you reach the top-level community
@@ -109,8 +122,14 @@ export class ThemeService {
               );
             }
           }
-          if (hasValue(activatedRouteSnapshot.queryParams) && hasValue(activatedRouteSnapshot.queryParams.scope)) {
-            const dsoFromScope$: Observable<RemoteData<DSpaceObject>> = this.dSpaceObjectDataService.findById(activatedRouteSnapshot.queryParams.scope);
+          if (
+            hasValue(activatedRouteSnapshot.queryParams) &&
+            hasValue(activatedRouteSnapshot.queryParams.scope)
+          ) {
+            const dsoFromScope$: Observable<RemoteData<DSpaceObject>> =
+              this.dSpaceObjectDataService.findById(
+                activatedRouteSnapshot.queryParams.scope
+              );
             // Start with the resolved dso and go recursively through its parents until you reach the top-level community
             return dsoFromScope$.pipe(
               getFirstSucceededRemoteData(),
@@ -124,7 +143,9 @@ export class ThemeService {
           }
 
           // check whether the route itself matches
-          const routeMatch = this.themes.find((theme: Theme) => theme.matches(currentRouteUrl, undefined));
+          const routeMatch = this.themes.find((theme: Theme) =>
+            theme.matches(currentRouteUrl, undefined)
+          );
 
           return [this.getActionForMatch(routeMatch, currentTheme)];
         }
@@ -132,18 +153,16 @@ export class ThemeService {
         // If there are no themes configured, do nothing
         return [new NoOpAction()];
       }),
-      take(1),
+      take(1)
     );
 
-    action$.pipe(
-      filter((action) => action.type !== NO_OP_ACTION_TYPE),
-    ).subscribe((action) => {
-      this.store.dispatch(action);
-    });
+    action$
+      .pipe(filter((action) => action.type !== NO_OP_ACTION_TYPE))
+      .subscribe((action) => {
+        this.store.dispatch(action);
+      });
 
-    return action$.pipe(
-      map((action) => action.type === ThemeActionTypes.SET),
-    );
+    return action$.pipe(map((action) => action.type === ThemeActionTypes.SET));
   }
 
   /**
@@ -152,13 +171,20 @@ export class ThemeService {
    * @param routes
    */
   findRouteData(...routes: ActivatedRouteSnapshot[]) {
-    const result = routes.find((route) => hasValue(route.data) && hasValue(route.data.dso));
+    const result = routes.find(
+      (route) => hasValue(route.data) && hasValue(route.data.dso)
+    );
     if (hasValue(result)) {
       return result;
     } else {
       const nextLevelRoutes = routes
         .map((route: ActivatedRouteSnapshot) => route.children)
-        .reduce((combined: ActivatedRouteSnapshot[], current: ActivatedRouteSnapshot[]) => [...combined, ...current]);
+        .reduce(
+          (
+            combined: ActivatedRouteSnapshot[],
+            current: ActivatedRouteSnapshot[]
+          ) => [...combined, ...current]
+        );
       if (isNotEmpty(nextLevelRoutes)) {
         return this.findRouteData(...nextLevelRoutes);
       } else {
@@ -179,22 +205,30 @@ export class ThemeService {
       source.pipe(
         expand((dso: DSpaceObject) => {
           // Check if the dso exists and has a parent link
-          if (hasValue(dso) && typeof (dso as any).getParentLinkKey === 'function') {
+          if (
+            hasValue(dso) &&
+            typeof (dso as any).getParentLinkKey === 'function'
+          ) {
             const linkName = (dso as any).getParentLinkKey();
             // If it does, retrieve it.
-            return this.linkService.resolveLinkWithoutAttaching<DSpaceObject, DSpaceObject>(dso, followLink(linkName)).pipe(
-              getFirstCompletedRemoteData(),
-              map((rd: RemoteData<DSpaceObject>) => {
-                if (hasValue(rd.payload)) {
-                  // If there's a parent, use it for the next iteration
-                  return rd.payload;
-                } else {
-                  // If there's no parent, or an error, return null, which will stop recursion
-                  // in the next iteration
-                  return null;
-                }
-              }),
-            );
+            return this.linkService
+              .resolveLinkWithoutAttaching<DSpaceObject, DSpaceObject>(
+                dso,
+                followLink(linkName)
+              )
+              .pipe(
+                getFirstCompletedRemoteData(),
+                map((rd: RemoteData<DSpaceObject>) => {
+                  if (hasValue(rd.payload)) {
+                    // If there's a parent, use it for the next iteration
+                    return rd.payload;
+                  } else {
+                    // If there's no parent, or an error, return null, which will stop recursion
+                    // in the next iteration
+                    return null;
+                  }
+                })
+              );
           }
 
           // The current dso has no value, or no parent. Return EMPTY to stop recursion
@@ -214,7 +248,10 @@ export class ThemeService {
    * @param currentThemeName The name of the currently active theme
    * @private
    */
-  private getActionForMatch(newTheme: Theme, currentThemeName: string): SetThemeAction | NoOpAction {
+  private getActionForMatch(
+    newTheme: Theme,
+    currentThemeName: string
+  ): SetThemeAction | NoOpAction {
     if (hasValue(newTheme) && newTheme.config.name !== currentThemeName) {
       // If we have a match, and it isn't already the active theme, set it as the new theme
       return new SetThemeAction(newTheme.config.name);
@@ -232,12 +269,17 @@ export class ThemeService {
    * @param currentRouteUrl The url for the current route
    * @private
    */
-  private matchThemeToDSOs(dsos: DSpaceObject[], currentRouteUrl: string): Theme {
+  private matchThemeToDSOs(
+    dsos: DSpaceObject[],
+    currentRouteUrl: string
+  ): Theme {
     // iterate over the themes in order, and return the first one that matches
     return this.themes.find((theme: Theme) => {
       // iterate over the dsos's in order (most specific one first, so Item, Collection,
       // Community), and return the first one that matches the current theme
-      const match = dsos.find((dso: DSpaceObject) => theme.matches(currentRouteUrl, dso));
+      const match = dsos.find((dso: DSpaceObject) =>
+        theme.matches(currentRouteUrl, dso)
+      );
       return hasValue(match);
     });
   }

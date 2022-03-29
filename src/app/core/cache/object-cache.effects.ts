@@ -7,7 +7,6 @@ import { ResetObjectCacheTimestampsAction } from './object-cache.actions';
 
 @Injectable()
 export class ObjectCacheEffects {
-
   /**
    * When the store is rehydrated in the browser, set all cache
    * timestamps to 'now', because the time zone of the server can
@@ -16,12 +15,12 @@ export class ObjectCacheEffects {
    * This assumes that the server cached everything a negligible
    * time ago, and will likely need to be revisited later
    */
-   fixTimestampsOnRehydrate = createEffect(() => this.actions$
-    .pipe(ofType(StoreActionTypes.REHYDRATE),
+  fixTimestampsOnRehydrate = createEffect(() =>
+    this.actions$.pipe(
+      ofType(StoreActionTypes.REHYDRATE),
       map(() => new ResetObjectCacheTimestampsAction(new Date().getTime()))
-    ));
+    )
+  );
 
-  constructor(private actions$: Actions) {
-  }
-
+  constructor(private actions$: Actions) {}
 }

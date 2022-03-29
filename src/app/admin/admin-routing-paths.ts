@@ -4,5 +4,8 @@ import { getAdminModuleRoute } from '../app-routing-paths';
 export const REGISTRIES_MODULE_PATH = 'registries';
 
 export function getRegistriesModuleRoute() {
-  return new URLCombiner(getAdminModuleRoute(), REGISTRIES_MODULE_PATH).toString();
+  return new URLCombiner(
+    getAdminModuleRoute(),
+    REGISTRIES_MODULE_PATH
+  ).toString();
 }

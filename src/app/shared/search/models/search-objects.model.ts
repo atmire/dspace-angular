@@ -13,7 +13,9 @@ import { SearchQueryResponse } from './search-query-response.model';
 @typedObject
 @inheritSerialization(PaginatedList)
 @inheritSerialization(SearchQueryResponse)
-export class SearchObjects<T extends DSpaceObject> extends SearchQueryResponse<SearchResult<T>> {
+export class SearchObjects<T extends DSpaceObject> extends SearchQueryResponse<
+  SearchResult<T>
+> {
   static type = SEARCH_OBJECTS;
 
   /**

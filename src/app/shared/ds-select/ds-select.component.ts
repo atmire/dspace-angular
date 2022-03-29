@@ -6,10 +6,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 @Component({
   selector: 'ds-select',
   templateUrl: './ds-select.component.html',
-  styleUrls: ['./ds-select.component.scss']
+  styleUrls: ['./ds-select.component.scss'],
 })
 export class DsSelectComponent {
-
   /**
    * An optional label for the dropdown selector.
    */

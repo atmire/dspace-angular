@@ -22,10 +22,9 @@ export const CURATION_CFG = 'plugin.named.org.dspace.curate.CurationTask';
  */
 @Component({
   selector: 'ds-curation-form',
-  templateUrl: './curation-form.component.html'
+  templateUrl: './curation-form.component.html',
 })
 export class CurationFormComponent implements OnInit {
-
   config: Observable<RemoteData<ConfigurationProperty>>;
   tasks: string[];
   form: FormGroup;
@@ -40,25 +39,27 @@ export class CurationFormComponent implements OnInit {
     private notificationsService: NotificationsService,
     private translateService: TranslateService,
     private router: Router
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.form = new FormGroup({
       task: new FormControl(''),
-      handle: new FormControl('')
+      handle: new FormControl(''),
     });
 
-    this.config = this.configurationDataService.findByPropertyName(CURATION_CFG);
-    this.config.pipe(
-      find((rd: RemoteData<ConfigurationProperty>) => rd.hasSucceeded),
-      map((rd: RemoteData<ConfigurationProperty>) => rd.payload)
-    ).subscribe((configProperties) => {
-      this.tasks = configProperties.values
-        .filter((value) => isNotEmpty(value) && value.includes('='))
-        .map((value) => value.split('=')[1].trim());
-      this.form.get('task').patchValue(this.tasks[0]);
-    });
+    this.config =
+      this.configurationDataService.findByPropertyName(CURATION_CFG);
+    this.config
+      .pipe(
+        find((rd: RemoteData<ConfigurationProperty>) => rd.hasSucceeded),
+        map((rd: RemoteData<ConfigurationProperty>) => rd.payload)
+      )
+      .subscribe((configProperties) => {
+        this.tasks = configProperties.values
+          .filter((value) => isNotEmpty(value) && value.includes('='))
+          .map((value) => value.split('=')[1].trim());
+        this.form.get('task').patchValue(this.tasks[0]);
+      });
   }
 
   /**
@@ -83,18 +84,31 @@ export class CurationFormComponent implements OnInit {
         handle = 'all';
       }
     }
-    this.scriptDataService.invoke('curate', [
-      { name: '-t', value: taskName },
-      { name: '-i', value: handle },
-    ], []).pipe(getFirstCompletedRemoteData()).subscribe((rd: RemoteData<Process>) => {
-      if (rd.hasSucceeded) {
-        this.notificationsService.success(this.translateService.get('curation.form.submit.success.head'),
-          this.translateService.get('curation.form.submit.success.content'));
-        this.router.navigateByUrl(getProcessDetailRoute(rd.payload.processId));
-      } else {
-        this.notificationsService.error(this.translateService.get('curation.form.submit.error.head'),
-          this.translateService.get('curation.form.submit.error.content'));
-      }
-    });
+    this.scriptDataService
+      .invoke(
+        'curate',
+        [
+          { name: '-t', value: taskName },
+          { name: '-i', value: handle },
+        ],
+        []
+      )
+      .pipe(getFirstCompletedRemoteData())
+      .subscribe((rd: RemoteData<Process>) => {
+        if (rd.hasSucceeded) {
+          this.notificationsService.success(
+            this.translateService.get('curation.form.submit.success.head'),
+            this.translateService.get('curation.form.submit.success.content')
+          );
+          this.router.navigateByUrl(
+            getProcessDetailRoute(rd.payload.processId)
+          );
+        } else {
+          this.notificationsService.error(
+            this.translateService.get('curation.form.submit.error.head'),
+            this.translateService.get('curation.form.submit.error.content')
+          );
+        }
+      });
   }
 }

@@ -1,4 +1,11 @@
-import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { uniqueId } from 'lodash';
 import { FileUploader } from 'ng2-file-upload';
 import { Observable, of as observableOf } from 'rxjs';
@@ -14,10 +21,9 @@ import { UploaderOptions } from '../uploader/uploader-options.model';
 @Component({
   selector: 'ds-file-dropzone-no-uploader',
   templateUrl: './file-dropzone-no-uploader.component.html',
-  styleUrls: ['./file-dropzone-no-uploader.scss']
+  styleUrls: ['./file-dropzone-no-uploader.scss'],
 })
 export class FileDropzoneNoUploaderComponent implements OnInit {
-
   public isOverDocumentDropZone: Observable<boolean>;
   public uploader: FileUploader;
   public uploaderId: string;
@@ -87,5 +93,4 @@ export class FileDropzoneNoUploaderComponent implements OnInit {
     this.fileObject = files.length > 0 ? files[0] : undefined;
     this.onFileAdded.emit(this.fileObject);
   }
-
 }

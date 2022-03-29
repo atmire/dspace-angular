@@ -29,16 +29,8 @@ const COMPONENTS = [
 ];
 
 @NgModule({
-  declarations: [
-    ...COMPONENTS
-  ],
-  imports: [
-    CommonModule,
-    FormModule,
-    SharedModule
-  ],
-  exports: [
-    ...COMPONENTS
-  ]
+  declarations: [...COMPONENTS],
+  imports: [CommonModule, FormModule, SharedModule],
+  exports: [...COMPONENTS],
 })
-export class ComcolModule { }
+export class ComcolModule {}

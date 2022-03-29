@@ -7,25 +7,31 @@ import {
   SearchFilterIncrementPageAction,
   SearchFilterInitializeAction,
   SearchFilterResetPageAction,
-  SearchFilterToggleAction
+  SearchFilterToggleAction,
 } from '../../../shared/search/search-filters/search-filter/search-filter.actions';
 import { SearchFiltersState } from '../../../shared/search/search-filters/search-filter/search-filter.reducer';
 import { SearchFilterConfig } from '../../../shared/search/models/search-filter-config.model';
 import { FilterType } from '../../../shared/search/models/filter-type.model';
 import { ActivatedRouteStub } from '../../../shared/testing/active-router.stub';
 import { of as observableOf } from 'rxjs';
-import { SortDirection, SortOptions } from '../../cache/models/sort-options.model';
+import {
+  SortDirection,
+  SortOptions,
+} from '../../cache/models/sort-options.model';
 
 describe('SearchFilterService', () => {
   let service: SearchFilterService;
   const filterName1 = 'test name';
-  const mockFilterConfig: SearchFilterConfig = Object.assign(new SearchFilterConfig(), {
-    name: filterName1,
-    filterType: FilterType.text,
-    hasFacets: false,
-    isOpenByDefault: false,
-    pageSize: 2
-  });
+  const mockFilterConfig: SearchFilterConfig = Object.assign(
+    new SearchFilterConfig(),
+    {
+      name: filterName1,
+      filterType: FilterType.text,
+      hasFacets: false,
+      isOpenByDefault: false,
+      pageSize: 2,
+    }
+  );
 
   const value1 = 'random value';
   // const value2 = 'another value';
@@ -33,34 +39,28 @@ describe('SearchFilterService', () => {
     /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
     dispatch: {},
     /* eslint-enable no-empty,@typescript-eslint/no-empty-function */
-    select: observableOf(true)
+    select: observableOf(true),
   });
 
   const routeServiceStub: any = {
     /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
-    hasQueryParamWithValue: (param: string, value: string) => {
-    },
-    hasQueryParam: (param: string) => {
-    },
-    removeQueryParameterValue: (param: string, value: string) => {
-    },
-    addQueryParameterValue: (param: string, value: string) => {
-    },
-    getQueryParameterValue: (param: string) => {
-    },
+    hasQueryParamWithValue: (param: string, value: string) => {},
+    hasQueryParam: (param: string) => {},
+    removeQueryParameterValue: (param: string, value: string) => {},
+    addQueryParameterValue: (param: string, value: string) => {},
+    getQueryParameterValue: (param: string) => {},
     getQueryParameterValues: (param: string) => {
       return observableOf({});
     },
     getQueryParamsWithPrefix: (param: string) => {
       return observableOf({});
     },
-    getRouteParameterValue: (param: string) => {
-    }
+    getRouteParameterValue: (param: string) => {},
     /* eslint-enable no-empty, @typescript-eslint/no-empty-function */
   };
   const activatedRoute: any = new ActivatedRouteStub();
   const searchServiceStub: any = {
-    uiSearchRoute: '/search'
+    uiSearchRoute: '/search',
   };
 
   beforeEach(() => {
@@ -73,7 +73,9 @@ describe('SearchFilterService', () => {
     });
 
     it('SearchFilterInitializeAction should be dispatched to the store', () => {
-      expect(store.dispatch).toHaveBeenCalledWith(new SearchFilterInitializeAction(mockFilterConfig));
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new SearchFilterInitializeAction(mockFilterConfig)
+      );
     });
   });
 
@@ -83,9 +85,10 @@ describe('SearchFilterService', () => {
     });
 
     it('SearchFilterCollapseAction should be dispatched to the store', () => {
-      expect(store.dispatch).toHaveBeenCalledWith(new SearchFilterCollapseAction(mockFilterConfig.name));
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new SearchFilterCollapseAction(mockFilterConfig.name)
+      );
     });
-
   });
 
   describe('when the toggle method is triggered', () => {
@@ -94,7 +97,9 @@ describe('SearchFilterService', () => {
     });
 
     it('SearchFilterInitialExpandAction should be dispatched to the store', () => {
-      expect(store.dispatch).toHaveBeenCalledWith(new SearchFilterToggleAction(mockFilterConfig.name));
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new SearchFilterToggleAction(mockFilterConfig.name)
+      );
     });
   });
 
@@ -104,9 +109,10 @@ describe('SearchFilterService', () => {
     });
 
     it('SearchFilterDecrementPageAction should be dispatched to the store', () => {
-      expect(store.dispatch).toHaveBeenCalledWith(new SearchFilterDecrementPageAction(mockFilterConfig.name));
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new SearchFilterDecrementPageAction(mockFilterConfig.name)
+      );
     });
-
   });
 
   describe('when the increasePage method is triggered', () => {
@@ -115,9 +121,10 @@ describe('SearchFilterService', () => {
     });
 
     it('SearchFilterCollapseAction should be dispatched to the store', () => {
-      expect(store.dispatch).toHaveBeenCalledWith(new SearchFilterIncrementPageAction(mockFilterConfig.name));
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new SearchFilterIncrementPageAction(mockFilterConfig.name)
+      );
     });
-
   });
 
   describe('when the resetPage method is triggered', () => {
@@ -126,9 +133,10 @@ describe('SearchFilterService', () => {
     });
 
     it('SearchFilterDecrementPageAction should be dispatched to the store', () => {
-      expect(store.dispatch).toHaveBeenCalledWith(new SearchFilterResetPageAction(mockFilterConfig.name));
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new SearchFilterResetPageAction(mockFilterConfig.name)
+      );
     });
-
   });
 
   describe('when the expand method is triggered', () => {
@@ -137,7 +145,9 @@ describe('SearchFilterService', () => {
     });
 
     it('SidebarExpandAction should be dispatched to the store', () => {
-      expect(store.dispatch).toHaveBeenCalledWith(new SearchFilterExpandAction(mockFilterConfig.name));
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new SearchFilterExpandAction(mockFilterConfig.name)
+      );
     });
   });
 
@@ -148,7 +158,10 @@ describe('SearchFilterService', () => {
     });
 
     it('should call hasQueryParamWithValue on the route service with the same parameters', () => {
-      expect(routeServiceStub.hasQueryParamWithValue).toHaveBeenCalledWith(mockFilterConfig.paramName, value1);
+      expect(routeServiceStub.hasQueryParamWithValue).toHaveBeenCalledWith(
+        mockFilterConfig.paramName,
+        value1
+      );
     });
   });
 
@@ -159,7 +172,9 @@ describe('SearchFilterService', () => {
     });
 
     it('should call hasQueryParam on the route service with the same parameters', () => {
-      expect(routeServiceStub.hasQueryParam).toHaveBeenCalledWith(mockFilterConfig.paramName);
+      expect(routeServiceStub.hasQueryParam).toHaveBeenCalledWith(
+        mockFilterConfig.paramName
+      );
     });
   });
 
@@ -170,7 +185,9 @@ describe('SearchFilterService', () => {
     });
 
     it('should call getQueryParameterValues on the route service with the same parameters', () => {
-      expect(routeServiceStub.getQueryParameterValues).toHaveBeenCalledWith(mockFilterConfig.paramName);
+      expect(routeServiceStub.getQueryParameterValues).toHaveBeenCalledWith(
+        mockFilterConfig.paramName
+      );
     });
   });
 
@@ -181,7 +198,9 @@ describe('SearchFilterService', () => {
     });
 
     it('should call getQueryParameterValue on the route service with scope', () => {
-      expect(routeServiceStub.getQueryParameterValue).toHaveBeenCalledWith('scope');
+      expect(routeServiceStub.getQueryParameterValue).toHaveBeenCalledWith(
+        'scope'
+      );
     });
   });
 
@@ -192,7 +211,9 @@ describe('SearchFilterService', () => {
     });
 
     it('should call getQueryParameterValue on the route service with query', () => {
-      expect(routeServiceStub.getQueryParameterValue).toHaveBeenCalledWith('query');
+      expect(routeServiceStub.getQueryParameterValue).toHaveBeenCalledWith(
+        'query'
+      );
     });
   });
 
@@ -201,16 +222,22 @@ describe('SearchFilterService', () => {
     const mockReturn = 5;
 
     beforeEach(() => {
-      spyOn(routeServiceStub, 'getQueryParameterValue').and.returnValue(observableOf(mockReturn));
+      spyOn(routeServiceStub, 'getQueryParameterValue').and.returnValue(
+        observableOf(mockReturn)
+      );
       result = service.getCurrentPagination();
     });
 
     it('should call getQueryParameterValue on the route service with page', () => {
-      expect(routeServiceStub.getQueryParameterValue).toHaveBeenCalledWith('page');
+      expect(routeServiceStub.getQueryParameterValue).toHaveBeenCalledWith(
+        'page'
+      );
     });
 
     it('should call getQueryParameterValue on the route service with pageSize', () => {
-      expect(routeServiceStub.getQueryParameterValue).toHaveBeenCalledWith('pageSize');
+      expect(routeServiceStub.getQueryParameterValue).toHaveBeenCalledWith(
+        'pageSize'
+      );
     });
 
     it('should return an observable containing the correct pagination', () => {
@@ -227,16 +254,22 @@ describe('SearchFilterService', () => {
     const direction = SortDirection.ASC;
 
     beforeEach(() => {
-      spyOn(routeServiceStub, 'getQueryParameterValue').and.returnValue(observableOf(undefined));
+      spyOn(routeServiceStub, 'getQueryParameterValue').and.returnValue(
+        observableOf(undefined)
+      );
       result = service.getCurrentSort(new SortOptions(field, direction));
     });
 
     it('should call getQueryParameterValue on the route service with sortDirection', () => {
-      expect(routeServiceStub.getQueryParameterValue).toHaveBeenCalledWith('sortDirection');
+      expect(routeServiceStub.getQueryParameterValue).toHaveBeenCalledWith(
+        'sortDirection'
+      );
     });
 
     it('should call getQueryParameterValue on the route service with sortField', () => {
-      expect(routeServiceStub.getQueryParameterValue).toHaveBeenCalledWith('sortField');
+      expect(routeServiceStub.getQueryParameterValue).toHaveBeenCalledWith(
+        'sortField'
+      );
     });
 
     it('should return an observable containing the correct sortOptions', () => {
@@ -253,8 +286,10 @@ describe('SearchFilterService', () => {
       service.getCurrentFilters();
     });
 
-    it('should call getQueryParamsWithPrefix on the route service with prefix \'f.\'', () => {
-      expect(routeServiceStub.getQueryParamsWithPrefix).toHaveBeenCalledWith('f.');
+    it("should call getQueryParamsWithPrefix on the route service with prefix 'f.'", () => {
+      expect(routeServiceStub.getQueryParamsWithPrefix).toHaveBeenCalledWith(
+        'f.'
+      );
     });
   });
 
@@ -265,8 +300,9 @@ describe('SearchFilterService', () => {
     });
 
     it('should call getQueryParameterValue on the route service with view', () => {
-      expect(routeServiceStub.getQueryParameterValue).toHaveBeenCalledWith('view');
+      expect(routeServiceStub.getQueryParameterValue).toHaveBeenCalledWith(
+        'view'
+      );
     });
   });
-
 });

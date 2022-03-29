@@ -1,4 +1,10 @@
-import { autoserialize, autoserializeAs, deserialize, deserializeAs, inheritSerialization } from 'cerialize';
+import {
+  autoserialize,
+  autoserializeAs,
+  deserialize,
+  deserializeAs,
+  inheritSerialization,
+} from 'cerialize';
 import { Observable } from 'rxjs';
 import { isEmpty } from '../../shared/empty.util';
 import { ListableObject } from '../../shared/object-collection/shared/listable-object.model';

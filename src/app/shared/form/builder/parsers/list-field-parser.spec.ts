@@ -13,13 +13,13 @@ describe('ListFieldParser test suite', () => {
   const parserOptions: ParserOptions = {
     readOnly: false,
     submissionScope: 'testScopeUUID',
-    collectionUUID: null
+    collectionUUID: null,
   };
 
   beforeEach(() => {
     field = {
       input: {
-        type: 'list'
+        type: 'list',
       },
       label: 'Type',
       mandatory: 'false',
@@ -29,22 +29,31 @@ describe('ListFieldParser test suite', () => {
         {
           metadata: 'type',
           controlledVocabulary: 'type_programme',
-          closed: false
-        }
+          closed: false,
+        },
       ],
-      languageCodes: []
+      languageCodes: [],
     } as FormFieldModel;
-
   });
 
   it('should init parser properly', () => {
-    const parser = new ListFieldParser(submissionId, field, initFormValues, parserOptions);
+    const parser = new ListFieldParser(
+      submissionId,
+      field,
+      initFormValues,
+      parserOptions
+    );
 
     expect(parser instanceof ListFieldParser).toBe(true);
   });
 
   it('should return a DynamicListCheckboxGroupModel object when repeatable option is true', () => {
-    const parser = new ListFieldParser(submissionId, field, initFormValues, parserOptions);
+    const parser = new ListFieldParser(
+      submissionId,
+      field,
+      initFormValues,
+      parserOptions
+    );
 
     const fieldModel = parser.parse();
 
@@ -53,7 +62,12 @@ describe('ListFieldParser test suite', () => {
 
   it('should return a DynamicListRadioGroupModel object when repeatable option is false', () => {
     field.repeatable = false;
-    const parser = new ListFieldParser(submissionId, field, initFormValues, parserOptions);
+    const parser = new ListFieldParser(
+      submissionId,
+      field,
+      initFormValues,
+      parserOptions
+    );
 
     const fieldModel = parser.parse();
 
@@ -66,11 +80,15 @@ describe('ListFieldParser test suite', () => {
     };
     const expectedValue = [new FormFieldMetadataValueObject('test type')];
 
-    const parser = new ListFieldParser(submissionId, field, initFormValues, parserOptions);
+    const parser = new ListFieldParser(
+      submissionId,
+      field,
+      initFormValues,
+      parserOptions
+    );
 
     const fieldModel = parser.parse();
 
     expect(fieldModel.value).toEqual(expectedValue);
   });
-
 });

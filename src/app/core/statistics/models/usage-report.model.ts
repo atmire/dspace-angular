@@ -13,7 +13,6 @@ import { deserialize, autoserializeAs } from 'cerialize';
 @typedObject
 @inheritSerialization(HALResource)
 export class UsageReport extends HALResource {
-
   static type = USAGE_REPORT;
 
   /**

@@ -12,33 +12,38 @@ let fixture: ComponentFixture<MetadataValuesComponent>;
 const mockMetadata = [
   {
     language: 'en_US',
-    value: '1234'
+    value: '1234',
   },
   {
     language: 'en_US',
-    value: 'a publisher'
+    value: 'a publisher',
   },
   {
     language: 'en_US',
-    value: 'desc'
-  }] as MetadataValue[];
+    value: 'desc',
+  },
+] as MetadataValue[];
 const mockSeperator = '<br/>';
 const mockLabel = 'fake.message';
 
 describe('MetadataValuesComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot({
-        loader: {
-          provide: TranslateLoader,
-          useClass: TranslateLoaderMock
-        }
-      })],
+      imports: [
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useClass: TranslateLoaderMock,
+          },
+        }),
+      ],
       declarations: [MetadataValuesComponent],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(MetadataValuesComponent, {
-      set: {changeDetection: ChangeDetectionStrategy.Default}
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(MetadataValuesComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -61,5 +66,4 @@ describe('MetadataValuesComponent', () => {
     const separators = fixture.debugElement.queryAll(By.css('span>span'));
     expect(separators.length).toBe(mockMetadata.length - 1);
   });
-
 });

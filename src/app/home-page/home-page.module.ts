@@ -23,15 +23,9 @@ const DECLARATIONS = [
     CommonModule,
     SharedModule,
     HomePageRoutingModule,
-    StatisticsModule.forRoot()
+    StatisticsModule.forRoot(),
   ],
-  declarations: [
-    ...DECLARATIONS,
-  ],
-  exports: [
-    ...DECLARATIONS,
-  ],
+  declarations: [...DECLARATIONS],
+  exports: [...DECLARATIONS],
 })
-export class HomePageModule {
-
-}
+export class HomePageModule {}

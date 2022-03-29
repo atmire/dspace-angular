@@ -1,15 +1,19 @@
 import { Injectable } from '@angular/core';
-import {combineLatest, Observable, of as observableOf, ReplaySubject} from 'rxjs';
-import {Breadcrumb} from './breadcrumb/breadcrumb.model';
-import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
-import {filter, map, switchMap, tap} from 'rxjs/operators';
-import {hasNoValue, hasValue, isUndefined} from '../shared/empty.util';
+import {
+  combineLatest,
+  Observable,
+  of as observableOf,
+  ReplaySubject,
+} from 'rxjs';
+import { Breadcrumb } from './breadcrumb/breadcrumb.model';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { filter, map, switchMap, tap } from 'rxjs/operators';
+import { hasNoValue, hasValue, isUndefined } from '../shared/empty.util';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BreadcrumbsService {
-
   /**
    * Observable of the list of breadcrumbs for this page
    */
@@ -20,10 +24,7 @@ export class BreadcrumbsService {
    */
   showBreadcrumbs$: ReplaySubject<boolean> = new ReplaySubject(1);
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-  ) {}
+  constructor(private route: ActivatedRoute, private router: Router) {}
 
   /**
    * Called by {@link AppComponent#constructor} (i.e. before routing)
@@ -31,11 +32,13 @@ export class BreadcrumbsService {
    */
   listenForRouteChanges() {
     // supply events to this.breadcrumbs$
-    this.router.events.pipe(
-      filter((e): e is NavigationEnd => e instanceof NavigationEnd),
-      tap(() => this.reset()),
-      switchMap(() => this.resolveBreadcrumbs(this.route.root)),
-    ).subscribe(this.breadcrumbs$);
+    this.router.events
+      .pipe(
+        filter((e): e is NavigationEnd => e instanceof NavigationEnd),
+        tap(() => this.reset()),
+        switchMap(() => this.resolveBreadcrumbs(this.route.root))
+      )
+      .subscribe(this.breadcrumbs$);
   }
 
   /**
@@ -56,13 +59,18 @@ export class BreadcrumbsService {
     }
 
     if (
-      hasValue(data) && hasValue(data.breadcrumb) &&
-      hasValue(routeConfig) && hasValue(routeConfig.resolve) && hasValue(routeConfig.resolve.breadcrumb)
+      hasValue(data) &&
+      hasValue(data.breadcrumb) &&
+      hasValue(routeConfig) &&
+      hasValue(routeConfig.resolve) &&
+      hasValue(routeConfig.resolve.breadcrumb)
     ) {
       const { provider, key, url } = data.breadcrumb;
       if (!last) {
-        return combineLatest(provider.getBreadcrumbs(key, url), this.resolveBreadcrumbs(route.firstChild))
-          .pipe(map((crumbs) => [].concat.apply([], crumbs)));
+        return combineLatest(
+          provider.getBreadcrumbs(key, url),
+          this.resolveBreadcrumbs(route.firstChild)
+        ).pipe(map((crumbs) => [].concat.apply([], crumbs)));
       } else {
         return provider.getBreadcrumbs(key, url);
       }
@@ -76,5 +84,4 @@ export class BreadcrumbsService {
   private reset() {
     this.showBreadcrumbs$.next(true);
   }
-
 }

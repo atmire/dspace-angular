@@ -16,18 +16,18 @@ describe('ObjectCollectionComponent', () => {
   const activatedRouteStub = {
     queryParams: observableOf({
       query: queryParam,
-      scope: scopeParam
-    })
+      scope: scopeParam,
+    }),
   };
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ObjectCollectionComponent],
       providers: [
         { provide: ActivatedRoute, useValue: activatedRouteStub },
-        { provide: Router, useClass: RouterStub }
+        { provide: Router, useClass: RouterStub },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents();  // compile template and css
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents(); // compile template and css
   }));
 
   beforeEach(waitForAsync(() => {
@@ -48,5 +48,4 @@ describe('ObjectCollectionComponent', () => {
     expect(fixture.debugElement.query(By.css('ds-object-list'))).toBeDefined();
     expect(fixture.debugElement.query(By.css('ds-object-grid'))).toBeNull();
   });
-
 });

@@ -1,6 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { pushInOut } from '../../../../app/shared/animations/push';
-import { MyDSpacePageComponent as BaseComponent, SEARCH_CONFIG_SERVICE } from '../../../../app/my-dspace-page/my-dspace-page.component';
+import {
+  MyDSpacePageComponent as BaseComponent,
+  SEARCH_CONFIG_SERVICE,
+} from '../../../../app/my-dspace-page/my-dspace-page.component';
 import { MyDSpaceConfigurationService } from '../../../../app/my-dspace-page/my-dspace-configuration.service';
 
 /**
@@ -17,9 +20,8 @@ import { MyDSpaceConfigurationService } from '../../../../app/my-dspace-page/my-
   providers: [
     {
       provide: SEARCH_CONFIG_SERVICE,
-      useClass: MyDSpaceConfigurationService
-    }
-  ]
+      useClass: MyDSpaceConfigurationService,
+    },
+  ],
 })
-export class MyDSpacePageComponent extends BaseComponent {
-}
+export class MyDSpacePageComponent extends BaseComponent {}

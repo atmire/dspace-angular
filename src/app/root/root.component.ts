@@ -9,7 +9,10 @@ import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
 
 import { MetadataService } from '../core/metadata/metadata.service';
 import { HostWindowState } from '../shared/search/host-window.reducer';
-import { NativeWindowRef, NativeWindowService } from '../core/services/window.service';
+import {
+  NativeWindowRef,
+  NativeWindowService,
+} from '../core/services/window.service';
 import { AuthService } from '../core/auth/auth.service';
 import { CSSVariableService } from '../shared/sass-helper/sass-helper.service';
 import { MenuService } from '../shared/menu/menu.service';
@@ -65,14 +68,16 @@ export class RootComponent implements OnInit {
   ngOnInit() {
     this.sidebarVisible = this.menuService.isMenuVisible(MenuID.ADMIN);
 
-    this.collapsedSidebarWidth = this.cssService.getVariable('collapsedSidebarWidth');
+    this.collapsedSidebarWidth = this.cssService.getVariable(
+      'collapsedSidebarWidth'
+    );
     this.totalSidebarWidth = this.cssService.getVariable('totalSidebarWidth');
 
     const sidebarCollapsed = this.menuService.isMenuCollapsed(MenuID.ADMIN);
-    this.slideSidebarOver = combineLatestObservable([sidebarCollapsed, this.windowService.isXsOrSm()])
-      .pipe(
-        map(([collapsed, mobile]) => collapsed || mobile)
-      );
+    this.slideSidebarOver = combineLatestObservable([
+      sidebarCollapsed,
+      this.windowService.isXsOrSm(),
+    ]).pipe(map(([collapsed, mobile]) => collapsed || mobile));
 
     if (this.router.url === getPageInternalServerErrorRoute()) {
       this.shouldShowRouteLoader = false;

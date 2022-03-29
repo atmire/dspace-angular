@@ -6,5 +6,5 @@ export enum ScriptParameterType {
   DATE = 'date',
   BOOLEAN = 'boolean',
   FILE = 'InputStream',
-  OUTPUT = 'OutputStream'
+  OUTPUT = 'OutputStream',
 }

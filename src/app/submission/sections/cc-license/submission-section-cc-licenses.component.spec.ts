@@ -18,7 +18,6 @@ import { createSuccessfulRemoteDataObject$ } from '../../../shared/remote-data.u
 import { createPaginatedList } from '../../../shared/testing/utils.test';
 
 describe('SubmissionSectionCcLicensesComponent', () => {
-
   let component: SubmissionSectionCcLicensesComponent;
   let fixture: ComponentFixture<SubmissionSectionCcLicensesComponent>;
   let de: DebugElement;
@@ -31,7 +30,7 @@ describe('SubmissionSectionCcLicensesComponent', () => {
     serverValidationErrors: [],
     header: 'test header',
     id: 'test section id',
-    sectionType: SectionsType.SubmissionForm
+    sectionType: SectionsType.SubmissionForm,
   };
 
   const submissionCcLicenses: SubmissionCcLicence[] = [
@@ -94,12 +93,12 @@ describe('SubmissionSectionCcLicensesComponent', () => {
             {
               id: 'test enum id 2a I',
               label: 'test enum label 2a I',
-              description: 'test enum description 2a I'
+              description: 'test enum description 2a I',
             },
             {
               id: 'test enum id 2a II',
               label: 'test enum label 2a II',
-              description: 'test enum description 2a II'
+              description: 'test enum description 2a II',
             },
           ],
         },
@@ -111,12 +110,12 @@ describe('SubmissionSectionCcLicensesComponent', () => {
             {
               id: 'test enum id 2b I',
               label: 'test enum label 2b I',
-              description: 'test enum description 2b I'
+              description: 'test enum description 2b I',
             },
             {
               id: 'test enum id 2b II',
               label: 'test enum label 2b II',
-              description: 'test enum description 2b II'
+              description: 'test enum description 2b II',
             },
           ],
         },
@@ -129,17 +128,23 @@ describe('SubmissionSectionCcLicensesComponent', () => {
     },
   ];
 
-  const submissionCcLicensesDataService = jasmine.createSpyObj('submissionCcLicensesDataService', {
-    findAll: createSuccessfulRemoteDataObject$(createPaginatedList(submissionCcLicenses)),
-  });
+  const submissionCcLicensesDataService = jasmine.createSpyObj(
+    'submissionCcLicensesDataService',
+    {
+      findAll: createSuccessfulRemoteDataObject$(
+        createPaginatedList(submissionCcLicenses)
+      ),
+    }
+  );
 
-  const submissionCcLicenseUrlDataService = jasmine.createSpyObj('submissionCcLicenseUrlDataService', {
-    getCcLicenseLink: createSuccessfulRemoteDataObject$(
-      {
+  const submissionCcLicenseUrlDataService = jasmine.createSpyObj(
+    'submissionCcLicenseUrlDataService',
+    {
+      getCcLicenseLink: createSuccessfulRemoteDataObject$({
         url: 'test cc license link',
-      }
-    ),
-  });
+      }),
+    }
+  );
 
   const sectionService = {
     getSectionState: () => {
@@ -148,7 +153,7 @@ describe('SubmissionSectionCcLicensesComponent', () => {
     setSectionStatus: () => undefined,
     updateSectionData: (submissionId, sectionId, updatedData) => {
       component.sectionData.data = updatedData;
-    }
+    },
   };
 
   const operationsBuilder = jasmine.createSpyObj('operationsBuilder', {
@@ -158,24 +163,27 @@ describe('SubmissionSectionCcLicensesComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        SharedModule,
-        TranslateModule.forRoot(),
-      ],
-      declarations: [
-        SubmissionSectionCcLicensesComponent,
-      ],
+      imports: [SharedModule, TranslateModule.forRoot()],
+      declarations: [SubmissionSectionCcLicensesComponent],
       providers: [
-        { provide: SubmissionCcLicenseDataService, useValue: submissionCcLicensesDataService },
-        { provide: SubmissionCcLicenseUrlDataService, useValue: submissionCcLicenseUrlDataService },
+        {
+          provide: SubmissionCcLicenseDataService,
+          useValue: submissionCcLicensesDataService,
+        },
+        {
+          provide: SubmissionCcLicenseUrlDataService,
+          useValue: submissionCcLicenseUrlDataService,
+        },
         { provide: SectionsService, useValue: sectionService },
         { provide: JsonPatchOperationsBuilder, useValue: operationsBuilder },
         { provide: 'collectionIdProvider', useValue: 'test collection id' },
-        { provide: 'sectionDataProvider', useValue: Object.assign({}, sectionObject) },
+        {
+          provide: 'sectionDataProvider',
+          useValue: Object.assign({}, sectionObject),
+        },
         { provide: 'submissionIdProvider', useValue: 'test submission id' },
       ],
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -187,15 +195,18 @@ describe('SubmissionSectionCcLicensesComponent', () => {
 
   it('should display a dropdown with the different cc licenses', () => {
     expect(
-      de.query(By.css('.ccLicense-select ds-select .dropdown-menu button:nth-child(1)')).nativeElement.innerText
+      de.query(
+        By.css('.ccLicense-select ds-select .dropdown-menu button:nth-child(1)')
+      ).nativeElement.innerText
     ).toContain('test license name 1');
     expect(
-      de.query(By.css('.ccLicense-select ds-select .dropdown-menu button:nth-child(2)')).nativeElement.innerText
+      de.query(
+        By.css('.ccLicense-select ds-select .dropdown-menu button:nth-child(2)')
+      ).nativeElement.innerText
     ).toContain('test license name 2');
   });
 
   describe('when a license is selected', () => {
-
     const ccLicence = submissionCcLicenses[1];
 
     beforeEach(() => {
@@ -205,7 +216,8 @@ describe('SubmissionSectionCcLicensesComponent', () => {
 
     it('should display the selected cc license', () => {
       expect(
-        de.query(By.css('.ccLicense-select ds-select button.selection')).nativeElement.innerText
+        de.query(By.css('.ccLicense-select ds-select button.selection'))
+          .nativeElement.innerText
       ).toContain('test license name 2');
     });
 
@@ -221,19 +233,30 @@ describe('SubmissionSectionCcLicensesComponent', () => {
     });
 
     it('should have section status incomplete', () => {
-      expect(component.getSectionStatus()).toBeObservable(cold('(a|)', { a: false }));
+      expect(component.getSectionStatus()).toBeObservable(
+        cold('(a|)', { a: false })
+      );
     });
 
     describe('when all options have a value selected', () => {
-
       beforeEach(() => {
-        component.selectOption(ccLicence, ccLicence.fields[0], ccLicence.fields[0].enums[1]);
-        component.selectOption(ccLicence, ccLicence.fields[1], ccLicence.fields[1].enums[0]);
+        component.selectOption(
+          ccLicence,
+          ccLicence.fields[0],
+          ccLicence.fields[0].enums[1]
+        );
+        component.selectOption(
+          ccLicence,
+          ccLicence.fields[1],
+          ccLicence.fields[1].enums[0]
+        );
         fixture.detectChanges();
       });
 
       it('should call the submission cc licenses data service getCcLicenseLink method', () => {
-        expect(submissionCcLicenseUrlDataService.getCcLicenseLink).toHaveBeenCalledWith(
+        expect(
+          submissionCcLicenseUrlDataService.getCcLicenseLink
+        ).toHaveBeenCalledWith(
           ccLicence,
           new Map([
             [ccLicence.fields[0], ccLicence.fields[0].enums[1]],
@@ -251,18 +274,21 @@ describe('SubmissionSectionCcLicensesComponent', () => {
       });
 
       it('should have section status incomplete', () => {
-        expect(component.getSectionStatus()).toBeObservable(cold('(a|)', { a: false }));
+        expect(component.getSectionStatus()).toBeObservable(
+          cold('(a|)', { a: false })
+        );
       });
 
       describe('when the cc license is accepted', () => {
-
         beforeEach(() => {
           component.setAccepted(true);
           fixture.detectChanges();
         });
 
         it('should have section status complete', () => {
-          expect(component.getSectionStatus()).toBeObservable(cold('(a|)', { a: true }));
+          expect(component.getSectionStatus()).toBeObservable(
+            cold('(a|)', { a: true })
+          );
         });
       });
     });

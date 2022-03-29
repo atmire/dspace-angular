@@ -41,15 +41,15 @@ describe('ResourcePolicyService', () => {
     uuid: 'resource-policy-1',
     _links: {
       eperson: {
-        href: 'https://rest.api/rest/api/eperson'
+        href: 'https://rest.api/rest/api/eperson',
       },
       group: {
-        href: 'https://rest.api/rest/api/group'
+        href: 'https://rest.api/rest/api/group',
       },
       self: {
-        href: 'https://rest.api/rest/api/resourcepolicies/1'
+        href: 'https://rest.api/rest/api/resourcepolicies/1',
       },
-    }
+    },
   };
 
   const anotherResourcePolicy: any = {
@@ -64,15 +64,15 @@ describe('ResourcePolicyService', () => {
     uuid: 'resource-policy-2',
     _links: {
       eperson: {
-        href: 'https://rest.api/rest/api/eperson'
+        href: 'https://rest.api/rest/api/eperson',
       },
       group: {
-        href: 'https://rest.api/rest/api/group'
+        href: 'https://rest.api/rest/api/group',
       },
       self: {
-        href: 'https://rest.api/rest/api/resourcepolicies/1'
+        href: 'https://rest.api/rest/api/resourcepolicies/1',
       },
-    }
+    },
   };
   const endpointURL = `https://rest.api/rest/api/resourcepolicies`;
   const requestURL = `https://rest.api/rest/api/resourcepolicies/${resourcePolicy.id}`;
@@ -92,7 +92,7 @@ describe('ResourcePolicyService', () => {
     scheduler = getTestScheduler();
 
     halService = jasmine.createSpyObj('halService', {
-      getEndpoint: cold('a', { a: endpointURL })
+      getEndpoint: cold('a', { a: endpointURL }),
     });
 
     responseCacheEntry = new RequestEntry();
@@ -108,14 +108,14 @@ describe('ResourcePolicyService', () => {
     });
     rdbService = jasmine.createSpyObj('rdbService', {
       buildSingle: hot('a|', {
-        a: resourcePolicyRD
+        a: resourcePolicyRD,
       }),
       buildList: hot('a|', {
-        a: paginatedListRD
+        a: paginatedListRD,
       }),
       buildFromRequestUUID: hot('a|', {
-        a: resourcePolicyRD
-      })
+        a: resourcePolicyRD,
+      }),
     });
     objectCache = {} as ObjectCacheService;
     const notificationsService = {} as NotificationsService;
@@ -138,36 +138,48 @@ describe('ResourcePolicyService', () => {
     spyOn((service as any).dataService, 'findById').and.callThrough();
     spyOn((service as any).dataService, 'findByHref').and.callThrough();
     spyOn((service as any).dataService, 'searchBy').and.callThrough();
-    spyOn((service as any).dataService, 'getSearchByHref').and.returnValue(observableOf(requestURL));
+    spyOn((service as any).dataService, 'getSearchByHref').and.returnValue(
+      observableOf(requestURL)
+    );
   });
 
   describe('create', () => {
     it('should proxy the call to dataservice.create with eperson UUID', () => {
-      scheduler.schedule(() => service.create(resourcePolicy, resourceUUID, epersonUUID));
+      scheduler.schedule(() =>
+        service.create(resourcePolicy, resourceUUID, epersonUUID)
+      );
       const params = [
         new RequestParam('resource', resourceUUID),
-        new RequestParam('eperson', epersonUUID)
+        new RequestParam('eperson', epersonUUID),
       ];
       scheduler.flush();
 
-      expect((service as any).dataService.create).toHaveBeenCalledWith(resourcePolicy, ...params);
+      expect((service as any).dataService.create).toHaveBeenCalledWith(
+        resourcePolicy,
+        ...params
+      );
     });
 
     it('should proxy the call to dataservice.create with group UUID', () => {
-      scheduler.schedule(() => service.create(resourcePolicy, resourceUUID, null, groupUUID));
+      scheduler.schedule(() =>
+        service.create(resourcePolicy, resourceUUID, null, groupUUID)
+      );
       const params = [
         new RequestParam('resource', resourceUUID),
-        new RequestParam('group', groupUUID)
+        new RequestParam('group', groupUUID),
       ];
       scheduler.flush();
 
-      expect((service as any).dataService.create).toHaveBeenCalledWith(resourcePolicy, ...params);
+      expect((service as any).dataService.create).toHaveBeenCalledWith(
+        resourcePolicy,
+        ...params
+      );
     });
 
     it('should return a RemoteData<ResourcePolicy> for the object with the given id', () => {
       const result = service.create(resourcePolicy, resourceUUID, epersonUUID);
       const expected = cold('a|', {
-        a: resourcePolicyRD
+        a: resourcePolicyRD,
       });
       expect(result).toBeObservable(expected);
     });
@@ -178,7 +190,9 @@ describe('ResourcePolicyService', () => {
       scheduler.schedule(() => service.delete(resourcePolicyId));
       scheduler.flush();
 
-      expect((service as any).dataService.delete).toHaveBeenCalledWith(resourcePolicyId);
+      expect((service as any).dataService.delete).toHaveBeenCalledWith(
+        resourcePolicyId
+      );
     });
   });
 
@@ -187,7 +201,9 @@ describe('ResourcePolicyService', () => {
       scheduler.schedule(() => service.update(resourcePolicy));
       scheduler.flush();
 
-      expect((service as any).dataService.update).toHaveBeenCalledWith(resourcePolicy);
+      expect((service as any).dataService.update).toHaveBeenCalledWith(
+        resourcePolicy
+      );
     });
   });
 
@@ -196,13 +212,17 @@ describe('ResourcePolicyService', () => {
       scheduler.schedule(() => service.findById(resourcePolicyId));
       scheduler.flush();
 
-      expect((service as any).dataService.findById).toHaveBeenCalledWith(resourcePolicyId, true, true);
+      expect((service as any).dataService.findById).toHaveBeenCalledWith(
+        resourcePolicyId,
+        true,
+        true
+      );
     });
 
     it('should return a RemoteData<ResourcePolicy> for the object with the given id', () => {
       const result = service.findById(resourcePolicyId);
       const expected = cold('a|', {
-        a: resourcePolicyRD
+        a: resourcePolicyRD,
       });
       expect(result).toBeObservable(expected);
     });
@@ -213,13 +233,17 @@ describe('ResourcePolicyService', () => {
       scheduler.schedule(() => service.findByHref(requestURL));
       scheduler.flush();
 
-      expect((service as any).dataService.findByHref).toHaveBeenCalledWith(requestURL, true, true);
+      expect((service as any).dataService.findByHref).toHaveBeenCalledWith(
+        requestURL,
+        true,
+        true
+      );
     });
 
     it('should return a RemoteData<ResourcePolicy> for the object with the given URL', () => {
       const result = service.findByHref(requestURL);
       const expected = cold('a|', {
-        a: resourcePolicyRD
+        a: resourcePolicyRD,
       });
       expect(result).toBeObservable(expected);
     });
@@ -232,7 +256,12 @@ describe('ResourcePolicyService', () => {
       scheduler.schedule(() => service.searchByEPerson(epersonUUID));
       scheduler.flush();
 
-      expect((service as any).dataService.searchBy).toHaveBeenCalledWith((service as any).searchByEPersonMethod, options, true, true);
+      expect((service as any).dataService.searchBy).toHaveBeenCalledWith(
+        (service as any).searchByEPersonMethod,
+        options,
+        true,
+        true
+      );
     });
 
     it('should proxy the call to dataservice.searchBy with additional search param', () => {
@@ -241,20 +270,26 @@ describe('ResourcePolicyService', () => {
         new RequestParam('uuid', epersonUUID),
         new RequestParam('resource', resourceUUID),
       ];
-      scheduler.schedule(() => service.searchByEPerson(epersonUUID, resourceUUID));
+      scheduler.schedule(() =>
+        service.searchByEPerson(epersonUUID, resourceUUID)
+      );
       scheduler.flush();
 
-      expect((service as any).dataService.searchBy).toHaveBeenCalledWith((service as any).searchByEPersonMethod, options, true, true);
+      expect((service as any).dataService.searchBy).toHaveBeenCalledWith(
+        (service as any).searchByEPersonMethod,
+        options,
+        true,
+        true
+      );
     });
 
     it('should return a RemoteData<PaginatedList<ResourcePolicy>) for the search', () => {
       const result = service.searchByEPerson(epersonUUID, resourceUUID);
       const expected = cold('a|', {
-        a: paginatedListRD
+        a: paginatedListRD,
       });
       expect(result).toBeObservable(expected);
     });
-
   });
 
   describe('searchByGroup', () => {
@@ -264,7 +299,12 @@ describe('ResourcePolicyService', () => {
       scheduler.schedule(() => service.searchByGroup(groupUUID));
       scheduler.flush();
 
-      expect((service as any).dataService.searchBy).toHaveBeenCalledWith((service as any).searchByGroupMethod, options, true, true);
+      expect((service as any).dataService.searchBy).toHaveBeenCalledWith(
+        (service as any).searchByGroupMethod,
+        options,
+        true,
+        true
+      );
     });
 
     it('should proxy the call to dataservice.searchBy with additional search param', () => {
@@ -276,17 +316,21 @@ describe('ResourcePolicyService', () => {
       scheduler.schedule(() => service.searchByGroup(groupUUID, resourceUUID));
       scheduler.flush();
 
-      expect((service as any).dataService.searchBy).toHaveBeenCalledWith((service as any).searchByGroupMethod, options, true, true);
+      expect((service as any).dataService.searchBy).toHaveBeenCalledWith(
+        (service as any).searchByGroupMethod,
+        options,
+        true,
+        true
+      );
     });
 
     it('should return a RemoteData<PaginatedList<ResourcePolicy>) for the search', () => {
       const result = service.searchByGroup(groupUUID);
       const expected = cold('a|', {
-        a: paginatedListRD
+        a: paginatedListRD,
       });
       expect(result).toBeObservable(expected);
     });
-
   });
 
   describe('searchByResource', () => {
@@ -296,7 +340,12 @@ describe('ResourcePolicyService', () => {
       scheduler.schedule(() => service.searchByResource(resourceUUID));
       scheduler.flush();
 
-      expect((service as any).dataService.searchBy).toHaveBeenCalledWith((service as any).searchByResourceMethod, options, true, true);
+      expect((service as any).dataService.searchBy).toHaveBeenCalledWith(
+        (service as any).searchByResourceMethod,
+        options,
+        true,
+        true
+      );
     });
 
     it('should proxy the call to dataservice.searchBy with additional search param', () => {
@@ -309,13 +358,18 @@ describe('ResourcePolicyService', () => {
       scheduler.schedule(() => service.searchByResource(resourceUUID, action));
       scheduler.flush();
 
-      expect((service as any).dataService.searchBy).toHaveBeenCalledWith((service as any).searchByResourceMethod, options, true, true);
+      expect((service as any).dataService.searchBy).toHaveBeenCalledWith(
+        (service as any).searchByResourceMethod,
+        options,
+        true,
+        true
+      );
     });
 
     it('should return a RemoteData<PaginatedList<ResourcePolicy>) for the search', () => {
       const result = service.searchByResource(resourceUUID);
       const expected = cold('a|', {
-        a: paginatedListRD
+        a: paginatedListRD,
       });
       expect(result).toBeObservable(expected);
     });

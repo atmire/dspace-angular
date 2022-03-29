@@ -13,13 +13,26 @@ import { SearchResultListElementComponent } from '../../search-result-list-eleme
  */
 @Component({
   selector: 'ds-item-search-result-list-element-submission',
-  styleUrls: ['../../search-result-list-element/search-result-list-element.component.scss', './item-search-result-list-element-submission.component.scss'],
-  templateUrl: './item-search-result-list-element-submission.component.html'
+  styleUrls: [
+    '../../search-result-list-element/search-result-list-element.component.scss',
+    './item-search-result-list-element-submission.component.scss',
+  ],
+  templateUrl: './item-search-result-list-element-submission.component.html',
 })
-
-@listableObjectComponent(ItemSearchResult, ViewMode.ListElement, Context.Workspace)
-@listableObjectComponent(ItemSearchResult, ViewMode.ListElement, Context.Workflow)
-export class ItemSearchResultListElementSubmissionComponent extends SearchResultListElementComponent<ItemSearchResult, Item> implements OnInit {
+@listableObjectComponent(
+  ItemSearchResult,
+  ViewMode.ListElement,
+  Context.Workspace
+)
+@listableObjectComponent(
+  ItemSearchResult,
+  ViewMode.ListElement,
+  Context.Workflow
+)
+export class ItemSearchResultListElementSubmissionComponent
+  extends SearchResultListElementComponent<ItemSearchResult, Item>
+  implements OnInit
+{
   /**
    * Represent item's status
    */

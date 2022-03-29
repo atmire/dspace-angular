@@ -5,7 +5,10 @@ import { MetadataRepresentationListComponent } from './metadata-representation-l
 import { RelationshipService } from '../../../core/data/relationship.service';
 import { Item } from '../../../core/shared/item.model';
 import { Relationship } from '../../../core/shared/item-relationships/relationship.model';
-import { createSuccessfulRemoteDataObject$, createFailedRemoteDataObject$ } from '../../../shared/remote-data.utils';
+import {
+  createSuccessfulRemoteDataObject$,
+  createFailedRemoteDataObject$,
+} from '../../../shared/remote-data.utils';
 import { TranslateModule } from '@ngx-translate/core';
 import { VarDirective } from '../../../shared/utils/var.directive';
 import { of as observableOf } from 'rxjs';
@@ -20,13 +23,13 @@ const parentItem: Item = Object.assign(new Item(), {
         language: null,
         value: 'Related Author with authority',
         authority: 'virtual::related-author',
-        place: 2
+        place: 2,
       },
       {
         language: null,
         value: 'Author without authority',
-        place: 1
-      }
+        place: 1,
+      },
     ],
     'dc.creator': [
       {
@@ -45,10 +48,10 @@ const parentItem: Item = Object.assign(new Item(), {
     'dc.title': [
       {
         language: null,
-        value: 'Parent Item'
-      }
-    ]
-  }
+        value: 'Parent Item',
+      },
+    ],
+  },
 });
 const relatedAuthor: Item = Object.assign(new Item(), {
   id: 'related-author',
@@ -56,10 +59,10 @@ const relatedAuthor: Item = Object.assign(new Item(), {
     'dc.title': [
       {
         language: null,
-        value: 'Related Author'
-      }
-    ]
-  }
+        value: 'Related Author',
+      },
+    ],
+  },
 });
 const relatedCreator: Item = Object.assign(new Item(), {
   id: 'related-creator',
@@ -67,24 +70,27 @@ const relatedCreator: Item = Object.assign(new Item(), {
     'dc.title': [
       {
         language: null,
-        value: 'Related Creator'
-      }
+        value: 'Related Creator',
+      },
     ],
     'dspace.entity.type': 'Person',
-  }
+  },
 });
 const authorRelation: Relationship = Object.assign(new Relationship(), {
   leftItem: createSuccessfulRemoteDataObject$(parentItem),
-  rightItem: createSuccessfulRemoteDataObject$(relatedAuthor)
+  rightItem: createSuccessfulRemoteDataObject$(relatedAuthor),
 });
 const creatorRelation: Relationship = Object.assign(new Relationship(), {
   leftItem: createSuccessfulRemoteDataObject$(parentItem),
   rightItem: createSuccessfulRemoteDataObject$(relatedCreator),
 });
-const creatorRelationUnauthorized: Relationship = Object.assign(new Relationship(), {
-  leftItem: createSuccessfulRemoteDataObject$(parentItem),
-  rightItem: createFailedRemoteDataObject$('Unauthorized', 401),
-});
+const creatorRelationUnauthorized: Relationship = Object.assign(
+  new Relationship(),
+  {
+    leftItem: createSuccessfulRemoteDataObject$(parentItem),
+    rightItem: createFailedRemoteDataObject$('Unauthorized', 401),
+  }
+);
 let relationshipService;
 
 describe('MetadataRepresentationListComponent', () => {
@@ -110,12 +116,14 @@ describe('MetadataRepresentationListComponent', () => {
       imports: [TranslateModule.forRoot()],
       declarations: [MetadataRepresentationListComponent, VarDirective],
       providers: [
-        { provide: RelationshipService, useValue: relationshipService }
+        { provide: RelationshipService, useValue: relationshipService },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(MetadataRepresentationListComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(MetadataRepresentationListComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -128,7 +136,9 @@ describe('MetadataRepresentationListComponent', () => {
   }));
 
   it('should load 4 ds-metadata-representation-loader components', () => {
-    const fields = fixture.debugElement.queryAll(By.css('ds-metadata-representation-loader'));
+    const fields = fixture.debugElement.queryAll(
+      By.css('ds-metadata-representation-loader')
+    );
     expect(fields.length).toBe(4);
   });
 
@@ -157,5 +167,4 @@ describe('MetadataRepresentationListComponent', () => {
       expect(comp.objects.length).toEqual(1);
     });
   });
-
 });

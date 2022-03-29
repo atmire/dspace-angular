@@ -1,7 +1,13 @@
-import { DynamicFormArrayModel, DynamicFormArrayModelConfig, DynamicFormControlLayout, serializable } from '@ng-dynamic-forms/core';
+import {
+  DynamicFormArrayModel,
+  DynamicFormArrayModelConfig,
+  DynamicFormControlLayout,
+  serializable,
+} from '@ng-dynamic-forms/core';
 import { RelationshipOptions } from '../../models/relationship-options.model';
 
-export interface DynamicRowArrayModelConfig extends DynamicFormArrayModelConfig {
+export interface DynamicRowArrayModelConfig
+  extends DynamicFormArrayModelConfig {
   notRepeatable: boolean;
   required: boolean;
   submissionId: string;
@@ -23,7 +29,10 @@ export class DynamicRowArrayModel extends DynamicFormArrayModel {
   @serializable() isDraggable: boolean;
   isRowArray = true;
 
-  constructor(config: DynamicRowArrayModelConfig, layout?: DynamicFormControlLayout) {
+  constructor(
+    config: DynamicRowArrayModelConfig,
+    layout?: DynamicFormControlLayout
+  ) {
     super(config, layout);
     this.notRepeatable = config.notRepeatable;
     this.required = config.required;

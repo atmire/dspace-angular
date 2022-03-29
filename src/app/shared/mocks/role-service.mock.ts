@@ -2,7 +2,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { RoleType } from '../../core/roles/role-types';
 
 export class RoleServiceMock {
-
   _isSubmitter = new BehaviorSubject(true);
   _isController = new BehaviorSubject(true);
   _isAdmin = new BehaviorSubject(true);

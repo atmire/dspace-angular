@@ -9,10 +9,9 @@ import { ItemSearchResultGridElementComponent } from '../../../../../shared/obje
   selector: 'ds-journal-search-result-grid-element',
   styleUrls: ['./journal-search-result-grid-element.component.scss'],
   templateUrl: './journal-search-result-grid-element.component.html',
-  animations: [focusShadow]
+  animations: [focusShadow],
 })
 /**
  * The component for displaying a grid element for an item search result of the type Journal
  */
-export class JournalSearchResultGridElementComponent extends ItemSearchResultGridElementComponent {
-}
+export class JournalSearchResultGridElementComponent extends ItemSearchResultGridElementComponent {}

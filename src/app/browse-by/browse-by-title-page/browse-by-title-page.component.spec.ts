@@ -19,7 +19,10 @@ import { RouterMock } from '../../shared/mocks/router.mock';
 import { VarDirective } from '../../shared/utils/var.directive';
 import { createSuccessfulRemoteDataObject$ } from '../../shared/remote-data.utils';
 import { PaginationComponentOptions } from '../../shared/pagination/pagination-component-options.model';
-import { SortDirection, SortOptions } from '../../core/cache/models/sort-options.model';
+import {
+  SortDirection,
+  SortOptions,
+} from '../../core/cache/models/sort-options.model';
 import { FindListOptions } from '../../core/data/request.models';
 import { PaginationService } from '../../core/pagination/pagination.service';
 import { PaginationServiceStub } from '../../shared/testing/pagination-service.stub';
@@ -35,9 +38,9 @@ describe('BrowseByTitlePageComponent', () => {
     metadata: [
       {
         key: 'dc.title',
-        value: 'test community'
-      }
-    ]
+        value: 'test community',
+      },
+    ],
   });
 
   const mockItems = [
@@ -46,40 +49,45 @@ describe('BrowseByTitlePageComponent', () => {
       metadata: [
         {
           key: 'dc.title',
-          value: 'Fake Title'
-        }
-      ]
-    })
+          value: 'Fake Title',
+        },
+      ],
+    }),
   ];
 
   const mockBrowseService = {
     getBrowseItemsFor: () => toRemoteData(mockItems),
-    getBrowseEntriesFor: () => toRemoteData([])
+    getBrowseEntriesFor: () => toRemoteData([]),
   };
 
   const mockDsoService = {
-    findById: () => createSuccessfulRemoteDataObject$(mockCommunity)
+    findById: () => createSuccessfulRemoteDataObject$(mockCommunity),
   };
 
   const activatedRouteStub = Object.assign(new ActivatedRouteStub(), {
     params: observableOf({}),
-    data: observableOf({ metadata: 'title' })
+    data: observableOf({ metadata: 'title' }),
   });
 
   const paginationService = new PaginationServiceStub();
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [CommonModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), NgbModule],
+      imports: [
+        CommonModule,
+        RouterTestingModule.withRoutes([]),
+        TranslateModule.forRoot(),
+        NgbModule,
+      ],
       declarations: [BrowseByTitlePageComponent, EnumKeysPipe, VarDirective],
       providers: [
         { provide: ActivatedRoute, useValue: activatedRouteStub },
         { provide: BrowseService, useValue: mockBrowseService },
         { provide: DSpaceObjectDataService, useValue: mockDsoService },
         { provide: PaginationService, useValue: paginationService },
-        { provide: Router, useValue: new RouterMock() }
+        { provide: Router, useValue: new RouterMock() },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 

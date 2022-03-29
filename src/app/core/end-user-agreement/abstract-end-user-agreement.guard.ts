@@ -1,4 +1,10 @@
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  CanActivate,
+  Router,
+  RouterStateSnapshot,
+  UrlTree,
+} from '@angular/router';
 import { Observable } from 'rxjs';
 import { returnEndUserAgreementUrlTreeOnFalse } from '../shared/operators';
 
@@ -7,9 +13,7 @@ import { returnEndUserAgreementUrlTreeOnFalse } from '../shared/operators';
  * That condition is defined by abstract method hasAccepted
  */
 export abstract class AbstractEndUserAgreementGuard implements CanActivate {
-
-  constructor(protected router: Router) {
-  }
+  constructor(protected router: Router) {}
 
   /**
    * True when the user agreement has been accepted
@@ -17,7 +21,10 @@ export abstract class AbstractEndUserAgreementGuard implements CanActivate {
    * A redirect URL will be provided with the navigation so the component can redirect the user back to the blocked route
    * when they're finished accepting the agreement
    */
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> {
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<boolean | UrlTree> {
     return this.hasAccepted().pipe(
       returnEndUserAgreementUrlTreeOnFalse(this.router, state.url)
     );
@@ -28,5 +35,4 @@ export abstract class AbstractEndUserAgreementGuard implements CanActivate {
    * the desired route
    */
   abstract hasAccepted(): Observable<boolean>;
-
 }

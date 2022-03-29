@@ -9,7 +9,7 @@ import {
   FilterCollapseAction,
   FilterExpandAction,
   FilterInitializeAction,
-  FilterToggleAction
+  FilterToggleAction,
 } from './sidebar-filter.actions';
 import { storeModuleConfig } from '../../../app.reducer';
 
@@ -19,33 +19,34 @@ describe('SidebarFilterService', () => {
   let initialState;
 
   function init() {
-
     initialState = {
       sidebarFilter: {
         filter_1: {
-          filterCollapsed: true
+          filterCollapsed: true,
         },
         filter_2: {
-          filterCollapsed: false
+          filterCollapsed: false,
         },
         filter_3: {
-          filterCollapsed: true
-        }
-      }
+          filterCollapsed: true,
+        },
+      },
     };
-
   }
 
   beforeEach(waitForAsync(() => {
     init();
     TestBed.configureTestingModule({
       imports: [
-        StoreModule.forRoot({ sidebarFilter: sidebarFilterReducer }, storeModuleConfig)
+        StoreModule.forRoot(
+          { sidebarFilter: sidebarFilterReducer },
+          storeModuleConfig
+        ),
       ],
       providers: [
         provideMockStore({ initialState }),
-        { provide: SidebarFilterService, useValue: service }
-      ]
+        { provide: SidebarFilterService, useValue: service },
+      ],
     }).compileComponents();
   }));
 
@@ -58,47 +59,53 @@ describe('SidebarFilterService', () => {
   describe('initializeFilter', () => {
     it('should dispatch an FilterInitializeAction with the correct arguments', () => {
       service.initializeFilter('fakeFilter', true);
-      expect(store.dispatch).toHaveBeenCalledWith(new FilterInitializeAction('fakeFilter', true));
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new FilterInitializeAction('fakeFilter', true)
+      );
     });
   });
 
   describe('collapse', () => {
     it('should dispatch an FilterInitializeAction with the correct arguments', () => {
       service.collapse('fakeFilter');
-      expect(store.dispatch).toHaveBeenCalledWith(new FilterCollapseAction('fakeFilter'));
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new FilterCollapseAction('fakeFilter')
+      );
     });
   });
 
   describe('expand', () => {
     it('should dispatch an FilterInitializeAction with the correct arguments', () => {
       service.expand('fakeFilter');
-      expect(store.dispatch).toHaveBeenCalledWith(new FilterExpandAction('fakeFilter'));
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new FilterExpandAction('fakeFilter')
+      );
     });
   });
 
   describe('toggle', () => {
     it('should dispatch an FilterInitializeAction with the correct arguments', () => {
       service.toggle('fakeFilter');
-      expect(store.dispatch).toHaveBeenCalledWith(new FilterToggleAction('fakeFilter'));
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new FilterToggleAction('fakeFilter')
+      );
     });
   });
 
   describe('isCollapsed', () => {
     it('should return true', () => {
-
       const result = service.isCollapsed('filter_1');
       const expected = cold('b', {
-        b: true
+        b: true,
       });
 
       expect(result).toBeObservable(expected);
     });
 
     it('should return false', () => {
-
       const result = service.isCollapsed('filter_2');
       const expected = cold('b', {
-        b: false
+        b: false,
       });
 
       expect(result).toBeObservable(expected);

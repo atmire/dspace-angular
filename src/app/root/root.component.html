@@ -1,14 +1,30 @@
-<div class="outer-wrapper" *ngIf="!shouldShowFullscreenLoader; else fullScreenLoader">
+<div
+  class="outer-wrapper"
+  *ngIf="!shouldShowFullscreenLoader; else fullScreenLoader"
+>
   <ds-themed-admin-sidebar></ds-themed-admin-sidebar>
-  <div class="inner-wrapper" [@slideSidebarPadding]="{
-     value: (!(sidebarVisible | async) ? 'hidden' : (slideSidebarOver | async) ? 'shown' : 'expanded'),
-     params: {collapsedSidebarWidth: (collapsedSidebarWidth | async), totalSidebarWidth: (totalSidebarWidth | async)}
-    }">
+  <div
+    class="inner-wrapper"
+    [@slideSidebarPadding]="{
+      value: !(sidebarVisible | async)
+        ? 'hidden'
+        : (slideSidebarOver | async)
+        ? 'shown'
+        : 'expanded',
+      params: {
+        collapsedSidebarWidth: (collapsedSidebarWidth | async),
+        totalSidebarWidth: (totalSidebarWidth | async)
+      }
+    }"
+  >
     <ds-themed-header-navbar-wrapper></ds-themed-header-navbar-wrapper>
     <main class="main-content">
       <ds-themed-breadcrumbs></ds-themed-breadcrumbs>
 
-      <div class="container d-flex justify-content-center align-items-center h-100" *ngIf="shouldShowRouteLoader">
+      <div
+        class="container d-flex justify-content-center align-items-center h-100"
+        *ngIf="shouldShowRouteLoader"
+      >
         <ds-loading [showMessage]="false"></ds-loading>
       </div>
       <div [class.d-none]="shouldShowRouteLoader">

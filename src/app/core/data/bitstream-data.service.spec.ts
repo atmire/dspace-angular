@@ -25,32 +25,43 @@ describe('BitstreamDataService', () => {
   const bitstream = Object.assign(new Bitstream(), {
     uuid: 'fake-bitstream',
     _links: {
-      self: { href: 'fake-bitstream-self' }
-    }
+      self: { href: 'fake-bitstream-self' },
+    },
   });
   const format = Object.assign(new BitstreamFormat(), {
     id: '2',
     shortDescription: 'PNG',
     description: 'Portable Network Graphics',
-    supportLevel: BitstreamFormatSupportLevel.Known
+    supportLevel: BitstreamFormatSupportLevel.Known,
   });
   const url = 'fake-bitstream-url';
 
   beforeEach(() => {
     objectCache = jasmine.createSpyObj('objectCache', {
-      remove: jasmine.createSpy('remove')
+      remove: jasmine.createSpy('remove'),
     });
     requestService = getMockRequestService();
     halService = Object.assign(new HALEndpointServiceStub(url));
     bitstreamFormatService = jasmine.createSpyObj('bistreamFormatService', {
-      getBrowseEndpoint: observableOf(bitstreamFormatHref)
+      getBrowseEndpoint: observableOf(bitstreamFormatHref),
     });
     rdbService = getMockRemoteDataBuildService();
 
-    service = new BitstreamDataService(requestService, rdbService, null, objectCache, halService, null, null, null, null, bitstreamFormatService);
+    service = new BitstreamDataService(
+      requestService,
+      rdbService,
+      null,
+      objectCache,
+      halService,
+      null,
+      null,
+      null,
+      null,
+      bitstreamFormatService
+    );
   });
 
-  describe('when updating the bitstream\'s format', () => {
+  describe("when updating the bitstream's format", () => {
     beforeEach(() => {
       service.updateFormat(bitstream, format);
     });

@@ -1,4 +1,10 @@
-import { distinctUntilChanged, filter, switchMap, take, withLatestFrom } from 'rxjs/operators';
+import {
+  distinctUntilChanged,
+  filter,
+  switchMap,
+  take,
+  withLatestFrom,
+} from 'rxjs/operators';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import {
   AfterViewInit,
@@ -14,7 +20,8 @@ import {
   ActivatedRouteSnapshot,
   NavigationCancel,
   NavigationEnd,
-  NavigationStart, ResolveEnd,
+  NavigationStart,
+  ResolveEnd,
   Router,
 } from '@angular/router';
 
@@ -28,7 +35,10 @@ import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
 import { MetadataService } from './core/metadata/metadata.service';
 import { HostWindowResizeAction } from './shared/host-window.actions';
 import { HostWindowState } from './shared/search/host-window.reducer';
-import { NativeWindowRef, NativeWindowService } from './core/services/window.service';
+import {
+  NativeWindowRef,
+  NativeWindowService,
+} from './core/services/window.service';
 import { isAuthenticationBlocking } from './core/auth/selectors';
 import { AuthService } from './core/auth/auth.service';
 import { CSSVariableService } from './shared/sass-helper/sass-helper.service';
@@ -79,7 +89,9 @@ export class AppComponent implements OnInit, AfterViewInit {
    */
   isThemeLoading$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
-  isThemeCSSLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  isThemeCSSLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
 
   /**
    * Whether or not the idle modal is is currently open
@@ -106,9 +118,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     private breadcrumbsService: BreadcrumbsService,
     private modalService: NgbModal,
     @Optional() private cookiesService: KlaroService,
-    @Optional() private googleAnalyticsService: GoogleAnalyticsService,
+    @Optional() private googleAnalyticsService: GoogleAnalyticsService
   ) {
-
     if (!isEqual(environment, this.appConfig)) {
       throw new Error('environment does not match app config!');
     }
@@ -141,7 +152,11 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
 
     // Load all the languages that are defined as active from the config file
-    translate.addLangs(environment.languages.filter((LangConfig) => LangConfig.active === true).map((a) => a.code));
+    translate.addLangs(
+      environment.languages
+        .filter((LangConfig) => LangConfig.active === true)
+        .map((a) => a.code)
+    );
 
     // Load the default language from the config file
     // translate.setDefaultLang(environment.defaultLanguage);
@@ -165,19 +180,26 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.isAuthBlocking$ = this.store.pipe(select(isAuthenticationBlocking)).pipe(
-      distinctUntilChanged()
-    );
+    this.isAuthBlocking$ = this.store
+      .pipe(select(isAuthenticationBlocking))
+      .pipe(distinctUntilChanged());
     this.isAuthBlocking$
       .pipe(
         filter((isBlocking: boolean) => isBlocking === false),
         take(1)
-      ).subscribe(() => this.initializeKlaro());
+      )
+      .subscribe(() => this.initializeKlaro());
 
     const env: string = environment.production ? 'Production' : 'Development';
     const color: string = environment.production ? 'red' : 'green';
-    console.info(`Environment: %c${env}`, `color: ${color}; font-weight: bold;`);
-    this.dispatchWindowSize(this._window.nativeWindow.innerWidth, this._window.nativeWindow.innerHeight);
+    console.info(
+      `Environment: %c${env}`,
+      `color: ${color}; font-weight: bold;`
+    );
+    this.dispatchWindowSize(
+      this._window.nativeWindow.innerWidth,
+      this._window.nativeWindow.innerHeight
+    );
   }
 
   private storeCSSVariables() {
@@ -202,20 +224,26 @@ export class AppComponent implements OnInit, AfterViewInit {
         resolveEndFound = false;
         this.isRouteLoading$.next(true);
         this.isThemeLoading$.next(true);
-      } else  if (event instanceof ResolveEnd) {
+      } else if (event instanceof ResolveEnd) {
         resolveEndFound = true;
         const activatedRouteSnapShot: ActivatedRouteSnapshot = event.state.root;
-        this.themeService.updateThemeOnRouteChange$(event.urlAfterRedirects, activatedRouteSnapShot).pipe(
-          switchMap((changed) => {
-            if (changed) {
-              return this.isThemeCSSLoading$;
-            } else {
-              return [false];
-            }
-          })
-        ).subscribe((changed) => {
-          this.isThemeLoading$.next(changed);
-        });
+        this.themeService
+          .updateThemeOnRouteChange$(
+            event.urlAfterRedirects,
+            activatedRouteSnapShot
+          )
+          .pipe(
+            switchMap((changed) => {
+              if (changed) {
+                return this.isThemeCSSLoading$;
+              } else {
+                return [false];
+              }
+            })
+          )
+          .subscribe((changed) => {
+            this.isThemeLoading$.next(changed);
+          });
       } else if (
         event instanceof NavigationEnd ||
         event instanceof NavigationCancel
@@ -234,9 +262,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   private dispatchWindowSize(width, height): void {
-    this.store.dispatch(
-      new HostWindowResizeAction(width, height)
-    );
+    this.store.dispatch(new HostWindowResizeAction(width, height));
   }
 
   private initializeKlaro() {
@@ -264,7 +290,9 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     // Array.from to ensure we end up with an array, not an HTMLCollection, which would be
     // automatically updated if we add nodes later
-    const currentThemeLinks = Array.from(head.getElementsByClassName('theme-css'));
+    const currentThemeLinks = Array.from(
+      head.getElementsByClassName('theme-css')
+    );
     const link = this.document.createElement('link');
     link.setAttribute('rel', 'stylesheet');
     link.setAttribute('type', 'text/css');
@@ -293,15 +321,18 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
 
     // clear head tags
-    const currentHeadTags = Array.from(head.getElementsByClassName('theme-head-tag'));
+    const currentHeadTags = Array.from(
+      head.getElementsByClassName('theme-head-tag')
+    );
     if (hasValue(currentHeadTags)) {
       currentHeadTags.forEach((currentHeadTag: any) => currentHeadTag.remove());
     }
 
     // create new head tags (not yet added to DOM)
     const headTagFragment = this.document.createDocumentFragment();
-    this.createHeadTags(themeName)
-      .forEach(newHeadTag => headTagFragment.appendChild(newHeadTag));
+    this.createHeadTags(themeName).forEach((newHeadTag) =>
+      headTagFragment.appendChild(newHeadTag)
+    );
 
     // add new head tags to DOM
     head.appendChild(headTagFragment);
@@ -327,13 +358,13 @@ export class AppComponent implements OnInit, AfterViewInit {
         // last resort, use fallback favicon.ico
         return [
           this.createHeadTag({
-            'tagName': 'link',
-            'attributes': {
-              'rel': 'icon',
-              'href': 'assets/images/favicon.ico',
-              'sizes': 'any',
-            }
-          })
+            tagName: 'link',
+            attributes: {
+              rel: 'icon',
+              href: 'assets/images/favicon.ico',
+              sizes: 'any',
+            },
+          }),
         ];
       }
 
@@ -348,8 +379,9 @@ export class AppComponent implements OnInit, AfterViewInit {
     const tag = this.document.createElement(headTagConfig.tagName);
 
     if (hasValue(headTagConfig.attributes)) {
-      Object.entries(headTagConfig.attributes)
-        .forEach(([key, value]) => tag.setAttribute(key, value));
+      Object.entries(headTagConfig.attributes).forEach(([key, value]) =>
+        tag.setAttribute(key, value)
+      );
     }
 
     // 'class' attribute should always be 'theme-head-tag' for removal
@@ -361,17 +393,22 @@ export class AppComponent implements OnInit, AfterViewInit {
   private trackIdleModal() {
     const isIdle$ = this.authService.isUserIdle();
     const isAuthenticated$ = this.authService.isAuthenticated();
-    isIdle$.pipe(withLatestFrom(isAuthenticated$))
+    isIdle$
+      .pipe(withLatestFrom(isAuthenticated$))
       .subscribe(([userIdle, authenticated]) => {
         if (userIdle && authenticated) {
           if (!this.idleModalOpen) {
-            const modalRef = this.modalService.open(IdleModalComponent, { ariaLabelledBy: 'idle-modal.header' });
-            this.idleModalOpen = true;
-            modalRef.componentInstance.response.pipe(take(1)).subscribe((closed: boolean) => {
-              if (closed) {
-                this.idleModalOpen = false;
-              }
+            const modalRef = this.modalService.open(IdleModalComponent, {
+              ariaLabelledBy: 'idle-modal.header',
             });
+            this.idleModalOpen = true;
+            modalRef.componentInstance.response
+              .pipe(take(1))
+              .subscribe((closed: boolean) => {
+                if (closed) {
+                  this.idleModalOpen = false;
+                }
+              });
           }
         }
       });

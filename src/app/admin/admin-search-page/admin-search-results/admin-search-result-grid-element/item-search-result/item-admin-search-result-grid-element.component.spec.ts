@@ -28,7 +28,7 @@ describe('ItemAdminSearchResultGridElementComponent', () => {
   const mockBitstreamDataService = {
     getThumbnailFor(item: Item): Observable<RemoteData<Bitstream>> {
       return createSuccessfulRemoteDataObject$(new Bitstream());
-    }
+    },
   };
 
   const mockThemeService = getMockThemeService();
@@ -42,27 +42,27 @@ describe('ItemAdminSearchResultGridElementComponent', () => {
 
   beforeEach(waitForAsync(() => {
     init();
-    TestBed.configureTestingModule(
-      {
-        declarations: [ItemAdminSearchResultGridElementComponent],
-        imports: [
-          NoopAnimationsModule,
-          TranslateModule.forRoot(),
-          RouterTestingModule.withRoutes([]),
-          SharedModule
-        ],
-        providers: [
-          { provide: TruncatableService, useValue: mockTruncatableService },
-          { provide: BitstreamDataService, useValue: mockBitstreamDataService },
-          { provide: ThemeService, useValue: mockThemeService },
-        ],
-        schemas: [NO_ERRORS_SCHEMA]
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [ItemAdminSearchResultGridElementComponent],
+      imports: [
+        NoopAnimationsModule,
+        TranslateModule.forRoot(),
+        RouterTestingModule.withRoutes([]),
+        SharedModule,
+      ],
+      providers: [
+        { provide: TruncatableService, useValue: mockTruncatableService },
+        { provide: BitstreamDataService, useValue: mockBitstreamDataService },
+        { provide: ThemeService, useValue: mockThemeService },
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ItemAdminSearchResultGridElementComponent);
+    fixture = TestBed.createComponent(
+      ItemAdminSearchResultGridElementComponent
+    );
     component = fixture.componentInstance;
     component.object = searchResult;
     component.linkTypes = CollectionElementLinkType;

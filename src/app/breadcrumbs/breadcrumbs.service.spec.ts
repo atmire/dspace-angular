@@ -29,8 +29,16 @@ describe('BreadcrumbsService', () => {
    */
   const initBreadcrumbs = () => {
     breadcrumbProvider = new TestBreadcrumbsService();
-    breadcrumbConfigA = { provider: breadcrumbProvider, key: 'example.path', url: 'example.com' };
-    breadcrumbConfigB = { provider: breadcrumbProvider, key: 'another.path', url: 'another.com' };
+    breadcrumbConfigA = {
+      provider: breadcrumbProvider,
+      key: 'example.path',
+      url: 'example.com',
+    };
+    breadcrumbConfigB = {
+      provider: breadcrumbProvider,
+      key: 'another.path',
+      url: 'another.com',
+    };
   };
 
   const changeActivatedRoute = (newRootRoute: any) => {
@@ -80,8 +88,8 @@ describe('BreadcrumbsService', () => {
       const route1 = {
         snapshot: {
           data: { breadcrumb: breadcrumbConfigA },
-          routeConfig: { resolve: { breadcrumb: {} } }
-        }
+          routeConfig: { resolve: { breadcrumb: {} } },
+        },
       };
 
       const expectation1 = [
@@ -89,12 +97,14 @@ describe('BreadcrumbsService', () => {
       ];
 
       changeActivatedRoute(route1);
-      expect(service.breadcrumbs$).toBeObservable(cold('a', { a: expectation1 }));
+      expect(service.breadcrumbs$).toBeObservable(
+        cold('a', { a: expectation1 })
+      );
 
       const route2 = {
         snapshot: {
           data: { breadcrumb: breadcrumbConfigA },
-          routeConfig: { resolve: { breadcrumb: {} } }
+          routeConfig: { resolve: { breadcrumb: {} } },
         },
         firstChild: {
           snapshot: {
@@ -104,10 +114,10 @@ describe('BreadcrumbsService', () => {
           firstChild: {
             snapshot: {
               data: { breadcrumb: breadcrumbConfigB },
-              routeConfig: { resolve: { breadcrumb: {} } }
-            }
-          }
-        }
+              routeConfig: { resolve: { breadcrumb: {} } },
+            },
+          },
+        },
       };
 
       const expectation2 = [
@@ -116,7 +126,9 @@ describe('BreadcrumbsService', () => {
       ];
 
       changeActivatedRoute(route2);
-      expect(service.breadcrumbs$).toBeObservable(cold('a', { a: expectation2 }));
+      expect(service.breadcrumbs$).toBeObservable(
+        cold('a', { a: expectation2 })
+      );
     });
   });
 
@@ -129,12 +141,14 @@ describe('BreadcrumbsService', () => {
               breadcrumb: breadcrumbConfigA,
               showBreadcrumbs: false, // explicitly hide breadcrumbs
             },
-            routeConfig: { resolve: { breadcrumb: {} } }
-          }
+            routeConfig: { resolve: { breadcrumb: {} } },
+          },
         };
 
         changeActivatedRoute(route1);
-        expect(service.showBreadcrumbs$).toBeObservable(cold('a', { a: false }));
+        expect(service.showBreadcrumbs$).toBeObservable(
+          cold('a', { a: false })
+        );
 
         const route2 = {
           snapshot: {
@@ -142,8 +156,8 @@ describe('BreadcrumbsService', () => {
               breadcrumb: breadcrumbConfigA,
               showBreadcrumbs: true, // explicitly show breadcrumbs
             },
-            routeConfig: { resolve: { breadcrumb: {} } }
-          }
+            routeConfig: { resolve: { breadcrumb: {} } },
+          },
         };
 
         changeActivatedRoute(route2);
@@ -158,14 +172,15 @@ describe('BreadcrumbsService', () => {
             data: {
               // no breadcrumbs set - always hide
             },
-            routeConfig: { resolve: { breadcrumb: {} } }
-          }
+            routeConfig: { resolve: { breadcrumb: {} } },
+          },
         };
 
         changeActivatedRoute(route1);
-        expect(service.showBreadcrumbs$).toBeObservable(cold('a', { a: false }));
+        expect(service.showBreadcrumbs$).toBeObservable(
+          cold('a', { a: false })
+        );
       });
     });
   });
-
 });

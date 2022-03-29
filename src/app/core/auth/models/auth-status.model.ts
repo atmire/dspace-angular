@@ -88,5 +88,4 @@ export class AuthStatus implements CacheableObject {
    */
   @autoserialize
   authMethods: AuthMethod[];
-
 }

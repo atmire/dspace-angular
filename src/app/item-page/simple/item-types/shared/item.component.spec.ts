@@ -1,5 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectionStrategy, DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  DebugElement,
+  NO_ERRORS_SCHEMA,
+} from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
@@ -27,29 +31,34 @@ import { createSuccessfulRemoteDataObject$ } from '../../../../shared/remote-dat
 import { TruncatableService } from '../../../../shared/truncatable/truncatable.service';
 import { TruncatePipe } from '../../../../shared/utils/truncate.pipe';
 import { GenericItemPageFieldComponent } from '../../field-components/specific-field/generic/generic-item-page-field.component';
-import { compareArraysUsing, compareArraysUsingIds } from './item-relationships-utils';
+import {
+  compareArraysUsing,
+  compareArraysUsingIds,
+} from './item-relationships-utils';
 import { ItemComponent } from './item.component';
 import { createPaginatedList } from '../../../../shared/testing/utils.test';
 import { RouteService } from '../../../../core/services/route.service';
 import { MetadataValue } from '../../../../core/shared/metadata.models';
 
-export const iiifEnabled = Object.assign(new MetadataValue(),{
-  'value': 'true',
-  'language': null,
-  'authority': null,
-  'confidence': -1,
-  'place': 0
+export const iiifEnabled = Object.assign(new MetadataValue(), {
+  value: 'true',
+  language: null,
+  authority: null,
+  confidence: -1,
+  place: 0,
 });
 
 export const iiifSearchEnabled = Object.assign(new MetadataValue(), {
-  'value': 'true',
-  'language': null,
-  'authority': null,
-  'confidence': -1,
-  'place': 0
+  value: 'true',
+  language: null,
+  authority: null,
+  confidence: -1,
+  place: 0,
 });
 
-export const mockRouteService = jasmine.createSpyObj('RouteService', ['getPreviousUrl']);
+export const mockRouteService = jasmine.createSpyObj('RouteService', [
+  'getPreviousUrl',
+]);
 
 /**
  * Create a generic test for an item-page-fields component using a mockItem and the type of component
@@ -67,15 +76,17 @@ export function getItemPageFieldsTest(mockItem: Item, component) {
       const mockBitstreamDataService = {
         getThumbnailFor(item: Item): Observable<RemoteData<Bitstream>> {
           return createSuccessfulRemoteDataObject$(new Bitstream());
-        }
+        },
       };
       TestBed.configureTestingModule({
-        imports: [TranslateModule.forRoot({
-          loader: {
-            provide: TranslateLoader,
-            useClass: TranslateLoaderMock
-          }
-        })],
+        imports: [
+          TranslateModule.forRoot({
+            loader: {
+              provide: TranslateLoader,
+              useClass: TranslateLoaderMock,
+            },
+          }),
+        ],
         declarations: [component, GenericItemPageFieldComponent, TruncatePipe],
         providers: [
           { provide: ItemDataService, useValue: {} },
@@ -92,13 +103,15 @@ export function getItemPageFieldsTest(mockItem: Item, component) {
           { provide: NotificationsService, useValue: {} },
           { provide: DefaultChangeAnalyzer, useValue: {} },
           { provide: BitstreamDataService, useValue: mockBitstreamDataService },
-          { provide: RouteService, useValue: {} }
+          { provide: RouteService, useValue: {} },
         ],
 
-        schemas: [NO_ERRORS_SCHEMA]
-      }).overrideComponent(component, {
-        set: { changeDetection: ChangeDetectionStrategy.Default }
-      }).compileComponents();
+        schemas: [NO_ERRORS_SCHEMA],
+      })
+        .overrideComponent(component, {
+          set: { changeDetection: ChangeDetectionStrategy.Default },
+        })
+        .compileComponents();
     }));
 
     beforeEach(waitForAsync(() => {
@@ -110,7 +123,9 @@ export function getItemPageFieldsTest(mockItem: Item, component) {
 
     for (const key of Object.keys(mockItem.metadata)) {
       it(`should be calling a component with metadata field ${key}`, () => {
-        const fields = fixture.debugElement.queryAll(By.css('ds-generic-item-page-field'));
+        const fields = fixture.debugElement.queryAll(
+          By.css('ds-generic-item-page-field')
+        );
         expect(containsFieldInput(fields, key)).toBeTruthy();
       });
     }
@@ -124,7 +139,10 @@ export function getItemPageFieldsTest(mockItem: Item, component) {
  * @param {string} metadataKey      A metadata key to look for
  * @returns {boolean}
  */
-export function containsFieldInput(fields: DebugElement[], metadataKey: string): boolean {
+export function containsFieldInput(
+  fields: DebugElement[],
+  metadataKey: string
+): boolean {
   for (const field of fields) {
     const fieldComp = field.componentInstance;
     if (isNotEmpty(fieldComp.fields)) {
@@ -137,79 +155,86 @@ export function containsFieldInput(fields: DebugElement[], metadataKey: string):
 }
 
 export function createRelationshipsObservable() {
-  return createSuccessfulRemoteDataObject$(createPaginatedList([
-    Object.assign(new Relationship(), {
-      relationshipType: createSuccessfulRemoteDataObject$(new RelationshipType()),
-      leftItem: createSuccessfulRemoteDataObject$(new Item()),
-      rightItem: createSuccessfulRemoteDataObject$(new Item())
-    })
-  ]));
+  return createSuccessfulRemoteDataObject$(
+    createPaginatedList([
+      Object.assign(new Relationship(), {
+        relationshipType: createSuccessfulRemoteDataObject$(
+          new RelationshipType()
+        ),
+        leftItem: createSuccessfulRemoteDataObject$(new Item()),
+        rightItem: createSuccessfulRemoteDataObject$(new Item()),
+      }),
+    ])
+  );
 }
 
 describe('ItemComponent', () => {
   const arr1 = [
     {
       id: 1,
-      name: 'test'
-    },
-    {
-      id: 2,
-      name: 'another test'
-    },
-    {
-      id: 3,
-      name: 'one last test'
-    }
-  ];
-  const arrWithWrongId = [
-    {
-      id: 1,
-      name: 'test'
-    },
-    {
-      id: 5,  // Wrong id on purpose
-      name: 'another test'
-    },
-    {
-      id: 3,
-      name: 'one last test'
-    }
-  ];
-  const arrWithWrongName = [
-    {
-      id: 1,
-      name: 'test'
-    },
-    {
-      id: 2,
-      name: 'wrong test'  // Wrong name on purpose
-    },
-    {
-      id: 3,
-      name: 'one last test'
-    }
-  ];
-  const arrWithDifferentOrder = [arr1[0], arr1[2], arr1[1]];
-  const arrWithOneMore = [...arr1, {
-    id: 4,
-    name: 'fourth test'
-  }];
-  const arrWithAddedProperties = [
-    {
-      id: 1,
       name: 'test',
-      extra: 'extra property'
     },
     {
       id: 2,
       name: 'another test',
-      extra: 'extra property'
     },
     {
       id: 3,
       name: 'one last test',
-      extra: 'extra property'
-    }
+    },
+  ];
+  const arrWithWrongId = [
+    {
+      id: 1,
+      name: 'test',
+    },
+    {
+      id: 5, // Wrong id on purpose
+      name: 'another test',
+    },
+    {
+      id: 3,
+      name: 'one last test',
+    },
+  ];
+  const arrWithWrongName = [
+    {
+      id: 1,
+      name: 'test',
+    },
+    {
+      id: 2,
+      name: 'wrong test', // Wrong name on purpose
+    },
+    {
+      id: 3,
+      name: 'one last test',
+    },
+  ];
+  const arrWithDifferentOrder = [arr1[0], arr1[2], arr1[1]];
+  const arrWithOneMore = [
+    ...arr1,
+    {
+      id: 4,
+      name: 'fourth test',
+    },
+  ];
+  const arrWithAddedProperties = [
+    {
+      id: 1,
+      name: 'test',
+      extra: 'extra property',
+    },
+    {
+      id: 2,
+      name: 'another test',
+      extra: 'extra property',
+    },
+    {
+      id: 3,
+      name: 'one last test',
+      extra: 'extra property',
+    },
   ];
   const arrOfPrimitiveTypes = [1, 2, 3, 4];
   const arrOfPrimitiveTypesWithOneWrong = [1, 5, 3, 4];
@@ -217,7 +242,6 @@ describe('ItemComponent', () => {
   const arrOfPrimitiveTypesWithOneMore = [1, 2, 3, 4, 5];
 
   describe('when calling compareArraysUsing', () => {
-
     describe('and comparing by id', () => {
       const compare = compareArraysUsing<any>((o) => o.id);
 
@@ -237,11 +261,11 @@ describe('ItemComponent', () => {
         expect(compare(arr1, arrWithAddedProperties)).toBeTruthy();
       });
 
-      it('should return false when the ids don\'t match', () => {
+      it("should return false when the ids don't match", () => {
         expect(compare(arr1, arrWithWrongId)).toBeFalsy();
       });
 
-      it('should return false when the sizes don\'t match', () => {
+      it("should return false when the sizes don't match", () => {
         expect(compare(arr1, arrWithOneMore)).toBeFalsy();
       });
     });
@@ -265,11 +289,11 @@ describe('ItemComponent', () => {
         expect(compare(arr1, arrWithAddedProperties)).toBeTruthy();
       });
 
-      it('should return false when the names don\'t match', () => {
+      it("should return false when the names don't match", () => {
         expect(compare(arr1, arrWithWrongName)).toBeFalsy();
       });
 
-      it('should return false when the sizes don\'t match', () => {
+      it("should return false when the sizes don't match", () => {
         expect(compare(arr1, arrWithOneMore)).toBeFalsy();
       });
     });
@@ -289,15 +313,15 @@ describe('ItemComponent', () => {
         expect(compare(arr1, arrWithAddedProperties)).toBeFalsy();
       });
 
-      it('should return false when the ids don\'t match', () => {
+      it("should return false when the ids don't match", () => {
         expect(compare(arr1, arrWithWrongId)).toBeFalsy();
       });
 
-      it('should return false when the names don\'t match', () => {
+      it("should return false when the names don't match", () => {
         expect(compare(arr1, arrWithWrongName)).toBeFalsy();
       });
 
-      it('should return false when the sizes don\'t match', () => {
+      it("should return false when the sizes don't match", () => {
         expect(compare(arr1, arrWithOneMore)).toBeFalsy();
       });
     });
@@ -310,18 +334,23 @@ describe('ItemComponent', () => {
       });
 
       it('should return true regardless of the order', () => {
-        expect(compare(arrOfPrimitiveTypes, arrOfPrimitiveTypesWithDifferentOrder)).toBeTruthy();
+        expect(
+          compare(arrOfPrimitiveTypes, arrOfPrimitiveTypesWithDifferentOrder)
+        ).toBeTruthy();
       });
 
       it('should return false when at least one is wrong', () => {
-        expect(compare(arrOfPrimitiveTypes, arrOfPrimitiveTypesWithOneWrong)).toBeFalsy();
+        expect(
+          compare(arrOfPrimitiveTypes, arrOfPrimitiveTypesWithOneWrong)
+        ).toBeFalsy();
       });
 
-      it('should return false when the sizes don\'t match', () => {
-        expect(compare(arrOfPrimitiveTypes, arrOfPrimitiveTypesWithOneMore)).toBeFalsy();
+      it("should return false when the sizes don't match", () => {
+        expect(
+          compare(arrOfPrimitiveTypes, arrOfPrimitiveTypesWithOneMore)
+        ).toBeFalsy();
       });
     });
-
   });
 
   describe('when calling compareArraysUsingIds', () => {
@@ -343,13 +372,12 @@ describe('ItemComponent', () => {
       expect(compare(arr1 as any, arrWithAddedProperties as any)).toBeTruthy();
     });
 
-    it('should return false when the ids don\'t match', () => {
+    it("should return false when the ids don't match", () => {
       expect(compare(arr1 as any, arrWithWrongId as any)).toBeFalsy();
     });
 
-    it('should return false when the sizes don\'t match', () => {
+    it("should return false when the sizes don't match", () => {
       expect(compare(arr1 as any, arrWithOneMore as any)).toBeFalsy();
     });
   });
-
 });

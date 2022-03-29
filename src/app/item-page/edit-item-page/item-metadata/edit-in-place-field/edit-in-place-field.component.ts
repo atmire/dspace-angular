@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import {
   metadataFieldsToString,
-  getFirstSucceededRemoteData
+  getFirstSucceededRemoteData,
 } from '../../../../core/shared/operators';
 import { hasValue, isNotEmpty } from '../../../../shared/empty.util';
 import { RegistryService } from '../../../../core/registry/registry.service';
@@ -54,27 +54,36 @@ export class EditInPlaceFieldComponent implements OnInit, OnChanges {
   /**
    * The current suggestions for the metadatafield when editing
    */
-  metadataFieldSuggestions: BehaviorSubject<InputSuggestion[]> = new BehaviorSubject([]);
+  metadataFieldSuggestions: BehaviorSubject<InputSuggestion[]> =
+    new BehaviorSubject([]);
 
   constructor(
     private registryService: RegistryService,
-    private objectUpdatesService: ObjectUpdatesService,
-  ) {
-  }
+    private objectUpdatesService: ObjectUpdatesService
+  ) {}
 
   /**
    * Sets up an observable that keeps track of the current editable and valid state of this field
    */
   ngOnInit(): void {
-    this.editable = this.objectUpdatesService.isEditable(this.url, this.metadata.uuid);
-    this.valid = this.objectUpdatesService.isValid(this.url, this.metadata.uuid);
+    this.editable = this.objectUpdatesService.isEditable(
+      this.url,
+      this.metadata.uuid
+    );
+    this.valid = this.objectUpdatesService.isValid(
+      this.url,
+      this.metadata.uuid
+    );
   }
 
   /**
    * Sends a new change update for this field to the object updates service
    */
   update(ngModel?: NgModel) {
-    this.objectUpdatesService.saveChangeFieldUpdate(this.url, cloneDeep(this.metadata));
+    this.objectUpdatesService.saveChangeFieldUpdate(
+      this.url,
+      cloneDeep(this.metadata)
+    );
     if (hasValue(ngModel)) {
       this.checkValidity(ngModel);
     }
@@ -87,7 +96,11 @@ export class EditInPlaceFieldComponent implements OnInit, OnChanges {
   public checkValidity(ngModel: NgModel) {
     ngModel.control.setValue(ngModel.viewModel);
     ngModel.control.updateValueAndValidity();
-    this.objectUpdatesService.setValidFieldUpdate(this.url, this.metadata.uuid, ngModel.control.valid);
+    this.objectUpdatesService.setValidFieldUpdate(
+      this.url,
+      this.metadata.uuid,
+      ngModel.control.valid
+    );
   }
 
   /**
@@ -95,21 +108,31 @@ export class EditInPlaceFieldComponent implements OnInit, OnChanges {
    * @param editable The new editable state for this field
    */
   setEditable(editable: boolean) {
-    this.objectUpdatesService.setEditableFieldUpdate(this.url, this.metadata.uuid, editable);
+    this.objectUpdatesService.setEditableFieldUpdate(
+      this.url,
+      this.metadata.uuid,
+      editable
+    );
   }
 
   /**
    * Sends a new remove update for this field to the object updates service
    */
   remove() {
-    this.objectUpdatesService.saveRemoveFieldUpdate(this.url, cloneDeep(this.metadata));
+    this.objectUpdatesService.saveRemoveFieldUpdate(
+      this.url,
+      cloneDeep(this.metadata)
+    );
   }
 
   /**
    * Notifies the object updates service that the updates for the current field can be removed
    */
   removeChangesFromField() {
-    this.objectUpdatesService.removeSingleFieldUpdate(this.url, this.metadata.uuid);
+    this.objectUpdatesService.removeSingleFieldUpdate(
+      this.url,
+      this.metadata.uuid
+    );
   }
 
   /**
@@ -127,10 +150,10 @@ export class EditInPlaceFieldComponent implements OnInit, OnChanges {
    */
   findMetadataFieldSuggestions(query: string) {
     if (isNotEmpty(query)) {
-      return this.registryService.queryMetadataFields(query, null, true, false, followLink('schema')).pipe(
-        getFirstSucceededRemoteData(),
-        metadataFieldsToString(),
-      ).subscribe((fieldNames: string[]) => {
+      return this.registryService
+        .queryMetadataFields(query, null, true, false, followLink('schema'))
+        .pipe(getFirstSucceededRemoteData(), metadataFieldsToString())
+        .subscribe((fieldNames: string[]) => {
           this.setInputSuggestions(fieldNames);
         });
     } else {
@@ -147,7 +170,7 @@ export class EditInPlaceFieldComponent implements OnInit, OnChanges {
       fields.map((fieldName: string) => {
         return {
           displayValue: fieldName.split('.').join('.&#8203;'),
-          value: fieldName
+          value: fieldName,
         };
       })
     );
@@ -182,7 +205,10 @@ export class EditInPlaceFieldComponent implements OnInit, OnChanges {
    * @return an observable that emits true when the user should be able to remove this field and false when they should not
    */
   canRemove(): Observable<boolean> {
-    return observableOf(this.fieldUpdate.changeType !== FieldChangeType.REMOVE && this.fieldUpdate.changeType !== FieldChangeType.ADD);
+    return observableOf(
+      this.fieldUpdate.changeType !== FieldChangeType.REMOVE &&
+        this.fieldUpdate.changeType !== FieldChangeType.ADD
+    );
   }
 
   /**

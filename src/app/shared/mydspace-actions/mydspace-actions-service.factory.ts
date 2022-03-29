@@ -15,7 +15,10 @@ import { WorkflowItem } from '../../core/submission/models/workflowitem.model';
 /**
  * Class to return DataService for given ResourceType
  */
-export class MydspaceActionsServiceFactory<T extends CacheableObject, TService extends DataService<T>> {
+export class MydspaceActionsServiceFactory<
+  T extends CacheableObject,
+  TService extends DataService<T>
+> {
   public getConstructor(type: ResourceType): TService {
     switch (type) {
       case Item.type: {

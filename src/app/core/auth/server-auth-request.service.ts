@@ -10,7 +10,6 @@ import { RemoteDataBuildService } from '../cache/builders/remote-data-build.serv
  */
 @Injectable()
 export class ServerAuthRequestService extends AuthRequestService {
-
   constructor(
     halService: HALEndpointService,
     requestService: RequestService,
@@ -28,9 +27,11 @@ export class ServerAuthRequestService extends AuthRequestService {
    * @protected
    */
   protected createShortLivedTokenRequest(href: string): GetRequest {
-    return Object.assign(new GetRequest(this.requestService.generateRequestId(), href), {
-      responseMsToLive: 2 * 1000 // A short lived token is only valid for 2 seconds.
-    });
+    return Object.assign(
+      new GetRequest(this.requestService.generateRequestId(), href),
+      {
+        responseMsToLive: 2 * 1000, // A short lived token is only valid for 2 seconds.
+      }
+    );
   }
-
 }

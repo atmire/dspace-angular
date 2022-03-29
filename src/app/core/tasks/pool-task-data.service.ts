@@ -25,7 +25,6 @@ import { getFirstCompletedRemoteData } from '../shared/operators';
 @Injectable()
 @dataService(POOL_TASK)
 export class PoolTaskDataService extends TasksService<PoolTask> {
-
   /**
    * The endpoint link name
    */
@@ -54,7 +53,8 @@ export class PoolTaskDataService extends TasksService<PoolTask> {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DSOChangeAnalyzer<PoolTask>) {
+    protected comparator: DSOChangeAnalyzer<PoolTask>
+  ) {
     super();
   }
 
@@ -67,10 +67,10 @@ export class PoolTaskDataService extends TasksService<PoolTask> {
    */
   public findByItem(uuid: string): Observable<RemoteData<PoolTask>> {
     const options = new FindListOptions();
-    options.searchParams = [
-      new RequestParam('uuid', uuid)
-    ];
-    return this.searchTask('findByItem', options).pipe(getFirstCompletedRemoteData());
+    options.searchParams = [new RequestParam('uuid', uuid)];
+    return this.searchTask('findByItem', options).pipe(
+      getFirstCompletedRemoteData()
+    );
   }
 
   /**
@@ -84,5 +84,4 @@ export class PoolTaskDataService extends TasksService<PoolTask> {
   public getPoolTaskEndpointById(poolTaskId): Observable<string> {
     return this.getEndpointById(poolTaskId);
   }
-
 }

@@ -9,11 +9,8 @@ export const mockTruncatableService: any = {
       return observableOf(false);
     }
   },
-  expand: (id: string) => {
-  },
-  collapse: (id: string) => {
-  },
-  toggle: (id: string) => {
-  }
+  expand: (id: string) => {},
+  collapse: (id: string) => {},
+  toggle: (id: string) => {},
   /* eslint-enable no-empty, @typescript-eslint/no-empty-function */
 };

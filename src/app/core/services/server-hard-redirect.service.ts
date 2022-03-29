@@ -8,10 +8,9 @@ import { HardRedirectService } from './hard-redirect.service';
  */
 @Injectable()
 export class ServerHardRedirectService extends HardRedirectService {
-
   constructor(
     @Inject(REQUEST) protected req: Request,
-    @Inject(RESPONSE) protected res: Response,
+    @Inject(RESPONSE) protected res: Response
   ) {
     super();
   }
@@ -21,7 +20,6 @@ export class ServerHardRedirectService extends HardRedirectService {
    * @param url
    */
   redirect(url: string) {
-
     if (url === this.req.url) {
       return;
     }
@@ -30,11 +28,17 @@ export class ServerHardRedirectService extends HardRedirectService {
       const req: any = this.req;
       req._r_count = (req._r_count || 0) + 1;
 
-      console.warn('Attempted to redirect on a finished response. From',
-        this.req.url, 'to', url);
+      console.warn(
+        'Attempted to redirect on a finished response. From',
+        this.req.url,
+        'to',
+        url
+      );
 
       if (req._r_count > 10) {
-        console.error('Detected a redirection loop. killing the nodejs process');
+        console.error(
+          'Detected a redirection loop. killing the nodejs process'
+        );
         process.exit(1);
       }
     } else {

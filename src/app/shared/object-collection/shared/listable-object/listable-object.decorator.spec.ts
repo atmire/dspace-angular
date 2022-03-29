@@ -1,7 +1,10 @@
-  /* eslint-disable max-classes-per-file */
+/* eslint-disable max-classes-per-file */
 import { Item } from '../../../../core/shared/item.model';
 import { ViewMode } from '../../../../core/shared/view-mode.model';
-import { getListableObjectComponent, listableObjectComponent } from './listable-object.decorator';
+import {
+  getListableObjectComponent,
+  listableObjectComponent,
+} from './listable-object.decorator';
 import { Context } from '../../../../core/shared/context.model';
 import { environment } from '../../../../../environments/environment';
 
@@ -14,29 +17,21 @@ describe('ListableObject decorator function', () => {
   const typeAncestor = 'TestTypeAncestor';
   const typeUnthemed = 'TestTypeUnthemed';
 
-  class Test1List {
-  }
+  class Test1List {}
 
-  class Test1Grid {
-  }
+  class Test1Grid {}
 
-  class Test2List {
-  }
+  class Test2List {}
 
-  class Test2ListSubmission {
-  }
+  class Test2ListSubmission {}
 
-  class Test3List {
-  }
+  class Test3List {}
 
-  class Test3DetailedSubmission {
-  }
+  class Test3DetailedSubmission {}
 
-  class TestAncestorComponent {
-  }
+  class TestAncestorComponent {}
 
-  class TestUnthemedComponent {
-  }
+  class TestUnthemedComponent {}
 
   /* eslint-enable max-classes-per-file */
 
@@ -45,14 +40,31 @@ describe('ListableObject decorator function', () => {
     listableObjectComponent(type1, ViewMode.GridElement)(Test1Grid);
 
     listableObjectComponent(type2, ViewMode.ListElement)(Test2List);
-    listableObjectComponent(type2, ViewMode.ListElement, Context.Workspace)(Test2ListSubmission);
+    listableObjectComponent(
+      type2,
+      ViewMode.ListElement,
+      Context.Workspace
+    )(Test2ListSubmission);
 
     listableObjectComponent(type3, ViewMode.ListElement)(Test3List);
-    listableObjectComponent(type3, ViewMode.DetailedListElement, Context.Workspace)(Test3DetailedSubmission);
+    listableObjectComponent(
+      type3,
+      ViewMode.DetailedListElement,
+      Context.Workspace
+    )(Test3DetailedSubmission);
 
     // Register a metadata representation in the 'ancestor' theme
-    listableObjectComponent(typeAncestor, ViewMode.ListElement, Context.Any, 'ancestor')(TestAncestorComponent);
-    listableObjectComponent(typeUnthemed, ViewMode.ListElement, Context.Any)(TestUnthemedComponent);
+    listableObjectComponent(
+      typeAncestor,
+      ViewMode.ListElement,
+      Context.Any,
+      'ancestor'
+    )(TestAncestorComponent);
+    listableObjectComponent(
+      typeUnthemed,
+      ViewMode.ListElement,
+      Context.Any
+    )(TestUnthemedComponent);
 
     ogEnvironmentThemes = environment.themes;
   });
@@ -71,32 +83,54 @@ describe('ListableObject decorator function', () => {
     expect(listDecorator).not.toEqual(gridDecorator);
   });
 
-  describe('If there\'s an exact match', () => {
+  describe("If there's an exact match", () => {
     it('should return the matching class', () => {
-      const component = getListableObjectComponent([type3], ViewMode.DetailedListElement, Context.Workspace);
+      const component = getListableObjectComponent(
+        [type3],
+        ViewMode.DetailedListElement,
+        Context.Workspace
+      );
       expect(component).toEqual(Test3DetailedSubmission);
 
-      const component2 = getListableObjectComponent([type3, type2], ViewMode.ListElement, Context.Workspace);
+      const component2 = getListableObjectComponent(
+        [type3, type2],
+        ViewMode.ListElement,
+        Context.Workspace
+      );
       expect(component2).toEqual(Test2ListSubmission);
     });
   });
 
-  describe('If there isn\'nt an exact match', () => {
+  describe("If there isn'nt an exact match", () => {
     describe('If there is a match for one of the entity types and the view mode', () => {
       it('should return the class with the matching entity type and view mode and default context', () => {
-        const component = getListableObjectComponent([type3], ViewMode.ListElement, Context.Workspace);
+        const component = getListableObjectComponent(
+          [type3],
+          ViewMode.ListElement,
+          Context.Workspace
+        );
         expect(component).toEqual(Test3List);
 
-        const component2 = getListableObjectComponent([type3, type1], ViewMode.GridElement, Context.Workspace);
+        const component2 = getListableObjectComponent(
+          [type3, type1],
+          ViewMode.GridElement,
+          Context.Workspace
+        );
         expect(component2).toEqual(Test1Grid);
       });
     });
-    describe('If there isn\'t a match for the representation type', () => {
+    describe("If there isn't a match for the representation type", () => {
       it('should return the class with the matching entity type and the default view mode and default context', () => {
-        const component = getListableObjectComponent([type1], ViewMode.DetailedListElement);
+        const component = getListableObjectComponent(
+          [type1],
+          ViewMode.DetailedListElement
+        );
         expect(component).toEqual(Test1List);
 
-        const component2 = getListableObjectComponent([type2, type1], ViewMode.DetailedListElement);
+        const component2 = getListableObjectComponent(
+          [type2, type1],
+          ViewMode.DetailedListElement
+        );
         expect(component2).toEqual(Test2List);
       });
     });
@@ -109,26 +143,36 @@ describe('ListableObject decorator function', () => {
       beforeEach(() => {
         environment.themes = [
           {
-            name: 'requested',        // Doesn't match any objectType
+            name: 'requested', // Doesn't match any objectType
             extends: 'intermediate',
           },
           {
-            name: 'intermediate',     // Doesn't match any objectType
+            name: 'intermediate', // Doesn't match any objectType
             extends: 'ancestor',
           },
           {
-            name: 'ancestor',         // Matches typeAncestor, but not typeUnthemed
-          }
+            name: 'ancestor', // Matches typeAncestor, but not typeUnthemed
+          },
         ];
       });
 
       it('should return component from the first ancestor theme that matches its objectType', () => {
-        const component = getListableObjectComponent([typeAncestor], ViewMode.ListElement, Context.Any, 'requested');
+        const component = getListableObjectComponent(
+          [typeAncestor],
+          ViewMode.ListElement,
+          Context.Any,
+          'requested'
+        );
         expect(component).toEqual(TestAncestorComponent);
       });
 
       it('should return default component if none of the ancestor themes match its objectType', () => {
-        const component = getListableObjectComponent([typeUnthemed], ViewMode.ListElement, Context.Any, 'requested');
+        const component = getListableObjectComponent(
+          [typeUnthemed],
+          ViewMode.ListElement,
+          Context.Any,
+          'requested'
+        );
         expect(component).toEqual(TestUnthemedComponent);
       });
     });
@@ -145,7 +189,12 @@ describe('ListableObject decorator function', () => {
 
       it('should throw an error', () => {
         expect(() => {
-          getListableObjectComponent([typeAncestor], ViewMode.ListElement, Context.Any, 'extension-cycle');
+          getListableObjectComponent(
+            [typeAncestor],
+            ViewMode.ListElement,
+            Context.Any,
+            'extension-cycle'
+          );
         }).toThrowError(
           'Theme extension cycle detected: extension-cycle -> broken1 -> broken2 -> broken3 -> broken1'
         );

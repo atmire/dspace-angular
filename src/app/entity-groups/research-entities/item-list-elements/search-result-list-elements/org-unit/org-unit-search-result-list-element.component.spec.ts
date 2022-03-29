@@ -22,18 +22,19 @@ const mockItemWithMetadata: ItemSearchResult = Object.assign(
         'dc.title': [
           {
             language: 'en_US',
-            value: 'This is just another title'
-          }
+            value: 'This is just another title',
+          },
         ],
         'dc.description': [
           {
             language: 'en_US',
-            value: 'A description about the OrgUnit'
-          }
-        ]
-      }
-    })
-  });
+            value: 'A description about the OrgUnit',
+          },
+        ],
+      },
+    }),
+  }
+);
 const mockItemWithoutMetadata: ItemSearchResult = Object.assign(
   new ItemSearchResult(),
   {
@@ -43,32 +44,34 @@ const mockItemWithoutMetadata: ItemSearchResult = Object.assign(
         'dc.title': [
           {
             language: 'en_US',
-            value: 'This is just another title'
-          }
-        ]
-      }
-    })
-  });
+            value: 'This is just another title',
+          },
+        ],
+      },
+    }),
+  }
+);
 
 describe('OrgUnitSearchResultListElementComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ OrgUnitSearchResultListElementComponent , TruncatePipe],
+      declarations: [OrgUnitSearchResultListElementComponent, TruncatePipe],
       providers: [
         { provide: TruncatableService, useValue: {} },
-        { provide: DSONameService, useClass: DSONameServiceMock }
+        { provide: DSONameService, useClass: DSONameServiceMock },
       ],
 
-      schemas: [ NO_ERRORS_SCHEMA ]
-    }).overrideComponent(OrgUnitSearchResultListElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(OrgUnitSearchResultListElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
     fixture = TestBed.createComponent(OrgUnitSearchResultListElementComponent);
     orgUnitListElementComponent = fixture.componentInstance;
-
   }));
 
   describe('When the item has an org unit description', () => {
@@ -78,7 +81,9 @@ describe('OrgUnitSearchResultListElementComponent', () => {
     });
 
     it('should show the description span', () => {
-      const orgUnitDescriptionField = fixture.debugElement.query(By.css('span.item-list-org-unit-description'));
+      const orgUnitDescriptionField = fixture.debugElement.query(
+        By.css('span.item-list-org-unit-description')
+      );
       expect(orgUnitDescriptionField).not.toBeNull();
     });
   });
@@ -90,7 +95,9 @@ describe('OrgUnitSearchResultListElementComponent', () => {
     });
 
     it('should not show the description span', () => {
-      const orgUnitDescriptionField = fixture.debugElement.query(By.css('span.item-list-org-unit-description'));
+      const orgUnitDescriptionField = fixture.debugElement.query(
+        By.css('span.item-list-org-unit-description')
+      );
       expect(orgUnitDescriptionField).toBeNull();
     });
   });

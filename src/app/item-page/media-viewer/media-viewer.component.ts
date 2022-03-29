@@ -88,7 +88,8 @@ export class MediaViewerComponent implements OnInit {
         filter(
           (bitstreamsRD: RemoteData<PaginatedList<Bitstream>>) =>
             hasValue(bitstreamsRD) &&
-            (hasValue(bitstreamsRD.errorMessage) || hasValue(bitstreamsRD.payload))
+            (hasValue(bitstreamsRD.errorMessage) ||
+              hasValue(bitstreamsRD.payload))
         ),
         take(1)
       );

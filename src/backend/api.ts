@@ -24,7 +24,8 @@ export function serverApi(req, res) {
   }
   console.log('/data.json Cache Miss');
 
-  fakeDataBase.get()
+  fakeDataBase
+    .get()
     .then((data) => {
       fakeDemoRedisCache.set(key, data);
       return data;
@@ -36,19 +37,18 @@ function toHALResponse(req, data, included?) {
   const result = {
     _embedded: data,
     _links: {
-      self: req.protocol + '://' + req.get('host') + req.originalUrl
-    }
+      self: req.protocol + '://' + req.get('host') + req.originalUrl,
+    },
   };
   if (included && Array.isArray(included) && included.length > 0) {
     Object.assign(result, {
-      included: included
+      included: included,
     });
   }
   return result;
 }
 
 export function createMockApi() {
-
   const router = Router();
 
   router.route('/communities').get((req, res) => {

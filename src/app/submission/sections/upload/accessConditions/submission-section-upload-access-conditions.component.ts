@@ -15,8 +15,9 @@ import { RemoteData } from '../../../../core/data/remote-data';
   selector: 'ds-submission-section-upload-access-conditions',
   templateUrl: './submission-section-upload-access-conditions.component.html',
 })
-export class SubmissionSectionUploadAccessConditionsComponent implements OnInit {
-
+export class SubmissionSectionUploadAccessConditionsComponent
+  implements OnInit
+{
   /**
    * The list of resource policy
    * @type {Array}
@@ -42,8 +43,14 @@ export class SubmissionSectionUploadAccessConditionsComponent implements OnInit 
   ngOnInit() {
     this.accessConditions.forEach((accessCondition: ResourcePolicy) => {
       if (isEmpty(accessCondition.name)) {
-        this.groupService.findByHref(accessCondition._links.group.href).pipe(
-          find((rd: RemoteData<Group>) => !rd.isResponsePending && rd.hasSucceeded))
+        this.groupService
+          .findByHref(accessCondition._links.group.href)
+          .pipe(
+            find(
+              (rd: RemoteData<Group>) =>
+                !rd.isResponsePending && rd.hasSucceeded
+            )
+          )
           .subscribe((rd: RemoteData<Group>) => {
             const group: Group = rd.payload;
             const accessConditionEntry = Object.assign({}, accessCondition);

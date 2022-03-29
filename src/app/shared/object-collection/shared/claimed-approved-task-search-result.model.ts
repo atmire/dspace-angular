@@ -4,5 +4,4 @@ import { SearchResult } from '../../search/models/search-result.model';
 /**
  * Represents a search result object of an Approved ClaimedTask object
  */
-export class ClaimedApprovedTaskSearchResult extends SearchResult<ClaimedTask> {
-}
+export class ClaimedApprovedTaskSearchResult extends SearchResult<ClaimedTask> {}

@@ -4,7 +4,11 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormControl, FormGroup } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
-import { DynamicFormControlModel, DynamicFormService, DynamicInputModel } from '@ng-dynamic-forms/core';
+import {
+  DynamicFormControlModel,
+  DynamicFormService,
+  DynamicInputModel,
+} from '@ng-dynamic-forms/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
 import { AuthService } from '../../../../core/auth/auth.service';
@@ -19,7 +23,10 @@ import { NotificationsServiceStub } from '../../../testing/notifications-service
 import { VarDirective } from '../../../utils/var.directive';
 import { ComColFormComponent } from './comcol-form.component';
 import { Operation } from 'fast-json-patch';
-import { createFailedRemoteDataObject$, createSuccessfulRemoteDataObject$ } from '../../../remote-data.utils';
+import {
+  createFailedRemoteDataObject$,
+  createSuccessfulRemoteDataObject$,
+} from '../../../remote-data.utils';
 
 describe('ComColFormComponent', () => {
   let comp: ComColFormComponent<any>;
@@ -30,35 +37,41 @@ describe('ComColFormComponent', () => {
       const controls = {};
       if (hasValue(fModel)) {
         fModel.forEach((controlModel) => {
-          controls[controlModel.id] = new FormControl((controlModel as any).value);
+          controls[controlModel.id] = new FormControl(
+            (controlModel as any).value
+          );
         });
         return new FormGroup(controls);
       }
       return undefined;
-    }
+    },
   };
   const dcTitle = 'dc.title';
   const dcAbstract = 'dc.description.abstract';
 
-  const abstractMD = { [dcAbstract]: [{ value: 'Community description', language: null }] };
-  const newTitleMD = { [dcTitle]: [{ value: 'New Community Title', language: null }] };
+  const abstractMD = {
+    [dcAbstract]: [{ value: 'Community description', language: null }],
+  };
+  const newTitleMD = {
+    [dcTitle]: [{ value: 'New Community Title', language: null }],
+  };
   const formModel = [
     new DynamicInputModel({
       id: 'title',
       name: dcTitle,
-      value: newTitleMD[dcTitle][0].value
+      value: newTitleMD[dcTitle][0].value,
     }),
     new DynamicInputModel({
       id: 'abstract',
       name: dcAbstract,
-      value: abstractMD[dcAbstract][0].value
-    })
+      value: abstractMD[dcAbstract][0].value,
+    }),
   ];
 
   const logoEndpoint = 'rest/api/logo/endpoint';
   const dsoService = Object.assign({
     getLogoEndpoint: () => observableOf(logoEndpoint),
-    deleteLogo: () => createSuccessfulRemoteDataObject$({})
+    deleteLogo: () => createSuccessfulRemoteDataObject$({}),
   });
   const notificationsService = new NotificationsServiceStub();
 
@@ -67,10 +80,10 @@ describe('ComColFormComponent', () => {
   /* eslint-enable no-empty, @typescript-eslint/no-empty-function */
 
   const requestServiceStub = jasmine.createSpyObj('requestService', {
-    removeByHrefSubstring: {}
+    removeByHrefSubstring: {},
   });
   const objectCacheStub = jasmine.createSpyObj('objectCache', {
-    remove: {}
+    remove: {},
   });
 
   beforeEach(waitForAsync(() => {
@@ -83,17 +96,19 @@ describe('ComColFormComponent', () => {
         { provide: NotificationsService, useValue: notificationsService },
         { provide: AuthService, useValue: new AuthServiceMock() },
         { provide: RequestService, useValue: requestServiceStub },
-        { provide: ObjectCacheService, useValue: objectCacheStub }
+        { provide: ObjectCacheService, useValue: objectCacheStub },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
-  describe('when the dso doesn\'t contain an ID (newly created)', () => {
+  describe("when the dso doesn't contain an ID (newly created)", () => {
     beforeEach(() => {
-      initComponent(Object.assign(new Community(), {
-        _links: { self: { href: 'community-self' } }
-      }));
+      initComponent(
+        Object.assign(new Community(), {
+          _links: { self: { href: 'community-self' } },
+        })
+      );
     });
 
     it('should initialize the uploadFilesOptions with a placeholder url', () => {
@@ -129,27 +144,28 @@ describe('ComColFormComponent', () => {
           },
         ];
 
-        expect(comp.submitForm.emit).toHaveBeenCalledWith(
-          {
-            dso: Object.assign({}, comp.dso, {
-                metadata: {
-                  'dc.title': [{
-                    value: 'New Community Title',
-                    language: null,
-                  }],
-                  'dc.description.abstract': [{
-                    value: 'Community description',
-                    language: null,
-                  }],
+        expect(comp.submitForm.emit).toHaveBeenCalledWith({
+          dso: Object.assign({}, comp.dso, {
+            metadata: {
+              'dc.title': [
+                {
+                  value: 'New Community Title',
+                  language: null,
                 },
-                type: Community.type,
-              }
-            ),
-            uploader: undefined,
-            deleteLogo: false,
-            operations: operations,
-          }
-        );
+              ],
+              'dc.description.abstract': [
+                {
+                  value: 'Community description',
+                  language: null,
+                },
+              ],
+            },
+            type: Community.type,
+          }),
+          uploader: undefined,
+          deleteLogo: false,
+          operations: operations,
+        });
       });
     });
 
@@ -185,16 +201,18 @@ describe('ComColFormComponent', () => {
   });
 
   describe('when the dso contains an ID (being edited)', () => {
-    describe('and the dso doesn\'t contain a logo', () => {
+    describe("and the dso doesn't contain a logo", () => {
       beforeEach(() => {
-        initComponent(Object.assign(new Community(), {
-          id: 'community-id',
-          logo: createSuccessfulRemoteDataObject$(undefined),
-          _links: { self: { href: 'community-self' } }
-        }));
+        initComponent(
+          Object.assign(new Community(), {
+            id: 'community-id',
+            logo: createSuccessfulRemoteDataObject$(undefined),
+            _links: { self: { href: 'community-self' } },
+          })
+        );
       });
 
-      it('should initialize the uploadFilesOptions with the logo\'s endpoint url', () => {
+      it("should initialize the uploadFilesOptions with the logo's endpoint url", () => {
         expect(comp.uploadFilesOptions.url).toEqual(logoEndpoint);
       });
 
@@ -205,17 +223,19 @@ describe('ComColFormComponent', () => {
 
     describe('and the dso contains a logo', () => {
       beforeEach(() => {
-        initComponent(Object.assign(new Community(), {
-          id: 'community-id',
-          logo: createSuccessfulRemoteDataObject$({}),
-          _links: {
-            self: { href: 'community-self' },
-            logo: { href: 'community-logo' },
-          }
-        }));
+        initComponent(
+          Object.assign(new Community(), {
+            id: 'community-id',
+            logo: createSuccessfulRemoteDataObject$({}),
+            _links: {
+              self: { href: 'community-self' },
+              logo: { href: 'community-logo' },
+            },
+          })
+        );
       });
 
-      it('should initialize the uploadFilesOptions with the logo\'s endpoint url', () => {
+      it("should initialize the uploadFilesOptions with the logo's endpoint url", () => {
         expect(comp.uploadFilesOptions.url).toEqual(logoEndpoint);
       });
 
@@ -230,7 +250,9 @@ describe('ComColFormComponent', () => {
 
         describe('when dsoService.deleteLogo returns a successful response', () => {
           beforeEach(() => {
-            spyOn(dsoService, 'deleteLogo').and.returnValue(createSuccessfulRemoteDataObject$({}));
+            spyOn(dsoService, 'deleteLogo').and.returnValue(
+              createSuccessfulRemoteDataObject$({})
+            );
             comp.onSubmit();
           });
 
@@ -238,7 +260,7 @@ describe('ComColFormComponent', () => {
             expect(notificationsService.success).toHaveBeenCalled();
           });
 
-          it('should remove the object\'s cache', () => {
+          it("should remove the object's cache", () => {
             expect(requestServiceStub.removeByHrefSubstring).toHaveBeenCalled();
             expect(objectCacheStub.remove).toHaveBeenCalled();
           });
@@ -246,7 +268,9 @@ describe('ComColFormComponent', () => {
 
         describe('when dsoService.deleteLogo returns an error response', () => {
           beforeEach(() => {
-            spyOn(dsoService, 'deleteLogo').and.returnValue(createFailedRemoteDataObject$('Error', 500));
+            spyOn(dsoService, 'deleteLogo').and.returnValue(
+              createFailedRemoteDataObject$('Error', 500)
+            );
             comp.onSubmit();
           });
 
@@ -267,17 +291,23 @@ describe('ComColFormComponent', () => {
         });
 
         it('should mark the logo section with a danger alert', () => {
-          const logoSection = fixture.debugElement.query(By.css('#logo-section.alert-danger'));
+          const logoSection = fixture.debugElement.query(
+            By.css('#logo-section.alert-danger')
+          );
           expect(logoSection).toBeTruthy();
         });
 
         it('should hide the delete button', () => {
-          const button = fixture.debugElement.query(By.css('#logo-section .btn-danger'));
+          const button = fixture.debugElement.query(
+            By.css('#logo-section .btn-danger')
+          );
           expect(button).not.toBeTruthy();
         });
 
         it('should show the undo button', () => {
-          const button = fixture.debugElement.query(By.css('#logo-section .btn-warning'));
+          const button = fixture.debugElement.query(
+            By.css('#logo-section .btn-warning')
+          );
           expect(button).toBeTruthy();
         });
       });
@@ -294,17 +324,23 @@ describe('ComColFormComponent', () => {
         });
 
         it('should disable the danger alert on the logo section', () => {
-          const logoSection = fixture.debugElement.query(By.css('#logo-section.alert-danger'));
+          const logoSection = fixture.debugElement.query(
+            By.css('#logo-section.alert-danger')
+          );
           expect(logoSection).not.toBeTruthy();
         });
 
         it('should show the delete button', () => {
-          const button = fixture.debugElement.query(By.css('#logo-section .btn-danger'));
+          const button = fixture.debugElement.query(
+            By.css('#logo-section .btn-danger')
+          );
           expect(button).toBeTruthy();
         });
 
         it('should hide the undo button', () => {
-          const button = fixture.debugElement.query(By.css('#logo-section .btn-warning'));
+          const button = fixture.debugElement.query(
+            By.css('#logo-section .btn-warning')
+          );
           expect(button).not.toBeTruthy();
         });
       });

@@ -12,18 +12,37 @@ import { type } from '../../shared/ngrx/type';
  * action types in the application are unique.
  */
 export const JsonPatchOperationsActionTypes = {
-  NEW_JSON_PATCH_ADD_OPERATION: type('dspace/core/patch/NEW_JSON_PATCH_ADD_OPERATION'),
-  NEW_JSON_PATCH_COPY_OPERATION: type('dspace/core/patch/NEW_JSON_PATCH_COPY_OPERATION'),
-  NEW_JSON_PATCH_MOVE_OPERATION: type('dspace/core/patch/NEW_JSON_PATCH_MOVE_OPERATION'),
-  NEW_JSON_PATCH_REMOVE_OPERATION: type('dspace/core/patch/NEW_JSON_PATCH_REMOVE_OPERATION'),
-  NEW_JSON_PATCH_REPLACE_OPERATION: type('dspace/core/patch/NEW_JSON_PATCH_REPLACE_OPERATION'),
-  COMMIT_JSON_PATCH_OPERATIONS: type('dspace/core/patch/COMMIT_JSON_PATCH_OPERATIONS'),
-  ROLLBACK_JSON_PATCH_OPERATIONS: type('dspace/core/patch/ROLLBACK_JSON_PATCH_OPERATIONS'),
-  FLUSH_JSON_PATCH_OPERATIONS: type('dspace/core/patch/FLUSH_JSON_PATCH_OPERATIONS'),
-  START_TRANSACTION_JSON_PATCH_OPERATIONS: type('dspace/core/patch/START_TRANSACTION_JSON_PATCH_OPERATIONS'),
-  DELETE_PENDING_JSON_PATCH_OPERATIONS: type('dspace/core/patch/DELETE_PENDING_JSON_PATCH_OPERATIONS'),
+  NEW_JSON_PATCH_ADD_OPERATION: type(
+    'dspace/core/patch/NEW_JSON_PATCH_ADD_OPERATION'
+  ),
+  NEW_JSON_PATCH_COPY_OPERATION: type(
+    'dspace/core/patch/NEW_JSON_PATCH_COPY_OPERATION'
+  ),
+  NEW_JSON_PATCH_MOVE_OPERATION: type(
+    'dspace/core/patch/NEW_JSON_PATCH_MOVE_OPERATION'
+  ),
+  NEW_JSON_PATCH_REMOVE_OPERATION: type(
+    'dspace/core/patch/NEW_JSON_PATCH_REMOVE_OPERATION'
+  ),
+  NEW_JSON_PATCH_REPLACE_OPERATION: type(
+    'dspace/core/patch/NEW_JSON_PATCH_REPLACE_OPERATION'
+  ),
+  COMMIT_JSON_PATCH_OPERATIONS: type(
+    'dspace/core/patch/COMMIT_JSON_PATCH_OPERATIONS'
+  ),
+  ROLLBACK_JSON_PATCH_OPERATIONS: type(
+    'dspace/core/patch/ROLLBACK_JSON_PATCH_OPERATIONS'
+  ),
+  FLUSH_JSON_PATCH_OPERATIONS: type(
+    'dspace/core/patch/FLUSH_JSON_PATCH_OPERATIONS'
+  ),
+  START_TRANSACTION_JSON_PATCH_OPERATIONS: type(
+    'dspace/core/patch/START_TRANSACTION_JSON_PATCH_OPERATIONS'
+  ),
+  DELETE_PENDING_JSON_PATCH_OPERATIONS: type(
+    'dspace/core/patch/DELETE_PENDING_JSON_PATCH_OPERATIONS'
+  ),
 };
-
 
 /**
  * An ngrx action to commit the current transaction
@@ -129,7 +148,7 @@ export class NewPatchAddOperationAction implements Action {
     resourceType: string;
     resourceId: string;
     path: string;
-    value: any
+    value: any;
   };
 
   /**
@@ -144,7 +163,12 @@ export class NewPatchAddOperationAction implements Action {
    * @param value
    *    the operation's payload
    */
-  constructor(resourceType: string, resourceId: string, path: string, value: any) {
+  constructor(
+    resourceType: string,
+    resourceId: string,
+    path: string,
+    value: any
+  ) {
     this.payload = { resourceType, resourceId, path, value };
   }
 }
@@ -173,7 +197,12 @@ export class NewPatchCopyOperationAction implements Action {
    * @param path
    *    the path where to copy the value
    */
-  constructor(resourceType: string, resourceId: string, from: string, path: string) {
+  constructor(
+    resourceType: string,
+    resourceId: string,
+    from: string,
+    path: string
+  ) {
     this.payload = { resourceType, resourceId, from, path };
   }
 }
@@ -202,7 +231,12 @@ export class NewPatchMoveOperationAction implements Action {
    * @param path
    *    the path where to move the value
    */
-  constructor(resourceType: string, resourceId: string, from: string, path: string) {
+  constructor(
+    resourceType: string,
+    resourceId: string,
+    from: string,
+    path: string
+  ) {
     this.payload = { resourceType, resourceId, from, path };
   }
 }
@@ -242,7 +276,7 @@ export class NewPatchReplaceOperationAction implements Action {
     resourceType: string;
     resourceId: string;
     path: string;
-    value: any
+    value: any;
   };
 
   /**
@@ -257,7 +291,12 @@ export class NewPatchReplaceOperationAction implements Action {
    * @param value
    *    the operation's payload
    */
-  constructor(resourceType: string, resourceId: string, path: string, value: any) {
+  constructor(
+    resourceType: string,
+    resourceId: string,
+    path: string,
+    value: any
+  ) {
     this.payload = { resourceType, resourceId, path, value };
   }
 }
@@ -269,13 +308,12 @@ export class DeletePendingJsonPatchOperationsAction implements Action {
   type = JsonPatchOperationsActionTypes.DELETE_PENDING_JSON_PATCH_OPERATIONS;
 }
 
-
 /**
  * Export a type alias of all actions in this action group
  * so that reducers can easily compose action types
  */
-export type PatchOperationsActions
-  = CommitPatchOperationsAction
+export type PatchOperationsActions =
+  | CommitPatchOperationsAction
   | FlushPatchOperationsAction
   | NewPatchAddOperationAction
   | NewPatchCopyOperationAction

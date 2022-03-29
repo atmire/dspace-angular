@@ -13,14 +13,13 @@ import { hasNoValue, hasValue } from '../../empty.util';
 @Component({
   selector: 'ds-community-grid-element',
   styleUrls: ['./community-grid-element.component.scss'],
-  templateUrl: './community-grid-element.component.html'
+  templateUrl: './community-grid-element.component.html',
 })
-
 @listableObjectComponent(Community, ViewMode.GridElement)
 export class CommunityGridElementComponent extends AbstractListableElementComponent<Community> {
   private _object: Community;
 
-  constructor( private linkService: LinkService) {
+  constructor(private linkService: LinkService) {
     super();
   }
 

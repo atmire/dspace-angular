@@ -1,13 +1,21 @@
 import { distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/forms';
+import {
+  AbstractControl,
+  FormArray,
+  FormControl,
+  FormGroup,
+} from '@angular/forms';
 import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 
 import { AppState } from '../../app.reducer';
 import { formObjectFromIdSelector } from './selectors';
 import { FormBuilderService } from './builder/form-builder.service';
-import { DynamicFormControlEvent, DynamicFormControlModel } from '@ng-dynamic-forms/core';
+import {
+  DynamicFormControlEvent,
+  DynamicFormControlModel,
+} from '@ng-dynamic-forms/core';
 import { isEmpty, isNotUndefined } from '../empty.util';
 import { uniqueId } from 'lodash';
 import {
@@ -17,18 +25,17 @@ import {
   FormInitAction,
   FormRemoveAction,
   FormRemoveErrorAction,
-  FormStatusChangeAction
+  FormStatusChangeAction,
 } from './form.actions';
 import { FormEntry, FormError, FormTouchedState } from './form.reducer';
 import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class FormService {
-
   constructor(
     private formBuilderService: FormBuilderService,
-    private store: Store<AppState>) {
-  }
+    private store: Store<AppState>
+  ) {}
 
   /**
    * Method to retrieve form's status from state
@@ -129,14 +136,25 @@ export class FormService {
     return hasErrors;
   }
 
-  public addControlErrors(field: AbstractControl, formId: string, fieldId: string, fieldIndex: number) {
+  public addControlErrors(
+    field: AbstractControl,
+    formId: string,
+    fieldId: string,
+    fieldIndex: number
+  ) {
     const errors: string[] = Object.keys(field.errors)
       .filter((errorKey) => field.errors[errorKey] === true)
       .map((errorKey) => `error.validation.${errorKey}`);
-    errors.forEach((error) => this.addError(formId, fieldId, fieldIndex, error));
+    errors.forEach((error) =>
+      this.addError(formId, fieldId, fieldIndex, error)
+    );
   }
 
-  public addErrorToField(field: AbstractControl, model: DynamicFormControlModel, message: string) {
+  public addErrorToField(
+    field: AbstractControl,
+    model: DynamicFormControlModel,
+    message: string
+  ) {
     const error = {}; // create the error object
     const errorKey = this.getValidatorNameFromMap(message);
     let errorMsg = message;
@@ -164,7 +182,11 @@ export class FormService {
     field.markAsTouched();
   }
 
-  public removeErrorFromField(field: AbstractControl, model: DynamicFormControlModel, messageKey: string) {
+  public removeErrorFromField(
+    field: AbstractControl,
+    model: DynamicFormControlModel,
+    messageKey: string
+  ) {
     const error = {};
     const errorKey = this.getValidatorNameFromMap(messageKey);
 
@@ -176,7 +198,11 @@ export class FormService {
     field.markAsUntouched();
   }
 
-  public resetForm(formGroup: FormGroup, groupModel: DynamicFormControlModel[], formId: string) {
+  public resetForm(
+    formGroup: FormGroup,
+    groupModel: DynamicFormControlModel[],
+    formId: string
+  ) {
     this.formBuilderService.clearAllModelsValue(groupModel);
     formGroup.reset();
     this.store.dispatch(new FormChangeAction(formId, formGroup.value));
@@ -186,14 +212,28 @@ export class FormService {
     if (validator.includes('.')) {
       const splitArray = validator.split('.');
       if (splitArray && splitArray.length > 0) {
-        validator = this.getValidatorNameFromMap(splitArray[splitArray.length - 1]);
+        validator = this.getValidatorNameFromMap(
+          splitArray[splitArray.length - 1]
+        );
       }
     }
-    return (environment.form.validatorMap.hasOwnProperty(validator)) ? environment.form.validatorMap[validator] : validator;
+    return environment.form.validatorMap.hasOwnProperty(validator)
+      ? environment.form.validatorMap[validator]
+      : validator;
   }
 
-  public initForm(formId: string, model: DynamicFormControlModel[], valid: boolean) {
-    this.store.dispatch(new FormInitAction(formId, this.formBuilderService.getValueFromModel(model), valid));
+  public initForm(
+    formId: string,
+    model: DynamicFormControlModel[],
+    valid: boolean
+  ) {
+    this.store.dispatch(
+      new FormInitAction(
+        formId,
+        this.formBuilderService.getValueFromModel(model),
+        valid
+      )
+    );
   }
 
   public setStatusChanged(formId: string, valid: boolean) {
@@ -209,20 +249,38 @@ export class FormService {
   }
 
   public changeForm(formId: string, model: DynamicFormControlModel[]) {
-    this.store.dispatch(new FormChangeAction(formId, this.formBuilderService.getValueFromModel(model)));
+    this.store.dispatch(
+      new FormChangeAction(
+        formId,
+        this.formBuilderService.getValueFromModel(model)
+      )
+    );
   }
 
-  public setTouched(formId: string, model: DynamicFormControlModel[], event: DynamicFormControlEvent) {
+  public setTouched(
+    formId: string,
+    model: DynamicFormControlModel[],
+    event: DynamicFormControlEvent
+  ) {
     const ids = this.formBuilderService.getMetadataIdsFromEvent(event);
     this.store.dispatch(new FormAddTouchedAction(formId, ids));
   }
 
-  public addError(formId: string, fieldId: string, fieldIndex: number, message: string) {
+  public addError(
+    formId: string,
+    fieldId: string,
+    fieldIndex: number,
+    message: string
+  ) {
     const normalizedFieldId = fieldId.replace(/\./g, '_');
-    this.store.dispatch(new FormAddError(formId, normalizedFieldId, fieldIndex, message));
+    this.store.dispatch(
+      new FormAddError(formId, normalizedFieldId, fieldIndex, message)
+    );
   }
   public removeError(formId: string, fieldId: string, fieldIndex: number) {
     const normalizedFieldId = fieldId.replace(/\./g, '_');
-    this.store.dispatch(new FormRemoveErrorAction(formId, normalizedFieldId, fieldIndex));
+    this.store.dispatch(
+      new FormRemoveErrorAction(formId, normalizedFieldId, fieldIndex)
+    );
   }
 }

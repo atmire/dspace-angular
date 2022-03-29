@@ -38,26 +38,29 @@ import { AppConfig, APP_CONFIG_STATE } from '../../config/app-config.interface';
 import { environment } from '../../environments/environment';
 
 export function createTranslateLoader() {
-  return new TranslateJson5UniversalLoader('dist/server/assets/i18n/', '.json5');
+  return new TranslateJson5UniversalLoader(
+    'dist/server/assets/i18n/',
+    '.json5'
+  );
 }
 
 @NgModule({
   bootstrap: [AppComponent],
   imports: [
     BrowserModule.withServerTransition({
-      appId: 'dspace-angular'
+      appId: 'dspace-angular',
     }),
     RouterModule.forRoot([], {
-      useHash: false
+      useHash: false,
     }),
     NoopAnimationsModule,
     DSpaceServerTransferStateModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: (createTranslateLoader),
-        deps: []
-      }
+        useFactory: createTranslateLoader,
+        deps: [],
+      },
     }),
     AppModule,
     ServerModule,
@@ -69,39 +72,42 @@ export function createTranslateLoader() {
       useFactory: (
         transferState: TransferState,
         dspaceTransferState: DSpaceTransferState,
-        correlationIdService: CorrelationIdService,
+        correlationIdService: CorrelationIdService
       ) => {
-        transferState.set<AppConfig>(APP_CONFIG_STATE, environment as AppConfig);
+        transferState.set<AppConfig>(
+          APP_CONFIG_STATE,
+          environment as AppConfig
+        );
         dspaceTransferState.transfer();
         correlationIdService.initCorrelationId();
         return () => true;
       },
       deps: [TransferState, DSpaceTransferState, CorrelationIdService],
-      multi: true
+      multi: true,
     },
     {
       provide: Angulartics2,
-      useClass: Angulartics2Mock
+      useClass: Angulartics2Mock,
     },
     {
       provide: Angulartics2GoogleAnalytics,
-      useClass: AngularticsProviderMock
+      useClass: AngularticsProviderMock,
     },
     {
       provide: Angulartics2DSpace,
-      useClass: AngularticsProviderMock
+      useClass: AngularticsProviderMock,
     },
     {
       provide: AuthService,
-      useClass: ServerAuthService
+      useClass: ServerAuthService,
     },
     {
       provide: CookieService,
-      useClass: ServerCookieService
+      useClass: ServerCookieService,
     },
     {
       provide: SubmissionService,
-      useClass: ServerSubmissionService
+      useClass: ServerSubmissionService,
     },
     {
       provide: AuthRequestService,
@@ -109,19 +115,18 @@ export function createTranslateLoader() {
     },
     {
       provide: LocaleService,
-      useClass: ServerLocaleService
+      useClass: ServerLocaleService,
     },
     // register ForwardClientIpInterceptor as HttpInterceptor
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ForwardClientIpInterceptor,
-      multi: true
+      multi: true,
     },
     {
       provide: HardRedirectService,
       useClass: ServerHardRedirectService,
     },
-  ]
+  ],
 })
-export class ServerAppModule {
-}
+export class ServerAppModule {}

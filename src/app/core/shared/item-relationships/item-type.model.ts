@@ -43,6 +43,6 @@ export class ItemType implements CacheableObject {
    */
   @deserialize
   _links: {
-    self: HALLink,
+    self: HALLink;
   };
 }

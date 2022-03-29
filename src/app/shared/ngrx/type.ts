@@ -1,4 +1,3 @@
-
 /**
  * Based on
  * https://github.com/ngrx/example-app/blob/master/src/app/util.ts

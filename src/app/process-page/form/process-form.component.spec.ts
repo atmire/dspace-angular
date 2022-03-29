@@ -32,17 +32,13 @@ describe('ProcessFormComponent', () => {
       Object.assign(new ProcessParameter(), { name: '-b', value: '123' }),
       Object.assign(new ProcessParameter(), { name: '-c', value: 'value' }),
     ];
-    scriptService = jasmine.createSpyObj(
-      'scriptService',
-      {
-        invoke: observableOf({
-          response:
-            {
-              isSuccessful: true
-            }
-        })
-      }
-    );
+    scriptService = jasmine.createSpyObj('scriptService', {
+      invoke: observableOf({
+        response: {
+          isSuccessful: true,
+        },
+      }),
+    });
     router = {
       navigateByUrl: () => undefined,
     };
@@ -56,19 +52,28 @@ describe('ProcessFormComponent', () => {
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
-            useClass: TranslateLoaderMock
-          }
-        })],
+            useClass: TranslateLoaderMock,
+          },
+        }),
+      ],
       declarations: [ProcessFormComponent],
       providers: [
         { provide: ScriptDataService, useValue: scriptService },
         { provide: NotificationsService, useClass: NotificationsServiceStub },
-        { provide: RequestService, useValue: jasmine.createSpyObj('requestService', ['removeBySubstring', 'removeByHrefSubstring']) },
-        { provide: Router, useValue: jasmine.createSpyObj('router', ['navigateByUrl']) },
+        {
+          provide: RequestService,
+          useValue: jasmine.createSpyObj('requestService', [
+            'removeBySubstring',
+            'removeByHrefSubstring',
+          ]),
+        },
+        {
+          provide: Router,
+          useValue: jasmine.createSpyObj('router', ['navigateByUrl']),
+        },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
-      .compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -95,7 +100,11 @@ describe('ProcessFormComponent', () => {
 
     it('should invoke the script with an empty array of parameters', () => {
       component.submitForm({ controls: {} } as any);
-      expect(scriptService.invoke).toHaveBeenCalledWith(script.id, [], jasmine.anything());
+      expect(scriptService.invoke).toHaveBeenCalledWith(
+        script.id,
+        [],
+        jasmine.anything()
+      );
     });
   });
 });

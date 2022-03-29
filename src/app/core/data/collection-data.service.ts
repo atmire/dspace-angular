@@ -4,7 +4,11 @@ import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { filter, map, switchMap, take } from 'rxjs/operators';
-import { hasValue, isNotEmpty, isNotEmptyOperator } from '../../shared/empty.util';
+import {
+  hasValue,
+  isNotEmpty,
+  isNotEmptyOperator,
+} from '../../shared/empty.util';
 import { NotificationOptions } from '../../shared/notifications/models/notification-options.model';
 import { INotification } from '../../shared/notifications/models/notification.model';
 import { NotificationsService } from '../../shared/notifications/notifications.service';
@@ -27,7 +31,12 @@ import { CommunityDataService } from './community-data.service';
 import { DSOChangeAnalyzer } from './dso-change-analyzer.service';
 import { PaginatedList } from './paginated-list.model';
 import { RemoteData } from './remote-data';
-import { ContentSourceRequest, FindListOptions, RestRequest, UpdateContentSourceRequest } from './request.models';
+import {
+  ContentSourceRequest,
+  FindListOptions,
+  RestRequest,
+  UpdateContentSourceRequest,
+} from './request.models';
 import { RequestService } from './request.service';
 import { BitstreamDataService } from './bitstream-data.service';
 
@@ -36,7 +45,8 @@ import { BitstreamDataService } from './bitstream-data.service';
 export class CollectionDataService extends ComColDataService<Collection> {
   protected linkPath = 'collections';
   protected errorTitle = 'collection.source.update.notifications.error.title';
-  protected contentSourceError = 'collection.source.update.notifications.error.content';
+  protected contentSourceError =
+    'collection.source.update.notifications.error.content';
 
   constructor(
     protected requestService: RequestService,
@@ -69,14 +79,30 @@ export class CollectionDataService extends ComColDataService<Collection> {
    * @return Observable<RemoteData<PaginatedList<Collection>>>
    *    collection list
    */
-  getAuthorizedCollection(query: string, options: FindListOptions = {}, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<Collection>[]): Observable<RemoteData<PaginatedList<Collection>>> {
+  getAuthorizedCollection(
+    query: string,
+    options: FindListOptions = {},
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<Collection>[]
+  ): Observable<RemoteData<PaginatedList<Collection>>> {
     const searchHref = 'findSubmitAuthorized';
     options = Object.assign({}, options, {
-      searchParams: [new RequestParam('query', query)]
+      searchParams: [new RequestParam('query', query)],
     });
 
-    return this.searchBy(searchHref, options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow).pipe(
-      filter((collections: RemoteData<PaginatedList<Collection>>) => !collections.isResponsePending));
+    return this.searchBy(
+      searchHref,
+      options,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow
+    ).pipe(
+      filter(
+        (collections: RemoteData<PaginatedList<Collection>>) =>
+          !collections.isResponsePending
+      )
+    );
   }
 
   /**
@@ -96,17 +122,28 @@ export class CollectionDataService extends ComColDataService<Collection> {
     entityType: string,
     options: FindListOptions = {},
     reRequestOnStale = true,
-    ...linksToFollow: FollowLinkConfig<Collection>[]): Observable<RemoteData<PaginatedList<Collection>>> {
+    ...linksToFollow: FollowLinkConfig<Collection>[]
+  ): Observable<RemoteData<PaginatedList<Collection>>> {
     const searchHref = 'findSubmitAuthorizedByEntityType';
     options = Object.assign({}, options, {
       searchParams: [
         new RequestParam('query', query),
-        new RequestParam('entityType', entityType)
-      ]
+        new RequestParam('entityType', entityType),
+      ],
     });
 
-    return this.searchBy(searchHref, options, true, reRequestOnStale, ...linksToFollow).pipe(
-      filter((collections: RemoteData<PaginatedList<Collection>>) => !collections.isResponsePending));
+    return this.searchBy(
+      searchHref,
+      options,
+      true,
+      reRequestOnStale,
+      ...linksToFollow
+    ).pipe(
+      filter(
+        (collections: RemoteData<PaginatedList<Collection>>) =>
+          !collections.isResponsePending
+      )
+    );
   }
 
   /**
@@ -120,17 +157,26 @@ export class CollectionDataService extends ComColDataService<Collection> {
    * @return Observable<RemoteData<PaginatedList<Collection>>>
    *    collection list
    */
-  getAuthorizedCollectionByCommunity(communityId: string, query: string, options: FindListOptions = {}, reRequestOnStale = true,): Observable<RemoteData<PaginatedList<Collection>>> {
+  getAuthorizedCollectionByCommunity(
+    communityId: string,
+    query: string,
+    options: FindListOptions = {},
+    reRequestOnStale = true
+  ): Observable<RemoteData<PaginatedList<Collection>>> {
     const searchHref = 'findSubmitAuthorizedByCommunity';
     options = Object.assign({}, options, {
       searchParams: [
         new RequestParam('uuid', communityId),
-        new RequestParam('query', query)
-      ]
+        new RequestParam('query', query),
+      ],
     });
 
     return this.searchBy(searchHref, options, reRequestOnStale).pipe(
-      filter((collections: RemoteData<PaginatedList<Collection>>) => !collections.isResponsePending));
+      filter(
+        (collections: RemoteData<PaginatedList<Collection>>) =>
+          !collections.isResponsePending
+      )
+    );
   }
   /**
    * Get all collections the user is authorized to submit to, by community and has the metadata
@@ -149,19 +195,30 @@ export class CollectionDataService extends ComColDataService<Collection> {
     entityType: string,
     options: FindListOptions = {},
     reRequestOnStale = true,
-    ...linksToFollow: FollowLinkConfig<Collection>[]): Observable<RemoteData<PaginatedList<Collection>>> {
+    ...linksToFollow: FollowLinkConfig<Collection>[]
+  ): Observable<RemoteData<PaginatedList<Collection>>> {
     const searchHref = 'findSubmitAuthorizedByCommunityAndEntityType';
     const searchParams = [
       new RequestParam('uuid', communityId),
-      new RequestParam('entityType', entityType)
+      new RequestParam('entityType', entityType),
     ];
 
     options = Object.assign({}, options, {
-      searchParams: searchParams
+      searchParams: searchParams,
     });
 
-    return this.searchBy(searchHref, options, true, reRequestOnStale, ...linksToFollow).pipe(
-      filter((collections: RemoteData<PaginatedList<Collection>>) => !collections.isResponsePending));
+    return this.searchBy(
+      searchHref,
+      options,
+      true,
+      reRequestOnStale,
+      ...linksToFollow
+    ).pipe(
+      filter(
+        (collections: RemoteData<PaginatedList<Collection>>) =>
+          !collections.isResponsePending
+      )
+    );
   }
 
   /**
@@ -176,9 +233,15 @@ export class CollectionDataService extends ComColDataService<Collection> {
     options.elementsPerPage = 1;
 
     return this.searchBy(searchHref, options).pipe(
-      filter((collections: RemoteData<PaginatedList<Collection>>) => !collections.isResponsePending),
+      filter(
+        (collections: RemoteData<PaginatedList<Collection>>) =>
+          !collections.isResponsePending
+      ),
       take(1),
-      map((collections: RemoteData<PaginatedList<Collection>>) => collections.payload.totalElements > 0)
+      map(
+        (collections: RemoteData<PaginatedList<Collection>>) =>
+          collections.payload.totalElements > 0
+      )
     );
   }
 
@@ -187,23 +250,33 @@ export class CollectionDataService extends ComColDataService<Collection> {
    * @param collectionId
    */
   getHarvesterEndpoint(collectionId: string): Observable<string> {
-    return this.halService.getEndpoint(this.linkPath).pipe(
-      switchMap((href: string) => this.halService.getEndpoint('harvester', `${href}/${collectionId}`))
-    );
+    return this.halService
+      .getEndpoint(this.linkPath)
+      .pipe(
+        switchMap((href: string) =>
+          this.halService.getEndpoint('harvester', `${href}/${collectionId}`)
+        )
+      );
   }
 
   /**
    * Get the collection's content harvester
    * @param collectionId
    */
-  getContentSource(collectionId: string, useCachedVersionIfAvailable = true): Observable<RemoteData<ContentSource>> {
+  getContentSource(
+    collectionId: string,
+    useCachedVersionIfAvailable = true
+  ): Observable<RemoteData<ContentSource>> {
     const href$ = this.getHarvesterEndpoint(collectionId).pipe(
       isNotEmptyOperator(),
       take(1)
     );
 
     href$.subscribe((href: string) => {
-      const request = new ContentSourceRequest(this.requestService.generateRequestId(), href);
+      const request = new ContentSourceRequest(
+        this.requestService.generateRequestId(),
+        href
+      );
       this.requestService.send(request, useCachedVersionIfAvailable);
     });
 
@@ -215,9 +288,14 @@ export class CollectionDataService extends ComColDataService<Collection> {
    * @param collectionId
    * @param contentSource
    */
-  updateContentSource(collectionId: string, contentSource: ContentSource): Observable<ContentSource | INotification> {
+  updateContentSource(
+    collectionId: string,
+    contentSource: ContentSource
+  ): Observable<ContentSource | INotification> {
     const requestId = this.requestService.generateRequestId();
-    const serializedContentSource = new DSpaceSerializer(ContentSource).serialize(contentSource);
+    const serializedContentSource = new DSpaceSerializer(
+      ContentSource
+    ).serialize(contentSource);
     const request$ = this.getHarvesterEndpoint(collectionId).pipe(
       take(1),
       map((href: string) => {
@@ -225,12 +303,19 @@ export class CollectionDataService extends ComColDataService<Collection> {
         let headers = new HttpHeaders();
         headers = headers.append('Content-Type', 'application/json');
         options.headers = headers;
-        return new UpdateContentSourceRequest(requestId, href, JSON.stringify(serializedContentSource), options);
+        return new UpdateContentSourceRequest(
+          requestId,
+          href,
+          JSON.stringify(serializedContentSource),
+          options
+        );
       })
     );
 
     // Execute the post/put request
-    request$.subscribe((request: RestRequest) => this.requestService.send(request));
+    request$.subscribe((request: RestRequest) =>
+      this.requestService.send(request)
+    );
 
     // Return updated ContentSource
     return this.rdbService.buildFromRequestUUID<ContentSource>(requestId).pipe(
@@ -239,9 +324,17 @@ export class CollectionDataService extends ComColDataService<Collection> {
         if (response.hasFailed) {
           if (hasValue(response.errorMessage)) {
             if (response.statusCode === 422) {
-              return this.notificationsService.error(this.translate.instant(this.errorTitle), this.translate.instant(this.contentSourceError), new NotificationOptions(-1));
+              return this.notificationsService.error(
+                this.translate.instant(this.errorTitle),
+                this.translate.instant(this.contentSourceError),
+                new NotificationOptions(-1)
+              );
             } else {
-              return this.notificationsService.error(this.translate.instant(this.errorTitle), (response as any).errorMessage, new NotificationOptions(-1));
+              return this.notificationsService.error(
+                this.translate.instant(this.errorTitle),
+                (response as any).errorMessage,
+                new NotificationOptions(-1)
+              );
             }
           }
         } else {
@@ -259,10 +352,16 @@ export class CollectionDataService extends ComColDataService<Collection> {
   }
 
   protected getFindByParentHref(parentUUID: string): Observable<string> {
-    return this.halService.getEndpoint('communities').pipe(
-      switchMap((communityEndpointHref: string) =>
-        this.halService.getEndpoint('collections', `${communityEndpointHref}/${parentUUID}`)),
-    );
+    return this.halService
+      .getEndpoint('communities')
+      .pipe(
+        switchMap((communityEndpointHref: string) =>
+          this.halService.getEndpoint(
+            'collections',
+            `${communityEndpointHref}/${parentUUID}`
+          )
+        )
+      );
   }
 
   /**
@@ -278,8 +377,13 @@ export class CollectionDataService extends ComColDataService<Collection> {
    * @param item  Item for which the mapped collections should be retrieved.
    * @param findListOptions Pagination and search options.
    */
-  findMappedCollectionsFor(item: Item, findListOptions?: FindListOptions): Observable<RemoteData<PaginatedList<Collection>>> {
-    return this.findAllByHref(item._links.mappedCollections.href, findListOptions);
+  findMappedCollectionsFor(
+    item: Item,
+    findListOptions?: FindListOptions
+  ): Observable<RemoteData<PaginatedList<Collection>>> {
+    return this.findAllByHref(
+      item._links.mappedCollections.href,
+      findListOptions
+    );
   }
-
 }

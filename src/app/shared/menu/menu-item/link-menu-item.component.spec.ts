@@ -29,9 +29,8 @@ describe('LinkMenuItemComponent', () => {
         { provide: 'itemModelProvider', useValue: { text: text, link: link } },
         { provide: Router, useValue: RouterStub },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
-      .compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -46,13 +45,18 @@ describe('LinkMenuItemComponent', () => {
   });
 
   it('should contain the correct text', () => {
-    const textContent = debugElement.query(By.css('a')).nativeElement.textContent;
+    const textContent = debugElement.query(By.css('a')).nativeElement
+      .textContent;
     expect(textContent).toEqual(text);
   });
 
   it('should have the right routerLink attribute', () => {
-    const linkDes = fixture.debugElement.queryAll(By.directive(RouterLinkDirectiveStub));
-    const routerLinkQuery = linkDes.map((de) => de.injector.get(RouterLinkDirectiveStub));
+    const linkDes = fixture.debugElement.queryAll(
+      By.directive(RouterLinkDirectiveStub)
+    );
+    const routerLinkQuery = linkDes.map((de) =>
+      de.injector.get(RouterLinkDirectiveStub)
+    );
 
     expect(routerLinkQuery.length).toBe(1);
     expect(routerLinkQuery[0].routerLink).toBe(environment.ui.nameSpace + link);

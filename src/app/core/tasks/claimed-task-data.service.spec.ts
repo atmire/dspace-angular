@@ -34,7 +34,7 @@ describe('ClaimedTaskDataService', () => {
     },
     getObjectBySelfLink: () => {
       /* empty */
-    }
+    },
   } as any;
   const store = {} as Store<CoreState>;
 
@@ -56,7 +56,10 @@ describe('ClaimedTaskDataService', () => {
     service = initTestService();
     options = Object.create({});
     let headers = new HttpHeaders();
-    headers = headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    headers = headers.append(
+      'Content-Type',
+      'application/x-www-form-urlencoded'
+    );
     options.headers = headers;
   });
 
@@ -64,7 +67,7 @@ describe('ClaimedTaskDataService', () => {
     it('should call postToEndpoint method', () => {
       const scopeId = '1234';
       const body = {
-        submit_approve: 'true'
+        submit_approve: 'true',
       };
 
       spyOn(service, 'postToEndpoint');
@@ -72,17 +75,22 @@ describe('ClaimedTaskDataService', () => {
 
       service.submitTask(scopeId, body);
 
-      expect(service.postToEndpoint).toHaveBeenCalledWith(linkPath, body, scopeId, options);
+      expect(service.postToEndpoint).toHaveBeenCalledWith(
+        linkPath,
+        body,
+        scopeId,
+        options
+      );
     });
   });
 
   describe('claimTask', () => {
-
     it('should call postToEndpoint method', () => {
-
       spyOn(service, 'postToEndpoint').and.returnValue(observableOf(null));
 
-      scheduler.schedule(() => service.claimTask('scopeId', 'poolTaskHref').subscribe());
+      scheduler.schedule(() =>
+        service.claimTask('scopeId', 'poolTaskHref').subscribe()
+      );
       scheduler.flush();
 
       const postToEndpointOptions: HttpOptions = Object.create({});
@@ -90,7 +98,12 @@ describe('ClaimedTaskDataService', () => {
       headers = headers.append('Content-Type', 'text/uri-list');
       postToEndpointOptions.headers = headers;
 
-      expect(service.postToEndpoint).toHaveBeenCalledWith(linkPath, 'poolTaskHref', null, postToEndpointOptions);
+      expect(service.postToEndpoint).toHaveBeenCalledWith(
+        linkPath,
+        'poolTaskHref',
+        null,
+        postToEndpointOptions
+      );
     });
   });
 
@@ -102,24 +115,34 @@ describe('ClaimedTaskDataService', () => {
 
       service.returnToPoolTask(scopeId);
 
-      expect(service.deleteById).toHaveBeenCalledWith(linkPath, scopeId, options);
+      expect(service.deleteById).toHaveBeenCalledWith(
+        linkPath,
+        scopeId,
+        options
+      );
     });
   });
 
   describe('findByItem', () => {
-
     it('should call searchTask method', () => {
-      spyOn((service as any), 'searchTask').and.returnValue(observableOf(createSuccessfulRemoteDataObject$({})));
+      spyOn(service as any, 'searchTask').and.returnValue(
+        observableOf(createSuccessfulRemoteDataObject$({}))
+      );
 
-      scheduler.schedule(() => service.findByItem('a0db0fde-1d12-4d43-bd0d-0f43df8d823c').subscribe());
+      scheduler.schedule(() =>
+        service.findByItem('a0db0fde-1d12-4d43-bd0d-0f43df8d823c').subscribe()
+      );
       scheduler.flush();
 
       const findListOptions = new FindListOptions();
       findListOptions.searchParams = [
-        new RequestParam('uuid', 'a0db0fde-1d12-4d43-bd0d-0f43df8d823c')
+        new RequestParam('uuid', 'a0db0fde-1d12-4d43-bd0d-0f43df8d823c'),
       ];
 
-      expect(service.searchTask).toHaveBeenCalledWith('findByItem', findListOptions);
+      expect(service.searchTask).toHaveBeenCalledWith(
+        'findByItem',
+        findListOptions
+      );
     });
   });
 });

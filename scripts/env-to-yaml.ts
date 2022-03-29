@@ -6,13 +6,15 @@ import { join } from 'path';
  * Script to help convert previous version environment.*.ts to yaml.
  *
  * Usage (see package.json):
- * 
+ *
  * yarn env:yaml [relative path to environment.ts file] (optional relative path to write yaml file) *
  */
 
 const args = process.argv.slice(2);
 if (args[0] === undefined) {
-  console.log(`Usage:\n\tyarn env:yaml [relative path to environment.ts file] (optional relative path to write yaml file)\n`);
+  console.log(
+    `Usage:\n\tyarn env:yaml [relative path to environment.ts file] (optional relative path to write yaml file)\n`
+  );
   process.exit(0);
 }
 
@@ -36,4 +38,3 @@ try {
 } catch (e) {
   console.error(e);
 }
-

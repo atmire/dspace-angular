@@ -22,24 +22,25 @@ const mockItemWithMetadata: ItemSearchResult = Object.assign(
         'dc.title': [
           {
             language: 'en_US',
-            value: 'This is just another title'
-          }
+            value: 'This is just another title',
+          },
         ],
         'publicationvolume.volumeNumber': [
           {
             language: 'en_US',
-            value: '1234'
-          }
+            value: '1234',
+          },
         ],
         'publicationissue.issueNumber': [
           {
             language: 'en_US',
-            value: '5678'
-          }
-        ]
-      }
-    })
-  });
+            value: '5678',
+          },
+        ],
+      },
+    }),
+  }
+);
 
 const mockItemWithoutMetadata: ItemSearchResult = Object.assign(
   new ItemSearchResult(),
@@ -50,32 +51,39 @@ const mockItemWithoutMetadata: ItemSearchResult = Object.assign(
         'dc.title': [
           {
             language: 'en_US',
-            value: 'This is just another title'
-          }
-        ]
-      }
-    })
-  });
+            value: 'This is just another title',
+          },
+        ],
+      },
+    }),
+  }
+);
 
 describe('JournalIssueSearchResultListElementComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [JournalIssueSearchResultListElementComponent, TruncatePipe],
+      declarations: [
+        JournalIssueSearchResultListElementComponent,
+        TruncatePipe,
+      ],
       providers: [
         { provide: TruncatableService, useValue: {} },
-        { provide: DSONameService, useClass: DSONameServiceMock }
+        { provide: DSONameService, useClass: DSONameServiceMock },
       ],
 
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(JournalIssueSearchResultListElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(JournalIssueSearchResultListElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
-    fixture = TestBed.createComponent(JournalIssueSearchResultListElementComponent);
+    fixture = TestBed.createComponent(
+      JournalIssueSearchResultListElementComponent
+    );
     journalIssueListElementComponent = fixture.componentInstance;
-
   }));
 
   describe('When the item has a journal identifier', () => {
@@ -85,7 +93,9 @@ describe('JournalIssueSearchResultListElementComponent', () => {
     });
 
     it('should show the journal issues span', () => {
-      const journalIdentifierField = fixture.debugElement.query(By.css('span.item-list-journal-issues'));
+      const journalIdentifierField = fixture.debugElement.query(
+        By.css('span.item-list-journal-issues')
+      );
       expect(journalIdentifierField).not.toBeNull();
     });
   });
@@ -97,7 +107,9 @@ describe('JournalIssueSearchResultListElementComponent', () => {
     });
 
     it('should not show the journal issues span', () => {
-      const journalIdentifierField = fixture.debugElement.query(By.css('span.item-list-journal-issues'));
+      const journalIdentifierField = fixture.debugElement.query(
+        By.css('span.item-list-journal-issues')
+      );
       expect(journalIdentifierField).toBeNull();
     });
   });
@@ -109,7 +121,9 @@ describe('JournalIssueSearchResultListElementComponent', () => {
     });
 
     it('should show the journal issue numbers span', () => {
-      const journalNumberField = fixture.debugElement.query(By.css('span.item-list-journal-issue-numbers'));
+      const journalNumberField = fixture.debugElement.query(
+        By.css('span.item-list-journal-issue-numbers')
+      );
       expect(journalNumberField).not.toBeNull();
     });
   });
@@ -121,7 +135,9 @@ describe('JournalIssueSearchResultListElementComponent', () => {
     });
 
     it('should not show the journal issue numbers span', () => {
-      const journalNumberField = fixture.debugElement.query(By.css('span.item-list-journal-issue-numbers'));
+      const journalNumberField = fixture.debugElement.query(
+        By.css('span.item-list-journal-issue-numbers')
+      );
       expect(journalNumberField).toBeNull();
     });
   });

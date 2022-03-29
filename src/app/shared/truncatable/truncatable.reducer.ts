@@ -1,4 +1,7 @@
-import { TruncatableAction, TruncatableActionTypes } from './truncatable.actions';
+import {
+  TruncatableAction,
+  TruncatableActionTypes,
+} from './truncatable.actions';
 
 /**
  * Interface that represents the state of a single truncatable
@@ -22,30 +25,33 @@ const initialState: TruncatablesState = Object.create(null);
  * @param {TruncatableAction} action The action that should be performed
  * @returns {TruncatablesState} The state after the action is performed
  */
-export function truncatableReducer(state = initialState, action: TruncatableAction): TruncatablesState {
-
+export function truncatableReducer(
+  state = initialState,
+  action: TruncatableAction
+): TruncatablesState {
   switch (action.type) {
-
     case TruncatableActionTypes.COLLAPSE: {
       return Object.assign({}, state, {
         [action.id]: {
           collapsed: true,
-        }
+        },
       });
-    } case TruncatableActionTypes.EXPAND: {
+    }
+    case TruncatableActionTypes.EXPAND: {
       return Object.assign({}, state, {
         [action.id]: {
           collapsed: false,
-        }
+        },
       });
-    } case TruncatableActionTypes.TOGGLE: {
+    }
+    case TruncatableActionTypes.TOGGLE: {
       if (!state[action.id]) {
-        state[action.id] = {collapsed: false};
+        state[action.id] = { collapsed: false };
       }
       return Object.assign({}, state, {
         [action.id]: {
           collapsed: !state[action.id].collapsed,
-        }
+        },
       });
     }
     default: {

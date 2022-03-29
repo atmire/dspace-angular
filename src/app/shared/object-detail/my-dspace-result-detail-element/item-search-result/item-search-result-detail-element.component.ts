@@ -12,16 +12,19 @@ import { ItemSearchResult } from '../../../object-collection/shared/item-search-
  */
 @Component({
   selector: 'ds-item-search-result-detail-element',
-  styleUrls: ['../search-result-detail-element.component.scss', './item-search-result-detail-element.component.scss'],
-  templateUrl: './item-search-result-detail-element.component.html'
+  styleUrls: [
+    '../search-result-detail-element.component.scss',
+    './item-search-result-detail-element.component.scss',
+  ],
+  templateUrl: './item-search-result-detail-element.component.html',
 })
-
 @listableObjectComponent(Item, ViewMode.DetailedListElement)
-export class ItemSearchResultDetailElementComponent extends SearchResultDetailElementComponent<ItemSearchResult, Item> {
-
+export class ItemSearchResultDetailElementComponent extends SearchResultDetailElementComponent<
+  ItemSearchResult,
+  Item
+> {
   /**
    * Represent item's status
    */
   public status = MyDspaceItemStatusType.ARCHIVED;
-
 }

@@ -7,10 +7,9 @@ import { listableObjectComponent } from '../../../../shared/object-collection/sh
 @Component({
   selector: 'ds-org-unit',
   styleUrls: ['./org-unit.component.scss'],
-  templateUrl: './org-unit.component.html'
+  templateUrl: './org-unit.component.html',
 })
 /**
  * The component for displaying metadata and relations of an item of the type Organisation Unit
  */
-export class OrgUnitComponent extends ItemComponent {
-}
+export class OrgUnitComponent extends ItemComponent {}

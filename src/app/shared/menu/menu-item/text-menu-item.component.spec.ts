@@ -13,12 +13,9 @@ describe('TextMenuItemComponent', () => {
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
       declarations: [TextMenuItemComponent],
-      providers: [
-        { provide: 'itemModelProvider', useValue: { text: text } },
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
-      .compileComponents();
+      providers: [{ provide: 'itemModelProvider', useValue: { text: text } }],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -33,7 +30,8 @@ describe('TextMenuItemComponent', () => {
   });
 
   it('should contain the text element', () => {
-    const textContent = debugElement.query(By.css('span')).nativeElement.textContent;
+    const textContent = debugElement.query(By.css('span')).nativeElement
+      .textContent;
     expect(textContent).toEqual(text);
   });
 });

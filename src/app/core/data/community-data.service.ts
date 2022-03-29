@@ -46,16 +46,24 @@ export class CommunityDataService extends ComColDataService<Community> {
     return this.halService.getEndpoint(this.linkPath);
   }
 
-  findTop(options: FindListOptions = {}, ...linksToFollow: FollowLinkConfig<Community>[]): Observable<RemoteData<PaginatedList<Community>>> {
+  findTop(
+    options: FindListOptions = {},
+    ...linksToFollow: FollowLinkConfig<Community>[]
+  ): Observable<RemoteData<PaginatedList<Community>>> {
     const hrefObs = this.getFindAllHref(options, this.topLinkPath);
     return this.findAllByHref(hrefObs, undefined, true, true, ...linksToFollow);
   }
 
   protected getFindByParentHref(parentUUID: string): Observable<string> {
-    return this.halService.getEndpoint(this.linkPath).pipe(
-      switchMap((communityEndpointHref: string) =>
-        this.halService.getEndpoint('subcommunities', `${communityEndpointHref}/${parentUUID}`))
-    );
+    return this.halService
+      .getEndpoint(this.linkPath)
+      .pipe(
+        switchMap((communityEndpointHref: string) =>
+          this.halService.getEndpoint(
+            'subcommunities',
+            `${communityEndpointHref}/${parentUUID}`
+          )
+        )
+      );
   }
-
 }

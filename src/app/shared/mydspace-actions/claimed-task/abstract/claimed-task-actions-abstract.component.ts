@@ -25,10 +25,15 @@ import { MyDSpaceReloadableActionsComponent } from '../../mydspace-reloadable-ac
  */
 @Component({
   selector: 'ds-claimed-task-action-abstract',
-  template: ''
+  template: '',
 })
-export abstract class ClaimedTaskActionsAbstractComponent extends MyDSpaceReloadableActionsComponent<ClaimedTask, ClaimedTaskDataService> implements OnDestroy {
-
+export abstract class ClaimedTaskActionsAbstractComponent
+  extends MyDSpaceReloadableActionsComponent<
+    ClaimedTask,
+    ClaimedTaskDataService
+  >
+  implements OnDestroy
+{
   /**
    * The workflow task option the child component represents
    */
@@ -43,13 +48,23 @@ export abstract class ClaimedTaskActionsAbstractComponent extends MyDSpaceReload
 
   subs = [];
 
-  protected constructor(protected injector: Injector,
-                        protected router: Router,
-                        protected notificationsService: NotificationsService,
-                        protected translate: TranslateService,
-                        protected searchService: SearchService,
-                        protected requestService: RequestService) {
-    super(CLAIMED_TASK, injector, router, notificationsService, translate, searchService, requestService);
+  protected constructor(
+    protected injector: Injector,
+    protected router: Router,
+    protected notificationsService: NotificationsService,
+    protected translate: TranslateService,
+    protected searchService: SearchService,
+    protected requestService: RequestService
+  ) {
+    super(
+      CLAIMED_TASK,
+      injector,
+      router,
+      notificationsService,
+      translate,
+      searchService,
+      requestService
+    );
   }
 
   /**
@@ -65,7 +80,7 @@ export abstract class ClaimedTaskActionsAbstractComponent extends MyDSpaceReload
    */
   createbody(): any {
     return {
-      [this.option]: 'true'
+      [this.option]: 'true',
     };
   }
 
@@ -88,17 +103,21 @@ export abstract class ClaimedTaskActionsAbstractComponent extends MyDSpaceReload
     if (!(this.object as any).workflowitem) {
       return;
     }
-    this.subs.push(this.object.workflowitem.pipe(
-      getFirstSucceededRemoteDataPayload(),
-      switchMap((workflowItem: WorkflowItem) => workflowItem.item.pipe(getFirstSucceededRemoteDataPayload())
-      ))
-      .subscribe((item: Item) => {
-        this.itemUuid = item.uuid;
-      }));
+    this.subs.push(
+      this.object.workflowitem
+        .pipe(
+          getFirstSucceededRemoteDataPayload(),
+          switchMap((workflowItem: WorkflowItem) =>
+            workflowItem.item.pipe(getFirstSucceededRemoteDataPayload())
+          )
+        )
+        .subscribe((item: Item) => {
+          this.itemUuid = item.uuid;
+        })
+    );
   }
 
   ngOnDestroy() {
     this.subs.forEach((sub) => sub.unsubscribe());
   }
-
 }

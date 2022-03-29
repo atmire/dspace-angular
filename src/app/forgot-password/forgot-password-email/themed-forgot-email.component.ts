@@ -8,7 +8,7 @@ import { ForgotEmailComponent } from './forgot-email.component';
 @Component({
   selector: 'ds-themed-forgot-email',
   styleUrls: [],
-  templateUrl: './../../shared/theme-support/themed.component.html'
+  templateUrl: './../../shared/theme-support/themed.component.html',
 })
 export class ThemedForgotEmailComponent extends ThemedComponent<ForgotEmailComponent> {
   protected getComponentName(): string {
@@ -16,11 +16,12 @@ export class ThemedForgotEmailComponent extends ThemedComponent<ForgotEmailCompo
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../themes/${themeName}/app/forgot-password/forgot-password-email/forgot-email.component`);
+    return import(
+      `../../../themes/${themeName}/app/forgot-password/forgot-password-email/forgot-email.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {
     return import(`./forgot-email.component`);
   }
-
 }

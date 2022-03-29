@@ -7,14 +7,13 @@ import { FlatNode } from './community-list-service';
  */
 
 export const CommunityListActionTypes = {
-  SAVE: type('dspace/community-list-page/SAVE')
+  SAVE: type('dspace/community-list-page/SAVE'),
 };
 
 /**
  * Community list SAVE action
  */
 export class CommunityListSaveAction implements Action {
-
   type = CommunityListActionTypes.SAVE;
 
   payload: {

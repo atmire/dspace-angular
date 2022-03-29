@@ -15,7 +15,7 @@ describe('OneboxFieldParser test suite', () => {
   const parserOptions: ParserOptions = {
     readOnly: false,
     submissionScope: 'testScopeUUID',
-    collectionUUID: null
+    collectionUUID: null,
   };
 
   beforeEach(() => {
@@ -29,14 +29,15 @@ describe('OneboxFieldParser test suite', () => {
         {
           metadata: 'title',
           controlledVocabulary: 'EVENTAuthority',
-          closed: false
-        }
+          closed: false,
+        },
       ],
-      languageCodes: []
+      languageCodes: [],
     } as FormFieldModel;
 
     field2 = {
-      hints: 'If the item has any identification numbers or codes associated with↵	it, please enter the types and the actual numbers or codes.',
+      hints:
+        'If the item has any identification numbers or codes associated with↵	it, please enter the types and the actual numbers or codes.',
       input: { type: 'onebox' },
       label: 'Identifiers',
       languageCodes: [],
@@ -46,13 +47,13 @@ describe('OneboxFieldParser test suite', () => {
         { metadata: 'dc.identifier.issn', label: 'ISSN' },
         { metadata: 'dc.identifier.other', label: 'Other' },
         { metadata: 'dc.identifier.ismn', label: 'ISMN' },
-        { metadata: 'dc.identifier.govdoc', label: 'Gov\'t Doc #' },
+        { metadata: 'dc.identifier.govdoc', label: "Gov't Doc #" },
         { metadata: 'dc.identifier.uri', label: 'URI' },
         { metadata: 'dc.identifier.isbn', label: 'ISBN' },
         { metadata: 'dc.identifier.doi', label: 'DOI' },
         { metadata: 'dc.identifier.pmid', label: 'PubMed ID' },
-        { metadata: 'dc.identifier.arxiv', label: 'arXiv' }
-      ]
+        { metadata: 'dc.identifier.arxiv', label: 'arXiv' },
+      ],
     } as FormFieldModel;
 
     field3 = {
@@ -64,20 +65,30 @@ describe('OneboxFieldParser test suite', () => {
       selectableMetadata: [
         {
           metadata: 'title',
-        }
+        },
       ],
-      languageCodes: []
+      languageCodes: [],
     } as FormFieldModel;
   });
 
   it('should init parser properly', () => {
-    const parser = new OneboxFieldParser(submissionId, field1, initFormValues, parserOptions);
+    const parser = new OneboxFieldParser(
+      submissionId,
+      field1,
+      initFormValues,
+      parserOptions
+    );
 
     expect(parser instanceof OneboxFieldParser).toBe(true);
   });
 
   it('should return a DynamicQualdropModel object when selectableMetadata is multiple', () => {
-    const parser = new OneboxFieldParser(submissionId, field2, initFormValues, parserOptions);
+    const parser = new OneboxFieldParser(
+      submissionId,
+      field2,
+      initFormValues,
+      parserOptions
+    );
 
     const fieldModel = parser.parse();
 
@@ -85,7 +96,12 @@ describe('OneboxFieldParser test suite', () => {
   });
 
   it('should return a DsDynamicInputModel object when selectableMetadata is not multiple', () => {
-    const parser = new OneboxFieldParser(submissionId, field3, initFormValues, parserOptions);
+    const parser = new OneboxFieldParser(
+      submissionId,
+      field3,
+      initFormValues,
+      parserOptions
+    );
 
     const fieldModel = parser.parse();
 
@@ -93,11 +109,15 @@ describe('OneboxFieldParser test suite', () => {
   });
 
   it('should return a DynamicOneboxModel object when selectableMetadata has authority', () => {
-    const parser = new OneboxFieldParser(submissionId, field1, initFormValues, parserOptions);
+    const parser = new OneboxFieldParser(
+      submissionId,
+      field1,
+      initFormValues,
+      parserOptions
+    );
 
     const fieldModel = parser.parse();
 
     expect(fieldModel instanceof DynamicOneboxModel).toBe(true);
   });
-
 });

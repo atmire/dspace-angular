@@ -8,8 +8,8 @@ import { BITSTREAM } from './bitstream.resource-type';
 import { DSpaceObject } from './dspace-object.model';
 import { HALLink } from './hal-link.model';
 import { HALResource } from './hal-resource.model';
-import {BUNDLE} from './bundle.resource-type';
-import {Bundle} from './bundle.model';
+import { BUNDLE } from './bundle.resource-type';
+import { Bundle } from './bundle.model';
 
 @typedObject
 @inheritSerialization(DSpaceObject)

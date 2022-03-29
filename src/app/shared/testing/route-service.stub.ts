@@ -2,14 +2,10 @@ import { of as observableOf } from 'rxjs';
 
 export const routeServiceStub: any = {
   /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
-  hasQueryParamWithValue: (param: string, value: string) => {
-  },
-  hasQueryParam: (param: string) => {
-  },
-  removeQueryParameterValue: (param: string, value: string) => {
-  },
-  addQueryParameterValue: (param: string, value: string) => {
-  },
+  hasQueryParamWithValue: (param: string, value: string) => {},
+  hasQueryParam: (param: string) => {},
+  removeQueryParameterValue: (param: string, value: string) => {},
+  addQueryParameterValue: (param: string, value: string) => {},
   getQueryParameterValues: (param: string) => {
     return observableOf({});
   },
@@ -33,6 +29,6 @@ export const routeServiceStub: any = {
   },
   getPreviousUrl: () => {
     return observableOf('/home');
-  }
+  },
   /* eslint-enable no-empty, @typescript-eslint/no-empty-function */
 };

@@ -13,22 +13,14 @@ import { RouterLinkDirectiveStub } from './router-link-directive.stub';
  * See https://github.com/angular/angular/issues/13590
  */
 @NgModule({
-  imports: [
-    CommonModule,
-    SharedModule
-  ],
+  imports: [CommonModule, SharedModule],
   declarations: [
     QueryParamsDirectiveStub,
     MySimpleItemActionComponent,
     RouterLinkDirectiveStub,
-    NgComponentOutletDirectiveStub
+    NgComponentOutletDirectiveStub,
   ],
-  exports: [
-    QueryParamsDirectiveStub
-  ],
-  schemas: [
-    CUSTOM_ELEMENTS_SCHEMA
-  ]
+  exports: [QueryParamsDirectiveStub],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class TestModule {
-}
+export class TestModule {}

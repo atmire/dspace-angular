@@ -62,7 +62,7 @@ export class Vocabulary implements CacheableObject {
    */
   @deserialize
   _links: {
-    self: HALLink,
-    entries: HALLink
+    self: HALLink;
+    entries: HALLink;
   };
 }

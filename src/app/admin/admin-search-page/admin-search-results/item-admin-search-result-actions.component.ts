@@ -8,13 +8,13 @@ import {
   ITEM_EDIT_PUBLIC_PATH,
   ITEM_EDIT_PRIVATE_PATH,
   ITEM_EDIT_REINSTATE_PATH,
-  ITEM_EDIT_WITHDRAW_PATH
+  ITEM_EDIT_WITHDRAW_PATH,
 } from '../../../item-page/edit-item-page/edit-item-page.routing-paths';
 
 @Component({
   selector: 'ds-item-admin-search-result-actions-element',
   styleUrls: ['./item-admin-search-result-actions.component.scss'],
-  templateUrl: './item-admin-search-result-actions.component.html'
+  templateUrl: './item-admin-search-result-actions.component.html',
 })
 /**
  * The component for displaying the actions for a list element for an item search result on the admin search page
@@ -48,34 +48,49 @@ export class ItemAdminSearchResultActionsComponent {
    * Returns the path to the delete page of this item
    */
   getDeleteRoute(): string {
-    return new URLCombiner(this.getEditRoute(), ITEM_EDIT_DELETE_PATH).toString();
+    return new URLCombiner(
+      this.getEditRoute(),
+      ITEM_EDIT_DELETE_PATH
+    ).toString();
   }
 
   /**
    * Returns the path to the withdraw page of this item
    */
   getWithdrawRoute(): string {
-    return new URLCombiner(this.getEditRoute(), ITEM_EDIT_WITHDRAW_PATH).toString();
+    return new URLCombiner(
+      this.getEditRoute(),
+      ITEM_EDIT_WITHDRAW_PATH
+    ).toString();
   }
 
   /**
    * Returns the path to the reinstate page of this item
    */
   getReinstateRoute(): string {
-    return new URLCombiner(this.getEditRoute(), ITEM_EDIT_REINSTATE_PATH).toString();
+    return new URLCombiner(
+      this.getEditRoute(),
+      ITEM_EDIT_REINSTATE_PATH
+    ).toString();
   }
 
   /**
    * Returns the path to the page where the user can make this item private
    */
   getPrivateRoute(): string {
-    return new URLCombiner(this.getEditRoute(), ITEM_EDIT_PRIVATE_PATH).toString();
+    return new URLCombiner(
+      this.getEditRoute(),
+      ITEM_EDIT_PRIVATE_PATH
+    ).toString();
   }
 
   /**
    * Returns the path to the page where the user can make this item public
    */
   getPublicRoute(): string {
-    return new URLCombiner(this.getEditRoute(), ITEM_EDIT_PUBLIC_PATH).toString();
+    return new URLCombiner(
+      this.getEditRoute(),
+      ITEM_EDIT_PUBLIC_PATH
+    ).toString();
   }
 }

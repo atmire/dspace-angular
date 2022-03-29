@@ -14,14 +14,21 @@ describe('HostWindowService', () => {
     SM_MIN = 576,
     MD_MIN = 768,
     LG_MIN = 992,
-    XL_MIN = 1200
+    XL_MIN = 1200,
   }
 
   describe('', () => {
     beforeEach(() => {
       const _initialState = { hostWindow: { width: 1600, height: 770 } };
-      store = new Store<AppState>(observableOf(_initialState), undefined, undefined);
-      service = new HostWindowService(store, new CSSVariableServiceStub() as any);
+      store = new Store<AppState>(
+        observableOf(_initialState),
+        undefined,
+        undefined
+      );
+      service = new HostWindowService(
+        store,
+        new CSSVariableServiceStub() as any
+      );
     });
 
     it('isXs() should return false with width = 1600', () => {
@@ -56,8 +63,15 @@ describe('HostWindowService', () => {
   describe('', () => {
     beforeEach(() => {
       const _initialState = { hostWindow: { width: 1100, height: 770 } };
-      store = new Store<AppState>(observableOf(_initialState), undefined, undefined);
-      service = new HostWindowService(store, new CSSVariableServiceStub() as any);
+      store = new Store<AppState>(
+        observableOf(_initialState),
+        undefined,
+        undefined
+      );
+      service = new HostWindowService(
+        store,
+        new CSSVariableServiceStub() as any
+      );
     });
 
     it('isXs() should return false with width = 1100', () => {
@@ -92,8 +106,15 @@ describe('HostWindowService', () => {
   describe('', () => {
     beforeEach(() => {
       const _initialState = { hostWindow: { width: 800, height: 770 } };
-      store = new Store<AppState>(observableOf(_initialState), undefined, undefined);
-      service = new HostWindowService(store, new CSSVariableServiceStub() as any);
+      store = new Store<AppState>(
+        observableOf(_initialState),
+        undefined,
+        undefined
+      );
+      service = new HostWindowService(
+        store,
+        new CSSVariableServiceStub() as any
+      );
     });
 
     it('isXs() should return false with width = 800', () => {
@@ -128,8 +149,15 @@ describe('HostWindowService', () => {
   describe('', () => {
     beforeEach(() => {
       const _initialState = { hostWindow: { width: 600, height: 770 } };
-      store = new Store<AppState>(observableOf(_initialState), undefined, undefined);
-      service = new HostWindowService(store, new CSSVariableServiceStub() as any);
+      store = new Store<AppState>(
+        observableOf(_initialState),
+        undefined,
+        undefined
+      );
+      service = new HostWindowService(
+        store,
+        new CSSVariableServiceStub() as any
+      );
     });
 
     it('isXs() should return false with width = 600', () => {
@@ -164,8 +192,15 @@ describe('HostWindowService', () => {
   describe('', () => {
     beforeEach(() => {
       const _initialState = { hostWindow: { width: 400, height: 770 } };
-      store = new Store<AppState>(observableOf(_initialState), undefined, undefined);
-      service = new HostWindowService(store, new CSSVariableServiceStub() as any);
+      store = new Store<AppState>(
+        observableOf(_initialState),
+        undefined,
+        undefined
+      );
+      service = new HostWindowService(
+        store,
+        new CSSVariableServiceStub() as any
+      );
     });
 
     it('isXs() should return true with width = 400', () => {
@@ -199,12 +234,16 @@ describe('HostWindowService', () => {
 
   describe('widthCategory', () => {
     beforeEach(() => {
-      service = new HostWindowService({} as Store<AppState>, new CSSVariableServiceStub() as any);
+      service = new HostWindowService(
+        {} as Store<AppState>,
+        new CSSVariableServiceStub() as any
+      );
     });
 
     it('should call getWithObs to get the current width', () => {
-      spyOn(service as any, 'getWidthObs').and
-        .returnValue(hot('a-', { a: GridBreakpoint.SM_MIN - 1 }));
+      spyOn(service as any, 'getWidthObs').and.returnValue(
+        hot('a-', { a: GridBreakpoint.SM_MIN - 1 })
+      );
 
       const result = service.widthCategory;
 
@@ -212,8 +251,9 @@ describe('HostWindowService', () => {
     });
 
     it('should return XS if width < SM_MIN', () => {
-      spyOn(service as any, 'getWidthObs').and
-        .returnValue(hot('a-', { a: GridBreakpoint.SM_MIN - 1 }));
+      spyOn(service as any, 'getWidthObs').and.returnValue(
+        hot('a-', { a: GridBreakpoint.SM_MIN - 1 })
+      );
 
       const result = service.widthCategory;
 
@@ -222,10 +262,13 @@ describe('HostWindowService', () => {
     });
 
     it('should return SM if SM_MIN <= width < MD_MIN', () => {
-      spyOn(service as any, 'getWidthObs').and
-        .returnValue(hot('a-', {
-          a: GridBreakpoint.SM_MIN + Math.floor((GridBreakpoint.MD_MIN - GridBreakpoint.SM_MIN) / 2)
-        }));
+      spyOn(service as any, 'getWidthObs').and.returnValue(
+        hot('a-', {
+          a:
+            GridBreakpoint.SM_MIN +
+            Math.floor((GridBreakpoint.MD_MIN - GridBreakpoint.SM_MIN) / 2),
+        })
+      );
 
       const result = service.widthCategory;
 
@@ -234,10 +277,13 @@ describe('HostWindowService', () => {
     });
 
     it('should return MD if MD_MIN <= width < LG_MIN', () => {
-      spyOn(service as any, 'getWidthObs').and
-        .returnValue(hot('a-', {
-          a: GridBreakpoint.MD_MIN + Math.floor((GridBreakpoint.LG_MIN - GridBreakpoint.MD_MIN) / 2)
-        }));
+      spyOn(service as any, 'getWidthObs').and.returnValue(
+        hot('a-', {
+          a:
+            GridBreakpoint.MD_MIN +
+            Math.floor((GridBreakpoint.LG_MIN - GridBreakpoint.MD_MIN) / 2),
+        })
+      );
 
       const result = service.widthCategory;
 
@@ -246,10 +292,13 @@ describe('HostWindowService', () => {
     });
 
     it('should return LG if LG_MIN <= width < XL_MIN', () => {
-      spyOn(service as any, 'getWidthObs').and
-        .returnValue(hot('a-', {
-          a: GridBreakpoint.LG_MIN + Math.floor((GridBreakpoint.XL_MIN - GridBreakpoint.LG_MIN) / 2)
-        }));
+      spyOn(service as any, 'getWidthObs').and.returnValue(
+        hot('a-', {
+          a:
+            GridBreakpoint.LG_MIN +
+            Math.floor((GridBreakpoint.XL_MIN - GridBreakpoint.LG_MIN) / 2),
+        })
+      );
 
       const result = service.widthCategory;
 
@@ -258,15 +307,14 @@ describe('HostWindowService', () => {
     });
 
     it('should return XL if width >= XL_MIN', () => {
-      spyOn(service as any, 'getWidthObs').and
-        .returnValue(hot('a-', { a: GridBreakpoint.XL_MIN + 1 }));
+      spyOn(service as any, 'getWidthObs').and.returnValue(
+        hot('a-', { a: GridBreakpoint.XL_MIN + 1 })
+      );
 
       const result = service.widthCategory;
 
       const expected = cold('b-', { b: WidthCategory.XL });
       expect(result).toBeObservable(expected);
     });
-
   });
-
 });

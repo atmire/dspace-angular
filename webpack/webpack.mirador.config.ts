@@ -4,11 +4,11 @@ const path = require('path');
 module.exports = {
   mode: 'production',
   entry: {
-    mirador: './src/mirador-viewer/index.js'
+    mirador: './src/mirador-viewer/index.js',
   },
   output: {
-    path: path.resolve(__dirname, '..' , 'dist/iiif/mirador'),
-    filename: '[name].js'
+    path: path.resolve(__dirname, '..', 'dist/iiif/mirador'),
+    filename: '[name].js',
   },
   module: {
     rules: [
@@ -21,8 +21,10 @@ module.exports = {
   devServer: {
     contentBase: '../dist/iiif/mirador',
   },
-  plugins: [new HtmlWebpackPlugin({
-    filename: 'index.html',
-    template: './src/mirador-viewer/mirador.html'
-  })]
+  plugins: [
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template: './src/mirador-viewer/mirador.html',
+    }),
+  ],
 };

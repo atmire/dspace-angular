@@ -16,14 +16,16 @@ describe('ScriptHelpComponent', () => {
   let script;
 
   function init() {
-    const param1 = Object.assign(
-      new ScriptParameter(),
-      {name: '-d', description: 'Lorem ipsum dolor sit amet,', type: ScriptParameterType.DATE}
-    );
-    const param2 = Object.assign(
-      new ScriptParameter(),
-      {name: '-f', description: 'consetetur sadipscing elitr', type: ScriptParameterType.BOOLEAN}
-    );
+    const param1 = Object.assign(new ScriptParameter(), {
+      name: '-d',
+      description: 'Lorem ipsum dolor sit amet,',
+      type: ScriptParameterType.DATE,
+    });
+    const param2 = Object.assign(new ScriptParameter(), {
+      name: '-f',
+      description: 'consetetur sadipscing elitr',
+      type: ScriptParameterType.BOOLEAN,
+    });
     script = Object.assign(new Script(), { parameters: [param1, param2] });
   }
   beforeEach(waitForAsync(() => {
@@ -34,13 +36,13 @@ describe('ScriptHelpComponent', () => {
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
-            useClass: TranslateLoaderMock
-          }
-        })],
-      declarations: [ ScriptHelpComponent ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
-    .compileComponents();
+            useClass: TranslateLoaderMock,
+          },
+        }),
+      ],
+      declarations: [ScriptHelpComponent],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -58,8 +60,12 @@ describe('ScriptHelpComponent', () => {
     const rows = fixture.debugElement.queryAll(By.css('tr'));
     expect(rows.length).toBe(script.parameters.length);
     script.parameters.forEach((parameter, index) => {
-      expect(rows[index].queryAll(By.css('td'))[0].nativeElement.textContent).toContain(parameter.name);
-      expect(rows[index].queryAll(By.css('td'))[1].nativeElement.textContent.trim()).toEqual(parameter.description);
+      expect(
+        rows[index].queryAll(By.css('td'))[0].nativeElement.textContent
+      ).toContain(parameter.name);
+      expect(
+        rows[index].queryAll(By.css('td'))[1].nativeElement.textContent.trim()
+      ).toEqual(parameter.description);
     });
   });
 });

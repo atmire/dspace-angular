@@ -1,9 +1,7 @@
 import { Community } from './community.model';
 
 describe('Community', () => {
-
   describe('Community handle value', () => {
-
     let metadataValue;
 
     beforeEach(() => {
@@ -11,7 +9,9 @@ describe('Community', () => {
     });
 
     it('should return the handle value from metadata', () => {
-      const community = Object.assign(new Community(), { metadata: metadataValue });
+      const community = Object.assign(new Community(), {
+        metadata: metadataValue,
+      });
       expect(community.handle).toEqual('123456789/1');
     });
 
@@ -20,5 +20,4 @@ describe('Community', () => {
       expect(community.handle).toEqual(undefined);
     });
   });
-
 });

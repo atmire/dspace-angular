@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { StatisticsPageComponent } from '../statistics-page/statistics-page.component';
 import { UsageReportService } from '../../core/statistics/usage-report-data.service';
-import { ActivatedRoute , Router} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Collection } from '../../core/shared/collection.model';
 import { DSONameService } from '../../core/breadcrumbs/dso-name.service';
 import { AuthService } from '../../core/auth/auth.service';
@@ -12,10 +12,9 @@ import { AuthService } from '../../core/auth/auth.service';
 @Component({
   selector: 'ds-collection-statistics-page',
   templateUrl: '../statistics-page/statistics-page.component.html',
-  styleUrls: ['./collection-statistics-page.component.scss']
+  styleUrls: ['./collection-statistics-page.component.scss'],
 })
 export class CollectionStatisticsPageComponent extends StatisticsPageComponent<Collection> {
-
   /**
    * The report types to show on this statistics page.
    */
@@ -33,12 +32,6 @@ export class CollectionStatisticsPageComponent extends StatisticsPageComponent<C
     protected nameService: DSONameService,
     protected authService: AuthService
   ) {
-    super(
-      route,
-      router,
-      usageReportService,
-      nameService,
-      authService,
-    );
+    super(route, router, usageReportService, nameService, authService);
   }
 }

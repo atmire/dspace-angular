@@ -24,12 +24,21 @@ export class ClaimedTaskActionsEditMetadataComponent extends ClaimedTaskActionsA
    */
   option = WORKFLOW_TASK_OPTION_EDIT_METADATA;
 
-  constructor(protected injector: Injector,
-              protected router: Router,
-              protected notificationsService: NotificationsService,
-              protected translate: TranslateService,
-              protected searchService: SearchService,
-              protected requestService: RequestService) {
-    super(injector, router, notificationsService, translate, searchService, requestService);
+  constructor(
+    protected injector: Injector,
+    protected router: Router,
+    protected notificationsService: NotificationsService,
+    protected translate: TranslateService,
+    protected searchService: SearchService,
+    protected requestService: RequestService
+  ) {
+    super(
+      injector,
+      router,
+      notificationsService,
+      translate,
+      searchService,
+      requestService
+    );
   }
 }

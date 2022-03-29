@@ -21,20 +21,17 @@ describe('Config Util', () => {
 
       const rateLimiter = {
         windowMs: 5 * 50 * 1000, // 5 minutes
-        max: 1000
+        max: 1000,
       };
       appConfig.ui.rateLimiter = rateLimiter;
 
-      const autoSaveMetadata = [
-        'dc.author',
-        'dc.title'
-      ];
+      const autoSaveMetadata = ['dc.author', 'dc.title'];
 
       appConfig.submission.autosave.metadata = autoSaveMetadata;
 
       const customTheme: HandleThemeConfig = {
         name: 'custom',
-        handle: '10673/1233'
+        handle: '10673/1233',
       };
 
       appConfig.themes.push(customTheme);
@@ -44,13 +41,19 @@ describe('Config Util', () => {
       expect(environment.cache.msToLive.default).toEqual(msToLive);
       expect(environment.ui.rateLimiter.windowMs).toEqual(rateLimiter.windowMs);
       expect(environment.ui.rateLimiter.max).toEqual(rateLimiter.max);
-      expect(environment.submission.autosave.metadata[0]).toEqual(autoSaveMetadata[0]);
-      expect(environment.submission.autosave.metadata[1]).toEqual(autoSaveMetadata[1]);
+      expect(environment.submission.autosave.metadata[0]).toEqual(
+        autoSaveMetadata[0]
+      );
+      expect(environment.submission.autosave.metadata[1]).toEqual(
+        autoSaveMetadata[1]
+      );
 
       expect(environment.themes.length).toEqual(2);
       expect(environment.themes[0].name).toEqual('dspace');
       expect(environment.themes[1].name).toEqual(customTheme.name);
-      expect((environment.themes[1] as HandleThemeConfig).handle).toEqual(customTheme.handle);
+      expect((environment.themes[1] as HandleThemeConfig).handle).toEqual(
+        customTheme.handle
+      );
     });
   });
 });

@@ -2,7 +2,6 @@
  * An interface to represent an access condition.
  */
 export class AccessConditionObject {
-
   /**
    * The access condition id
    */

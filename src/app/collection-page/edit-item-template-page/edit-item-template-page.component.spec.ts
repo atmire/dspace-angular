@@ -9,7 +9,10 @@ import { ActivatedRoute } from '@angular/router';
 import { of as observableOf } from 'rxjs';
 import { Collection } from '../../core/shared/collection.model';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { createSuccessfulRemoteDataObject, createSuccessfulRemoteDataObject$ } from '../../shared/remote-data.utils';
+import {
+  createSuccessfulRemoteDataObject,
+  createSuccessfulRemoteDataObject$,
+} from '../../shared/remote-data.utils';
 import { getCollectionEditRoute } from '../collection-page-routing-paths';
 
 describe('EditItemTemplatePageComponent', () => {
@@ -22,19 +25,33 @@ describe('EditItemTemplatePageComponent', () => {
     collection = Object.assign(new Collection(), {
       uuid: 'collection-id',
       id: 'collection-id',
-      name: 'Fake Collection'
+      name: 'Fake Collection',
     });
     itemTemplateService = jasmine.createSpyObj('itemTemplateService', {
-      findByCollectionID: createSuccessfulRemoteDataObject$({})
+      findByCollectionID: createSuccessfulRemoteDataObject$({}),
     });
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), SharedModule, CommonModule, RouterTestingModule],
+      imports: [
+        TranslateModule.forRoot(),
+        SharedModule,
+        CommonModule,
+        RouterTestingModule,
+      ],
       declarations: [EditItemTemplatePageComponent],
       providers: [
         { provide: ItemTemplateDataService, useValue: itemTemplateService },
-        { provide: ActivatedRoute, useValue: { parent: { data: observableOf({ dso: createSuccessfulRemoteDataObject(collection) }) } } }
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            parent: {
+              data: observableOf({
+                dso: createSuccessfulRemoteDataObject(collection),
+              }),
+            },
+          },
+        },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -45,7 +62,7 @@ describe('EditItemTemplatePageComponent', () => {
   });
 
   describe('getCollectionEditUrl', () => {
-    it('should return the collection\'s edit url', () => {
+    it("should return the collection's edit url", () => {
       const url = comp.getCollectionEditUrl(collection);
       expect(url).toEqual(getCollectionEditRoute(collection.uuid));
     });

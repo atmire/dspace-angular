@@ -18,8 +18,10 @@ import { SearchService } from '../../../core/shared/search/search.service';
   styleUrls: ['./workflowitem-actions.component.scss'],
   templateUrl: './workflowitem-actions.component.html',
 })
-export class WorkflowitemActionsComponent extends MyDSpaceActionsComponent<WorkflowItem, WorkflowItemDataService> {
-
+export class WorkflowitemActionsComponent extends MyDSpaceActionsComponent<
+  WorkflowItem,
+  WorkflowItemDataService
+> {
   /**
    * The WorkflowItem object
    */
@@ -35,13 +37,23 @@ export class WorkflowitemActionsComponent extends MyDSpaceActionsComponent<Workf
    * @param {SearchService} searchService
    * @param {RequestService} requestService
    */
-  constructor(protected injector: Injector,
-              protected router: Router,
-              protected notificationsService: NotificationsService,
-              protected translate: TranslateService,
-              protected searchService: SearchService,
-              protected requestService: RequestService) {
-    super(WorkflowItem.type, injector, router, notificationsService, translate, searchService, requestService);
+  constructor(
+    protected injector: Injector,
+    protected router: Router,
+    protected notificationsService: NotificationsService,
+    protected translate: TranslateService,
+    protected searchService: SearchService,
+    protected requestService: RequestService
+  ) {
+    super(
+      WorkflowItem.type,
+      injector,
+      router,
+      notificationsService,
+      translate,
+      searchService,
+      requestService
+    );
   }
 
   /**

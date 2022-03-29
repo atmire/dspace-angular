@@ -41,7 +41,8 @@ export class WorkflowItemDataService extends DataService<WorkflowItem> {
     protected requestService: RequestService,
     protected rdbService: RemoteDataBuildService,
     protected objectCache: ObjectCacheService,
-    protected store: Store<CoreState>) {
+    protected store: Store<CoreState>
+  ) {
     super();
   }
 
@@ -73,7 +74,10 @@ export class WorkflowItemDataService extends DataService<WorkflowItem> {
    * When true, the workflow item and its item will be permanently expunged on the server
    * When false, the workflow item will be removed, but the item will still be available as a workspace item
    */
-  private deleteWFI(id: string, expunge: boolean): Observable<RemoteData<NoContent>> {
+  private deleteWFI(
+    id: string,
+    expunge: boolean
+  ): Observable<RemoteData<NoContent>> {
     const requestId = this.requestService.generateRequestId();
 
     const hrefObs = this.halService.getEndpoint(this.linkPath).pipe(
@@ -81,12 +85,12 @@ export class WorkflowItemDataService extends DataService<WorkflowItem> {
       map((endpoint: string) => endpoint + '?expunge=' + expunge)
     );
 
-    hrefObs.pipe(
-      find((href: string) => hasValue(href)),
-    ).subscribe((href: string) => {
-      const request = new DeleteByIDRequest(requestId, href, id);
-      this.requestService.send(request);
-    });
+    hrefObs
+      .pipe(find((href: string) => hasValue(href)))
+      .subscribe((href: string) => {
+        const request = new DeleteByIDRequest(requestId, href, id);
+        this.requestService.send(request);
+      });
 
     return this.rdbService.buildFromRequestUUID(requestId);
   }
@@ -102,11 +106,27 @@ export class WorkflowItemDataService extends DataService<WorkflowItem> {
    * @param options        The {@link FindListOptions} object
    * @param linksToFollow  List of {@link FollowLinkConfig} that indicate which {@link HALLink}s should be automatically resolved
    */
-  public findByItem(uuid: string, useCachedVersionIfAvailable = false, reRequestOnStale = true, options: FindListOptions = {}, ...linksToFollow: FollowLinkConfig<WorkspaceItem>[]): Observable<RemoteData<WorkspaceItem>> {
+  public findByItem(
+    uuid: string,
+    useCachedVersionIfAvailable = false,
+    reRequestOnStale = true,
+    options: FindListOptions = {},
+    ...linksToFollow: FollowLinkConfig<WorkspaceItem>[]
+  ): Observable<RemoteData<WorkspaceItem>> {
     const findListOptions = new FindListOptions();
-    findListOptions.searchParams = [new RequestParam('uuid', encodeURIComponent(uuid))];
-    const href$ = this.getSearchByHref(this.searchByItemLinkPath, findListOptions, ...linksToFollow);
-    return this.findByHref(href$, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+    findListOptions.searchParams = [
+      new RequestParam('uuid', encodeURIComponent(uuid)),
+    ];
+    const href$ = this.getSearchByHref(
+      this.searchByItemLinkPath,
+      findListOptions,
+      ...linksToFollow
+    );
+    return this.findByHref(
+      href$,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow
+    );
   }
-
 }

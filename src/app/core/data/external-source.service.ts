@@ -35,7 +35,8 @@ export class ExternalSourceService extends DataService<ExternalSource> {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DefaultChangeAnalyzer<ExternalSource>) {
+    protected comparator: DefaultChangeAnalyzer<ExternalSource>
+  ) {
     super();
   }
 
@@ -44,7 +45,10 @@ export class ExternalSourceService extends DataService<ExternalSource> {
    * @param options
    * @param linkPath
    */
-  getBrowseEndpoint(options: FindListOptions = {}, linkPath: string = this.linkPath): Observable<string> {
+  getBrowseEndpoint(
+    options: FindListOptions = {},
+    linkPath: string = this.linkPath
+  ): Observable<string> {
     return this.halService.getEndpoint(linkPath);
   }
 
@@ -70,15 +74,29 @@ export class ExternalSourceService extends DataService<ExternalSource> {
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  getExternalSourceEntries(externalSourceId: string, searchOptions?: PaginatedSearchOptions, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<ExternalSourceEntry>[]): Observable<RemoteData<PaginatedList<ExternalSourceEntry>>> {
+  getExternalSourceEntries(
+    externalSourceId: string,
+    searchOptions?: PaginatedSearchOptions,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<ExternalSourceEntry>[]
+  ): Observable<RemoteData<PaginatedList<ExternalSourceEntry>>> {
     const href$ = this.getEntriesEndpoint(externalSourceId).pipe(
       isNotEmptyOperator(),
       distinctUntilChanged(),
-      map((endpoint: string) => hasValue(searchOptions) ? searchOptions.toRestUrl(endpoint) : endpoint),
+      map((endpoint: string) =>
+        hasValue(searchOptions) ? searchOptions.toRestUrl(endpoint) : endpoint
+      ),
       take(1)
     );
 
     // TODO create a dedicated ExternalSourceEntryDataService and move this entire method to it. Then the "as any"s won't be necessary
-    return this.findAllByHref(href$, undefined, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow as any) as any;
+    return this.findAllByHref(
+      href$,
+      undefined,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...(linksToFollow as any)
+    ) as any;
   }
 }

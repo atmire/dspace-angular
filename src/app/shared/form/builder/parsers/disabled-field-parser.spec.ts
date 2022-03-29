@@ -11,13 +11,13 @@ describe('DisabledFieldParser test suite', () => {
   const parserOptions: ParserOptions = {
     readOnly: false,
     submissionScope: null,
-    collectionUUID: null
+    collectionUUID: null,
   };
 
   beforeEach(() => {
     field = {
       input: {
-        type: ''
+        type: '',
       },
       label: 'Description',
       mandatory: 'false',
@@ -25,22 +25,31 @@ describe('DisabledFieldParser test suite', () => {
       hints: 'Enter a description.',
       selectableMetadata: [
         {
-          metadata: 'description'
-        }
+          metadata: 'description',
+        },
       ],
-      languageCodes: []
+      languageCodes: [],
     } as FormFieldModel;
-
   });
 
   it('should init parser properly', () => {
-    const parser = new DisabledFieldParser(submissionId, field, initFormValues, parserOptions);
+    const parser = new DisabledFieldParser(
+      submissionId,
+      field,
+      initFormValues,
+      parserOptions
+    );
 
     expect(parser instanceof DisabledFieldParser).toBe(true);
   });
 
   it('should return a DynamicDisabledModel object when repeatable option is false', () => {
-    const parser = new DisabledFieldParser(submissionId, field, initFormValues, parserOptions);
+    const parser = new DisabledFieldParser(
+      submissionId,
+      field,
+      initFormValues,
+      parserOptions
+    );
 
     const fieldModel = parser.parse();
 
@@ -49,16 +58,18 @@ describe('DisabledFieldParser test suite', () => {
 
   it('should set init value properly', () => {
     initFormValues = {
-      description: [
-        'test description',
-      ],
+      description: ['test description'],
     };
     const expectedValue = 'test description';
 
-    const parser = new DisabledFieldParser(submissionId, field, initFormValues, parserOptions);
+    const parser = new DisabledFieldParser(
+      submissionId,
+      field,
+      initFormValues,
+      parserOptions
+    );
 
     const fieldModel = parser.parse();
     expect(fieldModel.value.value).toEqual(expectedValue);
   });
-
 });

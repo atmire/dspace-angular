@@ -13,7 +13,7 @@ import { RequestService } from '../../core/data/request.service';
 @Component({
   selector: 'ds-delete-community',
   styleUrls: ['./delete-community-page.component.scss'],
-  templateUrl: './delete-community-page.component.html'
+  templateUrl: './delete-community-page.component.html',
 })
 export class DeleteCommunityPageComponent extends DeleteComColPageComponent<Community> {
   protected frontendURL = '/communities/';
@@ -26,7 +26,13 @@ export class DeleteCommunityPageComponent extends DeleteComColPageComponent<Comm
     protected translate: TranslateService,
     protected requestService: RequestService
   ) {
-    super(dsoDataService, router, route, notifications, translate, requestService);
+    super(
+      dsoDataService,
+      router,
+      route,
+      notifications,
+      translate,
+      requestService
+    );
   }
-
 }

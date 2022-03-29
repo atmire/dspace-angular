@@ -21,15 +21,28 @@ describe('DSOBreadcrumbResolver', () => {
       testCollection = Object.assign(new Collection(), { uuid });
       dsoBreadcrumbService = {};
       collectionService = {
-        findById: (id: string) => createSuccessfulRemoteDataObject$(testCollection)
+        findById: (id: string) =>
+          createSuccessfulRemoteDataObject$(testCollection),
       };
-      resolver = new CollectionBreadcrumbResolver(dsoBreadcrumbService, collectionService);
+      resolver = new CollectionBreadcrumbResolver(
+        dsoBreadcrumbService,
+        collectionService
+      );
     });
 
     it('should resolve a breadcrumb config for the correct DSO', () => {
-      const resolvedConfig = resolver.resolve({ params: { id: uuid } } as any, { url: currentUrl } as any);
-      const expectedConfig = { provider: dsoBreadcrumbService, key: testCollection, url: breadcrumbUrl };
-      getTestScheduler().expectObservable(resolvedConfig).toBe('(a|)', { a: expectedConfig });
+      const resolvedConfig = resolver.resolve(
+        { params: { id: uuid } } as any,
+        { url: currentUrl } as any
+      );
+      const expectedConfig = {
+        provider: dsoBreadcrumbService,
+        key: testCollection,
+        url: breadcrumbUrl,
+      };
+      getTestScheduler()
+        .expectObservable(resolvedConfig)
+        .toBe('(a|)', { a: expectedConfig });
     });
   });
 });

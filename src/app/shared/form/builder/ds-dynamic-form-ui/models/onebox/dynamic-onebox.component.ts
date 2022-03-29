@@ -1,7 +1,18 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { DynamicFormLayoutService, DynamicFormValidationService } from '@ng-dynamic-forms/core';
+import {
+  DynamicFormLayoutService,
+  DynamicFormValidationService,
+} from '@ng-dynamic-forms/core';
 import {
   catchError,
   debounceTime,
@@ -11,20 +22,30 @@ import {
   merge,
   switchMap,
   take,
-  tap
+  tap,
 } from 'rxjs/operators';
 import { Observable, of as observableOf, Subject, Subscription } from 'rxjs';
-import { NgbModal, NgbModalRef, NgbTypeahead, NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbModal,
+  NgbModalRef,
+  NgbTypeahead,
+  NgbTypeaheadSelectItemEvent,
+} from '@ng-bootstrap/ng-bootstrap';
 
 import { VocabularyService } from '../../../../../../core/submission/vocabularies/vocabulary.service';
 import { DynamicOneboxModel } from './dynamic-onebox.model';
-import { hasValue, isEmpty, isNotEmpty, isNotNull } from '../../../../../empty.util';
+import {
+  hasValue,
+  isEmpty,
+  isNotEmpty,
+  isNotNull,
+} from '../../../../../empty.util';
 import { FormFieldMetadataValueObject } from '../../../models/form-field-metadata-value.model';
 import { ConfidenceType } from '../../../../../../core/shared/confidence-type';
 import { getFirstSucceededRemoteDataPayload } from '../../../../../../core/shared/operators';
 import {
   PaginatedList,
-  buildPaginatedList
+  buildPaginatedList,
 } from '../../../../../../core/data/paginated-list.model';
 import { VocabularyEntry } from '../../../../../../core/submission/vocabularies/models/vocabulary-entry.model';
 import { PageInfo } from '../../../../../../core/shared/page-info.model';
@@ -40,10 +61,12 @@ import { VocabularyEntryDetail } from '../../../../../../core/submission/vocabul
 @Component({
   selector: 'ds-dynamic-onebox',
   styleUrls: ['./dynamic-onebox.component.scss'],
-  templateUrl: './dynamic-onebox.component.html'
+  templateUrl: './dynamic-onebox.component.html',
 })
-export class DsDynamicOneboxComponent extends DsDynamicVocabularyComponent implements OnInit {
-
+export class DsDynamicOneboxComponent
+  extends DsDynamicVocabularyComponent
+  implements OnInit
+{
   @Input() group: FormGroup;
   @Input() model: DynamicOneboxModel;
 
@@ -56,7 +79,9 @@ export class DsDynamicOneboxComponent extends DsDynamicVocabularyComponent imple
   pageInfo: PageInfo = new PageInfo();
   searching = false;
   searchFailed = false;
-  hideSearchingWhenUnsubscribed$ = new Observable(() => () => this.changeSearchingStatus(false));
+  hideSearchingWhenUnsubscribed$ = new Observable(
+    () => () => this.changeSearchingStatus(false)
+  );
   click$ = new Subject<string>();
   currentValue: any;
   inputValue: any;
@@ -66,11 +91,12 @@ export class DsDynamicOneboxComponent extends DsDynamicVocabularyComponent imple
   private isHierarchicalVocabulary$: Observable<boolean>;
   private subs: Subscription[] = [];
 
-  constructor(protected vocabularyService: VocabularyService,
-              protected cdr: ChangeDetectorRef,
-              protected layoutService: DynamicFormLayoutService,
-              protected modalService: NgbModal,
-              protected validationService: DynamicFormValidationService
+  constructor(
+    protected vocabularyService: VocabularyService,
+    protected cdr: ChangeDetectorRef,
+    protected layoutService: DynamicFormLayoutService,
+    protected modalService: NgbModal,
+    protected validationService: DynamicFormValidationService
   ) {
     super(vocabularyService, layoutService, validationService);
   }
@@ -79,7 +105,7 @@ export class DsDynamicOneboxComponent extends DsDynamicVocabularyComponent imple
    * Converts an item from the result list to a `string` to display in the `<input>` field.
    */
   formatter = (x: { display: string }) => {
-    return (typeof x === 'object') ? x.display : x;
+    return typeof x === 'object' ? x.display : x;
   };
 
   /**
@@ -96,20 +122,21 @@ export class DsDynamicOneboxComponent extends DsDynamicVocabularyComponent imple
         if (term === '' || term.length < this.model.minChars) {
           return observableOf({ list: [] });
         } else {
-          return this.vocabularyService.getVocabularyEntriesByValue(
-            term,
-            false,
-            this.model.vocabularyOptions,
-            this.pageInfo).pipe(
-            getFirstSucceededRemoteDataPayload(),
-            tap(() => this.searchFailed = false),
-            catchError(() => {
-              this.searchFailed = true;
-              return observableOf(buildPaginatedList(
-                new PageInfo(),
-                []
-              ));
-            }));
+          return this.vocabularyService
+            .getVocabularyEntriesByValue(
+              term,
+              false,
+              this.model.vocabularyOptions,
+              this.pageInfo
+            )
+            .pipe(
+              getFirstSucceededRemoteDataPayload(),
+              tap(() => (this.searchFailed = false)),
+              catchError(() => {
+                this.searchFailed = true;
+                return observableOf(buildPaginatedList(new PageInfo(), []));
+              })
+            );
         }
       }),
       map((list: PaginatedList<VocabularyEntry>) => list.page),
@@ -126,20 +153,22 @@ export class DsDynamicOneboxComponent extends DsDynamicVocabularyComponent imple
       this.setCurrentValue(this.model.value, true);
     }
 
-    this.vocabulary$ = this.vocabularyService.findVocabularyById(this.model.vocabularyOptions.name).pipe(
-      getFirstSucceededRemoteDataPayload(),
-      distinctUntilChanged()
-    );
+    this.vocabulary$ = this.vocabularyService
+      .findVocabularyById(this.model.vocabularyOptions.name)
+      .pipe(getFirstSucceededRemoteDataPayload(), distinctUntilChanged());
 
     this.isHierarchicalVocabulary$ = this.vocabulary$.pipe(
       map((result: Vocabulary) => result.hierarchical)
     );
 
-    this.subs.push(this.group.get(this.model.id).valueChanges.pipe(
-      filter((value) => this.currentValue !== value))
-      .subscribe((value) => {
-        this.setCurrentValue(this.model.value);
-      }));
+    this.subs.push(
+      this.group
+        .get(this.model.id)
+        .valueChanges.pipe(filter((value) => this.currentValue !== value))
+        .subscribe((value) => {
+          this.setCurrentValue(this.model.value);
+        })
+    );
   }
 
   /**
@@ -163,7 +192,10 @@ export class DsDynamicOneboxComponent extends DsDynamicVocabularyComponent imple
    * @param event
    */
   onInput(event) {
-    if (!this.model.vocabularyOptions.closed && isNotEmpty(event.target.value)) {
+    if (
+      !this.model.vocabularyOptions.closed &&
+      isNotEmpty(event.target.value)
+    ) {
       this.inputValue = new FormFieldMetadataValueObject(event.target.value);
     }
   }
@@ -175,7 +207,10 @@ export class DsDynamicOneboxComponent extends DsDynamicVocabularyComponent imple
   onBlur(event: Event) {
     if (!this.instance.isPopupOpen()) {
       if (!this.model.vocabularyOptions.closed && isNotEmpty(this.inputValue)) {
-        if (isNotNull(this.inputValue) && this.model.value !== this.inputValue) {
+        if (
+          isNotNull(this.inputValue) &&
+          this.model.value !== this.inputValue
+        ) {
           this.dispatchUpdate(this.inputValue);
         }
         this.inputValue = null;
@@ -218,23 +253,36 @@ export class DsDynamicOneboxComponent extends DsDynamicVocabularyComponent imple
   openTree(event) {
     event.preventDefault();
     event.stopImmediatePropagation();
-    this.subs.push(this.vocabulary$.pipe(
-      map((vocabulary: Vocabulary) => vocabulary.preloadLevel),
-      take(1)
-    ).subscribe((preloadLevel) => {
-      const modalRef: NgbModalRef = this.modalService.open(VocabularyTreeviewComponent, { size: 'lg', windowClass: 'treeview' });
-      modalRef.componentInstance.vocabularyOptions = this.model.vocabularyOptions;
-      modalRef.componentInstance.preloadLevel = preloadLevel;
-      modalRef.componentInstance.selectedItem = this.currentValue ? this.currentValue : '';
-      modalRef.result.then((result: VocabularyEntryDetail) => {
-        if (result) {
-          this.currentValue = result;
-          this.dispatchUpdate(result);
-        }
-      }, () => {
-        return;
-      });
-    }));
+    this.subs.push(
+      this.vocabulary$
+        .pipe(
+          map((vocabulary: Vocabulary) => vocabulary.preloadLevel),
+          take(1)
+        )
+        .subscribe((preloadLevel) => {
+          const modalRef: NgbModalRef = this.modalService.open(
+            VocabularyTreeviewComponent,
+            { size: 'lg', windowClass: 'treeview' }
+          );
+          modalRef.componentInstance.vocabularyOptions =
+            this.model.vocabularyOptions;
+          modalRef.componentInstance.preloadLevel = preloadLevel;
+          modalRef.componentInstance.selectedItem = this.currentValue
+            ? this.currentValue
+            : '';
+          modalRef.result.then(
+            (result: VocabularyEntryDetail) => {
+              if (result) {
+                this.currentValue = result;
+                this.dispatchUpdate(result);
+              }
+            },
+            () => {
+              return;
+            }
+          );
+        })
+    );
   }
 
   /**
@@ -254,11 +302,12 @@ export class DsDynamicOneboxComponent extends DsDynamicVocabularyComponent imple
   setCurrentValue(value: any, init = false): void {
     let result: string;
     if (init) {
-      this.getInitValueFromModel()
-        .subscribe((formValue: FormFieldMetadataValueObject) => {
+      this.getInitValueFromModel().subscribe(
+        (formValue: FormFieldMetadataValueObject) => {
           this.currentValue = formValue;
           this.cdr.detectChanges();
-        });
+        }
+      );
     } else {
       if (isEmpty(value)) {
         result = '';
@@ -269,7 +318,6 @@ export class DsDynamicOneboxComponent extends DsDynamicVocabularyComponent imple
       this.currentValue = result;
       this.cdr.detectChanges();
     }
-
   }
 
   ngOnDestroy(): void {
@@ -277,5 +325,4 @@ export class DsDynamicOneboxComponent extends DsDynamicVocabularyComponent imple
       .filter((sub) => hasValue(sub))
       .forEach((sub) => sub.unsubscribe());
   }
-
 }

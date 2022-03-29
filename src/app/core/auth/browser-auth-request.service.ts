@@ -10,7 +10,6 @@ import { RemoteDataBuildService } from '../cache/builders/remote-data-build.serv
  */
 @Injectable()
 export class BrowserAuthRequestService extends AuthRequestService {
-
   constructor(
     halService: HALEndpointService,
     requestService: RequestService,
@@ -30,5 +29,4 @@ export class BrowserAuthRequestService extends AuthRequestService {
   protected createShortLivedTokenRequest(href: string): PostRequest {
     return new PostRequest(this.requestService.generateRequestId(), href);
   }
-
 }

@@ -6,16 +6,7 @@ import { LogoutPageRoutingModule } from './logout-page-routing.module';
 import { ThemedLogoutPageComponent } from './themed-logout-page.component';
 
 @NgModule({
-  imports: [
-    LogoutPageRoutingModule,
-    CommonModule,
-    SharedModule,
-  ],
-  declarations: [
-    LogoutPageComponent,
-    ThemedLogoutPageComponent
-  ]
+  imports: [LogoutPageRoutingModule, CommonModule, SharedModule],
+  declarations: [LogoutPageComponent, ThemedLogoutPageComponent],
 })
-export class LogoutPageModule {
-
-}
+export class LogoutPageModule {}

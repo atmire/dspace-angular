@@ -1,7 +1,11 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
-import { ChangeDetectionStrategy, Injector, NO_ERRORS_SCHEMA } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Injector,
+  NO_ERRORS_SCHEMA,
+} from '@angular/core';
 import { MenuSectionComponent } from './menu-section.component';
 import { MenuService } from '../menu.service';
 import { MenuServiceStub } from '../../testing/menu-service.stub';
@@ -19,7 +23,7 @@ describe('MenuSectionComponent', () => {
     dummySection = {
       id: 'section',
       visible: true,
-      active: false
+      active: false,
     } as any;
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot(), NoopAnimationsModule],
@@ -29,18 +33,24 @@ describe('MenuSectionComponent', () => {
         { provide: MenuService, useClass: MenuServiceStub },
         { provide: MenuSection, useValue: dummySection },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(MenuSectionComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(MenuSectionComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MenuSectionComponent);
     comp = fixture.componentInstance;
     menuService = (comp as any).menuService;
-    spyOn(comp as any, 'getMenuItemComponent').and.returnValue(LinkMenuItemComponent);
-    spyOn(comp as any, 'getItemModelInjector').and.returnValue(observableOf({}));
+    spyOn(comp as any, 'getMenuItemComponent').and.returnValue(
+      LinkMenuItemComponent
+    );
+    spyOn(comp as any, 'getItemModelInjector').and.returnValue(
+      observableOf({})
+    );
     fixture.detectChanges();
   });
 
@@ -50,7 +60,10 @@ describe('MenuSectionComponent', () => {
       comp.toggleSection(new Event('click'));
     });
     it('should trigger the toggleActiveSection function on the menu service', () => {
-      expect(menuService.toggleActiveSection).toHaveBeenCalledWith(comp.menuID, dummySection.id);
+      expect(menuService.toggleActiveSection).toHaveBeenCalledWith(
+        comp.menuID,
+        dummySection.id
+      );
     });
   });
 
@@ -60,7 +73,10 @@ describe('MenuSectionComponent', () => {
       comp.activateSection(new Event('click'));
     });
     it('should trigger the activateSection function on the menu service', () => {
-      expect(menuService.activateSection).toHaveBeenCalledWith(comp.menuID, dummySection.id);
+      expect(menuService.activateSection).toHaveBeenCalledWith(
+        comp.menuID,
+        dummySection.id
+      );
     });
   });
 
@@ -70,8 +86,10 @@ describe('MenuSectionComponent', () => {
       comp.deactivateSection(new Event('click'));
     });
     it('should trigger the deactivateSection function on the menu service', () => {
-      expect(menuService.deactivateSection).toHaveBeenCalledWith(comp.menuID, dummySection.id);
+      expect(menuService.deactivateSection).toHaveBeenCalledWith(
+        comp.menuID,
+        dummySection.id
+      );
     });
   });
-
 });

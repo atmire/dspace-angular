@@ -34,11 +34,10 @@ import { RequestParam } from '../cache/models/request-param.model';
  * A service to retrieve {@link Bitstream}s from the REST API
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 @dataService(BITSTREAM)
 export class BitstreamDataService extends DataService<Bitstream> {
-
   /**
    * The HAL path to the bitstream endpoint
    */
@@ -71,8 +70,20 @@ export class BitstreamDataService extends DataService<Bitstream> {
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  findAllByBundle(bundle: Bundle, options?: FindListOptions, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<Bitstream>[]): Observable<RemoteData<PaginatedList<Bitstream>>> {
-    return this.findAllByHref(bundle._links.bitstreams.href, options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  findAllByBundle(
+    bundle: Bundle,
+    options?: FindListOptions,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<Bitstream>[]
+  ): Observable<RemoteData<PaginatedList<Bitstream>>> {
+    return this.findAllByHref(
+      bundle._links.bitstreams.href,
+      options,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow
+    );
   }
 
   /**
@@ -92,13 +103,29 @@ export class BitstreamDataService extends DataService<Bitstream> {
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  public findAllByItemAndBundleName(item: Item, bundleName: string, options?: FindListOptions, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<Bitstream>[]): Observable<RemoteData<PaginatedList<Bitstream>>> {
+  public findAllByItemAndBundleName(
+    item: Item,
+    bundleName: string,
+    options?: FindListOptions,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<Bitstream>[]
+  ): Observable<RemoteData<PaginatedList<Bitstream>>> {
     return this.bundleService.findByItemAndName(item, bundleName).pipe(
       switchMap((bundleRD: RemoteData<Bundle>) => {
         if (bundleRD.hasSucceeded && hasValue(bundleRD.payload)) {
-          return this.findAllByBundle(bundleRD.payload, options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+          return this.findAllByBundle(
+            bundleRD.payload,
+            options,
+            useCachedVersionIfAvailable,
+            reRequestOnStale,
+            ...linksToFollow
+          );
         } else if (!bundleRD.hasSucceeded && bundleRD.statusCode === 404) {
-          return createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), []), new Date().getTime());
+          return createSuccessfulRemoteDataObject$(
+            buildPaginatedList(new PageInfo(), []),
+            new Date().getTime()
+          );
         } else {
           return [bundleRD as any];
         }
@@ -111,28 +138,33 @@ export class BitstreamDataService extends DataService<Bitstream> {
    * @param bitstream
    * @param format
    */
-  updateFormat(bitstream: Bitstream, format: BitstreamFormat): Observable<RemoteData<Bitstream>> {
+  updateFormat(
+    bitstream: Bitstream,
+    format: BitstreamFormat
+  ): Observable<RemoteData<Bitstream>> {
     const requestId = this.requestService.generateRequestId();
     const bitstreamHref$ = this.getBrowseEndpoint().pipe(
       map((href: string) => `${href}/${bitstream.id}`),
       switchMap((href: string) => this.halService.getEndpoint('format', href))
     );
-    const formatHref$ = this.bitstreamFormatService.getBrowseEndpoint().pipe(
-      map((href: string) => `${href}/${format.id}`)
-    );
-    observableCombineLatest([bitstreamHref$, formatHref$]).pipe(
-      map(([bitstreamHref, formatHref]) => {
-        const options: HttpOptions = Object.create({});
-        let headers = new HttpHeaders();
-        headers = headers.append('Content-Type', 'text/uri-list');
-        options.headers = headers;
-        return new PutRequest(requestId, bitstreamHref, formatHref, options);
-      }),
-      sendRequest(this.requestService),
-      take(1)
-    ).subscribe(() => {
-      this.requestService.removeByHrefSubstring(bitstream.self + '/format');
-    });
+    const formatHref$ = this.bitstreamFormatService
+      .getBrowseEndpoint()
+      .pipe(map((href: string) => `${href}/${format.id}`));
+    observableCombineLatest([bitstreamHref$, formatHref$])
+      .pipe(
+        map(([bitstreamHref, formatHref]) => {
+          const options: HttpOptions = Object.create({});
+          let headers = new HttpHeaders();
+          headers = headers.append('Content-Type', 'text/uri-list');
+          options.headers = headers;
+          return new PutRequest(requestId, bitstreamHref, formatHref, options);
+        }),
+        sendRequest(this.requestService),
+        take(1)
+      )
+      .subscribe(() => {
+        this.requestService.removeByHrefSubstring(bitstream.self + '/format');
+      });
 
     return this.rdbService.buildFromRequestUUID(requestId);
   }
@@ -182,5 +214,4 @@ export class BitstreamDataService extends DataService<Bitstream> {
       ...linksToFollow
     );
   }
-
 }

@@ -21,5 +21,4 @@ export enum PolicyType {
    * A policy defined by the user during the submission or workflow phase
    */
   TYPE_CUSTOM = 'TYPE_CUSTOM',
-
 }

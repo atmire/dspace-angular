@@ -5,7 +5,6 @@ import { DynamicRowArrayModel } from '../ds-dynamic-form-ui/models/ds-dynamic-ro
 import { FormRowModel } from '../../../../core/config/models/config-submission-form.model';
 
 describe('RowParser test suite', () => {
-
   let row1: FormRowModel;
   let row2: FormRowModel;
   let row3: FormRowModel;
@@ -31,15 +30,16 @@ describe('RowParser test suite', () => {
           label: 'Journal',
           mandatory: 'false',
           repeatable: false,
-          hints: 'Enter the name of the journal where the item has been\n\t\t\t\t\tpublished, if any.',
+          hints:
+            'Enter the name of the journal where the item has been\n\t\t\t\t\tpublished, if any.',
           selectableMetadata: [
             {
               metadata: 'journal',
               controlledVocabulary: 'JOURNALAuthority',
-              closed: false
-            }
+              closed: false,
+            },
           ],
-          languageCodes: []
+          languageCodes: [],
         } as FormFieldModel,
         {
           input: { type: 'onebox' },
@@ -49,10 +49,10 @@ describe('RowParser test suite', () => {
           hints: ' Enter issue number.',
           selectableMetadata: [
             {
-              metadata: 'issue'
-            }
+              metadata: 'issue',
+            },
           ],
-          languageCodes: []
+          languageCodes: [],
         } as FormFieldModel,
         {
           input: { type: 'name' },
@@ -62,19 +62,19 @@ describe('RowParser test suite', () => {
           hints: 'Enter full name.',
           selectableMetadata: [
             {
-              metadata: 'name'
-            }
+              metadata: 'name',
+            },
           ],
-          languageCodes: []
-        } as FormFieldModel
-      ]
+          languageCodes: [],
+        } as FormFieldModel,
+      ],
     } as FormRowModel;
     row2 = {
       fields: [
         {
           input: {
             type: 'onebox',
-            regex: '^[a-zA-Z0-9]+$'
+            regex: '^[a-zA-Z0-9]+$',
           },
           label: 'Title',
           mandatory: 'false',
@@ -84,12 +84,12 @@ describe('RowParser test suite', () => {
             {
               metadata: 'title',
               controlledVocabulary: 'EVENTAuthority',
-              closed: false
-            }
+              closed: false,
+            },
           ],
-          languageCodes: []
-        } as FormFieldModel
-      ]
+          languageCodes: [],
+        } as FormFieldModel,
+      ],
     } as FormRowModel;
 
     row3 = {
@@ -104,10 +104,10 @@ describe('RowParser test suite', () => {
             {
               metadata: 'title',
               controlledVocabulary: 'EVENTAuthority',
-              closed: false
-            }
+              closed: false,
+            },
           ],
-          languageCodes: []
+          languageCodes: [],
         } as FormFieldModel,
         {
           input: { type: 'onebox' },
@@ -120,19 +120,19 @@ describe('RowParser test suite', () => {
             {
               metadata: 'otherTitle',
               controlledVocabulary: 'EVENTAuthority',
-              closed: false
-            }
+              closed: false,
+            },
           ],
-          languageCodes: []
-        } as FormFieldModel
-      ]
+          languageCodes: [],
+        } as FormFieldModel,
+      ],
     } as FormRowModel;
 
     row4 = {
       fields: [
         {
           input: {
-            type: 'dropdown'
+            type: 'dropdown',
           },
           label: 'Type',
           mandatory: 'false',
@@ -142,32 +142,33 @@ describe('RowParser test suite', () => {
             {
               metadata: 'type',
               controlledVocabulary: 'common_types_dataset',
-              closed: false
-            }
+              closed: false,
+            },
           ],
-          languageCodes: []
+          languageCodes: [],
         } as FormFieldModel,
         {
           input: { type: 'series' },
           label: 'Series/Report No.',
           mandatory: 'false',
           repeatable: false,
-          hints: 'Enter the series and number assigned to this item by your community.',
+          hints:
+            'Enter the series and number assigned to this item by your community.',
           selectableMetadata: [
             {
               metadata: 'series',
-            }
+            },
           ],
-          languageCodes: []
-        } as FormFieldModel
-      ]
+          languageCodes: [],
+        } as FormFieldModel,
+      ],
     } as FormRowModel;
 
     row5 = {
       fields: [
         {
           input: {
-            type: 'lookup-name'
+            type: 'lookup-name',
           },
           label: 'Author',
           mandatory: 'false',
@@ -177,19 +178,19 @@ describe('RowParser test suite', () => {
             {
               metadata: 'author',
               controlledVocabulary: 'RPAuthority',
-              closed: false
-            }
+              closed: false,
+            },
           ],
-          languageCodes: []
-        } as FormFieldModel
-      ]
+          languageCodes: [],
+        } as FormFieldModel,
+      ],
     } as FormRowModel;
 
     row6 = {
       fields: [
         {
           input: {
-            type: 'list'
+            type: 'list',
           },
           label: 'Type',
           mandatory: 'false',
@@ -199,40 +200,41 @@ describe('RowParser test suite', () => {
             {
               metadata: 'type',
               controlledVocabulary: 'type_programme',
-              closed: false
-            }
+              closed: false,
+            },
           ],
-          languageCodes: []
-        } as FormFieldModel
-      ]
+          languageCodes: [],
+        } as FormFieldModel,
+      ],
     } as FormRowModel;
 
     row7 = {
       fields: [
         {
           input: {
-            type: 'date'
+            type: 'date',
           },
           label: 'Date of Issue.',
           mandatory: 'true',
           repeatable: false,
-          hints: 'Please give the date of previous publication or public distribution. You can leave out the day and/or month if they aren\'t applicable.',
+          hints:
+            "Please give the date of previous publication or public distribution. You can leave out the day and/or month if they aren't applicable.",
           mandatoryMessage: 'You must enter at least the year.',
           selectableMetadata: [
             {
               metadata: 'date',
-            }
+            },
           ],
-          languageCodes: []
-        } as FormFieldModel
-      ]
+          languageCodes: [],
+        } as FormFieldModel,
+      ],
     } as FormRowModel;
 
     row8 = {
       fields: [
         {
           input: {
-            type: 'tag'
+            type: 'tag',
           },
           label: 'Keywords',
           mandatory: 'false',
@@ -242,19 +244,19 @@ describe('RowParser test suite', () => {
             {
               metadata: 'subject',
               controlledVocabulary: 'JOURNALAuthority',
-              closed: false
-            }
+              closed: false,
+            },
           ],
-          languageCodes: []
-        } as FormFieldModel
-      ]
+          languageCodes: [],
+        } as FormFieldModel,
+      ],
     } as FormRowModel;
 
     row9 = {
       fields: [
         {
           input: {
-            type: 'textarea'
+            type: 'textarea',
           },
           label: 'Description',
           mandatory: 'false',
@@ -262,26 +264,26 @@ describe('RowParser test suite', () => {
           hints: 'Enter a description.',
           selectableMetadata: [
             {
-              metadata: 'description'
-            }
+              metadata: 'description',
+            },
           ],
-          languageCodes: []
-        } as FormFieldModel
-      ]
+          languageCodes: [],
+        } as FormFieldModel,
+      ],
     } as FormRowModel;
 
     row10 = {
       fields: [
         {
           input: {
-            type: 'group'
+            type: 'group',
           },
           rows: [
             {
               fields: [
                 {
                   input: {
-                    type: 'onebox'
+                    type: 'onebox',
                   },
                   label: 'Author',
                   mandatory: 'false',
@@ -289,14 +291,14 @@ describe('RowParser test suite', () => {
                   hints: 'Enter the name of the author.',
                   selectableMetadata: [
                     {
-                      metadata: 'author'
-                    }
+                      metadata: 'author',
+                    },
                   ],
-                  languageCodes: []
+                  languageCodes: [],
                 },
                 {
                   input: {
-                    type: 'onebox'
+                    type: 'onebox',
                   },
                   label: 'Affiliation',
                   mandatory: false,
@@ -304,13 +306,13 @@ describe('RowParser test suite', () => {
                   hints: 'Enter the affiliation of the author.',
                   selectableMetadata: [
                     {
-                      metadata: 'affiliation'
-                    }
+                      metadata: 'affiliation',
+                    },
                   ],
-                  languageCodes: []
-                }
-              ]
-            }
+                  languageCodes: [],
+                },
+              ],
+            },
           ],
           label: 'Authors',
           mandatory: 'true',
@@ -319,12 +321,12 @@ describe('RowParser test suite', () => {
           hints: 'Enter the names of the authors of this item.',
           selectableMetadata: [
             {
-              metadata: 'author'
-            }
+              metadata: 'author',
+            },
           ],
-          languageCodes: []
-        } as FormFieldModel
-      ]
+          languageCodes: [],
+        } as FormFieldModel,
+      ],
     } as FormRowModel;
   });
 
@@ -338,7 +340,14 @@ describe('RowParser test suite', () => {
     it('should return a DynamicRowGroupModel object', () => {
       const parser = new RowParser(undefined);
 
-      const rowModel = parser.parse(submissionId, row1, scopeUUID, initFormValues, submissionScope, readOnly);
+      const rowModel = parser.parse(
+        submissionId,
+        row1,
+        scopeUUID,
+        initFormValues,
+        submissionScope,
+        readOnly
+      );
 
       expect(rowModel instanceof DynamicRowGroupModel).toBe(true);
     });
@@ -346,7 +355,14 @@ describe('RowParser test suite', () => {
     it('should return a row with three fields', () => {
       const parser = new RowParser(undefined);
 
-      const rowModel = parser.parse(submissionId, row1, scopeUUID, initFormValues, submissionScope, readOnly);
+      const rowModel = parser.parse(
+        submissionId,
+        row1,
+        scopeUUID,
+        initFormValues,
+        submissionScope,
+        readOnly
+      );
 
       expect((rowModel as DynamicRowGroupModel).group.length).toBe(3);
     });
@@ -354,7 +370,14 @@ describe('RowParser test suite', () => {
     it('should return a DynamicRowArrayModel object', () => {
       const parser = new RowParser(undefined);
 
-      const rowModel = parser.parse(submissionId, row2, scopeUUID, initFormValues, submissionScope, readOnly);
+      const rowModel = parser.parse(
+        submissionId,
+        row2,
+        scopeUUID,
+        initFormValues,
+        submissionScope,
+        readOnly
+      );
 
       expect(rowModel instanceof DynamicRowArrayModel).toBe(true);
     });
@@ -362,7 +385,14 @@ describe('RowParser test suite', () => {
     it('should return a row that contains only scoped fields', () => {
       const parser = new RowParser(undefined);
 
-      const rowModel = parser.parse(submissionId, row3, scopeUUID, initFormValues, submissionScope, readOnly);
+      const rowModel = parser.parse(
+        submissionId,
+        row3,
+        scopeUUID,
+        initFormValues,
+        submissionScope,
+        readOnly
+      );
 
       expect((rowModel as DynamicRowGroupModel).group.length).toBe(1);
     });
@@ -370,7 +400,14 @@ describe('RowParser test suite', () => {
     it('should be able to parse a dropdown combo field', () => {
       const parser = new RowParser(undefined);
 
-      const rowModel = parser.parse(submissionId, row4, scopeUUID, initFormValues, submissionScope, readOnly);
+      const rowModel = parser.parse(
+        submissionId,
+        row4,
+        scopeUUID,
+        initFormValues,
+        submissionScope,
+        readOnly
+      );
 
       expect(rowModel).toBeDefined();
     });
@@ -378,7 +415,14 @@ describe('RowParser test suite', () => {
     it('should be able to parse a lookup-name field', () => {
       const parser = new RowParser(undefined);
 
-      const rowModel = parser.parse(submissionId, row5, scopeUUID, initFormValues, submissionScope, readOnly);
+      const rowModel = parser.parse(
+        submissionId,
+        row5,
+        scopeUUID,
+        initFormValues,
+        submissionScope,
+        readOnly
+      );
 
       expect(rowModel).toBeDefined();
     });
@@ -386,7 +430,14 @@ describe('RowParser test suite', () => {
     it('should be able to parse a list field', () => {
       const parser = new RowParser(undefined);
 
-      const rowModel = parser.parse(submissionId, row6, scopeUUID, initFormValues, submissionScope, readOnly);
+      const rowModel = parser.parse(
+        submissionId,
+        row6,
+        scopeUUID,
+        initFormValues,
+        submissionScope,
+        readOnly
+      );
 
       expect(rowModel).toBeDefined();
     });
@@ -394,7 +445,14 @@ describe('RowParser test suite', () => {
     it('should be able to parse a date field', () => {
       const parser = new RowParser(undefined);
 
-      const rowModel = parser.parse(submissionId, row7, scopeUUID, initFormValues, submissionScope, readOnly);
+      const rowModel = parser.parse(
+        submissionId,
+        row7,
+        scopeUUID,
+        initFormValues,
+        submissionScope,
+        readOnly
+      );
 
       expect(rowModel).toBeDefined();
     });
@@ -402,7 +460,14 @@ describe('RowParser test suite', () => {
     it('should be able to parse a tag field', () => {
       const parser = new RowParser(undefined);
 
-      const rowModel = parser.parse(submissionId, row8, scopeUUID, initFormValues, submissionScope, readOnly);
+      const rowModel = parser.parse(
+        submissionId,
+        row8,
+        scopeUUID,
+        initFormValues,
+        submissionScope,
+        readOnly
+      );
 
       expect(rowModel).toBeDefined();
     });
@@ -410,7 +475,14 @@ describe('RowParser test suite', () => {
     it('should be able to parse a textarea field', () => {
       const parser = new RowParser(undefined);
 
-      const rowModel = parser.parse(submissionId, row9, scopeUUID, initFormValues, submissionScope, readOnly);
+      const rowModel = parser.parse(
+        submissionId,
+        row9,
+        scopeUUID,
+        initFormValues,
+        submissionScope,
+        readOnly
+      );
 
       expect(rowModel).toBeDefined();
     });
@@ -418,7 +490,14 @@ describe('RowParser test suite', () => {
     it('should be able to parse a group field', () => {
       const parser = new RowParser(undefined);
 
-      const rowModel = parser.parse(submissionId, row10, scopeUUID, initFormValues, submissionScope, readOnly);
+      const rowModel = parser.parse(
+        submissionId,
+        row10,
+        scopeUUID,
+        initFormValues,
+        submissionScope,
+        readOnly
+      );
 
       expect(rowModel).toBeDefined();
     });

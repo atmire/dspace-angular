@@ -17,10 +17,12 @@ describe('TruncatableComponent', () => {
       providers: [
         { provide: TruncatableService, useValue: mockTruncatableService },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(TruncatableComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(TruncatableComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
   beforeEach(() => {
     fixture = TestBed.createComponent(TruncatableComponent);
@@ -34,8 +36,7 @@ describe('TruncatableComponent', () => {
     beforeEach(() => {
       comp.onHover = true;
       fixture.detectChanges();
-    })
-    ;
+    });
 
     it('should call collapse on the TruncatableService', () => {
       spyOn(truncatableService, 'collapse');
@@ -54,8 +55,7 @@ describe('TruncatableComponent', () => {
     beforeEach(() => {
       comp.onHover = false;
       fixture.detectChanges();
-    })
-    ;
+    });
 
     it('should not call collapse on the TruncatableService', () => {
       spyOn(truncatableService, 'collapse');
@@ -80,5 +80,4 @@ describe('TruncatableComponent', () => {
       expect(truncatableService.toggle).toHaveBeenCalledWith(identifier);
     });
   });
-
 });

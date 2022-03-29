@@ -31,10 +31,30 @@ export class SubmissionFormsConfigService extends ConfigService {
     protected http: HttpClient,
     protected comparator: DefaultChangeAnalyzer<SubmissionFormsModel>
   ) {
-    super(requestService, rdbService, null, objectCache, halService, notificationsService, http, comparator, 'submissionforms');
+    super(
+      requestService,
+      rdbService,
+      null,
+      objectCache,
+      halService,
+      notificationsService,
+      http,
+      comparator,
+      'submissionforms'
+    );
   }
 
-  public findByHref(href: string, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<SubmissionFormsModel>[]): Observable<RemoteData<SubmissionFormsModel>> {
-    return super.findByHref(href, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow as FollowLinkConfig<ConfigObject>[]) as Observable<RemoteData<SubmissionFormsModel>>;
+  public findByHref(
+    href: string,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<SubmissionFormsModel>[]
+  ): Observable<RemoteData<SubmissionFormsModel>> {
+    return super.findByHref(
+      href,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...(linksToFollow as FollowLinkConfig<ConfigObject>[])
+    ) as Observable<RemoteData<SubmissionFormsModel>>;
   }
 }

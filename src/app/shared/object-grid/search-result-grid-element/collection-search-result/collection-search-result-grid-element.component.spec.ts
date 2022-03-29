@@ -29,45 +29,51 @@ const truncatableServiceStub: any = {
   isCollapsed: (id: number) => observableOf(true),
 };
 
-const mockCollectionWithAbstract: CollectionSearchResult = new CollectionSearchResult();
+const mockCollectionWithAbstract: CollectionSearchResult =
+  new CollectionSearchResult();
 mockCollectionWithAbstract.hitHighlights = {};
 mockCollectionWithAbstract.indexableObject = Object.assign(new Collection(), {
   metadata: {
     'dc.description.abstract': [
       {
         language: 'en_US',
-        value: 'Short description'
-      }
-    ]
-  }
+        value: 'Short description',
+      },
+    ],
+  },
 });
 
-const mockCollectionWithoutAbstract: CollectionSearchResult = new CollectionSearchResult();
+const mockCollectionWithoutAbstract: CollectionSearchResult =
+  new CollectionSearchResult();
 mockCollectionWithoutAbstract.hitHighlights = {};
-mockCollectionWithoutAbstract.indexableObject = Object.assign(new Collection(), {
-  metadata: {
-    'dc.title': [
-      {
-        language: 'en_US',
-        value: 'Test title'
-      }
-    ]
+mockCollectionWithoutAbstract.indexableObject = Object.assign(
+  new Collection(),
+  {
+    metadata: {
+      'dc.title': [
+        {
+          language: 'en_US',
+          value: 'Test title',
+        },
+      ],
+    },
   }
-});
+);
 const linkService = jasmine.createSpyObj('linkService', {
-  resolveLink: mockCollectionWithAbstract
+  resolveLink: mockCollectionWithAbstract,
 });
 
 describe('CollectionSearchResultGridElementComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        TranslateModule.forRoot()
-      ],
+      imports: [TranslateModule.forRoot()],
       declarations: [CollectionSearchResultGridElementComponent, TruncatePipe],
       providers: [
         { provide: TruncatableService, useValue: truncatableServiceStub },
-        { provide: 'objectElementProvider', useValue: (mockCollectionWithAbstract) },
+        {
+          provide: 'objectElementProvider',
+          useValue: mockCollectionWithAbstract,
+        },
         { provide: ObjectCacheService, useValue: {} },
         { provide: UUIDService, useValue: {} },
         { provide: Store, useValue: {} },
@@ -80,40 +86,50 @@ describe('CollectionSearchResultGridElementComponent', () => {
         { provide: DSOChangeAnalyzer, useValue: {} },
         { provide: DefaultChangeAnalyzer, useValue: {} },
         { provide: BitstreamFormatDataService, useValue: {} },
-        { provide: LinkService, useValue: linkService }
+        { provide: LinkService, useValue: linkService },
       ],
 
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(CollectionSearchResultGridElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(CollectionSearchResultGridElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
-    fixture = TestBed.createComponent(CollectionSearchResultGridElementComponent);
+    fixture = TestBed.createComponent(
+      CollectionSearchResultGridElementComponent
+    );
     collectionSearchResultGridElementComponent = fixture.componentInstance;
   }));
 
   describe('When the collection has an abstract', () => {
     beforeEach(() => {
-      collectionSearchResultGridElementComponent.dso = mockCollectionWithAbstract.indexableObject;
+      collectionSearchResultGridElementComponent.dso =
+        mockCollectionWithAbstract.indexableObject;
       fixture.detectChanges();
     });
 
     it('should show the description paragraph', () => {
-      const collectionAbstractField = fixture.debugElement.query(By.css('p.card-text'));
+      const collectionAbstractField = fixture.debugElement.query(
+        By.css('p.card-text')
+      );
       expect(collectionAbstractField).not.toBeNull();
     });
   });
 
   describe('When the collection has no abstract', () => {
     beforeEach(() => {
-      collectionSearchResultGridElementComponent.dso = mockCollectionWithoutAbstract.indexableObject;
+      collectionSearchResultGridElementComponent.dso =
+        mockCollectionWithoutAbstract.indexableObject;
       fixture.detectChanges();
     });
 
     it('should not show the description paragraph', () => {
-      const collectionAbstractField = fixture.debugElement.query(By.css('p.card-text'));
+      const collectionAbstractField = fixture.debugElement.query(
+        By.css('p.card-text')
+      );
       expect(collectionAbstractField).toBeNull();
     });
   });

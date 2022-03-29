@@ -36,7 +36,9 @@ import { createPaginatedList } from '../../../testing/utils.test';
 function getMockFileService(): FileService {
   return jasmine.createSpyObj('FileService', {
     downloadFile: jasmine.createSpy('downloadFile'),
-    getFileNameFromResponseContentDisposition: jasmine.createSpy('getFileNameFromResponseContentDisposition')
+    getFileNameFromResponseContentDisposition: jasmine.createSpy(
+      'getFileNameFromResponseContentDisposition'
+    ),
   });
 }
 
@@ -49,28 +51,28 @@ const mockItem: Item = Object.assign(new Item(), {
     'dc.contributor.author': [
       {
         language: 'en_US',
-        value: 'Smith, Donald'
-      }
+        value: 'Smith, Donald',
+      },
     ],
     'dc.date.issued': [
       {
         language: null,
-        value: '2015-06-26'
-      }
+        value: '2015-06-26',
+      },
     ],
     'dc.title': [
       {
         language: 'en_US',
-        value: 'This is just another title'
-      }
+        value: 'This is just another title',
+      },
     ],
     'dc.type': [
       {
         language: null,
-        value: 'Article'
-      }
-    ]
-  }
+        value: 'Article',
+      },
+    ],
+  },
 });
 
 describe('ItemDetailPreviewComponent', () => {
@@ -78,7 +80,12 @@ describe('ItemDetailPreviewComponent', () => {
     getThumbnailFor(item: Item): Observable<RemoteData<Bitstream>> {
       return createSuccessfulRemoteDataObject$(new Bitstream());
     },
-    findAllByItemAndBundleName(item: Item, bundleName: string, options?: FindListOptions, ...linksToFollow: FollowLinkConfig<Bitstream>[]): Observable<RemoteData<PaginatedList<Bitstream>>> {
+    findAllByItemAndBundleName(
+      item: Item,
+      bundleName: string,
+      options?: FindListOptions,
+      ...linksToFollow: FollowLinkConfig<Bitstream>[]
+    ): Observable<RemoteData<PaginatedList<Bitstream>>> {
       return createSuccessfulRemoteDataObject$(createPaginatedList([]));
     },
   };
@@ -89,14 +96,23 @@ describe('ItemDetailPreviewComponent', () => {
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
-            useClass: TranslateLoaderMock
-          }
+            useClass: TranslateLoaderMock,
+          },
         }),
       ],
-      declarations: [ItemDetailPreviewComponent, ItemDetailPreviewFieldComponent, TruncatePipe, FileSizePipe, VarDirective],
+      declarations: [
+        ItemDetailPreviewComponent,
+        ItemDetailPreviewFieldComponent,
+        TruncatePipe,
+        FileSizePipe,
+        VarDirective,
+      ],
       providers: [
         { provide: FileService, useValue: getMockFileService() },
-        { provide: HALEndpointService, useValue: new HALEndpointServiceStub('workspaceitems') },
+        {
+          provide: HALEndpointService,
+          useValue: new HALEndpointServiceStub('workspaceitems'),
+        },
         { provide: ObjectCacheService, useValue: {} },
         { provide: UUIDService, useValue: {} },
         { provide: Store, useValue: {} },
@@ -109,10 +125,12 @@ describe('ItemDetailPreviewComponent', () => {
         { provide: DefaultChangeAnalyzer, useValue: {} },
         { provide: BitstreamDataService, useValue: mockBitstreamDataService },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(ItemDetailPreviewComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(ItemDetailPreviewComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -123,7 +141,6 @@ describe('ItemDetailPreviewComponent', () => {
     component.separator = ', ';
     // spyOn(component.item, 'getFiles').and.returnValue(mockItem.bundles as any);
     fixture.detectChanges();
-
   }));
 
   it('should get item bitstreams', (done) => {

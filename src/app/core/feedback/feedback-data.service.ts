@@ -12,7 +12,10 @@ import { HALEndpointService } from '../shared/hal-endpoint.service';
 import { NotificationsService } from '../../shared/notifications/notifications.service';
 import { HttpClient } from '@angular/common/http';
 import { DSOChangeAnalyzer } from '../data/dso-change-analyzer.service';
-import { getFirstSucceededRemoteData, getRemoteDataPayload } from '../shared/operators';
+import {
+  getFirstSucceededRemoteData,
+  getRemoteDataPayload,
+} from '../shared/operators';
 
 /**
  * Service for checking and managing the feedback
@@ -30,7 +33,7 @@ export class FeedbackDataService extends DataService<Feedback> {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DSOChangeAnalyzer<Feedback>,
+    protected comparator: DSOChangeAnalyzer<Feedback>
   ) {
     super();
   }
@@ -42,8 +45,7 @@ export class FeedbackDataService extends DataService<Feedback> {
   getFeedback(uuid: string): Observable<Feedback> {
     return this.findById(uuid).pipe(
       getFirstSucceededRemoteData(),
-      getRemoteDataPayload(),
+      getRemoteDataPayload()
     );
   }
-
 }

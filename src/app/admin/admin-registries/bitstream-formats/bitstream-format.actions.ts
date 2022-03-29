@@ -12,10 +12,11 @@ import { BitstreamFormat } from '../../../core/shared/bitstream-format.model';
  * action types in the application are unique.
  */
 export const BitstreamFormatsRegistryActionTypes = {
-
   SELECT_FORMAT: type('dspace/bitstream-formats-registry/SELECT_FORMAT'),
   DESELECT_FORMAT: type('dspace/bitstream-formats-registry/DESELECT_FORMAT'),
-  DESELECT_ALL_FORMAT: type('dspace/bitstream-formats-registry/DESELECT_ALL_FORMAT')
+  DESELECT_ALL_FORMAT: type(
+    'dspace/bitstream-formats-registry/DESELECT_ALL_FORMAT'
+  ),
 };
 
 /**
@@ -51,13 +52,12 @@ export class BitstreamFormatsRegistryDeselectAllAction implements Action {
   type = BitstreamFormatsRegistryActionTypes.DESELECT_ALL_FORMAT;
 }
 
-
 /**
  * Export a type alias of all actions in this action group
  * so that reducers can easily compose action types
  * These are all the actions to perform on the bitstream format registry state
  */
-export type BitstreamFormatsRegistryAction
-  = BitstreamFormatsRegistrySelectAction
+export type BitstreamFormatsRegistryAction =
+  | BitstreamFormatsRegistrySelectAction
   | BitstreamFormatsRegistryDeselectAction
   | BitstreamFormatsRegistryDeselectAllAction;

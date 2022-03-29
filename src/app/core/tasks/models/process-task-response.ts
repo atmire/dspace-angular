@@ -6,8 +6,7 @@ export class ProcessTaskResponse {
     private isSuccessful: boolean,
     public statusCode?: number,
     public errorMessage?: string
-  ) {
-  }
+  ) {}
 
   get hasSucceeded(): boolean {
     return this.isSuccessful;

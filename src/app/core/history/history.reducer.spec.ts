@@ -10,7 +10,6 @@ class NullAction extends AddUrlToHistoryAction {
 }
 
 describe('historyReducer', () => {
-
   const emptyState = [];
   const state = ['testUrl', 'testUrl2', 'testUrl3'];
 
@@ -33,5 +32,4 @@ describe('historyReducer', () => {
 
     expect(newState).toEqual(state);
   });
-
 });

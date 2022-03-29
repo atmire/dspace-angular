@@ -20,10 +20,7 @@ export interface SelectionConfig {
 @Component({
   selector: 'ds-search-results',
   templateUrl: './search-results.component.html',
-  animations: [
-    fadeIn,
-    fadeInOut
-  ]
+  animations: [fadeIn, fadeInOut],
 })
 
 /**
@@ -85,23 +82,36 @@ export class SearchResultsComponent {
    */
   @Input() selectionConfig: SelectionConfig = null;
 
-  @Output() deselectObject: EventEmitter<ListableObject> = new EventEmitter<ListableObject>();
+  @Output() deselectObject: EventEmitter<ListableObject> =
+    new EventEmitter<ListableObject>();
 
-  @Output() selectObject: EventEmitter<ListableObject> = new EventEmitter<ListableObject>();
+  @Output() selectObject: EventEmitter<ListableObject> =
+    new EventEmitter<ListableObject>();
 
   /**
    * Check if search results are loading
    */
   isLoading() {
-    return !this.showError() && (hasNoValue(this.searchResults) || hasNoValue(this.searchResults.payload) || this.searchResults.isLoading);
+    return (
+      !this.showError() &&
+      (hasNoValue(this.searchResults) ||
+        hasNoValue(this.searchResults.payload) ||
+        this.searchResults.isLoading)
+    );
   }
 
   showError(): boolean {
-    return this.searchResults?.hasFailed && (!this.searchResults?.errorMessage || this.searchResults?.statusCode !== 400);
+    return (
+      this.searchResults?.hasFailed &&
+      (!this.searchResults?.errorMessage ||
+        this.searchResults?.statusCode !== 400)
+    );
   }
 
   errorMessageLabel(): string {
-    return (this.searchResults?.statusCode  === 422) ? 'error.invalid-search-query' : 'error.search-results';
+    return this.searchResults?.statusCode === 422
+      ? 'error.invalid-search-query'
+      : 'error.search-results';
   }
 
   /**
@@ -110,7 +120,10 @@ export class SearchResultsComponent {
   surroundStringWithQuotes(input: string): string {
     let result = input;
 
-    if (isNotEmpty(result) && !(result.startsWith('\"') && result.endsWith('\"'))) {
+    if (
+      isNotEmpty(result) &&
+      !(result.startsWith('"') && result.endsWith('"'))
+    ) {
       result = `"${result}"`;
     }
 

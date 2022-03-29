@@ -14,13 +14,11 @@ export class ItemEditBitstreamDragHandleComponent implements OnInit {
   /**
    * The view on the drag-handle
    */
-  @ViewChild('handleView', {static: true}) handleView;
+  @ViewChild('handleView', { static: true }) handleView;
 
-  constructor(private viewContainerRef: ViewContainerRef) {
-  }
+  constructor(private viewContainerRef: ViewContainerRef) {}
 
   ngOnInit(): void {
     this.viewContainerRef.createEmbeddedView(this.handleView);
   }
-
 }

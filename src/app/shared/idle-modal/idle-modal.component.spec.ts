@@ -1,5 +1,11 @@
 import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+  waitForAsync,
+} from '@angular/core/testing';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { IdleModalComponent } from './idle-modal.component';
@@ -27,9 +33,9 @@ describe('IdleModalComponent', () => {
       providers: [
         { provide: NgbActiveModal, useValue: modalStub },
         { provide: AuthService, useValue: authServiceStub },
-        { provide: Store, useValue: storeStub }
+        { provide: Store, useValue: storeStub },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -55,7 +61,7 @@ describe('IdleModalComponent', () => {
     it('should close the modal', () => {
       expect(modalStub.close).toHaveBeenCalled();
     });
-    it('response \'closed\' should have true as next', () => {
+    it("response 'closed' should have true as next", () => {
       expect(component.response.next).toHaveBeenCalledWith(true);
     });
   });
@@ -83,7 +89,7 @@ describe('IdleModalComponent', () => {
     it('should close the modal', () => {
       expect(modalStub.close).toHaveBeenCalled();
     });
-    it('response \'closed\' should have true as next', () => {
+    it("response 'closed' should have true as next", () => {
       expect(component.response.next).toHaveBeenCalledWith(true);
     });
   });
@@ -91,10 +97,13 @@ describe('IdleModalComponent', () => {
   describe('when the click method emits on extend session button', () => {
     beforeEach(fakeAsync(() => {
       spyOn(component, 'extendSessionPressed');
-      debugElement.query(By.css('button.confirm')).triggerEventHandler('click', {
-        preventDefault: () => {/**/
-        }
-      });
+      debugElement
+        .query(By.css('button.confirm'))
+        .triggerEventHandler('click', {
+          preventDefault: () => {
+            /**/
+          },
+        });
       tick();
       fixture.detectChanges();
     }));
@@ -107,8 +116,9 @@ describe('IdleModalComponent', () => {
     beforeEach(fakeAsync(() => {
       spyOn(component, 'logOutPressed');
       debugElement.query(By.css('button.cancel')).triggerEventHandler('click', {
-        preventDefault: () => {/**/
-        }
+        preventDefault: () => {
+          /**/
+        },
       });
       tick();
       fixture.detectChanges();
@@ -122,8 +132,9 @@ describe('IdleModalComponent', () => {
     beforeEach(fakeAsync(() => {
       spyOn(component, 'closePressed');
       debugElement.query(By.css('.close')).triggerEventHandler('click', {
-        preventDefault: () => {/**/
-        }
+        preventDefault: () => {
+          /**/
+        },
       });
       tick();
       fixture.detectChanges();

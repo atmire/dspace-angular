@@ -16,11 +16,12 @@ export class ThemedCollectionStatisticsPageComponent extends ThemedComponent<Col
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../themes/${themeName}/app/statistics-page/collection-statistics-page/collection-statistics-page.component`);
+    return import(
+      `../../../themes/${themeName}/app/statistics-page/collection-statistics-page/collection-statistics-page.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {
     return import(`./collection-statistics-page.component`);
   }
-
 }

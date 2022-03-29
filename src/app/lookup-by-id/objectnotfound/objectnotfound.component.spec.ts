@@ -15,21 +15,18 @@ describe('ObjectNotFoundComponent', () => {
   const handlePrefix = '123456789';
   const handleId = '22';
   const activatedRouteStub = Object.assign(new ActivatedRouteStub(), {
-    params: observableOf({id: testUUID, idType: uuidType})
+    params: observableOf({ id: testUUID, idType: uuidType }),
   });
   const activatedRouteStubHandle = Object.assign(new ActivatedRouteStub(), {
-    params: observableOf({id: handleId, idType: handlePrefix})
+    params: observableOf({ id: handleId, idType: handlePrefix }),
   });
   describe('uuid request', () => {
     beforeEach(waitForAsync(() => {
       TestBed.configureTestingModule({
-        imports: [
-          TranslateModule.forRoot()
-        ], providers: [
-          {provide: ActivatedRoute, useValue: activatedRouteStub}
-        ],
+        imports: [TranslateModule.forRoot()],
+        providers: [{ provide: ActivatedRoute, useValue: activatedRouteStub }],
         declarations: [ObjectNotFoundComponent],
-        schemas: [NO_ERRORS_SCHEMA]
+        schemas: [NO_ERRORS_SCHEMA],
       }).compileComponents();
     }));
 
@@ -50,16 +47,15 @@ describe('ObjectNotFoundComponent', () => {
     });
   });
 
-  describe( 'legacy handle request', () => {
+  describe('legacy handle request', () => {
     beforeEach(waitForAsync(() => {
       TestBed.configureTestingModule({
-        imports: [
-          TranslateModule.forRoot()
-        ], providers: [
-          {provide: ActivatedRoute, useValue: activatedRouteStubHandle}
+        imports: [TranslateModule.forRoot()],
+        providers: [
+          { provide: ActivatedRoute, useValue: activatedRouteStubHandle },
         ],
         declarations: [ObjectNotFoundComponent],
-        schemas: [NO_ERRORS_SCHEMA]
+        schemas: [NO_ERRORS_SCHEMA],
       }).compileComponents();
     }));
 
@@ -72,8 +68,9 @@ describe('ObjectNotFoundComponent', () => {
     it('should have handle prefix and id', () => {
       expect(comp.id).toEqual(handleId);
       expect(comp.idType).toEqual(handlePrefix);
-      expect(comp.missingItem).toEqual('handle: ' + handlePrefix + '/' + handleId);
+      expect(comp.missingItem).toEqual(
+        'handle: ' + handlePrefix + '/' + handleId
+      );
     });
   });
-
 });

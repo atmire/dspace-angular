@@ -16,7 +16,10 @@ import { Bitstream } from '../../../core/shared/bitstream.model';
 import { BundleDataService } from '../../../core/data/bundle-data.service';
 import { Bundle } from '../../../core/shared/bundle.model';
 import { RequestService } from '../../../core/data/request.service';
-import { createSuccessfulRemoteDataObject, createSuccessfulRemoteDataObject$ } from '../../../shared/remote-data.utils';
+import {
+  createSuccessfulRemoteDataObject,
+  createSuccessfulRemoteDataObject$,
+} from '../../../shared/remote-data.utils';
 import { createPaginatedList } from '../../../shared/testing/utils.test';
 import { RouterStub } from '../../../shared/testing/router.stub';
 import { NotificationsServiceStub } from '../../../shared/testing/notifications-service.stub';
@@ -34,13 +37,13 @@ describe('UploadBistreamComponent', () => {
       'dc.title': [
         {
           value: 'bundleName',
-          language: null
-        }
-      ]
+          language: null,
+        },
+      ],
     },
     _links: {
-      self: { href: 'bundle-selflink' }
-    }
+      self: { href: 'bundle-selflink' },
+    },
   });
   const customName = 'Custom Name';
   const createdBundle = Object.assign(new Bundle(), {
@@ -50,13 +53,13 @@ describe('UploadBistreamComponent', () => {
       'dc.title': [
         {
           value: customName,
-          language: null
-        }
-      ]
+          language: null,
+        },
+      ],
     },
     _links: {
-      self: { href: 'created-bundle-selflink' }
-    }
+      self: { href: 'created-bundle-selflink' },
+    },
   });
   const itemName = 'fake-name';
   const mockItem = Object.assign(new Item(), {
@@ -66,11 +69,11 @@ describe('UploadBistreamComponent', () => {
       'dc.title': [
         {
           language: null,
-          value: itemName
-        }
-      ]
+          value: itemName,
+        },
+      ],
     },
-    bundles: createSuccessfulRemoteDataObject$(createPaginatedList([bundle]))
+    bundles: createSuccessfulRemoteDataObject$(createPaginatedList([bundle])),
   });
   let routeStub;
   const routerStub = new RouterStub();
@@ -78,27 +81,29 @@ describe('UploadBistreamComponent', () => {
   const mockItemDataService = jasmine.createSpyObj('mockItemDataService', {
     getBitstreamsEndpoint: observableOf(restEndpoint),
     createBundle: createSuccessfulRemoteDataObject$(createdBundle),
-    getBundles: createSuccessfulRemoteDataObject$([bundle])
+    getBundles: createSuccessfulRemoteDataObject$([bundle]),
   });
   const bundleService = jasmine.createSpyObj('bundleService', {
     getBitstreamsEndpoint: observableOf(restEndpoint),
-    findById: createSuccessfulRemoteDataObject$(bundle)
+    findById: createSuccessfulRemoteDataObject$(bundle),
   });
   const authToken = 'fake-auth-token';
   const authServiceStub = Object.assign(new AuthServiceStub(), {
-    buildAuthHeader: () => authToken
+    buildAuthHeader: () => authToken,
   });
   const notificationsServiceStub = new NotificationsServiceStub();
-  const uploaderComponent = jasmine.createSpyObj('uploaderComponent', ['ngOnInit', 'ngAfterViewInit']);
+  const uploaderComponent = jasmine.createSpyObj('uploaderComponent', [
+    'ngOnInit',
+    'ngAfterViewInit',
+  ]);
   const requestService = jasmine.createSpyObj('requestService', {
-    removeByHrefSubstring: {}
+    removeByHrefSubstring: {},
   });
-
 
   describe('on init', () => {
     beforeEach(waitForAsync(() => {
       createUploadBitstreamTestingModule({
-        bundle: bundle.id
+        bundle: bundle.id,
       });
     }));
     beforeEach(() => {
@@ -106,7 +111,9 @@ describe('UploadBistreamComponent', () => {
     });
     it('should initialize the bundles', () => {
       expect(comp.bundlesRD$).toBeDefined();
-      getTestScheduler().expectObservable(comp.bundlesRD$).toBe('(a|)', {a: createSuccessfulRemoteDataObject([bundle])});
+      getTestScheduler()
+        .expectObservable(comp.bundlesRD$)
+        .toBe('(a|)', { a: createSuccessfulRemoteDataObject([bundle]) });
     });
   });
 
@@ -131,7 +138,7 @@ describe('UploadBistreamComponent', () => {
 
     describe('and it succeeds, calling onCompleteItem', () => {
       const createdBitstream = Object.assign(new Bitstream(), {
-        id: 'fake-bitstream'
+        id: 'fake-bitstream',
       });
 
       beforeEach(() => {
@@ -147,7 +154,7 @@ describe('UploadBistreamComponent', () => {
   describe('when a bundle url parameter is present', () => {
     beforeEach(waitForAsync(() => {
       createUploadBitstreamTestingModule({
-        bundle: bundle.id
+        bundle: bundle.id,
       });
     }));
 
@@ -155,11 +162,11 @@ describe('UploadBistreamComponent', () => {
       loadFixtureAndComp();
     });
 
-    it('should set the selected id to the bundle\'s id', () => {
+    it("should set the selected id to the bundle's id", () => {
       expect(comp.selectedBundleId).toEqual(bundle.id);
     });
 
-    it('should set the selected name to the bundle\'s name', () => {
+    it("should set the selected name to the bundle's name", () => {
       expect(comp.selectedBundleName).toEqual(bundle.name);
     });
 
@@ -190,7 +197,10 @@ describe('UploadBistreamComponent', () => {
       });
 
       it('should create a new bundle', () => {
-        expect(mockItemDataService.createBundle).toHaveBeenCalledWith(mockItem.id, customName);
+        expect(mockItemDataService.createBundle).toHaveBeenCalledWith(
+          mockItem.id,
+          customName
+        );
       });
 
       it('should set the selected id to the id of the new bundle', () => {
@@ -210,19 +220,24 @@ describe('UploadBistreamComponent', () => {
   function createUploadBitstreamTestingModule(queryParams) {
     routeStub = {
       data: observableOf({
-        dso: createSuccessfulRemoteDataObject(mockItem)
+        dso: createSuccessfulRemoteDataObject(mockItem),
       }),
       queryParams: observableOf(queryParams),
       snapshot: {
         queryParams: queryParams,
         params: {
-          id: mockItem.id
-        }
-      }
+          id: mockItem.id,
+        },
+      },
     };
 
     TestBed.configureTestingModule({
-      imports: [CommonModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), NgbModule],
+      imports: [
+        CommonModule,
+        RouterTestingModule.withRoutes([]),
+        TranslateModule.forRoot(),
+        NgbModule,
+      ],
       declarations: [UploadBitstreamComponent, VarDirective],
       providers: [
         { provide: ActivatedRoute, useValue: routeStub },
@@ -231,10 +246,9 @@ describe('UploadBistreamComponent', () => {
         { provide: NotificationsService, useValue: notificationsServiceStub },
         { provide: AuthService, useValue: authServiceStub },
         { provide: BundleDataService, useValue: bundleService },
-        { provide: RequestService, useValue: requestService }
-      ], schemas: [
-        NO_ERRORS_SCHEMA
-      ]
+        { provide: RequestService, useValue: requestService },
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }
 
@@ -247,5 +261,4 @@ describe('UploadBistreamComponent', () => {
     comp.uploaderComponent = uploaderComponent;
     fixture.detectChanges();
   }
-
 });

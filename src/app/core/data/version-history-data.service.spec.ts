@@ -66,7 +66,9 @@ describe('VersionHistoryDataService', () => {
     },
   });
   const versions = [version1, version2];
-  versionHistory.versions = createSuccessfulRemoteDataObject$(createPaginatedList(versions));
+  versionHistory.versions = createSuccessfulRemoteDataObject$(
+    createPaginatedList(versions)
+  );
   const item1 = Object.assign(new Item(), {
     uuid: item1Uuid,
     handle: '123456789/1',
@@ -74,8 +76,8 @@ describe('VersionHistoryDataService', () => {
     _links: {
       self: {
         href: '/items/' + item2Uuid,
-      }
-    }
+      },
+    },
   });
   const item2 = Object.assign(new Item(), {
     uuid: item2Uuid,
@@ -84,8 +86,8 @@ describe('VersionHistoryDataService', () => {
     _links: {
       self: {
         href: '/items/' + item2Uuid,
-      }
-    }
+      },
+    },
   });
   const items = [item1, item2];
   version1.item = createSuccessfulRemoteDataObject$(item1);
@@ -102,7 +104,7 @@ describe('VersionHistoryDataService', () => {
       buildFromRequestUUID: jasmine.createSpy('buildFromRequestUUID'),
     });
     objectCache = jasmine.createSpyObj('objectCache', {
-      remove: jasmine.createSpy('remove')
+      remove: jasmine.createSpy('remove'),
     });
     versionService = jasmine.createSpyObj('objectCache', {
       findByHref: jasmine.createSpy('findByHref'),
@@ -112,7 +114,17 @@ describe('VersionHistoryDataService', () => {
     halService = new HALEndpointServiceStub(url);
     notificationsService = new NotificationsServiceStub();
 
-    service = new VersionHistoryDataService(requestService, rdbService, null, objectCache, halService, notificationsService, versionService, null, null);
+    service = new VersionHistoryDataService(
+      requestService,
+      rdbService,
+      null,
+      objectCache,
+      halService,
+      notificationsService,
+      versionService,
+      null,
+      null
+    );
   }
 
   beforeEach(() => {
@@ -159,7 +171,9 @@ describe('VersionHistoryDataService', () => {
   describe('when cache is invalidated', () => {
     it('should call setStaleByHrefSubstring', () => {
       service.invalidateVersionHistoryCache(versionHistoryId);
-      expect(requestService.setStaleByHrefSubstring).toHaveBeenCalledWith('versioning/versionhistories/' + versionHistoryId);
+      expect(requestService.setStaleByHrefSubstring).toHaveBeenCalledWith(
+        'versioning/versionhistories/' + versionHistoryId
+      );
     });
   });
 
@@ -181,7 +195,9 @@ describe('VersionHistoryDataService', () => {
 
   describe('hasDraftVersion$', () => {
     beforeEach(waitForAsync(() => {
-      versionService.findByHref.and.returnValue(createSuccessfulRemoteDataObject$<Version>(version1));
+      versionService.findByHref.and.returnValue(
+        createSuccessfulRemoteDataObject$<Version>(version1)
+      );
     }));
     it('should return false if draftVersion is false', fakeAsync(() => {
       versionService.getHistoryFromVersion.and.returnValue(of(versionHistory));
@@ -190,11 +206,12 @@ describe('VersionHistoryDataService', () => {
       });
     }));
     it('should return true if draftVersion is true', fakeAsync(() => {
-      versionService.getHistoryFromVersion.and.returnValue(of(versionHistoryDraft));
+      versionService.getHistoryFromVersion.and.returnValue(
+        of(versionHistoryDraft)
+      );
       service.hasDraftVersion$('href').subscribe((res) => {
         expect(res).toBeTrue();
       });
     }));
   });
-
 });

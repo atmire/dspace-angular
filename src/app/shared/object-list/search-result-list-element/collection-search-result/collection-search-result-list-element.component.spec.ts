@@ -17,31 +17,36 @@ const truncatableServiceStub: any = {
   isCollapsed: (id: number) => observableOf(true),
 };
 
-const mockCollectionWithAbstract: CollectionSearchResult = new CollectionSearchResult();
+const mockCollectionWithAbstract: CollectionSearchResult =
+  new CollectionSearchResult();
 mockCollectionWithAbstract.hitHighlights = {};
 mockCollectionWithAbstract.indexableObject = Object.assign(new Collection(), {
   metadata: {
     'dc.description.abstract': [
       {
         language: 'en_US',
-        value: 'Short description'
-      }
-    ]
-  }
+        value: 'Short description',
+      },
+    ],
+  },
 });
 
-const mockCollectionWithoutAbstract: CollectionSearchResult = new CollectionSearchResult();
+const mockCollectionWithoutAbstract: CollectionSearchResult =
+  new CollectionSearchResult();
 mockCollectionWithoutAbstract.hitHighlights = {};
-mockCollectionWithoutAbstract.indexableObject = Object.assign(new Collection(), {
-  metadata: {
-    'dc.title': [
-      {
-        language: 'en_US',
-        value: 'Test title'
-      }
-    ]
+mockCollectionWithoutAbstract.indexableObject = Object.assign(
+  new Collection(),
+  {
+    metadata: {
+      'dc.title': [
+        {
+          language: 'en_US',
+          value: 'Test title',
+        },
+      ],
+    },
   }
-});
+);
 
 describe('CollectionSearchResultListElementComponent', () => {
   beforeEach(waitForAsync(() => {
@@ -49,41 +54,52 @@ describe('CollectionSearchResultListElementComponent', () => {
       declarations: [CollectionSearchResultListElementComponent, TruncatePipe],
       providers: [
         { provide: TruncatableService, useValue: truncatableServiceStub },
-        { provide: DSONameService, useClass: DSONameServiceMock }
+        { provide: DSONameService, useClass: DSONameServiceMock },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(CollectionSearchResultListElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(CollectionSearchResultListElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
-    fixture = TestBed.createComponent(CollectionSearchResultListElementComponent);
+    fixture = TestBed.createComponent(
+      CollectionSearchResultListElementComponent
+    );
     collectionSearchResultListElementComponent = fixture.componentInstance;
-    collectionSearchResultListElementComponent.object = mockCollectionWithAbstract;
+    collectionSearchResultListElementComponent.object =
+      mockCollectionWithAbstract;
     fixture.detectChanges();
   }));
 
   describe('When the collection has an abstract', () => {
     beforeEach(() => {
-      collectionSearchResultListElementComponent.dso = mockCollectionWithAbstract.indexableObject;
+      collectionSearchResultListElementComponent.dso =
+        mockCollectionWithAbstract.indexableObject;
       fixture.detectChanges();
     });
 
     it('should show the description paragraph', () => {
-      const collectionAbstractField = fixture.debugElement.query(By.css('div.abstract-text'));
+      const collectionAbstractField = fixture.debugElement.query(
+        By.css('div.abstract-text')
+      );
       expect(collectionAbstractField).not.toBeNull();
     });
   });
 
   describe('When the collection has no abstract', () => {
     beforeEach(() => {
-      collectionSearchResultListElementComponent.dso = mockCollectionWithoutAbstract.indexableObject;
+      collectionSearchResultListElementComponent.dso =
+        mockCollectionWithoutAbstract.indexableObject;
       fixture.detectChanges();
     });
 
     it('should not show the description paragraph', () => {
-      const collectionAbstractField = fixture.debugElement.query(By.css('div.abstract-text'));
+      const collectionAbstractField = fixture.debugElement.query(
+        By.css('div.abstract-text')
+      );
       expect(collectionAbstractField).toBeNull();
     });
   });

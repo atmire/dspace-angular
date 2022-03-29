@@ -12,10 +12,9 @@ import { AuthService } from '../../core/auth/auth.service';
 @Component({
   selector: 'ds-community-statistics-page',
   templateUrl: '../statistics-page/statistics-page.component.html',
-  styleUrls: ['./community-statistics-page.component.scss']
+  styleUrls: ['./community-statistics-page.component.scss'],
 })
 export class CommunityStatisticsPageComponent extends StatisticsPageComponent<Community> {
-
   /**
    * The report types to show on this statistics page.
    */
@@ -31,14 +30,8 @@ export class CommunityStatisticsPageComponent extends StatisticsPageComponent<Co
     protected router: Router,
     protected usageReportService: UsageReportService,
     protected nameService: DSONameService,
-    protected authService: AuthService,
+    protected authService: AuthService
   ) {
-    super(
-      route,
-      router,
-      usageReportService,
-      nameService,
-      authService,
-    );
+    super(route, router, usageReportService, nameService, authService);
   }
 }

@@ -19,7 +19,10 @@ import { toRemoteData } from '../browse-by-metadata-page/browse-by-metadata-page
 import { VarDirective } from '../../shared/utils/var.directive';
 import { createSuccessfulRemoteDataObject$ } from '../../shared/remote-data.utils';
 import { PaginationComponentOptions } from '../../shared/pagination/pagination-component-options.model';
-import { SortDirection, SortOptions } from '../../core/cache/models/sort-options.model';
+import {
+  SortDirection,
+  SortOptions,
+} from '../../core/cache/models/sort-options.model';
 import { FindListOptions } from '../../core/data/request.models';
 import { PaginationService } from '../../core/pagination/pagination.service';
 import { PaginationServiceStub } from '../../shared/testing/pagination-service.stub';
@@ -35,9 +38,9 @@ describe('BrowseByDatePageComponent', () => {
     metadata: [
       {
         key: 'dc.title',
-        value: 'test community'
-      }
-    ]
+        value: 'test community',
+      },
+    ],
   });
 
   const firstItem = Object.assign(new Item(), {
@@ -45,37 +48,47 @@ describe('BrowseByDatePageComponent', () => {
     metadata: {
       'dc.date.issued': [
         {
-          value: '1950-01-01'
-        }
-      ]
-    }
+          value: '1950-01-01',
+        },
+      ],
+    },
   });
 
   const mockBrowseService = {
-    getBrowseEntriesFor: (options: BrowseEntrySearchOptions) => toRemoteData([]),
-    getBrowseItemsFor: (value: string, options: BrowseEntrySearchOptions) => toRemoteData([firstItem]),
-    getFirstItemFor: () => createSuccessfulRemoteDataObject$(firstItem)
+    getBrowseEntriesFor: (options: BrowseEntrySearchOptions) =>
+      toRemoteData([]),
+    getBrowseItemsFor: (value: string, options: BrowseEntrySearchOptions) =>
+      toRemoteData([firstItem]),
+    getFirstItemFor: () => createSuccessfulRemoteDataObject$(firstItem),
   };
 
   const mockDsoService = {
-    findById: () => createSuccessfulRemoteDataObject$(mockCommunity)
+    findById: () => createSuccessfulRemoteDataObject$(mockCommunity),
   };
 
   const activatedRouteStub = Object.assign(new ActivatedRouteStub(), {
     params: observableOf({}),
     queryParams: observableOf({}),
-    data: observableOf({ metadata: 'dateissued', metadataField: 'dc.date.issued' })
+    data: observableOf({
+      metadata: 'dateissued',
+      metadataField: 'dc.date.issued',
+    }),
   });
 
   const mockCdRef = Object.assign({
-    detectChanges: () => fixture.detectChanges()
+    detectChanges: () => fixture.detectChanges(),
   });
 
   paginationService = new PaginationServiceStub();
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [CommonModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), NgbModule],
+      imports: [
+        CommonModule,
+        RouterTestingModule.withRoutes([]),
+        TranslateModule.forRoot(),
+        NgbModule,
+      ],
       declarations: [BrowseByDatePageComponent, EnumKeysPipe, VarDirective],
       providers: [
         { provide: ActivatedRoute, useValue: activatedRouteStub },
@@ -83,9 +96,9 @@ describe('BrowseByDatePageComponent', () => {
         { provide: DSpaceObjectDataService, useValue: mockDsoService },
         { provide: Router, useValue: new RouterMock() },
         { provide: PaginationService, useValue: paginationService },
-        { provide: ChangeDetectorRef, useValue: mockCdRef }
+        { provide: ChangeDetectorRef, useValue: mockCdRef },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -103,7 +116,9 @@ describe('BrowseByDatePageComponent', () => {
   });
 
   it('should create a list of startsWith options with the earliest year at the end (rounded down by 10)', () => {
-    expect(comp.startsWithOptions[comp.startsWithOptions.length - 1]).toEqual(1950);
+    expect(comp.startsWithOptions[comp.startsWithOptions.length - 1]).toEqual(
+      1950
+    );
   });
 
   it('should create a list of startsWith options with the current year first', () => {

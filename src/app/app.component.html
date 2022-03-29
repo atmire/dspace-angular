@@ -1,3 +1,6 @@
 <ds-themed-root
-  [shouldShowFullscreenLoader]="(isAuthBlocking$ | async) || (isThemeLoading$ | async)"
-  [shouldShowRouteLoader]="isRouteLoading$ | async"></ds-themed-root>
+  [shouldShowFullscreenLoader]="
+    (isAuthBlocking$ | async) || (isThemeLoading$ | async)
+  "
+  [shouldShowRouteLoader]="isRouteLoading$ | async"
+></ds-themed-root>

@@ -36,13 +36,13 @@ describe('ProcessParametersComponent', () => {
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
-            useClass: TranslateLoaderMock
-          }
-        })],
+            useClass: TranslateLoaderMock,
+          },
+        }),
+      ],
       declarations: [ProcessParametersComponent, ParameterSelectComponent],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
-      .compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -58,7 +58,9 @@ describe('ProcessParametersComponent', () => {
   });
 
   it('should render a ParameterSelectComponent for each parameter value of the component', () => {
-    const selectComponents = fixture.debugElement.queryAll(By.directive(ParameterSelectComponent));
+    const selectComponents = fixture.debugElement.queryAll(
+      By.directive(ParameterSelectComponent)
+    );
     expect(selectComponents.length).toBe(parameterValues.length);
   });
 });

@@ -1,6 +1,14 @@
-import { DynamicFormsCoreModule, DynamicFormService } from '@ng-dynamic-forms/core';
+import {
+  DynamicFormsCoreModule,
+  DynamicFormService,
+} from '@ng-dynamic-forms/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ComponentFixture, inject, TestBed, waitForAsync } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  inject,
+  TestBed,
+  waitForAsync,
+} from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
@@ -8,7 +16,6 @@ import { DynamicCustomSwitchModel } from './custom-switch.model';
 import { CustomSwitchComponent } from './custom-switch.component';
 
 describe('CustomSwitchComponent', () => {
-
   const testModel = new DynamicCustomSwitchModel({ id: 'switch' });
   const formModel = [testModel];
   let formGroup: FormGroup;
@@ -22,16 +29,17 @@ describe('CustomSwitchComponent', () => {
       imports: [
         ReactiveFormsModule,
         NoopAnimationsModule,
-        DynamicFormsCoreModule.forRoot()
+        DynamicFormsCoreModule.forRoot(),
       ],
-      declarations: [CustomSwitchComponent]
+      declarations: [CustomSwitchComponent],
+    })
+      .compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(CustomSwitchComponent);
 
-    }).compileComponents().then(() => {
-      fixture = TestBed.createComponent(CustomSwitchComponent);
-
-      component = fixture.componentInstance;
-      debugElement = fixture.debugElement;
-    });
+        component = fixture.componentInstance;
+        debugElement = fixture.debugElement;
+      });
   }));
 
   beforeEach(inject([DynamicFormService], (service: DynamicFormService) => {

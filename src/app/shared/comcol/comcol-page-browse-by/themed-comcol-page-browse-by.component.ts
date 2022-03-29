@@ -17,14 +17,19 @@ export class ThemedComcolPageBrowseByComponent extends ThemedComponent<ComcolPag
   @Input() id: string;
   @Input() contentType: string;
 
-  inAndOutputNames: (keyof ComcolPageBrowseByComponent & keyof this)[] = ['id', 'contentType'];
+  inAndOutputNames: (keyof ComcolPageBrowseByComponent & keyof this)[] = [
+    'id',
+    'contentType',
+  ];
 
   protected getComponentName(): string {
     return 'ComcolPageBrowseByComponent';
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../../themes/${themeName}/app/shared/comcol-page-browse-by/comcol-page-browse-by.component`);
+    return import(
+      `../../../../themes/${themeName}/app/shared/comcol-page-browse-by/comcol-page-browse-by.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

@@ -1,10 +1,8 @@
 export enum SortDirection {
   ASC = 'ASC',
-  DESC = 'DESC'
+  DESC = 'DESC',
 }
 
 export class SortOptions {
-  constructor(public field: string, public direction: SortDirection) {
-
-  }
+  constructor(public field: string, public direction: SortDirection) {}
 }

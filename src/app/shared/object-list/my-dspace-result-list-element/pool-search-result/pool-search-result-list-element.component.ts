@@ -20,13 +20,16 @@ import { DSONameService } from '../../../../core/breadcrumbs/dso-name.service';
  */
 @Component({
   selector: 'ds-pool-search-result-list-element',
-  styleUrls: ['../../search-result-list-element/search-result-list-element.component.scss'],
+  styleUrls: [
+    '../../search-result-list-element/search-result-list-element.component.scss',
+  ],
   templateUrl: './pool-search-result-list-element.component.html',
 })
-
 @listableObjectComponent(PoolTaskSearchResult, ViewMode.ListElement)
-export class PoolSearchResultListElementComponent extends SearchResultListElementComponent<PoolTaskSearchResult, PoolTask> implements OnInit {
-
+export class PoolSearchResultListElementComponent
+  extends SearchResultListElementComponent<PoolTaskSearchResult, PoolTask>
+  implements OnInit
+{
   /**
    * A boolean representing if to show submitter information
    */
@@ -60,10 +63,18 @@ export class PoolSearchResultListElementComponent extends SearchResultListElemen
    */
   ngOnInit() {
     super.ngOnInit();
-    this.linkService.resolveLinks(this.dso, followLink('workflowitem', {},
-      followLink('item'), followLink('submitter')
-    ), followLink('action'));
-    this.workflowitemRD$ = this.dso.workflowitem as Observable<RemoteData<WorkflowItem>>;
+    this.linkService.resolveLinks(
+      this.dso,
+      followLink(
+        'workflowitem',
+        {},
+        followLink('item'),
+        followLink('submitter')
+      ),
+      followLink('action')
+    );
+    this.workflowitemRD$ = this.dso.workflowitem as Observable<
+      RemoteData<WorkflowItem>
+    >;
   }
-
 }

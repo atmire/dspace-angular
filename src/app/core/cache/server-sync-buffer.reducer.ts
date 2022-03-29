@@ -3,7 +3,7 @@ import {
   AddToSSBAction,
   EmptySSBAction,
   ServerSyncBufferAction,
-  ServerSyncBufferActionTypes
+  ServerSyncBufferActionTypes,
 } from './server-sync-buffer.actions';
 import { RestRequestMethod } from '../data/rest-request-method';
 
@@ -38,9 +38,11 @@ const initialState: ServerSyncBufferState = { buffer: [] };
  * @return ServerSyncBufferState
  *    the new state
  */
-export function serverSyncBufferReducer(state = initialState, action: ServerSyncBufferAction): ServerSyncBufferState {
+export function serverSyncBufferReducer(
+  state = initialState,
+  action: ServerSyncBufferAction
+): ServerSyncBufferState {
   switch (action.type) {
-
     case ServerSyncBufferActionTypes.ADD: {
       return addToServerSyncQueue(state, action as AddToSSBAction);
     }
@@ -65,10 +67,22 @@ export function serverSyncBufferReducer(state = initialState, action: ServerSync
  * @return ServerSyncBufferState
  *    the new state, with a new entry added to the buffer
  */
-function addToServerSyncQueue(state: ServerSyncBufferState, action: AddToSSBAction): ServerSyncBufferState {
+function addToServerSyncQueue(
+  state: ServerSyncBufferState,
+  action: AddToSSBAction
+): ServerSyncBufferState {
   const actionEntry = action.payload as ServerSyncBufferEntry;
-  if (hasNoValue(state.buffer.find((entry) => entry.href === actionEntry.href && entry.method === actionEntry.method))) {
-    return Object.assign({}, state, { buffer: state.buffer.concat(actionEntry) });
+  if (
+    hasNoValue(
+      state.buffer.find(
+        (entry) =>
+          entry.href === actionEntry.href && entry.method === actionEntry.method
+      )
+    )
+  ) {
+    return Object.assign({}, state, {
+      buffer: state.buffer.concat(actionEntry),
+    });
   } else {
     return state;
   }
@@ -85,10 +99,13 @@ function addToServerSyncQueue(state: ServerSyncBufferState, action: AddToSSBActi
  * @return ServerSyncBufferState
  *    the new state, with a new entry added to the buffer
  */
-function emptyServerSyncQueue(state: ServerSyncBufferState, action: EmptySSBAction): ServerSyncBufferState {
-    let newBuffer = [];
-    if (hasValue(action.payload)) {
-      newBuffer = state.buffer.filter((entry) => entry.method !== action.payload);
-    }
-    return Object.assign({}, state, { buffer: newBuffer });
+function emptyServerSyncQueue(
+  state: ServerSyncBufferState,
+  action: EmptySSBAction
+): ServerSyncBufferState {
+  let newBuffer = [];
+  if (hasValue(action.payload)) {
+    newBuffer = state.buffer.filter((entry) => entry.method !== action.payload);
+  }
+  return Object.assign({}, state, { buffer: newBuffer });
 }

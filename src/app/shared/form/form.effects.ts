@@ -3,9 +3,5 @@ import { Actions } from '@ngrx/effects';
 
 @Injectable()
 export class FormEffects {
-
-  constructor(private actions$: Actions) {
-
-  }
-
+  constructor(private actions$: Actions) {}
 }

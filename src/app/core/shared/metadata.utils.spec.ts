@@ -1,16 +1,25 @@
 import { isUndefined } from '../../shared/empty.util';
 import { v4 as uuidv4 } from 'uuid';
-import { MetadataMap, MetadataValue, MetadataValueFilter, MetadatumViewModel } from './metadata.models';
+import {
+  MetadataMap,
+  MetadataValue,
+  MetadataValueFilter,
+  MetadatumViewModel,
+} from './metadata.models';
 import { Metadata } from './metadata.utils';
 
-const mdValue = (value: string, language?: string, authority?: string): MetadataValue => {
+const mdValue = (
+  value: string,
+  language?: string,
+  authority?: string
+): MetadataValue => {
   return Object.assign(new MetadataValue(), {
     uuid: uuidv4(),
     value: value,
     language: isUndefined(language) ? null : language,
     place: 0,
     authority: isUndefined(authority) ? null : authority,
-    confidence: undefined
+    confidence: undefined,
   });
 };
 
@@ -28,7 +37,7 @@ const multiMap = {
   'dc.description': [dcDescription],
   'dc.description.abstract': [dcAbstract],
   'dc.title': [dcTitle1, dcTitle2],
-  'foo': [bar]
+  foo: [bar],
 };
 
 const regexTestMap = {
@@ -41,36 +50,56 @@ const multiViewModelList = [
   { key: 'dc.description.abstract', ...dcAbstract, order: 0 },
   { key: 'dc.title', ...dcTitle1, order: 0 },
   { key: 'dc.title', ...dcTitle2, order: 1 },
-  { key: 'foo', ...bar, order: 0 }
+  { key: 'foo', ...bar, order: 0 },
 ];
 
-const testMethod = (fn, resultKind, mapOrMaps, keyOrKeys, expected, filter?) => {
+const testMethod = (
+  fn,
+  resultKind,
+  mapOrMaps,
+  keyOrKeys,
+  expected,
+  filter?
+) => {
   const keys = keyOrKeys instanceof Array ? keyOrKeys : [keyOrKeys];
-  describe('and key' + (keys.length === 1 ? (' ' + keys[0]) : ('s ' + JSON.stringify(keys)))
-    + ' with ' + (isUndefined(filter) ? 'no filter' : 'filter ' + JSON.stringify(filter)), () => {
-    const result = fn(mapOrMaps, keys, filter);
-    let shouldReturn;
-    if (resultKind === 'boolean') {
-      shouldReturn = expected;
-    } else if (isUndefined(expected)) {
-      shouldReturn = 'undefined';
-    } else if (expected instanceof Array) {
-      shouldReturn = 'an array with ' + expected.length + ' ' + (expected.length > 1 ? 'ordered ' : '')
-        + resultKind + (expected.length !== 1 ? 's' : '');
-    } else {
-      shouldReturn = 'a ' + resultKind;
+  describe(
+    'and key' +
+      (keys.length === 1 ? ' ' + keys[0] : 's ' + JSON.stringify(keys)) +
+      ' with ' +
+      (isUndefined(filter) ? 'no filter' : 'filter ' + JSON.stringify(filter)),
+    () => {
+      const result = fn(mapOrMaps, keys, filter);
+      let shouldReturn;
+      if (resultKind === 'boolean') {
+        shouldReturn = expected;
+      } else if (isUndefined(expected)) {
+        shouldReturn = 'undefined';
+      } else if (expected instanceof Array) {
+        shouldReturn =
+          'an array with ' +
+          expected.length +
+          ' ' +
+          (expected.length > 1 ? 'ordered ' : '') +
+          resultKind +
+          (expected.length !== 1 ? 's' : '');
+      } else {
+        shouldReturn = 'a ' + resultKind;
+      }
+      it('should return ' + shouldReturn, () => {
+        expect(result).toEqual(expected);
+      });
     }
-    it('should return ' + shouldReturn, () => {
-      expect(result).toEqual(expected);
-    });
-  });
+  );
 };
 
 describe('Metadata', () => {
-
   describe('all method', () => {
-
-    const testAll = (mapOrMaps, keyOrKeys, expected, filter?: MetadataValueFilter) =>
+    const testAll = (
+      mapOrMaps,
+      keyOrKeys,
+      expected,
+      filter?: MetadataValueFilter
+    ) =>
       testMethod(Metadata.all, 'value', mapOrMaps, keyOrKeys, expected, filter);
 
     describe('with emptyMap', () => {
@@ -86,10 +115,25 @@ describe('Metadata', () => {
     });
     describe('with multiMap', () => {
       testAll(multiMap, 'foo', [bar]);
-      testAll(multiMap, '*', [dcDescription, dcAbstract, dcTitle1, dcTitle2, bar]);
+      testAll(multiMap, '*', [
+        dcDescription,
+        dcAbstract,
+        dcTitle1,
+        dcTitle2,
+        bar,
+      ]);
       testAll(multiMap, 'dc.title', [dcTitle1, dcTitle2]);
-      testAll(multiMap, 'dc.*', [dcDescription, dcAbstract, dcTitle1, dcTitle2]);
-      testAll(multiMap, ['dc.title', 'dc.*'], [dcTitle1, dcTitle2, dcDescription, dcAbstract]);
+      testAll(multiMap, 'dc.*', [
+        dcDescription,
+        dcAbstract,
+        dcTitle1,
+        dcTitle2,
+      ]);
+      testAll(
+        multiMap,
+        ['dc.title', 'dc.*'],
+        [dcTitle1, dcTitle2, dcDescription, dcAbstract]
+      );
     });
     describe('with [ singleMap, multiMap ]', () => {
       testAll([singleMap, multiMap], 'foo', [bar]);
@@ -99,10 +143,25 @@ describe('Metadata', () => {
     });
     describe('with [ multiMap, singleMap ]', () => {
       testAll([multiMap, singleMap], 'foo', [bar]);
-      testAll([multiMap, singleMap], '*', [dcDescription, dcAbstract, dcTitle1, dcTitle2, bar]);
+      testAll([multiMap, singleMap], '*', [
+        dcDescription,
+        dcAbstract,
+        dcTitle1,
+        dcTitle2,
+        bar,
+      ]);
       testAll([multiMap, singleMap], 'dc.title', [dcTitle1, dcTitle2]);
-      testAll([multiMap, singleMap], 'dc.*', [dcDescription, dcAbstract, dcTitle1, dcTitle2]);
-      testAll([multiMap, singleMap], ['dc.title', 'dc.*'], [dcTitle1, dcTitle2, dcDescription, dcAbstract]);
+      testAll([multiMap, singleMap], 'dc.*', [
+        dcDescription,
+        dcAbstract,
+        dcTitle1,
+        dcTitle2,
+      ]);
+      testAll(
+        [multiMap, singleMap],
+        ['dc.title', 'dc.*'],
+        [dcTitle1, dcTitle2, dcDescription, dcAbstract]
+      );
     });
     describe('with regexTestMap', () => {
       testAll(regexTestMap, 'foo.bar.*', []);
@@ -110,7 +169,6 @@ describe('Metadata', () => {
   });
 
   describe('allValues method', () => {
-
     const testAllValues = (mapOrMaps, keyOrKeys, expected) =>
       testMethod(Metadata.allValues, 'string', mapOrMaps, keyOrKeys, expected);
 
@@ -121,12 +179,17 @@ describe('Metadata', () => {
       testAllValues([singleMap, multiMap], '*', [dcTitle0.value]);
     });
     describe('with [ multiMap, singleMap ]', () => {
-      testAllValues([multiMap, singleMap], '*', [dcDescription.value, dcAbstract.value, dcTitle1.value, dcTitle2.value, bar.value]);
+      testAllValues([multiMap, singleMap], '*', [
+        dcDescription.value,
+        dcAbstract.value,
+        dcTitle1.value,
+        dcTitle2.value,
+        bar.value,
+      ]);
     });
   });
 
   describe('first method', () => {
-
     const testFirst = (mapOrMaps, keyOrKeys, expected) =>
       testMethod(Metadata.first, 'value', mapOrMaps, keyOrKeys, expected);
 
@@ -142,7 +205,6 @@ describe('Metadata', () => {
   });
 
   describe('firstValue method', () => {
-
     const testFirstValue = (mapOrMaps, keyOrKeys, expected) =>
       testMethod(Metadata.firstValue, 'value', mapOrMaps, keyOrKeys, expected);
 
@@ -158,9 +220,20 @@ describe('Metadata', () => {
   });
 
   describe('has method', () => {
-
-    const testHas = (mapOrMaps, keyOrKeys, expected, filter?: MetadataValueFilter) =>
-      testMethod(Metadata.has, 'boolean', mapOrMaps, keyOrKeys, expected, filter);
+    const testHas = (
+      mapOrMaps,
+      keyOrKeys,
+      expected,
+      filter?: MetadataValueFilter
+    ) =>
+      testMethod(
+        Metadata.has,
+        'boolean',
+        mapOrMaps,
+        keyOrKeys,
+        expected,
+        filter
+      );
 
     describe('with emptyMap', () => {
       testHas({}, '*', false);
@@ -175,15 +248,23 @@ describe('Metadata', () => {
   });
 
   describe('valueMatches method', () => {
-
-    const testValueMatches = (value: MetadataValue, expected: boolean, filter?: MetadataValueFilter) => {
-      describe('with value ' + JSON.stringify(value) + ' and filter '
-        + (isUndefined(filter) ? 'undefined' : JSON.stringify(filter)), () => {
-        const result = Metadata.valueMatches(value, filter);
-        it('should return ' + expected, () => {
-          expect(result).toEqual(expected);
-        });
-      });
+    const testValueMatches = (
+      value: MetadataValue,
+      expected: boolean,
+      filter?: MetadataValueFilter
+    ) => {
+      describe(
+        'with value ' +
+          JSON.stringify(value) +
+          ' and filter ' +
+          (isUndefined(filter) ? 'undefined' : JSON.stringify(filter)),
+        () => {
+          const result = Metadata.valueMatches(value, filter);
+          it('should return ' + expected, () => {
+            expect(result).toEqual(expected);
+          });
+        }
+      );
     };
 
     testValueMatches(mdValue('a'), true);
@@ -195,13 +276,19 @@ describe('Metadata', () => {
     testValueMatches(mdValue('a'), true, { language: null });
     testValueMatches(mdValue('a'), false, { language: 'en_US' });
     testValueMatches(mdValue('a', 'en_US'), true, { language: 'en_US' });
-    testValueMatches(mdValue('a', undefined, '4321'), true, { authority: '4321' });
-    testValueMatches(mdValue('a', undefined, '4321'), false, { authority: '1234' });
+    testValueMatches(mdValue('a', undefined, '4321'), true, {
+      authority: '4321',
+    });
+    testValueMatches(mdValue('a', undefined, '4321'), false, {
+      authority: '1234',
+    });
   });
 
   describe('toViewModelList method', () => {
-
-    const testToViewModelList = (map: MetadataMap, expected: MetadatumViewModel[]) => {
+    const testToViewModelList = (
+      map: MetadataMap,
+      expected: MetadatumViewModel[]
+    ) => {
       describe('with map ' + JSON.stringify(map), () => {
         const result = Metadata.toViewModelList(map);
         it('should return ' + JSON.stringify(expected), () => {
@@ -214,8 +301,10 @@ describe('Metadata', () => {
   });
 
   describe('toMetadataMap method', () => {
-
-    const testToMetadataMap = (metadatumList: MetadatumViewModel[], expected: MetadataMap) => {
+    const testToMetadataMap = (
+      metadatumList: MetadatumViewModel[],
+      expected: MetadataMap
+    ) => {
       describe('with metadatum list ' + JSON.stringify(metadatumList), () => {
         const result = Metadata.toMetadataMap(metadatumList);
         it('should return ' + JSON.stringify(expected), () => {
@@ -228,13 +317,16 @@ describe('Metadata', () => {
   });
 
   describe('setFirstValue method', () => {
-
     const metadataMap = {
       'dc.description': [mdValue('Test description')],
-      'dc.title': [mdValue('Test title 1'), mdValue('Test title 2')]
+      'dc.title': [mdValue('Test title 1'), mdValue('Test title 2')],
     };
 
-    const testSetFirstValue = (map: MetadataMap, key: string, value: string) => {
+    const testSetFirstValue = (
+      map: MetadataMap,
+      key: string,
+      value: string
+    ) => {
       describe(`with field ${key} and value ${value}`, () => {
         Metadata.setFirstValue(map, key, value);
         it(`should set first value of ${key} to ${value}`, () => {
@@ -245,8 +337,10 @@ describe('Metadata', () => {
 
     testSetFirstValue(metadataMap, 'dc.description', 'New Description');
     testSetFirstValue(metadataMap, 'dc.title', 'New Title');
-    testSetFirstValue(metadataMap, 'dc.format', 'Completely new field and value');
-
+    testSetFirstValue(
+      metadataMap,
+      'dc.format',
+      'Completely new field and value'
+    );
   });
-
 });

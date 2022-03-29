@@ -14,20 +14,29 @@ import { getFirstCompletedRemoteData } from '../../core/shared/operators';
 
 @Component({
   selector: 'ds-workflow-item-delete',
-  templateUrl: '../workflow-item-action-page.component.html'
+  templateUrl: '../workflow-item-action-page.component.html',
 })
 /**
  * Component representing a page to delete a workflow item
  */
 export class WorkflowItemDeleteComponent extends WorkflowItemActionPageComponent {
-  constructor(protected route: ActivatedRoute,
-              protected workflowItemService: WorkflowItemDataService,
-              protected router: Router,
-              protected routeService: RouteService,
-              protected notificationsService: NotificationsService,
-              protected translationService: TranslateService,
-              protected requestService: RequestService) {
-    super(route, workflowItemService, router, routeService, notificationsService, translationService);
+  constructor(
+    protected route: ActivatedRoute,
+    protected workflowItemService: WorkflowItemDataService,
+    protected router: Router,
+    protected routeService: RouteService,
+    protected notificationsService: NotificationsService,
+    protected translationService: TranslateService,
+    protected requestService: RequestService
+  ) {
+    super(
+      route,
+      workflowItemService,
+      router,
+      routeService,
+      notificationsService,
+      translationService
+    );
   }
 
   /**

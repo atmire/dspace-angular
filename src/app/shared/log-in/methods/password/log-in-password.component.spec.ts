@@ -19,7 +19,6 @@ import { AuthMethodType } from '../../../../core/auth/models/auth.method-type';
 import { HardRedirectService } from '../../../../core/services/hard-redirect.service';
 
 describe('LogInPasswordComponent', () => {
-
   let component: LogInPasswordComponent;
   let fixture: ComponentFixture<LogInPasswordComponent>;
   let page: Page;
@@ -31,7 +30,7 @@ describe('LogInPasswordComponent', () => {
     user = EPersonMock;
 
     hardRedirectService = jasmine.createSpyObj('hardRedirectService', {
-      getCurrentRoute: {}
+      getCurrentRoute: {},
     });
 
     initialState = {
@@ -41,9 +40,9 @@ describe('LogInPasswordComponent', () => {
           loaded: false,
           blocking: false,
           loading: false,
-          authMethods: []
-        }
-      }
+          authMethods: [],
+        },
+      },
     };
   });
 
@@ -54,24 +53,21 @@ describe('LogInPasswordComponent', () => {
         FormsModule,
         ReactiveFormsModule,
         StoreModule.forRoot({ auth: authReducer }, storeModuleConfig),
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
       ],
-      declarations: [
-        LogInPasswordComponent
-      ],
+      declarations: [LogInPasswordComponent],
       providers: [
         { provide: AuthService, useClass: AuthServiceStub },
-        { provide: 'authMethodProvider', useValue: new AuthMethod(AuthMethodType.Password) },
+        {
+          provide: 'authMethodProvider',
+          useValue: new AuthMethod(AuthMethodType.Password),
+        },
         { provide: 'isStandalonePage', useValue: true },
         { provide: HardRedirectService, useValue: hardRedirectService },
         provideMockStore({ initialState }),
       ],
-      schemas: [
-        CUSTOM_ELEMENTS_SCHEMA
-      ]
-    })
-      .compileComponents();
-
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -88,7 +84,6 @@ describe('LogInPasswordComponent', () => {
     fixture.whenStable().then(() => {
       page.addPageElements();
     });
-
   });
 
   it('should create a FormGroup comprised of FormControls', () => {
@@ -107,9 +102,11 @@ describe('LogInPasswordComponent', () => {
     component.submit();
 
     // verify Store.dispatch() is invoked
-    expect(page.navigateSpy.calls.any()).toBe(true, 'Store.dispatch not invoked');
+    expect(page.navigateSpy.calls.any()).toBe(
+      true,
+      'Store.dispatch not invoked'
+    );
   });
-
 });
 
 /**
@@ -118,12 +115,14 @@ describe('LogInPasswordComponent', () => {
  * @class Page
  */
 class Page {
-
   public emailInput: HTMLInputElement;
   public navigateSpy: jasmine.Spy;
   public passwordInput: HTMLInputElement;
 
-  constructor(private component: LogInPasswordComponent, private fixture: ComponentFixture<LogInPasswordComponent>) {
+  constructor(
+    private component: LogInPasswordComponent,
+    private fixture: ComponentFixture<LogInPasswordComponent>
+  ) {
     // use injector to get services
     const injector = fixture.debugElement.injector;
     const store = injector.get(Store);
@@ -133,10 +132,14 @@ class Page {
   }
 
   public addPageElements() {
-    const emailInputSelector = 'input[formcontrolname=\'email\']';
-    this.emailInput = this.fixture.debugElement.query(By.css(emailInputSelector)).nativeElement;
+    const emailInputSelector = "input[formcontrolname='email']";
+    this.emailInput = this.fixture.debugElement.query(
+      By.css(emailInputSelector)
+    ).nativeElement;
 
-    const passwordInputSelector = 'input[formcontrolname=\'password\']';
-    this.passwordInput = this.fixture.debugElement.query(By.css(passwordInputSelector)).nativeElement;
+    const passwordInputSelector = "input[formcontrolname='password']";
+    this.passwordInput = this.fixture.debugElement.query(
+      By.css(passwordInputSelector)
+    ).nativeElement;
   }
 }

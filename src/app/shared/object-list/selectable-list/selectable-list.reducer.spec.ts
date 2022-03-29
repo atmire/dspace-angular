@@ -6,7 +6,7 @@ import {
   SelectableListDeselectSingleAction,
   SelectableListSelectAction,
   SelectableListSelectSingleAction,
-  SelectableListSetSelectionAction
+  SelectableListSetSelectionAction,
 } from './selectable-list.actions';
 import { selectableListReducer } from './selectable-list.reducer';
 import { ListableObject } from '../../object-collection/shared/listable-object.model';
@@ -18,7 +18,11 @@ class SelectableObject extends ListableObject {
   }
 
   equals(other: SelectableObject): boolean {
-    return hasValue(this.value) && hasValue(other.value) && this.value === other.value;
+    return (
+      hasValue(this.value) &&
+      hasValue(other.value) &&
+      this.value === other.value
+    );
   }
 
   getRenderTypes() {
@@ -45,10 +49,11 @@ const selected1 = new SelectableObject(value1);
 const selected2 = new SelectableObject(value2);
 const selected3 = new SelectableObject(value3);
 const selected4 = new SelectableObject(value4);
-const testState = { [listID1]: { id: listID1, selection: [selected1, selected2] } };
+const testState = {
+  [listID1]: { id: listID1, selection: [selected1, selected2] },
+};
 
 describe('selectableListReducer', () => {
-
   it('should return the current state when no valid actions have been made', () => {
     const state = {};
     state[listID1] = {};
@@ -68,21 +73,36 @@ describe('selectableListReducer', () => {
   });
 
   it('should add the payload to the existing list in response to the SELECT action for the given id', () => {
-    const action = new SelectableListSelectAction(listID1, [selected3, selected4]);
+    const action = new SelectableListSelectAction(listID1, [
+      selected3,
+      selected4,
+    ]);
     const newState = selectableListReducer(testState, action);
 
-    expect(newState[listID1].selection).toEqual([selected1, selected2, selected3, selected4]);
+    expect(newState[listID1].selection).toEqual([
+      selected1,
+      selected2,
+      selected3,
+      selected4,
+    ]);
   });
 
   it('should add the payload to the existing list in response to the SELECT_SINGLE action for the given id', () => {
     const action = new SelectableListSelectSingleAction(listID1, selected4);
     const newState = selectableListReducer(testState, action);
 
-    expect(newState[listID1].selection).toEqual([selected1, selected2, selected4]);
+    expect(newState[listID1].selection).toEqual([
+      selected1,
+      selected2,
+      selected4,
+    ]);
   });
 
   it('should remove the payload from the existing list in response to the DESELECT action for the given id', () => {
-    const action = new SelectableListDeselectAction(listID1, [selected1, selected2]);
+    const action = new SelectableListDeselectAction(listID1, [
+      selected1,
+      selected2,
+    ]);
     const newState = selectableListReducer(testState, action);
 
     expect(newState[listID1].selection).toEqual([]);
@@ -96,7 +116,10 @@ describe('selectableListReducer', () => {
   });
 
   it('should set the list to the payload in response to the SET_SELECTION action for the given id', () => {
-    const action = new SelectableListSetSelectionAction(listID2, [selected2, selected4]);
+    const action = new SelectableListSetSelectionAction(listID2, [
+      selected2,
+      selected4,
+    ]);
     const newState = selectableListReducer(testState, action);
 
     expect(newState[listID1].selection).toEqual(testState[listID1].selection);

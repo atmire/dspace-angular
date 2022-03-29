@@ -19,60 +19,70 @@ describe('ItemVersionsNoticeComponent', () => {
   let versionHistoryService: VersionHistoryDataService;
 
   const versionHistory = Object.assign(new VersionHistory(), {
-    id: '1'
+    id: '1',
   });
   const firstVersion = Object.assign(new Version(), {
     id: '1',
     version: 1,
     created: new Date(2020, 1, 1),
     summary: 'first version',
-    versionhistory: createSuccessfulRemoteDataObject$(versionHistory)
+    versionhistory: createSuccessfulRemoteDataObject$(versionHistory),
   });
   const latestVersion = Object.assign(new Version(), {
     id: '2',
     version: 2,
     summary: 'latest version',
     created: new Date(2020, 1, 2),
-    versionhistory: createSuccessfulRemoteDataObject$(versionHistory)
+    versionhistory: createSuccessfulRemoteDataObject$(versionHistory),
   });
   const versions = [latestVersion, firstVersion];
-  versionHistory.versions = createSuccessfulRemoteDataObject$(createPaginatedList(versions));
+  versionHistory.versions = createSuccessfulRemoteDataObject$(
+    createPaginatedList(versions)
+  );
   const firstItem = Object.assign(new Item(), {
     id: 'first_item_id',
     uuid: 'first_item_id',
     handle: '123456789/1',
-    version: createSuccessfulRemoteDataObject$(firstVersion)
+    version: createSuccessfulRemoteDataObject$(firstVersion),
   });
   const latestItem = Object.assign(new Item(), {
     id: 'latest_item_id',
     uuid: 'latest_item_id',
     handle: '123456789/2',
-    version: createSuccessfulRemoteDataObject$(latestVersion)
+    version: createSuccessfulRemoteDataObject$(latestVersion),
   });
   firstVersion.item = createSuccessfulRemoteDataObject$(firstItem);
   latestVersion.item = createSuccessfulRemoteDataObject$(latestItem);
 
-  const versionHistoryServiceSpy = jasmine.createSpyObj('versionHistoryService',
-    ['getVersions', 'getLatestVersionFromHistory$', 'isLatest$', ]
+  const versionHistoryServiceSpy = jasmine.createSpyObj(
+    'versionHistoryService',
+    ['getVersions', 'getLatestVersionFromHistory$', 'isLatest$']
   );
 
   beforeEach(waitForAsync(() => {
-
     TestBed.configureTestingModule({
       declarations: [ItemVersionsNoticeComponent],
       imports: [TranslateModule.forRoot(), RouterTestingModule.withRoutes([])],
       providers: [
-        { provide: VersionHistoryDataService, useValue: versionHistoryServiceSpy }
+        {
+          provide: VersionHistoryDataService,
+          useValue: versionHistoryServiceSpy,
+        },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
 
     versionHistoryService = TestBed.inject(VersionHistoryDataService);
 
-    const isLatestFcn = (version: Version) => of((version.version === latestVersion.version));
+    const isLatestFcn = (version: Version) =>
+      of(version.version === latestVersion.version);
 
-    versionHistoryServiceSpy.getVersions.and.returnValue(createSuccessfulRemoteDataObject$(createPaginatedList(versions)));
-    versionHistoryServiceSpy.getLatestVersionFromHistory$.and.returnValue(of(latestVersion));
+    versionHistoryServiceSpy.getVersions.and.returnValue(
+      createSuccessfulRemoteDataObject$(createPaginatedList(versions))
+    );
+    versionHistoryServiceSpy.getLatestVersionFromHistory$.and.returnValue(
+      of(latestVersion)
+    );
     versionHistoryServiceSpy.isLatest$.and.callFake(isLatestFcn);
   }));
 
@@ -100,14 +110,20 @@ describe('ItemVersionsNoticeComponent', () => {
 
   describe('isLatest', () => {
     it('firstVersion should not be the latest', () => {
-      versionHistoryService.isLatest$(firstVersion).pipe(take(1)).subscribe((res) => {
-        expect(res).toBeFalse();
-      });
+      versionHistoryService
+        .isLatest$(firstVersion)
+        .pipe(take(1))
+        .subscribe((res) => {
+          expect(res).toBeFalse();
+        });
     });
     it('latestVersion should be the latest', () => {
-      versionHistoryService.isLatest$(latestVersion).pipe(take(1)).subscribe((res) => {
-        expect(res).toBeTrue();
-      });
+      versionHistoryService
+        .isLatest$(latestVersion)
+        .pipe(take(1))
+        .subscribe((res) => {
+          expect(res).toBeTrue();
+        });
     });
   });
 

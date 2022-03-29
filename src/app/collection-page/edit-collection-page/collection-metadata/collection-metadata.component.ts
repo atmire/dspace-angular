@@ -41,7 +41,13 @@ export class CollectionMetadataComponent extends ComcolMetadataComponent<Collect
     protected objectCache: ObjectCacheService,
     protected requestService: RequestService
   ) {
-    super(collectionDataService, router, route, notificationsService, translate);
+    super(
+      collectionDataService,
+      router,
+      route,
+      notificationsService,
+      translate
+    );
   }
 
   ngOnInit(): void {
@@ -55,7 +61,9 @@ export class CollectionMetadataComponent extends ComcolMetadataComponent<Collect
   initTemplateItem() {
     this.itemTemplateRD$ = this.dsoRD$.pipe(
       getFirstSucceededRemoteDataPayload(),
-      switchMap((collection: Collection) => this.itemTemplateService.findByCollectionID(collection.uuid))
+      switchMap((collection: Collection) =>
+        this.itemTemplateService.findByCollectionID(collection.uuid)
+      )
     );
   }
 
@@ -63,61 +71,81 @@ export class CollectionMetadataComponent extends ComcolMetadataComponent<Collect
    * Add a new item template to the collection and redirect to the item template edit page
    */
   addItemTemplate() {
-    const collection$ = this.dsoRD$.pipe(
-      getFirstSucceededRemoteDataPayload(),
-    );
+    const collection$ = this.dsoRD$.pipe(getFirstSucceededRemoteDataPayload());
     const template$ = collection$.pipe(
-      switchMap((collection: Collection) => this.itemTemplateService.create(new Item(), collection.uuid).pipe(
-        getFirstSucceededRemoteDataPayload(),
-      )),
+      switchMap((collection: Collection) =>
+        this.itemTemplateService
+          .create(new Item(), collection.uuid)
+          .pipe(getFirstSucceededRemoteDataPayload())
+      )
     );
     const templateHref$ = collection$.pipe(
-      switchMap((collection) => this.itemTemplateService.getCollectionEndpoint(collection.id)),
+      switchMap((collection) =>
+        this.itemTemplateService.getCollectionEndpoint(collection.id)
+      )
     );
 
-    combineLatestObservable(collection$, template$, templateHref$).subscribe(([collection, template, templateHref]) => {
-      this.requestService.setStaleByHrefSubstring(templateHref);
-      this.router.navigate([getCollectionItemTemplateRoute(collection.uuid)]);
-    });
+    combineLatestObservable(collection$, template$, templateHref$).subscribe(
+      ([collection, template, templateHref]) => {
+        this.requestService.setStaleByHrefSubstring(templateHref);
+        this.router.navigate([getCollectionItemTemplateRoute(collection.uuid)]);
+      }
+    );
   }
 
   /**
    * Delete the item template from the collection
    */
   deleteItemTemplate() {
-    const collection$ = this.dsoRD$.pipe(
-      getFirstSucceededRemoteDataPayload(),
-    );
+    const collection$ = this.dsoRD$.pipe(getFirstSucceededRemoteDataPayload());
     const template$ = collection$.pipe(
-      switchMap((collection: Collection) => this.itemTemplateService.findByCollectionID(collection.uuid).pipe(
-        getFirstSucceededRemoteDataPayload(),
-      )),
+      switchMap((collection: Collection) =>
+        this.itemTemplateService
+          .findByCollectionID(collection.uuid)
+          .pipe(getFirstSucceededRemoteDataPayload())
+      )
     );
     const templateHref$ = collection$.pipe(
-      switchMap((collection) => this.itemTemplateService.getCollectionEndpoint(collection.id)),
+      switchMap((collection) =>
+        this.itemTemplateService.getCollectionEndpoint(collection.id)
+      )
     );
 
-    combineLatestObservable(collection$, template$, templateHref$).pipe(
-      switchMap(([collection, template, templateHref]) => {
-        return this.itemTemplateService.deleteByCollectionID(template, collection.uuid).pipe(
-          tap((success: boolean) => {
-            if (success) {
-              this.objectCache.remove(templateHref);
-              this.objectCache.remove(template.self);
-              this.requestService.setStaleByHrefSubstring(template.self);
-              this.requestService.setStaleByHrefSubstring(templateHref);
-              this.requestService.setStaleByHrefSubstring(collection.self);
-            }
-          })
-        );
-      })
-    ).subscribe((success: boolean) => {
-      if (success) {
-        this.notificationsService.success(null, this.translate.get('collection.edit.template.notifications.delete.success'));
-      } else {
-        this.notificationsService.error(null, this.translate.get('collection.edit.template.notifications.delete.error'));
-      }
-      this.initTemplateItem();
-    });
+    combineLatestObservable(collection$, template$, templateHref$)
+      .pipe(
+        switchMap(([collection, template, templateHref]) => {
+          return this.itemTemplateService
+            .deleteByCollectionID(template, collection.uuid)
+            .pipe(
+              tap((success: boolean) => {
+                if (success) {
+                  this.objectCache.remove(templateHref);
+                  this.objectCache.remove(template.self);
+                  this.requestService.setStaleByHrefSubstring(template.self);
+                  this.requestService.setStaleByHrefSubstring(templateHref);
+                  this.requestService.setStaleByHrefSubstring(collection.self);
+                }
+              })
+            );
+        })
+      )
+      .subscribe((success: boolean) => {
+        if (success) {
+          this.notificationsService.success(
+            null,
+            this.translate.get(
+              'collection.edit.template.notifications.delete.success'
+            )
+          );
+        } else {
+          this.notificationsService.error(
+            null,
+            this.translate.get(
+              'collection.edit.template.notifications.delete.error'
+            )
+          );
+        }
+        this.initTemplateItem();
+      });
   }
 }

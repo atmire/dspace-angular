@@ -8,7 +8,7 @@ import { SubmissionImportExternalComponent } from './submission-import-external.
 @Component({
   selector: 'ds-themed-submission-import-external',
   styleUrls: [],
-  templateUrl: './../../shared/theme-support/themed.component.html'
+  templateUrl: './../../shared/theme-support/themed.component.html',
 })
 export class ThemedSubmissionImportExternalComponent extends ThemedComponent<SubmissionImportExternalComponent> {
   protected getComponentName(): string {
@@ -16,7 +16,9 @@ export class ThemedSubmissionImportExternalComponent extends ThemedComponent<Sub
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../themes/${themeName}/app/submission/import-external/submission-import-external.component`);
+    return import(
+      `../../../themes/${themeName}/app/submission/import-external/submission-import-external.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

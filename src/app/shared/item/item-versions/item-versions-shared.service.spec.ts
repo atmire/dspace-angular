@@ -9,17 +9,25 @@ import { TranslateService } from '@ngx-translate/core';
 import { VersionHistoryDataService } from '../../../core/data/version-history-data.service';
 import { WorkspaceitemDataService } from '../../../core/submission/workspaceitem-data.service';
 import { WorkflowItemDataService } from '../../../core/submission/workflowitem-data.service';
-import { createFailedRemoteDataObject, createSuccessfulRemoteDataObject } from '../../remote-data.utils';
+import {
+  createFailedRemoteDataObject,
+  createSuccessfulRemoteDataObject,
+} from '../../remote-data.utils';
 import { Version } from '../../../core/shared/version.model';
 
 describe('ItemVersionsSharedService', () => {
   let service: ItemVersionsSharedService;
   let notificationService: NotificationsService;
 
-  const successfulVersionRD = createSuccessfulRemoteDataObject<Version>(new Version());
+  const successfulVersionRD = createSuccessfulRemoteDataObject<Version>(
+    new Version()
+  );
   const failedVersionRD = createFailedRemoteDataObject<Version>();
 
-  const notificationsServiceSpy = jasmine.createSpyObj('notificationsServiceSpy', ['success', 'error']);
+  const notificationsServiceSpy = jasmine.createSpyObj(
+    'notificationsServiceSpy',
+    ['success', 'error']
+  );
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -29,7 +37,7 @@ describe('ItemVersionsSharedService', () => {
         { provide: VersionHistoryDataService, useValue: {} },
         { provide: AuthService, useValue: {} },
         { provide: NotificationsService, useValue: notificationsServiceSpy },
-        { provide: TranslateService, useValue: { get: () => undefined, } },
+        { provide: TranslateService, useValue: { get: () => undefined } },
         { provide: WorkspaceitemDataService, useValue: {} },
         { provide: WorkflowItemDataService, useValue: {} },
       ],
@@ -52,5 +60,4 @@ describe('ItemVersionsSharedService', () => {
       expect(notificationService.error).toHaveBeenCalled();
     });
   });
-
 });

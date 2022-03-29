@@ -18,9 +18,8 @@ describe('ProcessDetailFieldComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ProcessDetailFieldComponent, VarDirective],
       imports: [TranslateModule.forRoot(), RouterTestingModule.withRoutes([])],
-      providers: [
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
+      providers: [],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 

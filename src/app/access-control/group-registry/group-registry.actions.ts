@@ -12,7 +12,6 @@ import { type } from '../../shared/ngrx/type';
  * action types in the application are unique.
  */
 export const GroupRegistryActionTypes = {
-
   EDIT_GROUP: type('dspace/epeople-registry/EDIT_GROUP'),
   CANCEL_EDIT_GROUP: type('dspace/epeople-registry/CANCEL_EDIT_GROUP'),
 };
@@ -37,12 +36,11 @@ export class GroupRegistryCancelGroupAction implements Action {
   type = GroupRegistryActionTypes.CANCEL_EDIT_GROUP;
 }
 
-
 /**
  * Export a type alias of all actions in this action group
  * so that reducers can easily compose action types
  * These are all the actions to perform on the EPeople registry state
  */
-export type GroupRegistryAction
-  = GroupRegistryEditGroupAction
+export type GroupRegistryAction =
+  | GroupRegistryEditGroupAction
   | GroupRegistryCancelGroupAction;

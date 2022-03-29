@@ -6,10 +6,9 @@ import { ItemMetadataRepresentationListElementComponent } from '../../../../shar
 @metadataRepresentationComponent('OrgUnit', MetadataRepresentationType.Item)
 @Component({
   selector: 'ds-org-unit-item-metadata-list-element',
-  templateUrl: './org-unit-item-metadata-list-element.component.html'
+  templateUrl: './org-unit-item-metadata-list-element.component.html',
 })
 /**
  * The component for displaying an item of the type OrgUnit as a metadata field
  */
-export class OrgUnitItemMetadataListElementComponent extends ItemMetadataRepresentationListElementComponent {
-}
+export class OrgUnitItemMetadataListElementComponent extends ItemMetadataRepresentationListElementComponent {}

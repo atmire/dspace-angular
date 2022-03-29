@@ -7,16 +7,23 @@ import { CollectionSearchResult } from '../../../../../shared/object-collection/
 import { Collection } from '../../../../../core/shared/collection.model';
 import { getCollectionEditRoute } from '../../../../../collection-page/collection-page-routing-paths';
 
-@listableObjectComponent(CollectionSearchResult, ViewMode.ListElement, Context.AdminSearch)
+@listableObjectComponent(
+  CollectionSearchResult,
+  ViewMode.ListElement,
+  Context.AdminSearch
+)
 @Component({
   selector: 'ds-collection-admin-search-result-list-element',
   styleUrls: ['./collection-admin-search-result-list-element.component.scss'],
-  templateUrl: './collection-admin-search-result-list-element.component.html'
+  templateUrl: './collection-admin-search-result-list-element.component.html',
 })
 /**
  * The component for displaying a list element for a collection search result on the admin search page
  */
-export class CollectionAdminSearchResultListElementComponent extends SearchResultListElementComponent<CollectionSearchResult, Collection> {
+export class CollectionAdminSearchResultListElementComponent extends SearchResultListElementComponent<
+  CollectionSearchResult,
+  Collection
+> {
   editPath: string;
 
   ngOnInit() {

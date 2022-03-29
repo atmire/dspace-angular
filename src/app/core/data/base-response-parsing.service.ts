@@ -11,7 +11,6 @@ import { getClassForType } from '../cache/builders/build-decorators';
 import { RestRequest } from './request.models';
 import { environment } from '../../../environments/environment';
 
-
 /**
  * Return true if halObj has a value for `_links.self`
  *
@@ -28,22 +27,29 @@ export function isRestDataObject(halObj: any): boolean {
  * @param {any} halObj The object to test
  */
 export function isRestPaginatedList(halObj: any): boolean {
-  return hasValue(halObj.page) &&
+  return (
+    hasValue(halObj.page) &&
     hasValue(halObj.page.size) &&
     hasValue(halObj.page.totalElements) &&
     hasValue(halObj.page.totalPages) &&
-    hasValue(halObj.page.number);
+    hasValue(halObj.page.number)
+  );
 }
 
 export abstract class BaseResponseParsingService {
   protected abstract objectCache: ObjectCacheService;
   protected abstract toCache: boolean;
   protected shouldDirectlyAttachEmbeds = false;
-  protected serializerConstructor: GenericConstructor<Serializer<any>> = DSpaceSerializer;
+  protected serializerConstructor: GenericConstructor<Serializer<any>> =
+    DSpaceSerializer;
 
-  protected process<ObjectDomain>(data: any, request: RestRequest, alternativeURL?: string): any {
+  protected process<ObjectDomain>(
+    data: any,
+    request: RestRequest,
+    alternativeURL?: string
+  ): any {
     if (isNotEmpty(data)) {
-      if (hasNoValue(data) || (typeof data !== 'object')) {
+      if (hasNoValue(data) || typeof data !== 'object') {
         return data;
       } else if (isRestPaginatedList(data)) {
         return this.processPaginatedList(data, request);
@@ -52,19 +58,30 @@ export abstract class BaseResponseParsingService {
       } else if (isRestDataObject(data)) {
         const object = this.deserialize(data);
         if (isNotEmpty(data._embedded)) {
-          Object
-            .keys(data._embedded)
+          Object.keys(data._embedded)
             .filter((property) => data._embedded.hasOwnProperty(property))
             .forEach((property) => {
-              const parsedObj = this.process<ObjectDomain>(data._embedded[property], request, data._links[property].href);
-              if (hasValue(object) && this.shouldDirectlyAttachEmbeds && isNotEmpty(parsedObj)) {
+              const parsedObj = this.process<ObjectDomain>(
+                data._embedded[property],
+                request,
+                data._links[property].href
+              );
+              if (
+                hasValue(object) &&
+                this.shouldDirectlyAttachEmbeds &&
+                isNotEmpty(parsedObj)
+              ) {
                 if (isRestPaginatedList(data._embedded[property])) {
                   object[property] = parsedObj;
-                  object[property].page = parsedObj.page.map((obj) => this.retrieveObjectOrUrl(obj));
+                  object[property].page = parsedObj.page.map((obj) =>
+                    this.retrieveObjectOrUrl(obj)
+                  );
                 } else if (isRestDataObject(data._embedded[property])) {
                   object[property] = this.retrieveObjectOrUrl(parsedObj);
                 } else if (Array.isArray(parsedObj)) {
-                    object[property] = parsedObj.map((obj) => this.retrieveObjectOrUrl(obj));
+                  object[property] = parsedObj.map((obj) =>
+                    this.retrieveObjectOrUrl(obj)
+                  );
                 }
               }
             });
@@ -81,11 +98,13 @@ export abstract class BaseResponseParsingService {
           result[property] = this.process(data[property], request);
         });
       return result;
-
     }
   }
 
-  protected processPaginatedList<ObjectDomain>(data: any, request: RestRequest): PaginatedList<ObjectDomain> {
+  protected processPaginatedList<ObjectDomain>(
+    data: any,
+    request: RestRequest
+  ): PaginatedList<ObjectDomain> {
     const pageInfo: PageInfo = this.processPageInfo(data);
     let list = data._embedded;
 
@@ -96,22 +115,26 @@ export abstract class BaseResponseParsingService {
       list = this.flattenSingleKeyObject(list);
     }
     const page: ObjectDomain[] = this.processArray(list, request);
-    return buildPaginatedList<ObjectDomain>(pageInfo, page,);
+    return buildPaginatedList<ObjectDomain>(pageInfo, page);
   }
 
-  protected processArray<ObjectDomain>(data: any, request: RestRequest): ObjectDomain[] {
+  protected processArray<ObjectDomain>(
+    data: any,
+    request: RestRequest
+  ): ObjectDomain[] {
     let array: ObjectDomain[] = [];
     data.forEach((datum) => {
-        array = [...array, this.process(datum, request)];
-      }
-    );
+      array = [...array, this.process(datum, request)];
+    });
     return array;
   }
 
   protected deserialize<ObjectDomain>(obj): any {
     const type: string = obj.type;
     if (hasValue(type)) {
-      const objConstructor = getClassForType(type) as GenericConstructor<ObjectDomain>;
+      const objConstructor = getClassForType(
+        type
+      ) as GenericConstructor<ObjectDomain>;
 
       if (hasValue(objConstructor)) {
         const serializer = new this.serializerConstructor(objConstructor);
@@ -120,43 +143,76 @@ export abstract class BaseResponseParsingService {
         console.warn('cannot deserialize type ' + type);
         return null;
       }
-
     } else {
       console.warn('cannot deserialize type ' + type);
       return null;
     }
   }
 
-  protected cache<ObjectDomain>(obj, request: RestRequest, data: any, alternativeURL: string) {
+  protected cache<ObjectDomain>(
+    obj,
+    request: RestRequest,
+    data: any,
+    alternativeURL: string
+  ) {
     if (this.toCache) {
       this.addToObjectCache(obj, request, data, alternativeURL);
     }
   }
 
-  protected addToObjectCache(co: CacheableObject, request: RestRequest, data: any, alternativeURL: string): void {
-    if (hasNoValue(co) || hasNoValue(co._links) || hasNoValue(co._links.self) || hasNoValue(co._links.self.href)) {
+  protected addToObjectCache(
+    co: CacheableObject,
+    request: RestRequest,
+    data: any,
+    alternativeURL: string
+  ): void {
+    if (
+      hasNoValue(co) ||
+      hasNoValue(co._links) ||
+      hasNoValue(co._links.self) ||
+      hasNoValue(co._links.self.href)
+    ) {
       const type = hasValue(data) && hasValue(data.type) ? data.type : 'object';
       let dataJSON: string;
       if (hasValue(data._embedded)) {
-        dataJSON = JSON.stringify(Object.assign({}, data, {
-          _embedded: '...'
-        }));
+        dataJSON = JSON.stringify(
+          Object.assign({}, data, {
+            _embedded: '...',
+          })
+        );
       } else {
         dataJSON = JSON.stringify(data);
       }
-      console.warn(`Can't cache incomplete ${type}: ${JSON.stringify(co)}, parsed from (partial) response: ${dataJSON}`);
+      console.warn(
+        `Can't cache incomplete ${type}: ${JSON.stringify(
+          co
+        )}, parsed from (partial) response: ${dataJSON}`
+      );
       return;
     }
 
-    this.objectCache.add(co, hasValue(request.responseMsToLive) ? request.responseMsToLive : environment.cache.msToLive.default, request.uuid, alternativeURL);
+    this.objectCache.add(
+      co,
+      hasValue(request.responseMsToLive)
+        ? request.responseMsToLive
+        : environment.cache.msToLive.default,
+      request.uuid,
+      alternativeURL
+    );
   }
 
   processPageInfo(payload: any): PageInfo {
     if (hasValue(payload.page)) {
-      const pageObj = Object.assign({}, payload.page, { _links: payload._links });
-      const pageInfoObject = new DSpaceSerializer(PageInfo).deserialize(pageObj);
+      const pageObj = Object.assign({}, payload.page, {
+        _links: payload._links,
+      });
+      const pageInfoObject = new DSpaceSerializer(PageInfo).deserialize(
+        pageObj
+      );
       if (pageInfoObject.currentPage >= 0) {
-        Object.assign(pageInfoObject, { currentPage: pageInfoObject.currentPage + 1 });
+        Object.assign(pageInfoObject, {
+          currentPage: pageInfoObject.currentPage + 1,
+        });
       }
       return pageInfoObject;
     } else {
@@ -167,7 +223,9 @@ export abstract class BaseResponseParsingService {
   protected flattenSingleKeyObject(obj: any): any {
     const keys = Object.keys(obj);
     if (keys.length !== 1) {
-      throw new Error(`Expected an object with a single key, got: ${JSON.stringify(obj)}`);
+      throw new Error(
+        `Expected an object with a single key, got: ${JSON.stringify(obj)}`
+      );
     }
     return obj[keys[0]];
   }

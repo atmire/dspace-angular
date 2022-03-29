@@ -96,5 +96,4 @@ export class Relationship implements CacheableObject {
    */
   @link(RELATIONSHIP_TYPE)
   relationshipType?: Observable<RemoteData<RelationshipType>>;
-
 }

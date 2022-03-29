@@ -1,7 +1,10 @@
 import { MemoizedSelector } from '@ngrx/store';
 import { CoreState } from '../core.reducers';
 import { coreSelector } from '../core.selectors';
-import { JsonPatchOperationsEntry, JsonPatchOperationsResourceEntry } from './json-patch-operations.reducer';
+import {
+  JsonPatchOperationsEntry,
+  JsonPatchOperationsResourceEntry,
+} from './json-patch-operations.reducer';
 import { keySelector, subStateSelector } from '../../submission/selectors';
 
 /**
@@ -12,8 +15,14 @@ import { keySelector, subStateSelector } from '../../submission/selectors';
  * @return MemoizedSelector<CoreState, JsonPatchOperationsResourceEntry>
  *     MemoizedSelector
  */
-export function jsonPatchOperationsByResourceType(resourceType: string): MemoizedSelector<CoreState, JsonPatchOperationsResourceEntry> {
-  return keySelector<CoreState, JsonPatchOperationsResourceEntry>(coreSelector,'json/patch', resourceType);
+export function jsonPatchOperationsByResourceType(
+  resourceType: string
+): MemoizedSelector<CoreState, JsonPatchOperationsResourceEntry> {
+  return keySelector<CoreState, JsonPatchOperationsResourceEntry>(
+    coreSelector,
+    'json/patch',
+    resourceType
+  );
 }
 
 /**
@@ -26,7 +35,13 @@ export function jsonPatchOperationsByResourceType(resourceType: string): Memoize
  * @return MemoizedSelector<CoreState, JsonPatchOperationsResourceEntry>
  *     MemoizedSelector
  */
-export function jsonPatchOperationsByResourceId(resourceType: string, resourceId: string): MemoizedSelector<CoreState, JsonPatchOperationsEntry> {
-  const resourceTypeSelector  = jsonPatchOperationsByResourceType(resourceType);
-  return subStateSelector<CoreState, JsonPatchOperationsEntry>(resourceTypeSelector, resourceId);
+export function jsonPatchOperationsByResourceId(
+  resourceType: string,
+  resourceId: string
+): MemoizedSelector<CoreState, JsonPatchOperationsEntry> {
+  const resourceTypeSelector = jsonPatchOperationsByResourceType(resourceType);
+  return subStateSelector<CoreState, JsonPatchOperationsEntry>(
+    resourceTypeSelector,
+    resourceId
+  );
 }

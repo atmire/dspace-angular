@@ -7,19 +7,25 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationsService } from '../../../shared/notifications/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
 import {
-  getAllSucceededRemoteDataPayload, getFirstCompletedRemoteData, getFirstSucceededRemoteData, getRemoteDataPayload,
+  getAllSucceededRemoteDataPayload,
+  getFirstCompletedRemoteData,
+  getFirstSucceededRemoteData,
+  getRemoteDataPayload,
 } from '../../../core/shared/operators';
 import { ItemDataService } from '../../../core/data/item-data.service';
 import { Observable } from 'rxjs';
 import { Collection } from '../../../core/shared/collection.model';
 import { SearchService } from '../../../core/shared/search/search.service';
-import { getItemEditRoute, getItemPageRoute } from '../../item-page-routing-paths';
+import {
+  getItemEditRoute,
+  getItemPageRoute,
+} from '../../item-page-routing-paths';
 import { followLink } from '../../../shared/utils/follow-link-config.model';
 import { RequestService } from '../../../core/data/request.service';
 
 @Component({
   selector: 'ds-item-move',
-  templateUrl: './item-move.component.html'
+  templateUrl: './item-move.component.html',
 })
 /**
  * Component that handles the moving of an item to a different collection
@@ -50,36 +56,39 @@ export class ItemMoveComponent implements OnInit {
 
   COLLECTIONS = [DSpaceObjectType.COLLECTION];
 
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private notificationsService: NotificationsService,
-              private itemDataService: ItemDataService,
-              private searchService: SearchService,
-              private translateService: TranslateService,
-              private requestService: RequestService,
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private notificationsService: NotificationsService,
+    private itemDataService: ItemDataService,
+    private searchService: SearchService,
+    private translateService: TranslateService,
+    private requestService: RequestService
   ) {}
 
   ngOnInit(): void {
     this.itemRD$ = this.route.data.pipe(
-      map((data) => data.dso), getFirstSucceededRemoteData()
+      map((data) => data.dso),
+      getFirstSucceededRemoteData()
     ) as Observable<RemoteData<Item>>;
     this.itemPageRoute$ = this.itemRD$.pipe(
       getAllSucceededRemoteDataPayload(),
       map((item) => getItemPageRoute(item))
     );
     this.itemRD$.subscribe((rd) => {
-        this.item = rd.payload;
-      }
-    );
-    this.itemRD$.pipe(
-      getFirstSucceededRemoteData(),
-      getRemoteDataPayload(),
-      switchMap((item) => item.owningCollection),
-      getFirstSucceededRemoteData(),
-      getRemoteDataPayload(),
-    ).subscribe((collection) => {
-      this.originalCollection = collection;
+      this.item = rd.payload;
     });
+    this.itemRD$
+      .pipe(
+        getFirstSucceededRemoteData(),
+        getRemoteDataPayload(),
+        switchMap((item) => item.owningCollection),
+        getFirstSucceededRemoteData(),
+        getRemoteDataPayload()
+      )
+      .subscribe((collection) => {
+        this.originalCollection = collection;
+      });
   }
 
   /**
@@ -104,31 +113,41 @@ export class ItemMoveComponent implements OnInit {
    */
   moveToCollection() {
     this.processing = true;
-    const move$ = this.itemDataService.moveToCollection(this.item.id, this.selectedCollection)
+    const move$ = this.itemDataService
+      .moveToCollection(this.item.id, this.selectedCollection)
       .pipe(getFirstCompletedRemoteData());
 
     move$.subscribe((response: RemoteData<any>) => {
       if (response.hasSucceeded) {
-        this.notificationsService.success(this.translateService.get('item.edit.move.success'));
+        this.notificationsService.success(
+          this.translateService.get('item.edit.move.success')
+        );
       } else {
-        this.notificationsService.error(this.translateService.get('item.edit.move.error'));
+        this.notificationsService.error(
+          this.translateService.get('item.edit.move.error')
+        );
       }
     });
 
-    move$.pipe(
-      switchMap(() => this.requestService.setStaleByHrefSubstring(this.item.id)),
-      switchMap(() =>
-        this.itemDataService.findById(
-          this.item.id,
-          false,
-          true,
-          followLink('owningCollection')
-      )),
-      getFirstCompletedRemoteData()
-    ).subscribe(() => {
-      this.processing = false;
-      this.router.navigate([getItemEditRoute(this.item)]);
-    });
+    move$
+      .pipe(
+        switchMap(() =>
+          this.requestService.setStaleByHrefSubstring(this.item.id)
+        ),
+        switchMap(() =>
+          this.itemDataService.findById(
+            this.item.id,
+            false,
+            true,
+            followLink('owningCollection')
+          )
+        ),
+        getFirstCompletedRemoteData()
+      )
+      .subscribe(() => {
+        this.processing = false;
+        this.router.navigate([getItemEditRoute(this.item)]);
+      });
   }
 
   discard(): void {
@@ -137,6 +156,9 @@ export class ItemMoveComponent implements OnInit {
   }
 
   get canMove(): boolean {
-    return this.canSubmit && this.selectedCollection?.id !== this.originalCollection.id;
+    return (
+      this.canSubmit &&
+      this.selectedCollection?.id !== this.originalCollection.id
+    );
   }
 }

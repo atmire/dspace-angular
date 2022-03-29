@@ -151,12 +151,11 @@ export class ResetRouteStateAction implements Action {
   type = RouteActionTypes.RESET;
 }
 
-
 /**
  * A type to encompass all RouteActions
  */
 export type RouteActions =
-  SetQueryParametersAction
+  | SetQueryParametersAction
   | SetParametersAction
   | AddQueryParameterAction
   | AddParameterAction

@@ -11,21 +11,34 @@ import { LinkService } from '../../../../../core/cache/builders/link.service';
 import { TranslateService } from '@ngx-translate/core';
 import { DSONameService } from '../../../../../core/breadcrumbs/dso-name.service';
 
-@listableObjectComponent('PersonSearchResult', ViewMode.ListElement, Context.SideBarSearchModal)
-@listableObjectComponent('PersonSearchResult', ViewMode.ListElement, Context.SideBarSearchModalCurrent)
+@listableObjectComponent(
+  'PersonSearchResult',
+  ViewMode.ListElement,
+  Context.SideBarSearchModal
+)
+@listableObjectComponent(
+  'PersonSearchResult',
+  ViewMode.ListElement,
+  Context.SideBarSearchModalCurrent
+)
 @Component({
   selector: 'ds-person-sidebar-search-list-element',
-  templateUrl: '../../../../../shared/object-list/sidebar-search-list-element/sidebar-search-list-element.component.html'
+  templateUrl:
+    '../../../../../shared/object-list/sidebar-search-list-element/sidebar-search-list-element.component.html',
 })
 /**
  * Component displaying a list element for a {@link ItemSearchResult} of type "Person" within the context of
  * a sidebar search modal
  */
-export class PersonSidebarSearchListElementComponent extends SidebarSearchListElementComponent<ItemSearchResult, Item> {
-  constructor(protected truncatableService: TruncatableService,
-              protected linkService: LinkService,
-              protected translateService: TranslateService,
-              protected dsoNameService: DSONameService
+export class PersonSidebarSearchListElementComponent extends SidebarSearchListElementComponent<
+  ItemSearchResult,
+  Item
+> {
+  constructor(
+    protected truncatableService: TruncatableService,
+    protected linkService: LinkService,
+    protected translateService: TranslateService,
+    protected dsoNameService: DSONameService
   ) {
     super(truncatableService, linkService, dsoNameService);
   }
@@ -46,7 +59,10 @@ export class PersonSidebarSearchListElementComponent extends SidebarSearchListEl
     if (isNotEmpty(givenName)) {
       title += givenName;
     }
-    return this.defaultIfEmpty(title, this.translateService.instant('person.listelement.no-title'));
+    return this.defaultIfEmpty(
+      title,
+      this.translateService.instant('person.listelement.no-title')
+    );
   }
 
   /**

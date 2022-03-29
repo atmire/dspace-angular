@@ -6,7 +6,6 @@ import { SectionsType } from '../sections-type';
  * An interface to represent section model
  */
 export interface SectionDataObject {
-
   /**
    * The section configuration url
    */

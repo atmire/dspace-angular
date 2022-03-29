@@ -22,52 +22,58 @@ describe('EditComColPageComponent', () => {
   function initializeVars() {
     community = Object.assign(new Community(), {
       uuid: 'a20da287-e174-466a-9926-f66b9300d347',
-      metadata: [{
-        key: 'dc.title',
-        value: 'test community'
-      }]
+      metadata: [
+        {
+          key: 'dc.title',
+          value: 'test community',
+        },
+      ],
     });
 
     routerStub = {
       navigate: (commands) => commands,
       events: observableOf({}),
-      url: 'mockUrl'
+      url: 'mockUrl',
     };
 
     routeStub = {
       data: observableOf({
-        dso: community
+        dso: community,
       }),
       routeConfig: {
         children: [
           {
             path: 'mockUrl',
             data: {
-              hideReturnButton: false
-            }
-          }
-        ]
+              hideReturnButton: false,
+            },
+          },
+        ],
       },
       snapshot: {
         firstChild: {
           routeConfig: {
-            path: 'mockUrl'
-          }
-        }
-      }
+            path: 'mockUrl',
+          },
+        },
+      },
     };
-
   }
 
   beforeEach(waitForAsync(() => {
     initializeVars();
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), SharedModule, CommonModule, RouterTestingModule],
+      imports: [
+        TranslateModule.forRoot(),
+        SharedModule,
+        CommonModule,
+        RouterTestingModule,
+      ],
       providers: [
         { provide: Router, useValue: routerStub },
         { provide: ActivatedRoute, useValue: routeStub },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 

@@ -4,7 +4,10 @@ import { Collection } from './core/shared/collection.model';
 import { Item } from './core/shared/item.model';
 import { getCommunityPageRoute } from './community-page/community-page-routing-paths';
 import { getCollectionPageRoute } from './collection-page/collection-page-routing-paths';
-import { getItemModuleRoute, getItemPageRoute } from './item-page/item-page-routing-paths';
+import {
+  getItemModuleRoute,
+  getItemPageRoute,
+} from './item-page/item-page-routing-paths';
 import { hasValue } from './shared/empty.util';
 import { URLCombiner } from './core/url-combiner/url-combiner';
 
@@ -20,15 +23,26 @@ export function getBitstreamModuleRoute() {
 }
 
 export function getBitstreamDownloadRoute(bitstream): string {
-  return new URLCombiner(getBitstreamModuleRoute(), bitstream.uuid, 'download').toString();
+  return new URLCombiner(
+    getBitstreamModuleRoute(),
+    bitstream.uuid,
+    'download'
+  ).toString();
 }
-export function getBitstreamRequestACopyRoute(item, bitstream): { routerLink: string, queryParams: any } {
-  const url = new URLCombiner(getItemModuleRoute(), item.uuid, 'request-a-copy').toString();
+export function getBitstreamRequestACopyRoute(
+  item,
+  bitstream
+): { routerLink: string; queryParams: any } {
+  const url = new URLCombiner(
+    getItemModuleRoute(),
+    item.uuid,
+    'request-a-copy'
+  ).toString();
   return {
     routerLink: url,
     queryParams: {
-      bitstream: bitstream.uuid
-    }
+      bitstream: bitstream.uuid,
+    },
   };
 }
 
@@ -54,14 +68,12 @@ export const REGISTER_PATH = 'register';
 
 export function getRegisterRoute() {
   return `/${REGISTER_PATH}`;
-
 }
 
 export const FORGOT_PASSWORD_PATH = 'forgot';
 
 export function getForgotPasswordRoute() {
   return `/${FORGOT_PASSWORD_PATH}`;
-
 }
 
 export const WORKFLOW_ITEM_MODULE_PATH = 'workflowitems';

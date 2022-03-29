@@ -14,14 +14,17 @@ import { I18nBreadcrumbResolver } from '../core/breadcrumbs/i18n-breadcrumb.reso
         pathMatch: 'full',
         component: ThemedSubmissionSubmitComponent,
         resolve: {
-          breadcrumb: I18nBreadcrumbResolver
+          breadcrumb: I18nBreadcrumbResolver,
         },
-        data: { title: 'submission.submit.title', breadcrumbKey: 'submission.submit' }
-      }
-    ])
-  ]
+        data: {
+          title: 'submission.submit.title',
+          breadcrumbKey: 'submission.submit',
+        },
+      },
+    ]),
+  ],
 })
 /**
  * This module defines the default component to load when navigating to the submit page path.
  */
-export class SubmitPageRoutingModule { }
+export class SubmitPageRoutingModule {}

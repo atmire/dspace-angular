@@ -3,7 +3,10 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { SearchSettingsComponent } from './search-settings.component';
 import { of as observableOf } from 'rxjs';
 import { PaginationComponentOptions } from '../../pagination/pagination-component-options.model';
-import { SortDirection, SortOptions } from '../../../core/cache/models/sort-options.model';
+import {
+  SortDirection,
+  SortOptions,
+} from '../../../core/cache/models/sort-options.model';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute } from '@angular/router';
@@ -19,7 +22,6 @@ import { PaginationService } from '../../../core/pagination/pagination.service';
 import { PaginationServiceStub } from '../../testing/pagination-service.stub';
 
 describe('SearchSettingsComponent', () => {
-
   let comp: SearchSettingsComponent;
   let fixture: ComponentFixture<SearchSettingsComponent>;
   let searchServiceObject: SearchService;
@@ -91,7 +93,7 @@ describe('SearchSettingsComponent', () => {
           useValue: {
             paginatedSearchOptions: observableOf(paginatedSearchOptions),
             getCurrentScope: observableOf('test-id'),
-          }
+          },
         },
       ],
       schemas: [NO_ERRORS_SCHEMA],
@@ -105,7 +107,7 @@ describe('SearchSettingsComponent', () => {
     comp.sortOptionsList = [
       new SortOptions('score', SortDirection.DESC),
       new SortOptions('dc.title', SortDirection.ASC),
-      new SortOptions('dc.title', SortDirection.DESC)
+      new SortOptions('dc.title', SortDirection.DESC),
     ];
 
     // SearchPageComponent test instance
@@ -113,12 +115,13 @@ describe('SearchSettingsComponent', () => {
     searchServiceObject = (comp as any).service;
     spyOn(comp, 'reloadOrder');
     spyOn(searchServiceObject, 'search').and.callThrough();
-
   });
 
   it('it should show the order settings with the respective selectable options', () => {
     fixture.detectChanges();
-    const orderSetting = fixture.debugElement.query(By.css('div.result-order-settings'));
+    const orderSetting = fixture.debugElement.query(
+      By.css('div.result-order-settings')
+    );
     expect(orderSetting).toBeDefined();
     const childElements = orderSetting.queryAll(By.css('option'));
     expect(childElements.length).toEqual(comp.sortOptionsList.length);
@@ -126,14 +129,20 @@ describe('SearchSettingsComponent', () => {
 
   it('it should show the size settings', () => {
     fixture.detectChanges();
-    const pageSizeSetting = fixture.debugElement.query(By.css('page-size-settings'));
+    const pageSizeSetting = fixture.debugElement.query(
+      By.css('page-size-settings')
+    );
     expect(pageSizeSetting).toBeDefined();
   });
 
   it('should have the proper order value selected by default', () => {
     fixture.detectChanges();
-    const orderSetting = fixture.debugElement.query(By.css('div.result-order-settings'));
-    const childElementToBeSelected = orderSetting.query(By.css('option[value="score,DESC"][selected="selected"]'));
+    const orderSetting = fixture.debugElement.query(
+      By.css('div.result-order-settings')
+    );
+    const childElementToBeSelected = orderSetting.query(
+      By.css('option[value="score,DESC"][selected="selected"]')
+    );
     expect(childElementToBeSelected).toBeDefined();
   });
 });

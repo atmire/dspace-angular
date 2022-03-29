@@ -42,7 +42,7 @@ export class MetadataSchema extends ListableObject implements HALResource {
 
   @deserialize
   _links: {
-    self: HALLink,
+    self: HALLink;
   };
 
   /**

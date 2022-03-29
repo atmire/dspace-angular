@@ -1,4 +1,8 @@
-import { Observable, of as observableOf, throwError as observableThrowError } from 'rxjs';
+import {
+  Observable,
+  of as observableOf,
+  throwError as observableThrowError,
+} from 'rxjs';
 
 import { catchError, map } from 'rxjs/operators';
 import { Injectable, Injector } from '@angular/core';
@@ -10,7 +14,7 @@ import {
   HttpInterceptor,
   HttpRequest,
   HttpResponse,
-  HttpResponseBase
+  HttpResponseBase,
 } from '@angular/common/http';
 
 import { AppState } from '../../app.reducer';
@@ -26,14 +30,16 @@ import { AuthMethodType } from './models/auth.method-type';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-
   // Interceptor is called twice per request,
   // so to prevent RefreshTokenAction is dispatched twice
   // we're creating a refresh token request list
   protected refreshTokenRequestUrls = [];
 
-  constructor(private inj: Injector, private router: Router, private store: Store<AppState>) {
-  }
+  constructor(
+    private inj: Injector,
+    private router: Router,
+    private store: Store<AppState>
+  ) {}
 
   /**
    * Check if response status code is 401
@@ -51,7 +57,7 @@ export class AuthInterceptor implements HttpInterceptor {
    * @param response
    */
   private isSuccess(response: HttpResponseBase): boolean {
-    return (response.status === 200 || response.status === 204);
+    return response.status === 200 || response.status === 204;
   }
 
   /**
@@ -60,10 +66,13 @@ export class AuthInterceptor implements HttpInterceptor {
    * @param http
    */
   private isAuthRequest(http: HttpRequest<any> | HttpResponseBase): boolean {
-    return http && http.url
-      && (http.url.endsWith('/authn/login')
-        || http.url.endsWith('/authn/logout')
-        || http.url.endsWith('/authn/status'));
+    return (
+      http &&
+      http.url &&
+      (http.url.endsWith('/authn/login') ||
+        http.url.endsWith('/authn/logout') ||
+        http.url.endsWith('/authn/status'))
+    );
   }
 
   /**
@@ -101,7 +110,10 @@ export class AuthInterceptor implements HttpInterceptor {
   private parseLocation(header: string): string {
     let location = header.trim();
     location = location.replace('location="', '');
-    location = location.replace('"', ''); /* lgtm [js/incomplete-sanitization] */
+    location = location.replace(
+      '"',
+      ''
+    ); /* lgtm [js/incomplete-sanitization] */
     let re = /%3A%2F%2F/g;
     location = location.replace(re, '://');
     re = /%3A/g;
@@ -146,7 +158,6 @@ export class AuthInterceptor implements HttpInterceptor {
 
       // eslint-disable-next-line guard-for-in
       for (const j in realms) {
-
         const splittedRealm = realms[j].split(', ');
         const methodName = splittedRealm[0].split(' ')[0].trim();
 
@@ -179,7 +190,12 @@ export class AuthInterceptor implements HttpInterceptor {
    * @param error
    * @param httpHeaders
    */
-  private makeAuthStatusObject(authenticated: boolean, accessToken?: string, error?: string, httpHeaders?: HttpHeaders): AuthStatus {
+  private makeAuthStatusObject(
+    authenticated: boolean,
+    accessToken?: string,
+    error?: string,
+    httpHeaders?: HttpHeaders
+  ): AuthStatus {
     const authStatus = new AuthStatus();
     // let authMethods: AuthMethodModel[];
     if (httpHeaders) {
@@ -196,7 +212,11 @@ export class AuthInterceptor implements HttpInterceptor {
       authStatus.token = new AuthTokenInfo(accessToken);
     } else {
       authStatus.authenticated = false;
-      authStatus.error = isNotEmpty(error) ? ((typeof error === 'string') ? JSON.parse(error) : error) : null;
+      authStatus.error = isNotEmpty(error)
+        ? typeof error === 'string'
+          ? JSON.parse(error)
+          : error
+        : null;
     }
     return authStatus;
   }
@@ -206,8 +226,10 @@ export class AuthInterceptor implements HttpInterceptor {
    * @param req
    * @param next
    */
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
+  intercept(
+    req: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
     const authService = this.inj.get(AuthService);
 
     const token: AuthTokenInfo = authService.getToken();
@@ -216,7 +238,10 @@ export class AuthInterceptor implements HttpInterceptor {
 
     if (authService.isTokenExpired()) {
       return observableOf(null);
-    } else if ((!this.isAuthRequest(req) || this.isLogoutResponse(req)) && isNotEmpty(token)) {
+    } else if (
+      (!this.isAuthRequest(req) || this.isLogoutResponse(req)) &&
+      isNotEmpty(token)
+    ) {
       // Get the auth header from the service.
       authorization = authService.buildAuthHeader(token);
       let newHeaders = req.headers.set('authorization', authorization);
@@ -237,14 +262,18 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(newReq).pipe(
       map((response) => {
         // Intercept a Login/Logout response
-        if (response instanceof HttpResponse && this.isSuccess(response) && this.isAuthRequest(response)) {
+        if (
+          response instanceof HttpResponse &&
+          this.isSuccess(response) &&
+          this.isAuthRequest(response)
+        ) {
           // It's a success Login/Logout response
           let authRes: HttpResponse<any>;
           if (this.isLoginResponse(response)) {
             // login successfully
             const newToken = response.headers.get('authorization');
             authRes = response.clone({
-              body: this.makeAuthStatusObject(true, newToken)
+              body: this.makeAuthStatusObject(true, newToken),
             });
 
             // clean eventually refresh Requests list
@@ -252,13 +281,13 @@ export class AuthInterceptor implements HttpInterceptor {
           } else if (this.isStatusResponse(response)) {
             authRes = response.clone({
               body: Object.assign(response.body, {
-                authMethods: this.parseAuthMethodsFromHeaders(response.headers)
-              })
+                authMethods: this.parseAuthMethodsFromHeaders(response.headers),
+              }),
             });
           } else {
             // logout successfully
             authRes = response.clone({
-              body: this.makeAuthStatusObject(false)
+              body: this.makeAuthStatusObject(false),
             });
           }
           return authRes;
@@ -269,7 +298,6 @@ export class AuthInterceptor implements HttpInterceptor {
       catchError((error, caught) => {
         // Intercept an error response
         if (error instanceof HttpErrorResponse) {
-
           // Checks if is a response from a request to an authentication endpoint
           if (this.isAuthRequest(error)) {
             // clean eventually refresh Requests list
@@ -277,21 +305,33 @@ export class AuthInterceptor implements HttpInterceptor {
 
             // Create a new HttpResponse and return it, so it can be handle properly by AuthService.
             const authResponse = new HttpResponse({
-              body: this.makeAuthStatusObject(false, null, error.error, error.headers),
+              body: this.makeAuthStatusObject(
+                false,
+                null,
+                error.error,
+                error.headers
+              ),
               headers: error.headers,
               status: error.status,
               statusText: error.statusText,
-              url: error.url
+              url: error.url,
             });
             return observableOf(authResponse);
-          } else if (this.isUnauthorized(error) && isNotNull(token) && authService.isTokenExpired()) {
+          } else if (
+            this.isUnauthorized(error) &&
+            isNotNull(token) &&
+            authService.isTokenExpired()
+          ) {
             // The access token provided is expired, revoked, malformed, or invalid for other reasons
             // Redirect to the login route
-            this.store.dispatch(new RedirectWhenTokenExpiredAction('auth.messages.expired'));
+            this.store.dispatch(
+              new RedirectWhenTokenExpiredAction('auth.messages.expired')
+            );
           }
         }
         // Return error response as is.
         return observableThrowError(error);
-      })) as any;
+      })
+    ) as any;
   }
 }

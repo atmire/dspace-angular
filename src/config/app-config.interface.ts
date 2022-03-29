@@ -38,8 +38,4 @@ const APP_CONFIG = new InjectionToken<AppConfig>('APP_CONFIG');
 
 const APP_CONFIG_STATE = makeStateKey('APP_CONFIG_STATE');
 
-export {
-  AppConfig,
-  APP_CONFIG,
-  APP_CONFIG_STATE
-};
+export { AppConfig, APP_CONFIG, APP_CONFIG_STATE };

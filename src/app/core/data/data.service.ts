@@ -14,7 +14,11 @@ import {
   tap,
   skipWhile,
 } from 'rxjs/operators';
-import { hasValue, isNotEmpty, isNotEmptyOperator } from '../../shared/empty.util';
+import {
+  hasValue,
+  isNotEmpty,
+  isNotEmptyOperator,
+} from '../../shared/empty.util';
 import { NotificationOptions } from '../../shared/notifications/models/notification-options.model';
 import { NotificationsService } from '../../shared/notifications/notifications.service';
 import { FollowLinkConfig } from '../../shared/utils/follow-link-config.model';
@@ -27,7 +31,10 @@ import { CoreState } from '../core.reducers';
 import { DSpaceSerializer } from '../dspace-rest/dspace.serializer';
 import { DSpaceObject } from '../shared/dspace-object.model';
 import { HALEndpointService } from '../shared/hal-endpoint.service';
-import { getRemoteDataPayload, getFirstSucceededRemoteData, } from '../shared/operators';
+import {
+  getRemoteDataPayload,
+  getFirstSucceededRemoteData,
+} from '../shared/operators';
 import { URLCombiner } from '../url-combiner/url-combiner';
 import { ChangeAnalyzer } from './change-analyzer';
 import { PaginatedList } from './paginated-list.model';
@@ -38,7 +45,7 @@ import {
   FindListOptions,
   PatchRequest,
   PutRequest,
-  DeleteRequest
+  DeleteRequest,
 } from './request.models';
 import { RequestService } from './request.service';
 import { RestRequestMethod } from './rest-request-method';
@@ -46,7 +53,9 @@ import { UpdateDataService } from './update-data.service';
 import { GenericConstructor } from '../shared/generic-constructor';
 import { NoContent } from '../shared/NoContent.model';
 
-export abstract class DataService<T extends CacheableObject> implements UpdateDataService<T> {
+export abstract class DataService<T extends CacheableObject>
+  implements UpdateDataService<T>
+{
   protected abstract requestService: RequestService;
   protected abstract rdbService: RemoteDataBuildService;
   protected abstract store: Store<CoreState>;
@@ -68,7 +77,10 @@ export abstract class DataService<T extends CacheableObject> implements UpdateDa
    * @param linkPath The link path for the object
    * @returns {Observable<string>}
    */
-  getBrowseEndpoint(options: FindListOptions = {}, linkPath?: string): Observable<string> {
+  getBrowseEndpoint(
+    options: FindListOptions = {},
+    linkPath?: string
+  ): Observable<string> {
     return this.getEndpoint();
   }
 
@@ -88,17 +100,27 @@ export abstract class DataService<T extends CacheableObject> implements UpdateDa
    *    Return an observable that emits created HREF
    * @param linksToFollow   List of {@link FollowLinkConfig} that indicate which {@link HALLink}s should be automatically resolved
    */
-  public getFindAllHref(options: FindListOptions = {}, linkPath?: string, ...linksToFollow: FollowLinkConfig<T>[]): Observable<string> {
+  public getFindAllHref(
+    options: FindListOptions = {},
+    linkPath?: string,
+    ...linksToFollow: FollowLinkConfig<T>[]
+  ): Observable<string> {
     let endpoint$: Observable<string>;
     const args = [];
 
     endpoint$ = this.getBrowseEndpoint(options).pipe(
       filter((href: string) => isNotEmpty(href)),
-      map((href: string) => isNotEmpty(linkPath) ? `${href}/${linkPath}` : href),
+      map((href: string) =>
+        isNotEmpty(linkPath) ? `${href}/${linkPath}` : href
+      ),
       distinctUntilChanged()
     );
 
-    return endpoint$.pipe(map((result: string) => this.buildHrefFromFindOptions(result, options, args, ...linksToFollow)));
+    return endpoint$.pipe(
+      map((result: string) =>
+        this.buildHrefFromFindOptions(result, options, args, ...linksToFollow)
+      )
+    );
   }
 
   /**
@@ -110,13 +132,21 @@ export abstract class DataService<T extends CacheableObject> implements UpdateDa
    *    Return an observable that emits created HREF
    * @param linksToFollow   List of {@link FollowLinkConfig} that indicate which {@link HALLink}s should be automatically resolved
    */
-  public getSearchByHref(searchMethod: string, options: FindListOptions = {}, ...linksToFollow: FollowLinkConfig<T>[]): Observable<string> {
+  public getSearchByHref(
+    searchMethod: string,
+    options: FindListOptions = {},
+    ...linksToFollow: FollowLinkConfig<T>[]
+  ): Observable<string> {
     let result$: Observable<string>;
     const args = [];
 
     result$ = this.getSearchEndpoint(searchMethod);
 
-    return result$.pipe(map((result: string) => this.buildHrefFromFindOptions(result, options, args, ...linksToFollow)));
+    return result$.pipe(
+      map((result: string) =>
+        this.buildHrefFromFindOptions(result, options, args, ...linksToFollow)
+      )
+    );
   }
 
   /**
@@ -129,10 +159,18 @@ export abstract class DataService<T extends CacheableObject> implements UpdateDa
    *    Return an observable that emits created HREF
    * @param linksToFollow   List of {@link FollowLinkConfig} that indicate which {@link HALLink}s should be automatically resolved
    */
-  public buildHrefFromFindOptions(href: string, options: FindListOptions, extraArgs: string[] = [], ...linksToFollow: FollowLinkConfig<T>[]): string {
+  public buildHrefFromFindOptions(
+    href: string,
+    options: FindListOptions,
+    extraArgs: string[] = [],
+    ...linksToFollow: FollowLinkConfig<T>[]
+  ): string {
     let args = [...extraArgs];
 
-    if (hasValue(options.currentPage) && typeof options.currentPage === 'number') {
+    if (
+      hasValue(options.currentPage) &&
+      typeof options.currentPage === 'number'
+    ) {
       /* TODO: this is a temporary fix for the pagination start index (0 or 1) discrepancy between the rest and the frontend respectively */
       args = this.addHrefArg(href, args, `page=${options.currentPage - 1}`);
     }
@@ -140,14 +178,22 @@ export abstract class DataService<T extends CacheableObject> implements UpdateDa
       args = this.addHrefArg(href, args, `size=${options.elementsPerPage}`);
     }
     if (hasValue(options.sort)) {
-      args = this.addHrefArg(href, args, `sort=${options.sort.field},${options.sort.direction}`);
+      args = this.addHrefArg(
+        href,
+        args,
+        `sort=${options.sort.field},${options.sort.direction}`
+      );
     }
     if (hasValue(options.startsWith)) {
       args = this.addHrefArg(href, args, `startsWith=${options.startsWith}`);
     }
     if (hasValue(options.searchParams)) {
       options.searchParams.forEach((param: RequestParam) => {
-        args = this.addHrefArg(href, args, `${param.fieldName}=${param.fieldValue}`);
+        args = this.addHrefArg(
+          href,
+          args,
+          `${param.fieldName}=${param.fieldValue}`
+        );
       });
     }
     args = this.addEmbedParams(href, args, ...linksToFollow);
@@ -168,12 +214,19 @@ export abstract class DataService<T extends CacheableObject> implements UpdateDa
    * @return {Observable<string>}
    * Return an observable that emits created HREF
    */
-  protected buildHrefWithParams(href: string, params: RequestParam[], ...linksToFollow: FollowLinkConfig<T>[]): string {
-
-    let  args = [];
+  protected buildHrefWithParams(
+    href: string,
+    params: RequestParam[],
+    ...linksToFollow: FollowLinkConfig<T>[]
+  ): string {
+    let args = [];
     if (hasValue(params)) {
       params.forEach((param: RequestParam) => {
-        args = this.addHrefArg(href, args, `${param.fieldName}=${param.fieldValue}`);
+        args = this.addHrefArg(
+          href,
+          args,
+          `${param.fieldName}=${param.fieldValue}`
+        );
       });
     }
 
@@ -191,18 +244,36 @@ export abstract class DataService<T extends CacheableObject> implements UpdateDa
    * @param args            params for the query string
    * @param linksToFollow   links we want to embed in query string if shouldEmbed is true
    */
-  protected addEmbedParams(href: string, args: string[], ...linksToFollow: FollowLinkConfig<T>[]) {
+  protected addEmbedParams(
+    href: string,
+    args: string[],
+    ...linksToFollow: FollowLinkConfig<T>[]
+  ) {
     linksToFollow.forEach((linkToFollow: FollowLinkConfig<T>) => {
       if (hasValue(linkToFollow) && linkToFollow.shouldEmbed) {
         const embedString = 'embed=' + String(linkToFollow.name);
         // Add the embeds size if given in the FollowLinkConfig.FindListOptions
-        if (hasValue(linkToFollow.findListOptions) && hasValue(linkToFollow.findListOptions.elementsPerPage)) {
-          args = this.addHrefArg(href, args,
-            'embed.size=' + String(linkToFollow.name) + '=' + linkToFollow.findListOptions.elementsPerPage);
+        if (
+          hasValue(linkToFollow.findListOptions) &&
+          hasValue(linkToFollow.findListOptions.elementsPerPage)
+        ) {
+          args = this.addHrefArg(
+            href,
+            args,
+            'embed.size=' +
+              String(linkToFollow.name) +
+              '=' +
+              linkToFollow.findListOptions.elementsPerPage
+          );
         }
         // Adds the nested embeds and their size if given
         if (isNotEmpty(linkToFollow.linksToFollow)) {
-          args = this.addNestedEmbeds(embedString, href, args, ...linkToFollow.linksToFollow);
+          args = this.addNestedEmbeds(
+            embedString,
+            href,
+            args,
+            ...linkToFollow.linksToFollow
+          );
         } else {
           args = this.addHrefArg(href, args, embedString);
         }
@@ -221,7 +292,11 @@ export abstract class DataService<T extends CacheableObject> implements UpdateDa
    * @return            The next list of arguments, with newArg included if it wasn't already.
    *                    Note this function will not modify any of the input params.
    */
-  protected addHrefArg(href: string, currentArgs: string[], newArg: string): string[] {
+  protected addHrefArg(
+    href: string,
+    currentArgs: string[],
+    newArg: string
+  ): string[] {
     if (href.includes(newArg) || currentArgs.includes(newArg)) {
       return [...currentArgs];
     } else {
@@ -236,18 +311,38 @@ export abstract class DataService<T extends CacheableObject> implements UpdateDa
    * @param args            params for the query string
    * @param linksToFollow   links we want to embed in query string if shouldEmbed is true
    */
-  protected addNestedEmbeds(embedString: string, href: string, args: string[], ...linksToFollow: FollowLinkConfig<T>[]): string[] {
+  protected addNestedEmbeds(
+    embedString: string,
+    href: string,
+    args: string[],
+    ...linksToFollow: FollowLinkConfig<T>[]
+  ): string[] {
     let nestEmbed = embedString;
     linksToFollow.forEach((linkToFollow: FollowLinkConfig<T>) => {
       if (hasValue(linkToFollow) && linkToFollow.shouldEmbed) {
         nestEmbed = nestEmbed + '/' + String(linkToFollow.name);
         // Add the nested embeds size if given in the FollowLinkConfig.FindListOptions
-        if (hasValue(linkToFollow.findListOptions) && hasValue(linkToFollow.findListOptions.elementsPerPage)) {
-          const nestedEmbedSize = 'embed.size=' + nestEmbed.split('=')[1] + '=' + linkToFollow.findListOptions.elementsPerPage;
+        if (
+          hasValue(linkToFollow.findListOptions) &&
+          hasValue(linkToFollow.findListOptions.elementsPerPage)
+        ) {
+          const nestedEmbedSize =
+            'embed.size=' +
+            nestEmbed.split('=')[1] +
+            '=' +
+            linkToFollow.findListOptions.elementsPerPage;
           args = this.addHrefArg(href, args, nestedEmbedSize);
         }
-        if (hasValue(linkToFollow.linksToFollow) && isNotEmpty(linkToFollow.linksToFollow)) {
-          args = this.addNestedEmbeds(nestEmbed, href, args, ...linkToFollow.linksToFollow);
+        if (
+          hasValue(linkToFollow.linksToFollow) &&
+          isNotEmpty(linkToFollow.linksToFollow)
+        ) {
+          args = this.addNestedEmbeds(
+            nestEmbed,
+            href,
+            args,
+            ...linkToFollow.linksToFollow
+          );
         } else {
           args = this.addHrefArg(href, args, nestEmbed);
         }
@@ -270,8 +365,19 @@ export abstract class DataService<T extends CacheableObject> implements UpdateDa
    * @return {Observable<RemoteData<PaginatedList<T>>>}
    *    Return an observable that emits object list
    */
-  findAll(options: FindListOptions = {}, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<T>[]): Observable<RemoteData<PaginatedList<T>>> {
-    return this.findAllByHref(this.getFindAllHref(options), options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  findAll(
+    options: FindListOptions = {},
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<T>[]
+  ): Observable<RemoteData<PaginatedList<T>>> {
+    return this.findAllByHref(
+      this.getFindAllHref(options),
+      options,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow
+    );
   }
 
   /**
@@ -280,8 +386,17 @@ export abstract class DataService<T extends CacheableObject> implements UpdateDa
    * @param resourceID The identifier for the object
    * @param linksToFollow   List of {@link FollowLinkConfig} that indicate which {@link HALLink}s should be automatically resolved
    */
-  getIDHref(endpoint, resourceID, ...linksToFollow: FollowLinkConfig<T>[]): string {
-    return this.buildHrefFromFindOptions(endpoint + '/' + resourceID, {}, [], ...linksToFollow);
+  getIDHref(
+    endpoint,
+    resourceID,
+    ...linksToFollow: FollowLinkConfig<T>[]
+  ): string {
+    return this.buildHrefFromFindOptions(
+      endpoint + '/' + resourceID,
+      {},
+      [],
+      ...linksToFollow
+    );
   }
 
   /**
@@ -289,9 +404,15 @@ export abstract class DataService<T extends CacheableObject> implements UpdateDa
    * @param resourceID The identifier for the object
    * @param linksToFollow   List of {@link FollowLinkConfig} that indicate which {@link HALLink}s should be automatically resolved
    */
-  getIDHrefObs(resourceID: string, ...linksToFollow: FollowLinkConfig<T>[]): Observable<string> {
+  getIDHrefObs(
+    resourceID: string,
+    ...linksToFollow: FollowLinkConfig<T>[]
+  ): Observable<string> {
     return this.getEndpoint().pipe(
-      map((endpoint: string) => this.getIDHref(endpoint, resourceID, ...linksToFollow)));
+      map((endpoint: string) =>
+        this.getIDHref(endpoint, resourceID, ...linksToFollow)
+      )
+    );
   }
 
   /**
@@ -305,9 +426,19 @@ export abstract class DataService<T extends CacheableObject> implements UpdateDa
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  findById(id: string, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<T>[]): Observable<RemoteData<T>> {
+  findById(
+    id: string,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<T>[]
+  ): Observable<RemoteData<T>> {
     const href$ = this.getIDHrefObs(encodeURIComponent(id), ...linksToFollow);
-    return this.findByHref(href$, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+    return this.findByHref(
+      href$,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow
+    );
   }
 
   /**
@@ -318,7 +449,10 @@ export abstract class DataService<T extends CacheableObject> implements UpdateDa
    * @param requestFn        The function to call if the RemoteData is stale and shouldReRequest is
    *                         true
    */
-  protected reRequestStaleRemoteData<O>(shouldReRequest: boolean, requestFn: () => Observable<RemoteData<O>>) {
+  protected reRequestStaleRemoteData<O>(
+    shouldReRequest: boolean,
+    requestFn: () => Observable<RemoteData<O>>
+  ) {
     return (source: Observable<RemoteData<O>>): Observable<RemoteData<O>> => {
       if (shouldReRequest === true) {
         return source.pipe(
@@ -346,7 +480,12 @@ export abstract class DataService<T extends CacheableObject> implements UpdateDa
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  findByHref(href$: string | Observable<string>, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<T>[]): Observable<RemoteData<T>> {
+  findByHref(
+    href$: string | Observable<string>,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<T>[]
+  ): Observable<RemoteData<T>> {
     if (typeof href$ === 'string') {
       href$ = observableOf(href$);
     }
@@ -354,7 +493,9 @@ export abstract class DataService<T extends CacheableObject> implements UpdateDa
     const requestHref$ = href$.pipe(
       isNotEmptyOperator(),
       take(1),
-      map((href: string) => this.buildHrefFromFindOptions(href, {}, [], ...linksToFollow))
+      map((href: string) =>
+        this.buildHrefFromFindOptions(href, {}, [], ...linksToFollow)
+      )
     );
 
     this.createAndSendGetRequest(requestHref$, useCachedVersionIfAvailable);
@@ -364,9 +505,17 @@ export abstract class DataService<T extends CacheableObject> implements UpdateDa
       // call it isn't immediately returned, but we wait until the remote data for the new request
       // is created. If useCachedVersionIfAvailable is false it also ensures you don't get a
       // cached completed object
-      skipWhile((rd: RemoteData<T>) => useCachedVersionIfAvailable ? rd.isStale : rd.hasCompleted),
+      skipWhile((rd: RemoteData<T>) =>
+        useCachedVersionIfAvailable ? rd.isStale : rd.hasCompleted
+      ),
       this.reRequestStaleRemoteData(reRequestOnStale, () =>
-        this.findByHref(href$, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow))
+        this.findByHref(
+          href$,
+          useCachedVersionIfAvailable,
+          reRequestOnStale,
+          ...linksToFollow
+        )
+      )
     );
   }
 
@@ -383,7 +532,13 @@ export abstract class DataService<T extends CacheableObject> implements UpdateDa
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  findAllByHref(href$: string | Observable<string>, findListOptions: FindListOptions = {}, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<T>[]): Observable<RemoteData<PaginatedList<T>>> {
+  findAllByHref(
+    href$: string | Observable<string>,
+    findListOptions: FindListOptions = {},
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<T>[]
+  ): Observable<RemoteData<PaginatedList<T>>> {
     if (typeof href$ === 'string') {
       href$ = observableOf(href$);
     }
@@ -391,7 +546,14 @@ export abstract class DataService<T extends CacheableObject> implements UpdateDa
     const requestHref$ = href$.pipe(
       isNotEmptyOperator(),
       take(1),
-      map((href: string) => this.buildHrefFromFindOptions(href, findListOptions, [], ...linksToFollow))
+      map((href: string) =>
+        this.buildHrefFromFindOptions(
+          href,
+          findListOptions,
+          [],
+          ...linksToFollow
+        )
+      )
     );
 
     this.createAndSendGetRequest(requestHref$, useCachedVersionIfAvailable);
@@ -401,9 +563,18 @@ export abstract class DataService<T extends CacheableObject> implements UpdateDa
       // call it isn't immediately returned, but we wait until the remote data for the new request
       // is created. If useCachedVersionIfAvailable is false it also ensures you don't get a
       // cached completed object
-      skipWhile((rd: RemoteData<PaginatedList<T>>) => useCachedVersionIfAvailable ? rd.isStale : rd.hasCompleted),
+      skipWhile((rd: RemoteData<PaginatedList<T>>) =>
+        useCachedVersionIfAvailable ? rd.isStale : rd.hasCompleted
+      ),
       this.reRequestStaleRemoteData(reRequestOnStale, () =>
-        this.findAllByHref(href$, findListOptions, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow))
+        this.findAllByHref(
+          href$,
+          findListOptions,
+          useCachedVersionIfAvailable,
+          reRequestOnStale,
+          ...linksToFollow
+        )
+      )
     );
   }
 
@@ -415,16 +586,16 @@ export abstract class DataService<T extends CacheableObject> implements UpdateDa
    * @param useCachedVersionIfAvailable If this is true, the request will only be sent if there's
    *                                    no valid cached version. Defaults to true
    */
-  protected createAndSendGetRequest(href$: string | Observable<string>, useCachedVersionIfAvailable = true): void {
+  protected createAndSendGetRequest(
+    href$: string | Observable<string>,
+    useCachedVersionIfAvailable = true
+  ): void {
     if (isNotEmpty(href$)) {
       if (typeof href$ === 'string') {
         href$ = observableOf(href$);
       }
 
-      href$.pipe(
-        isNotEmptyOperator(),
-        take(1)
-      ).subscribe((href: string) => {
+      href$.pipe(isNotEmptyOperator(), take(1)).subscribe((href: string) => {
         const requestId = this.requestService.generateRequestId();
         const request = new GetRequest(requestId, href);
         if (hasValue(this.responseMsToLive)) {
@@ -443,7 +614,8 @@ export abstract class DataService<T extends CacheableObject> implements UpdateDa
   protected getSearchEndpoint(searchMethod: string): Observable<string> {
     return this.halService.getEndpoint(this.linkPath).pipe(
       filter((href: string) => isNotEmpty(href)),
-      map((href: string) => `${href}/search/${searchMethod}`));
+      map((href: string) => `${href}/search/${searchMethod}`)
+    );
   }
 
   /**
@@ -460,10 +632,26 @@ export abstract class DataService<T extends CacheableObject> implements UpdateDa
    * @return {Observable<RemoteData<PaginatedList<T>>}
    *    Return an observable that emits response from the server
    */
-  searchBy(searchMethod: string, options: FindListOptions = {}, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<T>[]): Observable<RemoteData<PaginatedList<T>>> {
-    const hrefObs = this.getSearchByHref(searchMethod, options, ...linksToFollow);
+  searchBy(
+    searchMethod: string,
+    options: FindListOptions = {},
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<T>[]
+  ): Observable<RemoteData<PaginatedList<T>>> {
+    const hrefObs = this.getSearchByHref(
+      searchMethod,
+      options,
+      ...linksToFollow
+    );
 
-    return this.findAllByHref(hrefObs, undefined, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+    return this.findAllByHref(
+      hrefObs,
+      undefined,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow
+    );
   }
 
   /**
@@ -474,28 +662,30 @@ export abstract class DataService<T extends CacheableObject> implements UpdateDa
   patch(object: T, operations: Operation[]): Observable<RemoteData<T>> {
     const requestId = this.requestService.generateRequestId();
 
-    const hrefObs = this.halService.getEndpoint(this.linkPath).pipe(
-      map((endpoint: string) => this.getIDHref(endpoint, object.uuid)));
+    const hrefObs = this.halService
+      .getEndpoint(this.linkPath)
+      .pipe(map((endpoint: string) => this.getIDHref(endpoint, object.uuid)));
 
-    hrefObs.pipe(
-      find((href: string) => hasValue(href)),
-    ).subscribe((href: string) => {
-      const request = new PatchRequest(requestId, href, operations);
-      if (hasValue(this.responseMsToLive)) {
-        request.responseMsToLive = this.responseMsToLive;
-      }
-      this.requestService.send(request);
-    });
+    hrefObs
+      .pipe(find((href: string) => hasValue(href)))
+      .subscribe((href: string) => {
+        const request = new PatchRequest(requestId, href, operations);
+        if (hasValue(this.responseMsToLive)) {
+          request.responseMsToLive = this.responseMsToLive;
+        }
+        this.requestService.send(request);
+      });
 
     return this.rdbService.buildFromRequestUUID(requestId);
   }
 
   createPatchFromCache(object: T): Observable<Operation[]> {
-    const oldVersion$ = this.findByHref(object._links.self.href, true,  false);
+    const oldVersion$ = this.findByHref(object._links.self.href, true, false);
     return oldVersion$.pipe(
       getFirstSucceededRemoteData(),
       getRemoteDataPayload(),
-      map((oldVersion: T) => this.comparator.diff(oldVersion, object)));
+      map((oldVersion: T) => this.comparator.diff(oldVersion, object))
+    );
   }
 
   /**
@@ -505,8 +695,14 @@ export abstract class DataService<T extends CacheableObject> implements UpdateDa
    */
   put(object: T): Observable<RemoteData<T>> {
     const requestId = this.requestService.generateRequestId();
-    const serializedObject = new DSpaceSerializer(object.constructor as GenericConstructor<{}>).serialize(object);
-    const request = new PutRequest(requestId, object._links.self.href, serializedObject);
+    const serializedObject = new DSpaceSerializer(
+      object.constructor as GenericConstructor<{}>
+    ).serialize(object);
+    const request = new PutRequest(
+      requestId,
+      object._links.self.href,
+      serializedObject
+    );
 
     if (hasValue(this.responseMsToLive)) {
       request.responseMsToLive = this.responseMsToLive;
@@ -523,16 +719,14 @@ export abstract class DataService<T extends CacheableObject> implements UpdateDa
    * @param {DSpaceObject} object The given object
    */
   update(object: T): Observable<RemoteData<T>> {
-    return this.createPatchFromCache(object)
-      .pipe(
-        mergeMap((operations: Operation[]) => {
-            if (isNotEmpty(operations)) {
-              this.objectCache.addPatch(object._links.self.href, operations);
-            }
-            return this.findByHref(object._links.self.href, true, true);
-          }
-        )
-      );
+    return this.createPatchFromCache(object).pipe(
+      mergeMap((operations: Operation[]) => {
+        if (isNotEmpty(operations)) {
+          this.objectCache.addPatch(object._links.self.href, operations);
+        }
+        return this.findByHref(object._links.self.href, true, true);
+      })
+    );
   }
 
   /**
@@ -552,12 +746,16 @@ export abstract class DataService<T extends CacheableObject> implements UpdateDa
       map((endpoint: string) => this.buildHrefWithParams(endpoint, params))
     );
 
-    const serializedObject = new DSpaceSerializer(getClassForType(object.type)).serialize(object);
+    const serializedObject = new DSpaceSerializer(
+      getClassForType(object.type)
+    ).serialize(object);
 
-    endpoint$.pipe(
-      take(1)
-    ).subscribe((endpoint: string) => {
-      const request = new CreateRequest(requestId, endpoint, JSON.stringify(serializedObject));
+    endpoint$.pipe(take(1)).subscribe((endpoint: string) => {
+      const request = new CreateRequest(
+        requestId,
+        endpoint,
+        JSON.stringify(serializedObject)
+      );
       if (hasValue(this.responseMsToLive)) {
         request.responseMsToLive = this.responseMsToLive;
       }
@@ -568,13 +766,17 @@ export abstract class DataService<T extends CacheableObject> implements UpdateDa
 
     // TODO a dataservice is not the best place to show a notification,
     // this should move up to the components that use this method
-    result$.pipe(
-      takeWhile((rd: RemoteData<T>) => rd.isLoading, true)
-    ).subscribe((rd: RemoteData<T>) => {
-      if (rd.hasFailed) {
-        this.notificationsService.error('Server Error:', rd.errorMessage, new NotificationOptions(-1));
-      }
-    });
+    result$
+      .pipe(takeWhile((rd: RemoteData<T>) => rd.isLoading, true))
+      .subscribe((rd: RemoteData<T>) => {
+        if (rd.hasFailed) {
+          this.notificationsService.error(
+            'Server Error:',
+            rd.errorMessage,
+            new NotificationOptions(-1)
+          );
+        }
+      });
 
     return result$;
   }
@@ -587,7 +789,10 @@ export abstract class DataService<T extends CacheableObject> implements UpdateDa
    * @return  A RemoteData observable with an empty payload, but still representing the state of the request: statusCode,
    *          errorMessage, timeCompleted, etc
    */
-  delete(objectId: string, copyVirtualMetadata?: string[]): Observable<RemoteData<NoContent>> {
+  delete(
+    objectId: string,
+    copyVirtualMetadata?: string[]
+  ): Observable<RemoteData<NoContent>> {
     return this.getIDHrefObs(objectId).pipe(
       switchMap((href: string) => this.deleteByHref(href, copyVirtualMetadata))
     );
@@ -601,14 +806,17 @@ export abstract class DataService<T extends CacheableObject> implements UpdateDa
    * @return  A RemoteData observable with an empty payload, but still representing the state of the request: statusCode,
    *          errorMessage, timeCompleted, etc
    */
-  deleteByHref(href: string, copyVirtualMetadata?: string[]): Observable<RemoteData<NoContent>> {
+  deleteByHref(
+    href: string,
+    copyVirtualMetadata?: string[]
+  ): Observable<RemoteData<NoContent>> {
     const requestId = this.requestService.generateRequestId();
 
     if (copyVirtualMetadata) {
-      copyVirtualMetadata.forEach((id) =>
-        href += (href.includes('?') ? '&' : '?')
-          + 'copyVirtualMetadata='
-          + id
+      copyVirtualMetadata.forEach(
+        (id) =>
+          (href +=
+            (href.includes('?') ? '&' : '?') + 'copyVirtualMetadata=' + id)
       );
     }
 

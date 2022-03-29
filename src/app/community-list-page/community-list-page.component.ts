@@ -8,6 +8,4 @@ import { Component } from '@angular/core';
   selector: 'ds-community-list-page',
   templateUrl: './community-list-page.component.html',
 })
-export class CommunityListPageComponent {
-
-}
+export class CommunityListPageComponent {}

@@ -7,7 +7,7 @@ import {
   Input,
   OnDestroy,
   OnInit,
-  Output
+  Output,
 } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { hasValue } from '../empty.util';
@@ -22,7 +22,7 @@ import { getFirstSucceededRemoteWithNotEmptyData } from '../../core/shared/opera
 @Component({
   selector: 'ds-entity-dropdown',
   templateUrl: './entity-dropdown.component.html',
-  styleUrls: ['./entity-dropdown.component.scss']
+  styleUrls: ['./entity-dropdown.component.scss'],
 })
 export class EntityDropdownComponent implements OnInit, OnDestroy {
   /**
@@ -90,7 +90,7 @@ export class EntityDropdownComponent implements OnInit, OnDestroy {
     private changeDetectorRef: ChangeDetectorRef,
     private entityTypeService: EntityTypeService,
     private el: ElementRef
-  ) { }
+  ) {}
 
   /**
    * Method called on mousewheel event, it prevent the page scroll
@@ -122,15 +122,17 @@ export class EntityDropdownComponent implements OnInit, OnDestroy {
    * @param event
    */
   public onScroll(event) {
-    this.scrollableBottom = (event.target.scrollTop + event.target.clientHeight === event.target.scrollHeight);
-    this.scrollableTop = (event.target.scrollTop === 0);
+    this.scrollableBottom =
+      event.target.scrollTop + event.target.clientHeight ===
+      event.target.scrollHeight;
+    this.scrollableTop = event.target.scrollTop === 0;
   }
 
   /**
    * Method used from infitity scroll for retrive more data on scroll down
    */
   public onScrollDown() {
-    if ( this.hasNextPage ) {
+    if (this.hasNextPage) {
       this.populateEntityList(++this.currentPage);
     }
   }
@@ -154,29 +156,42 @@ export class EntityDropdownComponent implements OnInit, OnDestroy {
     // Set the pagination info
     const findOptions: FindListOptions = {
       elementsPerPage: 10,
-      currentPage: page
+      currentPage: page,
     };
     let searchListEntity$;
     if (this.isSubmission) {
-      searchListEntity$ = this.entityTypeService.getAllAuthorizedRelationshipType(findOptions);
+      searchListEntity$ =
+        this.entityTypeService.getAllAuthorizedRelationshipType(findOptions);
     } else {
-      searchListEntity$ = this.entityTypeService.getAllAuthorizedRelationshipTypeImport(findOptions);
+      searchListEntity$ =
+        this.entityTypeService.getAllAuthorizedRelationshipTypeImport(
+          findOptions
+        );
     }
     this.searchListEntity$ = searchListEntity$.pipe(
-        getFirstSucceededRemoteWithNotEmptyData(),
-        switchMap((entityType: RemoteData<PaginatedList<ItemType>>) => {
-          if ( (this.searchListEntity.length + findOptions.elementsPerPage) >= entityType.payload.totalElements ) {
-            this.hasNextPage = false;
-          }
-          return entityType.payload.page;
-        }),
-        reduce((acc: any, value: any) => [...acc, value], []),
-        startWith([])
+      getFirstSucceededRemoteWithNotEmptyData(),
+      switchMap((entityType: RemoteData<PaginatedList<ItemType>>) => {
+        if (
+          this.searchListEntity.length + findOptions.elementsPerPage >=
+          entityType.payload.totalElements
+        ) {
+          this.hasNextPage = false;
+        }
+        return entityType.payload.page;
+      }),
+      reduce((acc: any, value: any) => [...acc, value], []),
+      startWith([])
     );
     this.subs.push(
       this.searchListEntity$.subscribe(
-        (next) => { this.searchListEntity.push(...next); }, undefined,
-        () => { this.hideShowLoader(false); this.changeDetectorRef.detectChanges(); }
+        (next) => {
+          this.searchListEntity.push(...next);
+        },
+        undefined,
+        () => {
+          this.hideShowLoader(false);
+          this.changeDetectorRef.detectChanges();
+        }
       )
     );
   }
@@ -202,6 +217,8 @@ export class EntityDropdownComponent implements OnInit, OnDestroy {
    * Unsubscribe from all subscriptions
    */
   ngOnDestroy(): void {
-    this.subs.filter((sub) => hasValue(sub)).forEach((sub) => sub.unsubscribe());
+    this.subs
+      .filter((sub) => hasValue(sub))
+      .forEach((sub) => sub.unsubscribe());
   }
 }

@@ -11,32 +11,41 @@ import { getFirstCompletedRemoteData } from '../../../core/shared/operators';
 
 @Component({
   selector: 'ds-item-public',
-  templateUrl: '../simple-item-action/abstract-simple-item-action.component.html'
+  templateUrl:
+    '../simple-item-action/abstract-simple-item-action.component.html',
 })
 /**
  * Component responsible for rendering the make item public page
  */
 export class ItemPublicComponent extends AbstractSimpleItemActionComponent {
-
   protected messageKey = 'public';
   protected predicate = (rd: RemoteData<Item>) => rd.payload.isDiscoverable;
 
-  constructor(protected route: ActivatedRoute,
-              protected router: Router,
-              protected notificationsService: NotificationsService,
-              protected itemDataService: ItemDataService,
-              protected translateService: TranslateService) {
-    super(route, router, notificationsService, itemDataService, translateService);
+  constructor(
+    protected route: ActivatedRoute,
+    protected router: Router,
+    protected notificationsService: NotificationsService,
+    protected itemDataService: ItemDataService,
+    protected translateService: TranslateService
+  ) {
+    super(
+      route,
+      router,
+      notificationsService,
+      itemDataService,
+      translateService
+    );
   }
 
   /**
    * Perform the make public action to the item
    */
   performAction() {
-    this.itemDataService.setDiscoverable(this.item, true).pipe(getFirstCompletedRemoteData()).subscribe(
-      (response: RemoteData<Item>) => {
+    this.itemDataService
+      .setDiscoverable(this.item, true)
+      .pipe(getFirstCompletedRemoteData())
+      .subscribe((response: RemoteData<Item>) => {
         this.processRestResponse(response);
-      }
-    );
+      });
   }
 }

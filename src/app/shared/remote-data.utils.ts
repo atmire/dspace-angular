@@ -13,7 +13,10 @@ const FIXED_TIMESTAMP = new Date().getTime();
  * @param object The object to wrap
  * @param timeCompleted the moment when the remoteData was completed
  */
-export function createSuccessfulRemoteDataObject<T>(object: T, timeCompleted = FIXED_TIMESTAMP): RemoteData<T> {
+export function createSuccessfulRemoteDataObject<T>(
+  object: T,
+  timeCompleted = FIXED_TIMESTAMP
+): RemoteData<T> {
   return new RemoteData(
     timeCompleted,
     environment.cache.msToLive.default,
@@ -30,7 +33,10 @@ export function createSuccessfulRemoteDataObject<T>(object: T, timeCompleted = F
  * @param object The object to wrap
  * @param timeCompleted the moment when the remoteData was completed
  */
-export function createSuccessfulRemoteDataObject$<T>(object: T, timeCompleted?: number): Observable<RemoteData<T>> {
+export function createSuccessfulRemoteDataObject$<T>(
+  object: T,
+  timeCompleted?: number
+): Observable<RemoteData<T>> {
   return observableOf(createSuccessfulRemoteDataObject(object, timeCompleted));
 }
 
@@ -41,7 +47,11 @@ export function createSuccessfulRemoteDataObject$<T>(object: T, timeCompleted?: 
  * @param statusCode    the status code
  * @param timeCompleted the moment when the remoteData was completed
  */
-export function createFailedRemoteDataObject<T>(errorMessage?: string, statusCode?: number, timeCompleted = 1577836800000): RemoteData<T> {
+export function createFailedRemoteDataObject<T>(
+  errorMessage?: string,
+  statusCode?: number,
+  timeCompleted = 1577836800000
+): RemoteData<T> {
   return new RemoteData(
     timeCompleted,
     environment.cache.msToLive.default,
@@ -60,15 +70,23 @@ export function createFailedRemoteDataObject<T>(errorMessage?: string, statusCod
  * @param statusCode    the status code
  * @param timeCompleted the moment when the remoteData was completed
  */
-export function createFailedRemoteDataObject$<T>(errorMessage?: string, statusCode?: number, timeCompleted?: number): Observable<RemoteData<T>> {
-  return observableOf(createFailedRemoteDataObject(errorMessage, statusCode, timeCompleted));
+export function createFailedRemoteDataObject$<T>(
+  errorMessage?: string,
+  statusCode?: number,
+  timeCompleted?: number
+): Observable<RemoteData<T>> {
+  return observableOf(
+    createFailedRemoteDataObject(errorMessage, statusCode, timeCompleted)
+  );
 }
 
 /**
  * Method to create a remote data object that is still pending
  * @param lastVerified the moment when the remoteData was last verified
  */
-export function createPendingRemoteDataObject<T>(lastVerified = FIXED_TIMESTAMP): RemoteData<T> {
+export function createPendingRemoteDataObject<T>(
+  lastVerified = FIXED_TIMESTAMP
+): RemoteData<T> {
   return new RemoteData(
     undefined,
     environment.cache.msToLive.default,
@@ -84,7 +102,9 @@ export function createPendingRemoteDataObject<T>(lastVerified = FIXED_TIMESTAMP)
  * Method to create a remote data object that is still pending, wrapped in an observable
  * @param lastVerified the moment when the remoteData was last verified
  */
-export function createPendingRemoteDataObject$<T>(lastVerified?: number): Observable<RemoteData<T>> {
+export function createPendingRemoteDataObject$<T>(
+  lastVerified?: number
+): Observable<RemoteData<T>> {
   return observableOf(createPendingRemoteDataObject(lastVerified));
 }
 
@@ -92,7 +112,9 @@ export function createPendingRemoteDataObject$<T>(lastVerified?: number): Observ
  * Method to create a remote data object with no content
  * @param timeCompleted the moment when the remoteData was completed
  */
-export function createNoContentRemoteDataObject<T>(timeCompleted?: number): RemoteData<T> {
+export function createNoContentRemoteDataObject<T>(
+  timeCompleted?: number
+): RemoteData<T> {
   return createSuccessfulRemoteDataObject(undefined, timeCompleted);
 }
 
@@ -100,6 +122,8 @@ export function createNoContentRemoteDataObject<T>(timeCompleted?: number): Remo
  * Method to create a remote data object that has succeeded with no content, wrapped in an observable
  * @param timeCompleted the moment when the remoteData was completed
  */
-export function createNoContentRemoteDataObject$<T>(timeCompleted?: number): Observable<RemoteData<T>> {
+export function createNoContentRemoteDataObject$<T>(
+  timeCompleted?: number
+): Observable<RemoteData<T>> {
   return createSuccessfulRemoteDataObject$(undefined, timeCompleted);
 }

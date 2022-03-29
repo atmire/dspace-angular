@@ -1,4 +1,9 @@
-import { ComponentFixture, inject, TestBed, waitForAsync } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  inject,
+  TestBed,
+  waitForAsync,
+} from '@angular/core/testing';
 
 import { MetadataFieldFormComponent } from './metadata-field-form.component';
 import { RegistryService } from '../../../../core/registry/registry.service';
@@ -21,7 +26,7 @@ describe('MetadataFieldFormComponent', () => {
   const metadataSchema = Object.assign(new MetadataSchema(), {
     id: 1,
     namespace: 'fake schema',
-    prefix: 'fake'
+    prefix: 'fake',
   });
 
   /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
@@ -29,31 +34,33 @@ describe('MetadataFieldFormComponent', () => {
     getActiveMetadataField: () => observableOf(undefined),
     createMetadataField: (field: MetadataField) => observableOf(field),
     updateMetadataField: (field: MetadataField) => observableOf(field),
-    cancelEditMetadataField: () => {
-    },
-    cancelEditMetadataSchema: () => {
-    },
-    clearMetadataFieldRequests: () => observableOf(undefined)
+    cancelEditMetadataField: () => {},
+    cancelEditMetadataSchema: () => {},
+    clearMetadataFieldRequests: () => observableOf(undefined),
   };
   const formBuilderServiceStub = {
     createFormGroup: () => {
       return {
-        patchValue: () => {
-        }
+        patchValue: () => {},
       };
-    }
+    },
   };
   /* eslint-enable no-empty, @typescript-eslint/no-empty-function */
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [CommonModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), NgbModule],
+      imports: [
+        CommonModule,
+        RouterTestingModule.withRoutes([]),
+        TranslateModule.forRoot(),
+        NgbModule,
+      ],
       declarations: [MetadataFieldFormComponent, EnumKeysPipe],
       providers: [
         { provide: RegistryService, useValue: registryServiceStub },
-        { provide: FormBuilderService, useValue: formBuilderServiceStub }
+        { provide: FormBuilderService, useValue: formBuilderServiceStub },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -81,7 +88,7 @@ describe('MetadataFieldFormComponent', () => {
     const expected = Object.assign(new MetadataField(), {
       element: element,
       qualifier: qualifier,
-      scopeNote: scopeNote
+      scopeNote: scopeNote,
     });
 
     beforeEach(() => {
@@ -93,7 +100,9 @@ describe('MetadataFieldFormComponent', () => {
 
     describe('without an active field', () => {
       beforeEach(() => {
-        spyOn(registryService, 'getActiveMetadataField').and.returnValue(observableOf(undefined));
+        spyOn(registryService, 'getActiveMetadataField').and.returnValue(
+          observableOf(undefined)
+        );
         component.onSubmit();
         fixture.detectChanges();
       });
@@ -111,18 +120,22 @@ describe('MetadataFieldFormComponent', () => {
         schema: metadataSchema,
         element: element,
         qualifier: qualifier,
-        scopeNote: scopeNote
+        scopeNote: scopeNote,
       });
 
       beforeEach(() => {
-        spyOn(registryService, 'getActiveMetadataField').and.returnValue(observableOf(expectedWithId));
+        spyOn(registryService, 'getActiveMetadataField').and.returnValue(
+          observableOf(expectedWithId)
+        );
         component.onSubmit();
         fixture.detectChanges();
       });
 
       it('should edit the existing field using the correct values', waitForAsync(() => {
         fixture.whenStable().then(() => {
-          expect(component.submitForm.emit).toHaveBeenCalledWith(expectedWithId);
+          expect(component.submitForm.emit).toHaveBeenCalledWith(
+            expectedWithId
+          );
         });
       }));
     });

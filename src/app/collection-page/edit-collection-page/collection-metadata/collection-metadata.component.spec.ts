@@ -14,7 +14,10 @@ import { ItemTemplateDataService } from '../../../core/data/item-template-data.s
 import { Collection } from '../../../core/shared/collection.model';
 import { ObjectCacheService } from '../../../core/cache/object-cache.service';
 import { RequestService } from '../../../core/data/request.service';
-import { createSuccessfulRemoteDataObject, createSuccessfulRemoteDataObject$ } from '../../../shared/remote-data.utils';
+import {
+  createSuccessfulRemoteDataObject,
+  createSuccessfulRemoteDataObject$,
+} from '../../../shared/remote-data.utils';
 import { getCollectionItemTemplateRoute } from '../../collection-page-routing-paths';
 
 describe('CollectionMetadataComponent', () => {
@@ -25,16 +28,16 @@ describe('CollectionMetadataComponent', () => {
 
   const template = Object.assign(new Item(), {
     _links: {
-      self: { href: 'template-selflink' }
-    }
+      self: { href: 'template-selflink' },
+    },
   });
   const collection = Object.assign(new Collection(), {
     uuid: 'collection-id',
     id: 'collection-id',
     name: 'Fake Collection',
     _links: {
-      self: { href: 'collection-selflink' }
-    }
+      self: { href: 'collection-selflink' },
+    },
   });
   const collectionTemplateHref = 'rest/api/test/collections/template';
 
@@ -47,28 +50,42 @@ describe('CollectionMetadataComponent', () => {
 
   const notificationsService = jasmine.createSpyObj('notificationsService', {
     success: {},
-    error: {}
+    error: {},
   });
   const objectCache = jasmine.createSpyObj('objectCache', {
-    remove: {}
+    remove: {},
   });
   const requestService = jasmine.createSpyObj('requestService', {
-    setStaleByHrefSubstring: {}
+    setStaleByHrefSubstring: {},
   });
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), SharedModule, CommonModule, RouterTestingModule],
+      imports: [
+        TranslateModule.forRoot(),
+        SharedModule,
+        CommonModule,
+        RouterTestingModule,
+      ],
       declarations: [CollectionMetadataComponent],
       providers: [
         { provide: CollectionDataService, useValue: {} },
         { provide: ItemTemplateDataService, useValue: itemTemplateServiceStub },
-        { provide: ActivatedRoute, useValue: { parent: { data: observableOf({ dso: createSuccessfulRemoteDataObject(collection) }) } } },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            parent: {
+              data: observableOf({
+                dso: createSuccessfulRemoteDataObject(collection),
+              }),
+            },
+          },
+        },
         { provide: NotificationsService, useValue: notificationsService },
         { provide: ObjectCacheService, useValue: objectCache },
-        { provide: RequestService, useValue: requestService }
+        { provide: RequestService, useValue: requestService },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -87,17 +104,21 @@ describe('CollectionMetadataComponent', () => {
   });
 
   describe('addItemTemplate', () => {
-    it('should navigate to the collection\'s itemtemplate page', () => {
+    it("should navigate to the collection's itemtemplate page", () => {
       spyOn(router, 'navigate');
       comp.addItemTemplate();
-      expect(router.navigate).toHaveBeenCalledWith([getCollectionItemTemplateRoute(collection.uuid)]);
+      expect(router.navigate).toHaveBeenCalledWith([
+        getCollectionItemTemplateRoute(collection.uuid),
+      ]);
     });
   });
 
   describe('deleteItemTemplate', () => {
     describe('when delete returns a success', () => {
       beforeEach(() => {
-        (itemTemplateService.deleteByCollectionID as jasmine.Spy).and.returnValue(observableOf(true));
+        (
+          itemTemplateService.deleteByCollectionID as jasmine.Spy
+        ).and.returnValue(observableOf(true));
         comp.deleteItemTemplate();
       });
 
@@ -106,15 +127,23 @@ describe('CollectionMetadataComponent', () => {
       });
 
       it('should reset related object and request cache', () => {
-        expect(requestService.setStaleByHrefSubstring).toHaveBeenCalledWith(collectionTemplateHref);
-        expect(requestService.setStaleByHrefSubstring).toHaveBeenCalledWith(template.self);
-        expect(requestService.setStaleByHrefSubstring).toHaveBeenCalledWith(collection.self);
+        expect(requestService.setStaleByHrefSubstring).toHaveBeenCalledWith(
+          collectionTemplateHref
+        );
+        expect(requestService.setStaleByHrefSubstring).toHaveBeenCalledWith(
+          template.self
+        );
+        expect(requestService.setStaleByHrefSubstring).toHaveBeenCalledWith(
+          collection.self
+        );
       });
     });
 
     describe('when delete returns a failure', () => {
       beforeEach(() => {
-        (itemTemplateService.deleteByCollectionID as jasmine.Spy).and.returnValue(observableOf(false));
+        (
+          itemTemplateService.deleteByCollectionID as jasmine.Spy
+        ).and.returnValue(observableOf(false));
         comp.deleteItemTemplate();
       });
 

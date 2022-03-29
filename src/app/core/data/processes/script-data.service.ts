@@ -36,25 +36,37 @@ export class ScriptDataService extends DataService<Script> {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DefaultChangeAnalyzer<Script>) {
+    protected comparator: DefaultChangeAnalyzer<Script>
+  ) {
     super();
   }
 
-  public invoke(scriptName: string, parameters: ProcessParameter[], files: File[]): Observable<RemoteData<Process>> {
+  public invoke(
+    scriptName: string,
+    parameters: ProcessParameter[],
+    files: File[]
+  ): Observable<RemoteData<Process>> {
     const requestId = this.requestService.generateRequestId();
-    this.getBrowseEndpoint().pipe(
-      take(1),
-      map((endpoint: string) => new URLCombiner(endpoint, scriptName, 'processes').toString()),
-      map((endpoint: string) => {
-        const body = this.getInvocationFormData(parameters, files);
-        return new MultipartPostRequest(requestId, endpoint, body);
-      })
-    ).subscribe((request: RestRequest) => this.requestService.send(request));
+    this.getBrowseEndpoint()
+      .pipe(
+        take(1),
+        map((endpoint: string) =>
+          new URLCombiner(endpoint, scriptName, 'processes').toString()
+        ),
+        map((endpoint: string) => {
+          const body = this.getInvocationFormData(parameters, files);
+          return new MultipartPostRequest(requestId, endpoint, body);
+        })
+      )
+      .subscribe((request: RestRequest) => this.requestService.send(request));
 
     return this.rdbService.buildFromRequestUUID<Process>(requestId);
   }
 
-  private getInvocationFormData(parameters: ProcessParameter[], files: File[]): FormData {
+  private getInvocationFormData(
+    parameters: ProcessParameter[],
+    files: File[]
+  ): FormData {
     const form: FormData = new FormData();
     form.set('properties', JSON.stringify(parameters));
     files.forEach((file: File) => {

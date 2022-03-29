@@ -9,4 +9,6 @@ import { ResourceType } from '../../../shared/resource-type';
 
 export const VOCABULARY = new ResourceType('vocabulary');
 export const VOCABULARY_ENTRY = new ResourceType('vocabularyEntry');
-export const VOCABULARY_ENTRY_DETAIL = new ResourceType('vocabularyEntryDetail');
+export const VOCABULARY_ENTRY_DETAIL = new ResourceType(
+  'vocabularyEntryDetail'
+);

@@ -16,11 +16,12 @@ export class ThemedObjectNotFoundComponent extends ThemedComponent<ObjectNotFoun
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../themes/${themeName}/app/lookup-by-id/objectnotfound/objectnotfound.component`);
+    return import(
+      `../../../themes/${themeName}/app/lookup-by-id/objectnotfound/objectnotfound.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {
     return import(`./objectnotfound.component`);
   }
-
 }

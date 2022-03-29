@@ -18,7 +18,7 @@ import { SearchModule } from '../shared/search/search.module';
 const components = [
   SearchPageComponent,
   SearchTrackerComponent,
-  ThemedSearchPageComponent
+  ThemedSearchPageComponent,
 ];
 
 @NgModule({
@@ -29,7 +29,7 @@ const components = [
     CoreModule.forRoot(),
     StatisticsModule.forRoot(),
     JournalEntitiesModule.withEntryComponents(),
-    ResearchEntitiesModule.withEntryComponents()
+    ResearchEntitiesModule.withEntryComponents(),
   ],
   declarations: components,
   providers: [
@@ -37,13 +37,12 @@ const components = [
     SidebarFilterService,
     SearchFilterService,
     ConfigurationSearchPageGuard,
-    SearchConfigurationService
+    SearchConfigurationService,
   ],
-  exports: components
+  exports: components,
 })
 
 /**
  * This module handles all components and pipes that are necessary for the search page
  */
-export class SearchPageModule {
-}
+export class SearchPageModule {}

@@ -13,7 +13,10 @@ import { NotificationsService } from '../../../../shared/notifications/notificat
 import { NotificationsServiceStub } from '../../../../shared/testing/notifications-service.stub';
 import { RouterStub } from '../../../../shared/testing/router.stub';
 import { AddBitstreamFormatComponent } from './add-bitstream-format.component';
-import { createFailedRemoteDataObject$, createSuccessfulRemoteDataObject$ } from '../../../../shared/remote-data.utils';
+import {
+  createFailedRemoteDataObject$,
+  createSuccessfulRemoteDataObject$,
+} from '../../../../shared/remote-data.utils';
 
 describe('AddBitstreamFormatComponent', () => {
   let comp: AddBitstreamFormatComponent;
@@ -36,20 +39,31 @@ describe('AddBitstreamFormatComponent', () => {
   const initAsync = () => {
     router = new RouterStub();
     notificationService = new NotificationsServiceStub();
-    bitstreamFormatDataService = jasmine.createSpyObj('bitstreamFormatDataService', {
-      createBitstreamFormat: createSuccessfulRemoteDataObject$({}),
-      clearBitStreamFormatRequests: observableOf(null)
-    });
+    bitstreamFormatDataService = jasmine.createSpyObj(
+      'bitstreamFormatDataService',
+      {
+        createBitstreamFormat: createSuccessfulRemoteDataObject$({}),
+        clearBitStreamFormatRequests: observableOf(null),
+      }
+    );
 
     TestBed.configureTestingModule({
-      imports: [CommonModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), NgbModule],
+      imports: [
+        CommonModule,
+        RouterTestingModule.withRoutes([]),
+        TranslateModule.forRoot(),
+        NgbModule,
+      ],
       declarations: [AddBitstreamFormatComponent],
       providers: [
         { provide: Router, useValue: router },
         { provide: NotificationsService, useValue: notificationService },
-        { provide: BitstreamFormatDataService, useValue: bitstreamFormatDataService },
+        {
+          provide: BitstreamFormatDataService,
+          useValue: bitstreamFormatDataService,
+        },
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
   };
 
@@ -66,40 +80,55 @@ describe('AddBitstreamFormatComponent', () => {
     it('should send the updated form to the service, show a notification and navigate to ', () => {
       comp.createBitstreamFormat(bitstreamFormat);
 
-      expect(bitstreamFormatDataService.createBitstreamFormat).toHaveBeenCalledWith(bitstreamFormat);
+      expect(
+        bitstreamFormatDataService.createBitstreamFormat
+      ).toHaveBeenCalledWith(bitstreamFormat);
       expect(notificationService.success).toHaveBeenCalled();
-      expect(router.navigate).toHaveBeenCalledWith(['/admin/registries/bitstream-formats']);
-
+      expect(router.navigate).toHaveBeenCalledWith([
+        '/admin/registries/bitstream-formats',
+      ]);
     });
   });
   describe('createBitstreamFormat error', () => {
     beforeEach(waitForAsync(() => {
       router = new RouterStub();
       notificationService = new NotificationsServiceStub();
-      bitstreamFormatDataService = jasmine.createSpyObj('bitstreamFormatDataService', {
-        createBitstreamFormat: createFailedRemoteDataObject$('Error', 500),
-        clearBitStreamFormatRequests: observableOf(null)
-      });
+      bitstreamFormatDataService = jasmine.createSpyObj(
+        'bitstreamFormatDataService',
+        {
+          createBitstreamFormat: createFailedRemoteDataObject$('Error', 500),
+          clearBitStreamFormatRequests: observableOf(null),
+        }
+      );
 
       TestBed.configureTestingModule({
-        imports: [CommonModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), NgbModule],
+        imports: [
+          CommonModule,
+          RouterTestingModule.withRoutes([]),
+          TranslateModule.forRoot(),
+          NgbModule,
+        ],
         declarations: [AddBitstreamFormatComponent],
         providers: [
           { provide: Router, useValue: router },
           { provide: NotificationsService, useValue: notificationService },
-          { provide: BitstreamFormatDataService, useValue: bitstreamFormatDataService },
+          {
+            provide: BitstreamFormatDataService,
+            useValue: bitstreamFormatDataService,
+          },
         ],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA]
+        schemas: [CUSTOM_ELEMENTS_SCHEMA],
       }).compileComponents();
     }));
     beforeEach(initBeforeEach);
     it('should send the updated form to the service, show a notification and navigate to ', () => {
       comp.createBitstreamFormat(bitstreamFormat);
 
-      expect(bitstreamFormatDataService.createBitstreamFormat).toHaveBeenCalledWith(bitstreamFormat);
+      expect(
+        bitstreamFormatDataService.createBitstreamFormat
+      ).toHaveBeenCalledWith(bitstreamFormat);
       expect(notificationService.error).toHaveBeenCalled();
       expect(router.navigate).not.toHaveBeenCalled();
-
     });
   });
 });

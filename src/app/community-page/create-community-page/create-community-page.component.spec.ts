@@ -19,16 +19,30 @@ describe('CreateCommunityPageComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), SharedModule, CommonModule, RouterTestingModule],
+      imports: [
+        TranslateModule.forRoot(),
+        SharedModule,
+        CommonModule,
+        RouterTestingModule,
+      ],
       declarations: [CreateCommunityPageComponent],
       providers: [
-        { provide: CommunityDataService, useValue: { findById: () => observableOf({}) } },
-        { provide: RouteService, useValue: { getQueryParameterValue: () => observableOf('1234') } },
+        {
+          provide: CommunityDataService,
+          useValue: { findById: () => observableOf({}) },
+        },
+        {
+          provide: RouteService,
+          useValue: { getQueryParameterValue: () => observableOf('1234') },
+        },
         { provide: Router, useValue: {} },
-        { provide: NotificationsService, useValue: new NotificationsServiceStub() },
-        { provide: RequestService, useValue: {} }
+        {
+          provide: NotificationsService,
+          useValue: new NotificationsServiceStub(),
+        },
+        { provide: RequestService, useValue: {} },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 

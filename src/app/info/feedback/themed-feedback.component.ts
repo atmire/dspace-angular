@@ -16,11 +16,12 @@ export class ThemedFeedbackComponent extends ThemedComponent<FeedbackComponent> 
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../themes/${themeName}/app/info/feedback/feedback.component`);
+    return import(
+      `../../../themes/${themeName}/app/info/feedback/feedback.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {
     return import(`./feedback.component`);
   }
-
 }

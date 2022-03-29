@@ -14,8 +14,9 @@ import { DSpaceObject } from '../../core/shared/dspace-object.model';
 /**
  * Component that handles the Collection Authorizations
  */
-export class BitstreamAuthorizationsComponent<TDomain extends DSpaceObject> implements OnInit {
-
+export class BitstreamAuthorizationsComponent<TDomain extends DSpaceObject>
+  implements OnInit
+{
   /**
    * The initial DSO object
    */
@@ -26,15 +27,15 @@ export class BitstreamAuthorizationsComponent<TDomain extends DSpaceObject> impl
    *
    * @param {ActivatedRoute} route
    */
-  constructor(
-    private route: ActivatedRoute
-  ) {
-  }
+  constructor(private route: ActivatedRoute) {}
 
   /**
    * Initialize the component, setting up the collection
    */
   ngOnInit(): void {
-    this.dsoRD$ = this.route.data.pipe(first(), map((data) => data.bitstream));
+    this.dsoRD$ = this.route.data.pipe(
+      first(),
+      map((data) => data.bitstream)
+    );
   }
 }

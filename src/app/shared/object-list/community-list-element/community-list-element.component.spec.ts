@@ -12,10 +12,10 @@ const mockCommunityWithAbstract: Community = Object.assign(new Community(), {
     'dc.description.abstract': [
       {
         language: 'en_US',
-        value: 'Short description'
-      }
-    ]
-  }
+        value: 'Short description',
+      },
+    ],
+  },
 });
 
 const mockCommunityWithoutAbstract: Community = Object.assign(new Community(), {
@@ -23,10 +23,10 @@ const mockCommunityWithoutAbstract: Community = Object.assign(new Community(), {
     'dc.title': [
       {
         language: 'en_US',
-        value: 'Test title'
-      }
-    ]
-  }
+        value: 'Test title',
+      },
+    ],
+  },
 });
 
 describe('CommunityListElementComponent', () => {
@@ -34,13 +34,18 @@ describe('CommunityListElementComponent', () => {
     TestBed.configureTestingModule({
       declarations: [CommunityListElementComponent],
       providers: [
-        { provide: 'objectElementProvider', useValue: (mockCommunityWithAbstract) }
+        {
+          provide: 'objectElementProvider',
+          useValue: mockCommunityWithAbstract,
+        },
       ],
 
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(CommunityListElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(CommunityListElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -55,7 +60,9 @@ describe('CommunityListElementComponent', () => {
     });
 
     it('should show the description paragraph', () => {
-      const communityAbstractField = fixture.debugElement.query(By.css('div.abstract-text'));
+      const communityAbstractField = fixture.debugElement.query(
+        By.css('div.abstract-text')
+      );
       expect(communityAbstractField).not.toBeNull();
     });
   });
@@ -67,7 +74,9 @@ describe('CommunityListElementComponent', () => {
     });
 
     it('should not show the description paragraph', () => {
-      const communityAbstractField = fixture.debugElement.query(By.css('div.abstract-text'));
+      const communityAbstractField = fixture.debugElement.query(
+        By.css('div.abstract-text')
+      );
       expect(communityAbstractField).toBeNull();
     });
   });

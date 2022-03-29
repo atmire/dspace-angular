@@ -2,11 +2,15 @@
 import { Action } from '@ngrx/store';
 
 import { type } from '../../shared/ngrx/type';
-import { SectionVisibility, SubmissionError, SubmissionSectionError } from './submission-objects.reducer';
+import {
+  SectionVisibility,
+  SubmissionError,
+  SubmissionSectionError,
+} from './submission-objects.reducer';
 import { WorkspaceitemSectionUploadFileObject } from '../../core/submission/models/workspaceitem-section-upload-file.model';
 import {
   WorkspaceitemSectionDataType,
-  WorkspaceitemSectionsObject
+  WorkspaceitemSectionsObject,
 } from '../../core/submission/models/workspaceitem-sections.model';
 import { SubmissionObject } from '../../core/submission/models/submission-object.model';
 import { SubmissionDefinitionsModel } from '../../core/config/models/config-submission-definitions.model';
@@ -26,32 +30,62 @@ export const SubmissionObjectActionTypes = {
   INIT_SUBMISSION_FORM: type('dspace/submission/INIT_SUBMISSION_FORM'),
   RESET_SUBMISSION_FORM: type('dspace/submission/RESET_SUBMISSION_FORM'),
   CANCEL_SUBMISSION_FORM: type('dspace/submission/CANCEL_SUBMISSION_FORM'),
-  COMPLETE_INIT_SUBMISSION_FORM: type('dspace/submission/COMPLETE_INIT_SUBMISSION_FORM'),
-  SAVE_FOR_LATER_SUBMISSION_FORM: type('dspace/submission/SAVE_FOR_LATER_SUBMISSION_FORM'),
-  SAVE_FOR_LATER_SUBMISSION_FORM_SUCCESS: type('dspace/submission/SAVE_FOR_LATER_SUBMISSION_FORM_SUCCESS'),
-  SAVE_FOR_LATER_SUBMISSION_FORM_ERROR: type('dspace/submission/SAVE_FOR_LATER_SUBMISSION_FORM_ERROR'),
+  COMPLETE_INIT_SUBMISSION_FORM: type(
+    'dspace/submission/COMPLETE_INIT_SUBMISSION_FORM'
+  ),
+  SAVE_FOR_LATER_SUBMISSION_FORM: type(
+    'dspace/submission/SAVE_FOR_LATER_SUBMISSION_FORM'
+  ),
+  SAVE_FOR_LATER_SUBMISSION_FORM_SUCCESS: type(
+    'dspace/submission/SAVE_FOR_LATER_SUBMISSION_FORM_SUCCESS'
+  ),
+  SAVE_FOR_LATER_SUBMISSION_FORM_ERROR: type(
+    'dspace/submission/SAVE_FOR_LATER_SUBMISSION_FORM_ERROR'
+  ),
   SAVE_SUBMISSION_FORM: type('dspace/submission/SAVE_SUBMISSION_FORM'),
-  SAVE_SUBMISSION_FORM_SUCCESS: type('dspace/submission/SAVE_SUBMISSION_FORM_SUCCESS'),
-  SAVE_SUBMISSION_FORM_ERROR: type('dspace/submission/SAVE_SUBMISSION_FORM_ERROR'),
-  SAVE_SUBMISSION_SECTION_FORM: type('dspace/submission/SAVE_SUBMISSION_SECTION_FORM'),
-  SAVE_SUBMISSION_SECTION_FORM_SUCCESS: type('dspace/submission/SAVE_SUBMISSION_SECTION_FORM_SUCCESS'),
-  SAVE_SUBMISSION_SECTION_FORM_ERROR: type('dspace/submission/SAVE_SUBMISSION_SECTION_FORM_ERROR'),
-  CHANGE_SUBMISSION_COLLECTION: type('dspace/submission/CHANGE_SUBMISSION_COLLECTION'),
+  SAVE_SUBMISSION_FORM_SUCCESS: type(
+    'dspace/submission/SAVE_SUBMISSION_FORM_SUCCESS'
+  ),
+  SAVE_SUBMISSION_FORM_ERROR: type(
+    'dspace/submission/SAVE_SUBMISSION_FORM_ERROR'
+  ),
+  SAVE_SUBMISSION_SECTION_FORM: type(
+    'dspace/submission/SAVE_SUBMISSION_SECTION_FORM'
+  ),
+  SAVE_SUBMISSION_SECTION_FORM_SUCCESS: type(
+    'dspace/submission/SAVE_SUBMISSION_SECTION_FORM_SUCCESS'
+  ),
+  SAVE_SUBMISSION_SECTION_FORM_ERROR: type(
+    'dspace/submission/SAVE_SUBMISSION_SECTION_FORM_ERROR'
+  ),
+  CHANGE_SUBMISSION_COLLECTION: type(
+    'dspace/submission/CHANGE_SUBMISSION_COLLECTION'
+  ),
   SET_ACTIVE_SECTION: type('dspace/submission/SET_ACTIVE_SECTION'),
   INIT_SECTION: type('dspace/submission/INIT_SECTION'),
   ENABLE_SECTION: type('dspace/submission/ENABLE_SECTION'),
   DISABLE_SECTION: type('dspace/submission/DISABLE_SECTION'),
   SET_SECTION_FORM_ID: type('dspace/submission/SET_SECTION_FORM_ID'),
   SECTION_STATUS_CHANGE: type('dspace/submission/SECTION_STATUS_CHANGE'),
-  SECTION_LOADING_STATUS_CHANGE: type('dspace/submission/SECTION_LOADING_STATUS_CHANGE'),
+  SECTION_LOADING_STATUS_CHANGE: type(
+    'dspace/submission/SECTION_LOADING_STATUS_CHANGE'
+  ),
   UPDATE_SECTION_DATA: type('dspace/submission/UPDATE_SECTION_DATA'),
-  UPDATE_SECTION_DATA_SUCCESS: type('dspace/submission/UPDATE_SECTION_DATA_SUCCESS'),
-  SAVE_AND_DEPOSIT_SUBMISSION: type('dspace/submission/SAVE_AND_DEPOSIT_SUBMISSION'),
+  UPDATE_SECTION_DATA_SUCCESS: type(
+    'dspace/submission/UPDATE_SECTION_DATA_SUCCESS'
+  ),
+  SAVE_AND_DEPOSIT_SUBMISSION: type(
+    'dspace/submission/SAVE_AND_DEPOSIT_SUBMISSION'
+  ),
   DEPOSIT_SUBMISSION: type('dspace/submission/DEPOSIT_SUBMISSION'),
-  DEPOSIT_SUBMISSION_SUCCESS: type('dspace/submission/DEPOSIT_SUBMISSION_SUCCESS'),
+  DEPOSIT_SUBMISSION_SUCCESS: type(
+    'dspace/submission/DEPOSIT_SUBMISSION_SUCCESS'
+  ),
   DEPOSIT_SUBMISSION_ERROR: type('dspace/submission/DEPOSIT_SUBMISSION_ERROR'),
   DISCARD_SUBMISSION: type('dspace/submission/DISCARD_SUBMISSION'),
-  DISCARD_SUBMISSION_SUCCESS: type('dspace/submission/DISCARD_SUBMISSION_SUCCESS'),
+  DISCARD_SUBMISSION_SUCCESS: type(
+    'dspace/submission/DISCARD_SUBMISSION_SUCCESS'
+  ),
   DISCARD_SUBMISSION_ERROR: type('dspace/submission/DISCARD_SUBMISSION_ERROR'),
 
   // Upload file types
@@ -64,7 +98,6 @@ export const SubmissionObjectActionTypes = {
   DELETE_SECTION_ERROR: type('dspace/submission/DELETE_SECTION_ERROR'),
   REMOVE_SECTION_ERRORS: type('dspace/submission/REMOVE_SECTION_ERRORS'),
 };
-
 
 /**
  * Insert a new error of type SubmissionSectionError into the given section
@@ -80,7 +113,11 @@ export class InertSectionErrorsAction implements Action {
     error: SubmissionSectionError | SubmissionSectionError[];
   };
 
-  constructor(submissionId: string, sectionId: string, error: SubmissionSectionError | SubmissionSectionError[]) {
+  constructor(
+    submissionId: string,
+    sectionId: string,
+    error: SubmissionSectionError | SubmissionSectionError[]
+  ) {
     this.payload = { submissionId, sectionId, error };
   }
 }
@@ -99,7 +136,11 @@ export class DeleteSectionErrorsAction implements Action {
     errors: SubmissionSectionError | SubmissionSectionError[];
   };
 
-  constructor(submissionId: string, sectionId: string, errors: SubmissionSectionError | SubmissionSectionError[]) {
+  constructor(
+    submissionId: string,
+    sectionId: string,
+    errors: SubmissionSectionError | SubmissionSectionError[]
+  ) {
     this.payload = { submissionId, sectionId, errors };
   }
 }
@@ -145,17 +186,30 @@ export class InitSectionAction implements Action {
    * @param errors
    *    the section's errors
    */
-  constructor(submissionId: string,
-              sectionId: string,
-              header: string,
-              config: string,
-              mandatory: boolean,
-              sectionType: SectionsType,
-              visibility: SectionVisibility,
-              enabled: boolean,
-              data: WorkspaceitemSectionDataType,
-              errors: SubmissionSectionError[]) {
-    this.payload = { submissionId, sectionId, header, config, mandatory, sectionType, visibility, enabled, data, errors };
+  constructor(
+    submissionId: string,
+    sectionId: string,
+    header: string,
+    config: string,
+    mandatory: boolean,
+    sectionType: SectionsType,
+    visibility: SectionVisibility,
+    enabled: boolean,
+    data: WorkspaceitemSectionDataType,
+    errors: SubmissionSectionError[]
+  ) {
+    this.payload = {
+      submissionId,
+      sectionId,
+      header,
+      config,
+      mandatory,
+      sectionType,
+      visibility,
+      enabled,
+      data,
+      errors,
+    };
   }
 }
 
@@ -174,8 +228,7 @@ export class EnableSectionAction implements Action {
    * @param sectionId
    *    the section's ID to add
    */
-  constructor(submissionId: string,
-              sectionId: string) {
+  constructor(submissionId: string, sectionId: string) {
     this.payload = { submissionId, sectionId };
   }
 }
@@ -227,13 +280,22 @@ export class UpdateSectionDataAction implements Action {
    * @param metadata
    *    the section's metadata
    */
-  constructor(submissionId: string,
-              sectionId: string,
-              data: WorkspaceitemSectionDataType,
-              errorsToShow: SubmissionSectionError[],
-              serverValidationErrors: SubmissionSectionError[],
-              metadata?: string[]) {
-    this.payload = { submissionId, sectionId, data, errorsToShow, serverValidationErrors, metadata };
+  constructor(
+    submissionId: string,
+    sectionId: string,
+    data: WorkspaceitemSectionDataType,
+    errorsToShow: SubmissionSectionError[],
+    serverValidationErrors: SubmissionSectionError[],
+    metadata?: string[]
+  ) {
+    this.payload = {
+      submissionId,
+      sectionId,
+      data,
+      errorsToShow,
+      serverValidationErrors,
+      metadata,
+    };
   }
 }
 
@@ -331,14 +393,24 @@ export class InitSubmissionFormAction implements Action {
    * @param errors
    *    the submission's sections errors
    */
-  constructor(collectionId: string,
-              submissionId: string,
-              selfUrl: string,
-              submissionDefinition: SubmissionDefinitionsModel,
-              sections: WorkspaceitemSectionsObject,
-              item: Item,
-              errors: SubmissionError) {
-    this.payload = { collectionId, submissionId, selfUrl, submissionDefinition, sections, item, errors };
+  constructor(
+    collectionId: string,
+    submissionId: string,
+    selfUrl: string,
+    submissionDefinition: SubmissionDefinitionsModel,
+    sections: WorkspaceitemSectionsObject,
+    item: Item,
+    errors: SubmissionError
+  ) {
+    this.payload = {
+      collectionId,
+      submissionId,
+      selfUrl,
+      submissionDefinition,
+      sections,
+      item,
+      errors,
+    };
   }
 }
 
@@ -419,7 +491,7 @@ export class SaveSubmissionFormSuccessAction implements Action {
   payload: {
     submissionId: string;
     submissionObject: SubmissionObject[];
-    notify?: boolean
+    notify?: boolean;
   };
 
   /**
@@ -430,7 +502,11 @@ export class SaveSubmissionFormSuccessAction implements Action {
    * @param submissionObject
    *    the submission's Object
    */
-  constructor(submissionId: string, submissionObject: SubmissionObject[], notify?: boolean) {
+  constructor(
+    submissionId: string,
+    submissionObject: SubmissionObject[],
+    notify?: boolean
+  ) {
     this.payload = { submissionId, submissionObject, notify };
   }
 }
@@ -477,7 +553,7 @@ export class SaveSubmissionSectionFormSuccessAction implements Action {
   payload: {
     submissionId: string;
     submissionObject: SubmissionObject[];
-    notify?: boolean
+    notify?: boolean;
   };
 
   /**
@@ -488,7 +564,11 @@ export class SaveSubmissionSectionFormSuccessAction implements Action {
    * @param submissionObject
    *    the submission's Object
    */
-  constructor(submissionId: string, submissionObject: SubmissionObject[], notify?: boolean) {
+  constructor(
+    submissionId: string,
+    submissionObject: SubmissionObject[],
+    notify?: boolean
+  ) {
     this.payload = { submissionId, submissionObject, notify };
   }
 }
@@ -535,8 +615,22 @@ export class ResetSubmissionFormAction implements Action {
    * @param submissionDefinition
    *    the submission's form definition
    */
-  constructor(collectionId: string, submissionId: string, selfUrl: string, sections: WorkspaceitemSectionsObject, submissionDefinition: SubmissionDefinitionsModel, item: Item) {
-    this.payload = { collectionId, submissionId, selfUrl, sections, submissionDefinition, item };
+  constructor(
+    collectionId: string,
+    submissionId: string,
+    selfUrl: string,
+    sections: WorkspaceitemSectionsObject,
+    submissionDefinition: SubmissionDefinitionsModel,
+    item: Item
+  ) {
+    this.payload = {
+      collectionId,
+      submissionId,
+      selfUrl,
+      sections,
+      submissionDefinition,
+      item,
+    };
   }
 }
 
@@ -688,7 +782,7 @@ export class SectionStatusChangeAction implements Action {
   payload: {
     submissionId: string;
     sectionId: string;
-    status: boolean
+    status: boolean;
   };
 
   /**
@@ -748,7 +842,12 @@ export class NewUploadedFileAction implements Action {
    * @param data
    *    the metadata of the new bitstream
    */
-  constructor(submissionId: string, sectionId: string, fileId: string, data: WorkspaceitemSectionUploadFileObject) {
+  constructor(
+    submissionId: string,
+    sectionId: string,
+    fileId: string,
+    data: WorkspaceitemSectionUploadFileObject
+  ) {
     this.payload = { submissionId, sectionId, fileId, data };
   }
 }
@@ -774,7 +873,12 @@ export class EditFileDataAction implements Action {
    * @param data
    *    the metadata of the new bitstream
    */
-  constructor(submissionId: string, sectionId: string, fileId: string, data: WorkspaceitemSectionUploadFileObject) {
+  constructor(
+    submissionId: string,
+    sectionId: string,
+    fileId: string,
+    data: WorkspaceitemSectionUploadFileObject
+  ) {
     this.payload = { submissionId, sectionId, fileId: fileId, data };
   }
 }
@@ -802,12 +906,12 @@ export class DeleteUploadedFileAction implements Action {
   }
 }
 
-
 /**
  * Export a type alias of all actions in this action group
  * so that reducers can easily compose action types
  */
-export type SubmissionObjectAction = DisableSectionAction
+export type SubmissionObjectAction =
+  | DisableSectionAction
   | InitSectionAction
   | SetSectionFormId
   | EnableSectionAction

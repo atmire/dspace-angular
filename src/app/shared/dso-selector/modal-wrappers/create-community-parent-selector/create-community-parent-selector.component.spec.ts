@@ -17,10 +17,12 @@ describe('CreateCommunityParentSelectorComponent', () => {
   const community = new Community();
   community.uuid = '1234-1234-1234-1234';
   community.metadata = {
-    'dc.title': [Object.assign(new MetadataValue(), {
-      value: 'Community title',
-      language: undefined
-    })]
+    'dc.title': [
+      Object.assign(new MetadataValue(), {
+        value: 'Community title',
+        language: undefined,
+      }),
+    ],
   };
   const router = new RouterStub();
   const communityRD = createSuccessfulRemoteDataObject(community);
@@ -42,16 +44,16 @@ describe('CreateCommunityParentSelectorComponent', () => {
                   dso: communityRD,
                 },
               },
-            }
+            },
           },
         },
         {
-          provide: Router, useValue: router
-        }
+          provide: Router,
+          useValue: router,
+        },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
-
   }));
 
   beforeEach(() => {
@@ -67,7 +69,8 @@ describe('CreateCommunityParentSelectorComponent', () => {
 
   it('should call navigate on the router with the correct edit path when navigate is called', () => {
     component.navigate(community);
-    expect(router.navigate).toHaveBeenCalledWith([createPath], { queryParams: { parent: community.uuid } });
+    expect(router.navigate).toHaveBeenCalledWith([createPath], {
+      queryParams: { parent: community.uuid },
+    });
   });
-
 });

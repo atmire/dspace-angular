@@ -84,9 +84,9 @@ export class ResourcePolicy implements CacheableObject {
    */
   @deserialize
   _links: {
-    eperson: HALLink,
-    group: HALLink,
-    self: HALLink,
+    eperson: HALLink;
+    group: HALLink;
+    self: HALLink;
   };
 
   /**

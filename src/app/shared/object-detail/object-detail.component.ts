@@ -4,10 +4,13 @@ import {
   EventEmitter,
   Input,
   Output,
-  ViewEncapsulation
+  ViewEncapsulation,
 } from '@angular/core';
 
-import { SortDirection, SortOptions } from '../../core/cache/models/sort-options.model';
+import {
+  SortDirection,
+  SortOptions,
+} from '../../core/cache/models/sort-options.model';
 import { PaginatedList } from '../../core/data/paginated-list.model';
 
 import { RemoteData } from '../../core/data/remote-data';
@@ -26,9 +29,9 @@ import { CollectionElementLinkType } from '../object-collection/collection-eleme
   changeDetection: ChangeDetectionStrategy.Default,
   encapsulation: ViewEncapsulation.Emulated,
   selector: 'ds-object-detail',
-  styleUrls: [ './object-detail.component.scss' ],
+  styleUrls: ['./object-detail.component.scss'],
   templateUrl: './object-detail.component.html',
-  animations: [fadeIn]
+  animations: [fadeIn],
 })
 export class ObjectDetailComponent {
   /**
@@ -96,11 +99,11 @@ export class ObjectDetailComponent {
    * Event's payload equals to the newly selected page.
    */
   @Output() change: EventEmitter<{
-    pagination: PaginationComponentOptions,
-    sort: SortOptions
+    pagination: PaginationComponentOptions;
+    sort: SortOptions;
   }> = new EventEmitter<{
-    pagination: PaginationComponentOptions,
-    sort: SortOptions
+    pagination: PaginationComponentOptions;
+    sort: SortOptions;
   }>();
 
   /**
@@ -119,13 +122,15 @@ export class ObjectDetailComponent {
    * An event fired when the sort direction is changed.
    * Event's payload equals to the newly selected sort direction.
    */
-  @Output() sortDirectionChange: EventEmitter<SortDirection> = new EventEmitter<SortDirection>();
+  @Output() sortDirectionChange: EventEmitter<SortDirection> =
+    new EventEmitter<SortDirection>();
 
   /**
    * An event fired when the pagination is changed.
    * Event's payload equals to the newly selected sort direction.
    */
-  @Output() paginationChange: EventEmitter<SortDirection> = new EventEmitter<any>();
+  @Output() paginationChange: EventEmitter<SortDirection> =
+    new EventEmitter<any>();
 
   /**
    * An event fired when the sort field is changed.
@@ -167,5 +172,4 @@ export class ObjectDetailComponent {
   onPaginationChange(event) {
     this.paginationChange.emit(event);
   }
-
 }

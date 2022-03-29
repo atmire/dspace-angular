@@ -17,6 +17,8 @@ export class SubmissionRestServiceStub {
   getDataByHref = jasmine.createSpy('getDataByHref');
   getEndpointByIDHref = jasmine.createSpy('getEndpointByIDHref');
   patchToEndpoint = jasmine.createSpy('patchToEndpoint');
-  postToEndpoint = jasmine.createSpy('postToEndpoint').and.returnValue(observableOf({}));
+  postToEndpoint = jasmine
+    .createSpy('postToEndpoint')
+    .and.returnValue(observableOf({}));
   submitData = jasmine.createSpy('submitData');
 }

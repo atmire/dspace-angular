@@ -4,7 +4,10 @@ import { Observable } from 'rxjs';
 import { first, map } from 'rxjs/operators';
 import { RemoteData } from '../../../core/data/remote-data';
 import { Collection } from '../../../core/shared/collection.model';
-import { getRemoteDataPayload, getFirstSucceededRemoteData } from '../../../core/shared/operators';
+import {
+  getRemoteDataPayload,
+  getFirstSucceededRemoteData,
+} from '../../../core/shared/operators';
 import { HALLink } from '../../../core/shared/hal-link.model';
 
 /**
@@ -15,7 +18,6 @@ import { HALLink } from '../../../core/shared/hal-link.model';
   templateUrl: './collection-roles.component.html',
 })
 export class CollectionRolesComponent implements OnInit {
-
   dsoRD$: Observable<RemoteData<Collection>>;
 
   /**
@@ -28,20 +30,17 @@ export class CollectionRolesComponent implements OnInit {
    */
   collection$: Observable<Collection>;
 
-  constructor(
-    protected route: ActivatedRoute,
-  ) {
-  }
+  constructor(protected route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.dsoRD$ = this.route.parent.data.pipe(
       first(),
-      map((data) => data.dso),
+      map((data) => data.dso)
     );
 
     this.collection$ = this.dsoRD$.pipe(
       getFirstSucceededRemoteData(),
-      getRemoteDataPayload(),
+      getRemoteDataPayload()
     );
 
     this.comcolRoles$ = this.collection$.pipe(
@@ -63,7 +62,7 @@ export class CollectionRolesComponent implements OnInit {
           href: collection._links.bitstreamReadGroup.href,
         },
         ...collection._links.workflowGroups,
-      ]),
+      ])
     );
   }
 }

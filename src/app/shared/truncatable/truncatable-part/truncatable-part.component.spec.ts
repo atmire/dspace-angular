@@ -19,7 +19,7 @@ describe('TruncatablePartComponent', () => {
       } else {
         return observableOf(false);
       }
-    }
+    },
   };
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -28,10 +28,12 @@ describe('TruncatablePartComponent', () => {
       providers: [
         { provide: TruncatableService, useValue: truncatableServiceStub },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(TruncatablePartComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(TruncatablePartComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
   beforeEach(() => {
     fixture = TestBed.createComponent(TruncatablePartComponent);
@@ -46,8 +48,7 @@ describe('TruncatablePartComponent', () => {
       comp.minLines = 5;
       (comp as any).setLines();
       fixture.detectChanges();
-    })
-    ;
+    });
 
     it('lines should equal minlines', () => {
       expect((comp as any).lines).toEqual(comp.minLines.toString());
@@ -57,8 +58,7 @@ describe('TruncatablePartComponent', () => {
   describe('When the item is expanded', () => {
     beforeEach(() => {
       comp.id = id2;
-    })
-    ;
+    });
 
     it('lines should equal maxlines when maxlines has a value', () => {
       comp.maxLines = 5;
@@ -67,7 +67,7 @@ describe('TruncatablePartComponent', () => {
       expect((comp as any).lines).toEqual(comp.maxLines.toString());
     });
 
-    it('lines should equal \'none\' when maxlines has no value', () => {
+    it("lines should equal 'none' when maxlines has no value", () => {
       (comp as any).setLines();
       fixture.detectChanges();
       expect((comp as any).lines).toEqual('none');

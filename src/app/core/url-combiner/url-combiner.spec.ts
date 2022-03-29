@@ -1,7 +1,6 @@
 import { URLCombiner } from './url-combiner';
 
 describe('URLCombiner', () => {
-
   it('should return a valid URL when created with a valid set of url parts', () => {
     const url = new URLCombiner('http://foo.com', 'bar', 'id', '5').toString();
     expect(url).toBe('http://foo.com/bar/id/5');
@@ -13,7 +12,12 @@ describe('URLCombiner', () => {
   });
 
   it('should return a URL with a single slash between each part', () => {
-    const url = new URLCombiner('http://foo.com/', '/bar/', '//id', '///5').toString();
+    const url = new URLCombiner(
+      'http://foo.com/',
+      '/bar/',
+      '//id',
+      '///5'
+    ).toString();
     expect(url).toBe('http://foo.com/bar/id/5');
   });
 
@@ -29,5 +33,4 @@ describe('URLCombiner', () => {
     const url = new URLCombiner().toString();
     expect(url).toBe('');
   });
-
 });

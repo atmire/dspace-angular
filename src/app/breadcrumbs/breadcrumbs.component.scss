@@ -30,7 +30,7 @@ li.breadcrumb-item.active {
   color: var(--ds-breadcrumb-link-active-color) !important;
 }
 
-.breadcrumb-item+ .breadcrumb-item::before {
+.breadcrumb-item + .breadcrumb-item::before {
   display: block;
-  content: quote("•") !important;
+  content: quote('•') !important;
 }

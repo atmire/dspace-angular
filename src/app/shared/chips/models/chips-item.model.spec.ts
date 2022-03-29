@@ -34,14 +34,26 @@ describe('ChipsItem model test suite', () => {
   });
 
   it('should update icons', () => {
-    const icons: ChipsItemIcon[] = [{ metadata: 'test', visibleWhenAuthorityEmpty: false, style: 'fas fa-plus' }];
+    const icons: ChipsItemIcon[] = [
+      {
+        metadata: 'test',
+        visibleWhenAuthorityEmpty: false,
+        style: 'fas fa-plus',
+      },
+    ];
     item.updateIcons(icons);
 
     expect(item.icons).toEqual(icons);
   });
 
   it('should return true if has icons', () => {
-    const icons: ChipsItemIcon[] = [{ metadata: 'test', visibleWhenAuthorityEmpty: false, style: 'fas fa-plus' }];
+    const icons: ChipsItemIcon[] = [
+      {
+        metadata: 'test',
+        visibleWhenAuthorityEmpty: false,
+        style: 'fas fa-plus',
+      },
+    ];
     item.updateIcons(icons);
     const hasIcons = item.hasIcons();
 
@@ -58,9 +70,10 @@ describe('ChipsItem model test suite', () => {
     item = new ChipsItem(
       {
         label: 'A',
-        value: 'a'
+        value: 'a',
       },
-      'label');
+      'label'
+    );
 
     expect(item.display).toBe('A');
   });
@@ -69,9 +82,11 @@ describe('ChipsItem model test suite', () => {
     item = new ChipsItem(
       {
         toDisplay: new FormFieldMetadataValueObject('a', null, 'a'),
-        otherProperty: 'other'
+        otherProperty: 'other',
       },
-      'value', 'toDisplay');
+      'value',
+      'toDisplay'
+    );
 
     expect(item.display).toBe('a');
   });

@@ -38,15 +38,19 @@ import { take } from 'rxjs/operators';
  * and the output flattened type is `F` with additional information.
  */
 export class VocabularyTreeFlattener<T, F> {
+  constructor(
+    public transformFunction: (node: T, level: number) => F,
+    public getLevel: (node: F) => number,
+    public isExpandable: (node: F) => boolean,
+    public getChildren: (node: T) => Observable<T[]> | T[] | undefined | null
+  ) {}
 
-  constructor(public transformFunction: (node: T, level: number) => F,
-              public getLevel: (node: F) => number,
-              public isExpandable: (node: F) => boolean,
-              public getChildren: (node: T) =>
-                Observable<T[]> | T[] | undefined | null) {}
-
-  _flattenNode(node: T, level: number,
-               resultNodes: F[], parentMap: boolean[]): F[] {
+  _flattenNode(
+    node: T,
+    level: number,
+    resultNodes: F[],
+    parentMap: boolean[]
+  ): F[] {
     const flatNode = this.transformFunction(node, level);
     resultNodes.push(flatNode);
 
@@ -65,8 +69,12 @@ export class VocabularyTreeFlattener<T, F> {
     return resultNodes;
   }
 
-  _flattenChildren(children: T[], level: number,
-                   resultNodes: F[], parentMap: boolean[]): void {
+  _flattenChildren(
+    children: T[],
+    level: number,
+    resultNodes: F[],
+    parentMap: boolean[]
+  ): void {
     children.forEach((child, index) => {
       const childParentMap: boolean[] = parentMap.slice();
       childParentMap.push(index !== children.length - 1);
@@ -81,7 +89,9 @@ export class VocabularyTreeFlattener<T, F> {
    */
   flattenNodes(structuredData: T[]): F[] {
     const resultNodes: F[] = [];
-    structuredData.forEach((node) => this._flattenNode(node, 0, resultNodes, []));
+    structuredData.forEach((node) =>
+      this._flattenNode(node, 0, resultNodes, [])
+    );
     return resultNodes;
   }
 

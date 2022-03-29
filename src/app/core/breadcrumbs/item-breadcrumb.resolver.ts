@@ -10,10 +10,13 @@ import { ITEM_PAGE_LINKS_TO_FOLLOW } from '../../item-page/item.resolver';
  * The class that resolves the BreadcrumbConfig object for an Item
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ItemBreadcrumbResolver extends DSOBreadcrumbResolver<Item> {
-  constructor(protected breadcrumbService: DSOBreadcrumbsService, protected dataService: ItemDataService) {
+  constructor(
+    protected breadcrumbService: DSOBreadcrumbsService,
+    protected dataService: ItemDataService
+  ) {
     super(breadcrumbService, dataService);
   }
 

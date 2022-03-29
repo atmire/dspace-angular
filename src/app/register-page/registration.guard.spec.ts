@@ -1,6 +1,10 @@
 import { RegistrationGuard } from './registration.guard';
 import { EpersonRegistrationService } from '../core/data/eperson-registration.service';
-import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  Router,
+  RouterStateSnapshot,
+} from '@angular/router';
 import { AuthService } from '../core/auth/auth.service';
 import { Location } from '@angular/common';
 import {
@@ -48,26 +52,39 @@ describe('RegistrationGuard', () => {
       url: currentUrl,
     });
 
-    epersonRegistrationService = jasmine.createSpyObj('epersonRegistrationService', {
-      searchByToken: observableOf(registrationRD),
-    });
-    router = jasmine.createSpyObj('router', {
-      navigateByUrl: Promise.resolve(),
-    }, {
-      url: currentUrl,
-    });
+    epersonRegistrationService = jasmine.createSpyObj(
+      'epersonRegistrationService',
+      {
+        searchByToken: observableOf(registrationRD),
+      }
+    );
+    router = jasmine.createSpyObj(
+      'router',
+      {
+        navigateByUrl: Promise.resolve(),
+      },
+      {
+        url: currentUrl,
+      }
+    );
     authService = jasmine.createSpyObj('authService', {
       isAuthenticated: observableOf(false),
       setRedirectUrl: {},
     });
 
-    guard = new RegistrationGuard(epersonRegistrationService, router, authService);
+    guard = new RegistrationGuard(
+      epersonRegistrationService,
+      router,
+      authService
+    );
   });
 
   describe('canActivate', () => {
     describe('when searchByToken returns a successful response', () => {
       beforeEach(() => {
-        (epersonRegistrationService.searchByToken as jasmine.Spy).and.returnValue(observableOf(registrationRD));
+        (
+          epersonRegistrationService.searchByToken as jasmine.Spy
+        ).and.returnValue(observableOf(registrationRD));
       });
 
       it('should return true', (done) => {
@@ -77,9 +94,12 @@ describe('RegistrationGuard', () => {
         });
       });
 
-      it('should add the response to the route\'s data', (done) => {
+      it("should add the response to the route's data", (done) => {
         guard.canActivate(route, state).subscribe(() => {
-          expect(route.data).toEqual({ ...startingRouteData, registration: registrationRD });
+          expect(route.data).toEqual({
+            ...startingRouteData,
+            registration: registrationRD,
+          });
           done();
         });
       });
@@ -94,7 +114,9 @@ describe('RegistrationGuard', () => {
 
     describe('when searchByToken returns a 404 response', () => {
       beforeEach(() => {
-        (epersonRegistrationService.searchByToken as jasmine.Spy).and.returnValue(createFailedRemoteDataObject$('Not Found', 404));
+        (
+          epersonRegistrationService.searchByToken as jasmine.Spy
+        ).and.returnValue(createFailedRemoteDataObject$('Not Found', 404));
       });
 
       it('should redirect', () => {

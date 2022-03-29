@@ -11,7 +11,10 @@ import { createSuccessfulRemoteDataObject$ } from '../../../../shared/remote-dat
 import { buildPaginatedList } from '../../../../core/data/paginated-list.model';
 import { PageInfo } from '../../../../core/shared/page-info.model';
 import { MetadataMap } from '../../../../core/shared/metadata.models';
-import { createRelationshipsObservable, mockRouteService } from '../shared/item.component.spec';
+import {
+  createRelationshipsObservable,
+  mockRouteService,
+} from '../shared/item.component.spec';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Component } from '@angular/core';
 import { WorkspaceitemDataService } from '../../../../core/submission/workspaceitem-data.service';
@@ -21,23 +24,23 @@ import { Version } from '../../../../core/shared/version.model';
 import { RouteService } from '../../../../core/services/route.service';
 
 const mockItem: Item = Object.assign(new Item(), {
-  bundles: createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), [])),
+  bundles: createSuccessfulRemoteDataObject$(
+    buildPaginatedList(new PageInfo(), [])
+  ),
   metadata: new MetadataMap(),
   relationships: createRelationshipsObservable(),
   _links: {
     self: {
-      href: 'item-href'
+      href: 'item-href',
     },
     version: {
-      href: 'version-href'
-    }
-  }
+      href: 'version-href',
+    },
+  },
 });
 
-
-@Component({template: ''})
-class DummyComponent {
-}
+@Component({ template: '' })
+class DummyComponent {}
 
 describe('VersionedItemComponent', () => {
   let component: VersionedItemComponent;
@@ -50,16 +53,22 @@ describe('VersionedItemComponent', () => {
     findByHref: createSuccessfulRemoteDataObject$<Version>(new Version()),
   });
 
-  const versionHistoryServiceSpy = jasmine.createSpyObj('versionHistoryService', {
-    createVersion: createSuccessfulRemoteDataObject$<Version>(new Version()),
-  });
+  const versionHistoryServiceSpy = jasmine.createSpyObj(
+    'versionHistoryService',
+    {
+      createVersion: createSuccessfulRemoteDataObject$<Version>(new Version()),
+    }
+  );
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [VersionedItemComponent, DummyComponent],
       imports: [RouterTestingModule],
       providers: [
-        { provide: VersionHistoryDataService, useValue: versionHistoryServiceSpy },
+        {
+          provide: VersionHistoryDataService,
+          useValue: versionHistoryServiceSpy,
+        },
         { provide: TranslateService, useValue: {} },
         { provide: VersionDataService, useValue: versionServiceSpy },
         { provide: NotificationsService, useValue: {} },
@@ -67,8 +76,8 @@ describe('VersionedItemComponent', () => {
         { provide: WorkspaceitemDataService, useValue: {} },
         { provide: SearchService, useValue: {} },
         { provide: ItemDataService, useValue: {} },
-        { provide: RouteService, useValue: mockRouteService }
-      ]
+        { provide: RouteService, useValue: mockRouteService },
+      ],
     }).compileComponents();
     versionService = TestBed.inject(VersionDataService);
     versionHistoryService = TestBed.inject(VersionHistoryDataService);
@@ -91,5 +100,4 @@ describe('VersionedItemComponent', () => {
       expect(versionService.findByHref).toHaveBeenCalledWith('version-href');
     });
   });
-
 });

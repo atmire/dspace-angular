@@ -21,18 +21,22 @@ describe('DsoPageEditButtonComponent', () => {
     dso = Object.assign(new Item(), {
       id: 'test-item',
       _links: {
-        self: { href: 'test-item-selflink' }
-      }
+        self: { href: 'test-item-selflink' },
+      },
     });
     authorizationService = jasmine.createSpyObj('authorizationService', {
-      isAuthorized: observableOf(true)
+      isAuthorized: observableOf(true),
     });
     TestBed.configureTestingModule({
       declarations: [DsoPageEditButtonComponent],
-      imports: [TranslateModule.forRoot(), RouterTestingModule.withRoutes([]), NgbModule],
+      imports: [
+        TranslateModule.forRoot(),
+        RouterTestingModule.withRoutes([]),
+        NgbModule,
+      ],
       providers: [
-        { provide: AuthorizationDataService, useValue: authorizationService }
-      ]
+        { provide: AuthorizationDataService, useValue: authorizationService },
+      ],
     }).compileComponents();
   }));
 
@@ -45,12 +49,17 @@ describe('DsoPageEditButtonComponent', () => {
   });
 
   it('should check the authorization of the current user', () => {
-    expect(authorizationService.isAuthorized).toHaveBeenCalledWith(FeatureID.CanEditMetadata, dso.self);
+    expect(authorizationService.isAuthorized).toHaveBeenCalledWith(
+      FeatureID.CanEditMetadata,
+      dso.self
+    );
   });
 
   describe('when the user is authorized', () => {
     beforeEach(() => {
-      (authorizationService.isAuthorized as jasmine.Spy).and.returnValue(observableOf(true));
+      (authorizationService.isAuthorized as jasmine.Spy).and.returnValue(
+        observableOf(true)
+      );
       component.ngOnInit();
       fixture.detectChanges();
     });
@@ -63,7 +72,9 @@ describe('DsoPageEditButtonComponent', () => {
 
   describe('when the user is not authorized', () => {
     beforeEach(() => {
-      (authorizationService.isAuthorized as jasmine.Spy).and.returnValue(observableOf(false));
+      (authorizationService.isAuthorized as jasmine.Spy).and.returnValue(
+        observableOf(false)
+      );
       component.ngOnInit();
       fixture.detectChanges();
     });

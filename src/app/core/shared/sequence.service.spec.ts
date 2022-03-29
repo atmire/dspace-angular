@@ -15,7 +15,7 @@ describe('SequenceService', () => {
   });
 
   it('should return sequential numbers on next(), starting with 1', () => {
-    const NUMBERS = [1,2,3,4,5];
+    const NUMBERS = [1, 2, 3, 4, 5];
     const sequence = NUMBERS.map(() => service.next());
     expect(sequence).toEqual(NUMBERS);
   });

@@ -13,15 +13,14 @@ export const ServerSyncBufferActionTypes = {
   EMPTY: type('dspace/core/cache/syncbuffer/EMPTY'),
 };
 
-
 /**
  * An ngrx action to add a new cached object to the server sync buffer
  */
 export class AddToSSBAction implements Action {
   type = ServerSyncBufferActionTypes.ADD;
   payload: {
-    href: string,
-    method: RestRequestMethod
+    href: string;
+    method: RestRequestMethod;
   };
 
   /**
@@ -71,11 +70,10 @@ export class EmptySSBAction implements Action {
   }
 }
 
-
 /**
  * A type to encompass all ServerSyncBufferActions
  */
-export type ServerSyncBufferAction
-  = AddToSSBAction
+export type ServerSyncBufferAction =
+  | AddToSSBAction
   | CommitSSBAction
   | EmptySSBAction;

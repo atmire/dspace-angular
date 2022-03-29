@@ -11,22 +11,20 @@ import { CollectionDataService } from '../data/collection-data.service';
  */
 @Injectable()
 export class RoleService {
-
   /**
    * Initialize instance variables
    *
    * @param {CollectionDataService} collectionService
    */
-  constructor(private collectionService: CollectionDataService) {
-  }
+  constructor(private collectionService: CollectionDataService) {}
 
   /**
    * Check if current user is a submitter
    */
   isSubmitter(): Observable<boolean> {
-    return this.collectionService.hasAuthorizedCollection().pipe(
-      distinctUntilChanged()
-    );
+    return this.collectionService
+      .hasAuthorizedCollection()
+      .pipe(distinctUntilChanged());
   }
 
   /**

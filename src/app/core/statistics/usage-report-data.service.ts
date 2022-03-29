@@ -13,7 +13,10 @@ import { DefaultChangeAnalyzer } from '../data/default-change-analyzer.service';
 import { USAGE_REPORT } from './models/usage-report.resource-type';
 import { UsageReport } from './models/usage-report.model';
 import { Observable } from 'rxjs';
-import { getRemoteDataPayload, getFirstSucceededRemoteData } from '../shared/operators';
+import {
+  getRemoteDataPayload,
+  getFirstSucceededRemoteData,
+} from '../shared/operators';
 import { map } from 'rxjs/operators';
 
 /**
@@ -22,7 +25,6 @@ import { map } from 'rxjs/operators';
 @Injectable()
 @dataService(USAGE_REPORT)
 export class UsageReportService extends DataService<UsageReport> {
-
   protected linkPath = 'usagereports';
 
   constructor(
@@ -33,7 +35,7 @@ export class UsageReportService extends DataService<UsageReport> {
     protected objectCache: ObjectCacheService,
     protected rdbService: RemoteDataBuildService,
     protected requestService: RequestService,
-    protected store: Store<CoreState>,
+    protected store: Store<CoreState>
   ) {
     super();
   }
@@ -41,22 +43,33 @@ export class UsageReportService extends DataService<UsageReport> {
   getStatistic(scope: string, type: string): Observable<UsageReport> {
     return this.findById(`${scope}_${type}`).pipe(
       getFirstSucceededRemoteData(),
-      getRemoteDataPayload(),
+      getRemoteDataPayload()
     );
   }
 
-  searchStatistics(uri: string, page: number, size: number): Observable<UsageReport[]> {
-    return this.searchBy('object', {
-      searchParams: [{
-        fieldName: `uri`,
-        fieldValue: uri,
-      }],
-      currentPage: page,
-      elementsPerPage: size,
-    }, true, false).pipe(
+  searchStatistics(
+    uri: string,
+    page: number,
+    size: number
+  ): Observable<UsageReport[]> {
+    return this.searchBy(
+      'object',
+      {
+        searchParams: [
+          {
+            fieldName: `uri`,
+            fieldValue: uri,
+          },
+        ],
+        currentPage: page,
+        elementsPerPage: size,
+      },
+      true,
+      false
+    ).pipe(
       getFirstSucceededRemoteData(),
       getRemoteDataPayload(),
-      map((list) => list.page),
+      map((list) => list.page)
     );
   }
 }

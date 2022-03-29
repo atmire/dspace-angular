@@ -14,5 +14,5 @@ export enum RestRequestMethod {
   DELETE = 'DELETE',
   OPTIONS = 'OPTIONS',
   HEAD = 'HEAD',
-  PATCH = 'PATCH'
+  PATCH = 'PATCH',
 }

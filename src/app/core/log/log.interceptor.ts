@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import {
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest,
+} from '@angular/common/http';
 import { Router } from '@angular/router';
 
 import { Observable } from 'rxjs';
@@ -13,11 +18,15 @@ import { CorrelationIdService } from '../../correlation-id/correlation-id.servic
  */
 @Injectable()
 export class LogInterceptor implements HttpInterceptor {
+  constructor(
+    private cidService: CorrelationIdService,
+    private router: Router
+  ) {}
 
-  constructor(private cidService: CorrelationIdService, private router: Router) {}
-
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
+  intercept(
+    request: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
     // Get the correlation id for the user from the store
     const correlationId = this.cidService.getCorrelationId();
 

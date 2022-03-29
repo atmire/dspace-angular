@@ -17,9 +17,10 @@ import { getItemPageRoute } from '../../../item-page/item-page-routing-paths';
   styleUrls: ['./item-actions.component.scss'],
   templateUrl: './item-actions.component.html',
 })
-
-export class ItemActionsComponent extends MyDSpaceActionsComponent<Item, ItemDataService> implements OnInit {
-
+export class ItemActionsComponent
+  extends MyDSpaceActionsComponent<Item, ItemDataService>
+  implements OnInit
+{
   /**
    * The Item object
    */
@@ -40,13 +41,23 @@ export class ItemActionsComponent extends MyDSpaceActionsComponent<Item, ItemDat
    * @param {SearchService} searchService
    * @param {RequestService} requestService
    */
-  constructor(protected injector: Injector,
-              protected router: Router,
-              protected notificationsService: NotificationsService,
-              protected translate: TranslateService,
-              protected searchService: SearchService,
-              protected requestService: RequestService) {
-    super(Item.type, injector, router, notificationsService, translate, searchService, requestService);
+  constructor(
+    protected injector: Injector,
+    protected router: Router,
+    protected notificationsService: NotificationsService,
+    protected translate: TranslateService,
+    protected searchService: SearchService,
+    protected requestService: RequestService
+  ) {
+    super(
+      Item.type,
+      injector,
+      router,
+      notificationsService,
+      translate,
+      searchService,
+      requestService
+    );
   }
 
   ngOnInit(): void {
@@ -69,5 +80,4 @@ export class ItemActionsComponent extends MyDSpaceActionsComponent<Item, ItemDat
   initPageRoute() {
     this.itemPageRoute = getItemPageRoute(this.object);
   }
-
 }

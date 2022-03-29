@@ -17,7 +17,10 @@ import { By } from '@angular/platform-browser';
 import { NotificationsService } from '../../../../shared/notifications/notifications.service';
 import { NotificationsServiceStub } from '../../../../shared/testing/notifications-service.stub';
 import { PaginationComponentOptions } from '../../../../shared/pagination/pagination-component-options.model';
-import { SortDirection, SortOptions } from '../../../../core/cache/models/sort-options.model';
+import {
+  SortDirection,
+  SortOptions,
+} from '../../../../core/cache/models/sort-options.model';
 import { FindListOptions } from '../../../../core/data/request.models';
 import { PaginationService } from '../../../../core/pagination/pagination.service';
 import { PaginationServiceStub } from '../../../../shared/testing/pagination-service.stub';
@@ -26,56 +29,68 @@ describe('FullFileSectionComponent', () => {
   let comp: FullFileSectionComponent;
   let fixture: ComponentFixture<FullFileSectionComponent>;
 
-  const mockBitstream: Bitstream = Object.assign(new Bitstream(),
-    {
-      sizeBytes: 10201,
-      content: 'https://dspace7.4science.it/dspace-spring-rest/api/core/bitstreams/cf9b0c8e-a1eb-4b65-afd0-567366448713/content',
-      format: observableOf(MockBitstreamFormat1),
-      bundleName: 'ORIGINAL',
-      _links: {
-        self: {
-          href: 'https://dspace7.4science.it/dspace-spring-rest/api/core/bitstreams/cf9b0c8e-a1eb-4b65-afd0-567366448713'
-        },
-        content: {
-          href: 'https://dspace7.4science.it/dspace-spring-rest/api/core/bitstreams/cf9b0c8e-a1eb-4b65-afd0-567366448713/content'
-        }
+  const mockBitstream: Bitstream = Object.assign(new Bitstream(), {
+    sizeBytes: 10201,
+    content:
+      'https://dspace7.4science.it/dspace-spring-rest/api/core/bitstreams/cf9b0c8e-a1eb-4b65-afd0-567366448713/content',
+    format: observableOf(MockBitstreamFormat1),
+    bundleName: 'ORIGINAL',
+    _links: {
+      self: {
+        href: 'https://dspace7.4science.it/dspace-spring-rest/api/core/bitstreams/cf9b0c8e-a1eb-4b65-afd0-567366448713',
       },
-      id: 'cf9b0c8e-a1eb-4b65-afd0-567366448713',
-      uuid: 'cf9b0c8e-a1eb-4b65-afd0-567366448713',
-      type: 'bitstream',
-      metadata: {
-        'dc.title': [
-          {
-            language: null,
-            value: 'test_word.docx'
-          }
-        ]
-      }
-    });
+      content: {
+        href: 'https://dspace7.4science.it/dspace-spring-rest/api/core/bitstreams/cf9b0c8e-a1eb-4b65-afd0-567366448713/content',
+      },
+    },
+    id: 'cf9b0c8e-a1eb-4b65-afd0-567366448713',
+    uuid: 'cf9b0c8e-a1eb-4b65-afd0-567366448713',
+    type: 'bitstream',
+    metadata: {
+      'dc.title': [
+        {
+          language: null,
+          value: 'test_word.docx',
+        },
+      ],
+    },
+  });
 
   const bitstreamDataService = jasmine.createSpyObj('bitstreamDataService', {
-    findAllByItemAndBundleName: createSuccessfulRemoteDataObject$(createPaginatedList([mockBitstream, mockBitstream, mockBitstream]))
+    findAllByItemAndBundleName: createSuccessfulRemoteDataObject$(
+      createPaginatedList([mockBitstream, mockBitstream, mockBitstream])
+    ),
   });
 
   const paginationService = new PaginationServiceStub();
 
   beforeEach(waitForAsync(() => {
-
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot({
-        loader: {
-          provide: TranslateLoader,
-          useClass: TranslateLoaderMock
-        }
-      }), BrowserAnimationsModule],
-      declarations: [FullFileSectionComponent, VarDirective, FileSizePipe, MetadataFieldWrapperComponent],
+      imports: [
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useClass: TranslateLoaderMock,
+          },
+        }),
+        BrowserAnimationsModule,
+      ],
+      declarations: [
+        FullFileSectionComponent,
+        VarDirective,
+        FileSizePipe,
+        MetadataFieldWrapperComponent,
+      ],
       providers: [
         { provide: BitstreamDataService, useValue: bitstreamDataService },
-        { provide: NotificationsService, useValue: new NotificationsServiceStub() },
-        { provide: PaginationService, useValue: paginationService }
+        {
+          provide: NotificationsService,
+          useValue: new NotificationsServiceStub(),
+        },
+        { provide: PaginationService, useValue: paginationService },
       ],
 
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -87,7 +102,9 @@ describe('FullFileSectionComponent', () => {
 
   describe('when the full file section gets loaded with bitstreams available', () => {
     it('should contain a list with bitstreams', () => {
-      const fileSection = fixture.debugElement.queryAll(By.css('.file-section'));
+      const fileSection = fixture.debugElement.queryAll(
+        By.css('.file-section')
+      );
       expect(fileSection.length).toEqual(6);
     });
   });

@@ -24,8 +24,10 @@ export interface SubmissionObjectError {
  * An abstract model class for a SubmissionObject.
  */
 @inheritSerialization(DSpaceObject)
-export abstract class SubmissionObject extends DSpaceObject implements CacheableObject {
-
+export abstract class SubmissionObject
+  extends DSpaceObject
+  implements CacheableObject
+{
   @excludeFromEquals
   @autoserialize
   id: string;
@@ -84,7 +86,9 @@ export abstract class SubmissionObject extends DSpaceObject implements Cacheable
    * Will be undefined unless the submissionDefinition {@link HALLink} has been resolved.
    */
   @link(SubmissionDefinitionsModel.type)
-  submissionDefinition?: Observable<RemoteData<SubmissionDefinitionsModel>> | SubmissionDefinitionsModel;
+  submissionDefinition?:
+    | Observable<RemoteData<SubmissionDefinitionsModel>>
+    | SubmissionDefinitionsModel;
 
   /**
    * The submitter for this SubmissionObject
@@ -92,5 +96,4 @@ export abstract class SubmissionObject extends DSpaceObject implements Cacheable
    */
   @link(EPERSON)
   submitter?: Observable<RemoteData<EPerson>> | EPerson;
-
 }

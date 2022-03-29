@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, HostListener, Input, Output, ViewEncapsulation, } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  HostListener,
+  Input,
+  Output,
+  ViewEncapsulation,
+} from '@angular/core';
 
 import { of as observableOf } from 'rxjs';
 import { FileUploader } from 'ng2-file-upload';
@@ -10,7 +19,11 @@ import { hasValue, isNotEmpty, isUndefined } from '../empty.util';
 import { UploaderService } from './uploader.service';
 import { UploaderProperties } from './uploader-properties.model';
 import { HttpXsrfTokenExtractor } from '@angular/common/http';
-import { XSRF_COOKIE, XSRF_REQUEST_HEADER, XSRF_RESPONSE_HEADER } from '../../core/xsrf/xsrf.interceptor';
+import {
+  XSRF_COOKIE,
+  XSRF_REQUEST_HEADER,
+  XSRF_RESPONSE_HEADER,
+} from '../../core/xsrf/xsrf.interceptor';
 import { CookieService } from '../../core/services/cookie.service';
 
 @Component({
@@ -18,11 +31,9 @@ import { CookieService } from '../../core/services/cookie.service';
   templateUrl: 'uploader.component.html',
   styleUrls: ['uploader.component.scss'],
   changeDetection: ChangeDetectionStrategy.Default,
-  encapsulation: ViewEncapsulation.Emulated
+  encapsulation: ViewEncapsulation.Emulated,
 })
-
 export class UploaderComponent {
-
   /**
    * The message to show when drag files on the drop zone
    */
@@ -75,8 +86,10 @@ export class UploaderComponent {
 
   @HostListener('window:dragover', ['$event'])
   onDragOver(event: any) {
-
-    if (this.enableDragOverDocument && this.uploaderService.isAllowedDragOverPage()) {
+    if (
+      this.enableDragOverDocument &&
+      this.uploaderService.isAllowedDragOverPage()
+    ) {
       // Show drop area on the page
       event.preventDefault();
       if ((event.target as any).tagName !== 'HTML') {
@@ -85,10 +98,13 @@ export class UploaderComponent {
     }
   }
 
-  constructor(private cdr: ChangeDetectorRef, private scrollToService: ScrollToService,
-    private uploaderService: UploaderService, private tokenExtractor: HttpXsrfTokenExtractor,
-    private cookieService: CookieService) {
-  }
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private scrollToService: ScrollToService,
+    private uploaderService: UploaderService,
+    private tokenExtractor: HttpXsrfTokenExtractor,
+    private cookieService: CookieService
+  ) {}
 
   /**
    * Method provided by Angular. Invoked after the constructor.
@@ -119,18 +135,22 @@ export class UploaderComponent {
   }
 
   ngAfterViewInit() {
-    this.uploader.onAfterAddingAll = ((items) => {
+    this.uploader.onAfterAddingAll = (items) => {
       this.onFileSelected.emit(items);
-    });
+    };
     if (isUndefined(this.onBeforeUpload)) {
-      this.onBeforeUpload = () => {return;};
+      this.onBeforeUpload = () => {
+        return;
+      };
     }
     this.uploader.onBeforeUploadItem = (item) => {
       if (item.url !== this.uploader.options.url) {
         item.url = this.uploader.options.url;
       }
       // Ensure the current XSRF token is included in every upload request (token may change between items uploaded)
-      this.uploader.options.headers = [{ name: XSRF_REQUEST_HEADER, value: this.tokenExtractor.getToken() }];
+      this.uploader.options.headers = [
+        { name: XSRF_REQUEST_HEADER, value: this.tokenExtractor.getToken() },
+      ];
       this.onBeforeUpload();
       this.isOverDocumentDropZone = observableOf(false);
     };
@@ -139,14 +159,21 @@ export class UploaderComponent {
         form.append('properties', JSON.stringify(this.uploadProperties));
       };
     }
-    this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
+    this.uploader.onCompleteItem = (
+      item: any,
+      response: any,
+      status: any,
+      headers: any
+    ) => {
       // Check for a changed XSRF token in response & save new token if found (to both cookie & header for next request)
       // NOTE: this is only necessary because ng2-file-upload doesn't use an Http service and therefore never
       // triggers our xsrf.interceptor.ts. See this bug: https://github.com/valor-software/ng2-file-upload/issues/950
       const token = headers[XSRF_RESPONSE_HEADER.toLowerCase()];
       if (isNotEmpty(token)) {
         this.saveXsrfToken(token);
-        this.uploader.options.headers = [{ name: XSRF_REQUEST_HEADER, value: this.tokenExtractor.getToken() }];
+        this.uploader.options.headers = [
+          { name: XSRF_REQUEST_HEADER, value: this.tokenExtractor.getToken() },
+        ];
       }
 
       if (isNotEmpty(response)) {
@@ -154,17 +181,29 @@ export class UploaderComponent {
         this.onCompleteItem.emit(responsePath);
       }
     };
-    this.uploader.onErrorItem = (item: any, response: any, status: any, headers: any) => {
+    this.uploader.onErrorItem = (
+      item: any,
+      response: any,
+      status: any,
+      headers: any
+    ) => {
       // Check for a changed XSRF token in response & save new token if found (to both cookie & header for next request)
       // NOTE: this is only necessary because ng2-file-upload doesn't use an Http service and therefore never
       // triggers our xsrf.interceptor.ts. See this bug: https://github.com/valor-software/ng2-file-upload/issues/950
       const token = headers[XSRF_RESPONSE_HEADER.toLowerCase()];
       if (isNotEmpty(token)) {
         this.saveXsrfToken(token);
-        this.uploader.options.headers = [{ name: XSRF_REQUEST_HEADER, value: this.tokenExtractor.getToken() }];
+        this.uploader.options.headers = [
+          { name: XSRF_REQUEST_HEADER, value: this.tokenExtractor.getToken() },
+        ];
       }
 
-      this.onUploadError.emit({ item: item, response: response, status: status, headers: headers });
+      this.onUploadError.emit({
+        item: item,
+        response: response,
+        status: status,
+        headers: headers,
+      });
       this.uploader.cancelAll();
     };
     this.uploader.onProgressAll = () => this.onProgress();
@@ -200,10 +239,13 @@ export class UploaderComponent {
   private checkConfig(fileUploadOptions: any) {
     const required = ['url', 'authToken', 'disableMultipart', 'itemAlias'];
     const missing = required.filter((prop) => {
-      return !((prop in fileUploadOptions) && fileUploadOptions[prop] !== '');
+      return !(prop in fileUploadOptions && fileUploadOptions[prop] !== '');
     });
     if (0 < missing.length) {
-      throw new Error('UploadFiles: Argument is missing the following required properties: ' + missing.join(', '));
+      throw new Error(
+        'UploadFiles: Argument is missing the following required properties: ' +
+          missing.join(', ')
+      );
     }
   }
 
@@ -220,5 +262,4 @@ export class UploaderComponent {
     this.cookieService.remove(XSRF_COOKIE);
     this.cookieService.set(XSRF_COOKIE, token);
   }
-
 }

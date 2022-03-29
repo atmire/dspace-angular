@@ -4,9 +4,15 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { AuthenticateAction, ResetAuthenticationMessagesAction } from '../../../../core/auth/auth.actions';
+import {
+  AuthenticateAction,
+  ResetAuthenticationMessagesAction,
+} from '../../../../core/auth/auth.actions';
 
-import { getAuthenticationError, getAuthenticationInfo, } from '../../../../core/auth/selectors';
+import {
+  getAuthenticationError,
+  getAuthenticationInfo,
+} from '../../../../core/auth/selectors';
 import { CoreState } from '../../../../core/core.reducers';
 import { isNotEmpty } from '../../../empty.util';
 import { fadeOut } from '../../../animations/fade';
@@ -24,11 +30,10 @@ import { HardRedirectService } from '../../../../core/services/hard-redirect.ser
   selector: 'ds-log-in-password',
   templateUrl: './log-in-password.component.html',
   styleUrls: ['./log-in-password.component.scss'],
-  animations: [fadeOut]
+  animations: [fadeOut],
 })
 @renderAuthMethodFor(AuthMethodType.Password)
 export class LogInPasswordComponent implements OnInit {
-
   /**
    * The authentication method data.
    * @type {AuthMethod}
@@ -90,18 +95,17 @@ export class LogInPasswordComponent implements OnInit {
    * @method ngOnInit
    */
   public ngOnInit() {
-
     // set formGroup
     this.form = this.formBuilder.group({
       email: ['', Validators.required],
-      password: ['', Validators.required]
+      password: ['', Validators.required],
     });
 
     // set error
-    this.error = this.store.pipe(select(
-      getAuthenticationError),
+    this.error = this.store.pipe(
+      select(getAuthenticationError),
       map((error) => {
-        this.hasError = (isNotEmpty(error));
+        this.hasError = isNotEmpty(error);
         return error;
       })
     );
@@ -110,11 +114,10 @@ export class LogInPasswordComponent implements OnInit {
     this.message = this.store.pipe(
       select(getAuthenticationInfo),
       map((message) => {
-        this.hasMessage = (isNotEmpty(message));
+        this.hasMessage = isNotEmpty(message);
         return message;
       })
     );
-
   }
 
   /**
@@ -143,7 +146,9 @@ export class LogInPasswordComponent implements OnInit {
     password.trim();
 
     if (!this.isStandalonePage) {
-      this.authService.setRedirectUrl(this.hardRedirectService.getCurrentRoute());
+      this.authService.setRedirectUrl(
+        this.hardRedirectService.getCurrentRoute()
+      );
     } else {
       this.authService.setRedirectUrlIfNotSet('/');
     }
@@ -154,5 +159,4 @@ export class LogInPasswordComponent implements OnInit {
     // clear form
     this.form.reset();
   }
-
 }

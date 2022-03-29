@@ -8,10 +8,9 @@ import { MetadataValue } from '../../../core/shared/metadata.models';
 @Component({
   selector: 'ds-metadata-values',
   styleUrls: ['./metadata-values.component.scss'],
-  templateUrl: './metadata-values.component.html'
+  templateUrl: './metadata-values.component.html',
 })
 export class MetadataValuesComponent {
-
   /**
    * The metadata values to display
    */
@@ -26,5 +25,4 @@ export class MetadataValuesComponent {
    * The label for this iteration of metadata values
    */
   @Input() label: string;
-
 }

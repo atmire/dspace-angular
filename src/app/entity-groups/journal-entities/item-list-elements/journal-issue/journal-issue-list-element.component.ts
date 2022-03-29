@@ -8,10 +8,9 @@ import { Item } from '../../../../core/shared/item.model';
 @Component({
   selector: 'ds-journal-issue-list-element',
   styleUrls: ['./journal-issue-list-element.component.scss'],
-  templateUrl: './journal-issue-list-element.component.html'
+  templateUrl: './journal-issue-list-element.component.html',
 })
 /**
  * The component for displaying a list element for an item of the type Journal Issue
  */
-export class JournalIssueListElementComponent extends AbstractListableElementComponent<Item> {
-}
+export class JournalIssueListElementComponent extends AbstractListableElementComponent<Item> {}

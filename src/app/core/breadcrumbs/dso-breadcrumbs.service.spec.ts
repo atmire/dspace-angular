@@ -3,7 +3,10 @@ import { DSOBreadcrumbsService } from './dso-breadcrumbs.service';
 import { getMockLinkService } from '../../shared/mocks/link-service.mock';
 import { LinkService } from '../cache/builders/link.service';
 import { Item } from '../shared/item.model';
-import { createSuccessfulRemoteDataObject, createSuccessfulRemoteDataObject$ } from '../../shared/remote-data.utils';
+import {
+  createSuccessfulRemoteDataObject,
+  createSuccessfulRemoteDataObject$,
+} from '../../shared/remote-data.utils';
 import { DSpaceObject } from '../shared/dspace-object.model';
 import { of as observableOf } from 'rxjs';
 import { Community } from '../shared/community.model';
@@ -39,51 +42,49 @@ describe('DSOBreadcrumbsService', () => {
     collectionUUID = '91dfa5b5-5440-4fb4-b869-02610342f886';
     communityUUID = '6c0bfa6b-ce82-4bf4-a2a8-fd7682c567e8';
 
-    testCommunity = Object.assign(new Community(),
-      {
-        type: 'community',
-        metadata: {
-          'dc.title': [{ value: 'community' }]
-        },
-        uuid: communityUUID,
-        parentCommunity: observableOf(Object.assign(createSuccessfulRemoteDataObject(undefined), { statusCode: 204 })),
+    testCommunity = Object.assign(new Community(), {
+      type: 'community',
+      metadata: {
+        'dc.title': [{ value: 'community' }],
+      },
+      uuid: communityUUID,
+      parentCommunity: observableOf(
+        Object.assign(createSuccessfulRemoteDataObject(undefined), {
+          statusCode: 204,
+        })
+      ),
 
-        _links: {
-          parentCommunity: 'site',
-          self: communityPath + communityUUID
-        }
-      }
-    );
+      _links: {
+        parentCommunity: 'site',
+        self: communityPath + communityUUID,
+      },
+    });
 
-    testCollection = Object.assign(new Collection(),
-      {
-        type: 'collection',
-        metadata: {
-          'dc.title': [{ value: 'collection' }]
-        },
-        uuid: collectionUUID,
-        parentCommunity: createSuccessfulRemoteDataObject$(testCommunity),
-        _links: {
-          parentCommunity: communityPath + communityUUID,
-          self: communityPath + collectionUUID
-        }
-      }
-    );
+    testCollection = Object.assign(new Collection(), {
+      type: 'collection',
+      metadata: {
+        'dc.title': [{ value: 'collection' }],
+      },
+      uuid: collectionUUID,
+      parentCommunity: createSuccessfulRemoteDataObject$(testCommunity),
+      _links: {
+        parentCommunity: communityPath + communityUUID,
+        self: communityPath + collectionUUID,
+      },
+    });
 
-    testItem = Object.assign(new Item(),
-      {
-        type: 'item',
-        metadata: {
-          'dc.title': [{ value: 'item' }]
-        },
-        uuid: itemUUID,
-        owningCollection: createSuccessfulRemoteDataObject$(testCollection),
-        _links: {
-          owningCollection: collectionPath + collectionUUID,
-          self: itemPath + itemUUID
-        }
-      }
-    );
+    testItem = Object.assign(new Item(), {
+      type: 'item',
+      metadata: {
+        'dc.title': [{ value: 'item' }],
+      },
+      uuid: itemUUID,
+      owningCollection: createSuccessfulRemoteDataObject$(testCollection),
+      _links: {
+        owningCollection: collectionPath + collectionUUID,
+        self: itemPath + itemUUID,
+      },
+    });
 
     dsoNameService = { getName: (dso) => getName(dso) };
   }
@@ -93,8 +94,8 @@ describe('DSOBreadcrumbsService', () => {
     TestBed.configureTestingModule({
       providers: [
         { provide: LinkService, useValue: getMockLinkService() },
-        { provide: DSONameService, useValue: dsoNameService }
-      ]
+        { provide: DSONameService, useValue: dsoNameService },
+      ],
     }).compileComponents();
   }));
 
@@ -106,13 +107,18 @@ describe('DSOBreadcrumbsService', () => {
 
   describe('getBreadcrumbs', () => {
     it('should return the breadcrumbs based on an Item', () => {
-      const breadcrumbs = service.getBreadcrumbs(testItem, testItem._links.self);
+      const breadcrumbs = service.getBreadcrumbs(
+        testItem,
+        testItem._links.self
+      );
       const expectedCrumbs = [
         new Breadcrumb(getName(testCommunity), getDSORoute(testCommunity)),
         new Breadcrumb(getName(testCollection), getDSORoute(testCollection)),
         new Breadcrumb(getName(testItem), getDSORoute(testItem)),
       ];
-      getTestScheduler().expectObservable(breadcrumbs).toBe('(a|)', { a: expectedCrumbs });
+      getTestScheduler()
+        .expectObservable(breadcrumbs)
+        .toBe('(a|)', { a: expectedCrumbs });
     });
   });
 

@@ -22,7 +22,6 @@ import { ViewMode } from '../../../core/shared/view-mode.model';
  * Component representing the sidebar on the search page
  */
 export class SearchSidebarComponent {
-
   /**
    * The configuration to use for the search options
    */
@@ -86,11 +85,12 @@ export class SearchSidebarComponent {
   /**
    * Emits event when the user select a new configuration
    */
-  @Output() changeConfiguration: EventEmitter<SearchConfigurationOption> = new EventEmitter<SearchConfigurationOption>();
+  @Output() changeConfiguration: EventEmitter<SearchConfigurationOption> =
+    new EventEmitter<SearchConfigurationOption>();
 
   /**
    * Emits event when the user select a new view mode
    */
-  @Output() changeViewMode: EventEmitter<ViewMode> = new EventEmitter<ViewMode>();
-
+  @Output() changeViewMode: EventEmitter<ViewMode> =
+    new EventEmitter<ViewMode>();
 }

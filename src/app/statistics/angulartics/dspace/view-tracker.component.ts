@@ -13,15 +13,12 @@ import { DSpaceObject } from '../../../core/shared/dspace-object.model';
 export class ViewTrackerComponent implements OnInit {
   @Input() object: DSpaceObject;
 
-  constructor(
-    public angulartics2: Angulartics2
-  ) {
-  }
+  constructor(public angulartics2: Angulartics2) {}
 
   ngOnInit(): void {
     this.angulartics2.eventTrack.next({
       action: 'pageView',
-      properties: {object: this.object},
+      properties: { object: this.object },
     });
   }
 }

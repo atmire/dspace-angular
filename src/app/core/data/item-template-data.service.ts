@@ -54,8 +54,20 @@ class DataServiceImpl extends ItemDataService {
     protected http: HttpClient,
     protected comparator: DSOChangeAnalyzer<Item>,
     protected bundleService: BundleDataService,
-    protected collectionService: CollectionDataService) {
-    super(requestService, rdbService, store, bs, objectCache, halService, notificationsService, http, comparator, bundleService);
+    protected collectionService: CollectionDataService
+  ) {
+    super(
+      requestService,
+      rdbService,
+      store,
+      bs,
+      objectCache,
+      halService,
+      notificationsService,
+      http,
+      comparator,
+      bundleService
+    );
   }
 
   /**
@@ -63,9 +75,13 @@ class DataServiceImpl extends ItemDataService {
    * @param collectionID  The ID of the collection to base the endpoint on
    */
   public getCollectionEndpoint(collectionID: string): Observable<string> {
-    return this.collectionService.getIDHrefObs(collectionID).pipe(
-      switchMap((href: string) => this.halService.getEndpoint(this.collectionLinkPath, href))
-    );
+    return this.collectionService
+      .getIDHrefObs(collectionID)
+      .pipe(
+        switchMap((href: string) =>
+          this.halService.getEndpoint(this.collectionLinkPath, href)
+        )
+      );
   }
 
   /**
@@ -116,9 +132,19 @@ class DataServiceImpl extends ItemDataService {
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  findByCollectionID(collectionID: string, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<Item>[]): Observable<RemoteData<Item>> {
+  findByCollectionID(
+    collectionID: string,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<Item>[]
+  ): Observable<RemoteData<Item>> {
     this.setCollectionEndpoint(collectionID);
-    return super.findById(collectionID, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+    return super.findById(
+      collectionID,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow
+    );
   }
 
   /**
@@ -126,7 +152,10 @@ class DataServiceImpl extends ItemDataService {
    * @param item
    * @param collectionID
    */
-  createTemplate(item: Item, collectionID: string): Observable<RemoteData<Item>> {
+  createTemplate(
+    item: Item,
+    collectionID: string
+  ): Observable<RemoteData<Item>> {
     this.setCollectionEndpoint(collectionID);
     return super.create(item);
   }
@@ -140,7 +169,10 @@ class DataServiceImpl extends ItemDataService {
     this.setRegularEndpoint();
     return super.delete(item.uuid).pipe(
       getFirstCompletedRemoteData(),
-      map((response: RemoteData<NoContent>) => hasValue(response) && response.hasSucceeded)
+      map(
+        (response: RemoteData<NoContent>) =>
+          hasValue(response) && response.hasSucceeded
+      )
     );
   }
 }
@@ -166,8 +198,21 @@ export class ItemTemplateDataService implements UpdateDataService<Item> {
     protected http: HttpClient,
     protected comparator: DSOChangeAnalyzer<Item>,
     protected bundleService: BundleDataService,
-    protected collectionService: CollectionDataService) {
-    this.dataService = new DataServiceImpl(requestService, rdbService, store, bs, objectCache, halService, notificationsService, http, comparator, bundleService, collectionService);
+    protected collectionService: CollectionDataService
+  ) {
+    this.dataService = new DataServiceImpl(
+      requestService,
+      rdbService,
+      store,
+      bs,
+      objectCache,
+      halService,
+      notificationsService,
+      http,
+      comparator,
+      bundleService,
+      collectionService
+    );
   }
 
   /**
@@ -198,8 +243,18 @@ export class ItemTemplateDataService implements UpdateDataService<Item> {
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  findByCollectionID(collectionID: string, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<Item>[]): Observable<RemoteData<Item>> {
-    return this.dataService.findByCollectionID(collectionID, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  findByCollectionID(
+    collectionID: string,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<Item>[]
+  ): Observable<RemoteData<Item>> {
+    return this.dataService.findByCollectionID(
+      collectionID,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow
+    );
   }
 
   /**

@@ -16,10 +16,9 @@ import { getProfileModuleRoute } from '../../../app-routing-paths';
 @Component({
   selector: 'ds-user-menu',
   templateUrl: './user-menu.component.html',
-  styleUrls: ['./user-menu.component.scss']
+  styleUrls: ['./user-menu.component.scss'],
 })
 export class UserMenuComponent implements OnInit {
-
   /**
    * True if the authentication is loading.
    * @type {Observable<boolean>}
@@ -43,20 +42,19 @@ export class UserMenuComponent implements OnInit {
    */
   public profileRoute = getProfileModuleRoute();
 
-  constructor(private store: Store<AppState>,
-              private authService: AuthService) {
-  }
+  constructor(
+    private store: Store<AppState>,
+    private authService: AuthService
+  ) {}
 
   /**
    * Initialize all instance variables
    */
   ngOnInit(): void {
-
     // set loading
     this.loading$ = this.store.pipe(select(isAuthenticationLoading));
 
     // set user
     this.user$ = this.authService.getAuthenticatedUserFromStore();
-
   }
 }

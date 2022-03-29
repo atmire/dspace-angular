@@ -3,7 +3,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, of as observableOf } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { METADATA_EXPORT_SCRIPT_NAME, ScriptDataService } from '../../../../core/data/processes/script-data.service';
+import {
+  METADATA_EXPORT_SCRIPT_NAME,
+  ScriptDataService,
+} from '../../../../core/data/processes/script-data.service';
 import { Collection } from '../../../../core/shared/collection.model';
 import { Community } from '../../../../core/shared/community.model';
 import { DSpaceObjectType } from '../../../../core/shared/dspace-object-type.model';
@@ -14,7 +17,10 @@ import { ConfirmationModalComponent } from '../../../confirmation-modal/confirma
 import { isNotEmpty } from '../../../empty.util';
 import { NotificationsService } from '../../../notifications/notifications.service';
 import { createSuccessfulRemoteDataObject } from '../../../remote-data.utils';
-import { DSOSelectorModalWrapperComponent, SelectorActionType } from '../dso-selector-modal-wrapper.component';
+import {
+  DSOSelectorModalWrapperComponent,
+  SelectorActionType,
+} from '../dso-selector-modal-wrapper.component';
 import { getFirstCompletedRemoteData } from '../../../../core/shared/operators';
 import { Process } from '../../../../process-page/processes/process.model';
 import { RemoteData } from '../../../../core/data/remote-data';
@@ -28,15 +34,23 @@ import { getProcessDetailRoute } from '../../../../process-page/process-page-rou
   selector: 'ds-export-metadata-selector',
   templateUrl: '../dso-selector-modal-wrapper.component.html',
 })
-export class ExportMetadataSelectorComponent extends DSOSelectorModalWrapperComponent implements OnInit {
+export class ExportMetadataSelectorComponent
+  extends DSOSelectorModalWrapperComponent
+  implements OnInit
+{
   objectType = DSpaceObjectType.DSPACEOBJECT;
   selectorTypes = [DSpaceObjectType.COLLECTION, DSpaceObjectType.COMMUNITY];
   action = SelectorActionType.EXPORT_METADATA;
 
-  constructor(protected activeModal: NgbActiveModal, protected route: ActivatedRoute, private router: Router,
-              protected notificationsService: NotificationsService, protected translationService: TranslateService,
-              protected scriptDataService: ScriptDataService,
-              private modalService: NgbModal) {
+  constructor(
+    protected activeModal: NgbActiveModal,
+    protected route: ActivatedRoute,
+    private router: Router,
+    protected notificationsService: NotificationsService,
+    protected translationService: TranslateService,
+    protected scriptDataService: ScriptDataService,
+    private modalService: NgbModal
+  ) {
     super(activeModal, route);
   }
 
@@ -48,24 +62,34 @@ export class ExportMetadataSelectorComponent extends DSOSelectorModalWrapperComp
     if (dso instanceof Collection || dso instanceof Community) {
       const modalRef = this.modalService.open(ConfirmationModalComponent);
       modalRef.componentInstance.dso = dso;
-      modalRef.componentInstance.headerLabel = 'confirmation-modal.export-metadata.header';
-      modalRef.componentInstance.infoLabel = 'confirmation-modal.export-metadata.info';
-      modalRef.componentInstance.cancelLabel = 'confirmation-modal.export-metadata.cancel';
-      modalRef.componentInstance.confirmLabel = 'confirmation-modal.export-metadata.confirm';
+      modalRef.componentInstance.headerLabel =
+        'confirmation-modal.export-metadata.header';
+      modalRef.componentInstance.infoLabel =
+        'confirmation-modal.export-metadata.info';
+      modalRef.componentInstance.cancelLabel =
+        'confirmation-modal.export-metadata.cancel';
+      modalRef.componentInstance.confirmLabel =
+        'confirmation-modal.export-metadata.confirm';
       modalRef.componentInstance.confirmIcon = 'fas fa-file-export';
-      const resp$ =  modalRef.componentInstance.response.pipe(switchMap((confirm: boolean) => {
-        if (confirm) {
-          const startScriptSucceeded$ = this.startScriptNotifyAndRedirect(dso);
-          return startScriptSucceeded$.pipe(
-            switchMap((r: boolean) => {
-              return observableOf(r);
-            })
-          );
-        } else {
-          const modalRefExport = this.modalService.open(ExportMetadataSelectorComponent);
-          modalRefExport.componentInstance.dsoRD = createSuccessfulRemoteDataObject(dso);
-        }
-      }));
+      const resp$ = modalRef.componentInstance.response.pipe(
+        switchMap((confirm: boolean) => {
+          if (confirm) {
+            const startScriptSucceeded$ =
+              this.startScriptNotifyAndRedirect(dso);
+            return startScriptSucceeded$.pipe(
+              switchMap((r: boolean) => {
+                return observableOf(r);
+              })
+            );
+          } else {
+            const modalRefExport = this.modalService.open(
+              ExportMetadataSelectorComponent
+            );
+            modalRefExport.componentInstance.dsoRD =
+              createSuccessfulRemoteDataObject(dso);
+          }
+        })
+      );
       resp$.subscribe();
       return resp$;
     } else {
@@ -82,24 +106,36 @@ export class ExportMetadataSelectorComponent extends DSOSelectorModalWrapperComp
     const parameterValues: ProcessParameter[] = [
       Object.assign(new ProcessParameter(), { name: '-i', value: dso.uuid }),
     ];
-    return this.scriptDataService.invoke(METADATA_EXPORT_SCRIPT_NAME, parameterValues, [])
+    return this.scriptDataService
+      .invoke(METADATA_EXPORT_SCRIPT_NAME, parameterValues, [])
       .pipe(
         getFirstCompletedRemoteData(),
         map((rd: RemoteData<Process>) => {
           if (rd.hasSucceeded) {
-            const title = this.translationService.get('process.new.notification.success.title');
-            const content = this.translationService.get('process.new.notification.success.content');
+            const title = this.translationService.get(
+              'process.new.notification.success.title'
+            );
+            const content = this.translationService.get(
+              'process.new.notification.success.content'
+            );
             this.notificationsService.success(title, content);
             if (isNotEmpty(rd.payload)) {
-              this.router.navigateByUrl(getProcessDetailRoute(rd.payload.processId));
+              this.router.navigateByUrl(
+                getProcessDetailRoute(rd.payload.processId)
+              );
             }
             return true;
           } else {
-            const title = this.translationService.get('process.new.notification.error.title');
-            const content = this.translationService.get('process.new.notification.error.content');
+            const title = this.translationService.get(
+              'process.new.notification.error.title'
+            );
+            const content = this.translationService.get(
+              'process.new.notification.error.content'
+            );
             this.notificationsService.error(title, content);
             return false;
           }
-        }));
+        })
+      );
   }
 }

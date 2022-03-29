@@ -5,14 +5,16 @@ import { GenericConstructor } from '../../core/shared/generic-constructor';
 export enum BrowseByDataType {
   Title = 'title',
   Metadata = 'text',
-  Date = 'date'
+  Date = 'date',
 }
 
 export const DEFAULT_BROWSE_BY_TYPE = BrowseByDataType.Metadata;
 
-export const BROWSE_BY_COMPONENT_FACTORY = new InjectionToken<(browseByType) => GenericConstructor<any>>('getComponentByBrowseByType', {
+export const BROWSE_BY_COMPONENT_FACTORY = new InjectionToken<
+  (browseByType) => GenericConstructor<any>
+>('getComponentByBrowseByType', {
   providedIn: 'root',
-  factory: () => getComponentByBrowseByType
+  factory: () => getComponentByBrowseByType,
 });
 
 const map = new Map();
@@ -26,7 +28,9 @@ export function rendersBrowseBy(browseByType: BrowseByDataType) {
     if (hasNoValue(map.get(browseByType))) {
       map.set(browseByType, component);
     } else {
-      throw new Error(`There can't be more than one component to render Browse-By of type "${browseByType}"`);
+      throw new Error(
+        `There can't be more than one component to render Browse-By of type "${browseByType}"`
+      );
     }
   };
 }

@@ -2,7 +2,6 @@
  * Representing vocabulary properties
  */
 export class VocabularyOptions {
-
   /**
    * The name of the vocabulary
    */
@@ -13,8 +12,7 @@ export class VocabularyOptions {
    */
   closed: boolean;
 
-  constructor(name: string,
-              closed: boolean = false) {
+  constructor(name: string, closed: boolean = false) {
     this.name = name;
     this.closed = closed;
   }

@@ -1,4 +1,9 @@
-import { autoserialize, autoserializeAs, deserialize, inheritSerialization } from 'cerialize';
+import {
+  autoserialize,
+  autoserializeAs,
+  deserialize,
+  inheritSerialization,
+} from 'cerialize';
 import { Observable } from 'rxjs';
 import { link, typedObject } from '../../cache/builders/build-decorators';
 import { PaginatedList } from '../../data/paginated-list.model';
@@ -67,5 +72,4 @@ export class Group extends DSpaceObject {
    */
   @link(DSPACE_OBJECT)
   public object?: Observable<RemoteData<DSpaceObject>>;
-
 }

@@ -16,14 +16,20 @@ import { DSOChangeAnalyzer } from '../dso-change-analyzer.service';
 import { AuthService } from '../../auth/auth.service';
 import { SiteDataService } from '../site-data.service';
 import { FindListOptions } from '../request.models';
-import { followLink, FollowLinkConfig } from '../../../shared/utils/follow-link-config.model';
+import {
+  followLink,
+  FollowLinkConfig,
+} from '../../../shared/utils/follow-link-config.model';
 import { RemoteData } from '../remote-data';
 import { PaginatedList } from '../paginated-list.model';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { hasValue, isNotEmpty } from '../../../shared/empty.util';
 import { RequestParam } from '../../cache/models/request-param.model';
 import { AuthorizationSearchParams } from './authorization-search-params';
-import { addSiteObjectUrlIfEmpty, oneAuthorizationMatchesFeature } from './authorization-utils';
+import {
+  addSiteObjectUrlIfEmpty,
+  oneAuthorizationMatchesFeature,
+} from './authorization-utils';
 import { FeatureID } from './feature-id';
 import { getFirstCompletedRemoteData } from '../../shared/operators';
 
@@ -66,11 +72,27 @@ export class AuthorizationDataService extends DataService<Authorization> {
    *                      If not provided, the UUID of the currently authenticated {@link EPerson} will be used.
    * @param featureId     ID of the {@link Feature} to check {@link Authorization} for
    */
-  isAuthorized(featureId?: FeatureID, objectUrl?: string, ePersonUuid?: string): Observable<boolean> {
-    return this.searchByObject(featureId, objectUrl, ePersonUuid, {}, true, true, followLink('feature')).pipe(
+  isAuthorized(
+    featureId?: FeatureID,
+    objectUrl?: string,
+    ePersonUuid?: string
+  ): Observable<boolean> {
+    return this.searchByObject(
+      featureId,
+      objectUrl,
+      ePersonUuid,
+      {},
+      true,
+      true,
+      followLink('feature')
+    ).pipe(
       getFirstCompletedRemoteData(),
       map((authorizationRD) => {
-        if (authorizationRD.statusCode !== 401 && hasValue(authorizationRD.payload) && isNotEmpty(authorizationRD.payload.page)) {
+        if (
+          authorizationRD.statusCode !== 401 &&
+          hasValue(authorizationRD.payload) &&
+          isNotEmpty(authorizationRD.payload.page)
+        ) {
           return authorizationRD.payload.page;
         } else {
           return [];
@@ -97,11 +119,32 @@ export class AuthorizationDataService extends DataService<Authorization> {
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  searchByObject(featureId?: FeatureID, objectUrl?: string, ePersonUuid?: string, options: FindListOptions = {}, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<Authorization>[]): Observable<RemoteData<PaginatedList<Authorization>>> {
-    return observableOf(new AuthorizationSearchParams(objectUrl, ePersonUuid, featureId)).pipe(
+  searchByObject(
+    featureId?: FeatureID,
+    objectUrl?: string,
+    ePersonUuid?: string,
+    options: FindListOptions = {},
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<Authorization>[]
+  ): Observable<RemoteData<PaginatedList<Authorization>>> {
+    return observableOf(
+      new AuthorizationSearchParams(objectUrl, ePersonUuid, featureId)
+    ).pipe(
       addSiteObjectUrlIfEmpty(this.siteService),
       switchMap((params: AuthorizationSearchParams) => {
-        return this.searchBy(this.searchByObjectPath, this.createSearchOptions(params.objectUrl, options, params.ePersonUuid, params.featureId), useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+        return this.searchBy(
+          this.searchByObjectPath,
+          this.createSearchOptions(
+            params.objectUrl,
+            options,
+            params.ePersonUuid,
+            params.featureId
+          ),
+          useCachedVersionIfAvailable,
+          reRequestOnStale,
+          ...linksToFollow
+        );
       })
     );
   }
@@ -113,7 +156,12 @@ export class AuthorizationDataService extends DataService<Authorization> {
    * @param ePersonUuid Optional parameter value to add to {@link RequestParam} "eperson"
    * @param featureId   Optional parameter value to add to {@link RequestParam} "feature"
    */
-  private createSearchOptions(objectUrl: string, options: FindListOptions = {}, ePersonUuid?: string, featureId?: FeatureID): FindListOptions {
+  private createSearchOptions(
+    objectUrl: string,
+    options: FindListOptions = {},
+    ePersonUuid?: string,
+    featureId?: FeatureID
+  ): FindListOptions {
     let params = [];
     if (isNotEmpty(options.searchParams)) {
       params = [...options.searchParams];
@@ -126,7 +174,7 @@ export class AuthorizationDataService extends DataService<Authorization> {
       params.push(new RequestParam('eperson', ePersonUuid));
     }
     return Object.assign(new FindListOptions(), options, {
-      searchParams: [...params]
+      searchParams: [...params],
     });
   }
 }

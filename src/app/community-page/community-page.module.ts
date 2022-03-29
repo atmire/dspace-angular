@@ -14,12 +14,14 @@ import { CommunityFormModule } from './community-form/community-form.module';
 import { ThemedCommunityPageComponent } from './themed-community-page.component';
 import { ComcolModule } from '../shared/comcol/comcol.module';
 
-const DECLARATIONS = [CommunityPageComponent,
+const DECLARATIONS = [
+  CommunityPageComponent,
   ThemedCommunityPageComponent,
   CommunityPageSubCollectionListComponent,
   CommunityPageSubCommunityListComponent,
   CreateCommunityPageComponent,
-  DeleteCommunityPageComponent];
+  DeleteCommunityPageComponent,
+];
 
 @NgModule({
   imports: [
@@ -28,16 +30,9 @@ const DECLARATIONS = [CommunityPageComponent,
     CommunityPageRoutingModule,
     StatisticsModule.forRoot(),
     CommunityFormModule,
-    ComcolModule
+    ComcolModule,
   ],
-  declarations: [
-    ...DECLARATIONS
-  ],
-  exports: [
-    ...DECLARATIONS
-  ]
+  declarations: [...DECLARATIONS],
+  exports: [...DECLARATIONS],
 })
-
-export class CommunityPageModule {
-
-}
+export class CommunityPageModule {}

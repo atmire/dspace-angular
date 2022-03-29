@@ -22,7 +22,11 @@ export class ResponsiveTableSizes {
    * @param end   Index of the last column (inclusive)
    */
   combineColumns(start: number, end: number): ResponsiveColumnSizes {
-    if (start < end && hasValue(this.columns[start]) && hasValue(this.columns[end])) {
+    if (
+      start < end &&
+      hasValue(this.columns[start]) &&
+      hasValue(this.columns[end])
+    ) {
       let xs = this.columns[start].xs;
       let sm = this.columns[start].sm;
       let md = this.columns[start].md;

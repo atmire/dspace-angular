@@ -7,7 +7,7 @@ import {
   SelectableListDeselectAction,
   SelectableListDeselectSingleAction,
   SelectableListSelectAction,
-  SelectableListSelectSingleAction
+  SelectableListSelectSingleAction,
 } from './selectable-list.actions';
 import { AppState } from '../../../app.reducer';
 
@@ -17,7 +17,11 @@ class SelectableObject extends ListableObject {
   }
 
   equals(other: SelectableObject): boolean {
-    return hasValue(this.value) && hasValue(other.value) && this.value === other.value;
+    return (
+      hasValue(this.value) &&
+      hasValue(other.value) &&
+      this.value === other.value
+    );
   }
 
   getRenderTypes() {
@@ -45,12 +49,12 @@ describe('SelectableListService', () => {
   });
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-
       providers: [
         {
-          provide: Store, useValue: store
-        }
-      ]
+          provide: Store,
+          useValue: store,
+        },
+      ],
     }).compileComponents();
   }));
 
@@ -64,9 +68,10 @@ describe('SelectableListService', () => {
     });
 
     it('SelectableListSelectSingleAction should be dispatched to the store', () => {
-      expect(store.dispatch).toHaveBeenCalledWith(new SelectableListSelectSingleAction(listID1, selected3));
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new SelectableListSelectSingleAction(listID1, selected3)
+      );
     });
-
   });
 
   describe('when the select method is triggered', () => {
@@ -75,7 +80,9 @@ describe('SelectableListService', () => {
     });
 
     it('SelectableListSelectAction should be dispatched to the store', () => {
-      expect(store.dispatch).toHaveBeenCalledWith(new SelectableListSelectAction(listID1, [selected1, selected4]));
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new SelectableListSelectAction(listID1, [selected1, selected4])
+      );
     });
   });
 
@@ -85,9 +92,10 @@ describe('SelectableListService', () => {
     });
 
     it('SelectableListDeselectSingleAction should be dispatched to the store', () => {
-      expect(store.dispatch).toHaveBeenCalledWith(new SelectableListDeselectSingleAction(listID1, selected4));
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new SelectableListDeselectSingleAction(listID1, selected4)
+      );
     });
-
   });
 
   describe('when the deselect method is triggered', () => {
@@ -96,8 +104,9 @@ describe('SelectableListService', () => {
     });
 
     it('SelectableListDeselectAction should be dispatched to the store', () => {
-      expect(store.dispatch).toHaveBeenCalledWith(new SelectableListDeselectAction(listID1, [selected2, selected4]));
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new SelectableListDeselectAction(listID1, [selected2, selected4])
+      );
     });
   });
-
 });

@@ -1,5 +1,10 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  NG_VALUE_ACCESSOR,
+  Validators,
+} from '@angular/forms';
 import { ObjectUpdatesService } from '../../../core/data/object-updates/object-updates.service';
 import { MetadatumViewModel } from '../../../core/shared/metadata.models';
 import { MetadataFieldValidator } from '../../utils/metadatafield-validator.directive';
@@ -16,16 +21,18 @@ import { InputSuggestion } from '../input-suggestions.model';
       // Usage of forwardRef necessary https://github.com/angular/angular.io/issues/1151
       // eslint-disable-next-line @angular-eslint/no-forward-ref
       useExisting: forwardRef(() => ValidationSuggestionsComponent),
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+  ],
 })
 
 /**
  * Component representing a form with a autocomplete functionality
  */
-export class ValidationSuggestionsComponent extends InputSuggestionsComponent implements OnInit {
-
+export class ValidationSuggestionsComponent
+  extends InputSuggestionsComponent
+  implements OnInit
+{
   form: FormGroup;
 
   /**
@@ -46,17 +53,23 @@ export class ValidationSuggestionsComponent extends InputSuggestionsComponent im
    * The possibility to edit metadata
    */
   @Input() disable;
-  constructor(private metadataFieldValidator: MetadataFieldValidator,
-              private objectUpdatesService: ObjectUpdatesService) {
+  constructor(
+    private metadataFieldValidator: MetadataFieldValidator,
+    private objectUpdatesService: ObjectUpdatesService
+  ) {
     super();
   }
 
   ngOnInit() {
     this.form = new FormGroup({
       metadataNameField: new FormControl(this._value, {
-        asyncValidators: [this.metadataFieldValidator.validate.bind(this.metadataFieldValidator)],
-        validators: [Validators.required]
-      })
+        asyncValidators: [
+          this.metadataFieldValidator.validate.bind(
+            this.metadataFieldValidator
+          ),
+        ],
+        validators: [Validators.required],
+      }),
     });
   }
 
@@ -79,9 +92,16 @@ export class ValidationSuggestionsComponent extends InputSuggestionsComponent im
    * @param form  Form with input
    */
   checkIfValidInput(form) {
-    this.valid = !(form.get('metadataNameField').status === 'INVALID' && (form.get('metadataNameField').dirty || form.get('metadataNameField').touched));
-    this.objectUpdatesService.setValidFieldUpdate(this.url, this.metadata.uuid, this.valid);
+    this.valid = !(
+      form.get('metadataNameField').status === 'INVALID' &&
+      (form.get('metadataNameField').dirty ||
+        form.get('metadataNameField').touched)
+    );
+    this.objectUpdatesService.setValidFieldUpdate(
+      this.url,
+      this.metadata.uuid,
+      this.valid
+    );
     return this.valid;
   }
-
 }

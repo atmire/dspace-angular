@@ -8,13 +8,10 @@ import { TranslateService } from '@ngx-translate/core';
  * on its render types.
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DSONameService {
-
-  constructor(private translateService: TranslateService) {
-
-  }
+  constructor(private translateService: TranslateService) {}
 
   /**
    * Functions to generate the specific names.
@@ -27,15 +24,21 @@ export class DSONameService {
    */
   private readonly factories = {
     Person: (dso: DSpaceObject): string => {
-      return `${dso.firstMetadataValue('person.familyName')}, ${dso.firstMetadataValue('person.givenName')}`;
+      return `${dso.firstMetadataValue(
+        'person.familyName'
+      )}, ${dso.firstMetadataValue('person.givenName')}`;
     },
     OrgUnit: (dso: DSpaceObject): string => {
       return dso.firstMetadataValue('organization.legalName');
     },
     Default: (dso: DSpaceObject): string => {
       // If object doesn't have dc.title metadata use name property
-      return dso.firstMetadataValue('dc.title') || dso.name || this.translateService.instant('dso.name.untitled');
-    }
+      return (
+        dso.firstMetadataValue('dc.title') ||
+        dso.name ||
+        this.translateService.instant('dso.name.untitled')
+      );
+    },
   };
 
   /**
@@ -47,13 +50,14 @@ export class DSONameService {
     const types = dso.getRenderTypes();
     const match = types
       .filter((type) => typeof type === 'string')
-      .find((type: string) => Object.keys(this.factories).includes(type)) as string;
+      .find((type: string) =>
+        Object.keys(this.factories).includes(type)
+      ) as string;
 
     if (hasValue(match)) {
       return this.factories[match](dso);
     } else {
-      return  this.factories.Default(dso);
+      return this.factories.Default(dso);
     }
   }
-
 }

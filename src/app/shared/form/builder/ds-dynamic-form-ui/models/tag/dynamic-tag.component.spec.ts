@@ -1,12 +1,35 @@
 // Load the implementations that should be tested
-import { ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ComponentFixture, fakeAsync, flush, inject, TestBed, waitForAsync, } from '@angular/core/testing';
+import {
+  ChangeDetectorRef,
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+} from '@angular/core';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import {
+  ComponentFixture,
+  fakeAsync,
+  flush,
+  inject,
+  TestBed,
+  waitForAsync,
+} from '@angular/core/testing';
 import { of as observableOf } from 'rxjs';
 
-import { DynamicFormLayoutService, DynamicFormsCoreModule, DynamicFormValidationService } from '@ng-dynamic-forms/core';
+import {
+  DynamicFormLayoutService,
+  DynamicFormsCoreModule,
+  DynamicFormValidationService,
+} from '@ng-dynamic-forms/core';
 import { DynamicFormsNGBootstrapUIModule } from '@ng-dynamic-forms/ui-ng-bootstrap';
-import { NgbModule, NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbModule,
+  NgbTypeaheadSelectItemEvent,
+} from '@ng-bootstrap/ng-bootstrap';
 
 import { VocabularyOptions } from '../../../../../../core/submission/vocabularies/models/vocabulary-options.model';
 import { VocabularyService } from '../../../../../../core/submission/vocabularies/vocabulary.service';
@@ -19,15 +42,15 @@ import { VocabularyEntry } from '../../../../../../core/submission/vocabularies/
 import { createTestComponent } from '../../../../../testing/utils.test';
 import {
   mockDynamicFormLayoutService,
-  mockDynamicFormValidationService
+  mockDynamicFormValidationService,
 } from '../../../../../testing/dynamic-form-mock-services';
 
 function createKeyUpEvent(key: number) {
   /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
   const event = {
-    keyCode: key, preventDefault: () => {
-    }, stopPropagation: () => {
-    }
+    keyCode: key,
+    preventDefault: () => {},
+    stopPropagation: () => {},
   };
   /* eslint-enable no-empty, @typescript-eslint/no-empty-function */
   spyOn(event, 'preventDefault');
@@ -46,7 +69,7 @@ function init() {
   TAG_TEST_MODEL_CONFIG = {
     vocabularyOptions: {
       closed: false,
-      name: 'common_iso_languages'
+      name: 'common_iso_languages',
     } as VocabularyOptions,
     disabled: false,
     id: 'tag',
@@ -56,12 +79,11 @@ function init() {
     placeholder: 'Keywords',
     readOnly: false,
     required: false,
-    repeatable: false
+    repeatable: false,
   };
 }
 
 describe('DsDynamicTagComponent test suite', () => {
-
   let testComp: TestComponent;
   let tagComp: DsDynamicTagComponent;
   let testFixture: ComponentFixture<TestComponent>;
@@ -82,20 +104,22 @@ describe('DsDynamicTagComponent test suite', () => {
         NgbModule,
         ReactiveFormsModule,
       ],
-      declarations: [
-        DsDynamicTagComponent,
-        TestComponent,
-      ], // declare the test component
+      declarations: [DsDynamicTagComponent, TestComponent], // declare the test component
       providers: [
         ChangeDetectorRef,
         DsDynamicTagComponent,
         { provide: VocabularyService, useValue: vocabularyServiceStub },
-        { provide: DynamicFormLayoutService, useValue: mockDynamicFormLayoutService },
-        { provide: DynamicFormValidationService, useValue: mockDynamicFormValidationService }
+        {
+          provide: DynamicFormLayoutService,
+          useValue: mockDynamicFormLayoutService,
+        },
+        {
+          provide: DynamicFormValidationService,
+          useValue: mockDynamicFormValidationService,
+        },
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     });
-
   }));
 
   describe('', () => {
@@ -109,22 +133,26 @@ describe('DsDynamicTagComponent test suite', () => {
                       (change)="onValueChange($event)"
                       (focus)="onFocus($event)"></ds-dynamic-tag>`;
 
-      testFixture = createTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
+      testFixture = createTestComponent(
+        html,
+        TestComponent
+      ) as ComponentFixture<TestComponent>;
       testComp = testFixture.componentInstance;
     });
     afterEach(() => {
       testFixture.destroy();
     });
-    it('should create DsDynamicTagComponent', inject([DsDynamicTagComponent], (app: DsDynamicTagComponent) => {
-
-      expect(app).toBeDefined();
-    }));
+    it('should create DsDynamicTagComponent', inject(
+      [DsDynamicTagComponent],
+      (app: DsDynamicTagComponent) => {
+        expect(app).toBeDefined();
+      }
+    ));
   });
 
   describe('when vocabularyOptions are set', () => {
     describe('and init model value is empty', () => {
       beforeEach(() => {
-
         tagFixture = TestBed.createComponent(DsDynamicTagComponent);
         tagComp = tagFixture.componentInstance; // FormComponent test instance
         tagComp.group = TAG_TEST_GROUP;
@@ -143,26 +171,35 @@ describe('DsDynamicTagComponent test suite', () => {
       });
 
       it('should search when 3+ characters typed', fakeAsync(() => {
-        spyOn((tagComp as any).vocabularyService, 'getVocabularyEntriesByValue').and.callThrough();
+        spyOn(
+          (tagComp as any).vocabularyService,
+          'getVocabularyEntriesByValue'
+        ).and.callThrough();
 
         tagComp.search(observableOf('test')).subscribe(() => {
-          expect((tagComp as any).vocabularyService.getVocabularyEntriesByValue).toHaveBeenCalled();
+          expect(
+            (tagComp as any).vocabularyService.getVocabularyEntriesByValue
+          ).toHaveBeenCalled();
         });
       }));
 
       it('should select a results entry properly', fakeAsync(() => {
         modelValue = [
-          Object.assign(new VocabularyEntry(), { authority: 1, display: 'Name, Lastname', value: 1 })
+          Object.assign(new VocabularyEntry(), {
+            authority: 1,
+            display: 'Name, Lastname',
+            value: 1,
+          }),
         ];
         const event: NgbTypeaheadSelectItemEvent = {
           item: Object.assign(new VocabularyEntry(), {
             authority: 1,
             display: 'Name, Lastname',
-            value: 1
+            value: 1,
           }),
           preventDefault: () => {
             return;
-          }
+          },
         };
         spyOn(tagComp.change, 'emit');
 
@@ -206,7 +243,6 @@ describe('DsDynamicTagComponent test suite', () => {
 
     describe('and init model value is not empty', () => {
       beforeEach(() => {
-
         tagFixture = TestBed.createComponent(DsDynamicTagComponent);
         tagComp = tagFixture.componentInstance; // FormComponent test instance
         tagComp.group = TAG_TEST_GROUP;
@@ -230,13 +266,11 @@ describe('DsDynamicTagComponent test suite', () => {
         expect(tagComp.chips.getChipsItems()).toEqual(chips.getChipsItems());
       });
     });
-
   });
 
   describe('when vocabularyOptions are not set', () => {
     describe('and init model value is empty', () => {
       beforeEach(() => {
-
         tagFixture = TestBed.createComponent(DsDynamicTagComponent);
         tagComp = tagFixture.componentInstance; // FormComponent test instance
         tagComp.group = TAG_TEST_GROUP;
@@ -256,7 +290,7 @@ describe('DsDynamicTagComponent test suite', () => {
         expect(tagComp.chips.getChipsItems()).toEqual(chips.getChipsItems());
       });
 
-      it('should add an item on ENTER or key press is \',\' or \';\'', fakeAsync(() => {
+      it("should add an item on ENTER or key press is ',' or ';'", fakeAsync(() => {
         let event = createKeyUpEvent(13);
         tagComp.currentValue = 'test value';
 
@@ -279,7 +313,6 @@ describe('DsDynamicTagComponent test suite', () => {
         expect(tagComp.model.value).toEqual(['test value']);
         expect(tagComp.currentValue).toBeNull();
       }));
-
     });
   });
 });
@@ -287,14 +320,12 @@ describe('DsDynamicTagComponent test suite', () => {
 // declare a test component
 @Component({
   selector: 'ds-test-cmp',
-  template: ``
+  template: ``,
 })
 class TestComponent {
-
   group: FormGroup = TAG_TEST_GROUP;
 
   model = new DynamicTagModel(TAG_TEST_MODEL_CONFIG);
 
   showErrorMessages = false;
-
 }

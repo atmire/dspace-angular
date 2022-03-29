@@ -15,7 +15,10 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { ItemPrivateComponent } from './item-private.component';
 import { RestResponse } from '../../../core/cache/response.models';
-import { createSuccessfulRemoteDataObject, createSuccessfulRemoteDataObject$ } from '../../../shared/remote-data.utils';
+import {
+  createSuccessfulRemoteDataObject,
+  createSuccessfulRemoteDataObject$,
+} from '../../../shared/remote-data.utils';
 
 let comp: ItemPrivateComponent;
 let fixture: ComponentFixture<ItemPrivateComponent>;
@@ -31,42 +34,46 @@ let failRestResponse;
 
 describe('ItemPrivateComponent', () => {
   beforeEach(waitForAsync(() => {
-
     mockItem = Object.assign(new Item(), {
       id: 'fake-id',
       handle: 'fake/handle',
       lastModified: '2018',
-      isWithdrawn: true
+      isWithdrawn: true,
     });
 
     itemPageUrl = `fake-url/${mockItem.id}`;
     routerStub = Object.assign(new RouterStub(), {
-      url: `${itemPageUrl}/edit`
+      url: `${itemPageUrl}/edit`,
     });
 
     mockItemDataService = jasmine.createSpyObj('mockItemDataService', {
-      setDiscoverable: createSuccessfulRemoteDataObject$(mockItem)
+      setDiscoverable: createSuccessfulRemoteDataObject$(mockItem),
     });
 
     routeStub = {
       data: observableOf({
-        dso: createSuccessfulRemoteDataObject(mockItem)
-      })
+        dso: createSuccessfulRemoteDataObject(mockItem),
+      }),
     };
 
     notificationsServiceStub = new NotificationsServiceStub();
 
     TestBed.configureTestingModule({
-      imports: [CommonModule, FormsModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), NgbModule],
+      imports: [
+        CommonModule,
+        FormsModule,
+        RouterTestingModule.withRoutes([]),
+        TranslateModule.forRoot(),
+        NgbModule,
+      ],
       declarations: [ItemPrivateComponent],
       providers: [
         { provide: ActivatedRoute, useValue: routeStub },
         { provide: Router, useValue: routerStub },
         { provide: ItemDataService, useValue: mockItemDataService },
         { provide: NotificationsService, useValue: notificationsServiceStub },
-      ], schemas: [
-        CUSTOM_ELEMENTS_SCHEMA
-      ]
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -79,14 +86,18 @@ describe('ItemPrivateComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should render a page with messages based on the \'private\' messageKey', () => {
+  it("should render a page with messages based on the 'private' messageKey", () => {
     const header = fixture.debugElement.query(By.css('h2')).nativeElement;
     expect(header.innerHTML).toContain('item.edit.private.header');
     const description = fixture.debugElement.query(By.css('p')).nativeElement;
     expect(description.innerHTML).toContain('item.edit.private.description');
-    const confirmButton = fixture.debugElement.query(By.css('button.perform-action')).nativeElement;
+    const confirmButton = fixture.debugElement.query(
+      By.css('button.perform-action')
+    ).nativeElement;
     expect(confirmButton.innerHTML).toContain('item.edit.private.confirm');
-    const cancelButton = fixture.debugElement.query(By.css('button.cancel')).nativeElement;
+    const cancelButton = fixture.debugElement.query(
+      By.css('button.cancel')
+    ).nativeElement;
     expect(cancelButton.innerHTML).toContain('item.edit.private.cancel');
   });
 
@@ -95,7 +106,10 @@ describe('ItemPrivateComponent', () => {
       spyOn(comp, 'processRestResponse');
       comp.performAction();
 
-      expect(mockItemDataService.setDiscoverable).toHaveBeenCalledWith(mockItem, false);
+      expect(mockItemDataService.setDiscoverable).toHaveBeenCalledWith(
+        mockItem,
+        false
+      );
       expect(comp.processRestResponse).toHaveBeenCalled();
     });
   });

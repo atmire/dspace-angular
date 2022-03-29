@@ -1,7 +1,12 @@
-import { animate, state, transition, trigger, style } from '@angular/animations';
+import {
+  animate,
+  state,
+  transition,
+  trigger,
+  style,
+} from '@angular/animations';
 
 export const pushInOut = trigger('pushInOut', [
-
   /*
   state('expanded', style({ right: '100%' }));
 

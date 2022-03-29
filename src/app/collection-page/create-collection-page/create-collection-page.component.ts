@@ -15,7 +15,7 @@ import { RequestService } from '../../core/data/request.service';
 @Component({
   selector: 'ds-create-collection',
   styleUrls: ['./create-collection-page.component.scss'],
-  templateUrl: './create-collection-page.component.html'
+  templateUrl: './create-collection-page.component.html',
 })
 export class CreateCollectionPageComponent extends CreateComColPageComponent<Collection> {
   protected frontendURL = '/collections/';
@@ -30,6 +30,14 @@ export class CreateCollectionPageComponent extends CreateComColPageComponent<Col
     protected translate: TranslateService,
     protected requestService: RequestService
   ) {
-    super(collectionDataService, communityDataService, routeService, router, notificationsService, translate, requestService);
+    super(
+      collectionDataService,
+      communityDataService,
+      routeService,
+      router,
+      notificationsService,
+      translate,
+      requestService
+    );
   }
 }

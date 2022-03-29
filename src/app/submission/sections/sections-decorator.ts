@@ -1,4 +1,3 @@
-
 import { SectionsType } from './sections-type';
 
 const submissionSectionsMap = new Map();

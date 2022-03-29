@@ -12,14 +12,17 @@ const QUERY = 'test query';
 
 @Component({
   template: `
-    <ds-configuration-search-page [configuration]="'${CONFIGURATION}'"
-                                  [fixedFilterQuery]="'${QUERY}'"
-                                  #configurationSearchPage>
+    <ds-configuration-search-page
+      [configuration]="'${CONFIGURATION}'"
+      [fixedFilterQuery]="'${QUERY}'"
+      #configurationSearchPage
+    >
     </ds-configuration-search-page>
   `,
 })
 class HostComponent {
-  @ViewChild('configurationSearchPage') configurationSearchPage: ConfigurationSearchPageComponent;
+  @ViewChild('configurationSearchPage')
+  configurationSearchPage: ConfigurationSearchPageComponent;
 }
 
 describe('ConfigurationSearchPageComponent', () => {
@@ -29,14 +32,18 @@ describe('ConfigurationSearchPageComponent', () => {
   let routeService: RouteService;
 
   beforeEach(waitForAsync(() => {
-    configureSearchComponentTestingModule(ConfigurationSearchPageComponent, [HostComponent]);
+    configureSearchComponentTestingModule(ConfigurationSearchPageComponent, [
+      HostComponent,
+    ]);
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(HostComponent);
 
     // Set router url to a dummy value for SearchComponent#ngOnInit
-    spyOnProperty(TestBed.inject(Router), 'url', 'get').and.returnValue('some/url/here');
+    spyOnProperty(TestBed.inject(Router), 'url', 'get').and.returnValue(
+      'some/url/here'
+    );
 
     routeService = TestBed.inject(RouteService);
     routeService.setParameter = createSpy('setParameter');
@@ -51,8 +58,13 @@ describe('ConfigurationSearchPageComponent', () => {
     expect(comp.configuration).toBe(CONFIGURATION);
     expect(comp.fixedFilterQuery).toBe(QUERY);
 
-    expect(routeService.setParameter).toHaveBeenCalledWith('configuration', CONFIGURATION);
-    expect(routeService.setParameter).toHaveBeenCalledWith('fixedFilterQuery', QUERY);
+    expect(routeService.setParameter).toHaveBeenCalledWith(
+      'configuration',
+      CONFIGURATION
+    );
+    expect(routeService.setParameter).toHaveBeenCalledWith(
+      'fixedFilterQuery',
+      QUERY
+    );
   });
-
 });

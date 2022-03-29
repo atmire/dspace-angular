@@ -21,10 +21,7 @@
     "skipDefaultLibCheck": true,
     "pretty": true,
     "target": "es2015",
-    "typeRoots": [
-      "node_modules/@types",
-      "src/typings.d.ts"
-    ],
+    "typeRoots": ["node_modules/@types", "src/typings.d.ts"],
     "lib": [
       "dom",
       "dom.iterable",
@@ -35,10 +32,7 @@
       "es2017",
       "es2018"
     ],
-    "types": [
-      "node",
-      "jasmine"
-    ]
+    "types": ["node", "jasmine"]
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

@@ -1,4 +1,10 @@
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  CanActivate,
+  Router,
+  RouterStateSnapshot,
+  UrlTree,
+} from '@angular/router';
 import { Injectable } from '@angular/core';
 import { isNotEmpty } from '../../shared/empty.util';
 
@@ -8,15 +14,17 @@ import { isNotEmpty } from '../../shared/empty.util';
  */
 @Injectable()
 export class ReloadGuard implements CanActivate {
-  constructor(private router: Router) {
-  }
+  constructor(private router: Router) {}
 
   /**
    * Get the UrlTree of the URL to redirect to
    * @param route
    * @param state
    */
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): UrlTree {
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): UrlTree {
     if (isNotEmpty(route.queryParams.redirect)) {
       return this.router.parseUrl(route.queryParams.redirect);
     } else {

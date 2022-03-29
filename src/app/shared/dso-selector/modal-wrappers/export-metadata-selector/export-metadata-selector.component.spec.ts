@@ -3,9 +3,16 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { DebugElement, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
-import { NgbActiveModal, NgbModal, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbActiveModal,
+  NgbModal,
+  NgbModalModule,
+} from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute, Router } from '@angular/router';
-import { METADATA_EXPORT_SCRIPT_NAME, ScriptDataService } from '../../../../core/data/processes/script-data.service';
+import {
+  METADATA_EXPORT_SCRIPT_NAME,
+  ScriptDataService,
+} from '../../../../core/data/processes/script-data.service';
 import { Collection } from '../../../../core/shared/collection.model';
 import { Community } from '../../../../core/shared/community.model';
 import { Item } from '../../../../core/shared/item.model';
@@ -17,26 +24,26 @@ import { NotificationsServiceStub } from '../../../testing/notifications-service
 import {
   createFailedRemoteDataObject$,
   createSuccessfulRemoteDataObject,
-  createSuccessfulRemoteDataObject$
+  createSuccessfulRemoteDataObject$,
 } from '../../../remote-data.utils';
 import { ExportMetadataSelectorComponent } from './export-metadata-selector.component';
 
 // No way to add entryComponents yet to testbed; alternative implemented; source: https://stackoverflow.com/questions/41689468/how-to-shallow-test-a-component-with-an-entrycomponents
 @NgModule({
-    imports: [NgbModalModule,
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useClass: TranslateLoaderMock
-            }
-        }),
-    ],
-    exports: [],
-    declarations: [ConfirmationModalComponent],
-    providers: []
+  imports: [
+    NgbModalModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useClass: TranslateLoaderMock,
+      },
+    }),
+  ],
+  exports: [],
+  declarations: [ConfirmationModalComponent],
+  providers: [],
 })
-class ModelTestModule {
-}
+class ModelTestModule {}
 
 describe('ExportMetadataSelectorComponent', () => {
   let component: ExportMetadataSelectorComponent;
@@ -52,7 +59,7 @@ describe('ExportMetadataSelectorComponent', () => {
     id: 'fake-id',
     uuid: 'fake-id',
     handle: 'fake/handle',
-    lastModified: '2018'
+    lastModified: '2018',
   });
 
   const mockCollection: Collection = Object.assign(new Collection(), {
@@ -63,10 +70,10 @@ describe('ExportMetadataSelectorComponent', () => {
       'dc.identifier.uri': [
         {
           language: null,
-          value: 'fake/test-collection-1'
-        }
-      ]
-    }
+          value: 'fake/test-collection-1',
+        },
+      ],
+    },
   });
 
   const mockCommunity = Object.assign(new Community(), {
@@ -76,10 +83,10 @@ describe('ExportMetadataSelectorComponent', () => {
       'dc.identifier.uri': [
         {
           language: null,
-          value: 'fake/test-community-1'
-        }
-      ]
-    }
+          value: 'fake/test-community-1',
+        },
+      ],
+    },
   });
 
   const itemRD = createSuccessfulRemoteDataObject(mockItem);
@@ -88,15 +95,17 @@ describe('ExportMetadataSelectorComponent', () => {
   beforeEach(waitForAsync(() => {
     notificationService = new NotificationsServiceStub();
     router = jasmine.createSpyObj('router', {
-      navigateByUrl: jasmine.createSpy('navigateByUrl')
+      navigateByUrl: jasmine.createSpy('navigateByUrl'),
     });
-    scriptService = jasmine.createSpyObj('scriptService',
-      {
-        invoke: createSuccessfulRemoteDataObject$({ processId: '45' })
-      }
-    );
+    scriptService = jasmine.createSpyObj('scriptService', {
+      invoke: createSuccessfulRemoteDataObject$({ processId: '45' }),
+    });
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), RouterTestingModule.withRoutes([]), ModelTestModule],
+      imports: [
+        TranslateModule.forRoot(),
+        RouterTestingModule.withRoutes([]),
+        ModelTestModule,
+      ],
       declarations: [ExportMetadataSelectorComponent],
       providers: [
         { provide: NgbActiveModal, useValue: modalStub },
@@ -111,16 +120,16 @@ describe('ExportMetadataSelectorComponent', () => {
                   dso: itemRD,
                 },
               },
-            }
+            },
           },
         },
         {
-          provide: Router, useValue: router
-        }
+          provide: Router,
+          useValue: router,
+        },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
-
   }));
 
   beforeEach(() => {
@@ -161,9 +170,16 @@ describe('ExportMetadataSelectorComponent', () => {
     });
     it('should invoke the metadata-export script with option -i uuid', () => {
       const parameterValues: ProcessParameter[] = [
-        Object.assign(new ProcessParameter(), { name: '-i', value: mockCollection.uuid }),
+        Object.assign(new ProcessParameter(), {
+          name: '-i',
+          value: mockCollection.uuid,
+        }),
       ];
-      expect(scriptService.invoke).toHaveBeenCalledWith(METADATA_EXPORT_SCRIPT_NAME, parameterValues, []);
+      expect(scriptService.invoke).toHaveBeenCalledWith(
+        METADATA_EXPORT_SCRIPT_NAME,
+        parameterValues,
+        []
+      );
     });
     it('success notification is shown', () => {
       expect(scriptRequestSucceeded).toBeTrue();
@@ -185,9 +201,16 @@ describe('ExportMetadataSelectorComponent', () => {
     });
     it('should invoke the metadata-export script with option -i uuid', () => {
       const parameterValues: ProcessParameter[] = [
-        Object.assign(new ProcessParameter(), { name: '-i', value: mockCommunity.uuid }),
+        Object.assign(new ProcessParameter(), {
+          name: '-i',
+          value: mockCommunity.uuid,
+        }),
       ];
-      expect(scriptService.invoke).toHaveBeenCalledWith(METADATA_EXPORT_SCRIPT_NAME, parameterValues, []);
+      expect(scriptService.invoke).toHaveBeenCalledWith(
+        METADATA_EXPORT_SCRIPT_NAME,
+        parameterValues,
+        []
+      );
     });
     it('success notification is shown', () => {
       expect(scriptRequestSucceeded).toBeTrue();
@@ -203,7 +226,9 @@ describe('ExportMetadataSelectorComponent', () => {
     beforeEach((done) => {
       spyOn((component as any).modalService, 'open').and.returnValue(modalRef);
       jasmine.getEnv().allowRespy(true);
-      spyOn(scriptService, 'invoke').and.returnValue(createFailedRemoteDataObject$('Error', 500));
+      spyOn(scriptService, 'invoke').and.returnValue(
+        createFailedRemoteDataObject$('Error', 500)
+      );
       component.navigate(mockCommunity).subscribe((succeeded: boolean) => {
         scriptRequestSucceeded = succeeded;
         done();
@@ -214,5 +239,4 @@ describe('ExportMetadataSelectorComponent', () => {
       expect(notificationService.error).toHaveBeenCalled();
     });
   });
-
 });

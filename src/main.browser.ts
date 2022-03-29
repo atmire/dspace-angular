@@ -14,9 +14,9 @@ import { environment } from './environments/environment';
 import { AppConfig } from './config/app-config.interface';
 import { extendEnvironmentWithAppConfig } from './config/config.util';
 
-const bootstrap = () => platformBrowserDynamic()
-  .bootstrapModule(BrowserAppModule, {
-    preserveWhitespaces: true
+const bootstrap = () =>
+  platformBrowserDynamic().bootstrapModule(BrowserAppModule, {
+    preserveWhitespaces: true,
   });
 
 const main = () => {
@@ -24,8 +24,8 @@ const main = () => {
   // https://github.com/typekit/webfontloader#configuration
   loadWebFont({
     google: {
-      families: ['Droid Sans']
-    }
+      families: ['Droid Sans'],
+    },
   });
 
   if (environment.production) {
@@ -47,7 +47,11 @@ const main = () => {
 };
 
 // support async tag or hmr
-if (document.readyState === 'complete' && hasValue(environment.universal) && !environment.universal.preboot) {
+if (
+  document.readyState === 'complete' &&
+  hasValue(environment.universal) &&
+  !environment.universal.preboot
+) {
   main();
 } else {
   document.addEventListener('DOMContentLoaded', main);

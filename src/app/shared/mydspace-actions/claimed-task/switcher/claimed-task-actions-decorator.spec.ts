@@ -1,19 +1,19 @@
-  /* eslint-disable max-classes-per-file */
-import { getComponentByWorkflowTaskOption, rendersWorkflowTaskOption } from './claimed-task-actions-decorator';
+/* eslint-disable max-classes-per-file */
+import {
+  getComponentByWorkflowTaskOption,
+  rendersWorkflowTaskOption,
+} from './claimed-task-actions-decorator';
 
 describe('ClaimedTaskActions decorator function', () => {
   const option1 = 'test_option_1';
   const option2 = 'test_option_2';
   const option3 = 'test_option_3';
 
-  class Test1Action {
-  }
+  class Test1Action {}
 
-  class Test2Action {
-  }
+  class Test2Action {}
 
-  class Test3Action {
-  }
+  class Test3Action {}
 
   /* eslint-enable max-classes-per-file */
 
@@ -23,7 +23,7 @@ describe('ClaimedTaskActions decorator function', () => {
     rendersWorkflowTaskOption(option3)(Test3Action);
   });
 
-  describe('If there\'s an exact match', () => {
+  describe("If there's an exact match", () => {
     it('should return the matching class', () => {
       const component = getComponentByWorkflowTaskOption(option1);
       expect(component).toEqual(Test1Action);
@@ -36,7 +36,7 @@ describe('ClaimedTaskActions decorator function', () => {
     });
   });
 
-  describe('If there\'s no match', () => {
+  describe("If there's no match", () => {
     it('should return unidentified', () => {
       const component = getComponentByWorkflowTaskOption('non-existing-option');
       expect(component).toBeUndefined();

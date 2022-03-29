@@ -14,7 +14,10 @@ import { NotificationsServiceStub } from '../../../testing/notifications-service
 import { RequestService } from '../../../../core/data/request.service';
 import { getTestScheduler } from 'jasmine-marbles';
 import { ComColDataService } from '../../../../core/data/comcol-data.service';
-import { createFailedRemoteDataObject$, createNoContentRemoteDataObject$ } from '../../../remote-data.utils';
+import {
+  createFailedRemoteDataObject$,
+  createNoContentRemoteDataObject$,
+} from '../../../remote-data.utils';
 
 describe('DeleteComColPageComponent', () => {
   let comp: DeleteComColPageComponent<any>;
@@ -40,68 +43,79 @@ describe('DeleteComColPageComponent', () => {
   function initializeVars() {
     community = Object.assign(new Community(), {
       uuid: 'a20da287-e174-466a-9926-f66b9300d347',
-      metadata: [{
-        key: 'dc.title',
-        value: 'test community'
-      }]
+      metadata: [
+        {
+          key: 'dc.title',
+          value: 'test community',
+        },
+      ],
     });
 
     newCommunity = Object.assign(new Community(), {
       uuid: '1ff59938-a69a-4e62-b9a4-718569c55d48',
-      metadata: [{
-        key: 'dc.title',
-        value: 'new community'
-      }]
+      metadata: [
+        {
+          key: 'dc.title',
+          value: 'new community',
+        },
+      ],
     });
 
     parentCommunity = Object.assign(new Community(), {
       uuid: 'a20da287-e174-466a-9926-f66as300d399',
       id: 'a20da287-e174-466a-9926-f66as300d399',
-      metadata: [{
-        key: 'dc.title',
-        value: 'parent community'
-      }]
+      metadata: [
+        {
+          key: 'dc.title',
+          value: 'parent community',
+        },
+      ],
     });
 
-    dsoDataService = jasmine.createSpyObj(
-      'dsoDataService',
-      {
-        delete: createNoContentRemoteDataObject$(),
-        findByHref: jasmine.createSpy('findByHref'),
-        refreshCache: jasmine.createSpy('refreshCache')
-      });
+    dsoDataService = jasmine.createSpyObj('dsoDataService', {
+      delete: createNoContentRemoteDataObject$(),
+      findByHref: jasmine.createSpy('findByHref'),
+      refreshCache: jasmine.createSpy('refreshCache'),
+    });
 
     routerStub = {
-      navigate: (commands) => commands
+      navigate: (commands) => commands,
     };
 
     routeStub = {
-      data: observableOf(community)
+      data: observableOf(community),
     };
 
     requestServiceStub = jasmine.createSpyObj('RequestService', {
-      removeByHrefSubstring: jasmine.createSpy('removeByHrefSubstring')
+      removeByHrefSubstring: jasmine.createSpy('removeByHrefSubstring'),
     });
 
     translateServiceStub = jasmine.createSpyObj('TranslateService', {
-      instant: jasmine.createSpy('instant')
+      instant: jasmine.createSpy('instant'),
     });
-
   }
 
   beforeEach(waitForAsync(() => {
     initializeVars();
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), SharedModule, CommonModule, RouterTestingModule],
+      imports: [
+        TranslateModule.forRoot(),
+        SharedModule,
+        CommonModule,
+        RouterTestingModule,
+      ],
       providers: [
         { provide: ComColDataService, useValue: dsoDataService },
         { provide: Router, useValue: routerStub },
         { provide: ActivatedRoute, useValue: routeStub },
-        { provide: NotificationsService, useValue: new NotificationsServiceStub() },
+        {
+          provide: NotificationsService,
+          useValue: new NotificationsServiceStub(),
+        },
         { provide: TranslateService, useValue: translateServiceStub },
-        { provide: RequestService, useValue: requestServiceStub }
+        { provide: RequestService, useValue: requestServiceStub },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -122,38 +136,43 @@ describe('DeleteComColPageComponent', () => {
       data1 = {
         dso: Object.assign(new Community(), {
           uuid: validUUID,
-          metadata: [{
-            key: 'dc.title',
-            value: 'test'
-          }]
+          metadata: [
+            {
+              key: 'dc.title',
+              value: 'test',
+            },
+          ],
         }),
-        _links: {}
+        _links: {},
       };
 
       data2 = {
         dso: Object.assign(new Community(), {
           uuid: invalidUUID,
-          metadata: [{
-            key: 'dc.title',
-            value: 'test'
-          }]
+          metadata: [
+            {
+              key: 'dc.title',
+              value: 'test',
+            },
+          ],
         }),
         _links: {},
         uploader: {
           options: {
-            url: ''
+            url: '',
           },
           queue: [],
           /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
-          uploadAll: () => {
-          }
+          uploadAll: () => {},
           /* eslint-enable no-empty, @typescript-eslint/no-empty-function */
-        }
+        },
       };
     });
 
     it('should show an error notification on failure', () => {
-      (dsoDataService.delete as any).and.returnValue(createFailedRemoteDataObject$('Error', 500));
+      (dsoDataService.delete as any).and.returnValue(
+        createFailedRemoteDataObject$('Error', 500)
+      );
       spyOn(router, 'navigate');
       scheduler.schedule(() => comp.onConfirm(data2));
       scheduler.flush();
@@ -185,10 +204,12 @@ describe('DeleteComColPageComponent', () => {
     beforeEach(() => {
       data1 = Object.assign(new Community(), {
         uuid: validUUID,
-        metadata: [{
-          key: 'dc.title',
-          value: 'test'
-        }]
+        metadata: [
+          {
+            key: 'dc.title',
+            value: 'test',
+          },
+        ],
       });
     });
 

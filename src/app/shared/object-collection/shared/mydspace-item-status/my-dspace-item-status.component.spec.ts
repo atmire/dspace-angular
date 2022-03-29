@@ -19,9 +19,13 @@ let fixture: ComponentFixture<MyDSpaceItemStatusComponent>;
 let mockResultObject: PoolTask;
 
 const rdSumbitter = createSuccessfulRemoteDataObject(EPersonMock);
-const workflowitem = Object.assign(new WorkflowItem(), { submitter: observableOf(rdSumbitter) });
+const workflowitem = Object.assign(new WorkflowItem(), {
+  submitter: observableOf(rdSumbitter),
+});
 const rdWorkflowitem = createSuccessfulRemoteDataObject(workflowitem);
-mockResultObject = Object.assign(new PoolTask(), { workflowitem: observableOf(rdWorkflowitem) });
+mockResultObject = Object.assign(new PoolTask(), {
+  workflowitem: observableOf(rdWorkflowitem),
+});
 
 describe('MyDSpaceItemStatusComponent', () => {
   beforeEach(waitForAsync(() => {
@@ -30,15 +34,17 @@ describe('MyDSpaceItemStatusComponent', () => {
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
-            useClass: TranslateLoaderMock
-          }
-        })
+            useClass: TranslateLoaderMock,
+          },
+        }),
       ],
       declarations: [MyDSpaceItemStatusComponent],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(MyDSpaceItemStatusComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(MyDSpaceItemStatusComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -61,7 +67,9 @@ describe('MyDSpaceItemStatusComponent', () => {
   it('should init badge content and class', () => {
     component.status = MyDspaceItemStatusType.WAITING_CONTROLLER;
     fixture.detectChanges();
-    expect(component.badgeContent).toBe(MyDspaceItemStatusType.WAITING_CONTROLLER);
+    expect(component.badgeContent).toBe(
+      MyDspaceItemStatusType.WAITING_CONTROLLER
+    );
     expect(component.badgeClass).toBe('text-light badge badge-info');
   });
 

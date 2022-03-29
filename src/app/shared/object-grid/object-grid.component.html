@@ -10,15 +10,34 @@
   (pageSizeChange)="onPageSizeChange($event)"
   (sortDirectionChange)="onSortDirectionChange($event)"
   (sortFieldChange)="onSortFieldChange($event)"
-  (paginationChange)="onPaginationChange($event)">
-    <div class="card-columns row" *ngIf="objects?.hasSucceeded">
-      <div class="card-column col col-sm-6 col-lg-4" *ngFor="let column of (columns$ | async)" @fadeIn>
-        <div class="card-element" *ngFor="let object of column" data-test="grid-object">
-          <ds-listable-object-component-loader [object]="object" [viewMode]="viewMode" [context]="context" [linkType]="linkType"></ds-listable-object-component-loader>
-        </div>
+  (paginationChange)="onPaginationChange($event)"
+>
+  <div class="card-columns row" *ngIf="objects?.hasSucceeded">
+    <div
+      class="card-column col col-sm-6 col-lg-4"
+      *ngFor="let column of columns$ | async"
+      @fadeIn
+    >
+      <div
+        class="card-element"
+        *ngFor="let object of column"
+        data-test="grid-object"
+      >
+        <ds-listable-object-component-loader
+          [object]="object"
+          [viewMode]="viewMode"
+          [context]="context"
+          [linkType]="linkType"
+        ></ds-listable-object-component-loader>
       </div>
     </div>
-  <ds-error *ngIf="objects.hasFailed" message="{{'error.objects' | translate}}"></ds-error>
-  <ds-loading *ngIf="objects.isLoading" message="{{'loading.objects' | translate}}"></ds-loading>
+  </div>
+  <ds-error
+    *ngIf="objects.hasFailed"
+    message="{{ 'error.objects' | translate }}"
+  ></ds-error>
+  <ds-loading
+    *ngIf="objects.isLoading"
+    message="{{ 'loading.objects' | translate }}"
+  ></ds-loading>
 </ds-pagination>
-

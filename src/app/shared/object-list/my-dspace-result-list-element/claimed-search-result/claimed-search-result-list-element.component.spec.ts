@@ -1,5 +1,11 @@
 import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+  waitForAsync,
+} from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { of as observableOf } from 'rxjs';
@@ -31,33 +37,37 @@ const item = Object.assign(new Item(), {
     'dc.title': [
       {
         language: 'en_US',
-        value: 'This is just another title'
-      }
+        value: 'This is just another title',
+      },
     ],
     'dc.type': [
       {
         language: null,
-        value: 'Article'
-      }
+        value: 'Article',
+      },
     ],
     'dc.contributor.author': [
       {
         language: 'en_US',
-        value: 'Smith, Donald'
-      }
+        value: 'Smith, Donald',
+      },
     ],
     'dc.date.issued': [
       {
         language: null,
-        value: '2015-06-26'
-      }
-    ]
-  }
+        value: '2015-06-26',
+      },
+    ],
+  },
 });
 const rdItem = createSuccessfulRemoteDataObject(item);
-const workflowitem = Object.assign(new WorkflowItem(), { item: observableOf(rdItem) });
+const workflowitem = Object.assign(new WorkflowItem(), {
+  item: observableOf(rdItem),
+});
 const rdWorkflowitem = createSuccessfulRemoteDataObject(workflowitem);
-mockResultObject.indexableObject = Object.assign(new ClaimedTask(), { workflowitem: observableOf(rdWorkflowitem) });
+mockResultObject.indexableObject = Object.assign(new ClaimedTask(), {
+  workflowitem: observableOf(rdWorkflowitem),
+});
 const linkService = getMockLinkService();
 
 describe('ClaimedSearchResultListElementComponent', () => {
@@ -68,12 +78,14 @@ describe('ClaimedSearchResultListElementComponent', () => {
       providers: [
         { provide: TruncatableService, useValue: {} },
         { provide: LinkService, useValue: linkService },
-        { provide: DSONameService, useClass: DSONameServiceMock }
+        { provide: DSONameService, useClass: DSONameServiceMock },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(ClaimedSearchResultListElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(ClaimedSearchResultListElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -104,13 +116,16 @@ describe('ClaimedSearchResultListElementComponent', () => {
 
   it('should forward claimed-task-actions processComplete event to reloadObject event emitter', fakeAsync(() => {
     spyOn(component.reloadedObject, 'emit').and.callThrough();
-    const actionPayload: any = { reloadedObject: {}};
+    const actionPayload: any = { reloadedObject: {} };
 
-    const actionsComponent = fixture.debugElement.query(By.css('ds-claimed-task-actions'));
+    const actionsComponent = fixture.debugElement.query(
+      By.css('ds-claimed-task-actions')
+    );
     actionsComponent.triggerEventHandler('processCompleted', actionPayload);
     tick();
 
-    expect(component.reloadedObject.emit).toHaveBeenCalledWith(actionPayload.reloadedObject);
-
+    expect(component.reloadedObject.emit).toHaveBeenCalledWith(
+      actionPayload.reloadedObject
+    );
   }));
 });

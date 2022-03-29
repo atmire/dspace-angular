@@ -9,11 +9,10 @@ import { hasValue } from '../../empty.util';
 @Component({
   selector: 'ds-starts-with-text',
   styleUrls: ['./starts-with-text.component.scss'],
-  templateUrl: './starts-with-text.component.html'
+  templateUrl: './starts-with-text.component.html',
 })
 @renderStartsWithFor(StartsWithType.text)
 export class StartsWithTextComponent extends StartsWithAbstractComponent {
-
   /**
    * Get startsWith as text;
    */
@@ -45,5 +44,4 @@ export class StartsWithTextComponent extends StartsWithAbstractComponent {
     }
     return option === this.startsWith;
   }
-
 }

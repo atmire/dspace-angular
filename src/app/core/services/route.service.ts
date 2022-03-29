@@ -1,12 +1,24 @@
 import { distinctUntilChanged, filter, map, take } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Params, Router, RouterStateSnapshot, } from '@angular/router';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  Params,
+  Router,
+  RouterStateSnapshot,
+} from '@angular/router';
 
 import { combineLatest, Observable } from 'rxjs';
 import { createSelector, MemoizedSelector, select, Store } from '@ngrx/store';
 import { isEqual } from 'lodash';
 
-import { AddParameterAction, SetParameterAction, SetParametersAction, SetQueryParameterAction, SetQueryParametersAction } from './route.actions';
+import {
+  AddParameterAction,
+  SetParameterAction,
+  SetParametersAction,
+  SetQueryParameterAction,
+  SetQueryParametersAction,
+} from './route.actions';
 import { CoreState } from '../core.reducers';
 import { coreSelector } from '../core.selectors';
 import { hasValue } from '../../shared/empty.util';
@@ -18,7 +30,8 @@ import { AddUrlToHistoryAction } from '../history/history.actions';
  */
 export const routeParametersSelector = createSelector(
   coreSelector,
-  (state: CoreState) => hasValue(state) && hasValue(state.route) ? state.route.params : undefined
+  (state: CoreState) =>
+    hasValue(state) && hasValue(state.route) ? state.route.params : undefined
 );
 
 /**
@@ -26,27 +39,35 @@ export const routeParametersSelector = createSelector(
  */
 export const queryParametersSelector = createSelector(
   coreSelector,
-  (state: CoreState) => hasValue(state) && hasValue(state.route) ? state.route.queryParams : undefined
+  (state: CoreState) =>
+    hasValue(state) && hasValue(state.route)
+      ? state.route.queryParams
+      : undefined
 );
 
 /**
  * Selector to select a specific route parameter from the store
  * @param key The key of the parameter
  */
-export const routeParameterSelector = (key: string) => parameterSelector(key, routeParametersSelector);
+export const routeParameterSelector = (key: string) =>
+  parameterSelector(key, routeParametersSelector);
 
 /**
  * Selector to select a specific query parameter from the store
  * @param key The key of the parameter
  */
-export const queryParameterSelector = (key: string) => parameterSelector(key, queryParametersSelector);
+export const queryParameterSelector = (key: string) =>
+  parameterSelector(key, queryParametersSelector);
 
 /**
  * Function to select a specific parameter from the store
  * @param key The key to look for
  * @param paramsSelector The selector that selects the parameters to search in
  */
-export function parameterSelector(key: string, paramsSelector: (state: CoreState) => Params): MemoizedSelector<CoreState, string> {
+export function parameterSelector(
+  key: string,
+  paramsSelector: (state: CoreState) => Params
+): MemoizedSelector<CoreState, string> {
   return createSelector(paramsSelector, (state: Params) => {
     if (hasValue(state)) {
       return state[key];
@@ -60,10 +81,14 @@ export function parameterSelector(key: string, paramsSelector: (state: CoreState
  * Service to keep track of the current query parameters
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RouteService {
-  constructor(private route: ActivatedRoute, private router: Router, private store: Store<CoreState>) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private store: Store<CoreState>
+  ) {
     this.saveRouting();
   }
 
@@ -105,7 +130,10 @@ export class RouteService {
    * @param paramName The name of the parameter to look for
    * @param paramValue The value of the parameter to look for
    */
-  hasQueryParamWithValue(paramName: string, paramValue: string): Observable<boolean> {
+  hasQueryParamWithValue(
+    paramName: string,
+    paramValue: string
+  ): Observable<boolean> {
     return this.getQueryParamMap().pipe(
       map((params) => params.getAll(paramName).indexOf(paramValue) > -1),
       distinctUntilChanged()
@@ -117,7 +145,10 @@ export class RouteService {
   }
 
   getRouteDataValue(datafield: string): Observable<any> {
-    return this.route.data.pipe(map((data) => data[datafield]), distinctUntilChanged());
+    return this.route.data.pipe(
+      map((data) => data[datafield]),
+      distinctUntilChanged()
+    );
   }
 
   /**
@@ -135,7 +166,7 @@ export class RouteService {
           });
         return params;
       }),
-      distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b)),
+      distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b))
     );
   }
 
@@ -149,7 +180,8 @@ export class RouteService {
         } else {
           return paramMap;
         }
-      }));
+      })
+    );
   }
 
   public saveRouting(): void {
@@ -218,11 +250,9 @@ export class RouteService {
   public setCurrentRouteInfo() {
     combineLatest(this.getRouteParams(), this.route.queryParams)
       .pipe(take(1))
-      .subscribe(
-        ([params, queryParams]: [Params, Params]) => {
-          this.store.dispatch(new SetParametersAction(params));
-          this.store.dispatch(new SetQueryParametersAction(queryParams));
-        }
-      );
+      .subscribe(([params, queryParams]: [Params, Params]) => {
+        this.store.dispatch(new SetParametersAction(params));
+        this.store.dispatch(new SetQueryParametersAction(queryParams));
+      });
   }
 }

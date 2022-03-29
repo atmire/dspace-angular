@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { startWith, take } from 'rxjs/operators';
 import { of, Observable } from 'rxjs';
 import { RemoteData } from '../../../core/data/remote-data';
@@ -15,10 +22,11 @@ import { DSpaceObject } from '../../../core/shared/dspace-object.model';
  */
 @Component({
   selector: 'ds-object-select-abstract',
-  template: ''
+  template: '',
 })
-export abstract class ObjectSelectComponent<TDomain> implements OnInit, OnDestroy {
-
+export abstract class ObjectSelectComponent<TDomain>
+  implements OnInit, OnDestroy
+{
   /**
    * A unique key used for the object select service
    */
@@ -88,9 +96,10 @@ export abstract class ObjectSelectComponent<TDomain> implements OnInit, OnDestro
    */
   selectedIds$: Observable<string[]>;
 
-  constructor(protected objectSelectService: ObjectSelectService,
-              protected authorizationService: AuthorizationDataService) {
-  }
+  constructor(
+    protected objectSelectService: ObjectSelectService,
+    protected authorizationService: AuthorizationDataService
+  ) {}
 
   ngOnInit(): void {
     this.selectedIds$ = this.objectSelectService.getAllSelected(this.key);
@@ -124,7 +133,9 @@ export abstract class ObjectSelectComponent<TDomain> implements OnInit, OnDestro
     if (!this.featureId) {
       return of(true);
     }
-    return this.authorizationService.isAuthorized(this.featureId, item.self).pipe(startWith(false));
+    return this.authorizationService
+      .isAuthorized(this.featureId, item.self)
+      .pipe(startWith(false));
   }
 
   /**
@@ -132,9 +143,7 @@ export abstract class ObjectSelectComponent<TDomain> implements OnInit, OnDestro
    * Sends the selected UUIDs to the parent component
    */
   confirmSelected() {
-    this.selectedIds$.pipe(
-      take(1)
-    ).subscribe((ids: string[]) => {
+    this.selectedIds$.pipe(take(1)).subscribe((ids: string[]) => {
       this.confirm.emit(ids);
       this.objectSelectService.reset(this.key);
     });
@@ -146,5 +155,4 @@ export abstract class ObjectSelectComponent<TDomain> implements OnInit, OnDestro
   onCancel() {
     this.cancel.emit();
   }
-
 }

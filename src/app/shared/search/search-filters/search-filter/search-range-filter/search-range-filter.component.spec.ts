@@ -5,7 +5,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {
   FILTER_CONFIG,
   IN_PLACE_SEARCH,
-  SearchFilterService
+  SearchFilterService,
 } from '../../../../../core/shared/search/search-filter.service';
 import { SearchFilterConfig } from '../../../models/search-filter-config.model';
 import { FilterType } from '../../../models/filter-type.model';
@@ -35,15 +35,18 @@ describe('SearchRangeFilterComponent', () => {
   const value1 = '2000 - 2012';
   const value2 = '1992 - 2000';
   const value3 = '1990 - 1992';
-  const mockFilterConfig: SearchFilterConfig = Object.assign(new SearchFilterConfig(), {
-    name: filterName1,
-    filterType: FilterType.range,
-    hasFacets: false,
-    isOpenByDefault: false,
-    pageSize: 2,
-    minValue: 200,
-    maxValue: 3000,
-  });
+  const mockFilterConfig: SearchFilterConfig = Object.assign(
+    new SearchFilterConfig(),
+    {
+      name: filterName1,
+      filterType: FilterType.range,
+      hasFacets: false,
+      isOpenByDefault: false,
+      pageSize: 2,
+      minValue: 200,
+      maxValue: 3000,
+    }
+  );
   const values: FacetValue[] = [
     {
       label: value1,
@@ -51,37 +54,39 @@ describe('SearchRangeFilterComponent', () => {
       count: 52,
       _links: {
         self: {
-          href: ''
+          href: '',
         },
         search: {
-          href: ''
-        }
-      }
-    }, {
+          href: '',
+        },
+      },
+    },
+    {
       label: value2,
       value: value2,
       count: 20,
       _links: {
         self: {
-          href: ''
+          href: '',
         },
         search: {
-          href: ''
-        }
-      }
-    }, {
+          href: '',
+        },
+      },
+    },
+    {
       label: value3,
       value: value3,
       count: 5,
       _links: {
         self: {
-          href: ''
+          href: '',
         },
         search: {
-          href: ''
-        }
-      }
-    }
+          href: '',
+        },
+      },
+    },
   ];
 
   const searchLink = '/search';
@@ -91,7 +96,9 @@ describe('SearchRangeFilterComponent', () => {
   let router;
   const page = observableOf(0);
 
-  const mockValues = createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), values));
+  const mockValues = createSuccessfulRemoteDataObject$(
+    buildPaginatedList(new PageInfo(), values)
+  );
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot(), NoopAnimationsModule, FormsModule],
@@ -100,28 +107,39 @@ describe('SearchRangeFilterComponent', () => {
         { provide: SearchService, useValue: new SearchServiceStub(searchLink) },
         { provide: Router, useValue: new RouterStub() },
         { provide: FILTER_CONFIG, useValue: mockFilterConfig },
-        { provide: RemoteDataBuildService, useValue: { aggregate: () => observableOf({}) } },
-        { provide: RouteService, useValue: { getQueryParameterValue: () => observableOf({}) } },
-        { provide: SEARCH_CONFIG_SERVICE, useValue: new SearchConfigurationServiceStub() },
+        {
+          provide: RemoteDataBuildService,
+          useValue: { aggregate: () => observableOf({}) },
+        },
+        {
+          provide: RouteService,
+          useValue: { getQueryParameterValue: () => observableOf({}) },
+        },
+        {
+          provide: SEARCH_CONFIG_SERVICE,
+          useValue: new SearchConfigurationServiceStub(),
+        },
         { provide: IN_PLACE_SEARCH, useValue: false },
         {
-          provide: SearchFilterService, useValue: {
+          provide: SearchFilterService,
+          useValue: {
             getSelectedValuesForFilter: () => selectedValues,
-            isFilterActiveWithValue: (paramName: string, filterValue: string) => true,
+            isFilterActiveWithValue: (paramName: string, filterValue: string) =>
+              true,
             getPage: (paramName: string) => page,
             /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
-            incrementPage: (filterName: string) => {
-            },
-            resetPage: (filterName: string) => {
-            }
+            incrementPage: (filterName: string) => {},
+            resetPage: (filterName: string) => {},
             /* eslint-enable no-empty, @typescript-eslint/no-empty-function */
-          }
-        }
+          },
+        },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(SearchRangeFilterComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(SearchRangeFilterComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -147,9 +165,9 @@ describe('SearchRangeFilterComponent', () => {
       expect(router.navigate).toHaveBeenCalledWith(searchUrl.split('/'), {
         queryParams: {
           [mockFilterConfig.paramName + minSuffix]: [1900],
-          [mockFilterConfig.paramName + maxSuffix]: [1950]
+          [mockFilterConfig.paramName + maxSuffix]: [1950],
         },
-        queryParamsHandling: 'merge'
+        queryParamsHandling: 'merge',
       });
     });
   });

@@ -22,10 +22,11 @@ import { followLink } from '../../../utils/follow-link-config.model';
   styleUrls: ['../search-result-detail-element.component.scss'],
   templateUrl: './workflow-item-search-result-detail-element.component.html',
 })
-
 @listableObjectComponent(WorkflowItemSearchResult, ViewMode.DetailedListElement)
-export class WorkflowItemSearchResultDetailElementComponent extends SearchResultDetailElementComponent<WorkflowItemSearchResult, WorkflowItem> {
-
+export class WorkflowItemSearchResultDetailElementComponent extends SearchResultDetailElementComponent<
+  WorkflowItemSearchResult,
+  WorkflowItem
+> {
   /**
    * The item object that belonging to the result object
    */
@@ -36,9 +37,7 @@ export class WorkflowItemSearchResultDetailElementComponent extends SearchResult
    */
   public status = MyDspaceItemStatusType.WORKFLOW;
 
-  constructor(
-    protected linkService: LinkService
-  ) {
+  constructor(protected linkService: LinkService) {
     super();
   }
 
@@ -55,11 +54,15 @@ export class WorkflowItemSearchResultDetailElementComponent extends SearchResult
    * Retrieve item from result object
    */
   initItem(item$: Observable<RemoteData<Item>>) {
-    item$.pipe(
-      find((rd: RemoteData<Item>) => rd.hasSucceeded && isNotUndefined(rd.payload))
-    ).subscribe((rd: RemoteData<Item>) => {
-      this.item = rd.payload;
-    });
+    item$
+      .pipe(
+        find(
+          (rd: RemoteData<Item>) =>
+            rd.hasSucceeded && isNotUndefined(rd.payload)
+        )
+      )
+      .subscribe((rd: RemoteData<Item>) => {
+        this.item = rd.payload;
+      });
   }
-
 }

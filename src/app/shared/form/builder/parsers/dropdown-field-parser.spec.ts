@@ -11,13 +11,13 @@ describe('DropdownFieldParser test suite', () => {
   const parserOptions: ParserOptions = {
     readOnly: false,
     submissionScope: 'testScopeUUID',
-    collectionUUID: null
+    collectionUUID: null,
   };
 
   beforeEach(() => {
     field = {
       input: {
-        type: 'dropdown'
+        type: 'dropdown',
       },
       label: 'Type',
       mandatory: 'false',
@@ -27,22 +27,31 @@ describe('DropdownFieldParser test suite', () => {
         {
           metadata: 'type',
           controlledVocabulary: 'common_types_dataset',
-          closed: false
-        }
+          closed: false,
+        },
       ],
-      languageCodes: []
+      languageCodes: [],
     } as FormFieldModel;
-
   });
 
   it('should init parser properly', () => {
-    const parser = new DropdownFieldParser(submissionId, field, initFormValues, parserOptions);
+    const parser = new DropdownFieldParser(
+      submissionId,
+      field,
+      initFormValues,
+      parserOptions
+    );
 
     expect(parser instanceof DropdownFieldParser).toBe(true);
   });
 
   it('should return a DynamicScrollableDropdownModel object when repeatable option is false', () => {
-    const parser = new DropdownFieldParser(submissionId, field, initFormValues, parserOptions);
+    const parser = new DropdownFieldParser(
+      submissionId,
+      field,
+      initFormValues,
+      parserOptions
+    );
 
     const fieldModel = parser.parse();
 
@@ -51,10 +60,13 @@ describe('DropdownFieldParser test suite', () => {
 
   it('should throw when authority is not passed', () => {
     field.selectableMetadata[0].controlledVocabulary = null;
-    const parser = new DropdownFieldParser(submissionId, field, initFormValues, parserOptions);
+    const parser = new DropdownFieldParser(
+      submissionId,
+      field,
+      initFormValues,
+      parserOptions
+    );
 
-    expect(() => parser.parse())
-      .toThrow();
+    expect(() => parser.parse()).toThrow();
   });
-
 });

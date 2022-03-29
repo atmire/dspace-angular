@@ -7,7 +7,10 @@ import { VersionResolver } from './version-page/version.resolver';
 import { DSOBreadcrumbsService } from '../core/breadcrumbs/dso-breadcrumbs.service';
 import { LinkService } from '../core/cache/builders/link.service';
 import { UploadBitstreamComponent } from './bitstreams/upload/upload-bitstream.component';
-import { ITEM_EDIT_PATH, UPLOAD_BITSTREAM_PATH } from './item-page-routing-paths';
+import {
+  ITEM_EDIT_PATH,
+  UPLOAD_BITSTREAM_PATH,
+} from './item-page-routing-paths';
 import { ItemPageAdministratorGuard } from './item-page-administrator.guard';
 import { MenuItemType } from '../shared/menu/initial-menus-state';
 import { LinkMenuItemModel } from '../shared/menu/menu-item/models/link.model';
@@ -24,7 +27,7 @@ import { REQUEST_COPY_MODULE_PATH } from '../app-routing-paths';
         path: ':id',
         resolve: {
           dso: ItemPageResolver,
-          breadcrumb: ItemBreadcrumbResolver
+          breadcrumb: ItemBreadcrumbResolver,
         },
         runGuardsAndResolvers: 'always',
         children: [
@@ -39,31 +42,35 @@ import { REQUEST_COPY_MODULE_PATH } from '../app-routing-paths';
           },
           {
             path: ITEM_EDIT_PATH,
-            loadChildren: () => import('./edit-item-page/edit-item-page.module')
-              .then((m) => m.EditItemPageModule),
+            loadChildren: () =>
+              import('./edit-item-page/edit-item-page.module').then(
+                (m) => m.EditItemPageModule
+              ),
           },
           {
             path: UPLOAD_BITSTREAM_PATH,
             component: UploadBitstreamComponent,
-            canActivate: [AuthenticatedGuard]
+            canActivate: [AuthenticatedGuard],
           },
           {
             path: REQUEST_COPY_MODULE_PATH,
             component: BitstreamRequestACopyPageComponent,
-          }
+          },
         ],
         data: {
           menu: {
-            public: [{
-              id: 'statistics_item_:id',
-              active: true,
-              visible: true,
-              model: {
-                type: MenuItemType.LINK,
-                text: 'menu.section.statistics',
-                link: 'statistics/items/:id/',
-              } as LinkMenuItemModel,
-            }],
+            public: [
+              {
+                id: 'statistics_item_:id',
+                active: true,
+                visible: true,
+                model: {
+                  type: MenuItemType.LINK,
+                  text: 'menu.section.statistics',
+                  link: 'statistics/items/:id/',
+                } as LinkMenuItemModel,
+              },
+            ],
           },
         },
       },
@@ -76,10 +83,10 @@ import { REQUEST_COPY_MODULE_PATH } from '../app-routing-paths';
             resolve: {
               dso: VersionResolver,
             },
-          }
+          },
         ],
-      }
-    ])
+      },
+    ]),
   ],
   providers: [
     ItemPageResolver,
@@ -88,9 +95,6 @@ import { REQUEST_COPY_MODULE_PATH } from '../app-routing-paths';
     LinkService,
     ItemPageAdministratorGuard,
     VersionResolver,
-  ]
-
+  ],
 })
-export class ItemPageRoutingModule {
-
-}
+export class ItemPageRoutingModule {}

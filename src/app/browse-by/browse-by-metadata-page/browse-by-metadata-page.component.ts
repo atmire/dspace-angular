@@ -1,9 +1,16 @@
-import { combineLatest as observableCombineLatest, Observable, Subscription } from 'rxjs';
+import {
+  combineLatest as observableCombineLatest,
+  Observable,
+  Subscription,
+} from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { RemoteData } from '../../core/data/remote-data';
 import { PaginatedList } from '../../core/data/paginated-list.model';
 import { PaginationComponentOptions } from '../../shared/pagination/pagination-component-options.model';
-import { SortDirection, SortOptions } from '../../core/cache/models/sort-options.model';
+import {
+  SortDirection,
+  SortOptions,
+} from '../../core/cache/models/sort-options.model';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { hasValue, isNotEmpty } from '../../shared/empty.util';
 import { BrowseService } from '../../core/browse/browse.service';
@@ -14,14 +21,17 @@ import { getFirstSucceededRemoteData } from '../../core/shared/operators';
 import { DSpaceObjectDataService } from '../../core/data/dspace-object-data.service';
 import { DSpaceObject } from '../../core/shared/dspace-object.model';
 import { StartsWithType } from '../../shared/starts-with/starts-with-decorator';
-import { BrowseByDataType, rendersBrowseBy } from '../browse-by-switcher/browse-by-decorator';
+import {
+  BrowseByDataType,
+  rendersBrowseBy,
+} from '../browse-by-switcher/browse-by-decorator';
 import { PaginationService } from '../../core/pagination/pagination.service';
 import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'ds-browse-by-metadata-page',
   styleUrls: ['./browse-by-metadata-page.component.scss'],
-  templateUrl: './browse-by-metadata-page.component.html'
+  templateUrl: './browse-by-metadata-page.component.html',
 })
 /**
  * Component for browsing (items) by metadata definition
@@ -30,7 +40,6 @@ import { map } from 'rxjs/operators';
  */
 @rendersBrowseBy(BrowseByDataType.Metadata)
 export class BrowseByMetadataPageComponent implements OnInit {
-
   /**
    * The list of browse-entries to display
    */
@@ -49,11 +58,14 @@ export class BrowseByMetadataPageComponent implements OnInit {
   /**
    * The pagination config used to display the values
    */
-  paginationConfig: PaginationComponentOptions = Object.assign(new PaginationComponentOptions(), {
-    id: 'bbm',
-    currentPage: 1,
-    pageSize: 20
-  });
+  paginationConfig: PaginationComponentOptions = Object.assign(
+    new PaginationComponentOptions(),
+    {
+      id: 'bbm',
+      currentPage: 1,
+      pageSize: 20,
+    }
+  );
 
   /**
    * The pagination observable
@@ -102,43 +114,83 @@ export class BrowseByMetadataPageComponent implements OnInit {
   /**
    * The authority key (may be undefined) associated with {@link #value}.
    */
-   authority: string;
+  authority: string;
 
   /**
    * The current startsWith option (fetched and updated from query-params)
    */
   startsWith: string;
 
-  public constructor(protected route: ActivatedRoute,
-                     protected browseService: BrowseService,
-                     protected dsoService: DSpaceObjectDataService,
-                     protected paginationService: PaginationService,
-                     protected router: Router) {
-  }
+  public constructor(
+    protected route: ActivatedRoute,
+    protected browseService: BrowseService,
+    protected dsoService: DSpaceObjectDataService,
+    protected paginationService: PaginationService,
+    protected router: Router
+  ) {}
 
   ngOnInit(): void {
     const sortConfig = new SortOptions('default', SortDirection.ASC);
-    this.updatePage(new BrowseEntrySearchOptions(this.defaultBrowseId, this.paginationConfig, sortConfig));
-    this.currentPagination$ = this.paginationService.getCurrentPagination(this.paginationConfig.id, this.paginationConfig);
-    this.currentSort$ = this.paginationService.getCurrentSort(this.paginationConfig.id, sortConfig);
+    this.updatePage(
+      new BrowseEntrySearchOptions(
+        this.defaultBrowseId,
+        this.paginationConfig,
+        sortConfig
+      )
+    );
+    this.currentPagination$ = this.paginationService.getCurrentPagination(
+      this.paginationConfig.id,
+      this.paginationConfig
+    );
+    this.currentSort$ = this.paginationService.getCurrentSort(
+      this.paginationConfig.id,
+      sortConfig
+    );
     this.subs.push(
-      observableCombineLatest([this.route.params, this.route.queryParams, this.currentPagination$, this.currentSort$]).pipe(
-        map(([routeParams, queryParams, currentPage, currentSort]) => {
-          return [Object.assign({}, routeParams, queryParams),currentPage,currentSort];
-        })
-      ).subscribe(([params, currentPage, currentSort]: [Params, PaginationComponentOptions, SortOptions]) => {
-          this.browseId = params.id || this.defaultBrowseId;
-          this.authority = params.authority;
-          this.value = +params.value || params.value || '';
-          this.startsWith = +params.startsWith || params.startsWith;
-          const searchOptions = browseParamsToOptions(params, currentPage, currentSort, this.browseId);
-          if (isNotEmpty(this.value)) {
-            this.updatePageWithItems(searchOptions, this.value, this.authority);
-          } else {
-            this.updatePage(searchOptions);
+      observableCombineLatest([
+        this.route.params,
+        this.route.queryParams,
+        this.currentPagination$,
+        this.currentSort$,
+      ])
+        .pipe(
+          map(([routeParams, queryParams, currentPage, currentSort]) => {
+            return [
+              Object.assign({}, routeParams, queryParams),
+              currentPage,
+              currentSort,
+            ];
+          })
+        )
+        .subscribe(
+          ([params, currentPage, currentSort]: [
+            Params,
+            PaginationComponentOptions,
+            SortOptions
+          ]) => {
+            this.browseId = params.id || this.defaultBrowseId;
+            this.authority = params.authority;
+            this.value = +params.value || params.value || '';
+            this.startsWith = +params.startsWith || params.startsWith;
+            const searchOptions = browseParamsToOptions(
+              params,
+              currentPage,
+              currentSort,
+              this.browseId
+            );
+            if (isNotEmpty(this.value)) {
+              this.updatePageWithItems(
+                searchOptions,
+                this.value,
+                this.authority
+              );
+            } else {
+              this.updatePage(searchOptions);
+            }
+            this.updateParent(params.scope);
           }
-          this.updateParent(params.scope);
-        }));
+        )
+    );
     this.updateStartsWithTextOptions();
   }
 
@@ -172,8 +224,16 @@ export class BrowseByMetadataPageComponent implements OnInit {
    *                          scope: string }
    * @param value          The value of the browse-entry to display items for
    */
-  updatePageWithItems(searchOptions: BrowseEntrySearchOptions, value: string, authority: string) {
-    this.items$ = this.browseService.getBrowseItemsFor(value, authority, searchOptions);
+  updatePageWithItems(
+    searchOptions: BrowseEntrySearchOptions,
+    value: string,
+    authority: string
+  ) {
+    this.items$ = this.browseService.getBrowseItemsFor(
+      value,
+      authority,
+      searchOptions
+    );
   }
 
   /**
@@ -182,9 +242,9 @@ export class BrowseByMetadataPageComponent implements OnInit {
    */
   updateParent(scope: string) {
     if (hasValue(scope)) {
-      this.parent$ = this.dsoService.findById(scope).pipe(
-        getFirstSucceededRemoteData()
-      );
+      this.parent$ = this.dsoService
+        .findById(scope)
+        .pipe(getFirstSucceededRemoteData());
     }
   }
 
@@ -197,9 +257,12 @@ export class BrowseByMetadataPageComponent implements OnInit {
         this.items$ = this.browseService.getPrevBrowseItems(items);
       });
     } else if (this.browseEntries$) {
-      this.browseEntries$.pipe(getFirstSucceededRemoteData()).subscribe((entries) => {
-        this.browseEntries$ = this.browseService.getPrevBrowseEntries(entries);
-      });
+      this.browseEntries$
+        .pipe(getFirstSucceededRemoteData())
+        .subscribe((entries) => {
+          this.browseEntries$ =
+            this.browseService.getPrevBrowseEntries(entries);
+        });
     }
   }
 
@@ -212,18 +275,21 @@ export class BrowseByMetadataPageComponent implements OnInit {
         this.items$ = this.browseService.getNextBrowseItems(items);
       });
     } else if (this.browseEntries$) {
-      this.browseEntries$.pipe(getFirstSucceededRemoteData()).subscribe((entries) => {
-        this.browseEntries$ = this.browseService.getNextBrowseEntries(entries);
-      });
+      this.browseEntries$
+        .pipe(getFirstSucceededRemoteData())
+        .subscribe((entries) => {
+          this.browseEntries$ =
+            this.browseService.getNextBrowseEntries(entries);
+        });
     }
   }
 
   ngOnDestroy(): void {
-    this.subs.filter((sub) => hasValue(sub)).forEach((sub) => sub.unsubscribe());
+    this.subs
+      .filter((sub) => hasValue(sub))
+      .forEach((sub) => sub.unsubscribe());
     this.paginationService.clearPagination(this.paginationConfig.id);
   }
-
-
 }
 
 /**
@@ -233,10 +299,12 @@ export class BrowseByMetadataPageComponent implements OnInit {
  * @param sortConfig        Sorting configuration
  * @param metadata          Optional metadata definition to fetch browse entries/items for
  */
-export function browseParamsToOptions(params: any,
-                                      paginationConfig: PaginationComponentOptions,
-                                      sortConfig: SortOptions,
-                                      metadata?: string): BrowseEntrySearchOptions {
+export function browseParamsToOptions(
+  params: any,
+  paginationConfig: PaginationComponentOptions,
+  sortConfig: SortOptions,
+  metadata?: string
+): BrowseEntrySearchOptions {
   return new BrowseEntrySearchOptions(
     metadata,
     paginationConfig,

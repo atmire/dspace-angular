@@ -1,9 +1,15 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import {
   DynamicFormControlModel,
   DynamicFormGroupModel,
   DynamicFormLayout,
-  DynamicInputModel
+  DynamicInputModel,
 } from '@ng-dynamic-forms/core';
 import { FormGroup } from '@angular/forms';
 import { RegistryService } from '../../../../core/registry/registry.service';
@@ -15,13 +21,12 @@ import { MetadataSchema } from '../../../../core/metadata/metadata-schema.model'
 
 @Component({
   selector: 'ds-metadata-schema-form',
-  templateUrl: './metadata-schema-form.component.html'
+  templateUrl: './metadata-schema-form.component.html',
 })
 /**
  * A form used for creating and editing metadata schemas
  */
 export class MetadataSchemaFormComponent implements OnInit, OnDestroy {
-
   /**
    * A unique id used for ds-form
    */
@@ -53,14 +58,14 @@ export class MetadataSchemaFormComponent implements OnInit, OnDestroy {
   formLayout: DynamicFormLayout = {
     name: {
       grid: {
-        host: 'col col-sm-6 d-inline-block'
-      }
+        host: 'col col-sm-6 d-inline-block',
+      },
     },
     namespace: {
       grid: {
-        host: 'col col-sm-6 d-inline-block'
-      }
-    }
+        host: 'col col-sm-6 d-inline-block',
+      },
+    },
   };
 
   /**
@@ -73,8 +78,11 @@ export class MetadataSchemaFormComponent implements OnInit, OnDestroy {
    */
   @Output() submitForm: EventEmitter<any> = new EventEmitter();
 
-  constructor(public registryService: RegistryService, private formBuilderService: FormBuilderService, private translateService: TranslateService) {
-  }
+  constructor(
+    public registryService: RegistryService,
+    private formBuilderService: FormBuilderService,
+    private translateService: TranslateService
+  ) {}
 
   ngOnInit() {
     combineLatest(
@@ -82,38 +90,37 @@ export class MetadataSchemaFormComponent implements OnInit, OnDestroy {
       this.translateService.get(`${this.messagePrefix}.namespace`)
     ).subscribe(([name, namespace]) => {
       this.name = new DynamicInputModel({
-          id: 'name',
-          label: name,
-          name: 'name',
-          validators: {
-            required: null,
-            pattern: '^[^ ,_]{1,32}$'
-          },
-          required: true,
-        });
+        id: 'name',
+        label: name,
+        name: 'name',
+        validators: {
+          required: null,
+          pattern: '^[^ ,_]{1,32}$',
+        },
+        required: true,
+      });
       this.namespace = new DynamicInputModel({
-          id: 'namespace',
-          label: namespace,
-          name: 'namespace',
-          validators: {
-            required: null,
-          },
-          required: true,
-        });
+        id: 'namespace',
+        label: namespace,
+        name: 'namespace',
+        validators: {
+          required: null,
+        },
+        required: true,
+      });
       this.formModel = [
-        new DynamicFormGroupModel(
-          {
-            id: 'metadatadataschemagroup',
-            group:[this.namespace, this.name]
-          })
+        new DynamicFormGroupModel({
+          id: 'metadatadataschemagroup',
+          group: [this.namespace, this.name],
+        }),
       ];
       this.formGroup = this.formBuilderService.createFormGroup(this.formModel);
       this.registryService.getActiveMetadataSchema().subscribe((schema) => {
         this.formGroup.patchValue({
-          metadatadataschemagroup:{
+          metadatadataschemagroup: {
             name: schema != null ? schema.prefix : '',
-            namespace: schema != null ? schema.namespace : ''
-          }
+            namespace: schema != null ? schema.namespace : '',
+          },
         });
       });
     });
@@ -134,29 +141,40 @@ export class MetadataSchemaFormComponent implements OnInit, OnDestroy {
    */
   onSubmit() {
     this.registryService.clearMetadataSchemaRequests().subscribe();
-    this.registryService.getActiveMetadataSchema().pipe(take(1)).subscribe(
-      (schema) => {
+    this.registryService
+      .getActiveMetadataSchema()
+      .pipe(take(1))
+      .subscribe((schema) => {
         const values = {
           prefix: this.name.value,
-          namespace: this.namespace.value
+          namespace: this.namespace.value,
         };
         if (schema == null) {
-          this.registryService.createOrUpdateMetadataSchema(Object.assign(new MetadataSchema(), values)).subscribe((newSchema) => {
-            this.submitForm.emit(newSchema);
-          });
+          this.registryService
+            .createOrUpdateMetadataSchema(
+              Object.assign(new MetadataSchema(), values)
+            )
+            .subscribe((newSchema) => {
+              this.submitForm.emit(newSchema);
+            });
         } else {
-          this.registryService.createOrUpdateMetadataSchema(Object.assign(new MetadataSchema(), schema, {
-            id: schema.id,
-            prefix: (values.prefix ? values.prefix : schema.prefix),
-            namespace: (values.namespace ? values.namespace : schema.namespace)
-          })).subscribe((updatedSchema) => {
-            this.submitForm.emit(updatedSchema);
-          });
+          this.registryService
+            .createOrUpdateMetadataSchema(
+              Object.assign(new MetadataSchema(), schema, {
+                id: schema.id,
+                prefix: values.prefix ? values.prefix : schema.prefix,
+                namespace: values.namespace
+                  ? values.namespace
+                  : schema.namespace,
+              })
+            )
+            .subscribe((updatedSchema) => {
+              this.submitForm.emit(updatedSchema);
+            });
         }
         this.clearFields();
         this.registryService.cancelEditMetadataSchema();
-      }
-    );
+      });
   }
 
   /**
@@ -164,10 +182,10 @@ export class MetadataSchemaFormComponent implements OnInit, OnDestroy {
    */
   clearFields() {
     this.formGroup.patchValue({
-      metadatadataschemagroup:{
+      metadatadataschemagroup: {
         prefix: '',
-        namespace: ''
-      }
+        namespace: '',
+      },
     });
   }
 

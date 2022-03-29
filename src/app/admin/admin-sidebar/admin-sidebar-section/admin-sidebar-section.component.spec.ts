@@ -19,25 +19,35 @@ describe('AdminSidebarSectionComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, RouterTestingModule, TranslateModule.forRoot()],
+      imports: [
+        NoopAnimationsModule,
+        RouterTestingModule,
+        TranslateModule.forRoot(),
+      ],
       declarations: [AdminSidebarSectionComponent, TestComponent],
       providers: [
-        { provide: 'sectionDataProvider', useValue: { model: { link: 'google.com' }, icon: iconString } },
+        {
+          provide: 'sectionDataProvider',
+          useValue: { model: { link: 'google.com' }, icon: iconString },
+        },
         { provide: MenuService, useValue: menuService },
         { provide: CSSVariableService, useClass: CSSVariableServiceStub },
-      ]
-    }).overrideComponent(AdminSidebarSectionComponent, {
-      set: {
-        entryComponents: [TestComponent]
-      }
+      ],
     })
+      .overrideComponent(AdminSidebarSectionComponent, {
+        set: {
+          entryComponents: [TestComponent],
+        },
+      })
       .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AdminSidebarSectionComponent);
     component = fixture.componentInstance;
-    spyOn(component as any, 'getMenuItemComponent').and.returnValue(TestComponent);
+    spyOn(component as any, 'getMenuItemComponent').and.returnValue(
+      TestComponent
+    );
     fixture.detectChanges();
   });
 
@@ -46,15 +56,18 @@ describe('AdminSidebarSectionComponent', () => {
   });
 
   it('should set the right icon', () => {
-    const icon = fixture.debugElement.query(By.css('.shortcut-icon')).query(By.css('i.fas'));
-    expect(icon.nativeElement.getAttribute('class')).toContain('fa-' + iconString);
+    const icon = fixture.debugElement
+      .query(By.css('.shortcut-icon'))
+      .query(By.css('i.fas'));
+    expect(icon.nativeElement.getAttribute('class')).toContain(
+      'fa-' + iconString
+    );
   });
 });
 
 // declare a test component
 @Component({
   selector: 'ds-test-cmp',
-  template: ``
+  template: ``,
 })
-class TestComponent {
-}
+class TestComponent {}

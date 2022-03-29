@@ -11,13 +11,14 @@ import { SearchPageComponent } from './search-page.component';
   templateUrl: '../shared/theme-support/themed.component.html',
 })
 export class ThemedSearchPageComponent extends ThemedComponent<SearchPageComponent> {
-
   protected getComponentName(): string {
     return 'SearchPageComponent';
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../themes/${themeName}/app/search-page/search-page.component`);
+    return import(
+      `../../themes/${themeName}/app/search-page/search-page.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

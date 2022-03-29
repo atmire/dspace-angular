@@ -1,7 +1,10 @@
 import { SearchConfigurationService } from './search-configuration.service';
 import { ActivatedRouteStub } from '../../../shared/testing/active-router.stub';
 import { PaginationComponentOptions } from '../../../shared/pagination/pagination-component-options.model';
-import { SortDirection, SortOptions } from '../../cache/models/sort-options.model';
+import {
+  SortDirection,
+  SortOptions,
+} from '../../cache/models/sort-options.model';
 import { PaginatedSearchOptions } from '../../../shared/search/models/paginated-search-options.model';
 import { SearchFilter } from '../../../shared/search/models/search-filter.model';
 import { of as observableOf } from 'rxjs';
@@ -13,41 +16,50 @@ describe('SearchConfigurationService', () => {
   const prefixFilter = {
     'f.author': ['another value'],
     'f.date.min': ['2013'],
-    'f.date.max': ['2018']
+    'f.date.max': ['2018'],
   };
   const defaults = new PaginatedSearchOptions({
-    pagination: Object.assign(new PaginationComponentOptions(), { id: 'page-id', currentPage: 1, pageSize: 20 }),
+    pagination: Object.assign(new PaginationComponentOptions(), {
+      id: 'page-id',
+      currentPage: 1,
+      pageSize: 20,
+    }),
     sort: new SortOptions('score', SortDirection.DESC),
     configuration: 'default',
     query: '',
-    scope: ''
+    scope: '',
   });
 
   const backendFilters = [
     new SearchFilter('f.author', ['another value']),
-    new SearchFilter('f.date', ['[2013 TO 2018]'], 'equals')
+    new SearchFilter('f.date', ['[2013 TO 2018]'], 'equals'),
   ];
 
   const routeService = jasmine.createSpyObj('RouteService', {
     getQueryParameterValue: observableOf(value1),
     getQueryParamsWithPrefix: observableOf(prefixFilter),
-    getRouteParameterValue: observableOf('')
+    getRouteParameterValue: observableOf(''),
   });
 
   const paginationService = new PaginationServiceStub();
 
-
   const activatedRoute: any = new ActivatedRouteStub();
 
   beforeEach(() => {
-    service = new SearchConfigurationService(routeService, paginationService as any, activatedRoute);
+    service = new SearchConfigurationService(
+      routeService,
+      paginationService as any,
+      activatedRoute
+    );
   });
   describe('when the scope is called', () => {
     beforeEach(() => {
       service.getCurrentScope('');
     });
-    it('should call getQueryParameterValue on the routeService with parameter name \'scope\'', () => {
-      expect((service as any).routeService.getQueryParameterValue).toHaveBeenCalledWith('scope');
+    it("should call getQueryParameterValue on the routeService with parameter name 'scope'", () => {
+      expect(
+        (service as any).routeService.getQueryParameterValue
+      ).toHaveBeenCalledWith('scope');
     });
   });
 
@@ -55,8 +67,10 @@ describe('SearchConfigurationService', () => {
     beforeEach(() => {
       service.getCurrentConfiguration('');
     });
-    it('should call getQueryParameterValue on the routeService with parameter name \'configuration\'', () => {
-      expect((service as any).routeService.getQueryParameterValue).toHaveBeenCalledWith('configuration');
+    it("should call getQueryParameterValue on the routeService with parameter name 'configuration'", () => {
+      expect(
+        (service as any).routeService.getQueryParameterValue
+      ).toHaveBeenCalledWith('configuration');
     });
   });
 
@@ -64,8 +78,10 @@ describe('SearchConfigurationService', () => {
     beforeEach(() => {
       service.getCurrentQuery('');
     });
-    it('should call getQueryParameterValue on the routeService with parameter name \'query\'', () => {
-      expect((service as any).routeService.getQueryParameterValue).toHaveBeenCalledWith('query');
+    it("should call getQueryParameterValue on the routeService with parameter name 'query'", () => {
+      expect(
+        (service as any).routeService.getQueryParameterValue
+      ).toHaveBeenCalledWith('query');
     });
   });
 
@@ -73,8 +89,10 @@ describe('SearchConfigurationService', () => {
     beforeEach(() => {
       service.getCurrentDSOType();
     });
-    it('should call getQueryParameterValue on the routeService with parameter name \'dsoType\'', () => {
-      expect((service as any).routeService.getQueryParameterValue).toHaveBeenCalledWith('dsoType');
+    it("should call getQueryParameterValue on the routeService with parameter name 'dsoType'", () => {
+      expect(
+        (service as any).routeService.getQueryParameterValue
+      ).toHaveBeenCalledWith('dsoType');
     });
   });
 
@@ -82,8 +100,10 @@ describe('SearchConfigurationService', () => {
     beforeEach(() => {
       service.getCurrentFrontendFilters();
     });
-    it('should call getQueryParamsWithPrefix on the routeService with parameter prefix \'f.\'', () => {
-      expect((service as any).routeService.getQueryParamsWithPrefix).toHaveBeenCalledWith('f.');
+    it("should call getQueryParamsWithPrefix on the routeService with parameter prefix 'f.'", () => {
+      expect(
+        (service as any).routeService.getQueryParamsWithPrefix
+      ).toHaveBeenCalledWith('f.');
     });
   });
 
@@ -92,8 +112,10 @@ describe('SearchConfigurationService', () => {
     beforeEach(() => {
       parsedValues$ = service.getCurrentFilters();
     });
-    it('should call getQueryParamsWithPrefix on the routeService with parameter prefix \'f.\'', () => {
-      expect((service as any).routeService.getQueryParamsWithPrefix).toHaveBeenCalledWith('f.');
+    it("should call getQueryParamsWithPrefix on the routeService with parameter prefix 'f.'", () => {
+      expect(
+        (service as any).routeService.getQueryParamsWithPrefix
+      ).toHaveBeenCalledWith('f.');
       parsedValues$.subscribe((values) => {
         expect(values).toEqual(backendFilters);
       });
@@ -105,7 +127,9 @@ describe('SearchConfigurationService', () => {
       service.getCurrentSort(defaults.pagination.id, {} as any);
     });
     it('should call getCurrentSort on the paginationService with the provided id and sort options', () => {
-      expect((service as any).paginationService.getCurrentSort).toHaveBeenCalledWith(defaults.pagination.id, {});
+      expect(
+        (service as any).paginationService.getCurrentSort
+      ).toHaveBeenCalledWith(defaults.pagination.id, {});
     });
   });
 
@@ -114,7 +138,9 @@ describe('SearchConfigurationService', () => {
       service.getCurrentPagination(defaults.pagination.id, defaults.pagination);
     });
     it('should call getCurrentPagination on the paginationService with the provided id and sort options', () => {
-      expect((service as any).paginationService.getCurrentPagination).toHaveBeenCalledWith(defaults.pagination.id, defaults.pagination);
+      expect(
+        (service as any).paginationService.getCurrentPagination
+      ).toHaveBeenCalledWith(defaults.pagination.id, defaults.pagination);
     });
   });
 
@@ -146,7 +172,10 @@ describe('SearchConfigurationService', () => {
 
     describe('when subscribeToPaginatedSearchOptions is called', () => {
       beforeEach(() => {
-        (service as any).subscribeToPaginatedSearchOptions(defaults.pagination.id, defaults);
+        (service as any).subscribeToPaginatedSearchOptions(
+          defaults.pagination.id,
+          defaults
+        );
       });
       it('should call all getters it needs', () => {
         expect(service.getCurrentPagination).toHaveBeenCalled();
@@ -159,5 +188,4 @@ describe('SearchConfigurationService', () => {
       });
     });
   });
-
 });

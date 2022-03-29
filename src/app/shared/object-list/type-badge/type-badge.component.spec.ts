@@ -18,10 +18,10 @@ const mockItemWithEntityType = Object.assign(new Item(), {
     'dspace.entity.type': [
       {
         language: 'en_US',
-        value: type
-      }
-    ]
-  }
+        value: type,
+      },
+    ],
+  },
 });
 
 const mockItemWithoutEntityType = Object.assign(new Item(), {
@@ -30,10 +30,10 @@ const mockItemWithoutEntityType = Object.assign(new Item(), {
     'dc.title': [
       {
         language: 'en_US',
-        value: 'This is just another title'
-      }
-    ]
-  }
+        value: 'This is just another title',
+      },
+    ],
+  },
 });
 
 describe('ItemTypeBadgeComponent', () => {
@@ -41,10 +41,12 @@ describe('ItemTypeBadgeComponent', () => {
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
       declarations: [TypeBadgeComponent, TruncatePipe],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(TypeBadgeComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(TypeBadgeComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {

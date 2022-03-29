@@ -1,4 +1,10 @@
-import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+  waitForAsync,
+} from '@angular/core/testing';
 
 import { DateValueInputComponent } from './date-value-input.component';
 import { FormsModule } from '@angular/forms';
@@ -17,12 +23,12 @@ describe('DateValueInputComponent', () => {
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
-            useClass: TranslateLoaderMock
-          }
-        })],
-      declarations: [DateValueInputComponent]
-    })
-      .compileComponents();
+            useClass: TranslateLoaderMock,
+          },
+        }),
+      ],
+      declarations: [DateValueInputComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -36,11 +42,13 @@ describe('DateValueInputComponent', () => {
   });
 
   it('should not show a validation error if the input field was left untouched but left empty', () => {
-    const validationError = fixture.debugElement.query(By.css('.validation-error'));
+    const validationError = fixture.debugElement.query(
+      By.css('.validation-error')
+    );
     expect(validationError).toBeFalsy();
   });
 
-  it('should show a validation error if the input field was touched but left empty',  fakeAsync(() => {
+  it('should show a validation error if the input field was touched but left empty', fakeAsync(() => {
     component.value = '';
     fixture.detectChanges();
     tick();
@@ -50,7 +58,9 @@ describe('DateValueInputComponent', () => {
 
     fixture.detectChanges();
 
-    const validationError = fixture.debugElement.query(By.css('.validation-error'));
+    const validationError = fixture.debugElement.query(
+      By.css('.validation-error')
+    );
     expect(validationError).toBeTruthy();
   }));
 
@@ -64,7 +74,9 @@ describe('DateValueInputComponent', () => {
 
     fixture.detectChanges();
 
-    const validationError = fixture.debugElement.query(By.css('.validation-error'));
+    const validationError = fixture.debugElement.query(
+      By.css('.validation-error')
+    );
     expect(validationError).toBeFalsy();
   }));
 });

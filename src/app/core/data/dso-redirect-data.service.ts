@@ -23,7 +23,6 @@ import { getItemPageRoute } from '../../item-page/item-page-routing-paths';
 
 @Injectable()
 export class DsoRedirectDataService extends DataService<any> {
-
   // Set the default link path to the identifier lookup endpoint.
   protected linkPath = 'pid';
   private uuidEndpoint = 'dso';
@@ -37,7 +36,8 @@ export class DsoRedirectDataService extends DataService<any> {
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
     protected comparator: DSOChangeAnalyzer<any>,
-    private router: Router) {
+    private router: Router
+  ) {
     super();
   }
 
@@ -49,14 +49,26 @@ export class DsoRedirectDataService extends DataService<any> {
     }
   }
 
-  getIDHref(endpoint, resourceID, ...linksToFollow: FollowLinkConfig<any>[]): string {
+  getIDHref(
+    endpoint,
+    resourceID,
+    ...linksToFollow: FollowLinkConfig<any>[]
+  ): string {
     // Supporting both identifier (pid) and uuid (dso) endpoints
-    return this.buildHrefFromFindOptions( endpoint.replace(/\{\?id\}/, `?id=${resourceID}`)
+    return this.buildHrefFromFindOptions(
+      endpoint
+        .replace(/\{\?id\}/, `?id=${resourceID}`)
         .replace(/\{\?uuid\}/, `?uuid=${resourceID}`),
-      {}, [], ...linksToFollow);
+      {},
+      [],
+      ...linksToFollow
+    );
   }
 
-  findByIdAndIDType(id: string, identifierType = IdentifierType.UUID): Observable<RemoteData<DSpaceObject>> {
+  findByIdAndIDType(
+    id: string,
+    identifierType = IdentifierType.UUID
+  ): Observable<RemoteData<DSpaceObject>> {
     this.setLinkPath(identifierType);
     return this.findById(id).pipe(
       getFirstCompletedRemoteData(),

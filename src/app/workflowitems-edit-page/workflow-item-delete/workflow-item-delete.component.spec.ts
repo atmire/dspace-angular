@@ -11,7 +11,10 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { VarDirective } from '../../shared/utils/var.directive';
 import { of as observableOf } from 'rxjs';
 import { RequestService } from '../../core/data/request.service';
-import { createSuccessfulRemoteDataObject, createSuccessfulRemoteDataObject$ } from '../../shared/remote-data.utils';
+import {
+  createSuccessfulRemoteDataObject,
+  createSuccessfulRemoteDataObject$,
+} from '../../shared/remote-data.utils';
 import { TranslateLoaderMock } from '../../shared/mocks/translate-loader.mock';
 import { ActivatedRouteStub } from '../../shared/testing/active-router.stub';
 import { RouterStub } from '../../shared/testing/router.stub';
@@ -28,7 +31,7 @@ describe('WorkflowItemDeleteComponent', () => {
 
   function init() {
     wfiService = jasmine.createSpyObj('workflowItemService', {
-      delete: observableOf(true)
+      delete: observableOf(true),
     });
     itemRD$ = createSuccessfulRemoteDataObject$(itemRD$);
     wfi = new WorkflowItem();
@@ -39,24 +42,31 @@ describe('WorkflowItemDeleteComponent', () => {
   beforeEach(waitForAsync(() => {
     init();
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot({
-        loader: {
-          provide: TranslateLoader,
-          useClass: TranslateLoaderMock
-        }
-      })],
+      imports: [
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useClass: TranslateLoaderMock,
+          },
+        }),
+      ],
       declarations: [WorkflowItemDeleteComponent, VarDirective],
       providers: [
-        { provide: ActivatedRoute, useValue: new ActivatedRouteStub({}, { wfi: createSuccessfulRemoteDataObject(wfi) }) },
+        {
+          provide: ActivatedRoute,
+          useValue: new ActivatedRouteStub(
+            {},
+            { wfi: createSuccessfulRemoteDataObject(wfi) }
+          ),
+        },
         { provide: Router, useClass: RouterStub },
         { provide: RouteService, useValue: {} },
         { provide: NotificationsService, useClass: NotificationsServiceStub },
         { provide: WorkflowItemDataService, useValue: wfiService },
         { provide: RequestService, useValue: getMockRequestService() },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
-      .compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

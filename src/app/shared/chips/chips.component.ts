@@ -1,4 +1,12 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { isObject } from 'lodash';
@@ -15,7 +23,6 @@ import { BehaviorSubject } from 'rxjs';
   styleUrls: ['./chips.component.scss'],
   templateUrl: './chips.component.html',
 })
-
 export class ChipsComponent implements OnChanges {
   @Input() chips: Chips;
   @Input() wrapperClass: string;
@@ -34,14 +41,14 @@ export class ChipsComponent implements OnChanges {
   constructor(
     private cdr: ChangeDetectorRef,
     private uploaderService: UploaderService,
-    private translate: TranslateService) {
-
+    private translate: TranslateService
+  ) {
     this.options = {
       animation: 300,
       chosenClass: 'm-0',
       dragClass: 'm-0',
       filter: '.chips-sort-ignore',
-      ghostClass: 'm-0'
+      ghostClass: 'm-0',
     };
   }
 
@@ -96,13 +103,19 @@ export class ChipsComponent implements OnChanges {
         if (isObject(chipsItem.item[field])) {
           textToDisplay.push(chipsItem.item[field].display);
           if (chipsItem.item[field].hasOtherInformation()) {
-            Object.keys(chipsItem.item[field].otherInformation)
-              .forEach((otherField) => {
-                this.translate.get('form.other-information.' + otherField)
+            Object.keys(chipsItem.item[field].otherInformation).forEach(
+              (otherField) => {
+                this.translate
+                  .get('form.other-information.' + otherField)
                   .subscribe((label) => {
-                    textToDisplay.push(label + ': ' + chipsItem.item[field].otherInformation[otherField]);
+                    textToDisplay.push(
+                      label +
+                        ': ' +
+                        chipsItem.item[field].otherInformation[otherField]
+                    );
                   });
-            });
+              }
+            );
           }
         } else {
           textToDisplay.push(chipsItem.item[field]);
@@ -116,8 +129,6 @@ export class ChipsComponent implements OnChanges {
         this.tipText = textToDisplay;
         tooltip.open();
       }
-
     }
   }
-
 }

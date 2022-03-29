@@ -17,7 +17,7 @@ import { By } from '@angular/platform-browser';
 import { SearchFacetRangeOptionComponent } from './search-facet-range-option.component';
 import {
   RANGE_FILTER_MAX_SUFFIX,
-  RANGE_FILTER_MIN_SUFFIX
+  RANGE_FILTER_MIN_SUFFIX,
 } from '../../search-range-filter/search-range-filter.component';
 import { PaginationComponentOptions } from '../../../../../pagination/pagination-component-options.model';
 import { PaginationService } from '../../../../../../core/pagination/pagination.service';
@@ -43,12 +43,12 @@ describe('SearchFacetRangeOptionComponent', () => {
     count: 20,
     _links: {
       self: {
-        href: ''
+        href: '',
       },
       search: {
-        href: ''
-      }
-    }
+        href: '',
+      },
+    },
   };
 
   const searchLink = '/search';
@@ -57,7 +57,11 @@ describe('SearchFacetRangeOptionComponent', () => {
   let router;
   const page = observableOf(0);
 
-  const pagination = Object.assign(new PaginationComponentOptions(), { id: 'page-id', currentPage: 1, pageSize: 20 });
+  const pagination = Object.assign(new PaginationComponentOptions(), {
+    id: 'page-id',
+    currentPage: 1,
+    pageSize: 20,
+  });
   const paginationService = new PaginationServiceStub(pagination);
 
   beforeEach(waitForAsync(() => {
@@ -69,28 +73,31 @@ describe('SearchFacetRangeOptionComponent', () => {
         { provide: Router, useValue: new RouterStub() },
         { provide: PaginationService, useValue: paginationService },
         {
-          provide: SearchConfigurationService, useValue: {
+          provide: SearchConfigurationService,
+          useValue: {
             searchOptions: observableOf({}),
-            paginationId: 'page-id'
-          }
+            paginationId: 'page-id',
+          },
         },
         {
-          provide: SearchFilterService, useValue: {
-            isFilterActiveWithValue: (paramName: string, filterValue: string) => observableOf(true),
+          provide: SearchFilterService,
+          useValue: {
+            isFilterActiveWithValue: (paramName: string, filterValue: string) =>
+              observableOf(true),
             getPage: (paramName: string) => page,
             /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
-            incrementPage: (filterName: string) => {
-            },
-            resetPage: (filterName: string) => {
-            }
+            incrementPage: (filterName: string) => {},
+            resetPage: (filterName: string) => {},
             /* eslint-enable no-empty, @typescript-eslint/no-empty-function */
-          }
-        }
+          },
+        },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(SearchFacetRangeOptionComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(SearchFacetRangeOptionComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -113,18 +120,18 @@ describe('SearchFacetRangeOptionComponent', () => {
         count: 20,
         _links: {
           self: {
-            href: ''
+            href: '',
           },
           search: {
-            href: ''
-          }
-        }
+            href: '',
+          },
+        },
       };
       (comp as any).updateChangeParams();
       expect(comp.changeQueryParams).toEqual({
         [mockFilterConfig.paramName + RANGE_FILTER_MIN_SUFFIX]: ['50'],
         [mockFilterConfig.paramName + RANGE_FILTER_MAX_SUFFIX]: ['60'],
-        ['page-id.page']: 1
+        ['page-id.page']: 1,
       });
     });
   });

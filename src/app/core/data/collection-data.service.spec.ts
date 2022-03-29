@@ -6,7 +6,10 @@ import { HALEndpointServiceStub } from '../../shared/testing/hal-endpoint-servic
 import { NotificationsServiceStub } from '../../shared/testing/notifications-service.stub';
 import { getMockTranslateService } from '../../shared/mocks/translate.service.mock';
 import { fakeAsync, tick } from '@angular/core/testing';
-import { ContentSourceRequest, UpdateContentSourceRequest } from './request.models';
+import {
+  ContentSourceRequest,
+  UpdateContentSourceRequest,
+} from './request.models';
 import { ContentSource } from '../shared/content-source.model';
 import { ObjectCacheService } from '../cache/object-cache.service';
 import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
@@ -16,7 +19,7 @@ import { buildPaginatedList } from './paginated-list.model';
 import {
   createFailedRemoteDataObject$,
   createSuccessfulRemoteDataObject,
-  createSuccessfulRemoteDataObject$
+  createSuccessfulRemoteDataObject$,
 } from '../../shared/remote-data.utils';
 import { cold, getTestScheduler, hot } from 'jasmine-marbles';
 import { TestScheduler } from 'rxjs/testing';
@@ -42,9 +45,9 @@ describe('CollectionDataService', () => {
     name: 'test-collection-1',
     _links: {
       self: {
-        href: 'https://rest.api/collections/test-collection-1-1'
-      }
-    }
+        href: 'https://rest.api/collections/test-collection-1-1',
+      },
+    },
   });
 
   const mockCollection2: Collection = Object.assign(new Collection(), {
@@ -52,9 +55,9 @@ describe('CollectionDataService', () => {
     name: 'test-collection-2',
     _links: {
       self: {
-        href: 'https://rest.api/collections/test-collection-2-2'
-      }
-    }
+        href: 'https://rest.api/collections/test-collection-2-2',
+      },
+    },
   });
 
   const mockCollection3: Collection = Object.assign(new Collection(), {
@@ -62,9 +65,9 @@ describe('CollectionDataService', () => {
     name: 'test-collection-3',
     _links: {
       self: {
-        href: 'https://rest.api/collections/test-collection-3-3'
-      }
-    }
+        href: 'https://rest.api/collections/test-collection-3-3',
+      },
+    },
   });
 
   const queryString = 'test-string';
@@ -90,7 +93,10 @@ describe('CollectionDataService', () => {
       it('should send a new ContentSourceRequest', fakeAsync(() => {
         contentSource$.subscribe();
         tick();
-        expect(requestService.send).toHaveBeenCalledWith(jasmine.any(ContentSourceRequest), true);
+        expect(requestService.send).toHaveBeenCalledWith(
+          jasmine.any(ContentSourceRequest),
+          true
+        );
       }));
     });
 
@@ -100,13 +106,18 @@ describe('CollectionDataService', () => {
 
       beforeEach(() => {
         contentSource = new ContentSource();
-        returnedContentSource$ = service.updateContentSource(collectionId, contentSource);
+        returnedContentSource$ = service.updateContentSource(
+          collectionId,
+          contentSource
+        );
       });
 
       it('should send a new UpdateContentSourceRequest', fakeAsync(() => {
         returnedContentSource$.subscribe();
         tick();
-        expect(requestService.send).toHaveBeenCalledWith(jasmine.any(UpdateContentSourceRequest));
+        expect(requestService.send).toHaveBeenCalledWith(
+          jasmine.any(UpdateContentSourceRequest)
+        );
       }));
     });
 
@@ -121,28 +132,38 @@ describe('CollectionDataService', () => {
         scheduler.schedule(() => service.getAuthorizedCollection(queryString));
         scheduler.flush();
 
-        expect(service.getAuthorizedCollection).toHaveBeenCalledWith(queryString);
+        expect(service.getAuthorizedCollection).toHaveBeenCalledWith(
+          queryString
+        );
       });
 
       it('should return a RemoteData<PaginatedList<Colletion>> for the getAuthorizedCollection', () => {
         const result = service.getAuthorizedCollection(queryString);
         const expected = cold('a|', {
-          a: paginatedListRD
+          a: paginatedListRD,
         });
         expect(result).toBeObservable(expected);
       });
 
       it('should proxy the call to getAuthorizedCollectionByCommunity', () => {
-        scheduler.schedule(() => service.getAuthorizedCollectionByCommunity(communityId, queryString));
+        scheduler.schedule(() =>
+          service.getAuthorizedCollectionByCommunity(communityId, queryString)
+        );
         scheduler.flush();
 
-        expect(service.getAuthorizedCollectionByCommunity).toHaveBeenCalledWith(communityId, queryString);
+        expect(service.getAuthorizedCollectionByCommunity).toHaveBeenCalledWith(
+          communityId,
+          queryString
+        );
       });
 
       it('should return a RemoteData<PaginatedList<Colletion>> for the getAuthorizedCollectionByCommunity', () => {
-        const result = service.getAuthorizedCollectionByCommunity(communityId, queryString);
+        const result = service.getAuthorizedCollectionByCommunity(
+          communityId,
+          queryString
+        );
         const expected = cold('a|', {
-          a: paginatedListRD
+          a: paginatedListRD,
         });
         expect(result).toBeObservable(expected);
       });
@@ -160,13 +181,18 @@ describe('CollectionDataService', () => {
 
       beforeEach(() => {
         contentSource = new ContentSource();
-        returnedContentSource$ = service.updateContentSource(collectionId, contentSource);
+        returnedContentSource$ = service.updateContentSource(
+          collectionId,
+          contentSource
+        );
       });
 
       it('should send a new UpdateContentSourceRequest', fakeAsync(() => {
         returnedContentSource$.subscribe();
         tick();
-        expect(requestService.send).toHaveBeenCalledWith(jasmine.any(UpdateContentSourceRequest));
+        expect(requestService.send).toHaveBeenCalledWith(
+          jasmine.any(UpdateContentSourceRequest)
+        );
       }));
 
       it('should display an error notification', fakeAsync(() => {
@@ -189,19 +215,30 @@ describe('CollectionDataService', () => {
     }
     rdbService = jasmine.createSpyObj('rdbService', {
       buildList: hot('a|', {
-        a: paginatedListRD
+        a: paginatedListRD,
       }),
       buildFromRequestUUID: buildResponse$,
-      buildSingle: buildResponse$
+      buildSingle: buildResponse$,
     });
     objectCache = jasmine.createSpyObj('objectCache', {
-      remove: jasmine.createSpy('remove')
+      remove: jasmine.createSpy('remove'),
     });
     halService = new HALEndpointServiceStub(url);
     notificationsService = new NotificationsServiceStub();
     translate = getMockTranslateService();
 
-    service = new CollectionDataService(requestService, rdbService, null, null, objectCache, halService, notificationsService, null, null, null, translate);
+    service = new CollectionDataService(
+      requestService,
+      rdbService,
+      null,
+      null,
+      objectCache,
+      halService,
+      notificationsService,
+      null,
+      null,
+      null,
+      translate
+    );
   }
-
 });

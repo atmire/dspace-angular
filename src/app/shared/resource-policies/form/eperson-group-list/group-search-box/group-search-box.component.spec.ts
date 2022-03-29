@@ -1,4 +1,9 @@
-import { ComponentFixture, inject, TestBed, waitForAsync } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  inject,
+  TestBed,
+  waitForAsync,
+} from '@angular/core/testing';
 import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -17,22 +22,10 @@ describe('GroupSearchBoxComponent test suite', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        FormsModule,
-        ReactiveFormsModule,
-        TranslateModule.forRoot()
-      ],
-      declarations: [
-        GroupSearchBoxComponent,
-        TestComponent
-      ],
-      providers: [
-        FormBuilder,
-        GroupSearchBoxComponent
-      ],
-      schemas: [
-        NO_ERRORS_SCHEMA
-      ]
+      imports: [FormsModule, ReactiveFormsModule, TranslateModule.forRoot()],
+      declarations: [GroupSearchBoxComponent, TestComponent],
+      providers: [FormBuilder, GroupSearchBoxComponent],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -45,7 +38,10 @@ describe('GroupSearchBoxComponent test suite', () => {
       const html = `
         <ds-group-search-box></ds-group-search-box>`;
 
-      testFixture = createTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
+      testFixture = createTestComponent(
+        html,
+        TestComponent
+      ) as ComponentFixture<TestComponent>;
       testComp = testFixture.componentInstance;
     });
 
@@ -53,11 +49,12 @@ describe('GroupSearchBoxComponent test suite', () => {
       testFixture.destroy();
     });
 
-    it('should create GroupSearchBoxComponent', inject([GroupSearchBoxComponent], (app: GroupSearchBoxComponent) => {
-
-      expect(app).toBeDefined();
-
-    }));
+    it('should create GroupSearchBoxComponent', inject(
+      [GroupSearchBoxComponent],
+      (app: GroupSearchBoxComponent) => {
+        expect(app).toBeDefined();
+      }
+    ));
   });
 
   describe('', () => {
@@ -77,9 +74,9 @@ describe('GroupSearchBoxComponent test suite', () => {
     });
 
     it('should reset the form', () => {
-      comp.searchForm = formBuilder.group(({
+      comp.searchForm = formBuilder.group({
         query: 'test',
-      }));
+      });
 
       comp.reset();
 
@@ -88,12 +85,12 @@ describe('GroupSearchBoxComponent test suite', () => {
 
     it('should emit new search event', () => {
       const data = {
-        query: 'test'
+        query: 'test',
       };
 
       const event: SearchEvent = {
         scope: '',
-        query: 'test'
+        query: 'test',
       };
       spyOn(comp.search, 'emit');
 
@@ -107,8 +104,6 @@ describe('GroupSearchBoxComponent test suite', () => {
 // declare a test component
 @Component({
   selector: 'ds-test-cmp',
-  template: ``
+  template: ``,
 })
-class TestComponent {
-
-}
+class TestComponent {}
