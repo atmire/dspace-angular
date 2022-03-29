@@ -6,7 +6,8 @@
     "eslint-plugin-import",
     "eslint-plugin-jsdoc",
     "eslint-plugin-deprecation",
-    "eslint-plugin-unused-imports"
+    "eslint-plugin-unused-imports",
+    "eslint-plugin-regex"
   ],
   "overrides": [
     {
@@ -102,6 +103,10 @@
             "allowTernary": true
           }
         ],
+        "function-paren-newline": [
+          "error",
+          "consistent"
+        ],
         "prefer-const": "off",            // todo: re-enable & fix errors (more strict than it used to be in TSLint)
         "prefer-spread": "off",
         "no-underscore-dangle": "off",
@@ -181,6 +186,16 @@
         ],
         "@typescript-eslint/type-annotation-spacing": "error",
         "@typescript-eslint/unified-signatures": "error",
+        "@typescript-eslint/indent": [
+          "error",
+          2, {
+            "ignoreComments": true,
+            "SwitchCase": 1,
+            "ignoredNodes": [
+              "ClassBody.body > PropertyDefinition[decorators.length > 0] > .key"
+            ]
+          }
+        ],
         "@typescript-eslint/ban-types": "warn",  // todo: deal with {} type issues & re-enable
         "@typescript-eslint/no-floating-promises": "warn",
         "@typescript-eslint/no-misused-promises": "warn",
@@ -198,6 +213,24 @@
         "@typescript-eslint/no-unsafe-return": "off",
         "@typescript-eslint/restrict-template-expressions": "off",
         "@typescript-eslint/require-await": "off",
+
+        "regex/invalid": [
+          "error",
+          [
+            // ensure constructor definitions format their parameters consistently
+            // works together with function-paren-newline and @typescript-eslint/indent
+            {
+              "regex": "constructor\\((?=[^)\\n]+$)",
+              "replacement": "constructor(\n",
+              "message": "Multiline constructor definitions should have a newline after the opening parenthesis."
+            },
+            {
+              "regex": "(?<=constructor\\([^)]+), ?(?=[^)\\n]+$)",
+              "replacement": ",\n",
+              "message": "Multiline constructor definitions should put each parameter on a new line."
+            }
+          ]
+        ],
 
         "deprecation/deprecation": "warn",
 
