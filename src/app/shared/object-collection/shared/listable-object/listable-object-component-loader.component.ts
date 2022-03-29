@@ -185,13 +185,15 @@ export class ListableObjectComponentLoaderComponent implements OnInit, OnChanges
     this.connectInputsAndOutputs();
 
     if ((this.compRef.instance as any).reloadedObject) {
+      if (hasValue(this.subReloadedObject)) {
+        this.subReloadedObject.unsubscribe();
+      }
       this.subReloadedObject = (this.compRef.instance as any).reloadedObject.pipe(
         take(1)
       ).subscribe((reloadedObject: DSpaceObject) => {
         if (reloadedObject) {
           this.compRef.destroy();
           this.object = reloadedObject;
-          this.subReloadedObject.unsubscribe();
           this.instantiateComponent(reloadedObject);
           this.contentChange.emit(reloadedObject);
         }
