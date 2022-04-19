@@ -8,11 +8,10 @@ import { combineLatest as observableCombineLatest, Observable } from 'rxjs';
 import { ListableObject } from '../object-collection/shared/listable-object.model';
 import { getStartsWithComponent, StartsWithType } from '../starts-with/starts-with-decorator';
 import { PaginationService } from '../../core/pagination/pagination.service';
+import { ViewMode } from '../../core/shared/view-mode.model';
 import { RouteService } from '../../core/services/route.service';
 import { map } from 'rxjs/operators';
 import { hasValue } from '../empty.util';
-import { Location } from '@angular/common';
-import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'ds-browse-by',
@@ -27,6 +26,12 @@ import { TranslateService } from '@ngx-translate/core';
  * Component to display a browse-by page for any ListableObject
  */
 export class BrowseByComponent implements OnInit {
+
+  /**
+   * ViewMode that should be passed to {@link ListableObjectComponentLoaderComponent}.
+   */
+  viewMode: ViewMode = ViewMode.ListElement;
+
   /**
    * The i18n message to display as title
    */
@@ -65,30 +70,30 @@ export class BrowseByComponent implements OnInit {
   /**
    * Whether or not the pagination should be rendered as simple previous and next buttons instead of the normal pagination
    */
-  @Input() enableArrows = false;
+  @Input() showPaginator = true;
 
   /**
-   * If enableArrows is set to true, should it hide the options gear?
+   * It is used to hide or show gear
    */
   @Input() hideGear = false;
 
   /**
-   * If enableArrows is set to true, emit when the previous button is clicked
+   * Emits event when prev button clicked
    */
   @Output() prev = new EventEmitter<boolean>();
 
   /**
-   * If enableArrows is set to true, emit when the next button is clicked
+   * Emits event when next button clicked
    */
   @Output() next = new EventEmitter<boolean>();
 
   /**
-   * If enableArrows is set to true, emit when the page size is changed
+   * Emits event when page size is changed
    */
   @Output() pageSizeChange = new EventEmitter<number>();
 
   /**
-   * If enableArrows is set to true, emit when the sort direction is changed
+   * Emits event when page sort direction is changed
    */
   @Output() sortDirectionChange = new EventEmitter<SortDirection>();
 
@@ -110,7 +115,6 @@ export class BrowseByComponent implements OnInit {
   public constructor(private injector: Injector,
                      protected paginationService: PaginationService,
                      private routeService: RouteService,
-                     protected translate: TranslateService
   ) {
 
   }
@@ -169,8 +173,7 @@ export class BrowseByComponent implements OnInit {
     );
   }
 
-  getTranslation(key: string): Observable<string> {
-    return this.translate.instant(key);
+  back() {
+    this.paginationService.updateRoute(this.paginationConfig.id, {page: 1}, {value: null, startsWith: null});
   }
-
 }
