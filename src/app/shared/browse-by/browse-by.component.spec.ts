@@ -20,9 +20,13 @@ import { createSuccessfulRemoteDataObject$ } from '../remote-data.utils';
 import { storeModuleConfig } from '../../app.reducer';
 import { PaginationService } from '../../core/pagination/pagination.service';
 import { PaginationServiceStub } from '../testing/pagination-service.stub';
-import { ListableObjectComponentLoaderComponent } from '../object-collection/shared/listable-object/listable-object-component-loader.component';
+import {
+  ListableObjectComponentLoaderComponent
+} from '../object-collection/shared/listable-object/listable-object-component-loader.component';
 import { ViewMode } from '../../core/shared/view-mode.model';
-import { BrowseEntryListElementComponent } from '../object-list/browse-entry-list-element/browse-entry-list-element.component';
+import {
+  BrowseEntryListElementComponent
+} from '../object-list/browse-entry-list-element/browse-entry-list-element.component';
 import {
   DEFAULT_CONTEXT,
   listableObjectComponent,
@@ -39,7 +43,8 @@ import { routeServiceStub } from '../testing/route-service.stub';
   selector: 'ds-browse-entry-list-element',
   template: ''
 })
-class MockThemedBrowseEntryListElementComponent {}
+class MockThemedBrowseEntryListElementComponent {
+}
 
 describe('BrowseByComponent', () => {
   let comp: BrowseByComponent;
@@ -112,6 +117,8 @@ describe('BrowseByComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(BrowseByComponent);
     comp = fixture.componentInstance;
+    comp.paginationConfig = paginationConfig;
+    fixture.detectChanges();
   });
 
   it('should display a loading message when objects is empty', () => {
@@ -265,6 +272,15 @@ describe('BrowseByComponent', () => {
 
       const button = fixture.debugElement.query(By.css('reset'));
       expect(button).toBeDefined();
+    });
+  });
+  describe('back', () => {
+    it('should navigate back to the main browse page', () => {
+      comp.back();
+      expect(paginationService.updateRoute).toHaveBeenCalledWith('test-pagination', {page: 1}, {
+        value: null,
+        startsWith: null
+      });
     });
   });
 

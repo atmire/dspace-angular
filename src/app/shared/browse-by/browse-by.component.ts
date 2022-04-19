@@ -71,7 +71,7 @@ export class BrowseByComponent implements OnInit {
   /**
    * Whether or not the pagination should be rendered as simple previous and next buttons instead of the normal pagination
    */
-  @Input() enableArrows = false;
+  @Input() enableArrows = true;
 
   /**
    * If enableArrows is set to true, should it hide the options gear?
@@ -175,8 +175,8 @@ export class BrowseByComponent implements OnInit {
     );
   }
 
-  getTranslation(key: string): Observable<string> {
-    return this.translate.instant(key);
+  back() {
+    this.paginationService.updateRoute(this.paginationConfig.id, {page: 1}, {value: null, startsWith: null});
   }
 
 }
