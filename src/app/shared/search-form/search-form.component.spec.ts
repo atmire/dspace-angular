@@ -13,6 +13,7 @@ import { SearchConfigurationService } from '../../core/shared/search/search-conf
 import { PaginationServiceStub } from '../testing/pagination-service.stub';
 import { DSpaceObjectDataService } from '../../core/data/dspace-object-data.service';
 import { createSuccessfulRemoteDataObject$ } from '../remote-data.utils';
+import { BrowserOnlyMockPipe } from '../testing/browser-only-mock.pipe';
 
 describe('SearchFormComponent', () => {
   let comp: SearchFormComponent;
@@ -36,7 +37,10 @@ describe('SearchFormComponent', () => {
         { provide: SearchConfigurationService, useValue: searchConfigService },
         { provide: DSpaceObjectDataService, useValue: { findById: () => createSuccessfulRemoteDataObject$(undefined)} }
       ],
-      declarations: [SearchFormComponent]
+      declarations: [
+        SearchFormComponent,
+        BrowserOnlyMockPipe,
+      ]
     }).compileComponents();
   }));
 
