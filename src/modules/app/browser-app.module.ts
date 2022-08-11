@@ -38,6 +38,7 @@ import { extendEnvironmentWithAppConfig } from '../../config/config.util';
 import { CorrelationIdService } from '../../app/correlation-id/correlation-id.service';
 
 import { environment } from '../../environments/environment';
+import { fromEvent } from 'rxjs';
 
 export const REQ_KEY = makeStateKey<string>('req');
 
@@ -87,6 +88,28 @@ export function getRequest(transferState: TransferState): any {
         return () =>
           dspaceTransferState.transfer().then((b: boolean) => {
             correlationIdService.initCorrelationId();
+
+            const transitionStyles = Array.from(document.querySelectorAll('style[ng-transition]'));
+
+            const ssr = document.body.querySelector('ds-app') as HTMLElement;
+
+            const csr = ssr.cloneNode(false) as HTMLElement;
+            csr.style.display = 'none';
+            document.body.insertBefore(csr, ssr);
+
+            ssr.setAttribute('ng-non-bindable', '');
+
+            transitionStyles.forEach((element: HTMLElement) => {
+              element.removeAttribute('ng-transition');
+            });
+
+            fromEvent(window, 'load').subscribe(() => {
+              transitionStyles.forEach((el: HTMLElement) => el.remove());
+
+              csr.style.display = 'block';
+              ssr.remove();
+            });
+
             return b;
           });
       },
