@@ -25,6 +25,7 @@ import { storeModuleConfig } from '../../app.reducer';
 import { TestColdObservable } from 'jasmine-marbles/src/test-observables';
 import { IndexName } from '../index/index-name.model';
 import { CoreState } from '../core-state.model';
+import { ObjectBuildService } from './builders/object-build.service';
 
 describe('ObjectCacheService', () => {
   let service: ObjectCacheService;
@@ -32,6 +33,7 @@ describe('ObjectCacheService', () => {
   let mockStore: MockStore<CoreState>;
   let linkServiceStub;
   let initialState: any;
+  let objectBuildService: ObjectBuildService;
 
   let selfLink;
   let anotherLink;
@@ -113,9 +115,10 @@ describe('ObjectCacheService', () => {
     linkServiceStub = {
       removeResolvedLinks: (a) => a
     };
+    objectBuildService = { plainObjectToInstance: (a) => a } as any;
     spyOn(linkServiceStub, 'removeResolvedLinks').and.callThrough();
     spyOn(store, 'dispatch');
-    service = new ObjectCacheService(store, linkServiceStub);
+    service = new ObjectCacheService(store, linkServiceStub, objectBuildService);
 
     spyOn(Date.prototype, 'getTime').and.callFake(() => {
       return timestamp;
