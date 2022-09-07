@@ -503,8 +503,7 @@ export class SearchConfigurationService implements OnDestroy {
         if (rd.hasSucceeded) {
           let filters: SearchFilterConfig[];
           if (isNotEmpty(rd.payload.filters)) {
-            filters = rd.payload.filters
-              .map((f: any) => Object.assign(new SearchFilterConfig(), f));
+            filters = rd.payload.filters;
           } else {
             filters = [];
           }

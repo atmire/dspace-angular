@@ -25,12 +25,14 @@ import { hasSucceeded, RequestEntryState } from '../../data/request-entry-state.
 import { getRequestFromRequestHref, getRequestFromRequestUUID } from '../../shared/request.operators';
 import { RequestEntry } from '../../data/request-entry.model';
 import { ResponseState } from '../../data/response-state.model';
+import { ObjectBuildService } from './object-build.service';
 
 @Injectable()
 export class RemoteDataBuildService {
   constructor(protected objectCache: ObjectCacheService,
               protected linkService: LinkService,
-              protected requestService: RequestService) {
+              protected requestService: RequestService,
+              private objectBuildService: ObjectBuildService) {
   }
 
   /**
@@ -59,7 +61,7 @@ export class RemoteDataBuildService {
           } else if (this.isCacheablePayload(entry)) {
             return this.objectCache.getObjectByHref(entry.response.payloadLink.href);
           } else {
-            return [this.plainObjectToInstance<T>(entry.response.unCacheableObject)];
+            return [this.objectBuildService.plainObjectToInstance<T>(entry.response.unCacheableObject)];
           }
         } else if (hasSucceeded(entry.state)) {
           return [null];
@@ -78,23 +80,6 @@ export class RemoteDataBuildService {
         return [obj];
       })
     );
-  }
-
-  /**
-   * When an object is returned from the store, it's possibly a plain javascript object (in case
-   * it was first instantiated on the server). This method will turn it in to an instance of the
-   * class corresponding with its type property. If it doesn't have one, or we can't find a
-   * constructor for that type, it will remain a plain object.
-   *
-   * @param obj  The object to turn in to a class instance based on its type property
-   */
-  private plainObjectToInstance<T>(obj: any): T {
-    const type: GenericConstructor<T> = getClassForType(obj.type);
-    if (typeof type === 'function') {
-      return Object.assign(new type(), obj) as T;
-    } else {
-      return Object.assign({}, obj) as T;
-    }
   }
 
   /**
@@ -148,7 +133,7 @@ export class RemoteDataBuildService {
         const pageSelfLinks = paginatedList._links.page.map((link: HALLink) => link.href);
         return this.objectCache.getList(pageSelfLinks).pipe(map((page: any[]) => {
           paginatedList.page = page
-            .map((obj: any) => this.plainObjectToInstance<T>(obj))
+            .map((obj: any) => this.objectBuildService.plainObjectToInstance<T>(obj))
             .map((obj: any) =>
               this.linkService.resolveLinks(obj, ...pageLink.linksToFollow)
             );
@@ -160,7 +145,7 @@ export class RemoteDataBuildService {
       } else {
         // in case the elements of the paginated list were already filled in, because they're UnCacheableObjects
         paginatedList.page = paginatedList.page
-          .map((obj: any) => this.plainObjectToInstance<T>(obj))
+          .map((obj: any) => this.objectBuildService.plainObjectToInstance<T>(obj))
           .map((obj: any) =>
             this.linkService.resolveLinks(obj, ...pageLink.linksToFollow)
           );

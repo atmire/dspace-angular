@@ -28,6 +28,7 @@ import { RemoveFromIndexBySubstringAction } from '../index/index.actions';
 import { HALLink } from '../shared/hal-link.model';
 import { CacheableObject } from './cacheable-object.model';
 import { IndexName } from '../index/index-name.model';
+import { ObjectBuildService } from './builders/object-build.service';
 
 /**
  * The base selector function to select the object cache in the store
@@ -54,7 +55,8 @@ const entryFromSelfLinkSelector =
 export class ObjectCacheService {
   constructor(
     private store: Store<CoreState>,
-    private linkService: LinkService
+    private linkService: LinkService,
+    private objectBuildService: ObjectBuildService
   ) {
   }
 
@@ -147,11 +149,7 @@ export class ObjectCacheService {
         }
       ),
       map((entry: ObjectCacheEntry) => {
-        const type: GenericConstructor<T> = getClassForType((entry.data as any).type);
-        if (typeof type !== 'function') {
-          throw new Error(`${type} is not a valid constructor for ${JSON.stringify(entry.data)}`);
-        }
-        return Object.assign(new type(), entry.data) as T;
+        return this.objectBuildService.plainObjectToInstance<T>(entry.data);
       })
     );
   }

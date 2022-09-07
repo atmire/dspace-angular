@@ -18,6 +18,7 @@ import { take } from 'rxjs/operators';
 import { HALLink } from '../../shared/hal-link.model';
 import { RequestEntryState } from '../../data/request-entry-state.model';
 import { RequestEntry } from '../../data/request-entry.model';
+import { ObjectBuildService } from './object-build.service';
 
 describe('RemoteDataBuildService', () => {
   let service: RemoteDataBuildService;
@@ -25,6 +26,7 @@ describe('RemoteDataBuildService', () => {
   let linkService: LinkService;
   let requestService: RequestService;
   let unCacheableObject: UnCacheableObject;
+  let objectBuildService: ObjectBuildService;
   let pageInfo: PageInfo;
   let paginatedList: PaginatedList<any>;
   let normalizedPaginatedList: PaginatedList<any>;
@@ -45,6 +47,7 @@ describe('RemoteDataBuildService', () => {
     objectCache = getMockObjectCacheService();
     linkService = getMockLinkService();
     requestService = getMockRequestService();
+    objectBuildService = { plainObjectToInstance: (a) => a } as any;
     unCacheableObject = {
       foo: 'bar'
     };
@@ -137,12 +140,12 @@ describe('RemoteDataBuildService', () => {
       followLink('b'),
     ];
 
-    service = new RemoteDataBuildService(objectCache, linkService, requestService);
+    service = new RemoteDataBuildService(objectCache, linkService, requestService, objectBuildService);
   });
 
   describe(`buildPayload`, () => {
     beforeEach(() => {
-      spyOn(service as any, 'plainObjectToInstance').and.returnValue(unCacheableObject);
+      spyOn((service as any).objectBuildService, 'plainObjectToInstance').and.returnValue(unCacheableObject);
       spyOn(service as any, 'buildPaginatedList').and.returnValue(observableOf(paginatedList));
       (objectCache.getObjectByHref as jasmine.Spy).and.returnValue(observableOf(array[0]));
       (linkService.resolveLinks as jasmine.Spy).and.returnValue(array[1]);
@@ -294,7 +297,7 @@ describe('RemoteDataBuildService', () => {
         (service as any).buildPayload(requestEntry$, undefined)
           .pipe(take(1))
           .subscribe(() => {
-            expect((service as any).plainObjectToInstance).toHaveBeenCalledWith(unCacheableObject);
+            expect((service as any).objectBuildService.plainObjectToInstance).toHaveBeenCalledWith(unCacheableObject);
             done();
           });
       });
@@ -479,46 +482,11 @@ describe('RemoteDataBuildService', () => {
     });
   });
 
-  describe(`plainObjectToInstance`, () => {
-    describe(`when the object has a recognized type property`, () => {
-      it(`should return a new instance of that type`, () => {
-        const source: any = {
-          type: ITEM,
-          uuid: 'some-uuid'
-        };
-
-        const result = (service as any).plainObjectToInstance(source);
-        result.foo = 'bar';
-
-        expect(result).toEqual(jasmine.any(Item));
-        expect(result.uuid).toEqual('some-uuid');
-        expect(result.foo).toEqual('bar');
-        expect(source.foo).toBeUndefined();
-      });
-    });
-    describe(`when the object doesn't have a recognized type property`, () => {
-      it(`should return a new plain JS object`, () => {
-        const source: any = {
-          type: 'foobar',
-          uuid: 'some-uuid'
-        };
-
-        const result = (service as any).plainObjectToInstance(source);
-        result.foo = 'bar';
-
-        expect(result).toEqual(jasmine.any(Object));
-        expect(result.uuid).toEqual('some-uuid');
-        expect(result.foo).toEqual('bar');
-        expect(source.foo).toBeUndefined();
-      });
-    });
-  });
-
   describe(`buildPaginatedList`, () => {
     beforeEach(() => {
       (objectCache.getList as jasmine.Spy).and.returnValue(observableOf(array));
       (linkService.resolveLinks as jasmine.Spy).and.callFake((obj) => obj);
-      spyOn(service as any, 'plainObjectToInstance').and.callFake((obj) => obj);
+      spyOn((service as any).objectBuildService, 'plainObjectToInstance').and.callFake((obj) => obj);
     });
     describe(`when linksToFollow contains a 'page' link`, () => {
       let paginatedLinksToFollow;
@@ -543,7 +511,7 @@ describe('RemoteDataBuildService', () => {
             .pipe(take(1))
             .subscribe(() => {
               array.forEach((element) => {
-                expect((service as any).plainObjectToInstance).toHaveBeenCalledWith(element);
+                expect((service as any).objectBuildService.plainObjectToInstance).toHaveBeenCalledWith(element);
               });
               done();
             });
@@ -590,7 +558,7 @@ describe('RemoteDataBuildService', () => {
             .pipe(take(1))
             .subscribe(() => {
               array.forEach((element) => {
-                expect((service as any).plainObjectToInstance).toHaveBeenCalledWith(element);
+                expect((service as any).objectBuildService.plainObjectToInstance).toHaveBeenCalledWith(element);
               });
               done();
             });
