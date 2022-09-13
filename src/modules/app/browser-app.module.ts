@@ -38,6 +38,8 @@ import { extendEnvironmentWithAppConfig } from '../../config/config.util';
 import { CorrelationIdService } from '../../app/correlation-id/correlation-id.service';
 
 import { environment } from '../../environments/environment';
+import { ObjectBuildService } from '../../app/core/cache/builders/object-build.service';
+import { BrowserObjectBuildService } from '../../app/core/cache/builders/browser-object-build.service';
 
 export const REQ_KEY = makeStateKey<string>('req');
 
@@ -134,6 +136,10 @@ export function getRequest(transferState: TransferState): any {
       provide: LocationToken,
       useFactory: locationProvider,
     },
+    {
+      provide: ObjectBuildService,
+      useClass: BrowserObjectBuildService
+    }
   ]
 })
 export class BrowserAppModule {

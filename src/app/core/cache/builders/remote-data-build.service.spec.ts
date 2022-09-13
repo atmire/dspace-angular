@@ -4,7 +4,6 @@ import { Item } from '../../shared/item.model';
 import { PageInfo } from '../../shared/page-info.model';
 import { RemoteDataBuildService } from './remote-data-build.service';
 import { ObjectCacheService } from '../object-cache.service';
-import { ITEM } from '../../shared/item.resource-type';
 import { getMockLinkService } from '../../../shared/mocks/link-service.mock';
 import { getMockRequestService } from '../../../shared/mocks/request.service.mock';
 import { getMockObjectCacheService } from '../../../shared/mocks/object-cache.service.mock';

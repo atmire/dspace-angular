@@ -3,15 +3,15 @@ import { ObjectBuildService } from './object-build.service';
 import { NativeWindowRef } from '../../services/window.service';
 import { typedObject } from './build-decorators';
 import { ResourceType } from '../../shared/resource-type';
+import { Injectable } from '@angular/core';
 
 const machineType = 'machine';
 const capsuleType = 'capsule';
 const toyType = 'toy';
+let cerializeTypeMap: Map<any, any>;
 
 describe('ObjectBuildService', () => {
   let service: ObjectBuildService;
-  let windowRef: NativeWindowRef;
-  let cerializeTypeMap: Map<any, any>;
   let gashaponMachineJson: object;
 
 
@@ -48,10 +48,7 @@ describe('ObjectBuildService', () => {
     cerializeTypeMap = new Map();
     cerializeTypeMap.set(GashaponMachine, [{deserializedType: Capsule, deserializedKey: 'capsules'}]);
     cerializeTypeMap.set(Capsule, [{deserializedType: Toy, deserializedKey: 'toy'}]);
-    windowRef = {nativeWindow: {
-        __CerializeTypeMap: cerializeTypeMap
-      }} as NativeWindowRef;
-    service = new ObjectBuildService(windowRef);
+    service = new TestObjectBuildService();
   });
 
   describe(`plainObjectToInstance`, () => {
@@ -108,4 +105,11 @@ class GashaponMachine {
   static type = new ResourceType(machineType);
   capsules: Capsule[];
   turn(coin) {/* return capsule from list */}
+}
+
+@Injectable()
+class TestObjectBuildService extends ObjectBuildService {
+  protected getCerializeTypeMap() {
+    return cerializeTypeMap;
+  }
 }
