@@ -178,7 +178,6 @@ import { OrcidHistoryDataService } from './orcid/orcid-history-data.service';
 import { OrcidQueue } from './orcid/model/orcid-queue.model';
 import { OrcidHistory } from './orcid/model/orcid-history.model';
 import { OrcidAuthService } from './orcid/orcid-auth.service';
-import { ObjectBuildService } from './cache/builders/object-build.service';
 
 /**
  * When not in production, endpoint responses can be mocked for testing purposes
@@ -310,7 +309,6 @@ const PROVIDERS = [
   OrcidAuthService,
   OrcidQueueService,
   OrcidHistoryDataService,
-  ObjectBuildService,
 ];
 
 /**

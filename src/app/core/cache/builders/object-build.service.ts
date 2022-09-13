@@ -2,13 +2,8 @@ import { Inject, Injectable } from '@angular/core';
 import { hasValue, isNotEmpty } from '../../../shared/empty.util';
 import { GenericConstructor } from '../../shared/generic-constructor';
 import { getClassForType } from './build-decorators';
-import { NativeWindowRef, NativeWindowService } from '../../services/window.service';
 
-@Injectable()
-export class ObjectBuildService {
-  constructor(@Inject(NativeWindowService) private _window: NativeWindowRef) {
-  }
-
+export abstract class ObjectBuildService {
   /**
    * When an object is returned from the store, it's possibly a plain javascript object (in case
    * it was first instantiated on the server). This method will turn it in to an instance of the
@@ -35,10 +30,11 @@ export class ObjectBuildService {
     } else {
       object = Object.assign({}, obj) as T;
     }
-    if (this._window.nativeWindow) {
-      let fieldsForType = (this._window.nativeWindow as any).__CerializeTypeMap.get(type);
+    const typeMap = this.getCerializeTypeMap();
+    if (typeMap) {
+      let fieldsForType = typeMap.get(type);
       if (isNotEmpty(fieldsForType)) {
-        (this._window.nativeWindow as any).__CerializeTypeMap.get(type).forEach((field: { deserializedKey: string, deserializedType: GenericConstructor<any> }) => {
+        typeMap.get(type).forEach((field: { deserializedKey: string, deserializedType: GenericConstructor<any> }) => {
           if (hasValue(field.deserializedType)) {
             const fieldValue = object[field.deserializedKey];
             let newFieldValue;
@@ -56,4 +52,6 @@ export class ObjectBuildService {
     }
     return object;
   }
+
+  protected abstract getCerializeTypeMap();
 }

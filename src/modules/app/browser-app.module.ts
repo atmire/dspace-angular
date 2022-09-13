@@ -27,6 +27,8 @@ import { GoogleAnalyticsService } from '../../app/statistics/google-analytics.se
 import { AuthRequestService } from '../../app/core/auth/auth-request.service';
 import { BrowserAuthRequestService } from '../../app/core/auth/browser-auth-request.service';
 import { BrowserInitService } from './browser-init.service';
+import { ObjectBuildService } from '../../app/core/cache/builders/object-build.service';
+import { BrowserObjectBuildService } from '../../app/core/cache/builders/browser-object-build.service';
 
 export const REQ_KEY = makeStateKey<string>('req');
 
@@ -103,6 +105,10 @@ export function getRequest(transferState: TransferState): any {
       provide: LocationToken,
       useFactory: locationProvider,
     },
+    {
+      provide: ObjectBuildService,
+      useClass: BrowserObjectBuildService
+    }
   ]
 })
 export class BrowserAppModule {
