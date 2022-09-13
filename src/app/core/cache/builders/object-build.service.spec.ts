@@ -1,6 +1,5 @@
 /* eslint-disable max-classes-per-file */
 import { ObjectBuildService } from './object-build.service';
-import { NativeWindowRef } from '../../services/window.service';
 import { typedObject } from './build-decorators';
 import { ResourceType } from '../../shared/resource-type';
 import { Injectable } from '@angular/core';
