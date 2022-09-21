@@ -193,6 +193,11 @@ export function app() {
  * The callback function to serve server side angular
  */
 function ngApp(req, res) {
+  if (req && req.headers) {
+    console.log('HEADERS');
+    console.log(req.headers);
+    console.log('-------');
+  }
   if (environment.universal.preboot) {
     res.render(indexHtml, {
       req,
