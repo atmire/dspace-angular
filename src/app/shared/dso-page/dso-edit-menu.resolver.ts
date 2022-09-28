@@ -70,8 +70,115 @@ export class DSOEditMenuResolver implements Resolve<{ [key: string]: MenuSection
   getDsoMenus(dso, route, state): Observable<MenuSection[]>[] {
     return [
       this.getItemMenu(dso),
-      this.getCommonMenu(dso, state)
+      this.getCommonMenu(dso, state),
+      this.getTestMenus(),
     ];
+  }
+
+  getTestMenus() {
+    return of([
+      // Just a button
+      {
+        id: 'test1',
+        active: false,
+        visible: true,
+        model: {
+          type: MenuItemType.LINK,
+          text: 'Go home',
+          link: '/home',
+        } as LinkMenuItemModel,
+        icon: 'home',
+        index: 2,
+      },
+
+      // Dropdown menu where some entries have icons
+      {
+        id: 'test2-sub1',
+        parentID: 'test2',
+        active: false,
+        visible: true,
+        model: {
+          type: MenuItemType.LINK,
+          text: 'Go home from this dropdown',
+          link: '/home',
+        } as LinkMenuItemModel,
+        icon: 'home',
+        index: 1,
+      },
+      {
+        id: 'test2-sub2',
+        parentID: 'test2',
+        active: false,
+        visible: true,
+        model: {
+          type: MenuItemType.LINK,
+          text: 'Go home from this dropdown, but without an icon',
+          link: '/home',
+        } as LinkMenuItemModel,
+        index: 2,
+      },
+      {
+        id: 'test2-sub3',
+        parentID: 'test2',
+        active: false,
+        visible: true,
+        model: {
+          type: MenuItemType.LINK,
+          text: 'Go home from this dropdown, but with a different icon now',
+          link: '/home',
+        } as LinkMenuItemModel,
+        icon: 'tree',
+        index: 3,
+      },
+      {
+        id: 'test2',
+        active: false,
+        visible: true,
+        model: {
+          type: MenuItemType.TEXT,
+          text: 'Go home dropdown'
+        } as TextMenuItemModel,
+        icon: 'arrow-down',
+        index: 3,
+      },
+
+      // Drodown menu where none of the entries have icons
+      {
+        id: 'test3-sub1',
+        parentID: 'test3',
+        active: false,
+        visible: true,
+        model: {
+          type: MenuItemType.LINK,
+          text: 'Go home from this dropdown, no icon here either',
+          link: '/home',
+        } as LinkMenuItemModel,
+        index: 1,
+      },
+      {
+        id: 'test3-sub2',
+        parentID: 'test3',
+        active: false,
+        visible: true,
+        model: {
+          type: MenuItemType.LINK,
+          text: 'Go home from this dropdown, still no icon',
+          link: '/home',
+        } as LinkMenuItemModel,
+        index: 2,
+      },
+      {
+        id: 'test3',
+        active: false,
+        visible: true,
+        model: {
+          type: MenuItemType.TEXT,
+          text: 'Go home dropdown, again'
+        } as TextMenuItemModel,
+        icon: 'bars',
+        index: 4,
+      }
+    ]);
   }
 
   /**
