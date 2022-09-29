@@ -84,6 +84,25 @@ import { SearchModule } from '../../app/shared/search/search.module';
 import { ResourcePoliciesModule } from '../../app/shared/resource-policies/resource-policies.module';
 import { ComcolModule } from '../../app/shared/comcol/comcol.module';
 import { FeedbackComponent } from './app/info/feedback/feedback.component';
+import { CommunityListComponent } from './app/community-list-page/community-list/community-list.component';
+import { AuthNavMenuComponent } from './app/shared/auth-nav-menu/auth-nav-menu.component';
+import {
+  ExpandableNavbarSectionComponent
+} from './app/navbar/expandable-navbar-section/expandable-navbar-section.component';
+import { ItemMetadataComponent } from './app/item-page/edit-item-page/item-metadata/item-metadata.component';
+import {
+  EditItemTemplatePageComponent
+} from './app/collection-page/edit-item-template-page/edit-item-template-page.component';
+import { LoadingComponent } from './app/shared/loading/loading.component';
+import { SearchResultsComponent } from './app/shared/search/search-results/search-results.component';
+import { AdminSidebarComponent } from './app/admin/admin-sidebar/admin-sidebar.component';
+import { SearchSettingsComponent } from './app/shared/search/search-settings/search-settings.component';
+import {
+  CommunityPageSubCommunityListComponent
+} from './app/community-page/sub-community-list/community-page-sub-community-list.component';
+import {
+  CommunityPageSubCollectionListComponent
+} from './app/community-page/sub-collection-list/community-page-sub-collection-list.component';
 
 const DECLARATIONS = [
   FileSectionComponent,
@@ -126,7 +145,16 @@ const DECLARATIONS = [
   NavbarComponent,
   HeaderNavbarWrapperComponent,
   BreadcrumbsComponent,
-  FeedbackComponent
+  FeedbackComponent,
+  CommunityListComponent,
+  AuthNavMenuComponent,
+  ExpandableNavbarSectionComponent,
+  ItemMetadataComponent,
+  EditItemTemplatePageComponent,
+  LoadingComponent,
+  SearchResultsComponent,
+  AdminSidebarComponent,
+  SearchSettingsComponent
 ];
 
 @NgModule({

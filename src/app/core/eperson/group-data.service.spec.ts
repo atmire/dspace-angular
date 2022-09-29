@@ -11,7 +11,6 @@ import {
 } from '../../access-control/group-registry/group-registry.actions';
 import { GroupMock, GroupMock2 } from '../../shared/testing/group-mock';
 import { RequestParam } from '../cache/models/request-param.model';
-import { CoreState } from '../core.reducers';
 import { ChangeAnalyzer } from '../data/change-analyzer';
 import { DeleteRequest, FindListOptions, PostRequest } from '../data/request.models';
 import { RequestService } from '../data/request.service';
@@ -25,6 +24,10 @@ import { TranslateLoaderMock } from '../../shared/testing/translate-loader.mock'
 import { getMockRequestService } from '../../shared/mocks/request.service.mock';
 import { EPersonMock, EPersonMock2 } from '../../shared/testing/eperson.mock';
 import { createPaginatedList, createRequestEntry$ } from '../../shared/testing/utils.test';
+import { CoreState } from '../core-state.model';
+import { of as observableOf } from 'rxjs';
+import { ObjectCacheEntry } from '../cache/object-cache.reducer';
+import { getMockObjectCacheService } from '../../shared/mocks/object-cache.service.mock';
 
 describe('GroupDataService', () => {
   let service: GroupDataService;
@@ -37,7 +40,7 @@ describe('GroupDataService', () => {
   let groups$;
   let halService;
   let rdbService;
-
+  let objectCache;
   function init() {
     restEndpointURL = 'https://dspace.4science.it/dspace-spring-rest/api/eperson';
     groupsEndpoint = `${restEndpointURL}/groups`;
@@ -45,6 +48,7 @@ describe('GroupDataService', () => {
     groups$ = createSuccessfulRemoteDataObject$(createPaginatedList(groups));
     rdbService = getMockRemoteDataBuildServiceHrefMap(undefined, { 'https://dspace.4science.it/dspace-spring-rest/api/eperson/groups': groups$ });
     halService = new HALEndpointServiceStub(restEndpointURL);
+    objectCache = getMockObjectCacheService();
     TestBed.configureTestingModule({
       imports: [
         CommonModule,
@@ -108,6 +112,11 @@ describe('GroupDataService', () => {
 
   describe('addSubGroupToGroup', () => {
     beforeEach(() => {
+      objectCache.getByHref.and.returnValue(observableOf({
+        requestUUIDs: ['request1', 'request2'],
+        dependentRequestUUIDs: [],
+      } as ObjectCacheEntry));
+      spyOn((service as any).deleteData, 'invalidateByHref');
       service.addSubGroupToGroup(GroupMock, GroupMock2).subscribe();
     });
     it('should send PostRequest to eperson/groups/group-id/subgroups endpoint with new subgroup link in body', () => {
@@ -122,6 +131,11 @@ describe('GroupDataService', () => {
 
   describe('deleteSubGroupFromGroup', () => {
     beforeEach(() => {
+      objectCache.getByHref.and.returnValue(observableOf({
+        requestUUIDs: ['request1', 'request2'],
+        dependentRequestUUIDs: [],
+      } as ObjectCacheEntry));
+      spyOn((service as any).deleteData, 'invalidateByHref');
       service.deleteSubGroupFromGroup(GroupMock, GroupMock2).subscribe();
     });
     it('should send DeleteRequest to eperson/groups/group-id/subgroups/group-id endpoint', () => {
@@ -132,6 +146,11 @@ describe('GroupDataService', () => {
 
   describe('addMemberToGroup', () => {
     beforeEach(() => {
+      objectCache.getByHref.and.returnValue(observableOf({
+        requestUUIDs: ['request1', 'request2'],
+        dependentRequestUUIDs: [],
+      } as ObjectCacheEntry));
+      spyOn((service as any).deleteData, 'invalidateByHref');
       service.addMemberToGroup(GroupMock, EPersonMock2).subscribe();
     });
     it('should send PostRequest to eperson/groups/group-id/epersons endpoint with new eperson member in body', () => {
@@ -146,6 +165,11 @@ describe('GroupDataService', () => {
 
   describe('deleteMemberFromGroup', () => {
     beforeEach(() => {
+      objectCache.getByHref.and.returnValue(observableOf({
+        requestUUIDs: ['request1', 'request2'],
+        dependentRequestUUIDs: [],
+      } as ObjectCacheEntry));
+      spyOn((service as any).deleteData, 'invalidateByHref');
       service.deleteMemberFromGroup(GroupMock, EPersonMock).subscribe();
     });
     it('should send DeleteRequest to eperson/groups/group-id/epersons/eperson-id endpoint', () => {
