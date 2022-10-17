@@ -5,7 +5,7 @@
  *
  * http://www.dspace.org/license/
  */
-import { CacheableObject } from '../../cache/cacheable-object.model';
+import { CacheableObject } from '../../cache/object-cache.reducer';
 import { BaseDataService } from './base-data.service';
 import { RequestParam } from '../../cache/models/request-param.model';
 import { Observable } from 'rxjs';

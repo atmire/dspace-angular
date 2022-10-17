@@ -5,7 +5,7 @@
  *
  * http://www.dspace.org/license/
  */
-import { CacheableObject } from '../../cache/cacheable-object.model';
+import { CacheableObject } from '../../cache/object-cache.reducer';
 import { Operation } from 'fast-json-patch';
 import { Observable } from 'rxjs';
 import { RemoteData } from '../remote-data';

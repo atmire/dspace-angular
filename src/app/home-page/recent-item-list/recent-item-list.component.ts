@@ -34,9 +34,9 @@ export class RecentItemListComponent implements OnInit {
   sortConfig: SortOptions;
 
   /**
- * The view-mode we're currently on
- * @type {ViewMode}
- */
+   * The view-mode we're currently on
+   * @type {ViewMode}
+   */
   viewMode = ViewMode.ListElement;
 
   private _placeholderFontClass: string;
@@ -47,7 +47,7 @@ export class RecentItemListComponent implements OnInit {
     public searchConfigurationService: SearchConfigurationService,
     protected elementRef: ElementRef,
     @Inject(APP_CONFIG) private appConfig: AppConfig,
-    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(PLATFORM_ID) private platformId: object,
   ) {
 
     this.paginationConfig = Object.assign(new PaginationComponentOptions(), {

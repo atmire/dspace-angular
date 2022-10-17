@@ -11,6 +11,7 @@ import { ThemedHomeNewsComponent } from './home-news/themed-home-news.component'
 import { ThemedHomePageComponent } from './themed-home-page.component';
 import { JournalEntitiesModule } from '../entity-groups/journal-entities/journal-entities.module';
 import { ResearchEntitiesModule } from '../entity-groups/research-entities/research-entities.module';
+import { RecentItemListComponent } from './recent-item-list/recent-item-list.component';
 
 const DECLARATIONS = [
   HomePageComponent,
@@ -18,6 +19,7 @@ const DECLARATIONS = [
   TopLevelCommunityListComponent,
   ThemedHomeNewsComponent,
   HomeNewsComponent,
+  RecentItemListComponent,
 ];
 
 @NgModule({

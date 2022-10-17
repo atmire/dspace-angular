@@ -15,6 +15,7 @@ import { SubmissionConfig } from './submission-config.interface';
 import { ThemeConfig } from './theme.model';
 import { UIServerConfig } from './ui-server-config.interface';
 import { UniversalConfig } from './universal-config.interface';
+import { HomeConfig } from './homepage-config.interface';
 
 export class DefaultAppConfig implements AppConfig {
   production = false;
@@ -203,7 +204,25 @@ export class DefaultAppConfig implements AppConfig {
     // Limit for years to display using jumps of five years (current year - fiveYearLimit)
     fiveYearLimit: 30,
     // The absolute lowest year to display in the dropdown (only used when no lowest date can be found for all items)
-    defaultLowerLimit: 1900
+    defaultLowerLimit: 1900,
+    // Whether to add item thumbnail images to BOTH browse and search result lists.
+    showThumbnails: true,
+    // The number of entries in a paginated browse results list.
+    // Rounded to the nearest size in the list of selectable sizes on the
+    // settings menu.  See pageSizeOptions in 'pagination-component-options.model.ts'.
+    pageSize: 20
+  };
+
+  homePage: HomeConfig = {
+    recentSubmissions: {
+      // The number of item showing in recent submission components
+      pageSize: 5,
+      // sort record of recent submission
+      sortField: 'dc.date.accessioned',
+    },
+    topLevelCommunityList: {
+      pageSize: 5
+    }
   };
 
   // Item Page Config

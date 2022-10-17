@@ -1,6 +1,5 @@
 import { AuthorizationDataService } from './authorization-data.service';
 import { SiteDataService } from '../site-data.service';
-import { AuthService } from '../../auth/auth.service';
 import { Site } from '../../shared/site.model';
 import { EPerson } from '../../eperson/models/eperson.model';
 import { of as observableOf, combineLatest as observableCombineLatest, Observable } from 'rxjs';
@@ -12,9 +11,8 @@ import { Authorization } from '../../shared/authorization.model';
 import { createFailedRemoteDataObject$, createSuccessfulRemoteDataObject$ } from '../../../shared/remote-data.utils';
 import { createPaginatedList } from '../../../shared/testing/utils.test';
 import { Feature } from '../../shared/feature.model';
-import { FindListOptions } from '../find-list-options.model';
-import { testSearchDataImplementation } from '../base/search-data.spec';
 import { getMockObjectCacheService } from '../../../shared/mocks/object-cache.service.mock';
+import objectContaining = jasmine.objectContaining;
 
 describe('AuthorizationDataService', () => {
   let service: AuthorizationDataService;
@@ -77,7 +75,7 @@ describe('AuthorizationDataService', () => {
       });
 
       it('should call searchBy with the site\'s url', () => {
-        expect(service.searchBy).toHaveBeenCalledWith('object', createExpected(site.self), true, true);
+        expect(service.searchBy).toHaveBeenCalledWith('object', objectContaining(createExpected(site.self)), true, true);
       });
     });
 
@@ -87,7 +85,7 @@ describe('AuthorizationDataService', () => {
       });
 
       it('should call searchBy with the site\'s url and the feature', () => {
-        expect(service.searchBy).toHaveBeenCalledWith('object', createExpected(site.self, null, FeatureID.LoginOnBehalfOf), true, true);
+        expect(service.searchBy).toHaveBeenCalledWith('object', objectContaining(createExpected(site.self, null, FeatureID.LoginOnBehalfOf)), true, true);
       });
     });
 
@@ -97,7 +95,7 @@ describe('AuthorizationDataService', () => {
       });
 
       it('should call searchBy with the object\'s url and the feature', () => {
-        expect(service.searchBy).toHaveBeenCalledWith('object', createExpected(objectUrl, null, FeatureID.LoginOnBehalfOf), true, true);
+        expect(service.searchBy).toHaveBeenCalledWith('object', objectContaining(createExpected(objectUrl, null, FeatureID.LoginOnBehalfOf)), true, true);
       });
     });
 
@@ -107,7 +105,8 @@ describe('AuthorizationDataService', () => {
       });
 
       it('should call searchBy with the object\'s url, user\'s uuid and the feature', () => {
-        expect(service.searchBy).toHaveBeenCalledWith('object', createExpected(objectUrl, ePersonUuid, FeatureID.LoginOnBehalfOf), true, true);
+        console.log(createExpected(objectUrl, ePersonUuid, FeatureID.LoginOnBehalfOf) instanceof FindListOptions);
+        expect(service.searchBy).toHaveBeenCalledWith('object', objectContaining(createExpected(objectUrl, ePersonUuid, FeatureID.LoginOnBehalfOf)), true, true);
       });
     });
 

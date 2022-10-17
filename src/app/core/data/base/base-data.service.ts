@@ -15,12 +15,10 @@ import { RequestParam } from '../../cache/models/request-param.model';
 import { HALEndpointService } from '../../shared/hal-endpoint.service';
 import { URLCombiner } from '../../url-combiner/url-combiner';
 import { RemoteData } from '../remote-data';
-import { GetRequest } from '../request.models';
+import { GetRequest, FindListOptions } from '../request.models';
 import { RequestService } from '../request.service';
-import { CacheableObject } from '../../cache/cacheable-object.model';
-import { FindListOptions } from '../find-list-options.model';
 import { PaginatedList } from '../paginated-list.model';
-import { ObjectCacheEntry } from '../../cache/object-cache.reducer';
+import { CacheableObject, ObjectCacheEntry } from '../../cache/object-cache.reducer';
 import { ObjectCacheService } from '../../cache/object-cache.service';
 import { HALDataService } from './hal-data-service.interface';
 import { getFirstCompletedRemoteData } from '../../shared/operators';
@@ -288,7 +286,7 @@ export class BaseDataService<T extends CacheableObject> implements HALDataServic
    * @param reRequestOnStale            Whether or not the request should automatically be re-requested after the response becomes stale
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which {@link HALLink}s should be automatically resolved
    */
-  findListByHref(href$: string | Observable<string>, options: FindListOptions = {}, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<T>[]): Observable<RemoteData<PaginatedList<T>>> {
+  findAllByHref(href$: string | Observable<string>, options: FindListOptions = {}, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<T>[]): Observable<RemoteData<PaginatedList<T>>> {
     if (typeof href$ === 'string') {
       href$ = observableOf(href$);
     }
@@ -308,7 +306,7 @@ export class BaseDataService<T extends CacheableObject> implements HALDataServic
       // cached completed object
       skipWhile((rd: RemoteData<PaginatedList<T>>) => useCachedVersionIfAvailable ? rd.isStale : rd.hasCompleted),
       this.reRequestStaleRemoteData(reRequestOnStale, () =>
-        this.findListByHref(href$, options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow)),
+        this.findAllByHref(href$, options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow)),
     );
   }
 

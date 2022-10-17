@@ -364,7 +364,7 @@ describe('RequestService', () => {
           describe('and it is cached', () => {
             describe('in the ObjectCache', () => {
               beforeEach(() => {
-                (objectCache.getByHref as any).and.returnValue(observableOf({ requestUUID: 'some-uuid' }));
+                (objectCache.getByHref as any).and.returnValue(observableOf({ requestUUIDs: ['some-uuid'] }));
                 spyOn(serviceAsAny, 'hasByHref').and.returnValue(false);
                 spyOn(serviceAsAny, 'hasByUUID').and.returnValue(true);
               });
@@ -424,7 +424,7 @@ describe('RequestService', () => {
           describe('and it is cached', () => {
             describe('in the ObjectCache', () => {
               beforeEach(() => {
-                (objectCache.getByHref as any).and.returnValue(observableOf({ requestUUID: 'some-uuid' }));
+                (objectCache.getByHref as any).and.returnValue(observableOf({ requestUUIDs: ['some-uuid'] }));
                 spyOn(serviceAsAny, 'hasByHref').and.returnValue(false);
                 spyOn(serviceAsAny, 'hasByUUID').and.returnValue(true);
               });

@@ -25,8 +25,7 @@ import { RemoveFromIndexBySubstringAction } from '../index/index.actions';
 import { HALLink } from '../shared/hal-link.model';
 import { storeModuleConfig } from '../../app.reducer';
 import { TestColdObservable } from 'jasmine-marbles/src/test-observables';
-import { IndexName } from '../index/index-name.model';
-import { CoreState } from '../core-state.model';
+import { IndexName } from '../index/index.reducer';
 import { TestScheduler } from 'rxjs/testing';
 
 describe('ObjectCacheService', () => {

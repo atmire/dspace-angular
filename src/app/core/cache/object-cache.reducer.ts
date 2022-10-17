@@ -1,22 +1,19 @@
-/* eslint-disable max-classes-per-file */
-import { HALLink } from '../shared/hal-link.model';
-import { HALResource } from '../shared/hal-resource.model';
 import {
   AddDependentsObjectCacheAction,
   AddPatchObjectCacheAction,
   AddToObjectCacheAction,
   ApplyPatchObjectCacheAction,
   ObjectCacheAction,
-  RemoveDependentsObjectCacheAction,
-  ObjectCacheActionTypes,
+  ObjectCacheActionTypes, RemoveDependentsObjectCacheAction,
   RemoveFromObjectCacheAction,
   ResetObjectCacheTimestampsAction,
 } from './object-cache.actions';
 import { hasValue, isNotEmpty } from '../../shared/empty.util';
 import { CacheEntry } from './cache-entry';
-import { ResourceType } from '../shared/resource-type';
 import { applyPatch, Operation } from 'fast-json-patch';
-import { CacheableObject } from './cacheable-object.model';
+import { ResourceType } from '../shared/resource-type';
+import { HALLink } from '../shared/hal-link.model';
+import { HALResource } from '../shared/hal-resource.model';
 
 /**
  * An interface to represent a JsonPatch
@@ -92,9 +89,11 @@ export class ObjectCacheEntry implements CacheEntry {
   msToLive: number;
 
   /**
-   * The UUID of the request that caused this entry to be added
+   * The UUIDs of the requests that caused this entry to be added
+   * New UUIDs should be added to the front of the array
+   * to make retrieving the latest UUID easier.
    */
-  requestUUID: string;
+  requestUUIDs: string[];
 
   /**
    * A list of UUIDs for the requests that depend on this object.

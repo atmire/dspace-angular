@@ -43,7 +43,7 @@ describe('objectCacheReducer', () => {
       alternativeLinks: [altLink1, altLink2],
       timeCompleted: new Date().getTime(),
       msToLive: 900000,
-      requestUUID: requestUUID1,
+      requestUUIDs: [requestUUID1],
       dependentRequestUUIDs: [],
       patches: [],
       isDirty: false,

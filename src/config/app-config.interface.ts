@@ -15,6 +15,7 @@ import { AuthConfig } from './auth-config.interfaces';
 import { UIServerConfig } from './ui-server-config.interface';
 import { MediaViewerConfig } from './media-viewer-config.interface';
 import { BrowseByConfig } from './browse-by-config.interface';
+import { HomeConfig } from './homepage-config.interface';
 
 interface AppConfig extends Config {
   ui: UIServerConfig;
@@ -30,6 +31,7 @@ interface AppConfig extends Config {
   defaultLanguage: string;
   languages: LangConfig[];
   browseBy: BrowseByConfig;
+  homePage: HomeConfig;
   item: ItemPageConfig;
   collection: CollectionPageConfig;
   themes: ThemeConfig[];

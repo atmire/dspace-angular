@@ -68,7 +68,7 @@ describe('ItemSelectComponent', () => {
 
   paginationService = new PaginationServiceStub(mockPaginationOptions);
 
-  const authorizationDataService = new AuthorizationDataService(null, null, null, null, null, null, null, null, null, null);
+  const authorizationDataService = new AuthorizationDataService(null, null, null, null, null);
 
 
   beforeEach(waitForAsync(() => {

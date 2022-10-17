@@ -127,14 +127,14 @@ describe('SearchDataImpl', () => {
   });
 
   describe('searchBy', () => {
-    it('should patch getSearchEndpoint into findListByHref and return the result', () => {
+    it('should patch getSearchEndpoint into findAllByHref and return the result', () => {
       spyOn(service, 'getSearchByHref').and.returnValue('endpoint' as any);
-      spyOn(service, 'findListByHref').and.returnValue('resulting remote data' as any);
+      spyOn(service, 'findAllByHref').and.returnValue('resulting remote data' as any);
 
       const out: any = service.searchBy('testMethod', options, false, true, ...linksToFollow);
 
       expect(service.getSearchByHref).toHaveBeenCalledWith('testMethod', options, ...linksToFollow);
-      expect(service.findListByHref).toHaveBeenCalledWith('endpoint', undefined, false, true, ...linksToFollow);
+      expect(service.findAllByHref).toHaveBeenCalledWith('endpoint', undefined, false, true, ...linksToFollow);
       expect(out).toBe('resulting remote data');
     });
   });

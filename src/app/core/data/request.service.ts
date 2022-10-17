@@ -336,7 +336,7 @@ export class RequestService {
           .subscribe((entry: ObjectCacheEntry) => {
             // if the object cache has a match, check if the request that the object came with is
             // still valid
-            inObjCache = this.hasByUUID(entry.requestUUID);
+            inObjCache = this.hasByUUID(entry.requestUUIDs[0]);
           }).unsubscribe();
 
         // we should send the request if it isn't cached
@@ -450,6 +450,21 @@ export class RequestService {
   hasByUUID$(uuid: string, checkValidity = true): Observable<boolean> {
     return this.getByUUID(uuid).pipe(
       map((requestEntry: RequestEntry) => checkValidity ? isValid(requestEntry) : hasValue(requestEntry))
+    );
+  }
+
+  /**
+   * Mark a request as stale
+   * @param uuid  the UUID of the request
+   * @return      an Observable that will emit true once the Request becomes stale
+   */
+  setStaleByUUID(uuid: string): Observable<boolean> {
+    this.store.dispatch(new RequestStaleAction(uuid));
+
+    return this.getByUUID(uuid).pipe(
+      map((request: RequestEntry) => isStale(request.state)),
+      filter((stale: boolean) => stale),
+      take(1),
     );
   }
 

@@ -3,7 +3,7 @@ import {
   combineLatest as observableCombineLatest,
   Observable,
   of as observableOf,
-  race as observableRace
+  race as observableRace, AsyncSubject
 } from 'rxjs';
 import { map, switchMap, filter, distinctUntilKeyChanged } from 'rxjs/operators';
 import { hasValue, isEmpty, isNotEmpty, hasNoValue, isUndefined } from '../../../shared/empty.util';
@@ -18,7 +18,11 @@ import {
   hasSucceeded
 } from '../../data/request.reducer';
 import { RequestService } from '../../data/request.service';
-import { getRequestFromRequestHref, getRequestFromRequestUUID } from '../../shared/operators';
+import {
+  getRequestFromRequestHref,
+  getRequestFromRequestUUID,
+  getFirstCompletedRemoteData
+} from '../../shared/operators';
 import { ObjectCacheService } from '../object-cache.service';
 import { LinkService } from './link.service';
 import { HALLink } from '../../shared/hal-link.model';
@@ -190,6 +194,49 @@ export class RemoteDataBuildService {
     const payload$ = this.buildPayload<T>(requestEntry$, undefined, ...linksToFollow);
 
     return this.toRemoteDataObservable<T>(requestEntry$, payload$);
+  }
+
+  /**
+   * Creates a {@link RemoteData} object for a rest request and its response
+   * and emits it only after the callback function is completed.
+   *
+   * @param requestUUID$    The UUID of the request we want to retrieve
+   * @param callback        A function that returns an Observable. It will only be called once the request has succeeded.
+   *                        Then, the response will only be emitted after this callback function has emitted.
+   * @param linksToFollow   List of {@link FollowLinkConfig} that indicate which {@link HALLink}s should be automatically resolved
+   */
+  buildFromRequestUUIDAndAwait<T>(requestUUID$: string | Observable<string>, callback: (rd?: RemoteData<T>) => Observable<unknown>, ...linksToFollow: FollowLinkConfig<any>[]): Observable<RemoteData<T>> {
+    const response$ = this.buildFromRequestUUID(requestUUID$, ...linksToFollow);
+
+    const callbackDone$ = new AsyncSubject<boolean>();
+    response$.pipe(
+      getFirstCompletedRemoteData(),
+      switchMap((rd: RemoteData<any>) => {
+        if (rd.hasSucceeded) {
+          // if the request succeeded, execute the callback
+          return callback(rd);
+        } else {
+          // otherwise, emit right away so the subscription doesn't stick around
+          return [true];
+        }
+      }),
+    ).subscribe(() => {
+      callbackDone$.next(true);
+      callbackDone$.complete();
+    });
+
+    return response$.pipe(
+      switchMap((rd: RemoteData<any>) => {
+        if (rd.hasSucceeded) {
+          // if the request succeeded, wait for the callback to finish
+          return callbackDone$.pipe(
+            map(() => rd),
+          );
+        } else {
+          return [rd];
+        }
+      })
+    );
   }
 
   /**

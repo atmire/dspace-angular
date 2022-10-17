@@ -5,7 +5,6 @@
  *
  * http://www.dspace.org/license/
  */
-/* eslint-disable max-classes-per-file */
 import { RequestService } from '../request.service';
 import { RemoteDataBuildService } from '../../cache/builders/remote-data-build.service';
 import { ObjectCacheService } from '../../cache/object-cache.service';
@@ -101,6 +100,7 @@ class TestService extends PatchDataImpl<any> {
   }
 }
 
+// tslint:disable-next-line:max-classes-per-file
 class DummyChangeAnalyzer implements ChangeAnalyzer<Item> {
   diff(object1: Item, object2: Item): Operation[] {
     return compare((object1 as any).metadata, (object2 as any).metadata);

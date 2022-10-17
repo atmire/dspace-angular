@@ -28,7 +28,6 @@ import { MissingTranslationHelper } from '../translate/missing-translation.helpe
 import { SharedModule } from '../shared.module';
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { SearchComponent } from './search.component';
-import { ThemedSearchComponent } from './themed-search.component';
 import { ThemedSearchResultsComponent } from './search-results/themed-search-results.component';
 import { ThemedSearchSettingsComponent } from './search-settings/themed-search-settings.component';
 

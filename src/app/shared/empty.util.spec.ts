@@ -437,7 +437,7 @@ describe('Empty Utils', () => {
       };
 
       const source$ = hot('abcdefgh', testData);
-      const expected$ = cold('-bc-e--h', testData);
+      const expected$ = cold('-bc-e--hal-data-service.interface.ts', testData);
       const result$ = source$.pipe(isNotEmptyOperator());
 
       expect(result$).toBeObservable(expected$);
