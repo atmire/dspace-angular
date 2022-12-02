@@ -37,6 +37,9 @@ import { FormBuilderService } from './builder/form-builder.service';
 import { DsDynamicTypeBindRelationService } from './builder/ds-dynamic-form-ui/ds-dynamic-type-bind-relation.service';
 import { FormService } from './form.service';
 import { NgxMaskModule } from 'ngx-mask';
+import { NgbDatepickerModule, NgbTimepickerModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
+import { CdkTreeModule } from '@angular/cdk/tree';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const COMPONENTS = [
   CustomSwitchComponent,
@@ -84,6 +87,9 @@ const DIRECTIVES = [
     TranslateModule,
     SortablejsModule,
     NgxMaskModule.forRoot(),
+    NgbDatepickerModule,
+    NgbTimepickerModule,
+    CdkTreeModule,
   ],
   exports: [
     ...COMPONENTS,

@@ -308,8 +308,6 @@ const MODULES = [
   FormsModule,
   InfiniteScrollModule,
   NgbNavModule,
-  NgbDatepickerModule,
-  NgbTimepickerModule,
   NgbTypeaheadModule,
   NgbPaginationModule,
   NgbDropdownModule,
@@ -318,7 +316,6 @@ const MODULES = [
   RouterModule,
   MomentModule,
   DragDropModule,
-  CdkTreeModule,
   GoogleRecaptchaModule,
   MenuModule,
 ];
