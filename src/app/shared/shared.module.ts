@@ -225,14 +225,12 @@ import {
 import {
   ImportableListItemControlComponent
 } from './object-collection/shared/importable-list-item-control/importable-list-item-control.component';
-import { ItemVersionsComponent } from './item/item-versions/item-versions.component';
 import { LogInContainerComponent } from './log-in/container/log-in-container.component';
 import { LogInShibbolethComponent } from './log-in/methods/shibboleth/log-in-shibboleth.component';
 import { LogInPasswordComponent } from './log-in/methods/password/log-in-password.component';
 import { LogInComponent } from './log-in/log-in.component';
 import { BundleListElementComponent } from './object-list/bundle-list-element/bundle-list-element.component';
 import { MissingTranslationHelper } from './translate/missing-translation.helper';
-import { ItemVersionsNoticeComponent } from './item/item-versions/notice/item-versions-notice.component';
 import { FileValidator } from './utils/require-file.validator';
 import { FileValueAccessorDirective } from './utils/file-value-accessor.directive';
 import { FileSectionComponent } from '../item-page/simple/field-components/file-section/file-section.component';
@@ -273,7 +271,6 @@ import { HoverClassDirective } from './hover-class.directive';
 import {
   ValidationSuggestionsComponent
 } from './input-suggestions/validation-suggestions/validation-suggestions.component';
-import { ItemAlertsComponent } from './item/item-alerts/item-alerts.component';
 import {
   ItemSearchResultGridElementComponent
 } from './object-grid/search-result-grid-element/item-search-result/item/item-search-result-grid-element.component';
@@ -287,12 +284,6 @@ import {
 import { RelatedItemsComponent } from '../item-page/simple/related-items/related-items-component';
 import { SearchNavbarComponent } from '../search-navbar/search-navbar.component';
 import { ThemedSearchNavbarComponent } from '../search-navbar/themed-search-navbar.component';
-import {
-  ItemVersionsSummaryModalComponent
-} from './item/item-versions/item-versions-summary-modal/item-versions-summary-modal.component';
-import {
-  ItemVersionsDeleteModalComponent
-} from './item/item-versions/item-versions-delete-modal/item-versions-delete-modal.component';
 import { ScopeSelectorModalComponent } from './search-form/scope-selector-modal/scope-selector-modal.component';
 import {
   BitstreamRequestACopyPageComponent
@@ -421,8 +412,6 @@ const COMPONENTS = [
   SelectableListItemControlComponent,
   ImportableListItemControlComponent,
   LogInContainerComponent,
-  ItemVersionsComponent,
-  ItemVersionsNoticeComponent,
   ModifyItemOverviewComponent,
   ImpersonateNavbarComponent,
   EntityDropdownComponent,
@@ -503,7 +492,6 @@ const SHARED_ITEM_PAGE_COMPONENTS = [
   DsoPageEditButtonComponent,
   DsoPageVersionButtonComponent,
   PersonPageClaimButtonComponent,
-  ItemAlertsComponent,
   GenericItemPageFieldComponent,
   MetadataRepresentationListComponent,
   RelatedItemsComponent,
@@ -547,8 +535,6 @@ const DIRECTIVES = [
     ...ENTRY_COMPONENTS,
     ...DIRECTIVES,
     ...SHARED_ITEM_PAGE_COMPONENTS,
-    ItemVersionsSummaryModalComponent,
-    ItemVersionsDeleteModalComponent,
   ],
   providers: [
     ...PROVIDERS

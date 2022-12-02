@@ -7,10 +7,14 @@ import { TranslateModule } from '@ngx-translate/core';
 import { DYNAMIC_FORM_CONTROL_MAP_FN } from '@ng-dynamic-forms/core';
 import { dsDynamicFormControlMapFn } from '../shared/form/builder/ds-dynamic-form-ui/ds-dynamic-form-control-container.component';
 import { TabbedRelatedEntitiesSearchComponent } from './simple/related-entities/tabbed-related-entities-search/tabbed-related-entities-search.component';
+import { ItemVersionsDeleteModalComponent } from './versions/item-versions-delete-modal/item-versions-delete-modal.component';
+import { ItemVersionsSummaryModalComponent } from './versions/item-versions-summary-modal/item-versions-summary-modal.component';
 
 const COMPONENTS = [
   RelatedEntitiesSearchComponent,
-  TabbedRelatedEntitiesSearchComponent
+  TabbedRelatedEntitiesSearchComponent,
+  ItemVersionsDeleteModalComponent,
+  ItemVersionsSummaryModalComponent,
 ];
 
 @NgModule({

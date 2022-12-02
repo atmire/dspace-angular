@@ -47,6 +47,8 @@ import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import { OrcidSyncSettingsComponent } from './orcid-page/orcid-sync-settings/orcid-sync-settings.component';
 import { OrcidQueueComponent } from './orcid-page/orcid-queue/orcid-queue.component';
 import { UploadModule } from '../shared/upload/upload.module';
+import { ItemAlertsComponent } from './alerts/item-alerts.component';
+import { ItemVersionsModule } from './versions/item-versions.module';
 
 
 const ENTRY_COMPONENTS = [
@@ -82,7 +84,9 @@ const DECLARATIONS = [
   OrcidPageComponent,
   OrcidAuthComponent,
   OrcidSyncSettingsComponent,
-  OrcidQueueComponent
+  OrcidQueueComponent,
+  ItemAlertsComponent,
+  VersionedItemComponent,
 ];
 
 @NgModule({
@@ -91,6 +95,7 @@ const DECLARATIONS = [
     SharedModule.withEntryComponents(),
     ItemPageRoutingModule,
     EditItemPageModule,
+    ItemVersionsModule,
     StatisticsModule.forRoot(),
     JournalEntitiesModule.withEntryComponents(),
     ResearchEntitiesModule.withEntryComponents(),
@@ -100,10 +105,10 @@ const DECLARATIONS = [
   ],
   declarations: [
     ...DECLARATIONS,
-    VersionedItemComponent
+
   ],
   exports: [
-    ...DECLARATIONS
+    ...DECLARATIONS,
   ]
 })
 export class ItemPageModule {
