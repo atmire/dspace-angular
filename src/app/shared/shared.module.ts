@@ -311,7 +311,6 @@ const MODULES = [
   NgbDatepickerModule,
   NgbTimepickerModule,
   NgbTypeaheadModule,
-  NgxPaginationModule,
   NgbPaginationModule,
   NgbDropdownModule,
   NgbTooltipModule,
