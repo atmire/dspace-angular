@@ -49,6 +49,7 @@ import { OrcidQueueComponent } from './orcid-page/orcid-queue/orcid-queue.compon
 import { UploadModule } from '../shared/upload/upload.module';
 import { ItemAlertsComponent } from './alerts/item-alerts.component';
 import { ItemVersionsModule } from './versions/item-versions.module';
+import { BitstreamRequestACopyPageComponent } from './bitstreams/request-a-copy/bitstream-request-a-copy-page.component';
 
 
 const ENTRY_COMPONENTS = [
@@ -87,6 +88,7 @@ const DECLARATIONS = [
   OrcidQueueComponent,
   ItemAlertsComponent,
   VersionedItemComponent,
+  BitstreamRequestACopyPageComponent,
 ];
 
 @NgModule({

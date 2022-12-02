@@ -272,7 +272,6 @@ import {
 import {
   ItemSearchResultGridElementComponent
 } from './object-grid/search-result-grid-element/item-search-result/item/item-search-result-grid-element.component';
-import { BitstreamDownloadPageComponent } from './bitstream-download-page/bitstream-download-page.component';
 import {
   GenericItemPageFieldComponent
 } from '../item-page/simple/field-components/specific-field/generic/generic-item-page-field.component';
@@ -282,10 +281,6 @@ import {
 import { RelatedItemsComponent } from '../item-page/simple/related-items/related-items-component';
 import { SearchNavbarComponent } from '../search-navbar/search-navbar.component';
 import { ThemedSearchNavbarComponent } from '../search-navbar/themed-search-navbar.component';
-import { ScopeSelectorModalComponent } from './search-form/scope-selector-modal/scope-selector-modal.component';
-import {
-  BitstreamRequestACopyPageComponent
-} from './bitstream-request-a-copy-page/bitstream-request-a-copy-page.component';
 import { DsSelectComponent } from './ds-select/ds-select.component';
 import { LogInOidcComponent } from './log-in/methods/oidc/log-in-oidc.component';
 import { ThemedItemListPreviewComponent } from './object-list/my-dspace-result-list-element/item-list-preview/themed-item-list-preview.component';
@@ -302,6 +297,7 @@ import {
 import { MarkdownPipe } from './utils/markdown.pipe';
 import { GoogleRecaptchaModule } from '../core/google-recaptcha/google-recaptcha.module';
 import { MenuModule } from './menu/menu.module';
+import { ScopeSelectorModalComponent } from './search-form/scope-selector-modal/scope-selector-modal.component';
 
 const MODULES = [
   CommonModule,
@@ -465,8 +461,6 @@ const ENTRY_COMPONENTS = [
   ClaimedTaskActionsEditMetadataComponent,
   CollectionDropdownComponent,
   FileDownloadLinkComponent,
-  BitstreamDownloadPageComponent,
-  BitstreamRequestACopyPageComponent,
   CurationFormComponent,
   ExportMetadataSelectorComponent,
   ImportBatchSelectorComponent,
