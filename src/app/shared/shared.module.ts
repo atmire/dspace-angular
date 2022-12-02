@@ -4,8 +4,6 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CdkTreeModule } from '@angular/cdk/tree';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-
-import { NouisliderModule } from 'ng2-nouislider';
 import {
   NgbDatepickerModule,
   NgbDropdownModule,
@@ -319,7 +317,6 @@ const MODULES = [
   NgbTooltipModule,
   ReactiveFormsModule,
   RouterModule,
-  NouisliderModule,
   MomentModule,
   DragDropModule,
   CdkTreeModule,
