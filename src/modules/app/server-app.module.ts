@@ -1,4 +1,4 @@
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, XhrFactory } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule, TransferState } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -29,6 +29,7 @@ import { Angulartics2Mock } from '../../app/shared/mocks/angulartics2.service.mo
 import { AuthRequestService } from '../../app/core/auth/auth-request.service';
 import { ServerAuthRequestService } from '../../app/core/auth/server-auth-request.service';
 import { ServerInitService } from './server-init.service';
+import { ServerXhrKeepalive } from './server-xhr-keepalive';
 
 export function createTranslateLoader(transferState: TransferState) {
   return new TranslateServerLoader(transferState, 'dist/server/assets/i18n/', '.json5');
@@ -99,6 +100,10 @@ export function createTranslateLoader(transferState: TransferState) {
     {
       provide: HardRedirectService,
       useClass: ServerHardRedirectService,
+    },
+    {
+      provide: XhrFactory,
+      useClass: ServerXhrKeepalive,
     },
   ]
 })
