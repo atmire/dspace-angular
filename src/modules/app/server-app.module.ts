@@ -1,4 +1,4 @@
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, XhrFactory } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule, TransferState } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -36,6 +36,7 @@ import { CorrelationIdService } from '../../app/correlation-id/correlation-id.se
 import { AppConfig, APP_CONFIG_STATE } from '../../config/app-config.interface';
 
 import { environment } from '../../environments/environment';
+import { ServerXhrKeepalive } from './server-xhr-keepalive';
 
 export function createTranslateLoader() {
   return new TranslateJson5UniversalLoader('dist/server/assets/i18n/', '.json5');
@@ -120,6 +121,10 @@ export function createTranslateLoader() {
     {
       provide: HardRedirectService,
       useClass: ServerHardRedirectService,
+    },
+    {
+      provide: XhrFactory,
+      useClass: ServerXhrKeepalive,
     },
   ]
 })
