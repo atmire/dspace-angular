@@ -60,7 +60,7 @@ export function app() {
 
   // Tell Express to trust X-FORWARDED-* headers from proxies
   // See https://expressjs.com/en/guide/behind-proxies.html
-  server.set('trust proxy', environment.ui.useProxies);
+  server.set('trust proxy', true);
 
   /*
    * If production mode is enabled in the environment file:
