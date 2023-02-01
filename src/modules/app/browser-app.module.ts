@@ -1,4 +1,4 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule, BrowserTransferStateModule, makeStateKey, TransferState } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -31,6 +31,7 @@ import { GoogleAnalyticsService } from '../../app/statistics/google-analytics.se
 import { AuthRequestService } from '../../app/core/auth/auth-request.service';
 import { BrowserAuthRequestService } from '../../app/core/auth/browser-auth-request.service';
 import { BrowserInitService } from './browser-init.service';
+import { CsrRestUrlInterceptor } from 'src/app/core/csr-rest-url/csr-rest-url.interceptor';
 
 export const REQ_KEY = makeStateKey<string>('req');
 
@@ -110,6 +111,11 @@ export function getRequest(transferState: TransferState): any {
     {
       provide: LocationToken,
       useFactory: locationProvider,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CsrRestUrlInterceptor,
+      multi: true
     },
   ]
 })
