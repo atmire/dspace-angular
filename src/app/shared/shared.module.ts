@@ -326,6 +326,7 @@ import {
 } from '../item-page/simple/field-components/specific-field/title/item-page-title-field.component';
 import { MarkdownPipe } from './utils/markdown.pipe';
 import { GoogleRecaptchaModule } from '../core/google-recaptcha/google-recaptcha.module';
+import { ThemedContextHelpWrapperComponent } from './context-help-wrapper/themed-context-help-wrapper.component';
 
 const MODULES = [
   CommonModule,
@@ -514,6 +515,8 @@ const COMPONENTS = [
   ScopeSelectorModalComponent,
   ItemPageTitleFieldComponent,
   ThemedSearchNavbarComponent,
+  ContextHelpWrapperComponent,
+  ThemedContextHelpWrapperComponent,
 ];
 
 const ENTRY_COMPONENTS = [
@@ -635,7 +638,6 @@ const DIRECTIVES = [
     ItemVersionsSummaryModalComponent,
     ItemVersionsDeleteModalComponent,
     ContextHelpDirective,
-    ContextHelpWrapperComponent,
   ],
   providers: [
     ...PROVIDERS

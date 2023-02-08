@@ -11,7 +11,7 @@ import {
   OnDestroy
 } from '@angular/core';
 import { PlacementArray } from '@ng-bootstrap/ng-bootstrap/util/positioning';
-import { ContextHelpWrapperComponent } from './context-help-wrapper/context-help-wrapper.component';
+import { ThemedContextHelpWrapperComponent } from './context-help-wrapper/themed-context-help-wrapper.component';
 import { PlacementDir } from './context-help-wrapper/placement-dir.model';
 import { ContextHelpService } from './context-help.service';
 
@@ -40,7 +40,7 @@ export class ContextHelpDirective implements OnChanges, OnDestroy {
   @Input() dsContextHelp: ContextHelpDirectiveInput;
   mostRecentId: string | undefined = undefined;
 
-  protected wrapper: ComponentRef<ContextHelpWrapperComponent>;
+  protected wrapper: ComponentRef<ThemedContextHelpWrapperComponent>;
 
   constructor(
     private templateRef: TemplateRef<any>,
@@ -56,7 +56,7 @@ export class ContextHelpDirective implements OnChanges, OnDestroy {
 
     if (this.wrapper === undefined) {
       const factory
-        = this.componentFactoryResolver.resolveComponentFactory(ContextHelpWrapperComponent);
+        = this.componentFactoryResolver.resolveComponentFactory(ThemedContextHelpWrapperComponent);
       this.wrapper = this.viewContainerRef.createComponent(factory);
     }
     this.wrapper.instance.templateRef = this.templateRef;

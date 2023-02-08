@@ -43,6 +43,8 @@ import {
 
 import { CommunityListElementComponent } from './app/shared/object-list/community-list-element/community-list-element.component';
 import { CollectionListElementComponent} from './app/shared/object-list/collection-list-element/collection-list-element.component';
+import { ContextHelpWrapperComponent } from './app/shared/context-help-wrapper/context-help-wrapper.component';
+import { ContextHelpToggleComponent } from './app/header/context-help-toggle/context-help-toggle.component';
 
 
 /**
@@ -74,6 +76,8 @@ const DECLARATIONS = [
   EditCollectionSelectorComponent,
   EditCommunitySelectorComponent,
   EditItemSelectorComponent,
+  ContextHelpWrapperComponent,
+  ContextHelpToggleComponent,
 ];
 
 @NgModule({

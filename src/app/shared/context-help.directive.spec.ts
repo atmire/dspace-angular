@@ -4,11 +4,15 @@ import { of as observableOf, Observable, BehaviorSubject } from 'rxjs';
 import { ContextHelpDirective, ContextHelpDirectiveInput } from './context-help.directive';
 import { TranslateService } from '@ngx-translate/core';
 import { ContextHelpWrapperComponent } from './context-help-wrapper/context-help-wrapper.component';
+import { ThemedContextHelpWrapperComponent } from './context-help-wrapper/themed-context-help-wrapper.component';
+import { ThemedComponent } from './theme-support/themed.component';
+import { ThemeService } from './theme-support/theme.service';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { ContextHelpService } from './context-help.service';
 import { ContextHelp } from './context-help.model';
 import { before } from 'lodash';
 import { By } from '@angular/platform-browser';
+import { getMockThemeService } from '../shared/mocks/theme-service.mock';
 
 @Component({
   template: `<div *dsContextHelp="contextHelpParams()">some text</div>`
@@ -59,9 +63,10 @@ describe('ContextHelpDirective', () => {
       imports: [NgbTooltipModule],
       providers: [
         { provide: TranslateService, useValue: translateService },
-        { provide: ContextHelpService, useValue: contextHelpService }
+        { provide: ContextHelpService, useValue: contextHelpService },
+        { provide: ThemeService, useValue: getMockThemeService() },
       ],
-      declarations: [TestComponent, ContextHelpWrapperComponent, ContextHelpDirective]
+      declarations: [TestComponent, ContextHelpDirective, ThemedContextHelpWrapperComponent]
     }).compileComponents();
   }));
 
@@ -87,7 +92,7 @@ describe('ContextHelpDirective', () => {
       expect(fixture.nativeElement.children.length).toBe(1);
       const [wrapper] = fixture.nativeElement.children;
       expect(component).toBeDefined();
-      expect(wrapper.tagName).toBe('DS-CONTEXT-HELP-WRAPPER');
+      expect(wrapper.tagName).toBe('DS-THEMED-CONTEXT-HELP-WRAPPER');
       expect(contextHelpService.add).toHaveBeenCalledWith(exampleContextHelp);
       done();
     });

@@ -66,8 +66,8 @@ export class ContextHelpWrapperComponent implements OnInit, OnDestroy {
     = {always: [], tooltipBound: []};
 
   constructor(
-    private translateService: TranslateService,
-    private contextHelpService: ContextHelpService
+    protected translateService: TranslateService,
+    protected contextHelpService: ContextHelpService
   ) { }
 
   ngOnInit() {

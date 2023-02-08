@@ -17,7 +17,7 @@ export class ContextHelpToggleComponent implements OnInit, OnDestroy {
   buttonVisible$: Observable<boolean>;
 
   constructor(
-    private contextHelpService: ContextHelpService,
+    protected contextHelpService: ContextHelpService,
   ) { }
 
   private subs: Subscription[];

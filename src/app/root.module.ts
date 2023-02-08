@@ -43,6 +43,7 @@ import {
 import { ThemedPageErrorComponent } from './page-error/themed-page-error.component';
 import { PageErrorComponent } from './page-error/page-error.component';
 import { ContextHelpToggleComponent } from './header/context-help-toggle/context-help-toggle.component';
+import { ThemedContextHelpToggleComponent } from './header/context-help-toggle/themed-context-help-toggle.component';
 
 const IMPORTS = [
   CommonModule,
@@ -81,6 +82,7 @@ const DECLARATIONS = [
   ThemedPageErrorComponent,
   PageErrorComponent,
   ContextHelpToggleComponent,
+  ThemedContextHelpToggleComponent,
 ];
 
 const EXPORTS = [
