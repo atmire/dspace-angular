@@ -2,10 +2,8 @@ import {
   ComponentFactoryResolver,
   ComponentRef,
   Directive,
-  ElementRef,
   Input,
   OnChanges,
-  OnInit,
   TemplateRef,
   ViewContainerRef,
   OnDestroy

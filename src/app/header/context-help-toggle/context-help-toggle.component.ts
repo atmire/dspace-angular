@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ContextHelpService } from '../../shared/context-help.service';
-import { Observable, Subscription, BehaviorSubject } from 'rxjs';
-import { combineLatest } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 /**

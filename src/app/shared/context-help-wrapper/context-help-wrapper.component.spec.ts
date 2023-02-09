@@ -5,7 +5,7 @@ import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { ContextHelpService } from '../context-help.service';
 import { ContextHelp } from '../context-help.model';
-import { Component, Input, ViewChild, DebugElement } from '@angular/core';
+import { Component, Input, DebugElement } from '@angular/core';
 import { PlacementArray } from '@ng-bootstrap/ng-bootstrap/util/positioning';
 import { PlacementDir } from './placement-dir.model';
 import { By } from '@angular/platform-browser';

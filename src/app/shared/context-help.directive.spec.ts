@@ -1,6 +1,6 @@
-import { Component, DebugElement, Input } from '@angular/core';
-import { ComponentFixture, TestBed, getTestBed, waitForAsync } from '@angular/core/testing';
-import { of as observableOf, Observable, BehaviorSubject } from 'rxjs';
+import { Component, Input } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { of as observableOf, BehaviorSubject } from 'rxjs';
 import { ContextHelpDirective, ContextHelpDirectiveInput } from './context-help.directive';
 import { TranslateService } from '@ngx-translate/core';
 import { ContextHelpWrapperComponent } from './context-help-wrapper/context-help-wrapper.component';
@@ -10,8 +10,6 @@ import { ThemeService } from './theme-support/theme.service';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { ContextHelpService } from './context-help.service';
 import { ContextHelp } from './context-help.model';
-import { before } from 'lodash';
-import { By } from '@angular/platform-browser';
 import { getMockThemeService } from '../shared/mocks/theme-service.mock';
 
 @Component({

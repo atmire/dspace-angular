@@ -1,10 +1,9 @@
-import { Component, Input, OnInit, TemplateRef, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, TemplateRef, OnDestroy, ViewChild } from '@angular/core';
 import { PlacementArray } from '@ng-bootstrap/ng-bootstrap/util/positioning';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable, of as observableOf, Subscription, BehaviorSubject, combineLatest } from 'rxjs';
+import { Observable, Subscription, BehaviorSubject, combineLatest } from 'rxjs';
 import { map, distinctUntilChanged, mergeMap } from 'rxjs/operators';
 import { PlacementDir } from './placement-dir.model';
-import content from '*.scss';
 import { ContextHelpService } from '../context-help.service';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { hasValueOperator } from '../empty.util';
