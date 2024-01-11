@@ -82,7 +82,6 @@ export abstract class StartsWithAbstractComponent implements OnInit, OnDestroy {
     }
     this.router.navigate([], {
       queryParams: Object.assign({ startsWith: this.startsWith }),
-      queryParamsHandling: 'merge'
     });
   }
 
