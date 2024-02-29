@@ -52,7 +52,7 @@ describe('ItemPageResolver', () => {
           .pipe(first())
           .subscribe(
             () => {
-              expect(router.navigateByUrl).toHaveBeenCalledWith(router.parseUrl(`/entities/${entityType}/${uuid}`).toString());
+              expect(router.navigateByUrl).toHaveBeenCalledWith(router.parseUrl(`/entities/${entityType}/${uuid}`).toString(), { replaceUrl: true });
               done();
             }
           );
