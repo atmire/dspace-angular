@@ -46,7 +46,7 @@ export class ItemPageResolver extends ItemResolver {
           if (!thisRoute.startsWith(itemRoute)) {
             const itemId = rd.payload.uuid;
             const subRoute = thisRoute.substring(thisRoute.indexOf(itemId) + itemId.length, thisRoute.length);
-            this.router.navigateByUrl(itemRoute + subRoute);
+            this.router.navigateByUrl(itemRoute + subRoute, { replaceUrl: true });
           }
         }
         return rd;
