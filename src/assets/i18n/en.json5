@@ -4816,4 +4816,36 @@
 
   "person.orcid.registry.auth": "ORCID Authorizations",
   "home.recent-submissions.head": "Recent Submissions",
+
+//  "context.help.top-level-community-list": "add your context tip here",
+//
+//  "context.help.recent-item-list": "add your context tip here",
+//
+//  "context.help.community-list-page": "add your context tip here",
+//
+//  "context.help.search-results": "add your context tip here",
+//
+//  "context.help.workflowAdmin.search-results": "add your context tip here",
+//
+//  "context.help.administrativeView.search-results": "add your context tip here",
+//
+//  "context.help.workflow.search-results": "add your context tip here",
+//
+//  "context.help.workspace.search-results": "add your context tip here",
+//
+//  "context.help.search-filters": "add your context tip here",
+//
+//  "context.help.search-settings": "add your context tip here",
+//
+//  "context.help.processes": "add your context tip here",
+//
+//  "context.help.admin-curation-tasks": "add your context tip here",
+//
+//  "context.help.metadata-registry": "add your context tip here",
+//
+//  "context.help.bitstream-formats": "add your context tip here",
+//
+//  "context.help.group-registry-list": "add your context tip here",
+//
+//  "context.help.epeople-registry": "add your context tip here",
 }

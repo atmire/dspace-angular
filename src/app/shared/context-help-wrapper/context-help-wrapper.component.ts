@@ -72,13 +72,24 @@ export class ContextHelpWrapperComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.parsedContent$ = combineLatest([
-      this.content$.pipe(distinctUntilChanged(), mergeMap(translateKey => this.translateService.get(translateKey))),
+      this.content$.pipe(distinctUntilChanged(), mergeMap(translateKey => {
+        return this.translateService.get(translateKey).pipe(map(translatedText => {
+          if (translatedText === translateKey) {
+            console.warn(`Translation does not exist for context tooltip: ${translateKey}`);
+          }
+          return translatedText;
+        }));
+      })),
       this.dontParseLinks$.pipe(distinctUntilChanged())
     ]).pipe(
       map(([text, dontParseLinks]) =>
         dontParseLinks ? [text] : this.parseLinks(text))
     );
-    this.shouldShowIcon$ = this.contextHelpService.shouldShowIcons$();
+    this.shouldShowIcon$ = this.parsedContent$.pipe(
+      map(parsedContent => parsedContent[0] !== this.content$.getValue()),
+      mergeMap(shouldShow => shouldShow ? this.contextHelpService.shouldShowIcons$() : observableOf(false))
+    );
+
     this.subs.always = [this.parsedContent$.subscribe(), this.shouldShowIcon$.subscribe()];
   }
 

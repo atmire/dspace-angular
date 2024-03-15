@@ -14,6 +14,7 @@ import { toFindListOptions } from '../../../shared/pagination/pagination.utils';
 import { NoContent } from '../../../core/shared/NoContent.model';
 import { getFirstCompletedRemoteData } from '../../../core/shared/operators';
 import { PaginationService } from '../../../core/pagination/pagination.service';
+import {ContextHelpDirectiveInput} from '../../../shared/context-help.directive';
 
 @Component({
   selector: 'ds-metadata-registry',
@@ -25,6 +26,12 @@ import { PaginationService } from '../../../core/pagination/pagination.service';
  * The admin can create, edit or delete metadata schemas here.
  */
 export class MetadataRegistryComponent {
+  contextHelp = {
+    content: 'context.help.metadata-registry',
+    id: 'metadata-registry',
+    iconPlacement: 'right',
+    tooltipPlacement: ['right', 'bottom']
+  } as ContextHelpDirectiveInput;
 
   /**
    * A list of all the current metadata schemas within the repository

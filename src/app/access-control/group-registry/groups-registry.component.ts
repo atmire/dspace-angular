@@ -37,6 +37,7 @@ import { PaginationComponentOptions } from '../../shared/pagination/pagination-c
 import { NoContent } from '../../core/shared/NoContent.model';
 import { PaginationService } from '../../core/pagination/pagination.service';
 import { followLink } from '../../shared/utils/follow-link-config.model';
+import {ContextHelpDirectiveInput} from '../../shared/context-help.directive';
 
 @Component({
   selector: 'ds-groups-registry',
@@ -47,6 +48,12 @@ import { followLink } from '../../shared/utils/follow-link-config.model';
  * The admin can create, edit or delete groups here.
  */
 export class GroupsRegistryComponent implements OnInit, OnDestroy {
+  contextHelp = {
+    content: 'context.help.group-registry-list',
+    id: 'group-registry-list',
+    iconPlacement: 'right',
+    tooltipPlacement: ['right', 'bottom']
+  } as ContextHelpDirectiveInput;
 
   messagePrefix = 'admin.access-control.groups.';
 

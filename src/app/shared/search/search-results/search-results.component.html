@@ -1,5 +1,12 @@
 <div class="d-flex justify-content-between">
-    <h2 *ngIf="!disableHeader">{{ (configuration ? configuration + '.search.results.head' : 'search.results.head') | translate }}</h2>
+    <h2 *ngIf="!disableHeader">{{ (configuration ? configuration + '.search.results.head' : 'search.results.head') | translate }}
+        <span *dsContextHelp="{
+            content: configuration ? 'context.help.' + configuration + '.search-results' : 'context.help.search-results',
+            id: 'search-results',
+            iconPlacement: 'right',
+            tooltipPlacement: ['right', 'bottom']
+        }"></span>
+    </h2>
     <ds-search-export-csv [searchConfig]="searchConfig"></ds-search-export-csv>
 </div>
 <div *ngIf="searchResults && searchResults?.hasSucceeded && !searchResults?.isLoading && searchResults?.payload?.page.length > 0" @fadeIn>

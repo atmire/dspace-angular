@@ -21,6 +21,7 @@ import { RequestService } from '../../core/data/request.service';
 import { PageInfo } from '../../core/shared/page-info.model';
 import { NoContent } from '../../core/shared/NoContent.model';
 import { PaginationService } from '../../core/pagination/pagination.service';
+import {ContextHelpDirectiveInput} from '../../shared/context-help.directive';
 
 @Component({
   selector: 'ds-epeople-registry',
@@ -31,6 +32,12 @@ import { PaginationService } from '../../core/pagination/pagination.service';
  * The admin can create, edit or delete epeople here.
  */
 export class EPeopleRegistryComponent implements OnInit, OnDestroy {
+  contextHelp = {
+    content: 'context.help.epeople-registry',
+    id: 'epeople-registry',
+    iconPlacement: 'right',
+    tooltipPlacement: ['right', 'bottom']
+  } as ContextHelpDirectiveInput;
 
   labelPrefix = 'admin.access-control.epeople.';
 

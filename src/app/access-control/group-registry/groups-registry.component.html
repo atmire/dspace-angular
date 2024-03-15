@@ -2,7 +2,7 @@
   <div class="groups-registry row">
     <div class="col-12">
       <div class="d-flex justify-content-between border-bottom mb-3">
-        <h2 id="header" class="pb-2">{{messagePrefix + 'head' | translate}}</h2>
+        <h2 id="header" class="pb-2">{{messagePrefix + 'head' | translate}}<span *dsContextHelp="contextHelp"></span></h2>
         <div>
           <button class="mr-auto btn btn-success"
                   [routerLink]="['newGroup']">

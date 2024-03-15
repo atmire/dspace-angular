@@ -14,6 +14,7 @@ import { NoContent } from '../../../core/shared/NoContent.model';
 import { PaginationService } from '../../../core/pagination/pagination.service';
 import { FindListOptions } from '../../../core/data/find-list-options.model';
 import { getFirstCompletedRemoteData } from '../../../core/shared/operators';
+import {ContextHelpDirectiveInput} from '../../../shared/context-help.directive';
 
 /**
  * This component renders a list of bitstream formats
@@ -23,6 +24,12 @@ import { getFirstCompletedRemoteData } from '../../../core/shared/operators';
   templateUrl: './bitstream-formats.component.html'
 })
 export class BitstreamFormatsComponent implements OnInit, OnDestroy {
+  contextHelp = {
+    content: 'context.help.bitstream-formats',
+    id: 'bitstream-formats',
+    iconPlacement: 'right',
+    tooltipPlacement: ['right', 'bottom']
+  } as ContextHelpDirectiveInput;
 
   /**
    * A paginated list of bitstream formats to be shown on the page

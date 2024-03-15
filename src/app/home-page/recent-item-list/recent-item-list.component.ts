@@ -17,6 +17,7 @@ import { followLink, FollowLinkConfig } from '../../shared/utils/follow-link-con
 import { APP_CONFIG, AppConfig } from '../../../config/app-config.interface';
 import { isPlatformBrowser } from '@angular/common';
 import { setPlaceHolderAttributes } from '../../shared/utils/object-list-utils';
+import {ContextHelpDirectiveInput} from '../../shared/context-help.directive';
 
 @Component({
   selector: 'ds-recent-item-list',
@@ -32,6 +33,12 @@ export class RecentItemListComponent implements OnInit {
   itemRD$: Observable<RemoteData<PaginatedList<Item>>>;
   paginationConfig: PaginationComponentOptions;
   sortConfig: SortOptions;
+  contextHelp = {
+    content: 'context.help.recent-item-list',
+    id: 'recent-item-list',
+    iconPlacement: 'right',
+    tooltipPlacement: ['right', 'bottom']
+  } as ContextHelpDirectiveInput;
 
   /**
  * The view-mode we're currently on

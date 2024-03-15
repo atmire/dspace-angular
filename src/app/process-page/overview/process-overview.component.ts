@@ -14,6 +14,7 @@ import { FindListOptions } from '../../core/data/find-list-options.model';
 import { ProcessBulkDeleteService } from './process-bulk-delete.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { hasValue } from '../../shared/empty.util';
+import {ContextHelpDirectiveInput} from '../../shared/context-help.directive';
 
 @Component({
   selector: 'ds-process-overview',
@@ -23,6 +24,12 @@ import { hasValue } from '../../shared/empty.util';
  * Component displaying a list of all processes in a paginated table
  */
 export class ProcessOverviewComponent implements OnInit, OnDestroy {
+  contextHelp = {
+    content: 'context.help.processes',
+    id: 'processes-overview',
+    iconPlacement: 'right',
+    tooltipPlacement: ['right', 'bottom']
+  } as ContextHelpDirectiveInput;
 
   /**
    * List of all processes

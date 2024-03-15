@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SearchConfigurationService } from '../../../core/shared/search/search-configuration.service';
 import { SEARCH_CONFIG_SERVICE } from '../../../my-dspace-page/my-dspace-page.component';
 import { PaginationService } from '../../../core/pagination/pagination.service';
+import {ContextHelpDirectiveInput} from '../../context-help.directive';
 
 @Component({
   selector: 'ds-search-settings',
@@ -16,6 +17,13 @@ import { PaginationService } from '../../../core/pagination/pagination.service';
  * This component represents the part of the search sidebar that contains the general search settings.
  */
 export class SearchSettingsComponent {
+  contextHelp = {
+    content: 'context.help.search-settings',
+    id: 'search-settings',
+    iconPlacement: 'right',
+    tooltipPlacement: ['right', 'bottom']
+  } as ContextHelpDirectiveInput;
+
   /**
    * The current sort option used
    */

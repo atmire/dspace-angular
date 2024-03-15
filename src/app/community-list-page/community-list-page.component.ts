@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {ContextHelpDirectiveInput} from '../shared/context-help.directive';
 
 /**
  * Page with title and the community list tree, as described in community-list.component;
@@ -9,5 +10,10 @@ import { Component } from '@angular/core';
   templateUrl: './community-list-page.component.html',
 })
 export class CommunityListPageComponent {
-
+  contextHelp = {
+    content: 'context.help.community-list-page',
+    id: 'community-list-page',
+    iconPlacement: 'right',
+    tooltipPlacement: ['right', 'bottom']
+  } as ContextHelpDirectiveInput;
 }

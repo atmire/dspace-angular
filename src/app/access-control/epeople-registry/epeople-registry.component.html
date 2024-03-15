@@ -2,7 +2,7 @@
   <div class="epeople-registry row">
     <div class="col-12">
       <div class="d-flex justify-content-between border-bottom mb-3">
-        <h2 id="header" class="pb-2">{{labelPrefix + 'head' | translate}}</h2>
+        <h2 id="header" class="pb-2">{{labelPrefix + 'head' | translate}}<span *dsContextHelp="contextHelp"></span></h2>
 
         <div *ngIf="!isEPersonFormShown">
           <button class="mr-auto btn btn-success addEPerson-button"

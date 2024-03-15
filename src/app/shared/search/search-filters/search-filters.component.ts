@@ -12,6 +12,7 @@ import { SearchFilterService } from '../../../core/shared/search/search-filter.s
 import { SEARCH_CONFIG_SERVICE } from '../../../my-dspace-page/my-dspace-page.component';
 import { currentPath } from '../../utils/route.utils';
 import { hasValue } from '../../empty.util';
+import {ContextHelpDirectiveInput} from '../../context-help.directive';
 
 @Component({
   selector: 'ds-search-filters',
@@ -24,6 +25,13 @@ import { hasValue } from '../../empty.util';
  * This component represents the part of the search sidebar that contains filters.
  */
 export class SearchFiltersComponent implements OnInit, OnDestroy {
+  contextHelp = {
+    content: 'context.help.search-filters',
+    id: 'search-filters',
+    iconPlacement: 'right',
+    tooltipPlacement: ['right', 'bottom']
+  } as ContextHelpDirectiveInput;
+
   /**
    * An observable containing configuration about which filters are shown and how they are shown
    */

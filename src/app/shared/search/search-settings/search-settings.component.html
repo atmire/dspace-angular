@@ -1,5 +1,5 @@
 <ng-container>
-    <h3>{{ 'search.sidebar.settings.title' | translate}}</h3>
+    <h3>{{ 'search.sidebar.settings.title' | translate}}<span *dsContextHelp="contextHelp"></span></h3>
     <div class="result-order-settings">
     <ds-sidebar-dropdown *ngIf="sortOptionsList"
                          [id]="'search-sidebar-sort'"

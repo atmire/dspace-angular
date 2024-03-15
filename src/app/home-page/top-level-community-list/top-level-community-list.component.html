@@ -2,6 +2,7 @@
   <div *ngIf="communitiesRD?.hasSucceeded ">
     <h2>
       {{'home.top-level-communities.head' | translate}}
+      <span *dsContextHelp="contextHelp"></span>
     </h2>
   <p class="lead">{{'home.top-level-communities.help' | translate}}</p>
   <ds-viewable-collection

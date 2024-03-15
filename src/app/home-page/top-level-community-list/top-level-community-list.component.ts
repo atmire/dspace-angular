@@ -13,6 +13,7 @@ import { hasValue } from '../../shared/empty.util';
 import { switchMap } from 'rxjs/operators';
 import { PaginationService } from '../../core/pagination/pagination.service';
 import { AppConfig, APP_CONFIG } from 'src/config/app-config.interface';
+import {ContextHelpDirective, ContextHelpDirectiveInput} from '../../shared/context-help.directive';
 
 /**
  * this component renders the Top-Level Community list
@@ -26,6 +27,14 @@ import { AppConfig, APP_CONFIG } from 'src/config/app-config.interface';
 })
 
 export class TopLevelCommunityListComponent implements OnInit, OnDestroy {
+
+  contextHelp = {
+    content: 'context.help.top-level-community-list',
+    id: 'top-level-com-list',
+    iconPlacement: 'right',
+    tooltipPlacement: ['right', 'bottom']
+  } as ContextHelpDirectiveInput;
+
   /**
    * A list of remote data objects of all top communities
    */
