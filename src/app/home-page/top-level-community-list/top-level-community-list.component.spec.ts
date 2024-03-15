@@ -34,6 +34,8 @@ import { createPaginatedList } from '../../shared/testing/utils.test';
 import { SearchConfigurationServiceStub } from '../../shared/testing/search-configuration-service.stub';
 import { APP_CONFIG } from 'src/config/app-config.interface';
 import { environment } from 'src/environments/environment.test';
+import {Store} from '@ngrx/store';
+import {StoreMock} from '../../shared/testing/store.mock';
 
 describe('TopLevelCommunityList Component', () => {
   let comp: TopLevelCommunityListComponent;
@@ -142,6 +144,11 @@ describe('TopLevelCommunityList Component', () => {
     }))
   });
 
+  const store = jasmine.createSpyObj('store', {
+    dispatch: {},
+  });
+
+
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -163,6 +170,7 @@ describe('TopLevelCommunityList Component', () => {
         { provide: LinkHeadService, useValue: linkHeadService },
         { provide: ConfigurationDataService, useValue: configurationDataService },
         { provide: SearchConfigurationService, useValue: new SearchConfigurationServiceStub() },
+        { provide: Store, useValue: store},
       ],
       schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
@@ -176,7 +184,7 @@ describe('TopLevelCommunityList Component', () => {
   });
 
 
-  it('should display a list of top-communities', () => {
+  fit('should display a list of top-communities', () => {
     waitForAsync(() => {
       const subComList = fixture.debugElement.queryAll(By.css('li'));
 
