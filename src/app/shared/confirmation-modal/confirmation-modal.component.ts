@@ -1,11 +1,15 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { DSpaceObject } from '../../core/shared/dspace-object.model';
+import { DSONameService } from '../../core/breadcrumbs/dso-name.service';
+import { hasValue } from '../empty.util';
+import { OnInit } from '@angular/core';
 
 @Component({
   selector: 'ds-confirmation-modal',
   templateUrl: 'confirmation-modal.component.html',
 })
-export class ConfirmationModalComponent {
+export class ConfirmationModalComponent implements OnInit {
   @Input() headerLabel: string;
   @Input() infoLabel: string;
   @Input() cancelLabel: string;
@@ -16,6 +20,8 @@ export class ConfirmationModalComponent {
    */
   @Input() brandColor = 'primary';
 
+  @Input() dso: DSpaceObject;
+  // To also use ConfirmationModalComponent when not for DSO
   @Input() name: string;
 
   /**
@@ -26,7 +32,14 @@ export class ConfirmationModalComponent {
 
   constructor(
     protected activeModal: NgbActiveModal,
+    protected dsoNameService: DSONameService
   ) {
+  }
+
+  ngOnInit() {
+    if (!hasValue(this.name) && hasValue(this.dso)) {
+      this.name = this.dsoNameService.getName(this.dso);
+    }
   }
 
   /**
