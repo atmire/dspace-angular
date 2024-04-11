@@ -52,7 +52,7 @@ export class ContextHelpDirective implements OnChanges, OnDestroy {
   ngOnChanges() {
     this.clearMostRecentId();
     this.mostRecentId = this.dsContextHelp.id;
-    this.contextHelpService.add({id: this.dsContextHelp.id, isTooltipVisible: false});
+    this.contextHelpService.add({id: this.dsContextHelp.id, isTooltipVisible: false, translationKey: this.dsContextHelp.content});
 
     if (this.wrapper === undefined) {
       const factory

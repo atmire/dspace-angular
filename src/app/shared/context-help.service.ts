@@ -10,8 +10,9 @@ import {
   ContextHelpHideTooltipAction,
   ContextHelpToggleTooltipAction
 } from './context-help.actions';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { from, Observable } from 'rxjs';
+import {map, mergeAll, reduce, switchMap, } from 'rxjs/operators';
+import {TranslateService} from '@ngx-translate/core';
 
 const contextHelpStateSelector =
   createFeatureSelector<ContextHelpState>('contextHelp');
@@ -33,7 +34,8 @@ const allContextHelpSelector = createSelector(
   providedIn: 'root'
 })
 export class ContextHelpService {
-  constructor(private store: Store<ContextHelpState>) { }
+  constructor(private store: Store<ContextHelpState>,
+              private translateService: TranslateService) { }
 
   /**
    * Observable keeping track of whether context help icons should be visible globally.
@@ -52,11 +54,23 @@ export class ContextHelpService {
   }
 
   /**
-   * Observable that yields true iff there are currently no context help entries in the store.
+   * Observable that emits the number of context help icons that have a translation key different from the key itself.
+   * This is done since we don't want to count the icons that have no translation key, as they won't be shown.
    */
   tooltipCount$(): Observable<number> {
-    return this.store.pipe(select(allContextHelpSelector))
-      .pipe(map((models: ContextHelpModels) => Object.keys(models).length));
+    return this.store.pipe(
+      select(allContextHelpSelector),
+      switchMap((models: ContextHelpModels) => {
+        return from(Object.values(models).map((contextHelp: ContextHelp) => this.translateService.get(contextHelp.translationKey).pipe(
+          map(translatedText => {
+            return translatedText !== contextHelp.translationKey ? 1 : 0;
+          }),
+        ))).pipe(
+          mergeAll(),
+          reduce((acc, count) => acc + count, 0),
+        );
+      }),
+    );
   }
 
   /**
@@ -82,6 +96,8 @@ export class ContextHelpService {
    */
   remove(id: string) {
     this.store.dispatch(new ContextHelpRemoveAction(id));
+    // When a context help icon is removed, the visible tooltip count should be updated
+    this.tooltipCount$().subscribe();
   }
 
   /**

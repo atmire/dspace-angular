@@ -4817,6 +4817,10 @@
   "person.orcid.registry.auth": "ORCID Authorizations",
   "home.recent-submissions.head": "Recent Submissions",
 
+  // Context tooltips
+  // Uncommenting the translation for a tooltip will enable it and make it visible, so make sure
+  // to add a translation for each tooltip you want to enable
+
 //  "context.help.top-level-community-list": "add your context tip here",
 //
 //  "context.help.recent-item-list": "add your context tip here",
