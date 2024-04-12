@@ -15,6 +15,8 @@ import { DSONameService } from '../../core/breadcrumbs/dso-name.service';
 import { DSpaceObjectDataService } from '../../core/data/dspace-object-data.service';
 import { AuthService } from '../../core/auth/auth.service';
 import { createSuccessfulRemoteDataObject } from '../../shared/remote-data.utils';
+import {Store} from '@ngrx/store';
+import {TruncatablesState} from '../../shared/truncatable/truncatable.reducer';
 
 describe('CollectionStatisticsPageComponent', () => {
 
@@ -36,6 +38,13 @@ describe('CollectionStatisticsPageComponent', () => {
 
     const router = {
     };
+
+    const store: Store<TruncatablesState> = jasmine.createSpyObj('store', {
+      /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
+      dispatch: {},
+      /* eslint-enable no-empty, @typescript-eslint/no-empty-function */
+      pipe: observableOf(true)
+    });
 
     const usageReportService = {
       getStatistic: (scope, type) => undefined,
@@ -78,6 +87,7 @@ describe('CollectionStatisticsPageComponent', () => {
         { provide: DSpaceObjectDataService, useValue: {} },
         { provide: DSONameService, useValue: nameService },
         { provide: AuthService, useValue: authService },
+        { provide: Store, useValue: store },
       ],
     })
       .compileComponents();

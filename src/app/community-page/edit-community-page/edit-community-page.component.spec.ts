@@ -8,10 +8,19 @@ import { SharedModule } from '../../shared/shared.module';
 import { of as observableOf } from 'rxjs';
 import { EditCommunityPageComponent } from './edit-community-page.component';
 import { CommunityDataService } from '../../core/data/community-data.service';
+import {Store} from '@ngrx/store';
+import {TruncatablesState} from '../../shared/truncatable/truncatable.reducer';
+import {DSpaceObjectDataService} from '../../core/data/dspace-object-data.service';
 
 describe('EditCommunityPageComponent', () => {
   let comp: EditCommunityPageComponent;
   let fixture: ComponentFixture<EditCommunityPageComponent>;
+  const store: Store<TruncatablesState> = jasmine.createSpyObj('store', {
+    /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
+    dispatch: {},
+    /* eslint-enable no-empty, @typescript-eslint/no-empty-function */
+    pipe: observableOf(true)
+  });
 
   const routeStub = {
     data: observableOf({
@@ -43,6 +52,8 @@ describe('EditCommunityPageComponent', () => {
       providers: [
         { provide: CommunityDataService, useValue: {} },
         { provide: ActivatedRoute, useValue: routeStub },
+        { provide: Store, useValue: store },
+        { provide: DSpaceObjectDataService, useValue: {} },
       ],
       schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();

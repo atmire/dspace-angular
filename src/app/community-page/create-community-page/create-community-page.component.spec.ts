@@ -12,10 +12,19 @@ import { CreateCommunityPageComponent } from './create-community-page.component'
 import { NotificationsService } from '../../shared/notifications/notifications.service';
 import { NotificationsServiceStub } from '../../shared/testing/notifications-service.stub';
 import { RequestService } from '../../core/data/request.service';
+import { Store} from '@ngrx/store';
+import {TruncatablesState} from '../../shared/truncatable/truncatable.reducer';
+import {DSpaceObjectDataService} from '../../core/data/dspace-object-data.service';
 
 describe('CreateCommunityPageComponent', () => {
   let comp: CreateCommunityPageComponent;
   let fixture: ComponentFixture<CreateCommunityPageComponent>;
+  const store: Store<TruncatablesState> = jasmine.createSpyObj('store', {
+    /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
+    dispatch: {},
+    /* eslint-enable no-empty, @typescript-eslint/no-empty-function */
+    pipe: observableOf(true)
+  });
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -26,7 +35,9 @@ describe('CreateCommunityPageComponent', () => {
         { provide: RouteService, useValue: { getQueryParameterValue: () => observableOf('1234') } },
         { provide: Router, useValue: {} },
         { provide: NotificationsService, useValue: new NotificationsServiceStub() },
-        { provide: RequestService, useValue: {} }
+        { provide: RequestService, useValue: {} },
+        { provide: Store, useValue: store},
+        { provide: DSpaceObjectDataService, useValue: {} },
       ],
       schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();

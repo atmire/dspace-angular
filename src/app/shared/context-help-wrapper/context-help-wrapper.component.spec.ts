@@ -39,7 +39,8 @@ const messages = {
 };
 const exampleContextHelp: ContextHelp = {
   id: 'test-tooltip',
-  isTooltipVisible: false
+  isTooltipVisible: false,
+  translationKey: 'example-translation-key',
 };
 
 describe('ContextHelpWrapperComponent', () => {

@@ -15,6 +15,8 @@ import { DSONameService } from '../../core/breadcrumbs/dso-name.service';
 import { DSpaceObjectDataService } from '../../core/data/dspace-object-data.service';
 import { SiteDataService } from '../../core/data/site-data.service';
 import { AuthService } from '../../core/auth/auth.service';
+import {Store} from '@ngrx/store';
+import {TruncatablesState} from '../../shared/truncatable/truncatable.reducer';
 
 describe('SiteStatisticsPageComponent', () => {
 
@@ -40,6 +42,13 @@ describe('SiteStatisticsPageComponent', () => {
         ),
       ]),
     };
+
+    const store: Store<TruncatablesState> = jasmine.createSpyObj('store', {
+      /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
+      dispatch: {},
+      /* eslint-enable no-empty, @typescript-eslint/no-empty-function */
+      pipe: observableOf(true)
+    });
 
     const nameService = {
       getName: () => observableOf('test dso name'),
@@ -79,6 +88,7 @@ describe('SiteStatisticsPageComponent', () => {
         { provide: DSONameService, useValue: nameService },
         { provide: SiteDataService, useValue: siteService },
         { provide: AuthService, useValue: authService },
+        { provide: Store, useValue: store}
       ],
     })
       .compileComponents();

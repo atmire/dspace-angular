@@ -44,6 +44,7 @@ import { ConfigurationProperty } from '../../core/shared/configuration-property.
 import { SearchConfigurationServiceStub } from '../testing/search-configuration-service.stub';
 import { SearchConfigurationService } from '../../core/shared/search/search-configuration.service';
 import { getMockThemeService } from '../mocks/theme-service.mock';
+import {Store} from '@ngrx/store';
 
 @listableObjectComponent(BrowseEntry, ViewMode.ListElement, DEFAULT_CONTEXT, 'custom')
 @Component({
@@ -56,6 +57,13 @@ class MockThemedBrowseEntryListElementComponent {
 describe('BrowseByComponent', () => {
   let comp: BrowseByComponent;
   let fixture: ComponentFixture<BrowseByComponent>;
+  const store = jasmine.createSpyObj('store', {
+    /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
+    dispatch: {},
+    /* eslint-enable no-empty, @typescript-eslint/no-empty-function */
+    select: observableOf(true),
+    pipe: observableOf(true)
+  });
 
   const mockItems = [
     Object.assign(new Item(), {
@@ -125,6 +133,7 @@ describe('BrowseByComponent', () => {
       ],
       declarations: [],
       providers: [
+        { provide: Store, useValue: store },
         { provide: SearchConfigurationService, useValue: new SearchConfigurationServiceStub() },
         { provide: ConfigurationDataService, useValue: configurationDataService },
         { provide: LinkHeadService, useValue: linkHeadService },

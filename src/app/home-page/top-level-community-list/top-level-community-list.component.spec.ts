@@ -184,7 +184,7 @@ describe('TopLevelCommunityList Component', () => {
   });
 
 
-  fit('should display a list of top-communities', () => {
+  it('should display a list of top-communities', () => {
     waitForAsync(() => {
       const subComList = fixture.debugElement.queryAll(By.css('li'));
 

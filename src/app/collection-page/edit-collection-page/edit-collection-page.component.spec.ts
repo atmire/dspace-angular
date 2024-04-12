@@ -8,10 +8,19 @@ import { EditCollectionPageComponent } from './edit-collection-page.component';
 import { SharedModule } from '../../shared/shared.module';
 import { CollectionDataService } from '../../core/data/collection-data.service';
 import { of as observableOf } from 'rxjs';
+import {Store} from '@ngrx/store';
+import {TruncatablesState} from '../../shared/truncatable/truncatable.reducer';
+import {DSpaceObjectDataService} from '../../core/data/dspace-object-data.service';
 
 describe('EditCollectionPageComponent', () => {
   let comp: EditCollectionPageComponent;
   let fixture: ComponentFixture<EditCollectionPageComponent>;
+  const store: Store<TruncatablesState> = jasmine.createSpyObj('store', {
+    /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
+    dispatch: {},
+    /* eslint-enable no-empty, @typescript-eslint/no-empty-function */
+    pipe: observableOf(true)
+  });
 
   const routeStub = {
     data: observableOf({
@@ -43,6 +52,8 @@ describe('EditCollectionPageComponent', () => {
       providers: [
         { provide: CollectionDataService, useValue: {} },
         { provide: ActivatedRoute, useValue: routeStub },
+        { provide: Store, useValue: store },
+        { provide: DSpaceObjectDataService, useValue: {} },
       ],
       schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();

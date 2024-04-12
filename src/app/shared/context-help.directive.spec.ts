@@ -36,7 +36,8 @@ const messages = {
 };
 const exampleContextHelp: ContextHelp = {
   id: 'test-tooltip',
-  isTooltipVisible: false
+  isTooltipVisible: false,
+  translationKey: 'lorem',
 };
 describe('ContextHelpDirective', () => {
   let component: TestComponent;

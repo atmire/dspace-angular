@@ -4,13 +4,19 @@ import { ContextHelpService } from './context-help.service';
 import { StoreModule, Store } from '@ngrx/store';
 import { appReducers, storeModuleConfig } from '../app.reducer';
 import { TestScheduler } from 'rxjs/testing';
+import {of as observableOf } from 'rxjs';
 
 describe('ContextHelpService', () => {
   let service: ContextHelpService;
   let store;
   let testScheduler;
+
+  // mock the translateservice to just return the passed key
+  let translateService = jasmine.createSpyObj('translateService', ['get']);
+  translateService.get.and.callFake((arg) => observableOf(arg));
+
   const booleans = { f: false, t: true };
-  const mkContextHelp = (id: string) => ({ 0: {id, isTooltipVisible: false}, 1: {id, isTooltipVisible: true} });
+  const mkContextHelp = (id: string) => ({ 0: {id, isTooltipVisible: false, translationKey: id }, 1: {id, isTooltipVisible: true, translationKey: id}});
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
@@ -22,7 +28,7 @@ describe('ContextHelpService', () => {
 
   beforeEach(() => {
     store = TestBed.inject(Store);
-    service = new ContextHelpService(store);
+    service = new ContextHelpService(store, translateService);
     testScheduler = new TestScheduler((actual, expected) => expect(actual).toEqual(expected));
   });
 
@@ -41,13 +47,13 @@ describe('ContextHelpService', () => {
   it('add and remove calls should be observable in getContextHelp$', () => {
     testScheduler.run(({cold, expectObservable}) => {
       const modifications = cold('-abAcCB', {
-        a: () => service.add({id: 'a', isTooltipVisible: false}),
-        b: () => service.add({id: 'b', isTooltipVisible: false}),
-        c: () => service.add({id: 'c', isTooltipVisible: false}),
+        a: () => service.add({id: 'a', isTooltipVisible: false, translationKey: 'a'}),
+        b: () => service.add({id: 'b', isTooltipVisible: false, translationKey: 'b'}),
+        c: () => service.add({id: 'c', isTooltipVisible: false, translationKey: 'c'}),
         A: () => service.remove('a'), B: () => service.remove('b'), C: () => service.remove('c'),
       });
       modifications.subscribe(mod => mod());
-      const match = (id) => ({ 0: undefined, 1: {id, isTooltipVisible: false} });
+      const match = (id) => ({ 0: undefined, 1: {id, isTooltipVisible: false, translationKey: id} });
       expectObservable(service.getContextHelp$('a')).toBe('01-0---', match('a'));
       expectObservable(service.getContextHelp$('b')).toBe('0-1---0', match('b'));
       expectObservable(service.getContextHelp$('c')).toBe('0---10-', match('c'));
@@ -55,8 +61,8 @@ describe('ContextHelpService', () => {
   });
 
   it('toggleTooltip calls should be observable in getContextHelp$', () => {
-    service.add({id: 'a', isTooltipVisible: false});
-    service.add({id: 'b', isTooltipVisible: false});
+    service.add({id: 'a', isTooltipVisible: false, translationKey: 'a'});
+    service.add({id: 'b', isTooltipVisible: false, translationKey: 'b'});
     testScheduler.run(({cold, expectObservable}) => {
       const toggles = cold('-aaababbabba');
       toggles.subscribe(id => service.toggleTooltip(id));
@@ -66,7 +72,7 @@ describe('ContextHelpService', () => {
   });
 
   it('hideTooltip and showTooltip calls should be observable in getContextHelp$', () => {
-    service.add({id: 'a', isTooltipVisible: false});
+    service.add({id: 'a', isTooltipVisible: false, translationKey: 'a'});
     testScheduler.run(({cold, expectObservable}) => {
       const hideShowCalls = cold('-shssshhs', {
         s: () => service.showTooltip('a'), h: () => service.hideTooltip('a')
