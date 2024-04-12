@@ -49,6 +49,9 @@ export interface AccessConditionGroupsMapEntry {
   templateUrl: './section-upload.component.html',
 })
 @renderSectionFor(SectionsType.Upload)
+// For demonstration purposes, this custom step annotation is added to an existing component,
+// but you probably want to create a separate one for your own use-case
+@renderSectionFor(SectionsType.CustomUpload)
 export class SubmissionSectionUploadComponent extends SectionModelComponent {
 
   /**
