@@ -16,6 +16,9 @@ submissionSectionsMap.set(SectionsType.License, SubmissionSectionLicenseComponen
 submissionSectionsMap.set(SectionsType.CcLicense, SubmissionSectionCcLicensesComponent);
 submissionSectionsMap.set(SectionsType.SherpaPolicies, SubmissionSectionSherpaPoliciesComponent);
 submissionSectionsMap.set(SectionsType.Upload, SubmissionSectionUploadComponent);
+// For demonstration purposes, this custom step is configured for an existing component,
+// but you probably want to create a separate one for your own use-case
+submissionSectionsMap.set(SectionsType.CustomUpload, SubmissionSectionUploadComponent);
 submissionSectionsMap.set(SectionsType.SubmissionForm, SubmissionSectionFormComponent);
 submissionSectionsMap.set(SectionsType.Identifiers, SubmissionSectionIdentifiersComponent);
 submissionSectionsMap.set(SectionsType.CoarNotify, SubmissionSectionCoarNotifyComponent);
