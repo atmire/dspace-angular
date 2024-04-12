@@ -8,6 +8,7 @@ import { map } from 'rxjs/operators';
 import { isNotEmpty } from '../../shared/empty.util';
 import { getItemPageRoute } from '../item-page-routing-paths';
 import { GenericConstructor } from '../../core/shared/generic-constructor';
+import {ContextHelpDirectiveInput} from '../../shared/context-help.directive';
 
 @Component({
   selector: 'ds-edit-item-page',
@@ -22,6 +23,13 @@ import { GenericConstructor } from '../../core/shared/generic-constructor';
  * Page component for editing an item
  */
 export class EditItemPageComponent implements OnInit {
+  contextHelp = {
+    content: 'context.help.edit-item-page',
+    id: 'edit-item-page',
+    iconPlacement: 'right',
+    tooltipPlacement: ['right', 'bottom']
+  } as ContextHelpDirectiveInput;
+
 
   /**
    * The item to edit

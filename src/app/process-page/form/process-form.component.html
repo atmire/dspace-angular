@@ -2,6 +2,7 @@
     <div class="row">
         <h2 class="col-12">
             {{headerKey | translate}}
+            <span *dsContextHelp="contextHelp"></span>
         </h2>
         <div class="col-12 col-md-6">
             <form #form="ngForm" (ngSubmit)="submitForm(form)">

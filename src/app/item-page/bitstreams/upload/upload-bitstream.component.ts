@@ -19,6 +19,7 @@ import { RequestService } from '../../../core/data/request.service';
 import { getBitstreamModuleRoute } from '../../../app-routing-paths';
 import { getEntityEditRoute } from '../../item-page-routing-paths';
 import { environment } from '../../../../environments/environment';
+import {ContextHelpDirectiveInput} from '../../../shared/context-help.directive';
 
 @Component({
   selector: 'ds-upload-bitstream',
@@ -28,6 +29,12 @@ import { environment } from '../../../../environments/environment';
  * Page component for uploading a bitstream to an item
  */
 export class UploadBitstreamComponent implements OnInit, OnDestroy {
+  contextHelp = {
+    content: 'context.help.upload-bitstream',
+    id: 'upload-bitstream',
+    iconPlacement: 'right',
+    tooltipPlacement: ['right', 'bottom']
+  } as ContextHelpDirectiveInput;
   /**
    * The file uploader component
    */

@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Item } from '../../core/shared/item.model';
 import { DSONameService } from '../../core/breadcrumbs/dso-name.service';
 import { AuthService } from '../../core/auth/auth.service';
+import {ContextHelpDirectiveInput} from '../../shared/context-help.directive';
 
 /**
  * Component representing the statistics page for an item.
@@ -15,6 +16,13 @@ import { AuthService } from '../../core/auth/auth.service';
   styleUrls: ['./item-statistics-page.component.scss']
 })
 export class ItemStatisticsPageComponent extends StatisticsPageComponent<Item> {
+  contextHelp = {
+    content: 'context.help.item-statistics-page',
+    id: 'item-statistics-page',
+    iconPlacement: 'right',
+    tooltipPlacement: ['right', 'bottom']
+  } as ContextHelpDirectiveInput;
+
 
   /**
    * The report types to show on this statistics page.

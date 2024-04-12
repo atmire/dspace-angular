@@ -7,6 +7,7 @@ import { CreateComColPageComponent } from '../../shared/comcol/comcol-forms/crea
 import { NotificationsService } from '../../shared/notifications/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
 import { RequestService } from '../../core/data/request.service';
+import {ContextHelpDirectiveInput} from '../../shared/context-help.directive';
 
 /**
  * Component that represents the page where a user can create a new Community
@@ -17,6 +18,13 @@ import { RequestService } from '../../core/data/request.service';
   templateUrl: './create-community-page.component.html'
 })
 export class CreateCommunityPageComponent extends CreateComColPageComponent<Community> {
+  contextHelp = {
+    content: 'context.help.create-community-page',
+    id: 'create-community-page',
+    iconPlacement: 'right',
+    tooltipPlacement: ['right', 'bottom']
+  } as ContextHelpDirectiveInput;
+
   protected frontendURL = '/communities/';
   protected type = Community.type;
 

@@ -28,6 +28,7 @@ import { SearchConfigurationService } from '../../../core/shared/search/search-c
 import { SearchService } from '../../../core/shared/search/search.service';
 import { NoContent } from '../../../core/shared/NoContent.model';
 import { getItemPageRoute } from '../../item-page-routing-paths';
+import {ContextHelpDirectiveInput} from '../../../shared/context-help.directive';
 
 @Component({
   selector: 'ds-item-collection-mapper',
@@ -43,6 +44,12 @@ import { getItemPageRoute } from '../../item-page-routing-paths';
  * Component for mapping collections to an item
  */
 export class ItemCollectionMapperComponent implements OnInit {
+  contextHelp = {
+    content: 'context.help.item-collection-mapper',
+    id: 'item-collection-mapper',
+    iconPlacement: 'right',
+    tooltipPlacement: ['right', 'bottom']
+  } as ContextHelpDirectiveInput;
 
   /**
    * A view on the tabset element

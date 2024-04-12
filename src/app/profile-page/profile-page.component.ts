@@ -18,6 +18,7 @@ import { AuthorizationDataService } from '../core/data/feature-authorization/aut
 import { FeatureID } from '../core/data/feature-authorization/feature-id';
 import { ConfigurationDataService } from '../core/data/configuration-data.service';
 import { ConfigurationProperty } from '../core/shared/configuration-property.model';
+import {ContextHelpDirectiveInput} from '../shared/context-help.directive';
 
 @Component({
   selector: 'ds-profile-page',
@@ -28,6 +29,12 @@ import { ConfigurationProperty } from '../core/shared/configuration-property.mod
  * Component for a user to edit their profile information
  */
 export class ProfilePageComponent implements OnInit {
+  contextHelp = {
+    content: 'context.help.profile-page',
+    id: 'profile-page',
+    iconPlacement: 'right',
+    tooltipPlacement: ['right', 'bottom']
+  } as ContextHelpDirectiveInput;
   /**
    * A reference to the metadata form component
    */

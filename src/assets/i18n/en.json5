@@ -4852,4 +4852,46 @@
 //  "context.help.group-registry-list": "add your context tip here",
 //
 //  "context.help.epeople-registry": "add your context tip here",
+//
+//  "context.help.browse-by": "add your context tip here",
+//
+//  "context.help.comcol-header": "add your context tip here",
+//
+//  "context.help.sub-collection-list": "add your context tip here",
+//
+//  "context.help.item-page-title-field": "add your context tip here",
+//
+//  "context.help.profile-page": "add your context tip here",
+//
+//  "context.help.create-community-page": "add your context tip here",
+//
+//  "context.help.create-collection-page": "add your context tip here",
+//
+//  "context.help.process-form": "add your context tip here",
+//
+//  "context.help.edit-community": "add your context tip here",
+//
+//  "context.help.edit-collection": "add your context tip here",
+//
+//  "context.help.metadata-import-page": "add your context tip here",
+//
+//  "context.help.batch-import-page": "add your context tip here",
+//
+//  "context.help.process-detail-page": "add your context tip here",
+//
+//  "context.help.health-page": "add your context tip here",
+//
+//  "context.help.edit-item-page": "add your context tip here",
+//
+//  "context.help.item-statistics-page": "add your context tip here",
+//
+//  "context.help.community-statistics-page": "add your context tip here",
+//
+//  "context.help.collection-statistics-page": "add your context tip here",
+//
+//  "context.help.site-statistics-page": "add your context tip here",
+//
+//  "context.help.item-collection-mapper": "add your context tip here",
+//
+//  "context.help.upload-bitstream": "add your context tip here"
 }

@@ -5,6 +5,7 @@ import { take } from 'rxjs/operators';
 
 import { HealthService } from './health.service';
 import { HealthInfoResponse, HealthResponse } from './models/health-component.model';
+import {ContextHelpDirectiveInput} from '../shared/context-help.directive';
 
 @Component({
   selector: 'ds-health-page',
@@ -12,6 +13,12 @@ import { HealthInfoResponse, HealthResponse } from './models/health-component.mo
   styleUrls: ['./health-page.component.scss']
 })
 export class HealthPageComponent implements OnInit {
+  contextHelp = {
+    content: 'context.help.health-page',
+    id: 'health-page',
+    iconPlacement: 'right',
+    tooltipPlacement: ['right', 'bottom']
+  } as ContextHelpDirectiveInput;
 
   /**
    * Health info endpoint response

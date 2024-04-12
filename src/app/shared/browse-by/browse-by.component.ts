@@ -12,6 +12,7 @@ import { ViewMode } from '../../core/shared/view-mode.model';
 import { RouteService } from '../../core/services/route.service';
 import { map } from 'rxjs/operators';
 import { hasValue } from '../empty.util';
+import {ContextHelpDirectiveInput} from '../context-help.directive';
 
 @Component({
   selector: 'ds-browse-by',
@@ -26,6 +27,13 @@ import { hasValue } from '../empty.util';
  * Component to display a browse-by page for any ListableObject
  */
 export class BrowseByComponent implements OnInit, OnDestroy {
+
+  contextHelp = {
+    content: 'context.help.browse-by',
+    id: 'browse-by',
+    iconPlacement: 'right',
+    tooltipPlacement: ['right', 'bottom']
+  } as ContextHelpDirectiveInput;
 
   /**
    * ViewMode that should be passed to {@link ListableObjectComponentLoaderComponent}.

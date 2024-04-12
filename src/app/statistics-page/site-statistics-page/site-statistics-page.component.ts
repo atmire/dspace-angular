@@ -7,6 +7,7 @@ import { Site } from '../../core/shared/site.model';
 import { DSONameService } from '../../core/breadcrumbs/dso-name.service';
 import { switchMap } from 'rxjs/operators';
 import { AuthService } from '../../core/auth/auth.service';
+import {ContextHelpDirectiveInput} from '../../shared/context-help.directive';
 
 /**
  * Component representing the site-wide statistics page.
@@ -17,6 +18,12 @@ import { AuthService } from '../../core/auth/auth.service';
   styleUrls: ['./site-statistics-page.component.scss']
 })
 export class SiteStatisticsPageComponent extends StatisticsPageComponent<Site> {
+  contextHelp = {
+    content: 'context.help.site-statistics-page',
+    id: 'site-statistics-page',
+    iconPlacement: 'right',
+    tooltipPlacement: ['right', 'bottom']
+  } as ContextHelpDirectiveInput;
 
   /**
    * The report types to show on this statistics page.

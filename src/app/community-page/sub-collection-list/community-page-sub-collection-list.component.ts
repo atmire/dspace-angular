@@ -13,6 +13,7 @@ import { CollectionDataService } from '../../core/data/collection-data.service';
 import { PaginationService } from '../../core/pagination/pagination.service';
 import { switchMap } from 'rxjs/operators';
 import { hasValue } from '../../shared/empty.util';
+import {ContextHelpDirectiveInput} from '../../shared/context-help.directive';
 
 @Component({
   selector: 'ds-community-page-sub-collection-list',
@@ -21,6 +22,13 @@ import { hasValue } from '../../shared/empty.util';
   animations:[fadeIn]
 })
 export class CommunityPageSubCollectionListComponent implements OnInit, OnDestroy {
+  contextHelp = {
+    content: 'context.help.sub-collection-list',
+    id: 'sub-collection-list',
+    iconPlacement: 'right',
+    tooltipPlacement: ['right', 'bottom']
+  } as ContextHelpDirectiveInput;
+
   @Input() community: Community;
 
   /**

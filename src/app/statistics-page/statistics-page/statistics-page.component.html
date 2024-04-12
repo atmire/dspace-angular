@@ -5,6 +5,7 @@
         class="header"
         id="{{ scope.id }}">
       {{ 'statistics.header' | translate: { scope: getName(scope) } }}
+      <span *dsContextHelp="contextHelp"></span>
     </h2>
   </ng-container>
 

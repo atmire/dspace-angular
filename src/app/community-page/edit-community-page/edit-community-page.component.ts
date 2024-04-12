@@ -3,6 +3,7 @@ import { Community } from '../../core/shared/community.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EditComColPageComponent } from '../../shared/comcol/comcol-forms/edit-comcol-page/edit-comcol-page.component';
 import { getCommunityPageRoute } from '../community-page-routing-paths';
+import {ContextHelpDirectiveInput} from '../../shared/context-help.directive';
 
 /**
  * Component that represents the page where a user can edit an existing Community
@@ -12,6 +13,13 @@ import { getCommunityPageRoute } from '../community-page-routing-paths';
   templateUrl: '../../shared/comcol/comcol-forms/edit-comcol-page/edit-comcol-page.component.html'
 })
 export class EditCommunityPageComponent extends EditComColPageComponent<Community> {
+  contextHelp = {
+    content: 'context.help.edit-community',
+    id: 'edit-community',
+    iconPlacement: 'right',
+    tooltipPlacement: ['right', 'bottom']
+  } as ContextHelpDirectiveInput;
+
   type = 'community';
 
   public constructor(

@@ -26,6 +26,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { getProcessListRoute } from '../process-page-routing.paths';
 import { NotificationsService } from '../../shared/notifications/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
+import {ContextHelpDirectiveInput} from '../../shared/context-help.directive';
 
 @Component({
   selector: 'ds-process-detail',
@@ -35,6 +36,12 @@ import { TranslateService } from '@ngx-translate/core';
  * A component displaying detailed information about a DSpace Process
  */
 export class ProcessDetailComponent implements OnInit {
+  contextHelp = {
+    content: 'context.help.process-detail-page',
+    id: 'process-detail-page',
+    iconPlacement: 'right',
+    tooltipPlacement: ['right', 'bottom']
+  } as ContextHelpDirectiveInput;
 
   /**
    * The AlertType enumeration

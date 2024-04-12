@@ -3,7 +3,8 @@
         <h2 class="flex-grow-1">{{'process.detail.title' | translate:{
             id: process?.processId,
             name: process?.scriptName
-        } }}</h2>
+        } }}
+        <span *dsContextHelp="contextHelp"></span></h2>
     </div>
     <ds-process-detail-field id="process-name" [title]="'process.detail.script'">
         <div>{{ process?.scriptName }}</div>

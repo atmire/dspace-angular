@@ -8,6 +8,7 @@ import { CollectionDataService } from '../../core/data/collection-data.service';
 import { NotificationsService } from '../../shared/notifications/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
 import { RequestService } from '../../core/data/request.service';
+import {ContextHelpDirectiveInput} from '../../shared/context-help.directive';
 
 /**
  * Component that represents the page where a user can create a new Collection
@@ -18,6 +19,13 @@ import { RequestService } from '../../core/data/request.service';
   templateUrl: './create-collection-page.component.html'
 })
 export class CreateCollectionPageComponent extends CreateComColPageComponent<Collection> {
+  contextHelp = {
+    content: 'context.help.create-collection-page',
+    id: 'create-collection-page',
+    iconPlacement: 'right',
+    tooltipPlacement: ['right', 'bottom']
+  } as ContextHelpDirectiveInput;
+
   protected frontendURL = '/collections/';
   protected type = Collection.type;
 

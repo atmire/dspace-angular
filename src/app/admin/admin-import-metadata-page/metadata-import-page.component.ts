@@ -14,6 +14,7 @@ import { RemoteData } from '../../core/data/remote-data';
 import { Process } from '../../process-page/processes/process.model';
 import { getFirstCompletedRemoteData } from '../../core/shared/operators';
 import { getProcessDetailRoute } from '../../process-page/process-page-routing.paths';
+import {ContextHelpDirectiveInput} from '../../shared/context-help.directive';
 
 @Component({
   selector: 'ds-metadata-import-page',
@@ -24,6 +25,12 @@ import { getProcessDetailRoute } from '../../process-page/process-page-routing.p
  * Component that represents a metadata import page for administrators
  */
 export class MetadataImportPageComponent {
+  contextHelp = {
+    content: 'context.help.metadata-import-page',
+    id: 'metadata-import-page',
+    iconPlacement: 'right',
+    tooltipPlacement: ['right', 'bottom']
+  } as ContextHelpDirectiveInput;
 
   /**
    * The current value of the file

@@ -1,5 +1,5 @@
 <div class="container" *ngIf="(healthResponseInitialised | async) && (healthInfoResponseInitialised | async)">
-  <h2>{{'health-page.heading' | translate}}</h2>
+  <h2>{{'health-page.heading' | translate}}<span *dsContextHelp="contextHelp"></span></h2>
   <div *ngIf="(healthResponse | async) && (healthInfoResponse | async)">
     <ul ngbNav #nav="ngbNav" [activeId]="'status'" class="nav-tabs">
       <li [ngbNavItem]="'status'">

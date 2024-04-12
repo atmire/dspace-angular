@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-12">
       <div class="d-flex justify-content-between border-bottom">
-        <h2>{{ type + '.edit.head' | translate }}</h2>
+        <h2>{{ type + '.edit.head' | translate }} <span *dsContextHelp="contextHelp"></span></h2>
         <div>
           <a class="btn btn-danger"
              [routerLink]="((type === 'community') ? '/communities/' : '/collections/') + (dsoRD$ | async)?.payload.uuid + '/delete'">

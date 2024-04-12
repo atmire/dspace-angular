@@ -17,12 +17,20 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { take } from 'rxjs/operators';
 import { DSpaceObject } from '../../core/shared/dspace-object.model';
 import { DSONameService } from '../../core/breadcrumbs/dso-name.service';
+import {ContextHelpDirectiveInput} from '../../shared/context-help.directive';
 
 @Component({
   selector: 'ds-batch-import-page',
   templateUrl: './batch-import-page.component.html'
 })
 export class BatchImportPageComponent {
+  contextHelp = {
+    content: 'context.help.batch-import-page',
+    id: 'batch-import-page',
+    iconPlacement: 'right',
+    tooltipPlacement: ['right', 'bottom']
+  } as ContextHelpDirectiveInput;
+
   /**
    * The current value of the file
    */

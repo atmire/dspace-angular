@@ -13,6 +13,7 @@ import { getFirstCompletedRemoteData } from '../../core/shared/operators';
 import { RemoteData } from '../../core/data/remote-data';
 import { getProcessListRoute } from '../process-page-routing.paths';
 import { isEmpty } from '../../shared/empty.util';
+import {ContextHelpDirectiveInput} from '../../shared/context-help.directive';
 
 /**
  * Component to create a new script
@@ -23,6 +24,13 @@ import { isEmpty } from '../../shared/empty.util';
   styleUrls: ['./process-form.component.scss'],
 })
 export class ProcessFormComponent implements OnInit {
+  contextHelp = {
+    content: 'context.help.process-form',
+    id: 'process-form',
+    iconPlacement: 'right',
+    tooltipPlacement: ['right', 'bottom']
+  } as ContextHelpDirectiveInput;
+
   /**
    * The currently selected script
    */
