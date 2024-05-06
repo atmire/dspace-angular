@@ -31,6 +31,8 @@ import { BrowseEntry } from '../../core/shared/browse-entry.model';
 import { ITEM } from '../../core/shared/item.resource-type';
 import { ThemeService } from '../theme-support/theme.service';
 import SpyObj = jasmine.SpyObj;
+import { RouteService } from '../../core/services/route.service';
+import { routeServiceStub } from '../testing/route-service.stub';
 
 @listableObjectComponent(BrowseEntry, ViewMode.ListElement, DEFAULT_CONTEXT, 'custom')
 @Component({
@@ -101,6 +103,7 @@ describe('BrowseByComponent', () => {
         {provide: PaginationService, useValue: paginationService},
         {provide: MockThemedBrowseEntryListElementComponent},
         { provide: ThemeService, useValue: themeService },
+        {provide: RouteService, useValue: routeServiceStub}
       ],
       schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
@@ -248,6 +251,20 @@ describe('BrowseByComponent', () => {
           expect(browseEntry.componentInstance).toBeInstanceOf(MockThemedBrowseEntryListElementComponent);
         });
       });
+    });
+  });
+
+  describe('reset filters button', () => {
+    it('should not be present when no startsWith or value is present ', () => {
+      const button = fixture.debugElement.query(By.css('reset'));
+      expect(button).toBeNull();
+    });
+    it('should be present when a startsWith or value is present ', () => {
+      comp.shouldDisplayResetButton$ = observableOf(true);
+      fixture.detectChanges();
+
+      const button = fixture.debugElement.query(By.css('reset'));
+      expect(button).toBeDefined();
     });
   });
 
