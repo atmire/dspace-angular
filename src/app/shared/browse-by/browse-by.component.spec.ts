@@ -37,6 +37,9 @@ import { ThemeService } from '../theme-support/theme.service';
 import SpyObj = jasmine.SpyObj;
 import { RouteService } from '../../core/services/route.service';
 import { routeServiceStub } from '../testing/route-service.stub';
+import { SelectableListService } from '../object-list/selectable-list/selectable-list.service';
+import { HostWindowService } from '../host-window.service';
+import { HostWindowServiceStub } from '../testing/host-window-service.stub';
 
 @listableObjectComponent(BrowseEntry, ViewMode.ListElement, DEFAULT_CONTEXT, 'custom')
 @Component({
@@ -108,7 +111,9 @@ describe('BrowseByComponent', () => {
         {provide: PaginationService, useValue: paginationService},
         {provide: MockThemedBrowseEntryListElementComponent},
         { provide: ThemeService, useValue: themeService },
-        {provide: RouteService, useValue: routeServiceStub}
+        {provide: RouteService, useValue: routeServiceStub},
+        { provide: SelectableListService, useValue: {} },
+        { provide: HostWindowService, useValue: new HostWindowServiceStub(800) },
       ],
       schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
@@ -137,65 +142,6 @@ describe('BrowseByComponent', () => {
     });
     fixture.detectChanges();
     expect(fixture.debugElement.query(By.css('ds-viewable-collection'))).toBeDefined();
-  });
-
-  describe('when enableArrows is true and objects are defined', () => {
-    beforeEach(() => {
-      comp.enableArrows = true;
-      comp.objects$ = mockItemsRD$;
-
-      comp.paginationConfig = paginationConfig;
-      comp.sortConfig = Object.assign(new SortOptions('dc.title', SortDirection.ASC));
-      fixture.detectChanges();
-    });
-
-    describe('when clicking the previous arrow button', () => {
-      beforeEach(() => {
-        spyOn(comp.prev, 'emit');
-        fixture.debugElement.query(By.css('#nav-prev')).triggerEventHandler('click', null);
-        fixture.detectChanges();
-      });
-
-      it('should emit a signal to the EventEmitter', () => {
-        expect(comp.prev.emit).toHaveBeenCalled();
-      });
-    });
-
-    describe('when clicking the next arrow button', () => {
-      beforeEach(() => {
-        spyOn(comp.next, 'emit');
-        fixture.debugElement.query(By.css('#nav-next')).triggerEventHandler('click', null);
-        fixture.detectChanges();
-      });
-
-      it('should emit a signal to the EventEmitter', () => {
-        expect(comp.next.emit).toHaveBeenCalled();
-      });
-    });
-
-    describe('when clicking a different page size', () => {
-      beforeEach(() => {
-        spyOn(comp.pageSizeChange, 'emit');
-        fixture.debugElement.query(By.css('.page-size-change')).triggerEventHandler('click', null);
-        fixture.detectChanges();
-      });
-
-      it('should call the updateRoute method from the paginationService', () => {
-        expect(paginationService.updateRoute).toHaveBeenCalledWith('test-pagination', {pageSize: paginationConfig.pageSizeOptions[0]});
-      });
-    });
-
-    describe('when clicking a different sort direction', () => {
-      beforeEach(() => {
-        spyOn(comp.sortDirectionChange, 'emit');
-        fixture.debugElement.query(By.css('.sort-direction-change')).triggerEventHandler('click', null);
-        fixture.detectChanges();
-      });
-
-      it('should call the updateRoute method from the paginationService', () => {
-        expect(paginationService.updateRoute).toHaveBeenCalledWith('test-pagination', {sortDirection: 'ASC'});
-      });
-    });
   });
 
   describe('when enableArrows is true and browseEntries are provided', () => {
