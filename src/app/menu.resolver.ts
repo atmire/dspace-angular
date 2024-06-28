@@ -633,8 +633,9 @@ export class MenuResolver implements Resolve<boolean> {
   createAccessControlMenuSections() {
     observableCombineLatest([
       this.authorizationService.isAuthorized(FeatureID.AdministratorOf),
-      this.authorizationService.isAuthorized(FeatureID.CanManageGroups)
-    ]).subscribe(([isSiteAdmin, canManageGroups]) => {
+      this.authorizationService.isAuthorized(FeatureID.CanManageGroups),
+      this.authorizationService.isAuthorized(FeatureID.CanUseBulkAccessControl),
+    ]).subscribe(([isSiteAdmin, canManageGroups, canUseBulkAccessControl]) => {
       const menuList = [
         /* Access Control */
         {
@@ -663,7 +664,7 @@ export class MenuResolver implements Resolve<boolean> {
           id: 'access_control_bulk',
           parentID: 'access_control',
           active: false,
-          visible: isSiteAdmin,
+          visible: canUseBulkAccessControl,
           model: {
             type: MenuItemType.LINK,
             text: 'menu.section.access_control_bulk',

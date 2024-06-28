@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Injector } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EditComColPageComponent } from '../../shared/comcol/comcol-forms/edit-comcol-page/edit-comcol-page.component';
 import { Collection } from '../../core/shared/collection.model';
@@ -16,9 +16,10 @@ export class EditCollectionPageComponent extends EditComColPageComponent<Collect
 
   public constructor(
     protected router: Router,
-    protected route: ActivatedRoute
+    protected route: ActivatedRoute,
+    protected injector: Injector,
   ) {
-    super(router, route);
+    super(router, route, injector);
   }
 
   /**

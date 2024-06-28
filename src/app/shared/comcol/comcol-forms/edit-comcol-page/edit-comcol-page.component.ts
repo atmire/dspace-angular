@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Injector, OnInit } from '@angular/core';
 
-import { Observable } from 'rxjs';
+import { combineLatest as observableCombineLatest, Observable, of as observableOf } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, CanActivate, Route, Router } from '@angular/router';
 import { RemoteData } from '../../../../core/data/remote-data';
 import { isNotEmpty } from '../../../empty.util';
 import { DSpaceObject } from '../../../../core/shared/dspace-object.model';
+import { GenericConstructor } from '../../../../core/shared/generic-constructor';
 
 /**
  * Component representing the edit page for communities and collections
@@ -29,7 +30,7 @@ export class EditComColPageComponent<TDomain extends DSpaceObject> implements On
   /**
    * All possible page outlet strings
    */
-  public pages: string[];
+  pages: { page: string, enabled: Observable<boolean> }[];
 
   /**
    * The DSO to render the edit page for
@@ -43,7 +44,8 @@ export class EditComColPageComponent<TDomain extends DSpaceObject> implements On
 
   public constructor(
     protected router: Router,
-    protected route: ActivatedRoute
+    protected route: ActivatedRoute,
+    protected injector: Injector,
   ) {
     this.router.events.subscribe(() => this.initPageParamsByRoute());
   }
@@ -51,8 +53,21 @@ export class EditComColPageComponent<TDomain extends DSpaceObject> implements On
   ngOnInit(): void {
     this.initPageParamsByRoute();
     this.pages = this.route.routeConfig.children
-      .map((child: any) => child.path)
-      .filter((path: string) => isNotEmpty(path)); // ignore reroutes
+      .filter((child: Route) => isNotEmpty(child.path))
+      .map((child: Route) => {
+        let enabled = observableOf(true);
+        if (isNotEmpty(child.canActivate)) {
+          enabled = observableCombineLatest(child.canActivate.map((guardConstructor: GenericConstructor<CanActivate>) => {
+              const guard: CanActivate = this.injector.get<CanActivate>(guardConstructor);
+              return guard.canActivate(this.route.snapshot, this.router.routerState.snapshot);
+            })
+          ).pipe(
+            map((canActivateOutcomes: any[]) => canActivateOutcomes.every((e) => e === true))
+          );
+        }
+        return { page: child.path, enabled: enabled };
+      }); // ignore reroutes
+
     this.dsoRD$ = this.route.data.pipe(map((data) => data.dso));
   }
 

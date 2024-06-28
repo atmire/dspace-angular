@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnDestroy, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnDestroy, ViewChild, OnInit } from '@angular/core';
 import { concatMap, Observable, shareReplay } from 'rxjs';
 import { RemoteData } from '../../core/data/remote-data';
 import { Item } from '../../core/shared/item.model';
@@ -26,7 +26,7 @@ import {
   styleUrls: [ './access-control-form-container.component.scss' ],
   exportAs: 'dsAccessControlForm'
 })
-export class AccessControlFormContainerComponent<T extends DSpaceObject> implements OnDestroy {
+export class AccessControlFormContainerComponent<T extends DSpaceObject> implements OnDestroy, OnInit {
 
   /**
    * Will be used to determine if we need to show the limit changes to specific bitstreams radio buttons
@@ -39,9 +39,9 @@ export class AccessControlFormContainerComponent<T extends DSpaceObject> impleme
   @Input() titleMessage = '';
 
   /**
-   * The item to which the access control form applies
+   * The dso to which the access control form applies
    */
-  @Input() itemRD: RemoteData<T>;
+  @Input() dsoRD: RemoteData<T>;
 
   /**
    * Whether to show the submit and cancel button
@@ -65,11 +65,15 @@ export class AccessControlFormContainerComponent<T extends DSpaceObject> impleme
 
   state = createAccessControlInitialFormState();
 
-  dropdownData$: Observable<BulkAccessConditionOptions> = this.bulkAccessConfigService.findByName('default').pipe(
-    getFirstCompletedRemoteData(),
-    map((configRD: RemoteData<BulkAccessConditionOptions>) => configRD.hasSucceeded ? configRD.payload : null),
-    shareReplay(1)
-  );
+  dropdownData$: Observable<BulkAccessConditionOptions>;
+
+  ngOnInit() {
+   this.dropdownData$ = this.bulkAccessConfigService.searchByObjectOrName(this.dsoRD?.payload?.uuid, 'default').pipe(
+      getFirstCompletedRemoteData(),
+      map((configRD: RemoteData<BulkAccessConditionOptions>) => configRD.hasSucceeded ? configRD.payload : null),
+      shareReplay(1)
+    )
+  }
 
   /**
    * Will be used from a parent component to read the value of the form
@@ -112,7 +116,7 @@ export class AccessControlFormContainerComponent<T extends DSpaceObject> impleme
     });
 
     this.bulkAccessControlService.executeScript(
-      [ this.itemRD.payload.uuid ],
+      [ this.dsoRD.payload.uuid ],
       file
     ).pipe(take(1)).subscribe((res) => {
       console.log('success', res);

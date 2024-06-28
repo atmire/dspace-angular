@@ -12,10 +12,11 @@
       <div class="pt-2">
         <ul class="nav nav-tabs justify-content-start mb-2">
           <li *ngFor="let page of pages" class="nav-item">
-            <a class="nav-link"
-               [ngClass]="{'active' : page === currentPage}"
-               [routerLink]="['./' + page]">
-              {{ type + '.edit.tabs.' + page + '.head' | translate}}
+            <a *ngIf="(page.enabled | async)"
+               class="nav-link"
+               [ngClass]="{'active' : page.page === currentPage}"
+               [routerLink]="['./' + page.page]">
+              {{ type + '.edit.tabs.' + page.page + '.head' | translate}}
             </a>
           </li>
         </ul>

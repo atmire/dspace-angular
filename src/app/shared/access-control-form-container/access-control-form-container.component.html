@@ -98,9 +98,9 @@
                   {{'access-control-bitstreams-selected' | translate}}
 
                   <button
-                    *ngIf="itemRD"
+                    *ngIf="dsoRD"
                     [disabled]="!state.bitstream.toggleStatus || state.bitstream.changesLimit !== 'selected'"
-                    (click)="openSelectBitstreamsModal(itemRD.payload)"
+                    (click)="openSelectBitstreamsModal(dsoRD.payload)"
                     class="btn btn-outline-dark border-0" type="button">
                     <i class="fa fa-search"></i>
                   </button>

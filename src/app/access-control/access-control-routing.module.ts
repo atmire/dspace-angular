@@ -13,6 +13,7 @@ import {
   SiteAdministratorGuard
 } from '../core/data/feature-authorization/feature-authorization-guard/site-administrator.guard';
 import { BulkAccessComponent } from './bulk-access/bulk-access.component';
+import { BulkAccessControlGuard } from './bulk-access/bulk-access-control.guard';
 
 @NgModule({
   imports: [
@@ -60,7 +61,7 @@ import { BulkAccessComponent } from './bulk-access/bulk-access.component';
           breadcrumb: I18nBreadcrumbResolver
         },
         data: { title: 'admin.access-control.bulk-access.title', breadcrumbKey: 'admin.access-control.bulk-access' },
-        canActivate: [SiteAdministratorGuard]
+        canActivate: [BulkAccessControlGuard]
       },
     ])
   ]

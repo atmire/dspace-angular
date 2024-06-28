@@ -25,9 +25,9 @@ import {
   ITEM_EDIT_MOVE_PATH,
   ITEM_EDIT_PRIVATE_PATH,
   ITEM_EDIT_PUBLIC_PATH,
+  ITEM_EDIT_REGISTER_DOI_PATH,
   ITEM_EDIT_REINSTATE_PATH,
-  ITEM_EDIT_WITHDRAW_PATH,
-  ITEM_EDIT_REGISTER_DOI_PATH
+  ITEM_EDIT_WITHDRAW_PATH
 } from './edit-item-page.routing-paths';
 import { ItemPageReinstateGuard } from './item-page-reinstate.guard';
 import { ItemPageWithdrawGuard } from './item-page-withdraw.guard';
@@ -43,6 +43,7 @@ import { ItemPageRegisterDoiGuard } from './item-page-register-doi.guard';
 import { ItemCurateComponent } from './item-curate/item-curate.component';
 import { ThemedItemStatusComponent } from './item-status/themed-item-status.component';
 import { ItemAccessControlComponent } from './item-access-control/item-access-control.component';
+import { ItemBulkAccessControlGuard } from '../../access-control/bulk-access/item-bulk-access-control.guard';
 
 /**
  * Routing module that handles the routing for the Edit Item page administrator functionality
@@ -116,7 +117,10 @@ import { ItemAccessControlComponent } from './item-access-control/item-access-co
               {
                 path: 'access-control',
                 component: ItemAccessControlComponent,
-                data: { title: 'item.edit.tabs.access-control.title', showBreadcrumbs: true }
+                data: { title: 'item.edit.tabs.access-control.title', showBreadcrumbs: true },
+                canActivate: [
+                  ItemBulkAccessControlGuard,
+                ],
               },
               {
                 path: 'mapper',

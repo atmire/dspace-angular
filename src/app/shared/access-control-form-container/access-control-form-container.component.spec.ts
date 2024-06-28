@@ -36,7 +36,7 @@ describe('AccessControlFormContainerComponent', () => {
   };
 
   const mockBulkAccessConfigDataService = {
-    findByName: jasmine.createSpy('findByName').and.returnValue(of({payload: {options: []}})),
+    searchByObjectOrName: jasmine.createSpy('searchByObjectOrName').and.returnValue(of({payload: {options: []}})),
   };
 
   const mockSelectableListService = {
@@ -99,7 +99,7 @@ describe('AccessControlFormContainerComponent', () => {
     const itemAccess = 'itemAccess';
     component.bitstreamAccessCmp.getValue = jasmine.createSpy('getValue').and.returnValue(bitstreamAccess);
     component.itemAccessCmp.getValue = jasmine.createSpy('getValue').and.returnValue(itemAccess);
-    component.itemRD = {payload: {uuid: 'item-uuid'}} as any;
+    component.dsoRD = {payload: {uuid: 'item-uuid'}} as any;
 
     component.submit();
 
