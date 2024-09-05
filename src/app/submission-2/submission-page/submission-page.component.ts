@@ -5,7 +5,10 @@ import { Subscription, BehaviorSubject } from 'rxjs';
 import { WorkspaceItem } from '../../core/submission/models/workspaceitem.model';
 import { RemoteData } from '../../core/data/remote-data';
 import { switchMap, map } from 'rxjs/operators';
-import { getFirstCompletedRemoteData } from '../../core/shared/operators';
+import {
+  getFirstCompletedRemoteData,
+  getFirstSucceededRemoteData
+} from '../../core/shared/operators';
 import { hasValue } from '../../shared/empty.util';
 import { NgIf, AsyncPipe } from '@angular/common';
 import { ThemedLoadingComponent } from '../../shared/loading/themed-loading.component';
@@ -21,6 +24,8 @@ import {
 } from '../../core/config/models/config-submission-form.model';
 import { FormFieldModel } from '../../shared/form/builder/models/form-field.model';
 import { DateFieldComponent } from './date-field/date-field.component';
+import { RequestService } from '../../core/data/request.service';
+import { PatchRequest } from '../../core/data/request.models';
 
 const randomDate = (start: Date, end: Date): Date => {
   return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()))
@@ -51,12 +56,13 @@ export class SubmissionPageComponent implements OnInit, OnDestroy {
   model = {};
   count = 1;
   focusField: string;
-  modelChanges = observe(this.model);
+  modelChanges;
 
   constructor(
     protected route: ActivatedRoute,
     protected hrefOnlyDataService: HrefOnlyDataService,
     protected wsiDataService: WorkspaceitemDataService,
+    protected requestService: RequestService,
   ) {
   }
 
@@ -73,6 +79,13 @@ export class SubmissionPageComponent implements OnInit, OnDestroy {
       })
     ).subscribe((wsiRd: RemoteData<WorkspaceItem>) => this.wsiRd$.next(wsiRd)));
 
+    this.wsiRd$.pipe(getFirstSucceededRemoteData()).subscribe((wsiRd: RemoteData<WorkspaceItem>) => {
+      Object.entries(wsiRd.payload.sections['publicationStep']).forEach(([key, mdv]) => {
+        this.model[key.replace(/\./g, '-')] = mdv[0].value;
+      });
+      this.modelChanges = observe(this.model);
+    });
+
     //Todo we should get this by following links from the wsi, but that doesn't work on the backend, so it's a hardcoded link for now:
     this.subs.push(this.hrefOnlyDataService.findByHref<SubmissionFormModel>(
       new RESTURLCombiner('/config/submissionforms/traditionalpageone').toString()
@@ -86,14 +99,17 @@ export class SubmissionPageComponent implements OnInit, OnDestroy {
           const colsize = 12 / row.fields.length;
 
           const fieldGroup = row.fields.map((field: FormFieldModel) => {
-            const key = (field.selectableMetadata[0].metadata as any).replaceAll('.','_');
-            if (this.focusField !== key) {
-              if (field.input.type === 'date') {
-                this.model[key] = randomDate(new Date('2010'), new Date()).toISOString().split('T')[0];
-              } else {
-                this.model[key] = `${field.label} ${this.count}`;
-              }
-            }
+            const key = field.selectableMetadata[0].metadata.replace(/\./g, '-');
+
+            // generate default values if there are none yet
+            // if (this.focusField !== key && isEmpty(this.model[key])) {
+            //   if (field.input.type === 'date') {
+            //     this.model[key] = randomDate(new Date('2010'), new Date()).toISOString().split('T')[0];
+            //   } else {
+            //     this.model[key] = `${field.label} ${this.count}`;
+            //   }
+            // }
+
             return {
               className: `col-${colsize}`,
               type: field.input.type === 'date' ? DateFieldComponent : 'input',
@@ -126,16 +142,18 @@ export class SubmissionPageComponent implements OnInit, OnDestroy {
   onSubmit(model) {
     const patch = generate(this.modelChanges).map((operation) => {
       return Object.assign(operation, {
-        path: `/sections/publicationStep${(operation.path as any).replaceAll('_','.')}`,
-        value: {
+        path: `/sections/publicationStep${operation.path.replace(/-/g, '.')}`,
+        value: [{
           value: (operation as any).value,
           authority: null,
           language: null
-        }
+        }]
       })
     });
     console.log('patch', patch);
-    this.count++;
+    const requestId = this.requestService.generateRequestId();
+    const request = new PatchRequest(requestId, this.wsiRd$.getValue().payload.self, patch);
+    this.requestService.send(request);
   }
 
   ngOnDestroy(): void {
