@@ -1,0 +1,16 @@
+<div class="container">
+  @if ((wsiRd$ | async) === undefined || (wsiRd$ | async).isLoading) {
+    <div class="ds-full-screen-loader">
+      <ds-loading [showMessage]="false"></ds-loading>
+    </div>
+  } @else if((wsiRd$ | async).hasFailed) {
+    <div class="alert alert-danger">The form couldn't load</div>
+  } @else {
+    @if ((fields$ | async).length > 0) {
+      <form [formGroup]="form" (ngSubmit)="onSubmit(model)">
+        <formly-form [form]="form" [fields]="fields$ | async" [model]="model"></formly-form>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    }
+  }
+</div>

@@ -1,0 +1,13 @@
+<div class="form-group">
+  @if (props.label) {
+    <label>{{ props.label }}</label>
+  }
+  <div class="d-flex">
+    <input type="number" style="width: 100px" value="2024" class="form-control" min="0" max="3000" [(ngModel)]="year" (ngModelChange)="updateFormControl()">
+    <input type="number" style="width: 75px" class="form-control ml-1" min="0" max="12"  [(ngModel)]="month" (ngModelChange)="updateFormControl()">
+    <input type="number" style="width: 75px" class="form-control ml-1" min="0" max="31"  [(ngModel)]="day" (ngModelChange)="updateFormControl()">
+  </div>
+  @if (props.description) {
+    <small class="form-text text-muted">{{ props.description }}</small>
+  }
+<div>
