@@ -108,6 +108,7 @@
     "@ng-dynamic-forms/core": "^16.0.0",
     "@ng-dynamic-forms/ui-ng-bootstrap": "^16.0.0",
     "@ngrx/effects": "^18.1.1",
+    "@ngrx/operators": "^18.0.0",
     "@ngrx/router-store": "^18.1.1",
     "@ngrx/store": "^18.1.1",
     "@ngx-translate/core": "^16.0.3",
@@ -155,8 +156,7 @@
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.0",
     "uuid": "^8.3.2",
-    "zone.js": "~0.14.10",
-    "@ngrx/operators": "^18.0.0"
+    "zone.js": "~0.14.10"
   },
   "devDependencies": {
     "@angular-builders/custom-webpack": "~18.0.0",
@@ -218,7 +218,7 @@
     "karma-mocha-reporter": "2.2.5",
     "ng-mocks": "^14.13.1",
     "ngx-mask": "14.2.4",
-    "nodemon": "^2.0.22",
+    "nodemon": "^3.1.7",
     "postcss": "^8.4",
     "postcss-import": "^14.0.0",
     "postcss-loader": "^4.0.3",
