@@ -8,6 +8,7 @@ import {
   combineLatest,
   combineLatest as observableCombineLatest,
   Observable,
+  of as observableOf, mergeMap,
 } from 'rxjs';
 import {
   filter,
@@ -47,6 +48,7 @@ import { OnClickMenuItemModel } from './shared/menu/menu-item/models/onclick.mod
 import { TextMenuItemModel } from './shared/menu/menu-item/models/text.model';
 import { MenuItemType } from './shared/menu/menu-item-type.model';
 import { MenuState } from './shared/menu/menu-state.model';
+import { AuthService } from './core/auth/auth.service';
 
 /**
  * Creates all of the app's menus
@@ -62,6 +64,7 @@ export class MenuResolverService  {
     protected modalService: NgbModal,
     protected scriptDataService: ScriptDataService,
     protected configurationDataService: ConfigurationDataService,
+    protected authService: AuthService,
   ) {
   }
 
@@ -71,7 +74,7 @@ export class MenuResolverService  {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     return combineLatest([
       this.createPublicMenu$(),
-      this.createAdminMenu$(),
+      this.createAdminMenuIfLoggedIn$(),
     ]).pipe(
       map((menusDone: boolean[]) => menusDone.every(Boolean)),
     );
@@ -148,6 +151,15 @@ export class MenuResolverService  {
   }
 
   /**
+   * Initialize all menu sections and items for {@link MenuID.ADMIN}, only if the user is logged in.
+   */
+  createAdminMenuIfLoggedIn$() {
+    return this.authService.isAuthenticated().pipe(
+      mergeMap((isAuthenticated) => isAuthenticated ? this.createAdminMenu$() : observableOf(true))
+    );
+  }
+
+  /**
    * Initialize all menu sections and items for {@link MenuID.ADMIN}
    */
   createAdminMenu$() {
@@ -156,8 +168,6 @@ export class MenuResolverService  {
     this.createExportMenuSections();
     this.createImportMenuSections();
     this.createAccessControlMenuSections();
-    this.createReportMenuSections();
-
     return this.waitForMenu$(MenuID.ADMIN);
   }
 
