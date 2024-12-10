@@ -65,7 +65,8 @@ describe('BrowseByDatePageComponent', () => {
    const mockBrowseService = {
      getBrowseEntriesFor: (options: BrowseEntrySearchOptions) => toRemoteData([]),
      getBrowseItemsFor: (value: string, options: BrowseEntrySearchOptions) => toRemoteData([firstItem]),
-     getFirstItemFor: (definition: string, scope?: string, sortDirection?: SortDirection) => null
+     getFirstItemFor: (definition: string, scope?: string, sortDirection?: SortDirection) => null,
+     getConfiguredSortDirection: () => observableOf(SortDirection.DESC),
    };
 
   const mockDsoService = {
