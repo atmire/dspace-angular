@@ -4,7 +4,7 @@ import { RemoteData } from '../../core/data/remote-data';
 import { PaginatedList } from '../../core/data/paginated-list.model';
 import { PaginationComponentOptions } from '../../shared/pagination/pagination-component-options.model';
 import { SortDirection, SortOptions } from '../../core/cache/models/sort-options.model';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { hasValue, isNotEmpty } from '../../shared/empty.util';
 import { BrowseService } from '../../core/browse/browse.service';
 import { BrowseEntry } from '../../core/shared/browse-entry.model';
@@ -15,7 +15,7 @@ import { DSpaceObjectDataService } from '../../core/data/dspace-object-data.serv
 import { DSpaceObject } from '../../core/shared/dspace-object.model';
 import { StartsWithType } from '../../shared/starts-with/starts-with-decorator';
 import { PaginationService } from '../../core/pagination/pagination.service';
-import { filter, map, mergeMap } from 'rxjs/operators';
+import { filter, map, mergeMap, switchMap } from 'rxjs/operators';
 import { followLink, FollowLinkConfig } from '../../shared/utils/follow-link-config.model';
 import { Bitstream } from '../../core/shared/bitstream.model';
 import { Collection } from '../../core/shared/collection.model';
@@ -146,45 +146,44 @@ export class BrowseByMetadataPageComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-
-    const sortConfig = new SortOptions('default', SortDirection.ASC);
-    this.updatePage(getBrowseSearchOptions(this.defaultBrowseId, this.paginationConfig, sortConfig));
-    this.currentPagination$ = this.paginationService.getCurrentPagination(this.paginationConfig.id, this.paginationConfig);
-    this.currentSort$ = this.paginationService.getCurrentSort(this.paginationConfig.id, sortConfig);
+    this.browseId = this.route.snapshot.params.id;
     this.subs.push(
-      observableCombineLatest([this.route.params, this.route.queryParams, this.currentPagination$, this.currentSort$]).pipe(
-        map(([routeParams, queryParams, currentPage, currentSort]) => {
-          return [Object.assign({}, routeParams, queryParams),currentPage,currentSort];
-        })
-      ).subscribe(([params, currentPage, currentSort]: [Params, PaginationComponentOptions, SortOptions]) => {
-          this.browseId = params.id || this.defaultBrowseId;
-          this.authority = params.authority;
+      this.browseService.getConfiguredSortDirection(this.browseId, SortDirection.ASC).pipe(
+        map((sortDir) => new SortOptions(this.browseId, sortDir)),
+        switchMap((sortConfig) => {
+          this.currentSort$ = this.paginationService.getCurrentSort(this.paginationConfig.id, sortConfig, false);
+          this.currentPagination$ = this.paginationService.getCurrentPagination(this.paginationConfig.id, this.paginationConfig);
+          return observableCombineLatest([this.route.params, this.route.queryParams, this.currentPagination$, this.currentSort$]).pipe(
+            map(([routeParams, queryParams, currentPage, currentSort]) => ({
+              params: Object.assign({}, routeParams, queryParams), currentPage, currentSort
+            })));
+        })).subscribe(({ params, currentPage, currentSort }) => {
+        this.authority = params.authority;
 
-          if (typeof params.value === 'string'){
-            this.value = params.value.trim();
-          } else {
-            this.value = '';
-          }
+        if (typeof params.value === 'string') {
+          this.value = params.value.trim();
+        } else {
+          this.value = '';
+        }
 
-          if (params.startsWith === undefined || params.startsWith === '') {
-            this.startsWith = undefined;
-          }
+        if (params.startsWith === undefined || params.startsWith === '') {
+          this.startsWith = undefined;
+        }
 
-        if (typeof params.startsWith === 'string'){
-            this.startsWith = params.startsWith.trim();
-          }
+        if (typeof params.startsWith === 'string') {
+          this.startsWith = params.startsWith.trim();
+        }
 
-          if (isNotEmpty(this.value)) {
-            this.updatePageWithItems(
-              browseParamsToOptions(params, currentPage, currentSort, this.browseId, this.fetchThumbnails), this.value, this.authority);
-          } else {
-            this.updatePage(browseParamsToOptions(params, currentPage, currentSort, this.browseId, false));
-          }
-          this.updateParent(params.scope);
-          this.updateLogo();
-        }));
-    this.updateStartsWithTextOptions();
-
+        if (isNotEmpty(this.value)) {
+          this.updatePageWithItems(
+            browseParamsToOptions(params, currentPage, currentSort, this.browseId, this.fetchThumbnails), this.value, this.authority);
+        } else {
+          this.updatePage(browseParamsToOptions(params, currentPage, currentSort, this.browseId, false));
+        }
+        this.updateParent(params.scope);
+        this.updateLogo();
+        this.updateStartsWithTextOptions();
+      }));
   }
 
   /**
