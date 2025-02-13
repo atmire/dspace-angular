@@ -185,7 +185,7 @@ describe('BitstreamDownloadPageComponent', () => {
       });
       it('should navigate to the login page', () => {
         expect(authService.setRedirectUrl).toHaveBeenCalled();
-        expect(router.navigateByUrl).toHaveBeenCalledWith('login');
+        expect(router.navigateByUrl).toHaveBeenCalledWith('login', { replaceUrl: true });
       });
     });
   });

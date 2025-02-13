@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { filter, map, switchMap, take } from 'rxjs/operators';
-import { ActivatedRoute, Router } from '@angular/router';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import { hasValue, isNotEmpty } from '../../shared/empty.util';
 import { getRemoteDataPayload } from '../../core/shared/operators';
 import { Bitstream } from '../../core/shared/bitstream.model';
@@ -48,8 +48,25 @@ export class BitstreamDownloadPageComponent implements OnInit {
   }
 
   back(): void {
+    const previousPath = this.location.path();
+
+    const sub = this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        const finalUrl = event.urlAfterRedirects;
+
+        if (finalUrl === previousPath) {
+          this.location.back();
+        } else {
+          sub.unsubscribe();
+        }
+      });
+
     this.location.back();
   }
+
+
+
 
   ngOnInit(): void {
 
@@ -90,7 +107,7 @@ export class BitstreamDownloadPageComponent implements OnInit {
         this.router.navigateByUrl(getForbiddenRoute(), {skipLocationChange: true});
       } else if (!isAuthorized && !isLoggedIn) {
         this.auth.setRedirectUrl(this.router.url);
-        this.router.navigateByUrl('login');
+        this.router.navigateByUrl('login',{replaceUrl: true});
       }
     });
   }
