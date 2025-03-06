@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { filter, map, switchMap, take } from 'rxjs/operators';
+import { filter, map, switchMap, take, tap } from 'rxjs/operators';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import { hasValue, isNotEmpty} from '../../shared/empty.util';
-import { getRemoteDataPayload } from '../../core/shared/operators';
+import { getAllCompletedRemoteData, getAllSucceededRemoteData, getFirstCompletedRemoteData, getRemoteDataPayload } from '../../core/shared/operators';
 import { Bitstream } from '../../core/shared/bitstream.model';
 import { AuthorizationDataService } from '../../core/data/feature-authorization/authorization-data.service';
 import { FeatureID } from '../../core/data/feature-authorization/feature-id';
@@ -19,6 +19,9 @@ import { SignpostingDataService } from '../../core/data/signposting-data.service
 import { ServerResponseService } from '../../core/services/server-response.service';
 import { SignpostingLink } from '../../core/data/signposting-links.model';
 import {BundleDataService} from '../../core/data/bundle-data.service';
+import { followLink } from '../../shared/utils/follow-link-config.model';
+import { LinkService } from 'src/app/core/cache/builders/link.service';
+import { hasSucceeded } from '../../core/data/request-entry-state.model';
 
 @Component({
   selector: 'ds-bitstream-download-page',
@@ -44,7 +47,8 @@ export class BitstreamDownloadPageComponent implements OnInit {
     private signpostingDataService: SignpostingDataService,
     private responseService: ServerResponseService,
     private bundleService: BundleDataService,
-    @Inject(PLATFORM_ID) protected platformId: string
+    @Inject(PLATFORM_ID) protected platformId: string,
+    protected linkService: LinkService,
   ) {
     this.initPageLinks();
   }
@@ -130,24 +134,26 @@ export class BitstreamDownloadPageComponent implements OnInit {
       } else if (canDownload && !isLoggedIn) {
         this.hardRedirectService.redirect(bitstream._links.content.href);
       } else if (!canDownload && canRequestCopy) {
-          this.bundleService.findByHref(bitstream._links.bundle.href).pipe(
-            getRemoteDataPayload(),
-            switchMap(bundle => {
-              if (hasValue(bundle) && hasValue(bundle.item)) {
-                const routeObj = getBitstreamRequestACopyRoute(bundle.item, bitstream);
-                return observableOf(routeObj);
-              } else {
-                return observableOf(null);
-              }
-            }),
-            take(1)
-          ).subscribe(routeObj => {
-            if (hasValue(routeObj)) {
-              this.router.navigate([routeObj.routerLink], { queryParams: routeObj.queryParams });
+        // resolve the Item from the Bitstream (should only send requests if it wasn't embedded previously)
+        this.linkService.resolveLink(bitstream, followLink('bundle', {}, followLink('item')));
+        bitstream.bundle.pipe(
+          getFirstCompletedRemoteData(),
+          switchMap(bundleRD => bundleRD?.payload?.item),
+          getFirstCompletedRemoteData(),
+          map(itemRD => {
+            if (itemRD.hasSucceeded && hasValue(itemRD?.payload)) {
+              return getBitstreamRequestACopyRoute(itemRD.payload, bitstream);
             } else {
-              this.router.navigateByUrl(getForbiddenRoute(), { skipLocationChange: true });
+              return null;
             }
-          });
+          }),
+        ).subscribe(routeObj => {  // todo: nested subscribe should be avoided, but there is no easy way around it here
+          if (hasValue(routeObj)) {
+            this.router.navigate([routeObj.routerLink], { queryParams: routeObj.queryParams, replaceUrl: true });
+          } else {
+            this.router.navigateByUrl(getForbiddenRoute(), { skipLocationChange: true });
+          }
+        });
       } else if (!canDownload && isLoggedIn && !canRequestCopy) {
         this.router.navigateByUrl(getForbiddenRoute(), { skipLocationChange: true });
       } else if (!isLoggedIn) {
