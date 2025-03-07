@@ -14,6 +14,8 @@ import { CommonModule } from '@angular/common';
 import { SignpostingDataService } from '../../core/data/signposting-data.service';
 import { ServerResponseService } from '../../core/services/server-response.service';
 import { PLATFORM_ID } from '@angular/core';
+import {RequestService} from '../../core/data/request.service';
+import {ObjectCacheService} from '../../core/cache/object-cache.service';
 
 describe('BitstreamDownloadPageComponent', () => {
   let component: BitstreamDownloadPageComponent;
@@ -101,7 +103,15 @@ describe('BitstreamDownloadPageComponent', () => {
         { provide: HardRedirectService, useValue: hardRedirectService },
         { provide: ServerResponseService, useValue: serverResponseService },
         { provide: SignpostingDataService, useValue: signpostingDataService },
-        { provide: PLATFORM_ID, useValue: 'server' }
+        { provide: PLATFORM_ID, useValue: 'server' },
+        {
+          provide: ObjectCacheService,
+          useValue: jasmine.createSpyObj('ObjectCacheService', ['add', 'get', 'remove'])
+        },
+        {
+          provide: RequestService,
+          useValue: jasmine.createSpyObj('RequestService', ['configure', 'generateRequestId'])
+        },
       ]
     })
       .compileComponents();

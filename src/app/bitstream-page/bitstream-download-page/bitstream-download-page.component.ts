@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { filter, map, switchMap, take, tap } from 'rxjs/operators';
+import { filter, map, switchMap, take } from 'rxjs/operators';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import { hasValue, isNotEmpty} from '../../shared/empty.util';
-import { getAllCompletedRemoteData, getAllSucceededRemoteData, getFirstCompletedRemoteData, getRemoteDataPayload } from '../../core/shared/operators';
+import {getFirstCompletedRemoteData, getRemoteDataPayload } from '../../core/shared/operators';
 import { Bitstream } from '../../core/shared/bitstream.model';
 import { AuthorizationDataService } from '../../core/data/feature-authorization/authorization-data.service';
 import { FeatureID } from '../../core/data/feature-authorization/feature-id';
@@ -18,10 +18,8 @@ import { DSONameService } from '../../core/breadcrumbs/dso-name.service';
 import { SignpostingDataService } from '../../core/data/signposting-data.service';
 import { ServerResponseService } from '../../core/services/server-response.service';
 import { SignpostingLink } from '../../core/data/signposting-links.model';
-import {BundleDataService} from '../../core/data/bundle-data.service';
 import { followLink } from '../../shared/utils/follow-link-config.model';
 import { LinkService } from 'src/app/core/cache/builders/link.service';
-import { hasSucceeded } from '../../core/data/request-entry-state.model';
 
 @Component({
   selector: 'ds-bitstream-download-page',
@@ -46,7 +44,6 @@ export class BitstreamDownloadPageComponent implements OnInit {
     public dsoNameService: DSONameService,
     private signpostingDataService: SignpostingDataService,
     private responseService: ServerResponseService,
-    private bundleService: BundleDataService,
     @Inject(PLATFORM_ID) protected platformId: string,
     protected linkService: LinkService,
   ) {
