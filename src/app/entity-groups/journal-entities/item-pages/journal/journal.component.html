@@ -23,11 +23,11 @@
     </ds-generic-item-page-field>
   </div>
   <div class="col-xs-12 col-md-6">
-    <ds-related-items
+    <ds-themed-related-items
       [parentItem]="object"
       [relationType]="'isVolumeOfJournal'"
       [label]="'relationships.isVolumeOf' | translate">
-    </ds-related-items>
+    </ds-themed-related-items>
     <ds-generic-item-page-field class="item-page-fields" [item]="object"
       [fields]="['dc.description']"
       [label]="'journal.page.description'">

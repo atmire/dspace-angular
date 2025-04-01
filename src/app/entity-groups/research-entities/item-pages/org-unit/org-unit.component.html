@@ -32,11 +32,11 @@
     </ds-generic-item-page-field>
   </div>
   <div class="col-xs-12 col-md-7">
-    <ds-related-items
+    <ds-themed-related-items
       [parentItem]="object"
       [relationType]="'isPublicationOfOrgUnit'"
       [label]="'relationships.isPublicationOf' | translate">
-    </ds-related-items>
+    </ds-themed-related-items>
     <ds-generic-item-page-field [item]="object"
       [fields]="['dc.description']"
       [label]="'orgunit.page.description'">
