@@ -8,7 +8,7 @@ import { GenericItemPageFieldComponent } from '../../../../item-page/simple/fiel
 import { ThemedItemPageTitleFieldComponent } from '../../../../item-page/simple/field-components/specific-field/title/themed-item-page-field.component';
 import { ItemComponent } from '../../../../item-page/simple/item-types/shared/item.component';
 import { ThemedMetadataRepresentationListComponent } from '../../../../item-page/simple/metadata-representation-list/themed-metadata-representation-list.component';
-import { RelatedItemsComponent } from '../../../../item-page/simple/related-items/related-items-component';
+import { ThemedRelatedItemsComponent } from '../../../../item-page/simple/related-items/themed-related-items.component';
 import { DsoEditMenuComponent } from '../../../../shared/dso-page/dso-edit-menu/dso-edit-menu.component';
 import { MetadataFieldWrapperComponent } from '../../../../shared/metadata-field-wrapper/metadata-field-wrapper.component';
 import { listableObjectComponent } from '../../../../shared/object-collection/shared/listable-object/listable-object.decorator';
@@ -21,7 +21,7 @@ import { ThemedThumbnailComponent } from '../../../../thumbnail/themed-thumbnail
   styleUrls: ['./project.component.scss'],
   templateUrl: './project.component.html',
   standalone: true,
-  imports: [ThemedResultsBackButtonComponent, ThemedItemPageTitleFieldComponent, DsoEditMenuComponent, MetadataFieldWrapperComponent, ThemedThumbnailComponent, ThemedMetadataRepresentationListComponent, GenericItemPageFieldComponent, RelatedItemsComponent, RouterLink, AsyncPipe, TranslateModule],
+  imports: [ThemedResultsBackButtonComponent, ThemedItemPageTitleFieldComponent, DsoEditMenuComponent, MetadataFieldWrapperComponent, ThemedThumbnailComponent, ThemedMetadataRepresentationListComponent, GenericItemPageFieldComponent, ThemedRelatedItemsComponent, RouterLink, AsyncPipe, TranslateModule],
 })
 /**
  * The component for displaying metadata and relations of an item of the type Project

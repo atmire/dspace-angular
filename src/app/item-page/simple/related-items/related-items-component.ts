@@ -32,7 +32,7 @@ import { VarDirective } from '../../../shared/utils/var.directive';
 import { AbstractIncrementalListComponent } from '../abstract-incremental-list/abstract-incremental-list.component';
 
 @Component({
-  selector: 'ds-related-items',
+  selector: 'ds-base-related-items',
   styleUrls: ['./related-items.component.scss'],
   templateUrl: './related-items.component.html',
   standalone: true,
