@@ -18,8 +18,10 @@ import { of as observableOf } from 'rxjs';
 import { getForbiddenRoute } from '../../app-routing-paths';
 import { AuthService } from '../../core/auth/auth.service';
 import { DSONameService } from '../../core/breadcrumbs/dso-name.service';
+import { ObjectCacheService } from '../../core/cache/object-cache.service';
 import { ConfigurationDataService } from '../../core/data/configuration-data.service';
 import { AuthorizationDataService } from '../../core/data/feature-authorization/authorization-data.service';
+import { RequestService } from '../../core/data/request.service';
 import { SignpostingDataService } from '../../core/data/signposting-data.service';
 import { HardRedirectService } from '../../core/services/hard-redirect.service';
 import { ServerResponseService } from '../../core/services/server-response.service';
@@ -137,6 +139,15 @@ describe('BitstreamDownloadPageComponent', () => {
         { provide: Location, useValue: location },
         { provide: DSONameService, useValue: dsoNameService },
         { provide: ConfigurationDataService, useValue: {} },
+        {
+          provide: ObjectCacheService,
+          useValue: jasmine.createSpyObj('ObjectCacheService', ['add', 'get', 'remove']),
+        },
+        {
+          provide: RequestService,
+          useValue: jasmine.createSpyObj('RequestService', ['configure', 'generateRequestId']),
+        },
+
       ],
     })
       .compileComponents();
@@ -227,7 +238,7 @@ describe('BitstreamDownloadPageComponent', () => {
       it('should navigate to the login page', waitForAsync(() => {
         fixture.whenStable().then(() => {
           expect(authService.setRedirectUrl).toHaveBeenCalled();
-          expect(router.navigateByUrl).toHaveBeenCalledWith('login');
+          expect(router.navigateByUrl).toHaveBeenCalledWith('login', { replaceUrl: true });
         });
       }));
     });
