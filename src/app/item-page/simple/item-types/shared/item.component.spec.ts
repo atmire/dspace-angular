@@ -56,7 +56,6 @@ import { DsoEditMenuComponent } from '../../../../shared/dso-page/dso-edit-menu/
 import { isNotEmpty } from '../../../../shared/empty.util';
 import { MetadataFieldWrapperComponent } from '../../../../shared/metadata-field-wrapper/metadata-field-wrapper.component';
 import { mockTruncatableService } from '../../../../shared/mocks/mock-trucatable.service';
-import { getMockThemeService } from '../../../../shared/mocks/theme-service.mock';
 import { TranslateLoaderMock } from '../../../../shared/mocks/translate-loader.mock';
 import { NotificationsService } from '../../../../shared/notifications/notifications.service';
 import { createSuccessfulRemoteDataObject$ } from '../../../../shared/remote-data.utils';
@@ -65,7 +64,6 @@ import { AuthServiceStub } from '../../../../shared/testing/auth-service.stub';
 import { BrowseDefinitionDataServiceStub } from '../../../../shared/testing/browse-definition-data-service.stub';
 import { routeServiceStub } from '../../../../shared/testing/route-service.stub';
 import { createPaginatedList } from '../../../../shared/testing/utils.test';
-import { ThemeService } from '../../../../shared/theme-support/theme.service';
 import { TruncatableService } from '../../../../shared/truncatable/truncatable.service';
 import { TruncatePipe } from '../../../../shared/utils/truncate.pipe';
 import { ThemedThumbnailComponent } from '../../../../thumbnail/themed-thumbnail.component';
@@ -74,6 +72,7 @@ import { ThemedItemPageTitleFieldComponent } from '../../field-components/specif
 import { ThemedMetadataRepresentationListComponent } from '../../metadata-representation-list/themed-metadata-representation-list.component';
 import { TabbedRelatedEntitiesSearchComponent } from '../../related-entities/tabbed-related-entities-search/tabbed-related-entities-search.component';
 import { RelatedItemsComponent } from '../../related-items/related-items-component';
+import { ThemedRelatedItemsComponent } from '../../related-items/themed-related-items.component';
 import { ItemComponent } from './item.component';
 import {
   compareArraysUsing,
@@ -188,7 +187,6 @@ export function getItemPageFieldsTest(mockItem: Item, component) {
             provide: BrowseDefinitionDataService,
             useValue: BrowseDefinitionDataServiceStub,
           },
-          { provide: ThemeService, useValue: getMockThemeService() },
         ],
         schemas: [NO_ERRORS_SCHEMA],
       })
@@ -203,6 +201,7 @@ export function getItemPageFieldsTest(mockItem: Item, component) {
               RelatedItemsComponent,
               TabbedRelatedEntitiesSearchComponent,
               ThemedMetadataRepresentationListComponent,
+              ThemedRelatedItemsComponent,
             ],
           },
           add: { changeDetection: ChangeDetectionStrategy.Default },
