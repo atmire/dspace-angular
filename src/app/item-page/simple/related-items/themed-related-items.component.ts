@@ -12,8 +12,8 @@ export class ThemedRelatedItemsComponent extends ThemedComponent<RelatedItemsCom
 
   @Input() parentItem: Item;
   @Input() relationType: string;
-  @Input() incrementBy;
-  @Input() options = new FindListOptions();
+  @Input() incrementBy: number;
+  @Input() options: FindListOptions;
   @Input() label: string;
 
   protected inAndOutputNames: (keyof RelatedItemsComponent & keyof this)[] = [
@@ -33,7 +33,7 @@ export class ThemedRelatedItemsComponent extends ThemedComponent<RelatedItemsCom
   }
 
   protected importUnthemedComponent(): Promise<any> {
-    return import(`./related-items-component`);
+    return import('./related-items-component');
   }
 
 }
