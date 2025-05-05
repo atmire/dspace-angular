@@ -52,6 +52,7 @@ import { RemoteData } from '../../../core/data/remote-data';
 import { RequestService } from '../../../core/data/request.service';
 import { GroupDataService } from '../../../core/eperson/group-data.service';
 import { Group } from '../../../core/eperson/models/group.model';
+import { RouteService } from '../../../core/services/route.service';
 import { Collection } from '../../../core/shared/collection.model';
 import { Community } from '../../../core/shared/community.model';
 import { DSpaceObject } from '../../../core/shared/dspace-object.model';
@@ -201,6 +202,7 @@ export class GroupFormComponent implements OnInit, OnDestroy {
     public requestService: RequestService,
     protected changeDetectorRef: ChangeDetectorRef,
     public dsoNameService: DSONameService,
+    protected routeService: RouteService,
   ) {
   }
 
@@ -313,7 +315,11 @@ export class GroupFormComponent implements OnInit, OnDestroy {
   onCancel() {
     this.groupDataService.cancelEditGroup();
     this.cancelForm.emit();
-    void this.router.navigate([getGroupsRoute()]);
+    this.routeService.getPreviousUrl().pipe(
+      take(1),
+    ).subscribe((previousURL) => {
+      void this.router.navigate([previousURL && previousURL.trim().length > 0 ? previousURL : getGroupsRoute()]);
+    });
   }
 
   /**

@@ -44,6 +44,7 @@ import { RemoteData } from '../../../core/data/remote-data';
 import { EPersonDataService } from '../../../core/eperson/eperson-data.service';
 import { GroupDataService } from '../../../core/eperson/group-data.service';
 import { Group } from '../../../core/eperson/models/group.model';
+import { RouteService } from '../../../core/services/route.service';
 import { DSpaceObject } from '../../../core/shared/dspace-object.model';
 import { HALEndpointService } from '../../../core/shared/hal-endpoint.service';
 import { NoContent } from '../../../core/shared/NoContent.model';
@@ -65,6 +66,7 @@ import {
   GroupMock2,
 } from '../../../shared/testing/group-mock';
 import { NotificationsServiceStub } from '../../../shared/testing/notifications-service.stub';
+import { routeServiceStub } from '../../../shared/testing/route-service.stub';
 import { GroupFormComponent } from './group-form.component';
 import { MembersListComponent } from './members-list/members-list.component';
 import { SubgroupsListComponent } from './subgroup-list/subgroups-list.component';
@@ -261,6 +263,7 @@ describe('GroupFormComponent', () => {
         { provide: ActivatedRoute, useValue: route },
         { provide: Router, useValue: router },
         { provide: AuthorizationDataService, useValue: authorizationService },
+        { provide: RouteService, useValue: routeServiceStub },
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
