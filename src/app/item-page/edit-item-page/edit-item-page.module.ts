@@ -46,6 +46,7 @@ import { ResultsBackButtonModule } from '../../shared/results-back-button/result
 import {
   AccessControlFormModule
 } from '../../shared/access-control-form-container/access-control-form.module';
+import { ThemedItemOperationComponent } from './item-operation/themed-item-operation-component';
 
 /**
  * Module that contains all components related to the Edit Item page administrator functionality
@@ -68,6 +69,7 @@ import {
   declarations: [
     EditItemPageComponent,
     ItemOperationComponent,
+    ThemedItemOperationComponent,
     AbstractSimpleItemActionComponent,
     AbstractItemUpdateComponent,
     ItemWithdrawComponent,
@@ -102,6 +104,7 @@ import {
   ],
   exports: [
     ItemOperationComponent,
+    ThemedItemOperationComponent,
   ]
 })
 export class EditItemPageModule {
