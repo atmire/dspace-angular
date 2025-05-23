@@ -111,6 +111,7 @@ import { ThumbnailComponent } from './app/thumbnail/thumbnail.component';
 import { WorkflowItemDeleteComponent } from './app/workflowitems-edit-page/workflow-item-delete/workflow-item-delete.component';
 import { WorkflowItemSendBackComponent } from './app/workflowitems-edit-page/workflow-item-send-back/workflow-item-send-back.component';
 import { WorkspaceItemsDeletePageComponent } from './app/workspaceitems-edit-page/workspaceitems-delete-page/workspaceitems-delete-page.component';
+import { ItemOperationComponent } from './app/item-page/edit-item-page/item-operation/item-operation.component';
 
 const DECLARATIONS = [
   FileSectionComponent,
@@ -209,6 +210,7 @@ const DECLARATIONS = [
   SubmissionSectionContainerComponent,
   SubmissionFormFooterComponent,
   SubmissionFormComponent,
+  ItemOperationComponent,
 ];
 
 @NgModule({
