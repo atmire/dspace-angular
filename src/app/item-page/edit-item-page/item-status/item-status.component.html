@@ -34,7 +34,7 @@
 
   @for (operation of (operations$ | async); track operation) {
     <div class="w-100" [ngClass]="{'pt-3': operation}">
-      <ds-themed-item-operation [operation]="operation"></ds-themed-item-operation>
+      <ds-item-operation [operation]="operation"></ds-item-operation>
     </div>
   }
 

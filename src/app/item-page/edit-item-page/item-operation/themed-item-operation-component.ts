@@ -1,10 +1,14 @@
-import { Component, Input } from '@angular/core';
+import {
+  Component,
+  Input,
+} from '@angular/core';
+
 import { ThemedComponent } from '../../../shared/theme-support/themed.component';
 import { ItemOperationComponent } from './item-operation.component';
 import { ItemOperation } from './itemOperation.model';
 
 @Component({
-  selector: 'ds-themed-item-operation',
+  standalone: true,selector: 'ds-item-operation',
   templateUrl: '../../../shared/theme-support/themed.component.html',
 })
 export class ThemedItemOperationComponent extends ThemedComponent<ItemOperationComponent> {
