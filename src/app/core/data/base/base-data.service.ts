@@ -432,22 +432,27 @@ export class BaseDataService<T extends CacheableObject> implements HALDataServic
   invalidateByHref(href: string): Observable<boolean> {
     const done$ = new AsyncSubject<boolean>();
 
-    this.objectCache.getByHref(href).pipe(
-      take(1),
-      switchMap((oce: ObjectCacheEntry) => {
-        return observableFrom([
-          ...oce.requestUUIDs,
-          ...oce.dependentRequestUUIDs
-        ]).pipe(
-          mergeMap((requestUUID: string) => this.requestService.setStaleByUUID(requestUUID)),
-          toArray(),
-        );
-      }),
-    ).subscribe(() => {
-      this.objectCache.removeDependents(href);
+    if (this.objectCache.hasByHref(href) === true) {
+      this.objectCache.getByHref(href).pipe(
+        take(1),
+        switchMap((oce: ObjectCacheEntry) => {
+          return observableFrom([
+            ...oce.requestUUIDs,
+            ...oce.dependentRequestUUIDs
+          ]).pipe(
+            mergeMap((requestUUID: string) => this.requestService.setStaleByUUID(requestUUID)),
+            toArray(),
+          );
+        }),
+      ).subscribe(() => {
+        this.objectCache.removeDependents(href);
+        done$.next(true);
+        done$.complete();
+      });
+    } else {
       done$.next(true);
       done$.complete();
-    });
+    }
 
     return done$;
   }

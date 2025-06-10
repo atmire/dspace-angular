@@ -87,6 +87,7 @@ describe('GroupDataService', () => {
     service = initTestService();
     spyOn(store, 'dispatch');
     spyOn(rdbService, 'buildFromRequestUUIDAndAwait').and.callThrough();
+    objectCache.hasByHref = jasmine.createSpy().and.returnValue(true);
   });
 
   describe('searchGroups', () => {

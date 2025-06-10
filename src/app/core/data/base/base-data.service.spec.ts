@@ -67,6 +67,9 @@ describe('BaseDataService', () => {
       getByHref: () => {
         /* empty */
       },
+      hasByHref: () => {
+        /* empty */
+      },
       addDependency: () => {
         /* empty */
       },
@@ -562,83 +565,107 @@ describe('BaseDataService', () => {
 
   describe('invalidateByHref', () => {
     let getByHrefSpy: jasmine.Spy;
+    let hasByHrefSpy: jasmine.Spy;
 
-    beforeEach(() => {
-      getByHrefSpy = spyOn(objectCache, 'getByHref').and.returnValue(observableOf({
-        requestUUIDs: ['request1', 'request2', 'request3'],
-        dependentRequestUUIDs: ['request4', 'request5']
-      }));
+    describe(`when the href to invalidate exists in the cache`, () => {
+      beforeEach(() => {
+        getByHrefSpy = spyOn(objectCache, 'getByHref').and.returnValue(observableOf({
+          requestUUIDs: ['request1', 'request2', 'request3'],
+          dependentRequestUUIDs: ['request4', 'request5']
+        }));
+        hasByHrefSpy = spyOn(objectCache, 'hasByHref').and.returnValue(true);
+      });
 
-    });
+      it('should call setStaleByUUID for every request associated with this DSO', (done) => {
+        service.invalidateByHref('some-href').subscribe((ok) => {
+          expect(ok).toBeTrue();
+          expect(getByHrefSpy).toHaveBeenCalledWith('some-href');
+          expect(requestService.setStaleByUUID).toHaveBeenCalledWith('request1');
+          expect(requestService.setStaleByUUID).toHaveBeenCalledWith('request2');
+          expect(requestService.setStaleByUUID).toHaveBeenCalledWith('request3');
+          expect(requestService.setStaleByUUID).toHaveBeenCalledWith('request4');
+          expect(requestService.setStaleByUUID).toHaveBeenCalledWith('request5');
+          done();
+        });
+      });
 
-    it('should call setStaleByUUID for every request associated with this DSO', (done) => {
-      service.invalidateByHref('some-href').subscribe((ok) => {
-        expect(ok).toBeTrue();
+      it('should call setStaleByUUID even if not subscribing to returned Observable', fakeAsync(() => {
+        service.invalidateByHref('some-href');
+        tick();
+
         expect(getByHrefSpy).toHaveBeenCalledWith('some-href');
         expect(requestService.setStaleByUUID).toHaveBeenCalledWith('request1');
         expect(requestService.setStaleByUUID).toHaveBeenCalledWith('request2');
         expect(requestService.setStaleByUUID).toHaveBeenCalledWith('request3');
         expect(requestService.setStaleByUUID).toHaveBeenCalledWith('request4');
         expect(requestService.setStaleByUUID).toHaveBeenCalledWith('request5');
-        done();
-      });
-    });
+      }));
 
-    it('should call setStaleByUUID even if not subscribing to returned Observable', fakeAsync(() => {
-      service.invalidateByHref('some-href');
-      tick();
+      it('should return an Observable that only emits true once all requests are stale', () => {
+        testScheduler.run(({ cold, expectObservable }) => {
+          requestService.setStaleByUUID.and.callFake((uuid) => {
+            switch (uuid) {   // fake requests becoming stale at different times
+              case 'request1':
+                return cold('--(t|)', BOOLEAN);
+              case 'request2':
+                return cold('------(t|)', BOOLEAN);
+              case 'request3':
+                return cold('---(t|)', BOOLEAN);
+              case 'request4':
+                return cold('-(t|)', BOOLEAN);
+              case 'request5':
+                return cold('----(t|)', BOOLEAN);
+            }
+          });
 
-      expect(getByHrefSpy).toHaveBeenCalledWith('some-href');
-      expect(requestService.setStaleByUUID).toHaveBeenCalledWith('request1');
-      expect(requestService.setStaleByUUID).toHaveBeenCalledWith('request2');
-      expect(requestService.setStaleByUUID).toHaveBeenCalledWith('request3');
-      expect(requestService.setStaleByUUID).toHaveBeenCalledWith('request4');
-      expect(requestService.setStaleByUUID).toHaveBeenCalledWith('request5');
-    }));
+          const done$ = service.invalidateByHref('some-href');
 
-    it('should return an Observable that only emits true once all requests are stale', () => {
-      testScheduler.run(({ cold, expectObservable }) => {
-        requestService.setStaleByUUID.and.callFake((uuid) => {
-          switch (uuid) {   // fake requests becoming stale at different times
-            case 'request1':
-              return cold('--(t|)', BOOLEAN);
-            case 'request2':
-              return cold('------(t|)', BOOLEAN);
-            case 'request3':
-              return cold('---(t|)', BOOLEAN);
-            case 'request4':
-              return cold('-(t|)', BOOLEAN);
-            case 'request5':
-              return cold('----(t|)', BOOLEAN);
-          }
+          // emit true as soon as the final request is stale
+          expectObservable(done$).toBe('------(t|)', BOOLEAN);
         });
+      });
 
-        const done$ = service.invalidateByHref('some-href');
+      it('should only fire for the current state of the object (instead of tracking it)', () => {
+        testScheduler.run(({ cold, flush }) => {
+          getByHrefSpy.and.returnValue(cold('a---b---c---', {
+            a: { requestUUIDs: ['request1'], dependentRequestUUIDs: [] },  // this is the state at the moment we're invalidating the cache
+            b: { requestUUIDs: ['request2'], dependentRequestUUIDs: [] },  // we shouldn't keep tracking the state
+            c: { requestUUIDs: ['request3'], dependentRequestUUIDs: [] },  // because we may invalidate when we shouldn't
+          }));
 
-        // emit true as soon as the final request is stale
-        expectObservable(done$).toBe('------(t|)', BOOLEAN);
+          service.invalidateByHref('some-href');
+          flush();
+
+          // requests from the first state are marked as stale
+          expect(requestService.setStaleByUUID).toHaveBeenCalledWith('request1');
+
+          // request from subsequent states are ignored
+          expect(requestService.setStaleByUUID).not.toHaveBeenCalledWith('request2');
+          expect(requestService.setStaleByUUID).not.toHaveBeenCalledWith('request3');
+        });
       });
     });
 
-    it('should only fire for the current state of the object (instead of tracking it)', () => {
-      testScheduler.run(({ cold, flush }) => {
-        getByHrefSpy.and.returnValue(cold('a---b---c---', {
-          a: { requestUUIDs: ['request1'], dependentRequestUUIDs: [] },  // this is the state at the moment we're invalidating the cache
-          b: { requestUUIDs: ['request2'], dependentRequestUUIDs: [] },  // we shouldn't keep tracking the state
-          c: { requestUUIDs: ['request3'], dependentRequestUUIDs: [] },  // because we may invalidate when we shouldn't
-        }));
+    describe(`when the href to invalidate doesn't exist in the cache`, () => {
+      beforeEach(() => {
+        getByHrefSpy = spyOn(objectCache, 'getByHref');
+        hasByHrefSpy = spyOn(objectCache, 'hasByHref').and.returnValue(false);
+      });
 
-        service.invalidateByHref('some-href');
-        flush();
+      it(`should emit true and complete`, () => {
+        testScheduler.run(({ expectObservable, flush }) => {
+          const done$ = service.invalidateByHref('some-href-that-doesnt-exist');
+          expectObservable(done$).toBe('(t|)', BOOLEAN);
+          flush();
 
-        // requests from the first state are marked as stale
-        expect(requestService.setStaleByUUID).toHaveBeenCalledWith('request1');
-
-        // request from subsequent states are ignored
-        expect(requestService.setStaleByUUID).not.toHaveBeenCalledWith('request2');
-        expect(requestService.setStaleByUUID).not.toHaveBeenCalledWith('request3');
+          // requests from the first state are marked as stale
+          expect(hasByHrefSpy).toHaveBeenCalledOnceWith('some-href-that-doesnt-exist');
+          expect(getByHrefSpy).not.toHaveBeenCalled();
+          expect(requestService.setStaleByUUID).not.toHaveBeenCalled();
+        });
       });
     });
+
   });
 
   describe('hasCachedResponse', () => {
