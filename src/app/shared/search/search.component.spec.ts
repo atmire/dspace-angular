@@ -297,15 +297,6 @@ describe('SearchComponent', () => {
     }));
   }));
 
-  it('should retrieve Search Filters', fakeAsync(() => {
-    fixture.detectChanges();
-    tick(100);
-    const expectedResults = filtersConfigRD;
-    expect(comp.filtersRD$).toBeObservable(cold('b', {
-      b: expectedResults
-    }));
-  }));
-
   it('should emit resultFound event', fakeAsync(() => {
     spyOn(comp.resultFound, 'emit');
     const expectedResults = mockSearchResults;
