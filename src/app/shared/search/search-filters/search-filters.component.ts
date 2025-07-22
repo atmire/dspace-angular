@@ -1,11 +1,10 @@
 import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { map, filter, take } from 'rxjs/operators';
 
 import { SearchService } from '../../../core/shared/search/search.service';
-import { RemoteData } from '../../../core/data/remote-data';
 import { SearchFilterConfig } from '../models/search-filter-config.model';
 import { SearchConfigurationService } from '../../../core/shared/search/search-configuration.service';
 import { SearchFilterService } from '../../../core/shared/search/search-filter.service';
@@ -28,7 +27,7 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
   /**
    * An observable containing configuration about which filters are shown and how they are shown
    */
-  @Input() filters: Observable<RemoteData<SearchFilterConfig[]>>;
+  @Input() filters: SearchFilterConfig[];
 
   /**
    * List of all filters that are currently active with their value set to null.

@@ -48,6 +48,8 @@ export class SearchResponseParsingService extends DspaceRestResponseParsingServi
         indexableObject: dsoSelfLinks[index],
         hitHighlights: hitHighlights[index],
       }));
+
+    payload.facets = data.payload._embedded.facets;
     payload.objects = objects;
     const deserialized: any = new DSpaceSerializer(SearchObjects).deserialize(payload);
     deserialized.pageInfo = this.processPageInfo(payload);

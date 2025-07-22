@@ -1,6 +1,7 @@
-import { autoserialize } from 'cerialize';
+import { autoserialize, autoserializeAs } from 'cerialize';
 import { PageInfo } from '../../../core/shared/page-info.model';
 import { PaginatedList } from '../../../core/data/paginated-list.model';
+import { SearchFilterConfig } from './search-filter-config.model';
 
 /**
  * Class representing the response returned by the server when performing a search request
@@ -48,6 +49,9 @@ export abstract class SearchQueryResponse<T> extends PaginatedList<T> {
   @autoserialize
   page: T[];
 
-  @autoserialize
-  facets: any; // TODO
+  /**
+   * The facets for this query
+   */
+  @autoserializeAs(SearchFilterConfig, 'facets')
+  filterConfig: SearchFilterConfig[];
 }

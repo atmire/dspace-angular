@@ -5,8 +5,7 @@ import { SearchConfigurationOption } from '../search-switch-configuration/search
 import { SortOptions } from '../../../core/cache/models/sort-options.model';
 import { ViewMode } from '../../../core/shared/view-mode.model';
 import { PaginatedSearchOptions } from '../models/paginated-search-options.model';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { RemoteData } from '../../../core/data/remote-data';
+import { BehaviorSubject } from 'rxjs';
 import { SearchFilterConfig } from '../models/search-filter-config.model';
 
 /**
@@ -23,7 +22,7 @@ export class ThemedSearchSidebarComponent extends ThemedComponent<SearchSidebarC
   @Input() configurationList: SearchConfigurationOption[];
   @Input() currentScope: string;
   @Input() currentSortOption: SortOptions;
-  @Input() filters: Observable<RemoteData<SearchFilterConfig[]>>;
+  @Input() filters: SearchFilterConfig[];
   @Input() resultCount;
   @Input() viewModeList: ViewMode[];
   @Input() showViewModes = true;

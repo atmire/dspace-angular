@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, Output, OnChanges, SimpleChanges } from '@angular/core';
 
 import { BehaviorSubject, Observable, of as observableOf } from 'rxjs';
 import { filter, map, startWith, switchMap, take } from 'rxjs/operators';
@@ -22,7 +22,7 @@ import { SequenceService } from '../../../../core/shared/sequence.service';
 /**
  * Represents a part of the filter section for a single type of filter
  */
-export class SearchFilterComponent implements OnInit {
+export class SearchFilterComponent implements OnChanges {
   /**
    * The filter config for this component
    */
@@ -86,26 +86,25 @@ export class SearchFilterComponent implements OnInit {
     this.sequenceId = this.sequenceService.next();
   }
 
-  /**
-   * Requests the current set values for this filter
-   * If the filter config is open by default OR the filter has at least one value, the filter should be initially expanded
-   * Else, the filter should initially be collapsed
-   */
-  ngOnInit() {
-    this.selectedValues$ = this.getSelectedValues();
-    this.active$ = this.isActive().pipe(
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.filter) {
+      if (changes.filter.isFirstChange()) {
+        this.initializeFilter();
+        this.collapsed$ = this.isCollapsed();
+      }
+      this.selectedValues$ = this.getSelectedValues();
+      this.active$ = this.isActive().pipe(
       startWith(true)
     );
-    this.collapsed$ = this.isCollapsed();
-    this.initializeFilter();
-    this.selectedValues$.pipe(take(1)).subscribe((selectedValues) => {
-      if (isNotEmpty(selectedValues)) {
-        this.filterService.expand(this.filter.name);
-      }
-    });
+      this.selectedValues$.pipe(take(1)).subscribe((selectedValues) => {
+        if (isNotEmpty(selectedValues)) {
+          this.filterService.expand(this.filter.name);
+        }
+      });
     this.isActive().pipe(take(1)).subscribe(() => {
       this.isVisibilityComputed.emit(true);
     });
+    }
   }
 
   /**

@@ -15,7 +15,6 @@ import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map, switchMap } from 'rxjs/operators';
 import uniqueId from 'lodash/uniqueId';
 
-import { PaginatedList } from '../../core/data/paginated-list.model';
 import { RemoteData } from '../../core/data/remote-data';
 import { DSpaceObject } from '../../core/shared/dspace-object.model';
 import { pushInOut } from '../animations/push';
@@ -25,7 +24,6 @@ import { hasValue, hasValueOperator, isEmpty, isNotEmpty } from '../empty.util';
 import { RouteService } from '../../core/services/route.service';
 import { SEARCH_CONFIG_SERVICE } from '../../my-dspace-page/my-dspace-page.component';
 import { PaginatedSearchOptions } from './models/paginated-search-options.model';
-import { SearchResult } from './models/search-result.model';
 import { SearchConfigurationService } from '../../core/shared/search/search-configuration.service';
 import { SearchService } from '../../core/shared/search/search.service';
 import { currentPath } from '../utils/route.utils';
@@ -214,11 +212,6 @@ export class SearchComponent implements OnDestroy, OnInit {
   currentSortOptions$: BehaviorSubject<SortOptions> = new BehaviorSubject<SortOptions>(null);
 
   /**
-   * An observable containing configuration about which filters are shown and how they are shown
-   */
-  filtersRD$: BehaviorSubject<RemoteData<SearchFilterConfig[]>> = new BehaviorSubject<RemoteData<SearchFilterConfig[]>>(null);
-
-  /**
    * Maintains the last search options, so it can be used in refresh
    */
   lastSearchOptions: PaginatedSearchOptions;
@@ -226,7 +219,7 @@ export class SearchComponent implements OnDestroy, OnInit {
   /**
    * The current search results
    */
-  resultsRD$: BehaviorSubject<RemoteData<PaginatedList<SearchResult<DSpaceObject>>>> = new BehaviorSubject(null);
+  resultsRD$: BehaviorSubject<RemoteData<SearchObjects<DSpaceObject>>> = new BehaviorSubject(null);
 
   /**
    * The current paginated search options
@@ -294,6 +287,8 @@ export class SearchComponent implements OnDestroy, OnInit {
    * Emits event when the user select result entry
    */
   @Output() selectObject: EventEmitter<ListableObject> = new EventEmitter<ListableObject>();
+
+  filters$: BehaviorSubject<SearchFilterConfig[]> = new BehaviorSubject([]);
 
   constructor(protected service: SearchService,
               protected sidebarService: SidebarService,
@@ -393,7 +388,6 @@ export class SearchComponent implements OnDestroy, OnInit {
         this.initialized$.next(true);
         // retrieve results
         this.retrieveSearchResults(newSearchOptions);
-        this.retrieveFilters(newSearchOptions);
       }
     }));
 
@@ -434,7 +428,6 @@ export class SearchComponent implements OnDestroy, OnInit {
    * @param $event
    */
   public onContentChange($event: any) {
-    this.retrieveFilters(this.lastSearchOptions);
     this.refreshFilters.next(true);
   }
 
@@ -451,20 +444,6 @@ export class SearchComponent implements OnDestroy, OnInit {
    */
   protected getSearchOptions(): Observable<PaginatedSearchOptions> {
     return this.searchConfigService.paginatedSearchOptions;
-  }
-
-  /**
-   * Retrieve search filters by the given search options
-   * @param searchOptions
-   * @private
-   */
-  private retrieveFilters(searchOptions: PaginatedSearchOptions) {
-    this.filtersRD$.next(null);
-    this.searchConfigService.getConfig(searchOptions.scope, searchOptions.configuration).pipe(
-      getFirstCompletedRemoteData(),
-    ).subscribe((filtersRD: RemoteData<SearchFilterConfig[]>) => {
-      this.filtersRD$.next(filtersRD);
-    });
   }
 
   /**
@@ -510,6 +489,7 @@ export class SearchComponent implements OnDestroy, OnInit {
           if (results.payload?.page?.length > 0) {
             this.resultFound.emit(results.payload);
           }
+          this.filters$.next(results.payload?.filterConfig);
         }
         this.resultsRD$.next(results);
       });
