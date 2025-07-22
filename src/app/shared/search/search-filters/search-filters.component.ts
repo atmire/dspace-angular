@@ -130,62 +130,34 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
 
   countFiltersWithComputedVisibility(computed: boolean) {
     if (computed) {
-      this.filters.pipe(
-        // Get filter data and check if we need to increment the counter
-        map(filtersData => {
-          if (filtersData && filtersData.hasSucceeded && filtersData.payload) {
-            const totalFilters = filtersData.payload.length;
-            const currentComputed = this.getCurrentFiltersComputed(this.currentConfiguration);
+      if (this.filters) {
+        const totalFilters = this.filters.length;
+        const currentComputed = this.getCurrentFiltersComputed(this.currentConfiguration);
 
-            // If we've already computed all filters for this configuration
-            if (currentComputed >= totalFilters) {
-              // Register in finalFiltersComputed if not already registered
-              if (!this.findConfigInFinalFilters(this.currentConfiguration)) {
-                this.updateFinalFiltersComputed(this.currentConfiguration, totalFilters);
-              }
-              return { shouldIncrement: false };
-            }
-
-            // We haven't reached the total yet, proceed with increment
-            return {
-              shouldIncrement: true,
-              totalFilters
-            };
+        if (currentComputed >= totalFilters) {
+          // All filters already processed for this configuration
+          if (!this.findConfigInFinalFilters(this.currentConfiguration)) {
+            this.updateFinalFiltersComputed(this.currentConfiguration, totalFilters);
           }
-          return { shouldIncrement: false };
-        }),
-        // Only continue if we need to increment the counter
-        filter(result => result.shouldIncrement),
-        // Increment the counter for the current configuration
-        map(result => {
-          const filterConfig = this.findConfigInCurrentFilters(this.currentConfiguration);
+          return;
+        }
 
-          if (filterConfig) {
-            // Update existing counter
-            filterConfig.filtersComputed += 1;
-          } else {
-            // Create new counter entry
-            this.currentFiltersComputed.push({
-              configuration: this.currentConfiguration,
-              filtersComputed: 1
-            });
-          }
+        // Proceed with increment
+        const filterConfig = this.findConfigInCurrentFilters(this.currentConfiguration);
+        if (filterConfig) {
+          filterConfig.filtersComputed += 1;
+        } else {
+          this.currentFiltersComputed.push({
+            configuration: this.currentConfiguration,
+            filtersComputed: 1
+          });
+        }
 
-          // Pass along the total and updated count
-          return {
-            totalFilters: result.totalFilters,
-            currentComputed: this.getCurrentFiltersComputed(this.currentConfiguration)
-          };
-        }),
-        // Check if we've reached the total after incrementing
-        map(result => {
-          if (result.currentComputed === result.totalFilters) {
-            // If we've reached the total, update final filters count
-            this.updateFinalFiltersComputed(this.currentConfiguration, result.currentComputed);
-          }
-          return result;
-        })
-      ).pipe(take(1)).subscribe(); // Execute the pipeline and immediately unsubscribe
+        const updatedComputed = this.getCurrentFiltersComputed(this.currentConfiguration);
+        if (updatedComputed === totalFilters) {
+          this.updateFinalFiltersComputed(this.currentConfiguration, updatedComputed);
+        }
+      }
     }
   }
 
