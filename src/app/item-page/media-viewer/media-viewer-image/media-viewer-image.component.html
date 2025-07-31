@@ -3,5 +3,6 @@
     class="ngx-gallery"
     [options]="galleryOptions"
     [images]="galleryImages"
+    (previewChange)="handlePreviewChange($event)"
   ></ngx-gallery>
 </div>

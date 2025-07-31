@@ -74,6 +74,12 @@ export class MediaViewerComponent implements OnDestroy, OnInit {
 
   itemRequest: ItemRequest;
 
+  currentPage: number;
+
+  totalPages: number;
+
+  pageIndex: number;
+
   constructor(
     protected bitstreamDataService: BitstreamDataService,
     protected changeDetectorRef: ChangeDetectorRef,
@@ -94,12 +100,14 @@ export class MediaViewerComponent implements OnDestroy, OnInit {
       ...(this.mediaOptions.image ? ['image'] : []),
       ...(this.mediaOptions.video ? ['audio', 'video'] : []),
     ];
-    this.thumbnailsRD$ = this.loadRemoteData('THUMBNAIL');
-    this.subs.push(this.loadRemoteData('ORIGINAL').subscribe((bitstreamsRD: RemoteData<PaginatedList<Bitstream>>) => {
+    this.currentPage = 1;
+    this.thumbnailsRD$ = this.loadRemoteData('THUMBNAIL', 1);
+    this.subs.push(this.loadRemoteData('ORIGINAL', 1).subscribe((bitstreamsRD: RemoteData<PaginatedList<Bitstream>>) => {
       if (bitstreamsRD.payload.page.length === 0) {
         this.isLoading = false;
         this.mediaList$.next([]);
       } else {
+        this.totalPages = bitstreamsRD.payload.pageInfo.totalPages;
         this.subs.push(this.thumbnailsRD$.subscribe((thumbnailsRD: RemoteData<PaginatedList<Bitstream>>) => {
           for (
             let index = 0;
@@ -132,15 +140,17 @@ export class MediaViewerComponent implements OnDestroy, OnInit {
   /**
    * This method will retrieve the next page of Bitstreams from the external BitstreamDataService call.
    * @param bundleName Bundle name
+   * @param pageNumber Used for pagination in the request
    */
   loadRemoteData(
     bundleName: string,
+    pageNumber: number,
   ): Observable<RemoteData<PaginatedList<Bitstream>>> {
     return this.bitstreamDataService
       .findAllByItemAndBundleName(
         this.item,
         bundleName,
-        {},
+        { currentPage: pageNumber },
         true,
         true,
         followLink('format'),
@@ -179,6 +189,59 @@ export class MediaViewerComponent implements OnDestroy, OnInit {
       return this.itemRequest.accessToken;
     }
     return null;
+  }
+
+  handlePageChange(index: number) {
+    this.pageIndex = index;
+    this.currentPage++;
+    if (this.currentPage <= this.totalPages) {
+      this.loadNextPage();
+    }
+  }
+
+  loadNextPage(): void {
+    if (
+      this.isLoading ||
+      this.currentPage > this.totalPages
+    ) {
+      return;
+    }
+    const types: string[] = [
+      ...(this.mediaOptions.image ? ['image'] : []),
+      ...(this.mediaOptions.video ? ['audio', 'video'] : []),
+    ];
+    this.thumbnailsRD$ = this.loadRemoteData('THUMBNAIL', this.currentPage);
+    this.subs.push(this.loadRemoteData('ORIGINAL', this.currentPage).subscribe((bitstreamsRD: RemoteData<PaginatedList<Bitstream>>) => {
+      if (bitstreamsRD.payload.page.length === 0) {
+        this.isLoading = false;
+        this.mediaList$.next([]);
+      } else {
+        this.subs.push(this.thumbnailsRD$.subscribe((thumbnailsRD: RemoteData<PaginatedList<Bitstream>>) => {
+          for (
+            let index = 0;
+            index < bitstreamsRD.payload.page.length;
+            index++
+          ) {
+            this.subs.push(bitstreamsRD.payload.page[index].format
+              .pipe(getFirstSucceededRemoteDataPayload())
+              .subscribe((format: BitstreamFormat) => {
+                const mediaItem = this.createMediaViewerItem(
+                  bitstreamsRD.payload.page[index],
+                  format,
+                  thumbnailsRD.payload && thumbnailsRD.payload.page[index],
+                );
+                if (types.includes(mediaItem.format)) {
+                  this.mediaList$.next([...this.mediaList$.getValue(), mediaItem]);
+                } else if (format.mimetype === 'text/vtt') {
+                  this.captions$.next([...this.captions$.getValue(), bitstreamsRD.payload.page[index]]);
+                }
+              }));
+          }
+          this.isLoading = false;
+          this.changeDetectorRef.detectChanges();
+        }));
+      }
+    }));
   }
 
 }

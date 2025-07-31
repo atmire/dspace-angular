@@ -14,7 +14,7 @@
               <ds-media-viewer-video [medias]="mediaList" [captions]="captions$ | async"></ds-media-viewer-video>
             }
             @if (showImage) {
-              <ds-media-viewer-image [images]="mediaList"></ds-media-viewer-image>
+              <ds-media-viewer-image [images]="mediaList" [pageIndex]="pageIndex" (pageChange)="handlePageChange($event)"></ds-media-viewer-image>
             }
             @if (showImage || showVideo) {
             } @else {

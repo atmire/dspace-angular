@@ -1,12 +1,17 @@
 import { AsyncPipe } from '@angular/common';
 import {
+  AfterViewInit,
   Component,
+  EventEmitter,
   Input,
   OnChanges,
   OnInit,
+  Output,
+  ViewChild,
 } from '@angular/core';
 import {
   NgxGalleryAnimation,
+  NgxGalleryComponent,
   NgxGalleryImage,
   NgxGalleryModule,
   NgxGalleryOptions,
@@ -30,10 +35,13 @@ import { hasValue } from '../../../shared/empty.util';
   ],
   standalone: true,
 })
-export class MediaViewerImageComponent implements OnChanges, OnInit {
+export class MediaViewerImageComponent implements OnChanges, OnInit, AfterViewInit {
   @Input() images: MediaViewerItem[];
   @Input() preview?: boolean;
   @Input() image?: string;
+  @Input() pageIndex?: number;
+  @Output() pageChange? = new EventEmitter<number>();
+  @ViewChild(NgxGalleryComponent) gallery: NgxGalleryComponent;
 
   thumbnailPlaceholder = './assets/images/replacement_image.svg';
 
@@ -80,6 +88,17 @@ export class MediaViewerImageComponent implements OnChanges, OnInit {
     }
   }
 
+  /**
+   * The gallery component does not natively support lazy loading
+   * This causes it to close in the event of updating the content dynamically
+   * As a workaround, re-open it at the correct index
+   */
+  ngAfterViewInit() {
+    if (!this.gallery?.previewEnabled && this.pageIndex && this.pageIndex !== 0) {
+      this.gallery.openPreview(this.pageIndex);
+    }
+  }
+
   ngOnInit(): void {
     this.isAuthenticated$ = this.authService.isAuthenticated();
     this.ngOnChanges();
@@ -105,5 +124,11 @@ export class MediaViewerImageComponent implements OnChanges, OnInit {
       }
     }
     return mappedImages;
+  }
+
+  handlePreviewChange({ index }: { index: number, image: NgxGalleryImage }) {
+    if (index >= this.galleryImages.length - 1) {
+      this.pageChange.emit(index + 1);
+    }
   }
 }

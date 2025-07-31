@@ -1,6 +1,8 @@
 import {
   Component,
+  EventEmitter,
   Input,
+  Output,
 } from '@angular/core';
 
 import { MediaViewerItem } from '../../../core/shared/media-viewer-item.model';
@@ -24,11 +26,15 @@ export class ThemedMediaViewerImageComponent extends ThemedComponent<MediaViewer
   @Input() images: MediaViewerItem[];
   @Input() preview?: boolean;
   @Input() image?: string;
+  @Input() pageIndex?: number;
+  @Output() pageChange? = new EventEmitter<number>();
 
   protected inAndOutputNames: (keyof MediaViewerImageComponent & keyof this)[] = [
     'images',
     'preview',
     'image',
+    'pageIndex',
+    'pageChange',
   ];
 
   protected getComponentName(): string {
