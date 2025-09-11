@@ -5,7 +5,13 @@ import {
 } from 'node:fs';
 import { join } from 'node:path';
 
-import { isNotEmpty } from '@dspace/shared/utils/empty.util';
+import {
+  AppConfig,
+  Config,
+  DefaultAppConfig,
+  ServerConfig,
+} from '@dspace/config';
+import { isNotEmpty } from '@dspace/utils';
 import {
   blue,
   bold,
@@ -14,11 +20,7 @@ import {
 } from 'colors';
 import { load } from 'js-yaml';
 
-import { AppConfig } from './app-config.interface';
-import { Config } from './config.interface';
 import { mergeConfig } from './config.util';
-import { DefaultAppConfig } from './default-app-config';
-import { ServerConfig } from './server-config.interface';
 
 const CONFIG_PATH = join(process.cwd(), 'config');
 

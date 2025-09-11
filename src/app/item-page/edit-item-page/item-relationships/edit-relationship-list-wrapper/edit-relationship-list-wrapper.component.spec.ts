@@ -5,10 +5,12 @@ import {
   waitForAsync,
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { Item } from '@dspace/core/shared/item.model';
-import { ItemType } from '@dspace/core/shared/item-relationships/item-type.model';
-import { RelationshipType } from '@dspace/core/shared/item-relationships/relationship-type.model';
-import { createSuccessfulRemoteDataObject$ } from '@dspace/core/utilities/remote-data.utils';
+import {
+  createSuccessfulRemoteDataObject$,
+  Item,
+  ItemType,
+  RelationshipType,
+} from '@dspace/core';
 import { cold } from 'jasmine-marbles';
 import { of } from 'rxjs';
 

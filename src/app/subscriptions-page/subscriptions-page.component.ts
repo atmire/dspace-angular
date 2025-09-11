@@ -4,20 +4,20 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { AuthService } from '@dspace/core/auth/auth.service';
 import {
+  AuthService,
   buildPaginatedList,
+  EPerson,
+  getAllCompletedRemoteData,
+  PageInfo,
   PaginatedList,
-} from '@dspace/core/data/paginated-list.model';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { SubscriptionsDataService } from '@dspace/core/data/subscriptions-data.service';
-import { EPerson } from '@dspace/core/eperson/models/eperson.model';
-import { PaginationService } from '@dspace/core/pagination/pagination.service';
-import { PaginationComponentOptions } from '@dspace/core/pagination/pagination-component-options.model';
-import { getAllCompletedRemoteData } from '@dspace/core/shared/operators';
-import { PageInfo } from '@dspace/core/shared/page-info.model';
-import { Subscription } from '@dspace/core/shared/subscription.model';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+  PaginationComponentOptions,
+  PaginationService,
+  RemoteData,
+  Subscription,
+  SubscriptionsDataService,
+} from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   BehaviorSubject,

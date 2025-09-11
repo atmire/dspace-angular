@@ -10,18 +10,18 @@ import {
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { APP_CONFIG } from '@dspace/config/app-config.interface';
+import { APP_CONFIG } from '@dspace/config';
 import {
+  ActivatedRouteStub,
+  APP_DATA_SERVICES_MAP,
   authReducer,
+  AuthService,
   AuthState,
-} from '@dspace/core/auth/auth.reducer';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { AuthTokenInfo } from '@dspace/core/auth/models/auth-token-info.model';
-import { APP_DATA_SERVICES_MAP } from '@dspace/core/data-services-map-type';
-import { ActivatedRouteStub } from '@dspace/core/testing/active-router.stub';
-import { EPersonMock } from '@dspace/core/testing/eperson.mock';
-import { TranslateLoaderMock } from '@dspace/core/testing/translate-loader.mock';
-import { XSRFService } from '@dspace/core/xsrf/xsrf.service';
+  AuthTokenInfo,
+  EPersonMock,
+  TranslateLoaderMock,
+  XSRFService,
+} from '@dspace/core';
 import {
   Store,
   StoreModule,

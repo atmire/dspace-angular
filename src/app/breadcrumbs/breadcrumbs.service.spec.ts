@@ -4,9 +4,11 @@ import {
   NavigationEnd,
   Router,
 } from '@angular/router';
-import { BreadcrumbsProviderService } from '@dspace/core/breadcrumbs/breadcrumbsProviderService';
-import { Breadcrumb } from '@dspace/core/breadcrumbs/models/breadcrumb.model';
-import { BreadcrumbConfig } from '@dspace/core/breadcrumbs/models/breadcrumb-config.model';
+import {
+  Breadcrumb,
+  BreadcrumbConfig,
+  BreadcrumbsProviderService,
+} from '@dspace/core';
 import { cold } from 'jasmine-marbles';
 import {
   Observable,

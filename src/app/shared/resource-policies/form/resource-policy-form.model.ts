@@ -1,5 +1,7 @@
-import { ActionType } from '@dspace/core/resource-policy/models/action-type.model';
-import { PolicyType } from '@dspace/core/resource-policy/models/policy-type.model';
+import {
+  ActionType,
+  PolicyType,
+} from '@dspace/core';
 import {
   DynamicDatePickerModelConfig,
   DynamicFormControlLayout,

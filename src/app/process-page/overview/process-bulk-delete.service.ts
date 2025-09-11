@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-import { ProcessDataService } from '@dspace/core/data/processes/process-data.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { Process } from '@dspace/core/processes/process.model';
-import { getFirstCompletedRemoteData } from '@dspace/core/shared/operators';
-import { isNotEmpty } from '@dspace/shared/utils/empty.util';
+import {
+  getFirstCompletedRemoteData,
+  NotificationsService,
+  Process,
+  ProcessDataService,
+  RemoteData,
+} from '@dspace/core';
+import { isNotEmpty } from '@dspace/utils';
 import { TranslateService } from '@ngx-translate/core';
 import {
   BehaviorSubject,

@@ -10,17 +10,19 @@ import {
 import {
   APP_CONFIG,
   AppConfig,
-} from '@dspace/config/app-config.interface';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { LinkService } from '@dspace/core/cache/builders/link.service';
-import { Context } from '@dspace/core/shared/context.model';
-import { followLink } from '@dspace/core/shared/follow-link-config.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { ItemSearchResult } from '@dspace/core/shared/object-collection/item-search-result.model';
-import { WorkflowItemSearchResult } from '@dspace/core/shared/object-collection/workflow-item-search-result.model';
-import { getFirstSucceededRemoteDataPayload } from '@dspace/core/shared/operators';
-import { ViewMode } from '@dspace/core/shared/view-mode.model';
-import { WorkflowItem } from '@dspace/core/submission/models/workflowitem.model';
+} from '@dspace/config';
+import {
+  Context,
+  DSONameService,
+  followLink,
+  getFirstSucceededRemoteDataPayload,
+  Item,
+  ItemSearchResult,
+  LinkService,
+  ViewMode,
+  WorkflowItem,
+  WorkflowItemSearchResult,
+} from '@dspace/core';
 import { BehaviorSubject } from 'rxjs';
 
 import { ThemedLoadingComponent } from '../../../loading/themed-loading.component';

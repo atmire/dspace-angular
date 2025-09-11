@@ -7,24 +7,24 @@ import {
 import {
   APP_CONFIG,
   AppConfig,
-} from '@dspace/config/app-config.interface';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { LinkService } from '@dspace/core/cache/builders/link.service';
-import { PaginatedList } from '@dspace/core/data/paginated-list.model';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { Context } from '@dspace/core/shared/context.model';
-import { DSpaceObject } from '@dspace/core/shared/dspace-object.model';
-import { followLink } from '@dspace/core/shared/follow-link-config.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { WorkspaceItemSearchResult } from '@dspace/core/shared/object-collection/workspace-item-search-result.model';
+} from '@dspace/config';
 import {
+  Context,
+  DSONameService,
+  DSpaceObject,
+  followLink,
   getFirstCompletedRemoteData,
   getRemoteDataPayload,
-} from '@dspace/core/shared/operators';
-import { ViewMode } from '@dspace/core/shared/view-mode.model';
-import { WorkspaceItem } from '@dspace/core/submission/models/workspaceitem.model';
-import { SupervisionOrder } from '@dspace/core/supervision-order/models/supervision-order.model';
-import { SupervisionOrderDataService } from '@dspace/core/supervision-order/supervision-order-data.service';
+  Item,
+  LinkService,
+  PaginatedList,
+  RemoteData,
+  SupervisionOrder,
+  SupervisionOrderDataService,
+  ViewMode,
+  WorkspaceItem,
+  WorkspaceItemSearchResult,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   BehaviorSubject,

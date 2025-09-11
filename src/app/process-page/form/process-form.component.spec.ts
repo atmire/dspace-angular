@@ -9,16 +9,18 @@ import {
   ActivatedRoute,
   Router,
 } from '@angular/router';
-import { ScriptDataService } from '@dspace/core/data/processes/script-data.service';
-import { RequestService } from '@dspace/core/data/request.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { ProcessParameter } from '@dspace/core/processes/process-parameter.model';
-import { Script } from '@dspace/core/shared/scripts/script.model';
-import { ScriptParameter } from '@dspace/core/shared/scripts/script-parameter.model';
-import { ActivatedRouteStub } from '@dspace/core/testing/active-router.stub';
-import { NotificationsServiceStub } from '@dspace/core/testing/notifications-service.stub';
-import { RouterMock } from '@dspace/core/testing/router.mock';
-import { TranslateLoaderMock } from '@dspace/core/testing/translate-loader.mock';
+import {
+  ActivatedRouteStub,
+  NotificationsService,
+  NotificationsServiceStub,
+  ProcessParameter,
+  RequestService,
+  RouterMock,
+  Script,
+  ScriptDataService,
+  ScriptParameter,
+  TranslateLoaderMock,
+} from '@dspace/core';
 import {
   TranslateLoader,
   TranslateModule,

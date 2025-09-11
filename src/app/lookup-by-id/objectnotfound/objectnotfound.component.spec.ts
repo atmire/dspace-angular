@@ -5,8 +5,10 @@ import {
   waitForAsync,
 } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import { ServerResponseService } from '@dspace/core/services/server-response.service';
-import { ActivatedRouteStub } from '@dspace/core/testing/active-router.stub';
+import {
+  ActivatedRouteStub,
+  ServerResponseService,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 

@@ -1,4 +1,3 @@
-
 import {
   ChangeDetectionStrategy,
   Component,
@@ -8,7 +7,7 @@ import {
   ActivatedRoute,
   RouterLink,
 } from '@angular/router';
-import { ServerResponseService } from '@dspace/core/services/server-response.service';
+import { ServerResponseService } from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 
 /**

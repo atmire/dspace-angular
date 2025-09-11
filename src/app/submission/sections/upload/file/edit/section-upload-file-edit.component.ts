@@ -6,22 +6,24 @@ import {
   ViewChild,
 } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
-import { AccessConditionOption } from '@dspace/core/config/models/config-access-condition-option.model';
-import { SubmissionFormsModel } from '@dspace/core/config/models/config-submission-forms.model';
-import { JsonPatchOperationPathCombiner } from '@dspace/core/json-patch/builder/json-patch-operation-path-combiner';
-import { JsonPatchOperationsBuilder } from '@dspace/core/json-patch/builder/json-patch-operations-builder';
-import { FormFieldModel } from '@dspace/core/shared/form/models/form-field.model';
-import { SubmissionObject } from '@dspace/core/submission/models/submission-object.model';
-import { WorkspaceitemSectionUploadObject } from '@dspace/core/submission/models/workspaceitem-section-upload.model';
-import { WorkspaceitemSectionUploadFileObject } from '@dspace/core/submission/models/workspaceitem-section-upload-file.model';
-import { SubmissionJsonPatchOperationsService } from '@dspace/core/submission/submission-json-patch-operations.service';
-import { dateToISOFormat } from '@dspace/shared/utils/date.util';
 import {
+  AccessConditionOption,
+  FormFieldModel,
+  JsonPatchOperationPathCombiner,
+  JsonPatchOperationsBuilder,
+  SubmissionFormsModel,
+  SubmissionJsonPatchOperationsService,
+  SubmissionObject,
+  WorkspaceitemSectionUploadFileObject,
+  WorkspaceitemSectionUploadObject,
+} from '@dspace/core';
+import {
+  dateToISOFormat,
   hasNoValue,
   hasValue,
   isNotEmpty,
   isNotNull,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   DYNAMIC_FORM_CONTROL_TYPE_DATEPICKER,

@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { DspaceRestService } from '@dspace/core/dspace-rest/dspace-rest.service';
-import { RawRestResponse } from '@dspace/core/dspace-rest/raw-rest-response.model';
-import { HALEndpointService } from '@dspace/core/shared/hal-endpoint.service';
+import {
+  DspaceRestService,
+  HALEndpointService,
+  RawRestResponse,
+} from '@dspace/core';
 import { Observable } from 'rxjs';
 import {
   map,

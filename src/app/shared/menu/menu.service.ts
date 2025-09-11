@@ -3,13 +3,13 @@ import {
   ActivatedRoute,
   Router,
 } from '@angular/router';
-import { compareArraysUsingIds } from '@dspace/core/utilities/item-relationships-utils';
+import { compareArraysUsingIds } from '@dspace/core';
 import {
   hasNoValue,
   hasValue,
   hasValueOperator,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   createSelector,
   MemoizedSelector,

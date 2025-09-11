@@ -5,18 +5,18 @@ import {
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { ConfigurationDataService } from '@dspace/core/data/configuration-data.service';
-import { AuthorizationDataService } from '@dspace/core/data/feature-authorization/authorization-data.service';
-import { ScriptDataService } from '@dspace/core/data/processes/script-data.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { Process } from '@dspace/core/processes/process.model';
-import { PaginatedSearchOptions } from '@dspace/core/shared/search/models/paginated-search-options.model';
-import { SearchFilter } from '@dspace/core/shared/search/models/search-filter.model';
-import { NotificationsServiceStub } from '@dspace/core/testing/notifications-service.stub';
 import {
+  AuthorizationDataService,
+  ConfigurationDataService,
   createFailedRemoteDataObject$,
   createSuccessfulRemoteDataObject$,
-} from '@dspace/core/utilities/remote-data.utils';
+  NotificationsService,
+  NotificationsServiceStub,
+  PaginatedSearchOptions,
+  Process,
+  ScriptDataService,
+  SearchFilter,
+} from '@dspace/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';

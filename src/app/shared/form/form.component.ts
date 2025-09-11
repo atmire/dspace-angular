@@ -15,13 +15,13 @@ import {
   UntypedFormControl,
   UntypedFormGroup,
 } from '@angular/forms';
-import { FormFieldMetadataValueObject } from '@dspace/core/shared/form/models/form-field-metadata-value.model';
+import { FormFieldMetadataValueObject } from '@dspace/core';
 import {
   hasValue,
   isNotEmpty,
   isNotNull,
   isNull,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import {
   DynamicFormArrayModel,

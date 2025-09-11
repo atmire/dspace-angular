@@ -11,19 +11,19 @@ import {
   RouterLink,
   Scroll,
 } from '@angular/router';
-import { CollectionDataService } from '@dspace/core/data/collection-data.service';
-import { ItemTemplateDataService } from '@dspace/core/data/item-template-data.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { RequestService } from '@dspace/core/data/request.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { Collection } from '@dspace/core/shared/collection.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { NoContent } from '@dspace/core/shared/NoContent.model';
 import {
+  Collection,
+  CollectionDataService,
   getFirstCompletedRemoteData,
   getFirstSucceededRemoteDataPayload,
-} from '@dspace/core/shared/operators';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+  Item,
+  ItemTemplateDataService,
+  NoContent,
+  NotificationsService,
+  RemoteData,
+  RequestService,
+} from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import {
   TranslateModule,
   TranslateService,

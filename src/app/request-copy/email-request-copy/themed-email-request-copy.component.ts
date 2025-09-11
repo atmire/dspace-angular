@@ -4,7 +4,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { RequestCopyEmail } from '@dspace/core/shared/request-copy-email.model';
+import { RequestCopyEmail } from '@dspace/core';
 import { Observable } from 'rxjs';
 import { ThemedComponent } from 'src/app/shared/theme-support/themed.component';
 

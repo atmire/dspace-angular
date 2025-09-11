@@ -10,18 +10,20 @@ import {
 import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { BitstreamDataService } from '@dspace/core/data/bitstream-data.service';
-import { AuthorizationDataService } from '@dspace/core/data/feature-authorization/authorization-data.service';
-import { Bitstream } from '@dspace/core/shared/bitstream.model';
-import { FileService } from '@dspace/core/shared/file.service';
-import { MediaViewerItem } from '@dspace/core/shared/media-viewer-item.model';
-import { ActivatedRouteStub } from '@dspace/core/testing/active-router.stub';
-import { AuthServiceMock } from '@dspace/core/testing/auth.service.mock';
-import { MockBitstreamFormat1 } from '@dspace/core/testing/item.mock';
-import { TranslateLoaderMock } from '@dspace/core/testing/translate-loader.mock';
-import { createPaginatedList } from '@dspace/core/testing/utils.test';
-import { createSuccessfulRemoteDataObject$ } from '@dspace/core/utilities/remote-data.utils';
+import {
+  ActivatedRouteStub,
+  AuthorizationDataService,
+  AuthService,
+  AuthServiceMock,
+  Bitstream,
+  BitstreamDataService,
+  createPaginatedList,
+  createSuccessfulRemoteDataObject$,
+  FileService,
+  MediaViewerItem,
+  MockBitstreamFormat1,
+  TranslateLoaderMock,
+} from '@dspace/core';
 import {
   TranslateLoader,
   TranslateModule,

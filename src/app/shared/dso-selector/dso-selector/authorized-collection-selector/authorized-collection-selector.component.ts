@@ -10,22 +10,22 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { CollectionDataService } from '@dspace/core/data/collection-data.service';
-import { FindListOptions } from '@dspace/core/data/find-list-options.model';
 import {
   buildPaginatedList,
+  Collection,
+  CollectionDataService,
+  CollectionSearchResult,
+  DSONameService,
+  DSpaceObject,
+  FindListOptions,
+  followLink,
+  getFirstCompletedRemoteData,
+  NotificationsService,
   PaginatedList,
-} from '@dspace/core/data/paginated-list.model';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { Collection } from '@dspace/core/shared/collection.model';
-import { DSpaceObject } from '@dspace/core/shared/dspace-object.model';
-import { followLink } from '@dspace/core/shared/follow-link-config.model';
-import { CollectionSearchResult } from '@dspace/core/shared/object-collection/collection-search-result.model';
-import { getFirstCompletedRemoteData } from '@dspace/core/shared/operators';
-import { SearchResult } from '@dspace/core/shared/search/models/search-result.model';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+  RemoteData,
+  SearchResult,
+} from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import {
   TranslateModule,
   TranslateService,

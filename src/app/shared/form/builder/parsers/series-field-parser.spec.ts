@@ -1,6 +1,8 @@
-import { FormFieldModel } from '@dspace/core/shared/form/models/form-field.model';
-import { FormFieldMetadataValueObject } from '@dspace/core/shared/form/models/form-field-metadata-value.model';
-import { getMockTranslateService } from '@dspace/core/testing/translate.service.mock';
+import {
+  FormFieldMetadataValueObject,
+  FormFieldModel,
+  getMockTranslateService,
+} from '@dspace/core';
 
 import { DynamicConcatModel } from '../ds-dynamic-form-ui/models/ds-dynamic-concat.model';
 import { ParserOptions } from './parser-options';

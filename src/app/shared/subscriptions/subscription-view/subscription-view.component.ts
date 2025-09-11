@@ -1,4 +1,3 @@
-
 import {
   Component,
   EventEmitter,
@@ -6,12 +5,14 @@ import {
   Output,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { SubscriptionsDataService } from '@dspace/core/data/subscriptions-data.service';
-import { getDSORoute } from '@dspace/core/router/utils/dso-route.utils';
-import { DSpaceObject } from '@dspace/core/shared/dspace-object.model';
-import { Subscription } from '@dspace/core/shared/subscription.model';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+import {
+  DSONameService,
+  DSpaceObject,
+  getDSORoute,
+  Subscription,
+  SubscriptionsDataService,
+} from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import {
   NgbModal,
   NgbModalRef,

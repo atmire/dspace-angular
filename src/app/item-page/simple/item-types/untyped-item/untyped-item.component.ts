@@ -4,8 +4,10 @@ import {
   Component,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Item } from '@dspace/core/shared/item.model';
-import { ViewMode } from '@dspace/core/shared/view-mode.model';
+import {
+  Item,
+  ViewMode,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { DsoEditMenuComponent } from '../../../../shared/dso-page/dso-edit-menu/dso-edit-menu.component';

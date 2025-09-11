@@ -10,10 +10,12 @@ import {
   Router,
   RouterLink,
 } from '@angular/router';
-import { SuggestionTarget } from '@dspace/core/notifications/suggestions/models/suggestion-target.model';
-import { PaginationService } from '@dspace/core/pagination/pagination.service';
-import { PaginationComponentOptions } from '@dspace/core/pagination/pagination-component-options.model';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+import {
+  PaginationComponentOptions,
+  PaginationService,
+  SuggestionTarget,
+} from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   Observable,

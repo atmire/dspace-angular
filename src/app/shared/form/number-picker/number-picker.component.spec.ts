@@ -13,7 +13,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { createTestComponent } from '@dspace/core/testing/utils.test';
+import { createTestComponent } from '@dspace/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -159,7 +159,6 @@ describe('NumberPickerComponent', () => {
   imports: [
     FormsModule,
     NgbModule,
-    NumberPickerComponent,
     ReactiveFormsModule,
   ],
 })

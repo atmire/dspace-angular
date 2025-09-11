@@ -4,8 +4,10 @@ import {
   ElementRef,
   OnInit,
 } from '@angular/core';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { isAuthenticated } from '@dspace/core/auth/selectors';
+import {
+  AuthService,
+  isAuthenticated,
+} from '@dspace/core';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import {
   select,

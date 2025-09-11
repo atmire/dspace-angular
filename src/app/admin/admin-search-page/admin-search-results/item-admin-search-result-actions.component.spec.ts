@@ -6,8 +6,10 @@ import {
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Item } from '@dspace/core/shared/item.model';
-import { URLCombiner } from '@dspace/core/url-combiner/url-combiner';
+import {
+  Item,
+  URLCombiner,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 
 import {

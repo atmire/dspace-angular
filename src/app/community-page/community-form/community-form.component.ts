@@ -6,12 +6,14 @@ import {
   SimpleChange,
   SimpleChanges,
 } from '@angular/core';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { ObjectCacheService } from '@dspace/core/cache/object-cache.service';
-import { CommunityDataService } from '@dspace/core/data/community-data.service';
-import { RequestService } from '@dspace/core/data/request.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { Community } from '@dspace/core/shared/community.model';
+import {
+  AuthService,
+  Community,
+  CommunityDataService,
+  NotificationsService,
+  ObjectCacheService,
+  RequestService,
+} from '@dspace/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   DynamicFormControlModel,

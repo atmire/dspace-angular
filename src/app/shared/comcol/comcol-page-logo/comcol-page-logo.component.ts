@@ -1,9 +1,8 @@
-
 import {
   Component,
   Input,
 } from '@angular/core';
-import { Bitstream } from '@dspace/core/shared/bitstream.model';
+import { Bitstream } from '@dspace/core';
 
 @Component({
   selector: 'ds-comcol-page-logo',

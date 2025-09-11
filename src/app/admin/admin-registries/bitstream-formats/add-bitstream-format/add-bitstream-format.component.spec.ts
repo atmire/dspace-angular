@@ -7,16 +7,16 @@ import {
 } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { BitstreamFormatDataService } from '@dspace/core/data/bitstream-format-data.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { BitstreamFormat } from '@dspace/core/shared/bitstream-format.model';
-import { BitstreamFormatSupportLevel } from '@dspace/core/shared/bitstream-format-support-level';
-import { NotificationsServiceStub } from '@dspace/core/testing/notifications-service.stub';
-import { RouterStub } from '@dspace/core/testing/router.stub';
 import {
+  BitstreamFormat,
+  BitstreamFormatDataService,
+  BitstreamFormatSupportLevel,
   createFailedRemoteDataObject$,
   createSuccessfulRemoteDataObject$,
-} from '@dspace/core/utilities/remote-data.utils';
+  NotificationsService,
+  NotificationsServiceStub,
+  RouterStub,
+} from '@dspace/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';

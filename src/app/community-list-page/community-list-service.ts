@@ -6,31 +6,27 @@ import {
 import {
   APP_CONFIG,
   AppConfig,
-} from '@dspace/config/app-config.interface';
-import { CollectionDataService } from '@dspace/core/data/collection-data.service';
-import { CommunityDataService } from '@dspace/core/data/community-data.service';
-import { FindListOptions } from '@dspace/core/data/find-list-options.model';
+} from '@dspace/config';
 import {
   buildPaginatedList,
-  PaginatedList,
-} from '@dspace/core/data/paginated-list.model';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import {
+  Collection,
+  CollectionDataService,
+  Community,
+  CommunityDataService,
+  FindListOptions,
+  followLink,
   getCollectionPageRoute,
   getCommunityPageRoute,
-} from '@dspace/core/router/utils/dso-route.utils';
-import { Collection } from '@dspace/core/shared/collection.model';
-import { Community } from '@dspace/core/shared/community.model';
-import { followLink } from '@dspace/core/shared/follow-link-config.model';
-import {
   getFirstCompletedRemoteData,
   getFirstSucceededRemoteData,
-} from '@dspace/core/shared/operators';
-import { PageInfo } from '@dspace/core/shared/page-info.model';
+  PageInfo,
+  PaginatedList,
+  RemoteData,
+} from '@dspace/core';
 import {
   hasValue,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   createSelector,
   Store,

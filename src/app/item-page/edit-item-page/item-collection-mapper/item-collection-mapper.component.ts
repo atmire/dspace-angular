@@ -9,30 +9,30 @@ import {
   ActivatedRoute,
   Router,
 } from '@angular/router';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { CollectionDataService } from '@dspace/core/data/collection-data.service';
-import { ItemDataService } from '@dspace/core/data/item-data.service';
-import { PaginatedList } from '@dspace/core/data/paginated-list.model';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { getItemPageRoute } from '@dspace/core/router/utils/dso-route.utils';
-import { Collection } from '@dspace/core/shared/collection.model';
-import { DSpaceObjectType } from '@dspace/core/shared/dspace-object-type.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { NoContent } from '@dspace/core/shared/NoContent.model';
 import {
+  Collection,
+  CollectionDataService,
+  DSONameService,
+  DSpaceObjectType,
   getAllSucceededRemoteData,
   getFirstCompletedRemoteData,
   getFirstSucceededRemoteData,
   getFirstSucceededRemoteDataPayload,
+  getItemPageRoute,
   getRemoteDataPayload,
+  Item,
+  ItemDataService,
+  NoContent,
+  NotificationsService,
+  PaginatedList,
+  PaginatedSearchOptions,
+  RemoteData,
   toDSpaceObjectListRD,
-} from '@dspace/core/shared/operators';
-import { PaginatedSearchOptions } from '@dspace/core/shared/search/models/paginated-search-options.model';
+} from '@dspace/core';
 import {
   hasValue,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import {
   TranslateModule,

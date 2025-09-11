@@ -1,4 +1,3 @@
-
 import {
   Component,
   EventEmitter,
@@ -7,12 +6,14 @@ import {
   Output,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { BitstreamFormat } from '@dspace/core/shared/bitstream-format.model';
-import { BitstreamFormatSupportLevel } from '@dspace/core/shared/bitstream-format-support-level';
+import {
+  BitstreamFormat,
+  BitstreamFormatSupportLevel,
+} from '@dspace/core';
 import {
   hasValue,
   isEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   DynamicCheckboxModel,
   DynamicFormArrayModel,

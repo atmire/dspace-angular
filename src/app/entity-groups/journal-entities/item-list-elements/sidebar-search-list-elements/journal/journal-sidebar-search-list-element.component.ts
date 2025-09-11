@@ -3,11 +3,13 @@ import {
   NgClass,
 } from '@angular/common';
 import { Component } from '@angular/core';
-import { Context } from '@dspace/core/shared/context.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { ItemSearchResult } from '@dspace/core/shared/object-collection/item-search-result.model';
-import { ViewMode } from '@dspace/core/shared/view-mode.model';
-import { isNotEmpty } from '@dspace/shared/utils/empty.util';
+import {
+  Context,
+  Item,
+  ItemSearchResult,
+  ViewMode,
+} from '@dspace/core';
+import { isNotEmpty } from '@dspace/utils';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { listableObjectComponent } from '../../../../../shared/object-collection/shared/listable-object/listable-object.decorator';

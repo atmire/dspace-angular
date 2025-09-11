@@ -10,48 +10,44 @@ import {
 import {
   APP_CONFIG,
   AppConfig,
-} from '@dspace/config/app-config.interface';
-import { LinkService } from '@dspace/core/cache/builders/link.service';
-import { RemoteDataBuildService } from '@dspace/core/cache/builders/remote-data-build.service';
+} from '@dspace/config';
 import {
-  SortDirection,
-  SortOptions,
-} from '@dspace/core/cache/models/sort-options.model';
-import { FacetConfigResponseParsingService } from '@dspace/core/data/facet-config-response-parsing.service';
-import { ResponseParsingService } from '@dspace/core/data/parsing.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { GetRequest } from '@dspace/core/data/request.models';
-import { RequestService } from '@dspace/core/data/request.service';
-import { PaginationService } from '@dspace/core/pagination/pagination.service';
-import { PaginationComponentOptions } from '@dspace/core/pagination/pagination-component-options.model';
-import { RouteService } from '@dspace/core/services/route.service';
-import { DSpaceObjectType } from '@dspace/core/shared/dspace-object-type.model';
-import { GenericConstructor } from '@dspace/core/shared/generic-constructor';
-import { HALEndpointService } from '@dspace/core/shared/hal-endpoint.service';
-import {
+  createSuccessfulRemoteDataObject$,
+  DSpaceObjectType,
+  FacetConfigResponse,
+  FacetConfigResponseParsingService,
+  FilterConfig,
+  FilterType,
+  GenericConstructor,
   getAllSucceededRemoteDataPayload,
   getFirstSucceededRemoteData,
-} from '@dspace/core/shared/operators';
-import { FacetConfigResponse } from '@dspace/core/shared/search/models/facet-config-response.model';
-import { FilterType } from '@dspace/core/shared/search/models/filter-type.model';
-import { PaginatedSearchOptions } from '@dspace/core/shared/search/models/paginated-search-options.model';
-import { SearchFilter } from '@dspace/core/shared/search/models/search-filter.model';
-import { SearchFilterConfig } from '@dspace/core/shared/search/models/search-filter-config.model';
-import { SearchOptions } from '@dspace/core/shared/search/models/search-options.model';
-import {
-  FilterConfig,
+  GetRequest,
+  HALEndpointService,
+  LinkService,
+  PaginatedSearchOptions,
+  PaginationComponentOptions,
+  PaginationService,
+  RemoteData,
+  RemoteDataBuildService,
+  RequestService,
+  ResponseParsingService,
+  RouteService,
   SearchConfig,
+  SearchFilter,
+  SearchFilterConfig,
+  SearchOptions,
   SortConfig,
-} from '@dspace/core/shared/search/search-filters/search-config.model';
-import { ViewMode } from '@dspace/core/shared/view-mode.model';
-import { URLCombiner } from '@dspace/core/url-combiner/url-combiner';
-import { createSuccessfulRemoteDataObject$ } from '@dspace/core/utilities/remote-data.utils';
+  SortDirection,
+  SortOptions,
+  URLCombiner,
+  ViewMode,
+} from '@dspace/core';
 import {
   hasNoValue,
   hasValue,
   isNotEmpty,
   isNotEmptyOperator,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   BehaviorSubject,
   combineLatest as observableCombineLatest,

@@ -7,8 +7,10 @@ import {
   ActivatedRoute,
   RouterLink,
 } from '@angular/router';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { DSpaceObject } from '@dspace/core/shared/dspace-object.model';
+import {
+  DSpaceObject,
+  RemoteData,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import {

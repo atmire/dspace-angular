@@ -4,22 +4,18 @@ import {
   TestBed,
   tick,
 } from '@angular/core/testing';
-import { OrejimeService } from '@dspace/core/cookies/orejime.service';
-import { ConfigurationDataService } from '@dspace/core/data/configuration-data.service';
 import {
-  NativeWindowRef,
-  NativeWindowService,
-} from '@dspace/core/services/window.service';
-import { ConfigurationProperty } from '@dspace/core/shared/configuration-property.model';
-import {
+  ConfigurationDataService,
+  ConfigurationProperty,
+  createFailedRemoteDataObject$,
+  createSuccessfulRemoteDataObject$,
   MATOMO_ENABLED,
   MATOMO_SITE_ID,
   MATOMO_TRACKER_URL,
-} from '@dspace/core/statistics/models/matomo-type';
-import {
-  createFailedRemoteDataObject$,
-  createSuccessfulRemoteDataObject$,
-} from '@dspace/core/utilities/remote-data.utils';
+  NativeWindowRef,
+  NativeWindowService,
+  OrejimeService,
+} from '@dspace/core';
 import {
   MatomoInitializerService,
   MatomoTracker,

@@ -3,26 +3,24 @@ import {
   Route,
   RouterConfigOptions,
 } from '@angular/router';
-import { authBlockingGuard } from '@dspace/core/auth/auth-blocking.guard';
-import { authenticatedGuard } from '@dspace/core/auth/authenticated.guard';
-import { groupAdministratorGuard } from '@dspace/core/data/feature-authorization/feature-authorization-guard/group-administrator.guard';
-import { siteAdministratorGuard } from '@dspace/core/data/feature-authorization/feature-authorization-guard/site-administrator.guard';
-import { siteRegisterGuard } from '@dspace/core/data/feature-authorization/feature-authorization-guard/site-register.guard';
-import { endUserAgreementCurrentUserGuard } from '@dspace/core/end-user-agreement/end-user-agreement-current-user.guard';
-import { reloadGuard } from '@dspace/core/reload/reload.guard';
-import { forgotPasswordCheckGuard } from '@dspace/core/rest-property/forgot-password-check-guard.guard';
 import {
+  authBlockingGuard,
+  authenticatedGuard,
   BITSTREAM_MODULE_PATH,
   COLLECTION_MODULE_PATH,
   COMMUNITY_MODULE_PATH,
   ERROR_PAGE,
   FORBIDDEN_PATH,
+  forgotPasswordCheckGuard,
+  groupAdministratorGuard,
   INTERNAL_SERVER_ERROR,
   ITEM_MODULE_PATH,
   LEGACY_BITSTREAM_MODULE_PATH,
-} from '@dspace/core/router/core-routing-paths';
-import { INFO_MODULE_PATH } from '@dspace/core/router/info-routing-paths';
-import { ServerCheckGuard } from '@dspace/core/server-check/server-check.guard';
+  reloadGuard,
+  ServerCheckGuard,
+  siteAdministratorGuard,
+  siteRegisterGuard,
+} from '@dspace/core';
 
 import { ACCESS_CONTROL_MODULE_PATH } from './access-control/access-control-routing-paths';
 import { NOTIFICATIONS_MODULE_PATH } from './admin/admin-routing-paths';
@@ -36,8 +34,10 @@ import {
   WORKFLOW_ITEM_MODULE_PATH,
 } from './app-routing-paths';
 import { notAuthenticatedGuard } from './core/auth/not-authenticated.guard';
+import { INFO_MODULE_PATH } from './core/router/info-routing-paths';
 import { ThemedForbiddenComponent } from './forbidden/themed-forbidden.component';
 import { homePageResolver } from './home-page/home-page.resolver';
+import { endUserAgreementCurrentUserGuard } from './info/end-user-agreement/end-user-agreement-current-user.guard';
 import { provideSuggestionNotificationsState } from './notifications/provide-suggestion-notifications-state';
 import { ThemedPageErrorComponent } from './page-error/themed-page-error.component';
 import { ThemedPageInternalServerErrorComponent } from './page-internal-server-error/themed-page-internal-server-error.component';

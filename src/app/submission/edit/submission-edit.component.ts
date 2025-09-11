@@ -9,23 +9,25 @@ import {
   ParamMap,
   Router,
 } from '@angular/router';
-import { SubmissionDefinitionsModel } from '@dspace/core/config/models/config-submission-definitions.model';
-import { ItemDataService } from '@dspace/core/data/item-data.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { Collection } from '@dspace/core/shared/collection.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { getAllSucceededRemoteData } from '@dspace/core/shared/operators';
-import { SubmissionError } from '@dspace/core/submission/models/submission-error.model';
-import { SubmissionObject } from '@dspace/core/submission/models/submission-object.model';
-import { WorkspaceitemSectionsObject } from '@dspace/core/submission/models/workspaceitem-sections.model';
-import { SubmissionJsonPatchOperationsService } from '@dspace/core/submission/submission-json-patch-operations.service';
+import {
+  Collection,
+  getAllSucceededRemoteData,
+  Item,
+  ItemDataService,
+  NotificationsService,
+  RemoteData,
+  SubmissionDefinitionsModel,
+  SubmissionError,
+  SubmissionJsonPatchOperationsService,
+  SubmissionObject,
+  WorkspaceitemSectionsObject,
+} from '@dspace/core';
 import {
   hasValue,
   isEmpty,
   isNotEmptyOperator,
   isNotNull,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import { TranslateService } from '@ngx-translate/core';
 import {
   BehaviorSubject,

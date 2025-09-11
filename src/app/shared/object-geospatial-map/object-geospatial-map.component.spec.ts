@@ -6,12 +6,14 @@ import {
   ComponentFixture,
   TestBed,
 } from '@angular/core/testing';
-import { buildPaginatedList } from '@dspace/core/data/paginated-list.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { ItemSearchResult } from '@dspace/core/shared/object-collection/item-search-result.model';
-import { PageInfo } from '@dspace/core/shared/page-info.model';
-import { TranslateLoaderMock } from '@dspace/core/testing/translate-loader.mock';
-import { createSuccessfulRemoteDataObject$ } from '@dspace/core/utilities/remote-data.utils';
+import {
+  buildPaginatedList,
+  createSuccessfulRemoteDataObject$,
+  Item,
+  ItemSearchResult,
+  PageInfo,
+  TranslateLoaderMock,
+} from '@dspace/core';
 import { StoreModule } from '@ngrx/store';
 import {
   TranslateLoader,

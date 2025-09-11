@@ -11,13 +11,13 @@ import {
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
-import { BASE_THEME_NAME } from '@dspace/config/theme.config';
-import { GenericConstructor } from '@dspace/core/shared/generic-constructor';
+import { BASE_THEME_NAME } from '@dspace/config';
+import { GenericConstructor } from '@dspace/core';
 import {
   hasNoValue,
   hasValue,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   BehaviorSubject,
   combineLatest,

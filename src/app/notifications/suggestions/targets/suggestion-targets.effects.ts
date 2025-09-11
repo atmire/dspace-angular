@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import {
   AuthActionTypes,
+  ConfigurationDataService,
+  ConfigurationProperty,
+  getFirstCompletedRemoteData,
+  NotificationsService,
+  PaginatedList,
+  RemoteData,
   RetrieveAuthenticatedEpersonSuccessAction,
-} from '@dspace/core/auth/auth.actions';
-import { ConfigurationDataService } from '@dspace/core/data/configuration-data.service';
-import { PaginatedList } from '@dspace/core/data/paginated-list.model';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { SuggestionTarget } from '@dspace/core/notifications/suggestions/models/suggestion-target.model';
-import { ConfigurationProperty } from '@dspace/core/shared/configuration-property.model';
-import { getFirstCompletedRemoteData } from '@dspace/core/shared/operators';
+  SuggestionTarget,
+} from '@dspace/core';
 import {
   Actions,
   createEffect,

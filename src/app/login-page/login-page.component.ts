@@ -8,14 +8,14 @@ import {
   AddAuthenticationMessageAction,
   AuthenticatedAction,
   AuthenticationSuccessAction,
+  AuthTokenInfo,
+  isAuthenticated,
   ResetAuthenticationMessagesAction,
-} from '@dspace/core/auth/auth.actions';
-import { AuthTokenInfo } from '@dspace/core/auth/models/auth-token-info.model';
-import { isAuthenticated } from '@dspace/core/auth/selectors';
+} from '@dspace/core';
 import {
   hasValue,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import { Store } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
 import {

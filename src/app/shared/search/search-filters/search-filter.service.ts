@@ -1,21 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Params } from '@angular/router';
 import {
+  FacetValue,
+  getFirstSucceededRemoteData,
+  PaginatedList,
+  PaginationComponentOptions,
+  RemoteData,
+  RouteService,
+  SearchFilterConfig,
+  SearchOptions,
   SortDirection,
   SortOptions,
-} from '@dspace/core/cache/models/sort-options.model';
-import { PaginatedList } from '@dspace/core/data/paginated-list.model';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { PaginationComponentOptions } from '@dspace/core/pagination/pagination-component-options.model';
-import { RouteService } from '@dspace/core/services/route.service';
-import { getFirstSucceededRemoteData } from '@dspace/core/shared/operators';
-import { FacetValue } from '@dspace/core/shared/search/models/facet-value.model';
-import { SearchFilterConfig } from '@dspace/core/shared/search/models/search-filter-config.model';
-import { SearchOptions } from '@dspace/core/shared/search/models/search-options.model';
+} from '@dspace/core';
 import {
   hasValue,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   createSelector,
   MemoizedSelector,

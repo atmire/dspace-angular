@@ -4,11 +4,13 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { SortOptions } from '@dspace/core/cache/models/sort-options.model';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { PaginatedSearchOptions } from '@dspace/core/shared/search/models/paginated-search-options.model';
-import { SearchFilterConfig } from '@dspace/core/shared/search/models/search-filter-config.model';
-import { ViewMode } from '@dspace/core/shared/view-mode.model';
+import {
+  PaginatedSearchOptions,
+  RemoteData,
+  SearchFilterConfig,
+  SortOptions,
+  ViewMode,
+} from '@dspace/core';
 import {
   BehaviorSubject,
   Observable,

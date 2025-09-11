@@ -7,7 +7,7 @@ import {
   TestBed,
   waitForAsync,
 } from '@angular/core/testing';
-import { getMockTranslateService } from '@dspace/core/testing/translate.service.mock';
+import { getMockTranslateService } from '@dspace/core';
 import {
   TranslateModule,
   TranslateService,

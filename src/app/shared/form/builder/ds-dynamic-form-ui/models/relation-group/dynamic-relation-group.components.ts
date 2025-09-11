@@ -14,19 +14,21 @@ import {
   ViewChild,
 } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
-import { SubmissionFormsModel } from '@dspace/core/config/models/config-submission-forms.model';
-import { PLACEHOLDER_PARENT_METADATA } from '@dspace/core/shared/form/ds-dynamic-form-constants';
-import { FormFieldMetadataValueObject } from '@dspace/core/shared/form/models/form-field-metadata-value.model';
-import { getFirstSucceededRemoteDataPayload } from '@dspace/core/shared/operators';
-import { VocabularyEntryDetail } from '@dspace/core/submission/vocabularies/models/vocabulary-entry-detail.model';
-import { VocabularyService } from '@dspace/core/submission/vocabularies/vocabulary.service';
 import {
+  FormFieldMetadataValueObject,
+  getFirstSucceededRemoteDataPayload,
+  PLACEHOLDER_PARENT_METADATA,
+  SubmissionFormsModel,
+  VocabularyEntryDetail,
+  VocabularyService,
+} from '@dspace/core';
+import {
+  hasOnlyEmptyProperties,
   hasValue,
   isEmpty,
   isNotEmpty,
   isNotNull,
-} from '@dspace/shared/utils/empty.util';
-import { hasOnlyEmptyProperties } from '@dspace/shared/utils/object.util';
+} from '@dspace/utils';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import {
   DynamicFormControlComponent,

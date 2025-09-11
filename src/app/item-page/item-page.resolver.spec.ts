@@ -3,10 +3,12 @@ import {
   Router,
   RouterModule,
 } from '@angular/router';
-import { DSpaceObject } from '@dspace/core/shared/dspace-object.model';
-import { MetadataValueFilter } from '@dspace/core/shared/metadata.models';
-import { AuthServiceStub } from '@dspace/core/testing/auth-service.stub';
-import { createSuccessfulRemoteDataObject$ } from '@dspace/core/utilities/remote-data.utils';
+import {
+  AuthServiceStub,
+  createSuccessfulRemoteDataObject$,
+  DSpaceObject,
+  MetadataValueFilter,
+} from '@dspace/core';
 import { first } from 'rxjs/operators';
 
 import { itemPageResolver } from './item-page.resolver';

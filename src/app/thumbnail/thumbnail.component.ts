@@ -9,16 +9,18 @@ import {
   SimpleChanges,
   WritableSignal,
 } from '@angular/core';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { AuthorizationDataService } from '@dspace/core/data/feature-authorization/authorization-data.service';
-import { FeatureID } from '@dspace/core/data/feature-authorization/feature-id';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { Bitstream } from '@dspace/core/shared/bitstream.model';
-import { FileService } from '@dspace/core/shared/file.service';
+import {
+  AuthorizationDataService,
+  AuthService,
+  Bitstream,
+  FeatureID,
+  FileService,
+  RemoteData,
+} from '@dspace/core';
 import {
   hasNoValue,
   hasValue,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import { TranslatePipe } from '@ngx-translate/core';
 import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';

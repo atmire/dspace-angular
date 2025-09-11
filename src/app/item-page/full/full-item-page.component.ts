@@ -17,16 +17,18 @@ import {
   Router,
   RouterLink,
 } from '@angular/router';
-import { NotifyInfoService } from '@dspace/core/coar-notify/notify-info/notify-info.service';
-import { AuthorizationDataService } from '@dspace/core/data/feature-authorization/authorization-data.service';
-import { ItemDataService } from '@dspace/core/data/item-data.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { SignpostingDataService } from '@dspace/core/data/signposting-data.service';
-import { LinkHeadService } from '@dspace/core/services/link-head.service';
-import { ServerResponseService } from '@dspace/core/services/server-response.service';
-import { Item } from '@dspace/core/shared/item.model';
-import { MetadataMap } from '@dspace/core/shared/metadata.models';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+import {
+  AuthorizationDataService,
+  Item,
+  ItemDataService,
+  LinkHeadService,
+  MetadataMap,
+  NotifyInfoService,
+  RemoteData,
+  ServerResponseService,
+  SignpostingDataService,
+} from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   BehaviorSubject,

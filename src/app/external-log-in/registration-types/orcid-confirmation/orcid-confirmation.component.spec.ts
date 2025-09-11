@@ -8,9 +8,11 @@ import {
   FormBuilder,
   FormGroup,
 } from '@angular/forms';
-import { Registration } from '@dspace/core/shared/registration.model';
-import { BrowserOnlyMockPipe } from '@dspace/core/testing/browser-only-mock.pipe';
-import { TranslateLoaderMock } from '@dspace/core/testing/translate-loader.mock';
+import {
+  BrowserOnlyMockPipe,
+  Registration,
+  TranslateLoaderMock,
+} from '@dspace/core';
 import {
   TranslateLoader,
   TranslateModule,

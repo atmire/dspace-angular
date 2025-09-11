@@ -14,19 +14,19 @@ import {
   UntypedFormGroup,
 } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { buildPaginatedList } from '@dspace/core/data/paginated-list.model';
-import { SubscriptionsDataService } from '@dspace/core/data/subscriptions-data.service';
-import { EPerson } from '@dspace/core/eperson/models/eperson.model';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { Item } from '@dspace/core/shared/item.model';
-import { PageInfo } from '@dspace/core/shared/page-info.model';
 import {
+  AuthService,
+  buildPaginatedList,
+  createSuccessfulRemoteDataObject$,
+  EPerson,
+  Item,
+  NotificationsService,
+  PageInfo,
   subscriptionMock,
   subscriptionMock2,
-} from '@dspace/core/testing/subscriptions-data.mock';
-import { TranslateLoaderMock } from '@dspace/core/testing/translate-loader.mock';
-import { createSuccessfulRemoteDataObject$ } from '@dspace/core/utilities/remote-data.utils';
+  SubscriptionsDataService,
+  TranslateLoaderMock,
+} from '@dspace/core';
 import {
   NgbActiveModal,
   NgbModalModule,

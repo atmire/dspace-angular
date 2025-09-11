@@ -14,27 +14,23 @@ import {
   Router,
 } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { CollectionDataService } from '@dspace/core/data/collection-data.service';
-import { FieldUpdate } from '@dspace/core/data/object-updates/field-update.model';
-import { ObjectUpdatesService } from '@dspace/core/data/object-updates/object-updates.service';
-import { RequestService } from '@dspace/core/data/request.service';
 import {
-  INotification,
-  Notification,
-} from '@dspace/core/notification-system/models/notification.model';
-import { NotificationType } from '@dspace/core/notification-system/models/notification-type';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { Collection } from '@dspace/core/shared/collection.model';
-import {
+  Collection,
+  CollectionDataService,
   ContentSource,
   ContentSourceHarvestType,
-} from '@dspace/core/shared/content-source.model';
-import { RouterStub } from '@dspace/core/testing/router.stub';
-import {
   createSuccessfulRemoteDataObject,
   createSuccessfulRemoteDataObject$,
-} from '@dspace/core/utilities/remote-data.utils';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+  FieldUpdate,
+  INotification,
+  Notification,
+  NotificationsService,
+  NotificationType,
+  ObjectUpdatesService,
+  RequestService,
+  RouterStub,
+} from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import {
   DynamicFormControlModel,
   DynamicFormService,

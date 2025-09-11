@@ -7,12 +7,14 @@
  */
 
 import { Injectable } from '@angular/core';
-import { ConfigurationDataService } from '@dspace/core/data/configuration-data.service';
-import { AuthorizationDataService } from '@dspace/core/data/feature-authorization/authorization-data.service';
-import { FeatureID } from '@dspace/core/data/feature-authorization/feature-id';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { ConfigurationProperty } from '@dspace/core/shared/configuration-property.model';
-import { getFirstCompletedRemoteData } from '@dspace/core/shared/operators';
+import {
+  AuthorizationDataService,
+  ConfigurationDataService,
+  ConfigurationProperty,
+  FeatureID,
+  getFirstCompletedRemoteData,
+  RemoteData,
+} from '@dspace/core';
 import {
   combineLatest as observableCombineLatest,
   Observable,

@@ -10,24 +10,24 @@ import {
   ActivatedRoute,
   Router,
 } from '@angular/router';
-import { APP_CONFIG } from '@dspace/config/app-config.interface';
-import { authReducer } from '@dspace/core/auth/auth.reducer';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { LocaleService } from '@dspace/core/locale/locale.service';
-import { HeadTagService } from '@dspace/core/metadata/head-tag.service';
-import { RouteService } from '@dspace/core/services/route.service';
+import { APP_CONFIG } from '@dspace/config';
 import {
+  AngularticsProviderMock,
+  authReducer,
+  AuthService,
+  AuthServiceMock,
+  CSSVariableServiceStub,
+  HeadTagService,
+  HeadTagServiceMock,
+  HostWindowServiceStub,
+  LocaleService,
+  MockActivatedRoute,
   NativeWindowRef,
   NativeWindowService,
-} from '@dspace/core/services/window.service';
-import { MockActivatedRoute } from '@dspace/core/testing/active-router.mock';
-import { AngularticsProviderMock } from '@dspace/core/testing/angulartics-provider.service.mock';
-import { AuthServiceMock } from '@dspace/core/testing/auth.service.mock';
-import { CSSVariableServiceStub } from '@dspace/core/testing/css-variable-service.stub';
-import { HeadTagServiceMock } from '@dspace/core/testing/head-tag-service.mock';
-import { HostWindowServiceStub } from '@dspace/core/testing/host-window-service.stub';
-import { RouterMock } from '@dspace/core/testing/router.mock';
-import { TranslateLoaderMock } from '@dspace/core/testing/translate-loader.mock';
+  RouterMock,
+  RouteService,
+  TranslateLoaderMock,
+} from '@dspace/core';
 import {
   Store,
   StoreModule,

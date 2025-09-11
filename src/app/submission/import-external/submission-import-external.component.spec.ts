@@ -14,25 +14,23 @@ import {
   ActivatedRoute,
   Router,
 } from '@angular/router';
-import { ExternalSourceDataService } from '@dspace/core/data/external-source-data.service';
-import { PaginationComponentOptions } from '@dspace/core/pagination/pagination-component-options.model';
-import { RouteService } from '@dspace/core/services/route.service';
-import { ExternalSourceEntry } from '@dspace/core/shared/external-source-entry.model';
-import { PaginatedSearchOptions } from '@dspace/core/shared/search/models/paginated-search-options.model';
-import { ActivatedRouteStub } from '@dspace/core/testing/active-router.stub';
-import { getMockExternalSourceService } from '@dspace/core/testing/external-source.service.mock';
-import { HostWindowServiceStub } from '@dspace/core/testing/host-window-service.stub';
-import { routeServiceStub } from '@dspace/core/testing/route-service.stub';
-import { RouterStub } from '@dspace/core/testing/router.stub';
 import {
-  createPaginatedList,
-  createTestComponent,
-} from '@dspace/core/testing/utils.test';
-import {
+  ActivatedRouteStub,
   createFailedRemoteDataObject$,
+  createPaginatedList,
   createSuccessfulRemoteDataObject,
   createSuccessfulRemoteDataObject$,
-} from '@dspace/core/utilities/remote-data.utils';
+  createTestComponent,
+  ExternalSourceDataService,
+  ExternalSourceEntry,
+  getMockExternalSourceService,
+  HostWindowServiceStub,
+  PaginatedSearchOptions,
+  PaginationComponentOptions,
+  RouterStub,
+  RouteService,
+  routeServiceStub,
+} from '@dspace/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { getTestScheduler } from 'jasmine-marbles';

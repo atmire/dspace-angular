@@ -15,20 +15,20 @@ import {
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { buildPaginatedList } from '@dspace/core/data/paginated-list.model';
-import { SubscriptionsDataService } from '@dspace/core/data/subscriptions-data.service';
-import { PaginationService } from '@dspace/core/pagination/pagination.service';
-import { PageInfo } from '@dspace/core/shared/page-info.model';
-import { MockActivatedRoute } from '@dspace/core/testing/active-router.mock';
-import { PaginationServiceStub } from '@dspace/core/testing/pagination-service.stub';
 import {
+  AuthService,
+  buildPaginatedList,
+  createSuccessfulRemoteDataObject$,
+  MockActivatedRoute,
   mockSubscriptionEperson,
+  PageInfo,
+  PaginationService,
+  PaginationServiceStub,
   subscriptionMock,
   subscriptionMock2,
-} from '@dspace/core/testing/subscriptions-data.mock';
-import { TranslateLoaderMock } from '@dspace/core/testing/translate-loader.mock';
-import { createSuccessfulRemoteDataObject$ } from '@dspace/core/utilities/remote-data.utils';
+  SubscriptionsDataService,
+  TranslateLoaderMock,
+} from '@dspace/core';
 import {
   TranslateLoader,
   TranslateModule,

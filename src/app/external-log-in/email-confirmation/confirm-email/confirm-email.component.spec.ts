@@ -12,20 +12,20 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { AuthMethodType } from '@dspace/core/auth/models/auth.method-type';
-import { EPersonDataService } from '@dspace/core/eperson/eperson-data.service';
-import { EPerson } from '@dspace/core/eperson/models/eperson.model';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { HardRedirectService } from '@dspace/core/services/hard-redirect.service';
-import { NativeWindowService } from '@dspace/core/services/window.service';
-import { Registration } from '@dspace/core/shared/registration.model';
 import {
+  AuthMethodType,
+  AuthService,
+  createSuccessfulRemoteDataObject$,
+  EPerson,
+  EPersonDataService,
+  HardRedirectService,
   MockWindow,
   NativeWindowMockFactory,
-} from '@dspace/core/testing/mock-native-window-ref';
-import { TranslateLoaderMock } from '@dspace/core/testing/translate-loader.mock';
-import { createSuccessfulRemoteDataObject$ } from '@dspace/core/utilities/remote-data.utils';
+  NativeWindowService,
+  NotificationsService,
+  Registration,
+  TranslateLoaderMock,
+} from '@dspace/core';
 import {
   TranslateLoader,
   TranslateModule,

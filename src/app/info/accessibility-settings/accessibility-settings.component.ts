@@ -5,10 +5,12 @@ import {
   OnInit,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { OrejimeService } from '@dspace/core/cookies/orejime.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { isEmpty } from '@dspace/shared/utils/empty.util';
+import {
+  AuthService,
+  NotificationsService,
+  OrejimeService,
+} from '@dspace/core';
+import { isEmpty } from '@dspace/utils';
 import {
   TranslateModule,
   TranslateService,

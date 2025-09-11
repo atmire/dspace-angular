@@ -14,18 +14,18 @@ import {
   UntypedFormControl,
   UntypedFormGroup,
 } from '@angular/forms';
-import { ItemDataService } from '@dspace/core/data/item-data.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { ConfidenceType } from '@dspace/core/shared/confidence-type';
-import { followLink } from '@dspace/core/shared/follow-link-config.model';
-import { FormFieldMetadataValueObject } from '@dspace/core/shared/form/models/form-field-metadata-value.model';
 import {
+  ConfidenceType,
+  followLink,
+  FormFieldMetadataValueObject,
   getFirstCompletedRemoteData,
+  ItemDataService,
   metadataFieldsToString,
-} from '@dspace/core/shared/operators';
-import { Vocabulary } from '@dspace/core/submission/vocabularies/models/vocabulary.model';
-import { VocabularyOptions } from '@dspace/core/submission/vocabularies/models/vocabulary-options.model';
-import { isNotEmpty } from '@dspace/shared/utils/empty.util';
+  NotificationsService,
+  Vocabulary,
+  VocabularyOptions,
+} from '@dspace/core';
+import { isNotEmpty } from '@dspace/utils';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import {
   TranslateModule,

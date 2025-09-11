@@ -1,18 +1,19 @@
-
 import {
   Component,
   EventEmitter,
   Output,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { RequestEntryState } from '@dspace/core/data/request-entry-state.model';
-import { Group } from '@dspace/core/eperson/models/group.model';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { getFirstCompletedRemoteData } from '@dspace/core/shared/operators';
-import { SupervisionOrder } from '@dspace/core/supervision-order/models/supervision-order.model';
-import { SupervisionOrderDataService } from '@dspace/core/supervision-order/supervision-order-data.service';
+import {
+  DSONameService,
+  getFirstCompletedRemoteData,
+  Group,
+  NotificationsService,
+  RemoteData,
+  RequestEntryState,
+  SupervisionOrder,
+  SupervisionOrderDataService,
+} from '@dspace/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   TranslateModule,

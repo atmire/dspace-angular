@@ -12,17 +12,19 @@ import {
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { LinkService } from '@dspace/core/cache/builders/link.service';
-import { ObjectCacheService } from '@dspace/core/cache/object-cache.service';
-import { Context } from '@dspace/core/shared/context.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { PoolTaskSearchResult } from '@dspace/core/shared/object-collection/pool-task-search-result.model';
-import { WorkflowItem } from '@dspace/core/submission/models/workflowitem.model';
-import { PoolTask } from '@dspace/core/tasks/models/pool-task-object.model';
-import { DSONameServiceMock } from '@dspace/core/testing/dso-name.service.mock';
-import { getMockLinkService } from '@dspace/core/testing/link-service.mock';
-import { createSuccessfulRemoteDataObject } from '@dspace/core/utilities/remote-data.utils';
+import {
+  Context,
+  createSuccessfulRemoteDataObject,
+  DSONameService,
+  DSONameServiceMock,
+  getMockLinkService,
+  Item,
+  LinkService,
+  ObjectCacheService,
+  PoolTask,
+  PoolTaskSearchResult,
+  WorkflowItem,
+} from '@dspace/core';
 import { of } from 'rxjs';
 
 import { PoolTaskActionsComponent } from '../../../mydspace-actions/pool-task/pool-task-actions.component';

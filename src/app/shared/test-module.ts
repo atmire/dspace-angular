@@ -3,10 +3,12 @@ import {
   CUSTOM_ELEMENTS_SCHEMA,
   NgModule,
 } from '@angular/core';
-import { BrowserOnlyMockPipe } from '@dspace/core/testing/browser-only-mock.pipe';
-import { NgComponentOutletDirectiveStub } from '@dspace/core/testing/ng-component-outlet-directive.stub';
-import { QueryParamsDirectiveStub } from '@dspace/core/testing/query-params-directive.stub';
-import { RouterLinkDirectiveStub } from '@dspace/core/testing/router-link-directive.stub';
+import {
+  BrowserOnlyMockPipe,
+  NgComponentOutletDirectiveStub,
+  QueryParamsDirectiveStub,
+  RouterLinkDirectiveStub,
+} from '@dspace/core';
 
 import { MySimpleItemActionComponent } from '../item-page/edit-item-page/simple-item-action/abstract-simple-item-action.component.spec';
 

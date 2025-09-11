@@ -12,15 +12,13 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import {
   BATCH_IMPORT_SCRIPT_NAME,
-  ScriptDataService,
-} from '@dspace/core/data/processes/script-data.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { ProcessParameter } from '@dspace/core/processes/process-parameter.model';
-import { NotificationsServiceStub } from '@dspace/core/testing/notifications-service.stub';
-import {
   createFailedRemoteDataObject$,
   createSuccessfulRemoteDataObject$,
-} from '@dspace/core/utilities/remote-data.utils';
+  NotificationsService,
+  NotificationsServiceStub,
+  ProcessParameter,
+  ScriptDataService,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { FileDropzoneNoUploaderComponent } from '../../shared/upload/file-dropzone-no-uploader/file-dropzone-no-uploader.component';

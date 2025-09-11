@@ -11,12 +11,14 @@ import {
   By,
 } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { INotificationBoardOptions } from '@dspace/config/notifications-config.interfaces';
-import { Notification } from '@dspace/core/notification-system/models/notification.model';
-import { NotificationOptions } from '@dspace/core/notification-system/models/notification-options.model';
-import { NotificationType } from '@dspace/core/notification-system/models/notification-type';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { NotificationsServiceStub } from '@dspace/core/testing/notifications-service.stub';
+import { INotificationBoardOptions } from '@dspace/config';
+import {
+  Notification,
+  NotificationOptions,
+  NotificationsService,
+  NotificationsServiceStub,
+  NotificationType,
+} from '@dspace/core';
 import { provideMockStore } from '@ngrx/store/testing';
 import { cold } from 'jasmine-marbles';
 import uniqueId from 'lodash/uniqueId';

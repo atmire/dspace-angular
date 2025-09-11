@@ -1,20 +1,18 @@
 /* eslint-disable max-classes-per-file */
-import { SubmissionDefinitionsModel } from '@dspace/core/config/models/config-submission-definitions.model';
-import { type } from '@dspace/core/ngrx/type';
-import { Item } from '@dspace/core/shared/item.model';
 import {
+  Item,
   SectionScope,
+  SectionsType,
   SectionVisibility,
-} from '@dspace/core/submission/models/section-visibility.model';
-import { SubmissionError } from '@dspace/core/submission/models/submission-error.model';
-import { SubmissionObject } from '@dspace/core/submission/models/submission-object.model';
-import { SubmissionSectionError } from '@dspace/core/submission/models/submission-section-error.model';
-import { WorkspaceitemSectionUploadFileObject } from '@dspace/core/submission/models/workspaceitem-section-upload-file.model';
-import {
+  SubmissionDefinitionsModel,
+  SubmissionError,
+  SubmissionObject,
+  SubmissionSectionError,
+  type,
   WorkspaceitemSectionDataType,
   WorkspaceitemSectionsObject,
-} from '@dspace/core/submission/models/workspaceitem-sections.model';
-import { SectionsType } from '@dspace/core/submission/sections-type';
+  WorkspaceitemSectionUploadFileObject,
+} from '@dspace/core';
 import { Action } from '@ngrx/store';
 
 /**

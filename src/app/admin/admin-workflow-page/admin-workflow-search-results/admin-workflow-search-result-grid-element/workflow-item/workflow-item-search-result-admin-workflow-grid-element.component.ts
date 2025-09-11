@@ -1,4 +1,3 @@
-
 import {
   Component,
   ComponentRef,
@@ -7,22 +6,22 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { LinkService } from '@dspace/core/cache/builders/link.service';
-import { BitstreamDataService } from '@dspace/core/data/bitstream-data.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { Context } from '@dspace/core/shared/context.model';
-import { followLink } from '@dspace/core/shared/follow-link-config.model';
-import { GenericConstructor } from '@dspace/core/shared/generic-constructor';
-import { Item } from '@dspace/core/shared/item.model';
-import { WorkflowItemSearchResult } from '@dspace/core/shared/object-collection/workflow-item-search-result.model';
 import {
+  BitstreamDataService,
+  Context,
+  DSONameService,
+  followLink,
+  GenericConstructor,
   getAllSucceededRemoteData,
   getRemoteDataPayload,
-} from '@dspace/core/shared/operators';
-import { ViewMode } from '@dspace/core/shared/view-mode.model';
-import { WorkflowItem } from '@dspace/core/submission/models/workflowitem.model';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+  Item,
+  LinkService,
+  RemoteData,
+  ViewMode,
+  WorkflowItem,
+  WorkflowItemSearchResult,
+} from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import { TranslateModule } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';

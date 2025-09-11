@@ -17,19 +17,19 @@ import {
 import {
   APP_CONFIG,
   AppConfig,
-} from '@dspace/config/app-config.interface';
-import { StoreDevModules } from '@dspace/config/store/devtools';
-import { AuthInterceptor } from '@dspace/core/auth/auth.interceptor';
-import { ClientCookieService } from '@dspace/core/cookies/client-cookie.service';
-import { DspaceRestInterceptor } from '@dspace/core/dspace-rest/dspace-rest.interceptor';
-import { LocaleInterceptor } from '@dspace/core/locale/locale.interceptor';
-import { LogInterceptor } from '@dspace/core/log/log.interceptor';
-import { DSpaceRouterStateSerializer } from '@dspace/core/ngrx/dspace-router-state-serializer';
+  StoreDevModules,
+} from '@dspace/config';
 import {
+  AuthInterceptor,
+  ClientCookieService,
+  DspaceRestInterceptor,
+  DSpaceRouterStateSerializer,
+  LocaleInterceptor,
+  LogInterceptor,
   models,
   provideCore,
-} from '@dspace/core/provide-core';
-import { XsrfInterceptor } from '@dspace/core/xsrf/xsrf.interceptor';
+  XsrfInterceptor,
+} from '@dspace/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DYNAMIC_MATCHER_PROVIDERS } from '@ng-dynamic-forms/core';
 import { EffectsModule } from '@ngrx/effects';

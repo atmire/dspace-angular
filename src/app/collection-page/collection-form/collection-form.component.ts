@@ -8,21 +8,23 @@ import {
   SimpleChange,
   SimpleChanges,
 } from '@angular/core';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { ObjectCacheService } from '@dspace/core/cache/object-cache.service';
-import { CollectionDataService } from '@dspace/core/data/collection-data.service';
-import { EntityTypeDataService } from '@dspace/core/data/entity-type-data.service';
-import { RequestService } from '@dspace/core/data/request.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { Collection } from '@dspace/core/shared/collection.model';
-import { ItemType } from '@dspace/core/shared/item-relationships/item-type.model';
-import { NONE_ENTITY_TYPE } from '@dspace/core/shared/item-relationships/item-type.resource-type';
-import { MetadataValue } from '@dspace/core/shared/metadata.models';
-import { getFirstSucceededRemoteListPayload } from '@dspace/core/shared/operators';
+import {
+  AuthService,
+  Collection,
+  CollectionDataService,
+  EntityTypeDataService,
+  getFirstSucceededRemoteListPayload,
+  ItemType,
+  MetadataValue,
+  NONE_ENTITY_TYPE,
+  NotificationsService,
+  ObjectCacheService,
+  RequestService,
+} from '@dspace/core';
 import {
   hasNoValue,
   isNotNull,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   DynamicFormControlModel,

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { UUIDService } from '@dspace/core/shared/uuid.service';
+import { UUIDService } from '@dspace/core';
 import {
   BehaviorSubject,
   map,

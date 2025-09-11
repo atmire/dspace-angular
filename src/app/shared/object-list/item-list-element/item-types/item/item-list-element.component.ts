@@ -2,10 +2,12 @@ import {
   Component,
   OnChanges,
 } from '@angular/core';
-import { Item } from '@dspace/core/shared/item.model';
-import { ItemSearchResult } from '@dspace/core/shared/object-collection/item-search-result.model';
-import { ViewMode } from '@dspace/core/shared/view-mode.model';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+import {
+  Item,
+  ItemSearchResult,
+  ViewMode,
+} from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 
 import { listableObjectComponent } from '../../../../object-collection/shared/listable-object/listable-object.decorator';
 import { ListableObjectComponentLoaderComponent } from '../../../../object-collection/shared/listable-object/listable-object-component-loader.component';

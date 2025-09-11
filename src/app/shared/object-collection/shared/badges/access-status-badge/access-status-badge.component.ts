@@ -5,13 +5,15 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { LinkService } from '@dspace/core/cache/builders/link.service';
-import { AccessStatusObject } from '@dspace/core/shared/access-status.model';
-import { Bitstream } from '@dspace/core/shared/bitstream.model';
-import { followLink } from '@dspace/core/shared/follow-link-config.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { getFirstSucceededRemoteDataPayload } from '@dspace/core/shared/operators';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+import {
+  AccessStatusObject,
+  Bitstream,
+  followLink,
+  getFirstSucceededRemoteDataPayload,
+  Item,
+  LinkService,
+} from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   Observable,

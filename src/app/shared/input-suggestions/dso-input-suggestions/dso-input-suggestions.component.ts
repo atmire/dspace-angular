@@ -11,10 +11,12 @@ import {
   FormsModule,
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { DSpaceObject } from '@dspace/core/shared/dspace-object.model';
-import { ViewMode } from '@dspace/core/shared/view-mode.model';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+import {
+  DSONameService,
+  DSpaceObject,
+  ViewMode,
+} from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { CollectionElementLinkType } from '../../object-collection/collection-element-link.type';

@@ -4,21 +4,19 @@ import {
 } from '@angular/core/testing';
 import { APP_CONFIG } from '@dspace/config/app-config.interface';
 import {
-  SortDirection,
-  SortOptions,
-} from '@dspace/core/cache/models/sort-options.model';
-import { CollectionDataService } from '@dspace/core/data/collection-data.service';
-import { CommunityDataService } from '@dspace/core/data/community-data.service';
-import { FindListOptions } from '@dspace/core/data/find-list-options.model';
-import { buildPaginatedList } from '@dspace/core/data/paginated-list.model';
-import { Collection } from '@dspace/core/shared/collection.model';
-import { Community } from '@dspace/core/shared/community.model';
-import { PageInfo } from '@dspace/core/shared/page-info.model';
-import { StoreMock } from '@dspace/core/testing/store.mock';
-import {
+  buildPaginatedList,
+  Collection,
+  CollectionDataService,
+  Community,
+  CommunityDataService,
   createFailedRemoteDataObject$,
   createSuccessfulRemoteDataObject$,
-} from '@dspace/core/utilities/remote-data.utils';
+  FindListOptions,
+  PageInfo,
+  SortDirection,
+  SortOptions,
+  StoreMock,
+} from '@dspace/core';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { take } from 'rxjs/operators';

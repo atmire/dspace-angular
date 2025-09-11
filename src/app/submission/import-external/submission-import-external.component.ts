@@ -8,24 +8,24 @@ import {
   Router,
   RouterLink,
 } from '@angular/router';
-import { ExternalSourceDataService } from '@dspace/core/data/external-source-data.service';
 import {
   buildPaginatedList,
+  Context,
+  createSuccessfulRemoteDataObject,
+  ExternalSourceDataService,
+  ExternalSourceEntry,
+  getFinishedRemoteData,
+  NONE_ENTITY_TYPE,
+  PageInfo,
   PaginatedList,
-} from '@dspace/core/data/paginated-list.model';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { PaginationComponentOptions } from '@dspace/core/pagination/pagination-component-options.model';
-import { RouteService } from '@dspace/core/services/route.service';
-import { Context } from '@dspace/core/shared/context.model';
-import { ExternalSourceEntry } from '@dspace/core/shared/external-source-entry.model';
-import { NONE_ENTITY_TYPE } from '@dspace/core/shared/item-relationships/item-type.resource-type';
-import { getFinishedRemoteData } from '@dspace/core/shared/operators';
-import { PageInfo } from '@dspace/core/shared/page-info.model';
-import { createSuccessfulRemoteDataObject } from '@dspace/core/utilities/remote-data.utils';
+  PaginationComponentOptions,
+  RemoteData,
+  RouteService,
+} from '@dspace/core';
 import {
   hasValue,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   NgbModal,
   NgbModalRef,

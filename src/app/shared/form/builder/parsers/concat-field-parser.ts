@@ -1,11 +1,13 @@
 import { Inject } from '@angular/core';
-import { FormFieldModel } from '@dspace/core/shared/form/models/form-field.model';
-import { FormFieldMetadataValueObject } from '@dspace/core/shared/form/models/form-field-metadata-value.model';
+import {
+  FormFieldMetadataValueObject,
+  FormFieldModel,
+} from '@dspace/core';
 import {
   hasNoValue,
   hasValue,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import { TranslateService } from '@ngx-translate/core';
 
 import {

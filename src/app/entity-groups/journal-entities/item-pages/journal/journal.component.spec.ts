@@ -11,34 +11,36 @@ import {
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
-import { APP_CONFIG } from '@dspace/config/app-config.interface';
-import { BrowseDefinitionDataService } from '@dspace/core/browse/browse-definition-data.service';
-import { RemoteDataBuildService } from '@dspace/core/cache/builders/remote-data-build.service';
-import { ObjectCacheService } from '@dspace/core/cache/object-cache.service';
-import { BitstreamDataService } from '@dspace/core/data/bitstream-data.service';
-import { CommunityDataService } from '@dspace/core/data/community-data.service';
-import { DefaultChangeAnalyzer } from '@dspace/core/data/default-change-analyzer.service';
-import { DSOChangeAnalyzer } from '@dspace/core/data/dso-change-analyzer.service';
-import { ItemDataService } from '@dspace/core/data/item-data.service';
-import { buildPaginatedList } from '@dspace/core/data/paginated-list.model';
-import { RelationshipDataService } from '@dspace/core/data/relationship-data.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { VersionDataService } from '@dspace/core/data/version-data.service';
-import { VersionHistoryDataService } from '@dspace/core/data/version-history-data.service';
-import { APP_DATA_SERVICES_MAP } from '@dspace/core/data-services-map-type';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { RouteService } from '@dspace/core/services/route.service';
-import { Bitstream } from '@dspace/core/shared/bitstream.model';
-import { HALEndpointService } from '@dspace/core/shared/hal-endpoint.service';
-import { Item } from '@dspace/core/shared/item.model';
-import { PageInfo } from '@dspace/core/shared/page-info.model';
-import { UUIDService } from '@dspace/core/shared/uuid.service';
-import { WorkspaceitemDataService } from '@dspace/core/submission/workspaceitem-data.service';
-import { BrowseDefinitionDataServiceStub } from '@dspace/core/testing/browse-definition-data-service.stub';
-import { mockTruncatableService } from '@dspace/core/testing/mock-trucatable.service';
-import { TranslateLoaderMock } from '@dspace/core/testing/translate-loader.mock';
-import { createSuccessfulRemoteDataObject$ } from '@dspace/core/utilities/remote-data.utils';
-import { isNotEmpty } from '@dspace/shared/utils/empty.util';
+import { APP_CONFIG } from '@dspace/config';
+import {
+  APP_DATA_SERVICES_MAP,
+  Bitstream,
+  BitstreamDataService,
+  BrowseDefinitionDataService,
+  BrowseDefinitionDataServiceStub,
+  buildPaginatedList,
+  CommunityDataService,
+  createSuccessfulRemoteDataObject$,
+  DefaultChangeAnalyzer,
+  DSOChangeAnalyzer,
+  HALEndpointService,
+  Item,
+  ItemDataService,
+  mockTruncatableService,
+  NotificationsService,
+  ObjectCacheService,
+  PageInfo,
+  RelationshipDataService,
+  RemoteData,
+  RemoteDataBuildService,
+  RouteService,
+  TranslateLoaderMock,
+  UUIDService,
+  VersionDataService,
+  VersionHistoryDataService,
+  WorkspaceitemDataService,
+} from '@dspace/core';
+import { isNotEmpty } from '@dspace/utils';
 import { Store } from '@ngrx/store';
 import {
   TranslateLoader,

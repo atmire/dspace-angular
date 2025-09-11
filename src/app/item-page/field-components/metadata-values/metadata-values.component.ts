@@ -10,11 +10,13 @@ import { RouterLink } from '@angular/router';
 import {
   APP_CONFIG,
   AppConfig,
-} from '@dspace/config/app-config.interface';
-import { BrowseDefinition } from '@dspace/core/shared/browse-definition.model';
-import { MetadataValue } from '@dspace/core/shared/metadata.models';
-import { VALUE_LIST_BROWSE_DEFINITION } from '@dspace/core/shared/value-list-browse-definition.resource-type';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+} from '@dspace/config';
+import {
+  BrowseDefinition,
+  MetadataValue,
+  VALUE_LIST_BROWSE_DEFINITION,
+} from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { environment } from '../../../../environments/environment';

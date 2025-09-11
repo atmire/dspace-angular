@@ -2,8 +2,10 @@ import {
   Component,
   Input,
 } from '@angular/core';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { Bitstream } from '@dspace/core/shared/bitstream.model';
+import {
+  Bitstream,
+  RemoteData,
+} from '@dspace/core';
 
 import { ThemedComponent } from '../shared/theme-support/themed.component';
 import { ThumbnailComponent } from './thumbnail.component';

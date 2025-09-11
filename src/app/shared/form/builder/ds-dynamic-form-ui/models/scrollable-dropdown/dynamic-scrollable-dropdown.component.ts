@@ -12,26 +12,24 @@ import {
   ViewChild,
 } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
-import { CacheableObject } from '@dspace/core/cache/cacheable-object.model';
-import { FindAllDataImpl } from '@dspace/core/data/base/find-all-data';
-import {
-  buildPaginatedList,
-  PaginatedList,
-} from '@dspace/core/data/paginated-list.model';
-import { RemoteData } from '@dspace/core/data/remote-data';
 import {
   APP_DATA_SERVICES_MAP,
+  buildPaginatedList,
+  CacheableObject,
+  FindAllDataImpl,
+  FormFieldMetadataValueObject,
+  getFirstSucceededRemoteDataPayload,
+  lazyDataService,
   LazyDataServicesMap,
-} from '@dspace/core/data-services-map-type';
-import { lazyDataService } from '@dspace/core/lazy-data-service';
-import { FormFieldMetadataValueObject } from '@dspace/core/shared/form/models/form-field-metadata-value.model';
-import { getFirstSucceededRemoteDataPayload } from '@dspace/core/shared/operators';
-import { PageInfo } from '@dspace/core/shared/page-info.model';
-import { VocabularyService } from '@dspace/core/submission/vocabularies/vocabulary.service';
+  PageInfo,
+  PaginatedList,
+  RemoteData,
+  VocabularyService,
+} from '@dspace/core';
 import {
   hasValue,
   isEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   NgbDropdown,
   NgbDropdownModule,

@@ -10,11 +10,13 @@ import {
   Router,
   RouterLink,
 } from '@angular/router';
-import { PaginationService } from '@dspace/core/pagination/pagination.service';
-import { currentPath } from '@dspace/core/router/utils/route.utils';
-import { FacetValue } from '@dspace/core/shared/search/models/facet-value.model';
-import { SearchFilterConfig } from '@dspace/core/shared/search/models/search-filter-config.model';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+import {
+  currentPath,
+  FacetValue,
+  PaginationService,
+  SearchFilterConfig,
+} from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import {
   Observable,
   Subscription,

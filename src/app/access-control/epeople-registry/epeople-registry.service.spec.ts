@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { EPerson } from '@dspace/core/eperson/models/eperson.model';
+import { EPerson } from '@dspace/core';
 import {
   MockStore,
   provideMockStore,

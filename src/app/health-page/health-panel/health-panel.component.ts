@@ -4,7 +4,7 @@ import {
   Input,
   OnInit,
 } from '@angular/core';
-import { HealthResponse } from '@dspace/core/shared/health-component.model';
+import { HealthResponse } from '@dspace/core';
 import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import {
   TranslateModule,

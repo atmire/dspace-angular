@@ -8,17 +8,17 @@ import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import {
   buildPaginatedList,
+  createSuccessfulRemoteDataObject$,
+  Item,
+  ItemSearchResult,
+  ListableObject,
   PaginatedList,
-} from '@dspace/core/data/paginated-list.model';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { PaginationService } from '@dspace/core/pagination/pagination.service';
-import { PaginationComponentOptions } from '@dspace/core/pagination/pagination-component-options.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { ItemSearchResult } from '@dspace/core/shared/object-collection/item-search-result.model';
-import { ListableObject } from '@dspace/core/shared/object-collection/listable-object.model';
-import { PaginatedSearchOptions } from '@dspace/core/shared/search/models/paginated-search-options.model';
-import { PaginationServiceStub } from '@dspace/core/testing/pagination-service.stub';
-import { createSuccessfulRemoteDataObject$ } from '@dspace/core/utilities/remote-data.utils';
+  PaginatedSearchOptions,
+  PaginationComponentOptions,
+  PaginationService,
+  PaginationServiceStub,
+  RemoteData,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   Observable,

@@ -9,31 +9,33 @@ import {
   waitForAsync,
 } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { APP_CONFIG } from '@dspace/config/app-config.interface';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { RemoteDataBuildService } from '@dspace/core/cache/builders/remote-data-build.service';
-import { ObjectCacheService } from '@dspace/core/cache/object-cache.service';
-import { BitstreamDataService } from '@dspace/core/data/bitstream-data.service';
-import { CommunityDataService } from '@dspace/core/data/community-data.service';
-import { DefaultChangeAnalyzer } from '@dspace/core/data/default-change-analyzer.service';
-import { DSOChangeAnalyzer } from '@dspace/core/data/dso-change-analyzer.service';
-import { FindListOptions } from '@dspace/core/data/find-list-options.model';
-import { PaginatedList } from '@dspace/core/data/paginated-list.model';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { Bitstream } from '@dspace/core/shared/bitstream.model';
-import { FileService } from '@dspace/core/shared/file.service';
-import { FollowLinkConfig } from '@dspace/core/shared/follow-link-config.model';
-import { HALEndpointService } from '@dspace/core/shared/hal-endpoint.service';
-import { Item } from '@dspace/core/shared/item.model';
-import { UUIDService } from '@dspace/core/shared/uuid.service';
-import { AuthServiceMock } from '@dspace/core/testing/auth.service.mock';
-import { HALEndpointServiceStub } from '@dspace/core/testing/hal-endpoint-service.stub';
-import { SearchServiceStub } from '@dspace/core/testing/search-service.stub';
-import { TranslateLoaderMock } from '@dspace/core/testing/translate-loader.mock';
-import { createPaginatedList } from '@dspace/core/testing/utils.test';
-import { createSuccessfulRemoteDataObject$ } from '@dspace/core/utilities/remote-data.utils';
-import { XSRFService } from '@dspace/core/xsrf/xsrf.service';
+import { APP_CONFIG } from '@dspace/config';
+import {
+  AuthService,
+  AuthServiceMock,
+  Bitstream,
+  BitstreamDataService,
+  CommunityDataService,
+  createPaginatedList,
+  createSuccessfulRemoteDataObject$,
+  DefaultChangeAnalyzer,
+  DSOChangeAnalyzer,
+  FileService,
+  FindListOptions,
+  FollowLinkConfig,
+  HALEndpointService,
+  HALEndpointServiceStub,
+  Item,
+  NotificationsService,
+  ObjectCacheService,
+  PaginatedList,
+  RemoteData,
+  RemoteDataBuildService,
+  SearchServiceStub,
+  TranslateLoaderMock,
+  UUIDService,
+  XSRFService,
+} from '@dspace/core';
 import { Store } from '@ngrx/store';
 import {
   TranslateLoader,

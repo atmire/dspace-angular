@@ -8,8 +8,10 @@ import {
   waitForAsync,
 } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import { Item } from '@dspace/core/shared/item.model';
-import { ListableObject } from '@dspace/core/shared/object-collection/listable-object.model';
+import {
+  Item,
+  ListableObject,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 

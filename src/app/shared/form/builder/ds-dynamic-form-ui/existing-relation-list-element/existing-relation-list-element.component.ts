@@ -9,19 +9,19 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { Item } from '@dspace/core/shared/item.model';
-import { ReorderableRelationship } from '@dspace/core/shared/item-relationships/reorderable-relationship';
-import { ItemSearchResult } from '@dspace/core/shared/object-collection/item-search-result.model';
 import {
   getAllSucceededRemoteData,
   getRemoteDataPayload,
-} from '@dspace/core/shared/operators';
-import { RelationshipOptions } from '@dspace/core/shared/relationship-options.model';
-import { ViewMode } from '@dspace/core/shared/view-mode.model';
+  Item,
+  ItemSearchResult,
+  RelationshipOptions,
+  ReorderableRelationship,
+  ViewMode,
+} from '@dspace/core';
 import {
   hasValue,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import { Store } from '@ngrx/store';
 import {
   BehaviorSubject,

@@ -13,24 +13,24 @@ import {
   ActivatedRoute,
   Router,
 } from '@angular/router';
-import { RequestService } from '@dspace/core/data/request.service';
-import { WorkflowActionDataService } from '@dspace/core/data/workflow-action-data.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { Item } from '@dspace/core/shared/item.model';
-import { WorkflowItem } from '@dspace/core/submission/models/workflowitem.model';
-import { ClaimedTaskDataService } from '@dspace/core/tasks/claimed-task-data.service';
-import { ClaimedTask } from '@dspace/core/tasks/models/claimed-task-object.model';
-import { WorkflowAction } from '@dspace/core/tasks/models/workflow-action-object.model';
-import { ActivatedRouteStub } from '@dspace/core/testing/active-router.stub';
-import { NotificationsServiceStub } from '@dspace/core/testing/notifications-service.stub';
-import { getMockRequestService } from '@dspace/core/testing/request.service.mock';
-import { RouterStub } from '@dspace/core/testing/router.stub';
-import { getMockSearchService } from '@dspace/core/testing/search-service.mock';
-import { TranslateLoaderMock } from '@dspace/core/testing/translate-loader.mock';
 import {
+  ActivatedRouteStub,
+  ClaimedTask,
+  ClaimedTaskDataService,
   createSuccessfulRemoteDataObject,
   createSuccessfulRemoteDataObject$,
-} from '@dspace/core/utilities/remote-data.utils';
+  getMockRequestService,
+  getMockSearchService,
+  Item,
+  NotificationsService,
+  NotificationsServiceStub,
+  RequestService,
+  RouterStub,
+  TranslateLoaderMock,
+  WorkflowAction,
+  WorkflowActionDataService,
+  WorkflowItem,
+} from '@dspace/core';
 import {
   TranslateLoader,
   TranslateModule,

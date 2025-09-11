@@ -9,10 +9,12 @@ import {
   Params,
   Router,
 } from '@angular/router';
-import { RequestService } from '@dspace/core/data/request.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { getFirstSucceededRemoteDataPayload } from '@dspace/core/shared/operators';
-import { WorkflowItem } from '@dspace/core/submission/models/workflowitem.model';
+import {
+  getFirstSucceededRemoteDataPayload,
+  NotificationsService,
+  RequestService,
+  WorkflowItem,
+} from '@dspace/core';
 import { TranslateService } from '@ngx-translate/core';
 
 import { getAdvancedWorkflowRoute } from '../../../../workflowitems-edit-page/workflowitems-edit-page-routing-paths';

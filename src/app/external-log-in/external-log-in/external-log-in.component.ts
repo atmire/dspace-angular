@@ -10,14 +10,16 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { AuthMethodType } from '@dspace/core/auth/models/auth.method-type';
-import { AuthRegistrationType } from '@dspace/core/auth/models/auth.registration-type';
-import { Registration } from '@dspace/core/shared/registration.model';
+import {
+  AuthMethodType,
+  AuthRegistrationType,
+  AuthService,
+  Registration,
+} from '@dspace/core';
 import {
   hasValue,
   isEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   NgbModal,
   NgbModalRef,

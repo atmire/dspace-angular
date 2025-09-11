@@ -33,42 +33,40 @@ import {
 import {
   APP_CONFIG,
   AppConfig,
-} from '@dspace/config/app-config.interface';
-import { PaginatedList } from '@dspace/core/data/paginated-list.model';
-import { RelationshipDataService } from '@dspace/core/data/relationship-data.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { MetadataService } from '@dspace/core/metadata/metadata.service';
-import { Collection } from '@dspace/core/shared/collection.model';
-import { DSpaceObject } from '@dspace/core/shared/dspace-object.model';
-import { followLink } from '@dspace/core/shared/follow-link-config.model';
-import { FormFieldMetadataValueObject } from '@dspace/core/shared/form/models/form-field-metadata-value.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { Relationship } from '@dspace/core/shared/item-relationships/relationship.model';
-import { ReorderableRelationship } from '@dspace/core/shared/item-relationships/reorderable-relationship';
+} from '@dspace/config';
 import {
-  MetadataValue,
-  VIRTUAL_METADATA_PREFIX,
-} from '@dspace/core/shared/metadata.models';
-import { ItemSearchResult } from '@dspace/core/shared/object-collection/item-search-result.model';
-import {
+  Collection,
+  DSpaceObject,
+  followLink,
+  FormFieldMetadataValueObject,
   getAllSucceededRemoteData,
   getFirstSucceededRemoteData,
   getFirstSucceededRemoteDataPayload,
   getPaginatedListPayload,
   getRemoteDataPayload,
-} from '@dspace/core/shared/operators';
-import { RelationshipOptions } from '@dspace/core/shared/relationship-options.model';
-import { SearchResult } from '@dspace/core/shared/search/models/search-result.model';
-import { SubmissionObject } from '@dspace/core/submission/models/submission-object.model';
-import { SUBMISSION_LINKS_TO_FOLLOW } from '@dspace/core/submission/resolver/submission-links-to-follow';
-import { paginatedRelationsToItems } from '@dspace/core/utilities/item-relationships-utils';
-import { itemLinksToFollow } from '@dspace/core/utilities/relation-query.utils';
+  Item,
+  itemLinksToFollow,
+  ItemSearchResult,
+  MetadataService,
+  MetadataValue,
+  PaginatedList,
+  paginatedRelationsToItems,
+  Relationship,
+  RelationshipDataService,
+  RelationshipOptions,
+  RemoteData,
+  ReorderableRelationship,
+  SearchResult,
+  SUBMISSION_LINKS_TO_FOLLOW,
+  SubmissionObject,
+  VIRTUAL_METADATA_PREFIX,
+} from '@dspace/core';
 import {
   hasNoValue,
   hasValue,
   isNotEmpty,
   isNotUndefined,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   NgbModal,
   NgbModalRef,

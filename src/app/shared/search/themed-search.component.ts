@@ -4,11 +4,13 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { Context } from '@dspace/core/shared/context.model';
-import { DSpaceObject } from '@dspace/core/shared/dspace-object.model';
-import { ListableObject } from '@dspace/core/shared/object-collection/listable-object.model';
-import { SearchObjects } from '@dspace/core/shared/search/models/search-objects.model';
-import { ViewMode } from '@dspace/core/shared/view-mode.model';
+import {
+  Context,
+  DSpaceObject,
+  ListableObject,
+  SearchObjects,
+  ViewMode,
+} from '@dspace/core';
 
 import { CollectionElementLinkType } from '../object-collection/collection-element-link.type';
 import { ThemedComponent } from '../theme-support/themed.component';

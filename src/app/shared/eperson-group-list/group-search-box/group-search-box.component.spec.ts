@@ -13,7 +13,7 @@ import {
   ReactiveFormsModule,
   UntypedFormBuilder,
 } from '@angular/forms';
-import { createTestComponent } from '@dspace/core/testing/utils.test';
+import { createTestComponent } from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { SearchEvent } from '../eperson-group-list-event-type';

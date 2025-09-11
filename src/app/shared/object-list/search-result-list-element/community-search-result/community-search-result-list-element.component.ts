@@ -4,9 +4,11 @@ import {
   OnInit,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Community } from '@dspace/core/shared/community.model';
-import { CommunitySearchResult } from '@dspace/core/shared/object-collection/community-search-result.model';
-import { ViewMode } from '@dspace/core/shared/view-mode.model';
+import {
+  Community,
+  CommunitySearchResult,
+  ViewMode,
+} from '@dspace/core';
 
 import { ThemedBadgesComponent } from '../../../object-collection/shared/badges/themed-badges.component';
 import { listableObjectComponent } from '../../../object-collection/shared/listable-object/listable-object.decorator';

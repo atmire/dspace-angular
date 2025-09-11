@@ -19,29 +19,31 @@ import {
   ActivatedRoute,
   Router,
 } from '@angular/router';
-import { APP_CONFIG } from '@dspace/config/app-config.interface';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { RequestService } from '@dspace/core/data/request.service';
-import { APP_DATA_SERVICES_MAP } from '@dspace/core/data-services-map-type';
-import { EPersonDataService } from '@dspace/core/eperson/eperson-data.service';
-import { GroupDataService } from '@dspace/core/eperson/group-data.service';
-import { PaginationService } from '@dspace/core/pagination/pagination.service';
-import { ActionType } from '@dspace/core/resource-policy/models/action-type.model';
-import { PolicyType } from '@dspace/core/resource-policy/models/policy-type.model';
-import { ResourcePolicy } from '@dspace/core/resource-policy/models/resource-policy.model';
-import { RESOURCE_POLICY } from '@dspace/core/resource-policy/models/resource-policy.resource-type';
-import { EPersonMock } from '@dspace/core/testing/eperson.mock';
-import { GroupMock } from '@dspace/core/testing/group-mock';
-import { PaginationServiceStub } from '@dspace/core/testing/pagination-service.stub';
-import { getMockRequestService } from '@dspace/core/testing/request.service.mock';
-import { RouterMock } from '@dspace/core/testing/router.mock';
-import { createTestComponent } from '@dspace/core/testing/utils.test';
-import { createSuccessfulRemoteDataObject } from '@dspace/core/utilities/remote-data.utils';
+import { APP_CONFIG } from '@dspace/config';
+import {
+  ActionType,
+  APP_DATA_SERVICES_MAP,
+  createSuccessfulRemoteDataObject,
+  createTestComponent,
+  EPersonDataService,
+  EPersonMock,
+  getMockRequestService,
+  GroupDataService,
+  GroupMock,
+  PaginationService,
+  PaginationServiceStub,
+  PolicyType,
+  RemoteData,
+  RequestService,
+  RESOURCE_POLICY,
+  ResourcePolicy,
+  RouterMock,
+} from '@dspace/core';
 import {
   dateToISOFormat,
+  isNotEmptyOperator,
   stringToNgbDateStruct,
-} from '@dspace/shared/utils/date.util';
-import { isNotEmptyOperator } from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DYNAMIC_FORM_CONTROL_MAP_FN } from '@ng-dynamic-forms/core';
 import { provideMockStore } from '@ngrx/store/testing';

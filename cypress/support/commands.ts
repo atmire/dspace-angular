@@ -5,12 +5,10 @@
 
 import {
   AuthTokenInfo,
-  TOKENITEM,
-} from '@dspace/core/auth/models/auth-token-info.model';
-import {
   DSPACE_XSRF_COOKIE,
+  TOKENITEM,
   XSRF_REQUEST_HEADER,
-} from '@dspace/core/xsrf/xsrf.constants';
+} from '@dspace/core';
 import { v4 as uuidv4 } from 'uuid';
 
 // Declare Cypress namespace to help with Intellisense & code completion in IDEs

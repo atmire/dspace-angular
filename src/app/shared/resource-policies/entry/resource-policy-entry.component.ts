@@ -18,24 +18,22 @@ import {
   ActivatedRoute,
   Router,
 } from '@angular/router';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { GroupDataService } from '@dspace/core/eperson/group-data.service';
-import { Group } from '@dspace/core/eperson/models/group.model';
-import { ResourcePolicy } from '@dspace/core/resource-policy/models/resource-policy.model';
-import { DSpaceObject } from '@dspace/core/shared/dspace-object.model';
 import {
+  DSONameService,
+  DSpaceObject,
   getAllSucceededRemoteData,
   getFirstSucceededRemoteDataPayload,
-} from '@dspace/core/shared/operators';
+  Group,
+  GroupDataService,
+  RemoteData,
+  ResourcePolicy,
+} from '@dspace/core';
 import {
   dateToString,
-  stringToNgbDateStruct,
-} from '@dspace/shared/utils/date.util';
-import {
   hasValue,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+  stringToNgbDateStruct,
+} from '@dspace/utils';
 import { TranslateModule } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';

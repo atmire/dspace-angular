@@ -3,7 +3,7 @@ import {
   Component,
   Input,
 } from '@angular/core';
-import { Metadata } from '@dspace/core/submission/models/sherpa-policies-details.model';
+import { SherpaMetadata } from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 
 /**
@@ -22,6 +22,6 @@ export class MetadataInformationComponent {
   /**
    * Metadata to show information from
    */
-  @Input() metadata: Metadata;
+  @Input() metadata: SherpaMetadata;
 
 }

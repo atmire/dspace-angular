@@ -9,15 +9,17 @@ import {
 } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
-import { AppliedFilter } from '@dspace/core/shared/search/models/applied-filter.model';
-import { FacetValues } from '@dspace/core/shared/search/models/facet-values.model';
-import { FilterType } from '@dspace/core/shared/search/models/filter-type.model';
-import { SearchFilterConfig } from '@dspace/core/shared/search/models/search-filter-config.model';
-import { SequenceService } from '@dspace/core/shared/sequence.service';
-import { SearchConfigurationServiceStub } from '@dspace/core/testing/search-configuration-service.stub';
-import { SearchFilterServiceStub } from '@dspace/core/testing/search-filter-service.stub';
-import { SearchServiceStub } from '@dspace/core/testing/search-service.stub';
-import { createSuccessfulRemoteDataObject$ } from '@dspace/core/utilities/remote-data.utils';
+import {
+  AppliedFilter,
+  createSuccessfulRemoteDataObject$,
+  FacetValues,
+  FilterType,
+  SearchConfigurationServiceStub,
+  SearchFilterConfig,
+  SearchFilterServiceStub,
+  SearchServiceStub,
+  SequenceService,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { cold } from 'jasmine-marbles';
 import {

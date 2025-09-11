@@ -7,23 +7,23 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { PaginatedList } from '@dspace/core/data/paginated-list.model';
-import { RelationshipDataService } from '@dspace/core/data/relationship-data.service';
-import { PaginationService } from '@dspace/core/pagination/pagination.service';
-import { Context } from '@dspace/core/shared/context.model';
-import { DSpaceObject } from '@dspace/core/shared/dspace-object.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { Relationship } from '@dspace/core/shared/item-relationships/relationship.model';
-import { RelationshipType } from '@dspace/core/shared/item-relationships/relationship-type.model';
-import { ListableObject } from '@dspace/core/shared/object-collection/listable-object.model';
 import {
+  Context,
+  DSpaceObject,
   getFirstSucceededRemoteData,
   getRemoteDataPayload,
-} from '@dspace/core/shared/operators';
-import { RelationshipOptions } from '@dspace/core/shared/relationship-options.model';
-import { SearchObjects } from '@dspace/core/shared/search/models/search-objects.model';
-import { SearchResult } from '@dspace/core/shared/search/models/search-result.model';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+  Item,
+  ListableObject,
+  PaginatedList,
+  PaginationService,
+  Relationship,
+  RelationshipDataService,
+  RelationshipOptions,
+  RelationshipType,
+  SearchObjects,
+  SearchResult,
+} from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import {

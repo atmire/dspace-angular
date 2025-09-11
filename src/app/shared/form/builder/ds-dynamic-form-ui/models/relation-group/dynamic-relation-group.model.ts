@@ -1,9 +1,11 @@
-import { FormRowModel } from '@dspace/core/config/models/config-submission-form.model';
-import { DYNAMIC_FORM_CONTROL_TYPE_RELATION_GROUP } from '@dspace/core/shared/form/ds-dynamic-form-constants';
+import {
+  DYNAMIC_FORM_CONTROL_TYPE_RELATION_GROUP,
+  FormRowModel,
+} from '@dspace/core';
 import {
   isEmpty,
   isNull,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   DynamicFormControlLayout,
   serializable,

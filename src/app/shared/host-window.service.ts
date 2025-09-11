@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import {
   maxMobileWidth,
   WidthCategory,
-} from '@dspace/core/shared/host-window-type';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+} from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import {
   createSelector,
   select,

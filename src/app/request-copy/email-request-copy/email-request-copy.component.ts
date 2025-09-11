@@ -12,8 +12,8 @@ import {
   Output,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RequestCopyEmail } from '@dspace/core/shared/request-copy-email.model';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+import { RequestCopyEmail } from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import {

@@ -1,8 +1,8 @@
-import { MetadataValue } from '@dspace/core/shared/metadata.models';
+import { MetadataValue } from '@dspace/core';
 import {
   isEmpty,
   isNotUndefined,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   DynamicDateControlModel,
   DynamicDatePickerModelConfig,

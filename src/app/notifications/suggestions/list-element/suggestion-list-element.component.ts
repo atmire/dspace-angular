@@ -1,4 +1,3 @@
-
 import {
   Component,
   EventEmitter,
@@ -6,9 +5,11 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { Suggestion } from '@dspace/core/notifications/suggestions/models/suggestion.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { isNotEmpty } from '@dspace/shared/utils/empty.util';
+import {
+  Item,
+  Suggestion,
+} from '@dspace/core';
+import { isNotEmpty } from '@dspace/utils';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { fadeIn } from '../../../shared/animations/fade';

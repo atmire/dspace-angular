@@ -14,26 +14,24 @@ import {
   ActivatedRoute,
   Router,
 } from '@angular/router';
-import { NotifyInfoService } from '@dspace/core/coar-notify/notify-info/notify-info.service';
-import { AuthorizationDataService } from '@dspace/core/data/feature-authorization/authorization-data.service';
-import { ItemDataService } from '@dspace/core/data/item-data.service';
-import { SignpostingDataService } from '@dspace/core/data/signposting-data.service';
-import { SignpostingLink } from '@dspace/core/data/signposting-links.model';
 import {
-  LinkDefinition,
-  LinkHeadService,
-} from '@dspace/core/services/link-head.service';
-import { ServerResponseService } from '@dspace/core/services/server-response.service';
-import { Item } from '@dspace/core/shared/item.model';
-import { ActivatedRouteStub } from '@dspace/core/testing/active-router.stub';
-import { TranslateLoaderMock } from '@dspace/core/testing/translate-loader.mock';
-import { createPaginatedList } from '@dspace/core/testing/utils.test';
-import {
+  ActivatedRouteStub,
+  AuthorizationDataService,
   createFailedRemoteDataObject$,
+  createPaginatedList,
   createPendingRemoteDataObject$,
   createSuccessfulRemoteDataObject,
   createSuccessfulRemoteDataObject$,
-} from '@dspace/core/utilities/remote-data.utils';
+  Item,
+  ItemDataService,
+  LinkHeadService,
+  LinkTagDefinition,
+  NotifyInfoService,
+  ServerResponseService,
+  SignpostingDataService,
+  SignpostingLink,
+  TranslateLoaderMock,
+} from '@dspace/core';
 import {
   TranslateLoader,
   TranslateModule,
@@ -206,7 +204,7 @@ describe('ItemPageComponent', () => {
 
       // Check if linkHeadService.addTag() was called with the correct arguments
       expect(linkHeadService.addTag).toHaveBeenCalledTimes(mockSignpostingLinks.length + getCoarLdnLocalInboxUrls.length);
-      let expected: LinkDefinition = mockSignpostingLinks[0] as LinkDefinition;
+      let expected: LinkTagDefinition = mockSignpostingLinks[0] as LinkTagDefinition;
       expect(linkHeadService.addTag).toHaveBeenCalledWith(expected);
       expected = {
         href: 'http://test2.org',

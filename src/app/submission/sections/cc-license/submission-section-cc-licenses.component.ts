@@ -8,29 +8,27 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ConfigurationDataService } from '@dspace/core/data/configuration-data.service';
-import { FindListOptions } from '@dspace/core/data/find-list-options.model';
-import { JsonPatchOperationPathCombiner } from '@dspace/core/json-patch/builder/json-patch-operation-path-combiner';
-import { JsonPatchOperationsBuilder } from '@dspace/core/json-patch/builder/json-patch-operations-builder';
 import {
+  ConfigurationDataService,
+  Field,
+  FindListOptions,
   getFirstCompletedRemoteData,
   getFirstSucceededRemoteDataPayload,
   getRemoteDataPayload,
-} from '@dspace/core/shared/operators';
-import {
-  Field,
+  JsonPatchOperationPathCombiner,
+  JsonPatchOperationsBuilder,
   Option,
+  SectionsType,
   SubmissionCcLicence,
-} from '@dspace/core/submission/models/submission-cc-license.model';
-import { WorkspaceitemSectionCcLicenseObject } from '@dspace/core/submission/models/workspaceitem-section-cc-license.model';
-import { SectionsType } from '@dspace/core/submission/sections-type';
-import { SubmissionCcLicenseDataService } from '@dspace/core/submission/submission-cc-license-data.service';
-import { SubmissionCcLicenseUrlDataService } from '@dspace/core/submission/submission-cc-license-url-data.service';
+  SubmissionCcLicenseDataService,
+  SubmissionCcLicenseUrlDataService,
+  WorkspaceitemSectionCcLicenseObject,
+} from '@dspace/core';
 import {
   hasNoValue,
   hasValue,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   NgbDropdownModule,
   NgbModal,

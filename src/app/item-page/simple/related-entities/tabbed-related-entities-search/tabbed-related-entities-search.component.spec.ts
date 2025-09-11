@@ -9,8 +9,10 @@ import {
   ActivatedRoute,
   Router,
 } from '@angular/router';
-import { Item } from '@dspace/core/shared/item.model';
-import { RouterMock } from '@dspace/core/testing/router.mock';
+import {
+  Item,
+  RouterMock,
+} from '@dspace/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';

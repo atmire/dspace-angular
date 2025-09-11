@@ -12,18 +12,20 @@ import {
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { APP_CONFIG } from '@dspace/config/app-config.interface';
-import { RemoteDataBuildService } from '@dspace/core/cache/builders/remote-data-build.service';
-import { buildPaginatedList } from '@dspace/core/data/paginated-list.model';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { RequestEntryState } from '@dspace/core/data/request-entry-state.model';
-import { PageInfo } from '@dspace/core/shared/page-info.model';
-import { SearchFilterConfig } from '@dspace/core/shared/search/models/search-filter-config.model';
-import { VocabularyEntryDetail } from '@dspace/core/submission/vocabularies/models/vocabulary-entry-detail.model';
-import { VocabularyService } from '@dspace/core/submission/vocabularies/vocabulary.service';
-import { RouterStub } from '@dspace/core/testing/router.stub';
-import { SearchConfigurationServiceStub } from '@dspace/core/testing/search-configuration-service.stub';
-import { SearchServiceStub } from '@dspace/core/testing/search-service.stub';
+import { APP_CONFIG } from '@dspace/config';
+import {
+  buildPaginatedList,
+  PageInfo,
+  RemoteData,
+  RemoteDataBuildService,
+  RequestEntryState,
+  RouterStub,
+  SearchConfigurationServiceStub,
+  SearchFilterConfig,
+  SearchServiceStub,
+  VocabularyEntryDetail,
+  VocabularyService,
+} from '@dspace/core';
 import {
   NgbModal,
   NgbModule,

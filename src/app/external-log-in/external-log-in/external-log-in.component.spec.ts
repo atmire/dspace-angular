@@ -7,14 +7,16 @@ import {
   TestBed,
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { authReducer } from '@dspace/core/auth/auth.reducer';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { AuthMethod } from '@dspace/core/auth/models/auth.method';
-import { AuthMethodType } from '@dspace/core/auth/models/auth.method-type';
-import { AuthRegistrationType } from '@dspace/core/auth/models/auth.registration-type';
-import { MetadataValue } from '@dspace/core/shared/metadata.models';
-import { Registration } from '@dspace/core/shared/registration.model';
-import { AuthServiceMock } from '@dspace/core/testing/auth.service.mock';
+import {
+  AuthMethod,
+  AuthMethodType,
+  authReducer,
+  AuthRegistrationType,
+  AuthService,
+  AuthServiceMock,
+  MetadataValue,
+  Registration,
+} from '@dspace/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { StoreModule } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';

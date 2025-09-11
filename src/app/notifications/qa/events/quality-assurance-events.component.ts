@@ -9,35 +9,31 @@ import {
   RouterLink,
 } from '@angular/router';
 import {
+  AuthorizationDataService,
+  FeatureID,
+  FindListOptions,
+  followLink,
+  getFirstCompletedRemoteData,
+  getItemPageRoute,
+  getRemoteDataPayload,
+  Item,
+  ItemDataService,
+  ItemSearchResult,
+  Metadata,
+  NoContent,
+  NotificationsService,
+  PaginatedList,
+  PaginationComponentOptions,
+  PaginationService,
+  QualityAssuranceEventData,
+  QualityAssuranceEventDataService,
+  QualityAssuranceEventObject,
+  RemoteData,
   SortDirection,
   SortOptions,
-} from '@dspace/core/cache/models/sort-options.model';
-import { AuthorizationDataService } from '@dspace/core/data/feature-authorization/authorization-data.service';
-import { FeatureID } from '@dspace/core/data/feature-authorization/feature-id';
-import { FindListOptions } from '@dspace/core/data/find-list-options.model';
-import { ItemDataService } from '@dspace/core/data/item-data.service';
-import { PaginatedList } from '@dspace/core/data/paginated-list.model';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { QualityAssuranceEventDataService } from '@dspace/core/notifications/qa/events/quality-assurance-event-data.service';
-import {
-  QualityAssuranceEventObject,
   SourceQualityAssuranceEventMessageObject,
-} from '@dspace/core/notifications/qa/models/quality-assurance-event.model';
-import { QualityAssuranceEventData } from '@dspace/core/notifications/qa/models/quality-assurance-event-data.model';
-import { PaginationService } from '@dspace/core/pagination/pagination.service';
-import { PaginationComponentOptions } from '@dspace/core/pagination/pagination-component-options.model';
-import { getItemPageRoute } from '@dspace/core/router/utils/dso-route.utils';
-import { followLink } from '@dspace/core/shared/follow-link-config.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { Metadata } from '@dspace/core/shared/metadata.utils';
-import { NoContent } from '@dspace/core/shared/NoContent.model';
-import { ItemSearchResult } from '@dspace/core/shared/object-collection/item-search-result.model';
-import {
-  getFirstCompletedRemoteData,
-  getRemoteDataPayload,
-} from '@dspace/core/shared/operators';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+} from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import {
   NgbModal,
   NgbTooltipModule,

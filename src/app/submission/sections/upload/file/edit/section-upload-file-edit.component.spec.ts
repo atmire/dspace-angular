@@ -15,18 +15,20 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { APP_CONFIG } from '@dspace/config/app-config.interface';
-import { APP_DATA_SERVICES_MAP } from '@dspace/core/data-services-map-type';
-import { JsonPatchOperationPathCombiner } from '@dspace/core/json-patch/builder/json-patch-operation-path-combiner';
-import { JsonPatchOperationsBuilder } from '@dspace/core/json-patch/builder/json-patch-operations-builder';
-import { FormFieldMetadataValueObject } from '@dspace/core/shared/form/models/form-field-metadata-value.model';
-import { SubmissionJsonPatchOperationsService } from '@dspace/core/submission/submission-json-patch-operations.service';
-import { getMockSectionUploadService } from '@dspace/core/testing/section-upload.service.mock';
-import { SubmissionJsonPatchOperationsServiceStub } from '@dspace/core/testing/submission-json-patch-operations-service.stub';
-import { SubmissionServiceStub } from '@dspace/core/testing/submission-service.stub';
-import { createTestComponent } from '@dspace/core/testing/utils.test';
-import { XSRFService } from '@dspace/core/xsrf/xsrf.service';
-import { dateToISOFormat } from '@dspace/shared/utils/date.util';
+import { APP_CONFIG } from '@dspace/config';
+import {
+  APP_DATA_SERVICES_MAP,
+  createTestComponent,
+  FormFieldMetadataValueObject,
+  getMockSectionUploadService,
+  JsonPatchOperationPathCombiner,
+  JsonPatchOperationsBuilder,
+  SubmissionJsonPatchOperationsService,
+  SubmissionJsonPatchOperationsServiceStub,
+  SubmissionServiceStub,
+  XSRFService,
+} from '@dspace/core';
+import { dateToISOFormat } from '@dspace/utils';
 import {
   NgbActiveModal,
   NgbModal,

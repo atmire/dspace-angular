@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 import {
   hasValue,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   NgbDropdownModule,
   NgbTooltipModule,

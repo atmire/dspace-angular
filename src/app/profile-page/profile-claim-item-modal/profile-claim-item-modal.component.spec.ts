@@ -9,12 +9,14 @@ import {
   ActivatedRoute,
   Router,
 } from '@angular/router';
-import { getItemPageRoute } from '@dspace/core/router/utils/dso-route.utils';
-import { Item } from '@dspace/core/shared/item.model';
-import { ItemSearchResult } from '@dspace/core/shared/object-collection/item-search-result.model';
-import { SearchObjects } from '@dspace/core/shared/search/models/search-objects.model';
-import { RouterStub } from '@dspace/core/testing/router.stub';
-import { createSuccessfulRemoteDataObject } from '@dspace/core/utilities/remote-data.utils';
+import {
+  createSuccessfulRemoteDataObject,
+  getItemPageRoute,
+  Item,
+  ItemSearchResult,
+  RouterStub,
+  SearchObjects,
+} from '@dspace/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';

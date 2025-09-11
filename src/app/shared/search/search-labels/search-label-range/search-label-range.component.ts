@@ -9,9 +9,11 @@ import {
   Router,
   RouterLink,
 } from '@angular/router';
-import { PaginationService } from '@dspace/core/pagination/pagination.service';
-import { currentPath } from '@dspace/core/router/utils/route.utils';
-import { AppliedFilter } from '@dspace/core/shared/search/models/applied-filter.model';
+import {
+  AppliedFilter,
+  currentPath,
+  PaginationService,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 

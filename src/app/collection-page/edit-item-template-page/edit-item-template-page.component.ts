@@ -7,12 +7,14 @@ import {
   ActivatedRoute,
   RouterLink,
 } from '@angular/router';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { ItemTemplateDataService } from '@dspace/core/data/item-template-data.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { Collection } from '@dspace/core/shared/collection.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { getFirstSucceededRemoteDataPayload } from '@dspace/core/shared/operators';
+import {
+  Collection,
+  DSONameService,
+  getFirstSucceededRemoteDataPayload,
+  Item,
+  ItemTemplateDataService,
+  RemoteData,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import {

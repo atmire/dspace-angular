@@ -4,15 +4,13 @@ import {
   OnInit,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ItemRequest } from '@dspace/core/shared/item-request.model';
+import { ItemRequest } from '@dspace/core';
 import {
   dateToString,
-  stringToNgbDateStruct,
-} from '@dspace/shared/utils/date.util';
-import {
   hasValue,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+  stringToNgbDateStruct,
+} from '@dspace/utils';
 import { TranslateModule } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';

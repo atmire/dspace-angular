@@ -11,29 +11,29 @@ import {
   Router,
   RouterLink,
 } from '@angular/router';
-import { LinkService } from '@dspace/core/cache/builders/link.service';
-import { EntityTypeDataService } from '@dspace/core/data/entity-type-data.service';
-import { ItemDataService } from '@dspace/core/data/item-data.service';
-import { ObjectUpdatesService } from '@dspace/core/data/object-updates/object-updates.service';
-import { RelationshipDataService } from '@dspace/core/data/relationship-data.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { followLink } from '@dspace/core/shared/follow-link-config.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { Relationship } from '@dspace/core/shared/item-relationships/relationship.model';
-import { RelationshipType } from '@dspace/core/shared/item-relationships/relationship-type.model';
-import { MetadataValue } from '@dspace/core/shared/metadata.models';
-import { NoContent } from '@dspace/core/shared/NoContent.model';
 import {
+  EntityTypeDataService,
+  followLink,
   getFirstCompletedRemoteData,
   getFirstSucceededRemoteData,
   getRemoteDataPayload,
-} from '@dspace/core/shared/operators';
-import { ViewMode } from '@dspace/core/shared/view-mode.model';
+  Item,
+  ItemDataService,
+  LinkService,
+  MetadataValue,
+  NoContent,
+  NotificationsService,
+  ObjectUpdatesService,
+  Relationship,
+  RelationshipDataService,
+  RelationshipType,
+  RemoteData,
+  ViewMode,
+} from '@dspace/core';
 import {
   hasValue,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   NgbModal,
   NgbModalRef,

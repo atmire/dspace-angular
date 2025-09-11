@@ -11,19 +11,19 @@ import {
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { OrcidAuthService } from '@dspace/core/orcid/orcid-auth.service';
-import { ResearcherProfile } from '@dspace/core/profile/model/researcher-profile.model';
-import { NativeWindowService } from '@dspace/core/services/window.service';
-import { Item } from '@dspace/core/shared/item.model';
-import { NativeWindowMockFactory } from '@dspace/core/testing/mock-native-window-ref';
-import { NotificationsServiceStub } from '@dspace/core/testing/notifications-service.stub';
-import { TranslateLoaderMock } from '@dspace/core/testing/translate-loader.mock';
-import { createPaginatedList } from '@dspace/core/testing/utils.test';
 import {
   createFailedRemoteDataObject$,
+  createPaginatedList,
   createSuccessfulRemoteDataObject$,
-} from '@dspace/core/utilities/remote-data.utils';
+  Item,
+  NativeWindowMockFactory,
+  NativeWindowService,
+  NotificationsService,
+  NotificationsServiceStub,
+  OrcidAuthService,
+  ResearcherProfile,
+  TranslateLoaderMock,
+} from '@dspace/core';
 import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import {
   TranslateLoader,

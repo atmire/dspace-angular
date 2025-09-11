@@ -7,12 +7,14 @@ import {
   TestBed,
   waitForAsync,
 } from '@angular/core/testing';
-import { APP_CONFIG } from '@dspace/config/app-config.interface';
-import { BrowseDefinitionDataService } from '@dspace/core/browse/browse-definition-data.service';
-import { APP_DATA_SERVICES_MAP } from '@dspace/core/data-services-map-type';
-import { ITEM } from '@dspace/core/shared/item.resource-type';
-import { BrowseDefinitionDataServiceStub } from '@dspace/core/testing/browse-definition-data-service.stub';
-import { TranslateLoaderMock } from '@dspace/core/testing/translate-loader.mock';
+import { APP_CONFIG } from '@dspace/config';
+import {
+  APP_DATA_SERVICES_MAP,
+  BrowseDefinitionDataService,
+  BrowseDefinitionDataServiceStub,
+  ITEM,
+  TranslateLoaderMock,
+} from '@dspace/core';
 import { Store } from '@ngrx/store';
 import { MockStore } from '@ngrx/store/testing';
 import {
@@ -34,7 +36,7 @@ const mockLabel = 'Test location';
 const mockFields = [mockField];
 
 const mockDataServiceMap: any = new Map([
-  [ITEM.value, () => import('@dspace/core/testing/test-data-service.mock').then(m => m.TestDataService)],
+  [ITEM.value, () => import('../../../../projects/dspace/core/src/lib/testing/test-data-service.mock').then(m => m.TestDataService)],
 ]);
 describe('GeospatialItemPageFieldComponent', () => {
   beforeEach(waitForAsync(() => {

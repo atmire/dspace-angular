@@ -15,25 +15,23 @@ import {
 import {
   APP_CONFIG,
   AppConfig,
-} from '@dspace/config/app-config.interface';
+} from '@dspace/config';
 import {
-  SortDirection,
-  SortOptions,
-} from '@dspace/core/cache/models/sort-options.model';
-import { PaginatedList } from '@dspace/core/data/paginated-list.model';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { PaginationService } from '@dspace/core/pagination/pagination.service';
-import { PaginationComponentOptions } from '@dspace/core/pagination/pagination-component-options.model';
-import { DSpaceObjectType } from '@dspace/core/shared/dspace-object-type.model';
-import {
+  DSpaceObjectType,
   followLink,
   FollowLinkConfig,
-} from '@dspace/core/shared/follow-link-config.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { toDSpaceObjectListRD } from '@dspace/core/shared/operators';
-import { PaginatedSearchOptions } from '@dspace/core/shared/search/models/paginated-search-options.model';
-import { ViewMode } from '@dspace/core/shared/view-mode.model';
-import { setPlaceHolderAttributes } from '@dspace/shared/utils/object-list-utils';
+  Item,
+  PaginatedList,
+  PaginatedSearchOptions,
+  PaginationComponentOptions,
+  PaginationService,
+  RemoteData,
+  SortDirection,
+  SortOptions,
+  toDSpaceObjectListRD,
+  ViewMode,
+} from '@dspace/core';
+import { setPlaceHolderAttributes } from '@dspace/utils';
 import { TranslateModule } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 

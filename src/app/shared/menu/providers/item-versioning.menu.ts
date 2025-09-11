@@ -6,9 +6,11 @@
  * http://www.dspace.org/license/
  */
 import { Injectable } from '@angular/core';
-import { AuthorizationDataService } from '@dspace/core/data/feature-authorization/authorization-data.service';
-import { FeatureID } from '@dspace/core/data/feature-authorization/feature-id';
-import { Item } from '@dspace/core/shared/item.model';
+import {
+  AuthorizationDataService,
+  FeatureID,
+  Item,
+} from '@dspace/core';
 import {
   combineLatest,
   Observable,

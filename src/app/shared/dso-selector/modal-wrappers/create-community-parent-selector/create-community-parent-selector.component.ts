@@ -9,14 +9,14 @@ import {
   Router,
 } from '@angular/router';
 import {
+  AuthorizationDataService,
+  DSpaceObject,
+  DSpaceObjectType,
+  FeatureID,
   SortDirection,
   SortOptions,
-} from '@dspace/core/cache/models/sort-options.model';
-import { AuthorizationDataService } from '@dspace/core/data/feature-authorization/authorization-data.service';
-import { FeatureID } from '@dspace/core/data/feature-authorization/feature-id';
-import { DSpaceObject } from '@dspace/core/shared/dspace-object.model';
-import { DSpaceObjectType } from '@dspace/core/shared/dspace-object-type.model';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+} from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { Observable } from 'rxjs';

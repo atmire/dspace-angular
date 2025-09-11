@@ -1,4 +1,3 @@
-
 import {
   ChangeDetectorRef,
   Component,
@@ -13,21 +12,21 @@ import {
   UntypedFormGroup,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ConfigurationDataService } from '@dspace/core/data/configuration-data.service';
-import { ScriptDataService } from '@dspace/core/data/processes/script-data.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { Process } from '@dspace/core/processes/process.model';
-import { ConfigurationProperty } from '@dspace/core/shared/configuration-property.model';
 import {
+  ConfigurationDataService,
+  ConfigurationProperty,
   getFirstCompletedRemoteData,
   getFirstSucceededRemoteDataPayload,
-} from '@dspace/core/shared/operators';
+  NotificationsService,
+  Process,
+  RemoteData,
+  ScriptDataService,
+} from '@dspace/core';
 import {
   hasValue,
   isEmpty,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   TranslateModule,
   TranslateService,

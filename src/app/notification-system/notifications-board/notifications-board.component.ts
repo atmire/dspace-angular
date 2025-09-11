@@ -8,16 +8,18 @@ import {
   OnInit,
   ViewEncapsulation,
 } from '@angular/core';
-import { INotificationBoardOptions } from '@dspace/config/notifications-config.interfaces';
-import { CoreState } from '@dspace/core/core-state.model';
-import { INotification } from '@dspace/core/notification-system/models/notification.model';
-import { NotificationsState } from '@dspace/core/notification-system/notifications.reducers';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { notificationsStateSelector } from '@dspace/core/notification-system/selectors';
+import { INotificationBoardOptions } from '@dspace/config';
+import {
+  CoreState,
+  INotification,
+  NotificationsService,
+  NotificationsState,
+  notificationsStateSelector,
+} from '@dspace/core';
 import {
   hasNoValue,
   isNotEmptyOperator,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   select,
   Store,

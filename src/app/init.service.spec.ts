@@ -9,17 +9,21 @@ import {
   ActivatedRoute,
   Router,
 } from '@angular/router';
-import { APP_CONFIG } from '@dspace/config/app-config.interface';
-import { authReducer } from '@dspace/core/auth/auth.reducer';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { CorrelationIdService } from '@dspace/core/correlation-id/correlation-id.service';
-import { LocaleService } from '@dspace/core/locale/locale.service';
-import { RouteService } from '@dspace/core/services/route.service';
-import { MockActivatedRoute } from '@dspace/core/testing/active-router.mock';
-import { AngularticsProviderMock } from '@dspace/core/testing/angulartics-provider.service.mock';
-import { AuthServiceMock } from '@dspace/core/testing/auth.service.mock';
-import { RouterMock } from '@dspace/core/testing/router.mock';
-import { TranslateLoaderMock } from '@dspace/core/testing/translate-loader.mock';
+import { APP_CONFIG } from '@dspace/config';
+import {
+  AngularticsProviderMock,
+  authReducer,
+  AuthService,
+  AuthServiceMock,
+  CorrelationIdService,
+  HeadTagService,
+  HeadTagServiceMock,
+  LocaleService,
+  MockActivatedRoute,
+  RouterMock,
+  RouteService,
+  TranslateLoaderMock,
+} from '@dspace/core';
 import {
   Store,
   StoreModule,
@@ -29,6 +33,7 @@ import {
   TranslateLoader,
   TranslateModule,
 } from '@ngx-translate/core';
+import { getTestScheduler } from 'jasmine-marbles';
 
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
@@ -43,9 +48,6 @@ import { Angulartics2DSpace } from './statistics/angulartics/dspace-provider';
 import objectContaining = jasmine.objectContaining;
 import createSpyObj = jasmine.createSpyObj;
 import SpyObj = jasmine.SpyObj;
-import { HeadTagService } from '@dspace/core/metadata/head-tag.service';
-import { HeadTagServiceMock } from '@dspace/core/testing/head-tag-service.mock';
-import { getTestScheduler } from 'jasmine-marbles';
 
 let spy: SpyObj<any>;
 

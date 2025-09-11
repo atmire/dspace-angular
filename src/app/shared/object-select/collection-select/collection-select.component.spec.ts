@@ -6,20 +6,22 @@ import {
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ConfigurationDataService } from '@dspace/core/data/configuration-data.service';
-import { AuthorizationDataService } from '@dspace/core/data/feature-authorization/authorization-data.service';
-import { GroupDataService } from '@dspace/core/eperson/group-data.service';
-import { PaginationService } from '@dspace/core/pagination/pagination.service';
-import { PaginationComponentOptions } from '@dspace/core/pagination/pagination-component-options.model';
-import { LinkHeadService } from '@dspace/core/services/link-head.service';
-import { Collection } from '@dspace/core/shared/collection.model';
-import { ConfigurationProperty } from '@dspace/core/shared/configuration-property.model';
-import { HostWindowServiceStub } from '@dspace/core/testing/host-window-service.stub';
-import { ObjectSelectServiceStub } from '@dspace/core/testing/object-select-service.stub';
-import { PaginationServiceStub } from '@dspace/core/testing/pagination-service.stub';
-import { SearchConfigurationServiceStub } from '@dspace/core/testing/search-configuration-service.stub';
-import { createPaginatedList } from '@dspace/core/testing/utils.test';
-import { createSuccessfulRemoteDataObject$ } from '@dspace/core/utilities/remote-data.utils';
+import {
+  AuthorizationDataService,
+  Collection,
+  ConfigurationDataService,
+  ConfigurationProperty,
+  createPaginatedList,
+  createSuccessfulRemoteDataObject$,
+  GroupDataService,
+  HostWindowServiceStub,
+  LinkHeadService,
+  ObjectSelectServiceStub,
+  PaginationComponentOptions,
+  PaginationService,
+  PaginationServiceStub,
+  SearchConfigurationServiceStub,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 

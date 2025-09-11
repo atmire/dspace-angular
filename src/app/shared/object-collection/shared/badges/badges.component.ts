@@ -1,10 +1,11 @@
-
 import {
   Component,
   Input,
 } from '@angular/core';
-import { Context } from '@dspace/core/shared/context.model';
-import { DSpaceObject } from '@dspace/core/shared/dspace-object.model';
+import {
+  Context,
+  DSpaceObject,
+} from '@dspace/core';
 
 import { ThemedAccessStatusBadgeComponent } from './access-status-badge/themed-access-status-badge.component';
 import { ThemedMyDSpaceStatusBadgeComponent } from './my-dspace-status-badge/themed-my-dspace-status-badge.component';

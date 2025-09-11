@@ -5,8 +5,10 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { VocabularyEntryDetail } from '@dspace/core/submission/vocabularies/models/vocabulary-entry-detail.model';
-import { VocabularyOptions } from '@dspace/core/submission/vocabularies/models/vocabulary-options.model';
+import {
+  VocabularyEntryDetail,
+  VocabularyOptions,
+} from '@dspace/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   TranslateModule,

@@ -7,19 +7,21 @@ import {
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
-import { BitstreamDataService } from '@dspace/core/data/bitstream-data.service';
-import { CollectionDataService } from '@dspace/core/data/collection-data.service';
-import { ProcessDataService } from '@dspace/core/data/processes/process-data.service';
-import { ScriptDataService } from '@dspace/core/data/processes/script-data.service';
-import { RequestService } from '@dspace/core/data/request.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { Process } from '@dspace/core/processes/process.model';
-import { Bitstream } from '@dspace/core/shared/bitstream.model';
-import { Collection } from '@dspace/core/shared/collection.model';
-import { ContentSource } from '@dspace/core/shared/content-source.model';
-import { ContentSourceSetSerializer } from '@dspace/core/shared/content-source-set-serializer';
-import { NotificationsServiceStub } from '@dspace/core/testing/notifications-service.stub';
-import { createSuccessfulRemoteDataObject$ } from '@dspace/core/utilities/remote-data.utils';
+import {
+  Bitstream,
+  BitstreamDataService,
+  Collection,
+  CollectionDataService,
+  ContentSource,
+  ContentSourceSetSerializer,
+  createSuccessfulRemoteDataObject$,
+  NotificationsService,
+  NotificationsServiceStub,
+  Process,
+  ProcessDataService,
+  RequestService,
+  ScriptDataService,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { getTestScheduler } from 'jasmine-marbles';
 import { of } from 'rxjs';

@@ -10,25 +10,27 @@ import {
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { APP_CONFIG } from '@dspace/config/app-config.interface';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { LinkService } from '@dspace/core/cache/builders/link.service';
-import { RemoteDataBuildService } from '@dspace/core/cache/builders/remote-data-build.service';
-import { ObjectCacheService } from '@dspace/core/cache/object-cache.service';
-import { BitstreamDataService } from '@dspace/core/data/bitstream-data.service';
-import { BitstreamFormatDataService } from '@dspace/core/data/bitstream-format-data.service';
-import { CommunityDataService } from '@dspace/core/data/community-data.service';
-import { DefaultChangeAnalyzer } from '@dspace/core/data/default-change-analyzer.service';
-import { DSOChangeAnalyzer } from '@dspace/core/data/dso-change-analyzer.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { Community } from '@dspace/core/shared/community.model';
-import { HALEndpointService } from '@dspace/core/shared/hal-endpoint.service';
-import { CommunitySearchResult } from '@dspace/core/shared/object-collection/community-search-result.model';
-import { UUIDService } from '@dspace/core/shared/uuid.service';
-import { ActivatedRouteStub } from '@dspace/core/testing/active-router.stub';
-import { AuthServiceMock } from '@dspace/core/testing/auth.service.mock';
-import { StoreMock } from '@dspace/core/testing/store.mock';
-import { XSRFService } from '@dspace/core/xsrf/xsrf.service';
+import { APP_CONFIG } from '@dspace/config';
+import {
+  ActivatedRouteStub,
+  AuthService,
+  AuthServiceMock,
+  BitstreamDataService,
+  BitstreamFormatDataService,
+  Community,
+  CommunityDataService,
+  CommunitySearchResult,
+  DefaultChangeAnalyzer,
+  DSOChangeAnalyzer,
+  HALEndpointService,
+  LinkService,
+  NotificationsService,
+  ObjectCacheService,
+  RemoteDataBuildService,
+  StoreMock,
+  UUIDService,
+  XSRFService,
+} from '@dspace/core';
 import { Store } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';

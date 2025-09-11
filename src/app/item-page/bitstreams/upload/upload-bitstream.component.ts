@@ -10,26 +10,26 @@ import {
   ActivatedRoute,
   Router,
 } from '@angular/router';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { BundleDataService } from '@dspace/core/data/bundle-data.service';
-import { ItemDataService } from '@dspace/core/data/item-data.service';
-import { PaginatedList } from '@dspace/core/data/paginated-list.model';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { RequestService } from '@dspace/core/data/request.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { getBitstreamModuleRoute } from '@dspace/core/router/core-routing-paths';
-import { Bundle } from '@dspace/core/shared/bundle.model';
-import { Item } from '@dspace/core/shared/item.model';
 import {
+  AuthService,
+  Bundle,
+  BundleDataService,
+  DSONameService,
+  getBitstreamModuleRoute,
   getFirstCompletedRemoteData,
   getFirstSucceededRemoteDataPayload,
-} from '@dspace/core/shared/operators';
+  Item,
+  ItemDataService,
+  NotificationsService,
+  PaginatedList,
+  RemoteData,
+  RequestService,
+} from '@dspace/core';
 import {
   hasValue,
   isEmpty,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   TranslateModule,
   TranslateService,

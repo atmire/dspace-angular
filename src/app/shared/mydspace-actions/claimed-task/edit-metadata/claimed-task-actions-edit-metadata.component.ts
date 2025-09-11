@@ -7,8 +7,10 @@ import {
   Router,
   RouterLink,
 } from '@angular/router';
-import { RequestService } from '@dspace/core/data/request.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
+import {
+  NotificationsService,
+  RequestService,
+} from '@dspace/core';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import {
   TranslateModule,

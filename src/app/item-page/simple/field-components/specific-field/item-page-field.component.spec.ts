@@ -9,20 +9,20 @@ import {
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
-import { APP_CONFIG } from '@dspace/config/app-config.interface';
-import { BrowseService } from '@dspace/core/browse/browse.service';
-import { BrowseDefinitionDataService } from '@dspace/core/browse/browse-definition-data.service';
-import { Item } from '@dspace/core/shared/item.model';
-import { MathService } from '@dspace/core/shared/math.service';
+import { APP_CONFIG } from '@dspace/config';
 import {
+  BrowseDefinitionDataService,
+  BrowseDefinitionDataServiceStub,
+  BrowseService,
+  BrowseServiceStub,
+  createPaginatedList,
+  createSuccessfulRemoteDataObject$,
+  Item,
+  MathService,
   MetadataMap,
   MetadataValue,
-} from '@dspace/core/shared/metadata.models';
-import { BrowseDefinitionDataServiceStub } from '@dspace/core/testing/browse-definition-data-service.stub';
-import { BrowseServiceStub } from '@dspace/core/testing/browse-service.stub';
-import { TranslateLoaderMock } from '@dspace/core/testing/translate-loader.mock';
-import { createPaginatedList } from '@dspace/core/testing/utils.test';
-import { createSuccessfulRemoteDataObject$ } from '@dspace/core/utilities/remote-data.utils';
+  TranslateLoaderMock,
+} from '@dspace/core';
 import {
   TranslateLoader,
   TranslateModule,

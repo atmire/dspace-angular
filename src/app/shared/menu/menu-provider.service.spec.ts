@@ -5,7 +5,7 @@ import {
   RouterStateSnapshot,
   UrlSegment,
 } from '@angular/router';
-import { COMMUNITY_MODULE_PATH } from '@dspace/core/router/core-routing-paths';
+import { COMMUNITY_MODULE_PATH } from '@dspace/core';
 import { of } from 'rxjs';
 
 import { MenuService } from './menu.service';

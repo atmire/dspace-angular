@@ -1,11 +1,13 @@
 import { InjectionToken } from '@angular/core';
-import { Context } from '@dspace/core/shared/context.model';
-import { GenericConstructor } from '@dspace/core/shared/generic-constructor';
-import { MetadataRepresentationType } from '@dspace/core/shared/metadata-representation/metadata-representation.model';
+import {
+  Context,
+  GenericConstructor,
+  MetadataRepresentationType,
+} from '@dspace/core';
 import {
   hasNoValue,
   hasValue,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 
 import { OrgUnitItemMetadataListElementComponent } from '../../entity-groups/research-entities/metadata-representations/org-unit/org-unit-item-metadata-list-element.component';
 import { PersonItemMetadataListElementComponent } from '../../entity-groups/research-entities/metadata-representations/person/person-item-metadata-list-element.component';

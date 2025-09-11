@@ -4,15 +4,17 @@ import {
   OnInit,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { IdentifiableDataService } from '@dspace/core/data/base/identifiable-data.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { RequestService } from '@dspace/core/data/request.service';
-import { NotificationOptions } from '@dspace/core/notification-system/models/notification-options.model';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { DSpaceObject } from '@dspace/core/shared/dspace-object.model';
-import { getFirstCompletedRemoteData } from '@dspace/core/shared/operators';
-import { ResourceType } from '@dspace/core/shared/resource-type';
-import { ProcessTaskResponse } from '@dspace/core/tasks/models/process-task-response';
+import {
+  DSpaceObject,
+  getFirstCompletedRemoteData,
+  IdentifiableDataService,
+  NotificationOptions,
+  NotificationsService,
+  ProcessTaskResponse,
+  RemoteData,
+  RequestService,
+  ResourceType,
+} from '@dspace/core';
 import { TranslateService } from '@ngx-translate/core';
 import {
   Observable,

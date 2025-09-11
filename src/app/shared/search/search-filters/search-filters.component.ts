@@ -12,11 +12,13 @@ import {
 import {
   APP_CONFIG,
   AppConfig,
-} from '@dspace/config/app-config.interface';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { currentPath } from '@dspace/core/router/utils/route.utils';
-import { AppliedFilter } from '@dspace/core/shared/search/models/applied-filter.model';
-import { SearchFilterConfig } from '@dspace/core/shared/search/models/search-filter-config.model';
+} from '@dspace/config';
+import {
+  AppliedFilter,
+  currentPath,
+  RemoteData,
+  SearchFilterConfig,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import {

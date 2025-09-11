@@ -8,17 +8,17 @@ import {
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { SubscriptionsDataService } from '@dspace/core/data/subscriptions-data.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { Item } from '@dspace/core/shared/item.model';
-import { ITEM } from '@dspace/core/shared/item.resource-type';
-import { Subscription } from '@dspace/core/shared/subscription.model';
-import { NotificationsServiceStub } from '@dspace/core/testing/notifications-service.stub';
 import {
+  createSuccessfulRemoteDataObject$,
   findByEPersonAndDsoResEmpty,
+  ITEM,
+  Item,
+  NotificationsService,
+  NotificationsServiceStub,
+  Subscription,
   subscriptionMock,
-} from '@dspace/core/testing/subscriptions-data.mock';
-import { createSuccessfulRemoteDataObject$ } from '@dspace/core/utilities/remote-data.utils';
+  SubscriptionsDataService,
+} from '@dspace/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';

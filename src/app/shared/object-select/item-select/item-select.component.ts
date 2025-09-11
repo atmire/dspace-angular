@@ -9,14 +9,16 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { PaginatedList } from '@dspace/core/data/paginated-list.model';
-import { getItemPageRoute } from '@dspace/core/router/utils/dso-route.utils';
-import { Item } from '@dspace/core/shared/item.model';
-import { getAllSucceededRemoteDataPayload } from '@dspace/core/shared/operators';
+import {
+  getAllSucceededRemoteDataPayload,
+  getItemPageRoute,
+  Item,
+  PaginatedList,
+} from '@dspace/core';
 import {
   hasValueOperator,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import { TranslateModule } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';

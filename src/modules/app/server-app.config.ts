@@ -13,31 +13,33 @@ import {
 } from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideServerRendering } from '@angular/ssr';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { AuthRequestService } from '@dspace/core/auth/auth-request.service';
-import { ServerAuthService } from '@dspace/core/auth/server-auth.service';
-import { ServerAuthRequestService } from '@dspace/core/auth/server-auth-request.service';
-import { CookieService } from '@dspace/core/cookies/cookie.service';
-import { OrejimeService } from '@dspace/core/cookies/orejime.service';
-import { ServerCookieService } from '@dspace/core/cookies/server-cookie.service';
-import { ServerOrejimeService } from '@dspace/core/cookies/server-orejime.service';
-import { coreEffects } from '@dspace/core/core.effects';
-import { coreReducers } from '@dspace/core/core.reducers';
-import { CoreState } from '@dspace/core/core-state.model';
-import { ForwardClientIpInterceptor } from '@dspace/core/forward-client-ip/forward-client-ip.interceptor';
-import { LocaleService } from '@dspace/core/locale/locale.service';
-import { ServerLocaleService } from '@dspace/core/locale/server-locale.service';
-import { HardRedirectService } from '@dspace/core/services/hard-redirect.service';
-import { ReferrerService } from '@dspace/core/services/referrer.service';
-import { ServerReferrerService } from '@dspace/core/services/server.referrer.service';
-import { ServerHardRedirectService } from '@dspace/core/services/server-hard-redirect.service';
-import { ServerXhrService } from '@dspace/core/services/server-xhr.service';
-import { MathService } from '@dspace/core/shared/math.service';
-import { ServerMathService } from '@dspace/core/shared/server-math.service';
-import { AngularticsProviderMock } from '@dspace/core/testing/angulartics-provider.service.mock';
-import { Angulartics2Mock } from '@dspace/core/testing/angulartics2.service.mock';
-import { ServerXSRFService } from '@dspace/core/xsrf/server-xsrf.service';
-import { XSRFService } from '@dspace/core/xsrf/xsrf.service';
+import {
+  Angulartics2Mock,
+  AngularticsProviderMock,
+  AuthRequestService,
+  AuthService,
+  CookieService,
+  coreEffects,
+  coreReducers,
+  CoreState,
+  ForwardClientIpInterceptor,
+  HardRedirectService,
+  LocaleService,
+  MathService,
+  OrejimeService,
+  ReferrerService,
+  ServerAuthRequestService,
+  ServerAuthService,
+  ServerCookieService,
+  ServerHardRedirectService,
+  ServerLocaleService,
+  ServerMathService,
+  ServerOrejimeService,
+  ServerReferrerService,
+  ServerXhrService,
+  ServerXSRFService,
+  XSRFService,
+} from '@dspace/core';
 import { EffectsModule } from '@ngrx/effects';
 import {
   Action,

@@ -9,8 +9,10 @@ import {
   RouterLink,
   RouterOutlet,
 } from '@angular/router';
-import { getCommunityPageRoute } from '@dspace/core/router/utils/dso-route.utils';
-import { Community } from '@dspace/core/shared/community.model';
+import {
+  Community,
+  getCommunityPageRoute,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { EditComColPageComponent } from '../../shared/comcol/comcol-forms/edit-comcol-page/edit-comcol-page.component';

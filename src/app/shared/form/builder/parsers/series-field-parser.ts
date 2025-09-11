@@ -1,5 +1,5 @@
 import { Inject } from '@angular/core';
-import { FormFieldModel } from '@dspace/core/shared/form/models/form-field.model';
+import { FormFieldModel } from '@dspace/core';
 import { TranslateService } from '@ngx-translate/core';
 
 import { ConcatFieldParser } from './concat-field-parser';

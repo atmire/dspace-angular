@@ -17,23 +17,23 @@ import {
 import {
   APP_CONFIG,
   AppConfig,
-} from '@dspace/config/app-config.interface';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { BrowseService } from '@dspace/core/browse/browse.service';
+} from '@dspace/config';
 import {
+  BrowseService,
+  DSONameService,
+  DSpaceObjectDataService,
+  Item,
+  PaginationComponentOptions,
+  PaginationService,
+  RemoteData,
   SortDirection,
   SortOptions,
-} from '@dspace/core/cache/models/sort-options.model';
-import { DSpaceObjectDataService } from '@dspace/core/data/dspace-object-data.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { PaginationService } from '@dspace/core/pagination/pagination.service';
-import { PaginationComponentOptions } from '@dspace/core/pagination/pagination-component-options.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { isValidDate } from '@dspace/shared/utils/date.util';
+} from '@dspace/core';
 import {
   hasValue,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+  isValidDate,
+} from '@dspace/utils';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   combineLatest as observableCombineLatest,

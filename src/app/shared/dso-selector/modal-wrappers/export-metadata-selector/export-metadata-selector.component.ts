@@ -6,24 +6,24 @@ import {
   ActivatedRoute,
   Router,
 } from '@angular/router';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { AuthorizationDataService } from '@dspace/core/data/feature-authorization/authorization-data.service';
-import { FeatureID } from '@dspace/core/data/feature-authorization/feature-id';
 import {
+  AuthorizationDataService,
+  Collection,
+  Community,
+  createSuccessfulRemoteDataObject,
+  DSONameService,
+  DSpaceObject,
+  DSpaceObjectType,
+  FeatureID,
+  getFirstCompletedRemoteData,
   METADATA_EXPORT_SCRIPT_NAME,
+  NotificationsService,
+  Process,
+  ProcessParameter,
+  RemoteData,
   ScriptDataService,
-} from '@dspace/core/data/processes/script-data.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { Process } from '@dspace/core/processes/process.model';
-import { ProcessParameter } from '@dspace/core/processes/process-parameter.model';
-import { Collection } from '@dspace/core/shared/collection.model';
-import { Community } from '@dspace/core/shared/community.model';
-import { DSpaceObject } from '@dspace/core/shared/dspace-object.model';
-import { DSpaceObjectType } from '@dspace/core/shared/dspace-object-type.model';
-import { getFirstCompletedRemoteData } from '@dspace/core/shared/operators';
-import { createSuccessfulRemoteDataObject } from '@dspace/core/utilities/remote-data.utils';
-import { isNotEmpty } from '@dspace/shared/utils/empty.util';
+} from '@dspace/core';
+import { isNotEmpty } from '@dspace/utils';
 import {
   NgbActiveModal,
   NgbModal,

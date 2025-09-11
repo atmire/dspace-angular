@@ -5,17 +5,17 @@ import {
 } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { RequestService } from '@dspace/core/data/request.service';
-import { SystemWideAlertDataService } from '@dspace/core/data/system-wide-alert-data.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { SystemWideAlert } from '@dspace/core/shared/system-wide-alert.model';
-import { NotificationsServiceStub } from '@dspace/core/testing/notifications-service.stub';
-import { RouterStub } from '@dspace/core/testing/router.stub';
-import { createPaginatedList } from '@dspace/core/testing/utils.test';
 import {
   createFailedRemoteDataObject$,
+  createPaginatedList,
   createSuccessfulRemoteDataObject$,
-} from '@dspace/core/utilities/remote-data.utils';
+  NotificationsService,
+  NotificationsServiceStub,
+  RequestService,
+  RouterStub,
+  SystemWideAlert,
+  SystemWideAlertDataService,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   utcToZonedTime,

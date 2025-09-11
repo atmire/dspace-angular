@@ -4,26 +4,28 @@ import {
   Component,
   Inject,
 } from '@angular/core';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { AccessConditionOption } from '@dspace/core/config/models/config-access-condition-option.model';
-import { SubmissionFormsModel } from '@dspace/core/config/models/config-submission-forms.model';
-import { SubmissionUploadsModel } from '@dspace/core/config/models/config-submission-uploads.model';
-import { SubmissionUploadsConfigDataService } from '@dspace/core/config/submission-uploads-config-data.service';
-import { CollectionDataService } from '@dspace/core/data/collection-data.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { GroupDataService } from '@dspace/core/eperson/group-data.service';
-import { Group } from '@dspace/core/eperson/models/group.model';
-import { ResourcePolicyDataService } from '@dspace/core/resource-policy/resource-policy-data.service';
-import { Collection } from '@dspace/core/shared/collection.model';
-import { followLink } from '@dspace/core/shared/follow-link-config.model';
-import { getFirstSucceededRemoteData } from '@dspace/core/shared/operators';
-import { WorkspaceitemSectionUploadObject } from '@dspace/core/submission/models/workspaceitem-section-upload.model';
+import {
+  AccessConditionOption,
+  Collection,
+  CollectionDataService,
+  DSONameService,
+  followLink,
+  getFirstSucceededRemoteData,
+  Group,
+  GroupDataService,
+  RemoteData,
+  ResourcePolicyDataService,
+  SubmissionFormsModel,
+  SubmissionUploadsConfigDataService,
+  SubmissionUploadsModel,
+  WorkspaceitemSectionUploadObject,
+} from '@dspace/core';
 import {
   hasValue,
   isNotEmpty,
   isNotUndefined,
   isUndefined,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   BehaviorSubject,

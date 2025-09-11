@@ -1,6 +1,8 @@
 import { Route } from '@angular/router';
-import { i18nBreadcrumbResolver } from '@dspace/core/breadcrumbs/i18n-breadcrumb.resolver';
-import { statisticsAdministratorGuard } from '@dspace/core/data/feature-authorization/feature-authorization-guard/statistics-administrator.guard';
+import {
+  i18nBreadcrumbResolver,
+  statisticsAdministratorGuard,
+} from '@dspace/core';
 
 import { collectionPageResolver } from '../collection-page/collection-page.resolver';
 import { communityPageResolver } from '../community-page/community-page.resolver';

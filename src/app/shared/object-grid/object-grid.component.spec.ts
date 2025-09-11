@@ -1,4 +1,4 @@
-import { WidthCategory } from '@dspace/core/shared/host-window-type';
+import { WidthCategory } from '@dspace/core';
 import {
   cold,
   hot,

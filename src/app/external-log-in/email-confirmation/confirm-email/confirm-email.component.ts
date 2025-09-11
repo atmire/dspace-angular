@@ -12,24 +12,22 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { EPersonDataService } from '@dspace/core/eperson/eperson-data.service';
-import { EPerson } from '@dspace/core/eperson/models/eperson.model';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { HardRedirectService } from '@dspace/core/services/hard-redirect.service';
 import {
-  NativeWindowRef,
-  NativeWindowService,
-} from '@dspace/core/services/window.service';
-import {
+  AuthService,
+  EPerson,
+  EPersonDataService,
   getFirstCompletedRemoteData,
   getRemoteDataPayload,
-} from '@dspace/core/shared/operators';
-import { Registration } from '@dspace/core/shared/registration.model';
+  HardRedirectService,
+  NativeWindowRef,
+  NativeWindowService,
+  NotificationsService,
+  Registration,
+} from '@dspace/core';
 import {
   hasNoValue,
   hasValue,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   TranslateModule,
   TranslateService,

@@ -4,23 +4,21 @@ import {
   Input,
   OnChanges,
 } from '@angular/core';
-import { FieldChangeType } from '@dspace/core/data/object-updates/field-change-type.model';
-import { FieldUpdate } from '@dspace/core/data/object-updates/field-update.model';
 import {
   DeleteRelationship,
-  RelationshipIdentifiable,
-} from '@dspace/core/data/object-updates/object-updates.reducer';
-import { ObjectUpdatesService } from '@dspace/core/data/object-updates/object-updates.service';
-import { Item } from '@dspace/core/shared/item.model';
-import {
+  FieldChangeType,
+  FieldUpdate,
   getFirstSucceededRemoteData,
   getRemoteDataPayload,
-} from '@dspace/core/shared/operators';
-import { ViewMode } from '@dspace/core/shared/view-mode.model';
+  Item,
+  ObjectUpdatesService,
+  RelationshipIdentifiable,
+  ViewMode,
+} from '@dspace/core';
 import {
   hasValue,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   NgbModal,
   NgbModalRef,

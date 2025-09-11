@@ -4,12 +4,14 @@ import {
   ResolveFn,
   RouterStateSnapshot,
 } from '@angular/router';
-import { BreadcrumbConfig } from '@dspace/core/breadcrumbs/models/breadcrumb-config.model';
-import { ProcessDataService } from '@dspace/core/data/processes/process-data.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { Process } from '@dspace/core/processes/process.model';
-import { followLink } from '@dspace/core/shared/follow-link-config.model';
-import { getFirstCompletedRemoteData } from '@dspace/core/shared/operators';
+import {
+  BreadcrumbConfig,
+  followLink,
+  getFirstCompletedRemoteData,
+  Process,
+  ProcessDataService,
+  RemoteData,
+} from '@dspace/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 

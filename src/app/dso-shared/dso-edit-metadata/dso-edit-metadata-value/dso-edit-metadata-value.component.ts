@@ -17,20 +17,20 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { RelationshipDataService } from '@dspace/core/data/relationship-data.service';
-import { MetadataService } from '@dspace/core/metadata/metadata.service';
-import { getItemPageRoute } from '@dspace/core/router/utils/dso-route.utils';
-import { ConfidenceType } from '@dspace/core/shared/confidence-type';
-import { Context } from '@dspace/core/shared/context.model';
-import { DSpaceObject } from '@dspace/core/shared/dspace-object.model';
-import { ItemMetadataRepresentation } from '@dspace/core/shared/metadata-representation/item/item-metadata-representation.model';
 import {
+  ConfidenceType,
+  Context,
+  DSONameService,
+  DSpaceObject,
+  getItemPageRoute,
+  ItemMetadataRepresentation,
   MetadataRepresentation,
   MetadataRepresentationType,
-} from '@dspace/core/shared/metadata-representation/metadata-representation.model';
-import { Vocabulary } from '@dspace/core/submission/vocabularies/models/vocabulary.model';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+  MetadataService,
+  RelationshipDataService,
+  Vocabulary,
+} from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import {

@@ -1,4 +1,3 @@
-
 import {
   Component,
   EventEmitter,
@@ -13,8 +12,8 @@ import {
   NavigationExtras,
   Router,
 } from '@angular/router';
-import { currentPath } from '@dspace/core/router/utils/route.utils';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+import { currentPath } from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import { TranslateModule } from '@ngx-translate/core';
 import findIndex from 'lodash/findIndex';
 import { Subscription } from 'rxjs';

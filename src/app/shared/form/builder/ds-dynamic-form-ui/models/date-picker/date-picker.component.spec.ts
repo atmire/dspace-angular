@@ -20,10 +20,10 @@ import {
 } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import {
+  createTestComponent,
   mockDynamicFormLayoutService,
   mockDynamicFormValidationService,
-} from '@dspace/core/testing/dynamic-form-mock-services';
-import { createTestComponent } from '@dspace/core/testing/utils.test';
+} from '@dspace/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {
   DynamicFormLayoutService,

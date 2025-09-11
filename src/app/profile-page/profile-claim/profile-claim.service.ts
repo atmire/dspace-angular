@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { EPerson } from '@dspace/core/eperson/models/eperson.model';
-import { DSpaceObject } from '@dspace/core/shared/dspace-object.model';
-import { getFirstCompletedRemoteData } from '@dspace/core/shared/operators';
-import { PaginatedSearchOptions } from '@dspace/core/shared/search/models/paginated-search-options.model';
-import { SearchObjects } from '@dspace/core/shared/search/models/search-objects.model';
-import { createNoContentRemoteDataObject } from '@dspace/core/utilities/remote-data.utils';
+import {
+  createNoContentRemoteDataObject,
+  DSpaceObject,
+  EPerson,
+  getFirstCompletedRemoteData,
+  PaginatedSearchOptions,
+  RemoteData,
+  SearchObjects,
+} from '@dspace/core';
 import {
   isEmpty,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   Observable,
   of,

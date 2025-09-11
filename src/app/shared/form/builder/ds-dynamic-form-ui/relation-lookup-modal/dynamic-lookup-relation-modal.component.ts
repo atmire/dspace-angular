@@ -8,29 +8,29 @@ import {
   Output,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { RemoteDataBuildService } from '@dspace/core/cache/builders/remote-data-build.service';
-import { RequestParam } from '@dspace/core/cache/models/request-param.model';
-import { ExternalSourceDataService } from '@dspace/core/data/external-source-data.service';
-import { FindListOptions } from '@dspace/core/data/find-list-options.model';
-import { PaginatedList } from '@dspace/core/data/paginated-list.model';
-import { Context } from '@dspace/core/shared/context.model';
-import { DSpaceObject } from '@dspace/core/shared/dspace-object.model';
-import { ExternalSource } from '@dspace/core/shared/external-source.model';
-import { followLink } from '@dspace/core/shared/follow-link-config.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { RelationshipType } from '@dspace/core/shared/item-relationships/relationship-type.model';
-import { ItemSearchResult } from '@dspace/core/shared/object-collection/item-search-result.model';
-import { ListableObject } from '@dspace/core/shared/object-collection/listable-object.model';
 import {
+  Context,
+  DSpaceObject,
+  ExternalSource,
+  ExternalSourceDataService,
+  FindListOptions,
+  followLink,
   getAllSucceededRemoteDataPayload,
   getFirstSucceededRemoteDataPayload,
-} from '@dspace/core/shared/operators';
-import { RelationshipOptions } from '@dspace/core/shared/relationship-options.model';
-import { SearchResult } from '@dspace/core/shared/search/models/search-result.model';
+  Item,
+  ItemSearchResult,
+  ListableObject,
+  PaginatedList,
+  RelationshipOptions,
+  RelationshipType,
+  RemoteDataBuildService,
+  RequestParam,
+  SearchResult,
+} from '@dspace/core';
 import {
   hasValue,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   NgbActiveModal,
   NgbNavModule,

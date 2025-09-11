@@ -3,17 +3,17 @@ import {
   ComponentFixture,
   TestBed,
 } from '@angular/core/testing';
-import { LdnServicesService } from '@dspace/core/coar-notify/ldn-services/ldn-services-data.service';
-import { NotifyServicePattern } from '@dspace/core/coar-notify/ldn-services/models/ldn-service-patterns.model';
 import {
+  CoarNotifyConfigDataService,
+  createPaginatedList,
+  createSuccessfulRemoteDataObject$,
+  JsonPatchOperationsBuilder,
   LdnService,
   LdnServiceByPattern,
-} from '@dspace/core/coar-notify/ldn-services/models/ldn-services.model';
-import { SubmissionCoarNotifyModel } from '@dspace/core/coar-notify/notify-info/models/submission-coar-notify.model';
-import { CoarNotifyConfigDataService } from '@dspace/core/config/coar-notify-config-data.service';
-import { JsonPatchOperationsBuilder } from '@dspace/core/json-patch/builder/json-patch-operations-builder';
-import { createPaginatedList } from '@dspace/core/testing/utils.test';
-import { createSuccessfulRemoteDataObject$ } from '@dspace/core/utilities/remote-data.utils';
+  LdnServicesService,
+  NotifyServicePattern,
+  SubmissionCoarNotifyModel,
+} from '@dspace/core';
 import { NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';

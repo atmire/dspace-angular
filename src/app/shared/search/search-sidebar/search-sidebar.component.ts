@@ -10,13 +10,15 @@ import {
 import {
   APP_CONFIG,
   AppConfig,
-} from '@dspace/config/app-config.interface';
-import { SortOptions } from '@dspace/core/cache/models/sort-options.model';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { PaginatedSearchOptions } from '@dspace/core/shared/search/models/paginated-search-options.model';
-import { SearchFilterConfig } from '@dspace/core/shared/search/models/search-filter-config.model';
-import { FilterConfig } from '@dspace/core/shared/search/search-filters/search-config.model';
-import { ViewMode } from '@dspace/core/shared/view-mode.model';
+} from '@dspace/config';
+import {
+  FilterConfig,
+  PaginatedSearchOptions,
+  RemoteData,
+  SearchFilterConfig,
+  SortOptions,
+  ViewMode,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   BehaviorSubject,

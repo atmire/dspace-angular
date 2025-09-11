@@ -1,5 +1,7 @@
-import { MetadataField } from '@dspace/core/metadata/metadata-field.model';
-import { MetadataSchema } from '@dspace/core/metadata/metadata-schema.model';
+import {
+  MetadataField,
+  MetadataSchema,
+} from '@dspace/core';
 
 import {
   MetadataRegistryAction,

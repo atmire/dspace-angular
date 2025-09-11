@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { PaginatedList } from '@dspace/core/data/paginated-list.model';
-import { SearchResult } from '@dspace/core/shared/search/models/search-result.model';
+import {
+  PaginatedList,
+  SearchResult,
+} from '@dspace/core';
 
 import { AbstractTabulatableElementComponent } from '../../../object-collection/shared/objects-collection-tabulatable/objects-collection-tabulatable.component';
 

@@ -1,11 +1,11 @@
-import { OrejimeService } from '@dspace/core/cookies/orejime.service';
-import { GOOGLE_ANALYTICS_OREJIME_KEY } from '@dspace/core/cookies/orejime-configuration';
-import { ConfigurationDataService } from '@dspace/core/data/configuration-data.service';
-import { ConfigurationProperty } from '@dspace/core/shared/configuration-property.model';
 import {
+  ConfigurationDataService,
+  ConfigurationProperty,
   createFailedRemoteDataObject$,
   createSuccessfulRemoteDataObject$,
-} from '@dspace/core/utilities/remote-data.utils';
+  GOOGLE_ANALYTICS_OREJIME_KEY,
+  OrejimeService,
+} from '@dspace/core';
 import {
   Angulartics2GoogleAnalytics,
   Angulartics2GoogleGlobalSiteTag,

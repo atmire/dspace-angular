@@ -10,25 +10,27 @@ import {
   ActivatedRoute,
   Router,
 } from '@angular/router';
-import { ErrorResponse } from '@dspace/core/cache/response.models';
-import { RequestService } from '@dspace/core/data/request.service';
-import { RequestError } from '@dspace/core/data/request-error.model';
-import { HttpOptions } from '@dspace/core/dspace-rest/dspace-rest.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { RouteService } from '@dspace/core/services/route.service';
-import { Item } from '@dspace/core/shared/item.model';
-import { SectionScope } from '@dspace/core/submission/models/section-visibility.model';
-import { SubmissionJsonPatchOperationsService } from '@dspace/core/submission/submission-json-patch-operations.service';
-import { SubmissionRestService } from '@dspace/core/submission/submission-rest.service';
-import { SubmissionScopeType } from '@dspace/core/submission/submission-scope-type';
-import { MockActivatedRoute } from '@dspace/core/testing/active-router.mock';
-import { getMockRequestService } from '@dspace/core/testing/request.service.mock';
-import { RouterMock } from '@dspace/core/testing/router.mock';
-import { getMockSearchService } from '@dspace/core/testing/search-service.mock';
-import { SubmissionJsonPatchOperationsServiceStub } from '@dspace/core/testing/submission-json-patch-operations-service.stub';
-import { SubmissionRestServiceStub } from '@dspace/core/testing/submission-rest-service.stub';
-import { TranslateLoaderMock } from '@dspace/core/testing/translate-loader.mock';
-import { createFailedRemoteDataObject } from '@dspace/core/utilities/remote-data.utils';
+import {
+  createFailedRemoteDataObject,
+  ErrorResponse,
+  getMockRequestService,
+  getMockSearchService,
+  HttpOptions,
+  Item,
+  MockActivatedRoute,
+  NotificationsService,
+  RequestError,
+  RequestService,
+  RouterMock,
+  RouteService,
+  SectionScope,
+  SubmissionJsonPatchOperationsService,
+  SubmissionJsonPatchOperationsServiceStub,
+  SubmissionRestService,
+  SubmissionRestServiceStub,
+  SubmissionScopeType,
+  TranslateLoaderMock,
+} from '@dspace/core';
 import { StoreModule } from '@ngrx/store';
 import {
   TranslateLoader,

@@ -16,19 +16,21 @@ import {
   Router,
 } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { APP_CONFIG } from '@dspace/config/app-config.interface';
-import { BrowseService } from '@dspace/core/browse/browse.service';
-import { BrowseEntrySearchOptions } from '@dspace/core/browse/browse-entry-search-options.model';
-import { SortDirection } from '@dspace/core/cache/models/sort-options.model';
-import { DSpaceObjectDataService } from '@dspace/core/data/dspace-object-data.service';
-import { PaginationService } from '@dspace/core/pagination/pagination.service';
-import { BrowseEntry } from '@dspace/core/shared/browse-entry.model';
-import { Community } from '@dspace/core/shared/community.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { ActivatedRouteStub } from '@dspace/core/testing/active-router.stub';
-import { PaginationServiceStub } from '@dspace/core/testing/pagination-service.stub';
-import { RouterMock } from '@dspace/core/testing/router.mock';
-import { createSuccessfulRemoteDataObject$ } from '@dspace/core/utilities/remote-data.utils';
+import { APP_CONFIG } from '@dspace/config';
+import {
+  ActivatedRouteStub,
+  BrowseEntry,
+  BrowseEntrySearchOptions,
+  BrowseService,
+  Community,
+  createSuccessfulRemoteDataObject$,
+  DSpaceObjectDataService,
+  Item,
+  PaginationService,
+  PaginationServiceStub,
+  RouterMock,
+  SortDirection,
+} from '@dspace/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';

@@ -8,18 +8,18 @@ import {
   Router,
   RouterLink,
 } from '@angular/router';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { ItemDataService } from '@dspace/core/data/item-data.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { getItemPageRoute } from '@dspace/core/router/utils/dso-route.utils';
-import { redirectOn4xx } from '@dspace/core/shared/authorized.operators';
-import { Item } from '@dspace/core/shared/item.model';
-import { ItemRequest } from '@dspace/core/shared/item-request.model';
 import {
+  AuthService,
+  DSONameService,
   getFirstCompletedRemoteData,
   getFirstSucceededRemoteDataPayload,
-} from '@dspace/core/shared/operators';
+  getItemPageRoute,
+  Item,
+  ItemDataService,
+  ItemRequest,
+  redirectOn4xx,
+  RemoteData,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import {

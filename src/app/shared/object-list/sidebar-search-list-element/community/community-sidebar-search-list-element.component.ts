@@ -3,10 +3,12 @@ import {
   NgClass,
 } from '@angular/common';
 import { Component } from '@angular/core';
-import { Community } from '@dspace/core/shared/community.model';
-import { Context } from '@dspace/core/shared/context.model';
-import { CommunitySearchResult } from '@dspace/core/shared/object-collection/community-search-result.model';
-import { ViewMode } from '@dspace/core/shared/view-mode.model';
+import {
+  Community,
+  CommunitySearchResult,
+  Context,
+  ViewMode,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { listableObjectComponent } from '../../../object-collection/shared/listable-object/listable-object.decorator';

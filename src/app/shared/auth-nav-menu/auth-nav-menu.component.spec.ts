@@ -11,19 +11,19 @@ import {
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
-import { APP_CONFIG } from '@dspace/config/app-config.interface';
+import { APP_CONFIG } from '@dspace/config';
 import {
+  ActivatedRouteStub,
+  APP_DATA_SERVICES_MAP,
   authReducer,
+  AuthService,
   AuthState,
-} from '@dspace/core/auth/auth.reducer';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { AuthTokenInfo } from '@dspace/core/auth/models/auth-token-info.model';
-import { APP_DATA_SERVICES_MAP } from '@dspace/core/data-services-map-type';
-import { ActivatedRouteStub } from '@dspace/core/testing/active-router.stub';
-import { BrowserOnlyMockPipe } from '@dspace/core/testing/browser-only-mock.pipe';
-import { EPersonMock } from '@dspace/core/testing/eperson.mock';
-import { HostWindowServiceStub } from '@dspace/core/testing/host-window-service.stub';
-import { XSRFService } from '@dspace/core/xsrf/xsrf.service';
+  AuthTokenInfo,
+  BrowserOnlyMockPipe,
+  EPersonMock,
+  HostWindowServiceStub,
+  XSRFService,
+} from '@dspace/core';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import {
   Store,

@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { PaginatedList } from '@dspace/core/data/paginated-list.model';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { QualityAssuranceTopicObject } from '@dspace/core/notifications/qa/models/quality-assurance-topic.model';
-import { QualityAssuranceTopicDataService } from '@dspace/core/notifications/qa/topics/quality-assurance-topic-data.service';
+import {
+  NotificationsService,
+  PaginatedList,
+  QualityAssuranceTopicDataService,
+  QualityAssuranceTopicObject,
+} from '@dspace/core';
 import {
   Actions,
   createEffect,

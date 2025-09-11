@@ -5,28 +5,33 @@ import {
 import {
   ChangeDetectorRef,
   Component,
+  Inject,
 } from '@angular/core';
 import {
   ActivatedRoute,
   Router,
 } from '@angular/router';
-import { ObjectCacheService } from '@dspace/core/cache/object-cache.service';
-import { EntityTypeDataService } from '@dspace/core/data/entity-type-data.service';
-import { ItemDataService } from '@dspace/core/data/item-data.service';
-import { ObjectUpdatesService } from '@dspace/core/data/object-updates/object-updates.service';
-import { PaginatedList } from '@dspace/core/data/paginated-list.model';
-import { RelationshipDataService } from '@dspace/core/data/relationship-data.service';
-import { RelationshipTypeDataService } from '@dspace/core/data/relationship-type-data.service';
-import { RequestService } from '@dspace/core/data/request.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { followLink } from '@dspace/core/shared/follow-link-config.model';
-import { ItemType } from '@dspace/core/shared/item-relationships/item-type.model';
-import { RelationshipType } from '@dspace/core/shared/item-relationships/relationship-type.model';
 import {
+  APP_CONFIG,
+  AppConfig,
+} from '@dspace/config';
+import {
+  compareArraysUsingIds,
+  EntityTypeDataService,
+  followLink,
   getFirstSucceededRemoteData,
   getRemoteDataPayload,
-} from '@dspace/core/shared/operators';
-import { compareArraysUsingIds } from '@dspace/core/utilities/item-relationships-utils';
+  ItemDataService,
+  ItemType,
+  NotificationsService,
+  ObjectCacheService,
+  ObjectUpdatesService,
+  PaginatedList,
+  RelationshipDataService,
+  RelationshipType,
+  RelationshipTypeDataService,
+  RequestService,
+} from '@dspace/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   TranslateModule,
@@ -92,6 +97,7 @@ export class ItemRelationshipsComponent extends AbstractItemUpdateComponent {
     public notificationsService: NotificationsService,
     public translateService: TranslateService,
     public route: ActivatedRoute,
+    @Inject(APP_CONFIG) public appConfig: AppConfig,
     public relationshipService: RelationshipDataService,
     public objectCache: ObjectCacheService,
     public requestService: RequestService,
@@ -101,7 +107,7 @@ export class ItemRelationshipsComponent extends AbstractItemUpdateComponent {
     protected modalService: NgbModal,
     protected editItemRelationshipsService: EditItemRelationshipsService,
   ) {
-    super(itemService, objectUpdatesService, router, notificationsService, translateService, route);
+    super(itemService, objectUpdatesService, router, notificationsService, translateService, route, appConfig);
   }
 
   /**

@@ -1,11 +1,11 @@
-import { EPerson } from '@dspace/core/eperson/models/eperson.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { ItemSearchResult } from '@dspace/core/shared/object-collection/item-search-result.model';
-import { SearchObjects } from '@dspace/core/shared/search/models/search-objects.model';
 import {
   createNoContentRemoteDataObject,
   createSuccessfulRemoteDataObject,
-} from '@dspace/core/utilities/remote-data.utils';
+  EPerson,
+  Item,
+  ItemSearchResult,
+  SearchObjects,
+} from '@dspace/core';
 import {
   cold,
   getTestScheduler,

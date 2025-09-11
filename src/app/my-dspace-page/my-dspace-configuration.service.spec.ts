@@ -1,16 +1,16 @@
 import {
+  ActivatedRouteStub,
+  Context,
+  getMockRemoteDataBuildService,
+  HALEndpointServiceStub,
+  PaginatedSearchOptions,
+  PaginationComponentOptions,
+  PaginationServiceStub,
+  RoleServiceMock,
+  SearchFilter,
   SortDirection,
   SortOptions,
-} from '@dspace/core/cache/models/sort-options.model';
-import { PaginationComponentOptions } from '@dspace/core/pagination/pagination-component-options.model';
-import { Context } from '@dspace/core/shared/context.model';
-import { PaginatedSearchOptions } from '@dspace/core/shared/search/models/paginated-search-options.model';
-import { SearchFilter } from '@dspace/core/shared/search/models/search-filter.model';
-import { ActivatedRouteStub } from '@dspace/core/testing/active-router.stub';
-import { HALEndpointServiceStub } from '@dspace/core/testing/hal-endpoint-service.stub';
-import { PaginationServiceStub } from '@dspace/core/testing/pagination-service.stub';
-import { getMockRemoteDataBuildService } from '@dspace/core/testing/remote-data-build.service.mock';
-import { RoleServiceMock } from '@dspace/core/testing/role-service.mock';
+} from '@dspace/core';
 import {
   cold,
   hot,

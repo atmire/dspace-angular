@@ -3,19 +3,19 @@ import {
   ComponentFixture,
   TestBed,
 } from '@angular/core/testing';
-import { APP_CONFIG } from '@dspace/config/app-config.interface';
-import { SubmissionAccessesConfigDataService } from '@dspace/core/config/submission-accesses-config-data.service';
-import { APP_DATA_SERVICES_MAP } from '@dspace/core/data-services-map-type';
-import { JsonPatchOperationsBuilder } from '@dspace/core/json-patch/builder/json-patch-operations-builder';
-import { SubmissionJsonPatchOperationsService } from '@dspace/core/submission/submission-json-patch-operations.service';
-import { getSectionAccessesService } from '@dspace/core/testing/section-accesses.service.mock';
+import { APP_CONFIG } from '@dspace/config';
 import {
+  APP_DATA_SERVICES_MAP,
+  getSectionAccessesService,
   getSubmissionAccessesConfigNotChangeDiscoverableService,
   getSubmissionAccessesConfigService,
-} from '@dspace/core/testing/section-accesses-config.service.mock';
-import { SectionsServiceStub } from '@dspace/core/testing/sections-service.stub';
-import { SubmissionJsonPatchOperationsServiceStub } from '@dspace/core/testing/submission-json-patch-operations-service.stub';
-import { XSRFService } from '@dspace/core/xsrf/xsrf.service';
+  JsonPatchOperationsBuilder,
+  SectionsServiceStub,
+  SubmissionAccessesConfigDataService,
+  SubmissionJsonPatchOperationsService,
+  SubmissionJsonPatchOperationsServiceStub,
+  XSRFService,
+} from '@dspace/core';
 import {
   DYNAMIC_FORM_CONTROL_MAP_FN,
   DynamicCheckboxModel,

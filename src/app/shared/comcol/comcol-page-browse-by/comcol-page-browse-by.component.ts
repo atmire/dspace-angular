@@ -17,17 +17,17 @@ import {
 import {
   APP_CONFIG,
   AppConfig,
-} from '@dspace/config/app-config.interface';
-import { BrowseService } from '@dspace/core/browse/browse.service';
-import { PaginatedList } from '@dspace/core/data/paginated-list.model';
-import { RemoteData } from '@dspace/core/data/remote-data';
+} from '@dspace/config';
 import {
+  BrowseDefinition,
+  BrowseService,
   getCollectionPageRoute,
   getCommunityPageRoute,
-} from '@dspace/core/router/utils/dso-route.utils';
-import { BrowseDefinition } from '@dspace/core/shared/browse-definition.model';
-import { getFirstCompletedRemoteData } from '@dspace/core/shared/operators';
-import { isNotEmpty } from '@dspace/shared/utils/empty.util';
+  getFirstCompletedRemoteData,
+  PaginatedList,
+  RemoteData,
+} from '@dspace/core';
+import { isNotEmpty } from '@dspace/utils';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   BehaviorSubject,

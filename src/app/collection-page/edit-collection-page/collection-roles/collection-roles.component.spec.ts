@@ -10,17 +10,17 @@ import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { RequestService } from '@dspace/core/data/request.service';
-import { GroupDataService } from '@dspace/core/eperson/group-data.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { Collection } from '@dspace/core/shared/collection.model';
-import { DSONameServiceMock } from '@dspace/core/testing/dso-name.service.mock';
-import { NotificationsServiceStub } from '@dspace/core/testing/notifications-service.stub';
 import {
+  Collection,
   createSuccessfulRemoteDataObject,
   createSuccessfulRemoteDataObject$,
-} from '@dspace/core/utilities/remote-data.utils';
+  DSONameService,
+  DSONameServiceMock,
+  GroupDataService,
+  NotificationsService,
+  NotificationsServiceStub,
+  RequestService,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 

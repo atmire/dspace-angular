@@ -7,26 +7,24 @@ import {
   Component,
   Inject,
 } from '@angular/core';
-import { LdnServicesService } from '@dspace/core/coar-notify/ldn-services/ldn-services-data.service';
 import {
-  LdnService,
-  LdnServiceByPattern,
-} from '@dspace/core/coar-notify/ldn-services/models/ldn-services.model';
-import { LdnPattern } from '@dspace/core/coar-notify/notify-info/models/submission-coar-notify.model';
-import { CoarNotifyConfigDataService } from '@dspace/core/config/coar-notify-config-data.service';
-import { JsonPatchOperationPathCombiner } from '@dspace/core/json-patch/builder/json-patch-operation-path-combiner';
-import { JsonPatchOperationsBuilder } from '@dspace/core/json-patch/builder/json-patch-operations-builder';
-import {
+  CoarNotifyConfigDataService,
   getFirstCompletedRemoteData,
   getPaginatedListPayload,
   getRemoteDataPayload,
-} from '@dspace/core/shared/operators';
-import { SubmissionSectionError } from '@dspace/core/submission/models/submission-section-error.model';
+  JsonPatchOperationPathCombiner,
+  JsonPatchOperationsBuilder,
+  LdnPattern,
+  LdnService,
+  LdnServiceByPattern,
+  LdnServicesService,
+  SubmissionSectionError,
+} from '@dspace/core';
 import {
   hasValue,
   isEmpty,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   NgbDropdown,
   NgbDropdownModule,

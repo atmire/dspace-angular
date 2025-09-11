@@ -13,7 +13,7 @@ import {
 import {
   hasValue,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 
 import { MenuID } from './menu-id.model';
 import {

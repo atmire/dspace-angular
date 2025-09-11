@@ -8,14 +8,16 @@ import {
   waitForAsync,
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { BrowseDefinitionDataService } from '@dspace/core/browse/browse-definition-data.service';
-import { RelationshipDataService } from '@dspace/core/data/relationship-data.service';
-import { DSpaceObject } from '@dspace/core/shared/dspace-object.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { MetadataValue } from '@dspace/core/shared/metadata.models';
-import { ItemMetadataRepresentation } from '@dspace/core/shared/metadata-representation/item/item-metadata-representation.model';
-import { MetadatumRepresentation } from '@dspace/core/shared/metadata-representation/metadatum/metadatum-representation.model';
-import { BrowseDefinitionDataServiceStub } from '@dspace/core/testing/browse-definition-data-service.stub';
+import {
+  BrowseDefinitionDataService,
+  BrowseDefinitionDataServiceStub,
+  DSpaceObject,
+  Item,
+  ItemMetadataRepresentation,
+  MetadataValue,
+  MetadatumRepresentation,
+  RelationshipDataService,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 

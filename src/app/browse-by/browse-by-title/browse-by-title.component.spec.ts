@@ -15,18 +15,20 @@ import {
   Router,
 } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { APP_CONFIG } from '@dspace/config/app-config.interface';
-import { BrowseService } from '@dspace/core/browse/browse.service';
-import { DSpaceObjectDataService } from '@dspace/core/data/dspace-object-data.service';
-import { ItemDataService } from '@dspace/core/data/item-data.service';
-import { PaginationService } from '@dspace/core/pagination/pagination.service';
-import { BrowseEntry } from '@dspace/core/shared/browse-entry.model';
-import { Community } from '@dspace/core/shared/community.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { ActivatedRouteStub } from '@dspace/core/testing/active-router.stub';
-import { PaginationServiceStub } from '@dspace/core/testing/pagination-service.stub';
-import { RouterMock } from '@dspace/core/testing/router.mock';
-import { createSuccessfulRemoteDataObject$ } from '@dspace/core/utilities/remote-data.utils';
+import { APP_CONFIG } from '@dspace/config';
+import {
+  ActivatedRouteStub,
+  BrowseEntry,
+  BrowseService,
+  Community,
+  createSuccessfulRemoteDataObject$,
+  DSpaceObjectDataService,
+  Item,
+  ItemDataService,
+  PaginationService,
+  PaginationServiceStub,
+  RouterMock,
+} from '@dspace/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';

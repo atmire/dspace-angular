@@ -7,19 +7,21 @@ import {
 import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
-import { APP_CONFIG } from '@dspace/config/app-config.interface';
-import { BitstreamDataService } from '@dspace/core/data/bitstream-data.service';
-import { APP_DATA_SERVICES_MAP } from '@dspace/core/data-services-map-type';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { Bitstream } from '@dspace/core/shared/bitstream.model';
-import { PageInfo } from '@dspace/core/shared/page-info.model';
-import { ActivatedRouteStub } from '@dspace/core/testing/active-router.stub';
-import { MockBitstreamFormat1 } from '@dspace/core/testing/item.mock';
-import { NotificationsServiceStub } from '@dspace/core/testing/notifications-service.stub';
-import { TranslateLoaderMock } from '@dspace/core/testing/translate-loader.mock';
-import { createPaginatedList } from '@dspace/core/testing/utils.test';
-import { createSuccessfulRemoteDataObject$ } from '@dspace/core/utilities/remote-data.utils';
-import { XSRFService } from '@dspace/core/xsrf/xsrf.service';
+import { APP_CONFIG } from '@dspace/config';
+import {
+  ActivatedRouteStub,
+  APP_DATA_SERVICES_MAP,
+  Bitstream,
+  BitstreamDataService,
+  createPaginatedList,
+  createSuccessfulRemoteDataObject$,
+  MockBitstreamFormat1,
+  NotificationsService,
+  NotificationsServiceStub,
+  PageInfo,
+  TranslateLoaderMock,
+  XSRFService,
+} from '@dspace/core';
 import { provideMockStore } from '@ngrx/store/testing';
 import {
   TranslateLoader,

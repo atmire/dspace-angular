@@ -8,13 +8,16 @@ import {
 } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import { RoleService } from '@dspace/core/roles/role.service';
-import { Context } from '@dspace/core/shared/context.model';
+import {
+  Context,
+  RoleService,
+} from '@dspace/core';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { cold } from 'jasmine-marbles';
 import { of } from 'rxjs';
 
+import { SuggestionsNotificationComponent } from '../notifications/suggestions/notification/suggestions-notification.component';
 import { RoleDirective } from '../shared/roles/role.directive';
 import { SearchService } from '../shared/search/search.service';
 import { ThemedSearchComponent } from '../shared/search/themed-search.component';
@@ -27,9 +30,8 @@ import {
 import { MyDSpaceConfigurationValueType } from './my-dspace-configuration-value-type';
 import { MyDSpaceNewSubmissionComponent } from './my-dspace-new-submission/my-dspace-new-submission.component';
 import { MyDSpacePageComponent } from './my-dspace-page.component';
-import SpyObj = jasmine.SpyObj;
-import { SuggestionsNotificationComponent } from '../notifications/suggestions/notification/suggestions-notification.component';
 import { MyDspaceQaEventsNotificationsComponent } from './my-dspace-qa-events-notifications/my-dspace-qa-events-notifications.component';
+import SpyObj = jasmine.SpyObj;
 
 describe('MyDSpacePageComponent', () => {
   let comp: MyDSpacePageComponent;

@@ -14,19 +14,17 @@ import {
 import { RouterLink } from '@angular/router';
 import {
   AuthenticateAction,
-  ResetAuthenticationMessagesAction,
-} from '@dspace/core/auth/auth.actions';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { AuthMethod } from '@dspace/core/auth/models/auth.method';
-import {
+  AuthMethod,
+  AuthorizationDataService,
+  AuthService,
+  CoreState,
+  FeatureID,
   getAuthenticationError,
   getAuthenticationInfo,
-} from '@dspace/core/auth/selectors';
-import { CoreState } from '@dspace/core/core-state.model';
-import { AuthorizationDataService } from '@dspace/core/data/feature-authorization/authorization-data.service';
-import { FeatureID } from '@dspace/core/data/feature-authorization/feature-id';
-import { HardRedirectService } from '@dspace/core/services/hard-redirect.service';
-import { isNotEmpty } from '@dspace/shared/utils/empty.util';
+  HardRedirectService,
+  ResetAuthenticationMessagesAction,
+} from '@dspace/core';
+import { isNotEmpty } from '@dspace/utils';
 import {
   select,
   Store,

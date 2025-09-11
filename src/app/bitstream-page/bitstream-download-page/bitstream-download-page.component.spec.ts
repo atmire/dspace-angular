@@ -12,17 +12,19 @@ import {
   ActivatedRoute,
   Router,
 } from '@angular/router';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { ConfigurationDataService } from '@dspace/core/data/configuration-data.service';
-import { AuthorizationDataService } from '@dspace/core/data/feature-authorization/authorization-data.service';
-import { SignpostingDataService } from '@dspace/core/data/signposting-data.service';
-import { getForbiddenRoute } from '@dspace/core/router/core-routing-paths';
-import { HardRedirectService } from '@dspace/core/services/hard-redirect.service';
-import { ServerResponseService } from '@dspace/core/services/server-response.service';
-import { Bitstream } from '@dspace/core/shared/bitstream.model';
-import { FileService } from '@dspace/core/shared/file.service';
-import { createSuccessfulRemoteDataObject } from '@dspace/core/utilities/remote-data.utils';
+import {
+  AuthorizationDataService,
+  AuthService,
+  Bitstream,
+  ConfigurationDataService,
+  createSuccessfulRemoteDataObject,
+  DSONameService,
+  FileService,
+  getForbiddenRoute,
+  HardRedirectService,
+  ServerResponseService,
+  SignpostingDataService,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 

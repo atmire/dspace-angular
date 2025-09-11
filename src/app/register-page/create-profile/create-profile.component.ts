@@ -14,23 +14,21 @@ import {
   ActivatedRoute,
   Router,
 } from '@angular/router';
-import { LangConfig } from '@dspace/config/lang-config.interface';
-import { AuthenticateAction } from '@dspace/core/auth/auth.actions';
-import { CoreState } from '@dspace/core/core-state.model';
-import { RemoteData } from '@dspace/core/data/remote-data';
+import { LangConfig } from '@dspace/config';
 import {
+  AuthenticateAction,
+  CoreState,
   END_USER_AGREEMENT_METADATA_FIELD,
   EndUserAgreementService,
-} from '@dspace/core/end-user-agreement/end-user-agreement.service';
-import { EPersonDataService } from '@dspace/core/eperson/eperson-data.service';
-import { EPerson } from '@dspace/core/eperson/models/eperson.model';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import {
+  EPerson,
+  EPersonDataService,
   getFirstCompletedRemoteData,
   getFirstSucceededRemoteDataPayload,
-} from '@dspace/core/shared/operators';
-import { Registration } from '@dspace/core/shared/registration.model';
-import { isEmpty } from '@dspace/shared/utils/empty.util';
+  NotificationsService,
+  Registration,
+  RemoteData,
+} from '@dspace/core';
+import { isEmpty } from '@dspace/utils';
 import { Store } from '@ngrx/store';
 import {
   TranslateModule,

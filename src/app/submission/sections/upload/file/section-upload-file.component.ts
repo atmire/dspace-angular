@@ -8,16 +8,18 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { SubmissionFormsModel } from '@dspace/core/config/models/config-submission-forms.model';
-import { JsonPatchOperationPathCombiner } from '@dspace/core/json-patch/builder/json-patch-operation-path-combiner';
-import { JsonPatchOperationsBuilder } from '@dspace/core/json-patch/builder/json-patch-operations-builder';
-import { Bitstream } from '@dspace/core/shared/bitstream.model';
-import { WorkspaceitemSectionUploadFileObject } from '@dspace/core/submission/models/workspaceitem-section-upload-file.model';
-import { SubmissionJsonPatchOperationsService } from '@dspace/core/submission/submission-json-patch-operations.service';
+import {
+  Bitstream,
+  JsonPatchOperationPathCombiner,
+  JsonPatchOperationsBuilder,
+  SubmissionFormsModel,
+  SubmissionJsonPatchOperationsService,
+  WorkspaceitemSectionUploadFileObject,
+} from '@dspace/core';
 import {
   hasValue,
   isNotUndefined,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   NgbModal,
   NgbModalOptions,

@@ -16,27 +16,25 @@ import {
   Router,
 } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { BitstreamDataService } from '@dspace/core/data/bitstream-data.service';
-import { BitstreamFormatDataService } from '@dspace/core/data/bitstream-format-data.service';
-import { PrimaryBitstreamService } from '@dspace/core/data/primary-bitstream.service';
 import {
-  INotification,
-  Notification,
-} from '@dspace/core/notification-system/models/notification.model';
-import { NotificationType } from '@dspace/core/notification-system/models/notification-type';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { Bitstream } from '@dspace/core/shared/bitstream.model';
-import { BitstreamFormat } from '@dspace/core/shared/bitstream-format.model';
-import { BitstreamFormatSupportLevel } from '@dspace/core/shared/bitstream-format-support-level';
-import { Item } from '@dspace/core/shared/item.model';
-import { MetadataValueFilter } from '@dspace/core/shared/metadata.models';
-import { createPaginatedList } from '@dspace/core/testing/utils.test';
-import {
+  Bitstream,
+  BitstreamDataService,
+  BitstreamFormat,
+  BitstreamFormatDataService,
+  BitstreamFormatSupportLevel,
+  createPaginatedList,
   createSuccessfulRemoteDataObject,
   createSuccessfulRemoteDataObject$,
-} from '@dspace/core/utilities/remote-data.utils';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+  DSONameService,
+  INotification,
+  Item,
+  MetadataValueFilter,
+  Notification,
+  NotificationsService,
+  NotificationType,
+  PrimaryBitstreamService,
+} from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import {
   DynamicFormControlModel,
   DynamicFormService,

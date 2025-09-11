@@ -6,7 +6,7 @@ import {
 import {
   HealthInfoResponse,
   HealthResponse,
-} from '@dspace/core/shared/health-component.model';
+} from '@dspace/core';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs';

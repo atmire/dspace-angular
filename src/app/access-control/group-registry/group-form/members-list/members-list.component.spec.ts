@@ -24,33 +24,31 @@ import {
   ActivatedRoute,
   Router,
 } from '@angular/router';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { RestResponse } from '@dspace/core/cache/response.models';
 import {
+  ActivatedRouteStub,
   buildPaginatedList,
-  PaginatedList,
-} from '@dspace/core/data/paginated-list.model';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { EPersonDataService } from '@dspace/core/eperson/eperson-data.service';
-import { GroupDataService } from '@dspace/core/eperson/group-data.service';
-import { EPerson } from '@dspace/core/eperson/models/eperson.model';
-import { Group } from '@dspace/core/eperson/models/group.model';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { PaginationService } from '@dspace/core/pagination/pagination.service';
-import { PageInfo } from '@dspace/core/shared/page-info.model';
-import { ActivatedRouteStub } from '@dspace/core/testing/active-router.stub';
-import { DSONameServiceMock } from '@dspace/core/testing/dso-name.service.mock';
-import {
+  createSuccessfulRemoteDataObject$,
+  DSONameService,
+  DSONameServiceMock,
+  EPerson,
+  EPersonDataService,
   EPersonMock,
   EPersonMock2,
-} from '@dspace/core/testing/eperson.mock';
-import { GroupMock } from '@dspace/core/testing/group-mock';
-import { NotificationsServiceStub } from '@dspace/core/testing/notifications-service.stub';
-import { PaginationServiceStub } from '@dspace/core/testing/pagination-service.stub';
-import { RouterMock } from '@dspace/core/testing/router.mock';
-import { getMockTranslateService } from '@dspace/core/testing/translate.service.mock';
-import { TranslateLoaderMock } from '@dspace/core/testing/translate-loader.mock';
-import { createSuccessfulRemoteDataObject$ } from '@dspace/core/utilities/remote-data.utils';
+  getMockTranslateService,
+  Group,
+  GroupDataService,
+  GroupMock,
+  NotificationsService,
+  NotificationsServiceStub,
+  PageInfo,
+  PaginatedList,
+  PaginationService,
+  PaginationServiceStub,
+  RemoteData,
+  RestResponse,
+  RouterMock,
+  TranslateLoaderMock,
+} from '@dspace/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {
   TranslateLoader,

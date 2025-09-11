@@ -12,21 +12,21 @@ import {
   ActivatedRoute,
   RouterLink,
 } from '@angular/router';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { AuthorizationDataService } from '@dspace/core/data/feature-authorization/authorization-data.service';
-import { FeatureID } from '@dspace/core/data/feature-authorization/feature-id';
 import {
+  AuthorizationDataService,
+  Bitstream,
+  DSONameService,
+  FeatureID,
   getBitstreamDownloadRoute,
   getBitstreamDownloadWithAccessTokenRoute,
   getBitstreamRequestACopyRoute,
-} from '@dspace/core/router/utils/dso-route.utils';
-import { Bitstream } from '@dspace/core/shared/bitstream.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { ItemRequest } from '@dspace/core/shared/item-request.model';
+  Item,
+  ItemRequest,
+} from '@dspace/core';
 import {
   hasValue,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   TranslateModule,
   TranslateService,

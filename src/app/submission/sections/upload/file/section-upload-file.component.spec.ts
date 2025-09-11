@@ -1,7 +1,4 @@
-import {
-  AsyncPipe,
-  CommonModule,
-} from '@angular/common';
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectorRef,
   Component,
@@ -13,15 +10,17 @@ import {
   waitForAsync,
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { JsonPatchOperationPathCombiner } from '@dspace/core/json-patch/builder/json-patch-operation-path-combiner';
-import { JsonPatchOperationsBuilder } from '@dspace/core/json-patch/builder/json-patch-operations-builder';
-import { HALEndpointService } from '@dspace/core/shared/hal-endpoint.service';
-import { SubmissionJsonPatchOperationsService } from '@dspace/core/submission/submission-json-patch-operations.service';
-import { HALEndpointServiceStub } from '@dspace/core/testing/hal-endpoint-service.stub';
-import { getMockSectionUploadService } from '@dspace/core/testing/section-upload.service.mock';
-import { SubmissionJsonPatchOperationsServiceStub } from '@dspace/core/testing/submission-json-patch-operations-service.stub';
-import { SubmissionServiceStub } from '@dspace/core/testing/submission-service.stub';
-import { createTestComponent } from '@dspace/core/testing/utils.test';
+import {
+  createTestComponent,
+  getMockSectionUploadService,
+  HALEndpointService,
+  HALEndpointServiceStub,
+  JsonPatchOperationPathCombiner,
+  JsonPatchOperationsBuilder,
+  SubmissionJsonPatchOperationsService,
+  SubmissionJsonPatchOperationsServiceStub,
+  SubmissionServiceStub,
+} from '@dspace/core';
 import {
   NgbModal,
   NgbModule,
@@ -280,7 +279,6 @@ describe('SubmissionSectionUploadFileComponent', () => {
   selector: 'ds-test-cmp',
   template: '{{ obs | async }}',
   imports: [
-    AsyncPipe,
     NgbModule,
   ],
 })

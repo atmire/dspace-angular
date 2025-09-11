@@ -1,18 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 import {
-  SortDirection,
-  SortOptions,
-} from '@dspace/core/cache/models/sort-options.model';
-import { FindListOptions } from '@dspace/core/data/find-list-options.model';
-import { buildPaginatedList } from '@dspace/core/data/paginated-list.model';
-import { QualityAssuranceSourceDataService } from '@dspace/core/notifications/qa/source/quality-assurance-source-data.service';
-import { PageInfo } from '@dspace/core/shared/page-info.model';
-import {
+  buildPaginatedList,
+  createSuccessfulRemoteDataObject,
+  FindListOptions,
   getMockQualityAssuranceSourceRestService,
+  PageInfo,
+  QualityAssuranceSourceDataService,
   qualityAssuranceSourceObjectMoreAbstract,
   qualityAssuranceSourceObjectMorePid,
-} from '@dspace/core/testing/notifications.mock';
-import { createSuccessfulRemoteDataObject } from '@dspace/core/utilities/remote-data.utils';
+  SortDirection,
+  SortOptions,
+} from '@dspace/core';
 import { cold } from 'jasmine-marbles';
 import { of } from 'rxjs';
 

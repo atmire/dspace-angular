@@ -11,12 +11,14 @@ import {
 import {
   APP_CONFIG,
   AppConfig,
-} from '@dspace/config/app-config.interface';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { Context } from '@dspace/core/shared/context.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { SearchResult } from '@dspace/core/shared/search/models/search-result.model';
-import { WorkflowItem } from '@dspace/core/submission/models/workflowitem.model';
+} from '@dspace/config';
+import {
+  Context,
+  DSONameService,
+  Item,
+  SearchResult,
+  WorkflowItem,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { ThemedThumbnailComponent } from '../../../../thumbnail/themed-thumbnail.component';

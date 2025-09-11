@@ -5,8 +5,10 @@ import {
   TestBed,
 } from '@angular/core/testing';
 import { RouterModule } from '@angular/router';
-import { AdminNotifyMessagesDataService } from '@dspace/core/coar-notify/notify-info/admin-notify-messages-data.service';
-import { mockAdminNotifyMessages } from '@dspace/core/testing/admin-notify-messages.mock';
+import {
+  AdminNotifyMessagesDataService,
+  mockAdminNotifyMessages,
+} from '@dspace/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';

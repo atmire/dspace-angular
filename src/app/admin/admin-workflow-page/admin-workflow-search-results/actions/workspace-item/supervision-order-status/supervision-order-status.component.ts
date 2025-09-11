@@ -7,12 +7,14 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { Group } from '@dspace/core/eperson/models/group.model';
-import { getFirstCompletedRemoteData } from '@dspace/core/shared/operators';
-import { SupervisionOrder } from '@dspace/core/supervision-order/models/supervision-order.model';
-import { isNotEmpty } from '@dspace/shared/utils/empty.util';
+import {
+  DSONameService,
+  getFirstCompletedRemoteData,
+  Group,
+  RemoteData,
+  SupervisionOrder,
+} from '@dspace/core';
+import { isNotEmpty } from '@dspace/utils';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import {

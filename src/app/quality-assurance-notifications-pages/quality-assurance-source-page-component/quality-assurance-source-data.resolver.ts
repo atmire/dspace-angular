@@ -8,9 +8,11 @@ import {
 import {
   APP_CONFIG,
   AppConfig,
-} from '@dspace/config/app-config.interface';
-import { PaginatedList } from '@dspace/core/data/paginated-list.model';
-import { QualityAssuranceSourceObject } from '@dspace/core/notifications/qa/models/quality-assurance-source.model';
+} from '@dspace/config';
+import {
+  PaginatedList,
+  QualityAssuranceSourceObject,
+} from '@dspace/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 

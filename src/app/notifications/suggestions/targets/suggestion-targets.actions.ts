@@ -1,6 +1,8 @@
 /* eslint-disable max-classes-per-file */
-import { type } from '@dspace/core/ngrx/type';
-import { SuggestionTarget } from '@dspace/core/notifications/suggestions/models/suggestion-target.model';
+import {
+  SuggestionTarget,
+  type,
+} from '@dspace/core';
 import { Action } from '@ngrx/store';
 
 /**

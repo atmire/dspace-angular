@@ -6,15 +6,17 @@ import {
 } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ItemDataService } from '@dspace/core/data/item-data.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { Collection } from '@dspace/core/shared/collection.model';
-import { ExternalSourceEntry } from '@dspace/core/shared/external-source-entry.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { ItemSearchResult } from '@dspace/core/shared/object-collection/item-search-result.model';
-import { RelationshipOptions } from '@dspace/core/shared/relationship-options.model';
-import { createPaginatedList } from '@dspace/core/testing/utils.test';
-import { createSuccessfulRemoteDataObject$ } from '@dspace/core/utilities/remote-data.utils';
+import {
+  Collection,
+  createPaginatedList,
+  createSuccessfulRemoteDataObject$,
+  ExternalSourceEntry,
+  Item,
+  ItemDataService,
+  ItemSearchResult,
+  NotificationsService,
+  RelationshipOptions,
+} from '@dspace/core';
 import {
   NgbActiveModal,
   NgbModule,

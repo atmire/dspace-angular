@@ -5,18 +5,20 @@ import {
   waitForAsync,
 } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { buildPaginatedList } from '@dspace/core/data/paginated-list.model';
-import { RelationshipDataService } from '@dspace/core/data/relationship-data.service';
-import { PaginationService } from '@dspace/core/pagination/pagination.service';
-import { Item } from '@dspace/core/shared/item.model';
-import { RelationshipType } from '@dspace/core/shared/item-relationships/relationship-type.model';
-import { ItemSearchResult } from '@dspace/core/shared/object-collection/item-search-result.model';
-import { RelationshipOptions } from '@dspace/core/shared/relationship-options.model';
-import { PaginatedSearchOptions } from '@dspace/core/shared/search/models/paginated-search-options.model';
-import { SearchObjects } from '@dspace/core/shared/search/models/search-objects.model';
-import { PaginationServiceStub } from '@dspace/core/testing/pagination-service.stub';
-import { relatedRelationships } from '@dspace/core/testing/related-relationships.mock';
-import { createSuccessfulRemoteDataObject$ } from '@dspace/core/utilities/remote-data.utils';
+import {
+  buildPaginatedList,
+  createSuccessfulRemoteDataObject$,
+  Item,
+  ItemSearchResult,
+  PaginatedSearchOptions,
+  PaginationService,
+  PaginationServiceStub,
+  relatedRelationships,
+  RelationshipDataService,
+  RelationshipOptions,
+  RelationshipType,
+  SearchObjects,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 

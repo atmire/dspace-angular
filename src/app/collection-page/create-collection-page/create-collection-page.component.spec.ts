@@ -7,16 +7,18 @@ import {
 } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { CollectionDataService } from '@dspace/core/data/collection-data.service';
-import { CommunityDataService } from '@dspace/core/data/community-data.service';
-import { RequestService } from '@dspace/core/data/request.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { RouteService } from '@dspace/core/services/route.service';
-import { AuthServiceMock } from '@dspace/core/testing/auth.service.mock';
-import { DSONameServiceMock } from '@dspace/core/testing/dso-name.service.mock';
-import { NotificationsServiceStub } from '@dspace/core/testing/notifications-service.stub';
+import {
+  AuthService,
+  AuthServiceMock,
+  CollectionDataService,
+  CommunityDataService,
+  DSONameService,
+  DSONameServiceMock,
+  NotificationsService,
+  NotificationsServiceStub,
+  RequestService,
+  RouteService,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 

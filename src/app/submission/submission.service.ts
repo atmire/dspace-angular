@@ -1,32 +1,32 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { ErrorResponse } from '@dspace/core/cache/response.models';
-import { SubmissionDefinitionsModel } from '@dspace/core/config/models/config-submission-definitions.model';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { RequestService } from '@dspace/core/data/request.service';
-import { HttpOptions } from '@dspace/core/dspace-rest/dspace-rest.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { RouteService } from '@dspace/core/services/route.service';
-import { Item } from '@dspace/core/shared/item.model';
-import { SectionScope } from '@dspace/core/submission/models/section-visibility.model';
-import { SubmissionError } from '@dspace/core/submission/models/submission-error.model';
-import { SubmissionObject } from '@dspace/core/submission/models/submission-object.model';
-import { SubmissionSectionObject } from '@dspace/core/submission/models/submission-section-object.model';
-import { WorkspaceitemSectionsObject } from '@dspace/core/submission/models/workspaceitem-sections.model';
-import { SectionsType } from '@dspace/core/submission/sections-type';
-import { SubmissionJsonPatchOperationsService } from '@dspace/core/submission/submission-json-patch-operations.service';
-import { SubmissionRestService } from '@dspace/core/submission/submission-rest.service';
-import { SubmissionScopeType } from '@dspace/core/submission/submission-scope-type';
 import {
   createFailedRemoteDataObject$,
   createSuccessfulRemoteDataObject,
-} from '@dspace/core/utilities/remote-data.utils';
+  ErrorResponse,
+  HttpOptions,
+  Item,
+  NotificationsService,
+  RemoteData,
+  RequestService,
+  RouteService,
+  SectionScope,
+  SectionsType,
+  SubmissionDefinitionsModel,
+  SubmissionError,
+  SubmissionJsonPatchOperationsService,
+  SubmissionObject,
+  SubmissionRestService,
+  SubmissionScopeType,
+  SubmissionSectionObject,
+  WorkspaceitemSectionsObject,
+} from '@dspace/core';
 import {
   hasValue,
   isEmpty,
   isNotUndefined,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   createSelector,
   MemoizedSelector,

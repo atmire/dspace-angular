@@ -19,18 +19,20 @@ import {
   Router,
 } from '@angular/router';
 import {
+  Context,
+  ListableObject,
+  PageInfo,
+  PaginatedList,
+  PaginationComponentOptions,
+  RemoteData,
   SortDirection,
   SortOptions,
-} from '@dspace/core/cache/models/sort-options.model';
-import { PaginatedList } from '@dspace/core/data/paginated-list.model';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { PaginationComponentOptions } from '@dspace/core/pagination/pagination-component-options.model';
-import { Context } from '@dspace/core/shared/context.model';
-import { ListableObject } from '@dspace/core/shared/object-collection/listable-object.model';
-import { PageInfo } from '@dspace/core/shared/page-info.model';
-import { ViewMode } from '@dspace/core/shared/view-mode.model';
-import { isEmpty } from '@dspace/shared/utils/empty.util';
-import { setPlaceHolderAttributes } from '@dspace/shared/utils/object-list-utils';
+  ViewMode,
+} from '@dspace/core';
+import {
+  isEmpty,
+  setPlaceHolderAttributes,
+} from '@dspace/utils';
 import { Observable } from 'rxjs';
 import {
   distinctUntilChanged,

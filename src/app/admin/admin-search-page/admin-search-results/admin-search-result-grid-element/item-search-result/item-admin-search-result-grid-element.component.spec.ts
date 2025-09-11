@@ -6,20 +6,22 @@ import {
 } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { BitstreamDataService } from '@dspace/core/data/bitstream-data.service';
-import { AuthorizationDataService } from '@dspace/core/data/feature-authorization/authorization-data.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { Bitstream } from '@dspace/core/shared/bitstream.model';
-import { FileService } from '@dspace/core/shared/file.service';
-import { Item } from '@dspace/core/shared/item.model';
-import { ItemSearchResult } from '@dspace/core/shared/object-collection/item-search-result.model';
-import { ViewMode } from '@dspace/core/shared/view-mode.model';
-import { AuthServiceStub } from '@dspace/core/testing/auth-service.stub';
-import { AuthorizationDataServiceStub } from '@dspace/core/testing/authorization-service.stub';
-import { FileServiceStub } from '@dspace/core/testing/file-service.stub';
-import { mockTruncatableService } from '@dspace/core/testing/mock-trucatable.service';
-import { createSuccessfulRemoteDataObject$ } from '@dspace/core/utilities/remote-data.utils';
+import {
+  AuthorizationDataService,
+  AuthorizationDataServiceStub,
+  AuthService,
+  AuthServiceStub,
+  Bitstream,
+  BitstreamDataService,
+  createSuccessfulRemoteDataObject$,
+  FileService,
+  FileServiceStub,
+  Item,
+  ItemSearchResult,
+  mockTruncatableService,
+  RemoteData,
+  ViewMode,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 

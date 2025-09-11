@@ -15,10 +15,12 @@ import {
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { authReducer } from '@dspace/core/auth/auth.reducer';
-import { AuthorizationDataService } from '@dspace/core/data/feature-authorization/authorization-data.service';
-import { Item } from '@dspace/core/shared/item.model';
-import { createSuccessfulRemoteDataObject } from '@dspace/core/utilities/remote-data.utils';
+import {
+  AuthorizationDataService,
+  authReducer,
+  createSuccessfulRemoteDataObject,
+  Item,
+} from '@dspace/core';
 import {
   Store,
   StoreModule,

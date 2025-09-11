@@ -1,7 +1,9 @@
 import { Injector } from '@angular/core';
-import { FormRowModel } from '@dspace/core/config/models/config-submission-form.model';
-import { FormFieldModel } from '@dspace/core/shared/form/models/form-field.model';
-import { getMockTranslateService } from '@dspace/core/testing/translate.service.mock';
+import {
+  FormFieldModel,
+  FormRowModel,
+  getMockTranslateService,
+} from '@dspace/core';
 import { TranslateService } from '@ngx-translate/core';
 
 import { DynamicRowArrayModel } from '../ds-dynamic-form-ui/models/ds-dynamic-row-array-model';

@@ -8,7 +8,7 @@ import {
 import {
   isEmpty,
   isNotUndefined,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   DynamicFormControlEvent,
   DynamicFormControlModel,

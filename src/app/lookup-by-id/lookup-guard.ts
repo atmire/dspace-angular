@@ -4,10 +4,12 @@ import {
   CanActivateFn,
   RouterStateSnapshot,
 } from '@angular/router';
-import { DsoRedirectService } from '@dspace/core/data/dso-redirect.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { IdentifierType } from '@dspace/core/data/request.models';
-import { DSpaceObject } from '@dspace/core/shared/dspace-object.model';
+import {
+  DsoRedirectService,
+  DSpaceObject,
+  IdentifierType,
+  RemoteData,
+} from '@dspace/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 

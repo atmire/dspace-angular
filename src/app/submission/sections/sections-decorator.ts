@@ -1,4 +1,4 @@
-import { SectionsType } from '@dspace/core/submission/sections-type';
+import { SectionsType } from '@dspace/core';
 
 import { SubmissionSectionAccessesComponent } from './accesses/section-accesses.component';
 import { SubmissionSectionCcLicensesComponent } from './cc-license/submission-section-cc-licenses.component';

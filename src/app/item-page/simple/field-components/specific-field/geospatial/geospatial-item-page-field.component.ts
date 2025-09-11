@@ -3,11 +3,11 @@ import {
   Input,
   OnInit,
 } from '@angular/core';
-import { Item } from '@dspace/core/shared/item.model';
+import { Item } from '@dspace/core';
 import {
   hasValue,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import { TranslatePipe } from '@ngx-translate/core';
 
 import { GeospatialMapComponent } from '../../../../../shared/geospatial-map/geospatial-map.component';

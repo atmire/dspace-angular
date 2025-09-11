@@ -17,19 +17,19 @@ import {
 } from '@angular/forms';
 import {
   buildPaginatedList,
+  ConfidenceType,
+  FormFieldMetadataValueObject,
+  getFirstSucceededRemoteDataPayload,
+  PageInfo,
   PaginatedList,
-} from '@dspace/core/data/paginated-list.model';
-import { ConfidenceType } from '@dspace/core/shared/confidence-type';
-import { FormFieldMetadataValueObject } from '@dspace/core/shared/form/models/form-field-metadata-value.model';
-import { getFirstSucceededRemoteDataPayload } from '@dspace/core/shared/operators';
-import { PageInfo } from '@dspace/core/shared/page-info.model';
-import { VocabularyEntry } from '@dspace/core/submission/vocabularies/models/vocabulary-entry.model';
-import { VocabularyService } from '@dspace/core/submission/vocabularies/vocabulary.service';
+  VocabularyEntry,
+  VocabularyService,
+} from '@dspace/core';
 import {
   hasValue,
   isEmpty,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   NgbDropdown,
   NgbDropdownModule,

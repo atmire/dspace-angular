@@ -8,23 +8,23 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { PaginatedList } from '@dspace/core/data/paginated-list.model';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { SourceQualityAssuranceEventMessageObject } from '@dspace/core/notifications/qa/models/quality-assurance-event.model';
 import {
+  Context,
+  DSpaceObject,
   ImportType,
+  ListableObject,
+  PaginatedList,
+  PaginatedSearchOptions,
+  PaginationComponentOptions,
   QualityAssuranceEventData,
-} from '@dspace/core/notifications/qa/models/quality-assurance-event-data.model';
-import { PaginationComponentOptions } from '@dspace/core/pagination/pagination-component-options.model';
-import { Context } from '@dspace/core/shared/context.model';
-import { DSpaceObject } from '@dspace/core/shared/dspace-object.model';
-import { ListableObject } from '@dspace/core/shared/object-collection/listable-object.model';
-import { PaginatedSearchOptions } from '@dspace/core/shared/search/models/paginated-search-options.model';
-import { SearchResult } from '@dspace/core/shared/search/models/search-result.model';
+  RemoteData,
+  SearchResult,
+  SourceQualityAssuranceEventMessageObject,
+} from '@dspace/core';
 import {
   hasValue,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import {

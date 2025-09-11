@@ -5,13 +5,15 @@ import {
   ActivatedRoute,
   Router,
 } from '@angular/router';
-import { PaginatedList } from '@dspace/core/data/paginated-list.model';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { SuggestionSource } from '@dspace/core/notifications/suggestions/models/suggestion-source.model';
-import { SuggestionSourceDataService } from '@dspace/core/notifications/suggestions/source/suggestion-source-data.service';
-import { PaginationService } from '@dspace/core/pagination/pagination.service';
-import { PaginationComponentOptions } from '@dspace/core/pagination/pagination-component-options.model';
-import { getFirstCompletedRemoteData } from '@dspace/core/shared/operators';
+import {
+  getFirstCompletedRemoteData,
+  PaginatedList,
+  PaginationComponentOptions,
+  PaginationService,
+  RemoteData,
+  SuggestionSource,
+  SuggestionSourceDataService,
+} from '@dspace/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import {
   BehaviorSubject,

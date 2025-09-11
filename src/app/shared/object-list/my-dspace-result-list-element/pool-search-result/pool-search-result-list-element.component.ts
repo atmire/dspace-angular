@@ -11,28 +11,30 @@ import {
 import {
   APP_CONFIG,
   AppConfig,
-} from '@dspace/config/app-config.interface';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { LinkService } from '@dspace/core/cache/builders/link.service';
-import { ObjectCacheService } from '@dspace/core/cache/object-cache.service';
-import { ConfigurationDataService } from '@dspace/core/data/configuration-data.service';
-import { PaginatedList } from '@dspace/core/data/paginated-list.model';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { ConfigurationProperty } from '@dspace/core/shared/configuration-property.model';
-import { Context } from '@dspace/core/shared/context.model';
-import { Duplicate } from '@dspace/core/shared/duplicate-data/duplicate.model';
-import { followLink } from '@dspace/core/shared/follow-link-config.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { PoolTaskSearchResult } from '@dspace/core/shared/object-collection/pool-task-search-result.model';
-import { getFirstCompletedRemoteData } from '@dspace/core/shared/operators';
-import { ViewMode } from '@dspace/core/shared/view-mode.model';
-import { WorkflowItem } from '@dspace/core/submission/models/workflowitem.model';
-import { SubmissionDuplicateDataService } from '@dspace/core/submission/submission-duplicate-data.service';
-import { PoolTask } from '@dspace/core/tasks/models/pool-task-object.model';
+} from '@dspace/config';
+import {
+  ConfigurationDataService,
+  ConfigurationProperty,
+  Context,
+  DSONameService,
+  Duplicate,
+  followLink,
+  getFirstCompletedRemoteData,
+  Item,
+  LinkService,
+  ObjectCacheService,
+  PaginatedList,
+  PoolTask,
+  PoolTaskSearchResult,
+  RemoteData,
+  SubmissionDuplicateDataService,
+  ViewMode,
+  WorkflowItem,
+} from '@dspace/core';
 import {
   hasValue,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   BehaviorSubject,

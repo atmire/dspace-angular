@@ -3,10 +3,12 @@ import {
   TestBed,
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { ConfigurationDataService } from '@dspace/core/data/configuration-data.service';
-import { NativeWindowService } from '@dspace/core/services/window.service';
-import { NativeWindowMockFactory } from '@dspace/core/testing/mock-native-window-ref';
-import { createSuccessfulRemoteDataObject$ } from '@dspace/core/utilities/remote-data.utils';
+import {
+  ConfigurationDataService,
+  createSuccessfulRemoteDataObject$,
+  NativeWindowMockFactory,
+  NativeWindowService,
+} from '@dspace/core';
 
 import { GoogleRecaptchaComponent } from './google-recaptcha.component';
 

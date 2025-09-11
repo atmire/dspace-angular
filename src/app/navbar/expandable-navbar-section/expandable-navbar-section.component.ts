@@ -12,7 +12,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { RouterLinkActive } from '@angular/router';
-import { isNotEmpty } from '@dspace/shared/utils/empty.util';
+import { isNotEmpty } from '@dspace/utils';
 import { Observable } from 'rxjs';
 import {
   first,

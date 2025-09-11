@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { ListableObject } from '@dspace/core/shared/object-collection/listable-object.model';
+import { ListableObject } from '@dspace/core';
 import {
   hasValue,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   MemoizedSelector,
   select,

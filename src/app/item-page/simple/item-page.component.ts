@@ -14,27 +14,27 @@ import {
   ActivatedRoute,
   Router,
 } from '@angular/router';
-import { NotifyInfoService } from '@dspace/core/coar-notify/notify-info/notify-info.service';
-import { AuthorizationDataService } from '@dspace/core/data/feature-authorization/authorization-data.service';
-import { FeatureID } from '@dspace/core/data/feature-authorization/feature-id';
-import { ItemDataService } from '@dspace/core/data/item-data.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { SignpostingDataService } from '@dspace/core/data/signposting-data.service';
-import { SignpostingLink } from '@dspace/core/data/signposting-links.model';
-import { getItemPageRoute } from '@dspace/core/router/utils/dso-route.utils';
 import {
-  LinkDefinition,
+  AuthorizationDataService,
+  FeatureID,
+  getAllSucceededRemoteDataPayload,
+  getItemPageRoute,
+  Item,
+  ItemDataService,
+  ItemRequest,
   LinkHeadService,
-} from '@dspace/core/services/link-head.service';
-import { ServerResponseService } from '@dspace/core/services/server-response.service';
-import { Item } from '@dspace/core/shared/item.model';
-import { ItemRequest } from '@dspace/core/shared/item-request.model';
-import { getAllSucceededRemoteDataPayload } from '@dspace/core/shared/operators';
-import { ViewMode } from '@dspace/core/shared/view-mode.model';
+  LinkTagDefinition,
+  NotifyInfoService,
+  RemoteData,
+  ServerResponseService,
+  SignpostingDataService,
+  SignpostingLink,
+  ViewMode,
+} from '@dspace/core';
 import {
   hasValue,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   combineLatest,
@@ -127,7 +127,7 @@ export class ItemPageComponent implements OnInit, OnDestroy {
   /**
    * An array of LinkDefinition objects representing inbox links for the item page.
    */
-  inboxTags: LinkDefinition[] = [];
+  inboxTags: LinkTagDefinition[] = [];
 
   coarRestApiUrls: string[] = [];
 
@@ -179,7 +179,7 @@ export class ItemPageComponent implements OnInit, OnDestroy {
           signpostingLinks.forEach((link: SignpostingLink) => {
             links = links + (isNotEmpty(links) ? ', ' : '') + `<${link.href}> ; rel="${link.rel}"` + (isNotEmpty(link.type) ? ` ; type="${link.type}" ` : ' ')
               + (isNotEmpty(link.profile) ? ` ; profile="${link.profile}" ` : '');
-            let tag: LinkDefinition = {
+            let tag: LinkTagDefinition = {
               href: link.href,
               rel: link.rel,
             };
@@ -234,7 +234,7 @@ export class ItemPageComponent implements OnInit, OnDestroy {
 
     coarRestApiUrls.forEach((coarRestApiUrl: string) => {
       // Add link to head
-      const tag: LinkDefinition = {
+      const tag: LinkTagDefinition = {
         href: coarRestApiUrl,
         rel: rel,
       };
@@ -251,7 +251,7 @@ export class ItemPageComponent implements OnInit, OnDestroy {
     this.signpostingLinks.forEach((link: SignpostingLink) => {
       this.linkHeadService.removeTag(`href='${link.href}'`);
     });
-    this.inboxTags.forEach((link: LinkDefinition) => {
+    this.inboxTags.forEach((link: LinkTagDefinition) => {
       this.linkHeadService.removeTag(`href='${link.href}'`);
     });
   }

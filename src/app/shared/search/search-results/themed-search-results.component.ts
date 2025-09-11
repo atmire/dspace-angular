@@ -4,15 +4,17 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { SortOptions } from '@dspace/core/cache/models/sort-options.model';
-import { PaginatedList } from '@dspace/core/data/paginated-list.model';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { Context } from '@dspace/core/shared/context.model';
-import { DSpaceObject } from '@dspace/core/shared/dspace-object.model';
-import { ListableObject } from '@dspace/core/shared/object-collection/listable-object.model';
-import { PaginatedSearchOptions } from '@dspace/core/shared/search/models/paginated-search-options.model';
-import { SearchResult } from '@dspace/core/shared/search/models/search-result.model';
-import { ViewMode } from '@dspace/core/shared/view-mode.model';
+import {
+  Context,
+  DSpaceObject,
+  ListableObject,
+  PaginatedList,
+  PaginatedSearchOptions,
+  RemoteData,
+  SearchResult,
+  SortOptions,
+  ViewMode,
+} from '@dspace/core';
 
 import { CollectionElementLinkType } from '../../object-collection/collection-element-link.type';
 import { ThemedComponent } from '../../theme-support/themed.component';

@@ -2,8 +2,10 @@ import {
   Component,
   Input,
 } from '@angular/core';
-import { Context } from '@dspace/core/shared/context.model';
-import { ViewMode } from '@dspace/core/shared/view-mode.model';
+import {
+  Context,
+  ViewMode,
+} from '@dspace/core';
 
 import { CollectionElementLinkType } from '../shared/object-collection/collection-element-link.type';
 import { SelectionConfig } from '../shared/search/search-results/search-results.component';

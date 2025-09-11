@@ -11,22 +11,22 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { authReducer } from '@dspace/core/auth/auth.reducer';
-import { AuthTokenInfo } from '@dspace/core/auth/models/auth-token-info.model';
-import { BrowseService } from '@dspace/core/browse/browse.service';
-import { BrowseByDataType } from '@dspace/core/browse/browse-by-data-type';
-import { AuthorizationDataService } from '@dspace/core/data/feature-authorization/authorization-data.service';
-import { buildPaginatedList } from '@dspace/core/data/paginated-list.model';
-import { FlatBrowseDefinition } from '@dspace/core/shared/flat-browse-definition.model';
-import { HierarchicalBrowseDefinition } from '@dspace/core/shared/hierarchical-browse-definition.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { ValueListBrowseDefinition } from '@dspace/core/shared/value-list-browse-definition.model';
-import { EPersonMock } from '@dspace/core/testing/eperson.mock';
-import { HostWindowServiceStub } from '@dspace/core/testing/host-window-service.stub';
 import {
+  AuthorizationDataService,
+  authReducer,
+  AuthTokenInfo,
+  BrowseByDataType,
+  BrowseService,
+  buildPaginatedList,
   createSuccessfulRemoteDataObject,
   createSuccessfulRemoteDataObject$,
-} from '@dspace/core/utilities/remote-data.utils';
+  EPersonMock,
+  FlatBrowseDefinition,
+  HierarchicalBrowseDefinition,
+  HostWindowServiceStub,
+  Item,
+  ValueListBrowseDefinition,
+} from '@dspace/core';
 import {
   Store,
   StoreModule,

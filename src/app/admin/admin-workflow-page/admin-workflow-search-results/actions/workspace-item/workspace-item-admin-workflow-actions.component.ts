@@ -7,15 +7,17 @@ import {
   Output,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { DSpaceObject } from '@dspace/core/shared/dspace-object.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { getFirstSucceededRemoteDataPayload } from '@dspace/core/shared/operators';
-import { WorkspaceItem } from '@dspace/core/submission/models/workspaceitem.model';
-import { SupervisionOrder } from '@dspace/core/supervision-order/models/supervision-order.model';
-import { SupervisionOrderDataService } from '@dspace/core/supervision-order/supervision-order-data.service';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+import {
+  DSONameService,
+  DSpaceObject,
+  getFirstSucceededRemoteDataPayload,
+  Item,
+  NotificationsService,
+  SupervisionOrder,
+  SupervisionOrderDataService,
+  WorkspaceItem,
+} from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import {
   NgbModal,
   NgbModalRef,

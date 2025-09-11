@@ -11,16 +11,18 @@ import {
 } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
-import { RestRequestMethod } from '@dspace/config/rest-request-method';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { ObjectCacheService } from '@dspace/core/cache/object-cache.service';
-import { RequestService } from '@dspace/core/data/request.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { Community } from '@dspace/core/shared/community.model';
-import { AuthServiceMock } from '@dspace/core/testing/auth.service.mock';
-import { NotificationsServiceStub } from '@dspace/core/testing/notifications-service.stub';
-import { createSuccessfulRemoteDataObject$ } from '@dspace/core/utilities/remote-data.utils';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+import { RestRequestMethod } from '@dspace/config';
+import {
+  AuthService,
+  AuthServiceMock,
+  Community,
+  createSuccessfulRemoteDataObject$,
+  NotificationsService,
+  NotificationsServiceStub,
+  ObjectCacheService,
+  RequestService,
+} from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import {
   DynamicFormControlModel,
   DynamicFormService,

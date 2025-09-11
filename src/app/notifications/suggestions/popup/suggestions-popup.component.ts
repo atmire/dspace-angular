@@ -6,8 +6,8 @@ import {
   OnInit,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { SuggestionTarget } from '@dspace/core/notifications/suggestions/models/suggestion-target.model';
-import { isNotEmpty } from '@dspace/shared/utils/empty.util';
+import { SuggestionTarget } from '@dspace/core';
+import { isNotEmpty } from '@dspace/utils';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   combineLatest,

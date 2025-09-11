@@ -7,10 +7,12 @@ import {
   ActivatedRoute,
   Router,
 } from '@angular/router';
-import { RequestService } from '@dspace/core/data/request.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { RouteService } from '@dspace/core/services/route.service';
-import { WorkflowItemDataService } from '@dspace/core/submission/workflowitem-data.service';
+import {
+  NotificationsService,
+  RequestService,
+  RouteService,
+  WorkflowItemDataService,
+} from '@dspace/core';
 import {
   TranslateModule,
   TranslateService,

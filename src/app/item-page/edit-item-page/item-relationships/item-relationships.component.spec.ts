@@ -12,33 +12,31 @@ import {
   ActivatedRoute,
   Router,
 } from '@angular/router';
-import { ObjectCacheService } from '@dspace/core/cache/object-cache.service';
-import { RestResponse } from '@dspace/core/cache/response.models';
-import { EntityTypeDataService } from '@dspace/core/data/entity-type-data.service';
-import { ItemDataService } from '@dspace/core/data/item-data.service';
-import { FieldChangeType } from '@dspace/core/data/object-updates/field-change-type.model';
-import { ObjectUpdatesService } from '@dspace/core/data/object-updates/object-updates.service';
-import { RelationshipDataService } from '@dspace/core/data/relationship-data.service';
-import { RelationshipTypeDataService } from '@dspace/core/data/relationship-type-data.service';
-import { RequestService } from '@dspace/core/data/request.service';
 import {
-  INotification,
-  Notification,
-} from '@dspace/core/notification-system/models/notification.model';
-import { NotificationType } from '@dspace/core/notification-system/models/notification-type';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { Item } from '@dspace/core/shared/item.model';
-import { ItemType } from '@dspace/core/shared/item-relationships/item-type.model';
-import { Relationship } from '@dspace/core/shared/item-relationships/relationship.model';
-import { RelationshipType } from '@dspace/core/shared/item-relationships/relationship-type.model';
-import { ItemDataServiceStub } from '@dspace/core/testing/item-data.service.stub';
-import { relationshipTypes } from '@dspace/core/testing/relationship-types.mock';
-import { RouterStub } from '@dspace/core/testing/router.stub';
-import { createPaginatedList } from '@dspace/core/testing/utils.test';
-import {
+  createPaginatedList,
   createSuccessfulRemoteDataObject,
   createSuccessfulRemoteDataObject$,
-} from '@dspace/core/utilities/remote-data.utils';
+  EntityTypeDataService,
+  FieldChangeType,
+  INotification,
+  Item,
+  ItemDataService,
+  ItemDataServiceStub,
+  ItemType,
+  Notification,
+  NotificationsService,
+  NotificationType,
+  ObjectCacheService,
+  ObjectUpdatesService,
+  Relationship,
+  RelationshipDataService,
+  RelationshipType,
+  RelationshipTypeDataService,
+  relationshipTypes,
+  RequestService,
+  RestResponse,
+  RouterStub,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   combineLatest as observableCombineLatest,

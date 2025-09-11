@@ -10,13 +10,15 @@ import {
   PLATFORM_ID,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { FacetValue } from '@dspace/core/shared/search/models/facet-value.model';
-import { FacetValues } from '@dspace/core/shared/search/models/facet-values.model';
+import {
+  FacetValue,
+  FacetValues,
+} from '@dspace/core';
 import {
   hasValue,
   isEmpty,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import { TranslateService } from '@ngx-translate/core';
 import { wktToGeoJSON } from '@terraformer/wkt';
 import {

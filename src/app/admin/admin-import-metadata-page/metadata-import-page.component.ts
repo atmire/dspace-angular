@@ -3,15 +3,15 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
+  getFirstCompletedRemoteData,
   METADATA_IMPORT_SCRIPT_NAME,
+  NotificationsService,
+  Process,
+  ProcessParameter,
+  RemoteData,
   ScriptDataService,
-} from '@dspace/core/data/processes/script-data.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { Process } from '@dspace/core/processes/process.model';
-import { ProcessParameter } from '@dspace/core/processes/process-parameter.model';
-import { getFirstCompletedRemoteData } from '@dspace/core/shared/operators';
-import { isNotEmpty } from '@dspace/shared/utils/empty.util';
+} from '@dspace/core';
+import { isNotEmpty } from '@dspace/utils';
 import {
   TranslateModule,
   TranslateService,

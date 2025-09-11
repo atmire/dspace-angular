@@ -7,22 +7,22 @@ import {
   ActivatedRoute,
   Router,
 } from '@angular/router';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { ItemDataService } from '@dspace/core/data/item-data.service';
-import { ItemRequestDataService } from '@dspace/core/data/item-request-data.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { EPerson } from '@dspace/core/eperson/models/eperson.model';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { redirectOn4xx } from '@dspace/core/shared/authorized.operators';
-import { Item } from '@dspace/core/shared/item.model';
-import { ItemRequest } from '@dspace/core/shared/item-request.model';
 import {
+  AuthService,
+  DSONameService,
+  EPerson,
   getFirstCompletedRemoteData,
   getFirstSucceededRemoteDataPayload,
-} from '@dspace/core/shared/operators';
-import { RequestCopyEmail } from '@dspace/core/shared/request-copy-email.model';
-import { isNotEmpty } from '@dspace/shared/utils/empty.util';
+  Item,
+  ItemDataService,
+  ItemRequest,
+  ItemRequestDataService,
+  NotificationsService,
+  redirectOn4xx,
+  RemoteData,
+  RequestCopyEmail,
+} from '@dspace/core';
+import { isNotEmpty } from '@dspace/utils';
 import {
   TranslateModule,
   TranslateService,

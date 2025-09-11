@@ -11,15 +11,17 @@ import {
 } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { authReducer } from '@dspace/core/auth/auth.reducer';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { AuthMethod } from '@dspace/core/auth/models/auth.method';
-import { AuthMethodType } from '@dspace/core/auth/models/auth.method-type';
-import { AuthorizationDataService } from '@dspace/core/data/feature-authorization/authorization-data.service';
-import { HardRedirectService } from '@dspace/core/services/hard-redirect.service';
-import { ActivatedRouteStub } from '@dspace/core/testing/active-router.stub';
-import { AuthServiceStub } from '@dspace/core/testing/auth-service.stub';
-import { AuthorizationDataServiceStub } from '@dspace/core/testing/authorization-service.stub';
+import {
+  ActivatedRouteStub,
+  AuthMethod,
+  AuthMethodType,
+  AuthorizationDataService,
+  AuthorizationDataServiceStub,
+  authReducer,
+  AuthService,
+  AuthServiceStub,
+  HardRedirectService,
+} from '@dspace/core';
 import {
   Store,
   StoreModule,

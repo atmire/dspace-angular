@@ -12,18 +12,18 @@ import {
   Output,
   ViewEncapsulation,
 } from '@angular/core';
-import { CookieService } from '@dspace/core/cookies/cookie.service';
-import { DragService } from '@dspace/core/drag.service';
 import {
+  CookieService,
+  DragService,
   XSRF_COOKIE,
   XSRF_REQUEST_HEADER,
   XSRF_RESPONSE_HEADER,
-} from '@dspace/core/xsrf/xsrf.constants';
+} from '@dspace/core';
 import {
   hasValue,
   isNotEmpty,
   isUndefined,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import { TranslateModule } from '@ngx-translate/core';
 import uniqueId from 'lodash/uniqueId';
 import {

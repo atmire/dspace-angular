@@ -6,8 +6,10 @@ import {
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
-import { DSpaceObject } from '@dspace/core/shared/dspace-object.model';
-import { MetadataValue } from '@dspace/core/shared/metadata.models';
+import {
+  DSpaceObject,
+  MetadataValue,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   BehaviorSubject,

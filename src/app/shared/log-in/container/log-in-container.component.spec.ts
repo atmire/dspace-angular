@@ -13,15 +13,17 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { authReducer } from '@dspace/core/auth/auth.reducer';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { AuthMethod } from '@dspace/core/auth/models/auth.method';
-import { AuthMethodType } from '@dspace/core/auth/models/auth.method-type';
-import { AuthorizationDataService } from '@dspace/core/data/feature-authorization/authorization-data.service';
-import { HardRedirectService } from '@dspace/core/services/hard-redirect.service';
-import { AuthServiceStub } from '@dspace/core/testing/auth-service.stub';
-import { AuthorizationDataServiceStub } from '@dspace/core/testing/authorization-service.stub';
-import { createTestComponent } from '@dspace/core/testing/utils.test';
+import {
+  AuthMethod,
+  AuthMethodType,
+  AuthorizationDataService,
+  AuthorizationDataServiceStub,
+  authReducer,
+  AuthService,
+  AuthServiceStub,
+  createTestComponent,
+  HardRedirectService,
+} from '@dspace/core';
 import { StoreModule } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
 

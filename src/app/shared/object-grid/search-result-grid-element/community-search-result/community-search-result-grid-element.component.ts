@@ -4,17 +4,19 @@ import {
   Input,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { LinkService } from '@dspace/core/cache/builders/link.service';
-import { BitstreamDataService } from '@dspace/core/data/bitstream-data.service';
-import { Community } from '@dspace/core/shared/community.model';
-import { followLink } from '@dspace/core/shared/follow-link-config.model';
-import { CommunitySearchResult } from '@dspace/core/shared/object-collection/community-search-result.model';
-import { ViewMode } from '@dspace/core/shared/view-mode.model';
+import {
+  BitstreamDataService,
+  Community,
+  CommunitySearchResult,
+  DSONameService,
+  followLink,
+  LinkService,
+  ViewMode,
+} from '@dspace/core';
 import {
   hasNoValue,
   hasValue,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { ThemedThumbnailComponent } from '../../../../thumbnail/themed-thumbnail.component';

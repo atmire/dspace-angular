@@ -13,18 +13,18 @@ import {
   Router,
   RouterLink,
 } from '@angular/router';
-import { SortOptions } from '@dspace/core/cache/models/sort-options.model';
-import { ItemDataService } from '@dspace/core/data/item-data.service';
-import { QualityAssuranceTopicObject } from '@dspace/core/notifications/qa/models/quality-assurance-topic.model';
-import { PaginationService } from '@dspace/core/pagination/pagination.service';
-import { PaginationComponentOptions } from '@dspace/core/pagination/pagination-component-options.model';
-import { getItemPageRoute } from '@dspace/core/router/utils/dso-route.utils';
-import { Item } from '@dspace/core/shared/item.model';
 import {
   getFirstCompletedRemoteData,
+  getItemPageRoute,
   getRemoteDataPayload,
-} from '@dspace/core/shared/operators';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+  Item,
+  ItemDataService,
+  PaginationComponentOptions,
+  PaginationService,
+  QualityAssuranceTopicObject,
+  SortOptions,
+} from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   Observable,

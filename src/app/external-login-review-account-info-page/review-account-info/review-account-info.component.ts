@@ -8,19 +8,19 @@ import {
   OnInit,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { AuthRegistrationType } from '@dspace/core/auth/models/auth.registration-type';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { EPersonDataService } from '@dspace/core/eperson/eperson-data.service';
-import { EPerson } from '@dspace/core/eperson/models/eperson.model';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { HardRedirectService } from '@dspace/core/services/hard-redirect.service';
 import {
+  AuthRegistrationType,
+  AuthService,
+  EPerson,
+  EPersonDataService,
+  HardRedirectService,
   NativeWindowRef,
   NativeWindowService,
-} from '@dspace/core/services/window.service';
-import { Registration } from '@dspace/core/shared/registration.model';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+  NotificationsService,
+  Registration,
+  RemoteData,
+} from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   TranslateModule,

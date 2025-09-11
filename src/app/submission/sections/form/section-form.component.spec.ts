@@ -14,24 +14,26 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { ObjectCacheService } from '@dspace/core/cache/object-cache.service';
-import { FormRowModel } from '@dspace/core/config/models/config-submission-form.model';
-import { SubmissionFormsConfigDataService } from '@dspace/core/config/submission-forms-config-data.service';
-import { RequestService } from '@dspace/core/data/request.service';
-import { JsonPatchOperationPathCombiner } from '@dspace/core/json-patch/builder/json-patch-operation-path-combiner';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { FormFieldModel } from '@dspace/core/shared/form/models/form-field.model';
-import { FormFieldMetadataValueObject } from '@dspace/core/shared/form/models/form-field-metadata-value.model';
-import { SubmissionSectionError } from '@dspace/core/submission/models/submission-section-error.model';
-import { WorkflowItem } from '@dspace/core/submission/models/workflowitem.model';
-import { WorkspaceItem } from '@dspace/core/submission/models/workspaceitem.model';
-import { SectionsType } from '@dspace/core/submission/sections-type';
-import { NotificationsServiceStub } from '@dspace/core/testing/notifications-service.stub';
-import { SectionsServiceStub } from '@dspace/core/testing/sections-service.stub';
-import { SubmissionServiceStub } from '@dspace/core/testing/submission-service.stub';
-import { getMockTranslateService } from '@dspace/core/testing/translate.service.mock';
-import { createTestComponent } from '@dspace/core/testing/utils.test';
-import { createSuccessfulRemoteDataObject$ } from '@dspace/core/utilities/remote-data.utils';
+import {
+  createSuccessfulRemoteDataObject$,
+  createTestComponent,
+  FormFieldMetadataValueObject,
+  FormFieldModel,
+  FormRowModel,
+  getMockTranslateService,
+  JsonPatchOperationPathCombiner,
+  NotificationsService,
+  NotificationsServiceStub,
+  ObjectCacheService,
+  RequestService,
+  SectionsServiceStub,
+  SectionsType,
+  SubmissionFormsConfigDataService,
+  SubmissionSectionError,
+  SubmissionServiceStub,
+  WorkflowItem,
+  WorkspaceItem,
+} from '@dspace/core';
 import {
   DynamicFormControlEvent,
   DynamicFormControlEventType,

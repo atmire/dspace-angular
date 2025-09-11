@@ -9,22 +9,22 @@ import {
   Router,
   RouterLink,
 } from '@angular/router';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { ItemDataService } from '@dspace/core/data/item-data.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { RequestService } from '@dspace/core/data/request.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { getItemPageRoute } from '@dspace/core/router/utils/dso-route.utils';
-import { Collection } from '@dspace/core/shared/collection.model';
-import { DSpaceObjectType } from '@dspace/core/shared/dspace-object-type.model';
-import { followLink } from '@dspace/core/shared/follow-link-config.model';
-import { Item } from '@dspace/core/shared/item.model';
 import {
+  Collection,
+  DSONameService,
+  DSpaceObjectType,
+  followLink,
   getAllSucceededRemoteDataPayload,
   getFirstCompletedRemoteData,
   getFirstSucceededRemoteData,
+  getItemPageRoute,
   getRemoteDataPayload,
-} from '@dspace/core/shared/operators';
+  Item,
+  ItemDataService,
+  NotificationsService,
+  RemoteData,
+  RequestService,
+} from '@dspace/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {
   TranslateModule,

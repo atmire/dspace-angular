@@ -7,7 +7,7 @@ import {
   Output,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ListableObject } from '@dspace/core/shared/object-collection/listable-object.model';
+import { ListableObject } from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import {

@@ -1,4 +1,3 @@
-
 import {
   Component,
   Inject,
@@ -11,20 +10,20 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { EPerson } from '@dspace/core/eperson/models/eperson.model';
-import { FeedbackDataService } from '@dspace/core/feedback/feedback-data.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { getHomePageRoute } from '@dspace/core/router/core-routing-paths';
-import { RouteService } from '@dspace/core/services/route.service';
 import {
+  AuthService,
+  EPerson,
+  FeedbackDataService,
+  getFirstCompletedRemoteData,
+  getHomePageRoute,
   NativeWindowRef,
   NativeWindowService,
-} from '@dspace/core/services/window.service';
-import { NoContent } from '@dspace/core/shared/NoContent.model';
-import { getFirstCompletedRemoteData } from '@dspace/core/shared/operators';
-import { URLCombiner } from '@dspace/core/url-combiner/url-combiner';
+  NoContent,
+  NotificationsService,
+  RemoteData,
+  RouteService,
+  URLCombiner,
+} from '@dspace/core';
 import {
   TranslateModule,
   TranslateService,

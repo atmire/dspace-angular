@@ -1,20 +1,22 @@
 import { Injectable } from '@angular/core';
-import { SubmissionFormsModel } from '@dspace/core/config/models/config-submission-forms.model';
-import { JsonPatchOperationPathCombiner } from '@dspace/core/json-patch/builder/json-patch-operation-path-combiner';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { SectionScope } from '@dspace/core/submission/models/section-visibility.model';
-import { SubmissionSectionError } from '@dspace/core/submission/models/submission-section-error.model';
-import { SubmissionSectionObject } from '@dspace/core/submission/models/submission-section-object.model';
-import { WorkspaceitemSectionDataType } from '@dspace/core/submission/models/workspaceitem-sections.model';
-import { SectionsType } from '@dspace/core/submission/sections-type';
-import { normalizeSectionData } from '@dspace/core/submission/submission-response-parsing.service';
-import { SubmissionScopeType } from '@dspace/core/submission/submission-scope-type';
+import {
+  JsonPatchOperationPathCombiner,
+  normalizeSectionData,
+  NotificationsService,
+  SectionScope,
+  SectionsType,
+  SubmissionFormsModel,
+  SubmissionScopeType,
+  SubmissionSectionError,
+  SubmissionSectionObject,
+  WorkspaceitemSectionDataType,
+} from '@dspace/core';
 import {
   hasValue,
   isEmpty,
   isNotEmpty,
   isNotUndefined,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import { parseReviver } from '@ng-dynamic-forms/core';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';

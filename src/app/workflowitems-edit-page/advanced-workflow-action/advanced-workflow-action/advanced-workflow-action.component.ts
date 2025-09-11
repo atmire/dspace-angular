@@ -7,15 +7,17 @@ import {
   ActivatedRoute,
   Router,
 } from '@angular/router';
-import { RequestService } from '@dspace/core/data/request.service';
-import { WorkflowActionDataService } from '@dspace/core/data/workflow-action-data.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { RouteService } from '@dspace/core/services/route.service';
-import { getFirstSucceededRemoteDataPayload } from '@dspace/core/shared/operators';
-import { WorkflowItemDataService } from '@dspace/core/submission/workflowitem-data.service';
-import { ClaimedTaskDataService } from '@dspace/core/tasks/claimed-task-data.service';
-import { ProcessTaskResponse } from '@dspace/core/tasks/models/process-task-response';
-import { WorkflowAction } from '@dspace/core/tasks/models/workflow-action-object.model';
+import {
+  ClaimedTaskDataService,
+  getFirstSucceededRemoteDataPayload,
+  NotificationsService,
+  ProcessTaskResponse,
+  RequestService,
+  RouteService,
+  WorkflowAction,
+  WorkflowActionDataService,
+  WorkflowItemDataService,
+} from '@dspace/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';

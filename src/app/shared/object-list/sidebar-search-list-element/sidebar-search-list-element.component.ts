@@ -6,18 +6,20 @@ import {
   Component,
   OnInit,
 } from '@angular/core';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { LinkService } from '@dspace/core/cache/builders/link.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { ChildHALResource } from '@dspace/core/shared/child-hal-resource.model';
-import { Context } from '@dspace/core/shared/context.model';
-import { DSpaceObject } from '@dspace/core/shared/dspace-object.model';
-import { followLink } from '@dspace/core/shared/follow-link-config.model';
-import { SearchResult } from '@dspace/core/shared/search/models/search-result.model';
+import {
+  ChildHALResource,
+  Context,
+  DSONameService,
+  DSpaceObject,
+  followLink,
+  LinkService,
+  RemoteData,
+  SearchResult,
+} from '@dspace/core';
 import {
   hasValue,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   Observable,

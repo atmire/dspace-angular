@@ -5,18 +5,22 @@ import {
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { ItemDataService } from '@dspace/core/data/item-data.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { ResolvedAction } from '@dspace/core/resolving/resolver.actions';
-import { getItemPageRoute } from '@dspace/core/router/utils/dso-route.utils';
-import { redirectOn4xx } from '@dspace/core/shared/authorized.operators';
 import {
+  APP_CONFIG,
+  AppConfig,
+} from '@dspace/config';
+import {
+  AuthService,
+  getFirstCompletedRemoteData,
   getItemPageLinksToFollow,
+  getItemPageRoute,
   Item,
-} from '@dspace/core/shared/item.model';
-import { getFirstCompletedRemoteData } from '@dspace/core/shared/operators';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+  ItemDataService,
+  redirectOn4xx,
+  RemoteData,
+  ResolvedAction,
+} from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -41,12 +45,13 @@ export const itemPageResolver: ResolveFn<RemoteData<Item>> = (
   itemService: ItemDataService = inject(ItemDataService),
   store: Store<AppState> = inject(Store<AppState>),
   authService: AuthService = inject(AuthService),
+  appConfig: AppConfig = inject(APP_CONFIG),
 ): Observable<RemoteData<Item>> => {
   const itemRD$ = itemService.findById(
     route.params.id,
     true,
     false,
-    ...getItemPageLinksToFollow(),
+    ...getItemPageLinksToFollow(appConfig.item.showAccessStatuses),
   ).pipe(
     getFirstCompletedRemoteData(),
     redirectOn4xx(router, authService),

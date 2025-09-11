@@ -15,9 +15,11 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { FormFieldMetadataValueObject } from '@dspace/core/shared/form/models/form-field-metadata-value.model';
-import { StoreMock } from '@dspace/core/testing/store.mock';
-import { createTestComponent } from '@dspace/core/testing/utils.test';
+import {
+  createTestComponent,
+  FormFieldMetadataValueObject,
+  StoreMock,
+} from '@dspace/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {
   DynamicFormArrayModel,

@@ -14,16 +14,18 @@ import {
 import { By } from '@angular/platform-browser';
 import { RouterLinkWithHref } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { buildPaginatedList } from '@dspace/core/data/paginated-list.model';
-import { Collection } from '@dspace/core/shared/collection.model';
-import { Community } from '@dspace/core/shared/community.model';
-import { PageInfo } from '@dspace/core/shared/page-info.model';
-import { TranslateLoaderMock } from '@dspace/core/testing/translate-loader.mock';
-import { createSuccessfulRemoteDataObject$ } from '@dspace/core/utilities/remote-data.utils';
+import {
+  buildPaginatedList,
+  Collection,
+  Community,
+  createSuccessfulRemoteDataObject$,
+  PageInfo,
+  TranslateLoaderMock,
+} from '@dspace/core';
 import {
   isEmpty,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   TranslateLoader,
   TranslateModule,

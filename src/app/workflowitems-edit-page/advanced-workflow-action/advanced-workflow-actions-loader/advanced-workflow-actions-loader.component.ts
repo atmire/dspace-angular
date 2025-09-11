@@ -4,9 +4,11 @@ import {
   OnInit,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { PAGE_NOT_FOUND_PATH } from '@dspace/core/router/core-routing-paths';
-import { GenericConstructor } from '@dspace/core/shared/generic-constructor';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+import {
+  GenericConstructor,
+  PAGE_NOT_FOUND_PATH,
+} from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import { AbstractComponentLoaderComponent } from 'src/app/shared/abstract-component-loader/abstract-component-loader.component';
 
 import { getAdvancedComponentByWorkflowTaskOption } from '../../../shared/mydspace-actions/claimed-task/switcher/claimed-task-actions-decorator';

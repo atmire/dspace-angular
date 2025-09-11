@@ -7,14 +7,14 @@ import {
 } from '@angular/core';
 import {
   buildPaginatedList,
+  createSuccessfulRemoteDataObject,
+  ListableObject,
+  PageInfo,
   PaginatedList,
-} from '@dspace/core/data/paginated-list.model';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { PaginationComponentOptions } from '@dspace/core/pagination/pagination-component-options.model';
-import { ListableObject } from '@dspace/core/shared/object-collection/listable-object.model';
-import { PageInfo } from '@dspace/core/shared/page-info.model';
-import { createSuccessfulRemoteDataObject } from '@dspace/core/utilities/remote-data.utils';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+  PaginationComponentOptions,
+  RemoteData,
+} from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import {
   NgbAccordionModule,
   NgbNavModule,

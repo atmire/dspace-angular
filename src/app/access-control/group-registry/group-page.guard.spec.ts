@@ -7,10 +7,12 @@ import {
   Router,
   UrlTree,
 } from '@angular/router';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { AuthorizationDataService } from '@dspace/core/data/feature-authorization/authorization-data.service';
-import { FeatureID } from '@dspace/core/data/feature-authorization/feature-id';
-import { HALEndpointService } from '@dspace/core/shared/hal-endpoint.service';
+import {
+  AuthorizationDataService,
+  AuthService,
+  FeatureID,
+  HALEndpointService,
+} from '@dspace/core';
 import {
   Observable,
   of,

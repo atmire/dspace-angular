@@ -8,16 +8,16 @@ import { RouterLink } from '@angular/router';
 import {
   AdminNotifyMetricsBox,
   AdminNotifyMetricsRow,
-} from '@dspace/config/admin-notify-metrics.config';
-import {
   APP_CONFIG,
   AppConfig,
-} from '@dspace/config/app-config.interface';
-import { PaginationComponentOptions } from '@dspace/core/pagination/pagination-component-options.model';
-import { DSpaceObject } from '@dspace/core/shared/dspace-object.model';
-import { getFirstCompletedRemoteData } from '@dspace/core/shared/operators';
-import { PaginatedSearchOptions } from '@dspace/core/shared/search/models/paginated-search-options.model';
-import { SearchObjects } from '@dspace/core/shared/search/models/search-objects.model';
+} from '@dspace/config';
+import {
+  DSpaceObject,
+  getFirstCompletedRemoteData,
+  PaginatedSearchOptions,
+  PaginationComponentOptions,
+  SearchObjects,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   BehaviorSubject,

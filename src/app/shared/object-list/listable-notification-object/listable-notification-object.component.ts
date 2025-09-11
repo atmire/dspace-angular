@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { ListableNotificationObject } from '@dspace/core/shared/listable-notification-object.model';
-import { LISTABLE_NOTIFICATION_OBJECT } from '@dspace/core/shared/object-collection/listable-notification-object.resource-type';
-import { ViewMode } from '@dspace/core/shared/view-mode.model';
+import {
+  LISTABLE_NOTIFICATION_OBJECT,
+  ListableNotificationObject,
+  ViewMode,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { listableObjectComponent } from '../../object-collection/shared/listable-object/listable-object.decorator';

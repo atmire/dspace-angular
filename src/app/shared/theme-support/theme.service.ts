@@ -9,34 +9,31 @@ import {
   ResolveEnd,
   Router,
 } from '@angular/router';
-import { APP_CONFIG } from '@dspace/config/app-config.interface';
-import { BuildConfig } from '@dspace/config/build-config.interface';
-import { getDefaultThemeConfig } from '@dspace/config/config.util';
 import {
+  APP_CONFIG,
   BASE_THEME_NAME,
+  BuildConfig,
   HeadTagConfig,
   ThemeConfig,
-} from '@dspace/config/theme.config';
-import { LinkService } from '@dspace/core/cache/builders/link.service';
-import { DSpaceObjectDataService } from '@dspace/core/data/dspace-object-data.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
+} from '@dspace/config';
 import {
-  NO_OP_ACTION_TYPE,
-  NoOpAction,
-} from '@dspace/core/ngrx/no-op.action';
-import { distinctNext } from '@dspace/core/shared/distinct-next';
-import { DSpaceObject } from '@dspace/core/shared/dspace-object.model';
-import { followLink } from '@dspace/core/shared/follow-link-config.model';
-import {
+  distinctNext,
+  DSpaceObject,
+  DSpaceObjectDataService,
+  followLink,
   getFirstCompletedRemoteData,
   getFirstSucceededRemoteData,
   getRemoteDataPayload,
-} from '@dspace/core/shared/operators';
+  LinkService,
+  NO_OP_ACTION_TYPE,
+  NoOpAction,
+  RemoteData,
+} from '@dspace/core';
 import {
   hasNoValue,
   hasValue,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   createFeatureSelector,
   createSelector,
@@ -72,6 +69,7 @@ import {
   themeFactory,
 } from './theme.model';
 import { ThemeState } from './theme.reducer';
+import { getDefaultThemeConfig } from './theme.utils';
 
 export const themeStateSelector = createFeatureSelector<ThemeState>('theme');
 

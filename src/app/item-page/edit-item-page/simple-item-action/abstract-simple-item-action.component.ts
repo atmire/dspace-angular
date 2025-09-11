@@ -8,12 +8,14 @@ import {
   Router,
   RouterLink,
 } from '@angular/router';
-import { ItemDataService } from '@dspace/core/data/item-data.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { getItemPageRoute } from '@dspace/core/router/utils/dso-route.utils';
-import { Item } from '@dspace/core/shared/item.model';
-import { getFirstSucceededRemoteData } from '@dspace/core/shared/operators';
+import {
+  getFirstSucceededRemoteData,
+  getItemPageRoute,
+  Item,
+  ItemDataService,
+  NotificationsService,
+  RemoteData,
+} from '@dspace/core';
 import {
   TranslateModule,
   TranslateService,

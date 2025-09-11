@@ -1,10 +1,12 @@
 import { waitForAsync } from '@angular/core/testing';
-import { buildPaginatedList } from '@dspace/core/data/paginated-list.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { MetadataMap } from '@dspace/core/shared/metadata.models';
-import { PageInfo } from '@dspace/core/shared/page-info.model';
-import { Version } from '@dspace/core/shared/version.model';
-import { createSuccessfulRemoteDataObject$ } from '@dspace/core/utilities/remote-data.utils';
+import {
+  buildPaginatedList,
+  createSuccessfulRemoteDataObject$,
+  Item,
+  MetadataMap,
+  PageInfo,
+  Version,
+} from '@dspace/core';
 import {
   EMPTY,
   of,

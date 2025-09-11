@@ -5,15 +5,17 @@ import {
   waitForAsync,
 } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import { Item } from '@dspace/core/shared/item.model';
-import { Relationship } from '@dspace/core/shared/item-relationships/relationship.model';
-import { ReorderableRelationship } from '@dspace/core/shared/item-relationships/reorderable-relationship';
-import { ItemSearchResult } from '@dspace/core/shared/object-collection/item-search-result.model';
-import { RelationshipOptions } from '@dspace/core/shared/relationship-options.model';
-import { ActivatedRouteStub } from '@dspace/core/testing/active-router.stub';
-import { SubmissionServiceStub } from '@dspace/core/testing/submission-service.stub';
-import { TranslateLoaderMock } from '@dspace/core/testing/translate-loader.mock';
-import { createSuccessfulRemoteDataObject$ } from '@dspace/core/utilities/remote-data.utils';
+import {
+  ActivatedRouteStub,
+  createSuccessfulRemoteDataObject$,
+  Item,
+  ItemSearchResult,
+  Relationship,
+  RelationshipOptions,
+  ReorderableRelationship,
+  SubmissionServiceStub,
+  TranslateLoaderMock,
+} from '@dspace/core';
 import { Store } from '@ngrx/store';
 import {
   TranslateLoader,

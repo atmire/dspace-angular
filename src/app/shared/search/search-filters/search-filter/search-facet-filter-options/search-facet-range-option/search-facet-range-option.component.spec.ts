@@ -14,14 +14,16 @@ import {
   Router,
   RouterLink,
 } from '@angular/router';
-import { PaginationService } from '@dspace/core/pagination/pagination.service';
-import { PaginationComponentOptions } from '@dspace/core/pagination/pagination-component-options.model';
-import { FacetValue } from '@dspace/core/shared/search/models/facet-value.model';
-import { FilterType } from '@dspace/core/shared/search/models/filter-type.model';
-import { SearchFilterConfig } from '@dspace/core/shared/search/models/search-filter-config.model';
-import { PaginationServiceStub } from '@dspace/core/testing/pagination-service.stub';
-import { RouterStub } from '@dspace/core/testing/router.stub';
-import { SearchServiceStub } from '@dspace/core/testing/search-service.stub';
+import {
+  FacetValue,
+  FilterType,
+  PaginationComponentOptions,
+  PaginationService,
+  PaginationServiceStub,
+  RouterStub,
+  SearchFilterConfig,
+  SearchServiceStub,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 

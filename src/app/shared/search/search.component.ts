@@ -21,37 +21,37 @@ import {
 import {
   APP_CONFIG,
   AppConfig,
-} from '@dspace/config/app-config.interface';
-import { SortOptions } from '@dspace/core/cache/models/sort-options.model';
-import { PaginatedList } from '@dspace/core/data/paginated-list.model';
-import { RemoteData } from '@dspace/core/data/remote-data';
+} from '@dspace/config';
 import {
   COLLECTION_MODULE_PATH,
   COMMUNITY_MODULE_PATH,
+  Context,
+  currentPath,
+  DSpaceObject,
+  followLink,
+  getFirstCompletedRemoteData,
+  Item,
   ITEM_MODULE_PATH,
-} from '@dspace/core/router/core-routing-paths';
-import { currentPath } from '@dspace/core/router/utils/route.utils';
-import { RouteService } from '@dspace/core/services/route.service';
-import { Context } from '@dspace/core/shared/context.model';
-import { DSpaceObject } from '@dspace/core/shared/dspace-object.model';
-import { followLink } from '@dspace/core/shared/follow-link-config.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { ListableObject } from '@dspace/core/shared/object-collection/listable-object.model';
-import { getFirstCompletedRemoteData } from '@dspace/core/shared/operators';
-import { PaginatedSearchOptions } from '@dspace/core/shared/search/models/paginated-search-options.model';
-import { SearchFilterConfig } from '@dspace/core/shared/search/models/search-filter-config.model';
-import { SearchObjects } from '@dspace/core/shared/search/models/search-objects.model';
-import { SearchResult } from '@dspace/core/shared/search/models/search-result.model';
-import { SearchConfig } from '@dspace/core/shared/search/search-filters/search-config.model';
-import { ViewMode } from '@dspace/core/shared/view-mode.model';
-import { SubmissionObject } from '@dspace/core/submission/models/submission-object.model';
-import { WorkspaceItem } from '@dspace/core/submission/models/workspaceitem.model';
+  ListableObject,
+  PaginatedList,
+  PaginatedSearchOptions,
+  RemoteData,
+  RouteService,
+  SearchConfig,
+  SearchFilterConfig,
+  SearchObjects,
+  SearchResult,
+  SortOptions,
+  SubmissionObject,
+  ViewMode,
+  WorkspaceItem,
+} from '@dspace/core';
 import {
   hasValue,
   hasValueOperator,
   isEmpty,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import { TranslateModule } from '@ngx-translate/core';
 import uniqueId from 'lodash/uniqueId';
 import {

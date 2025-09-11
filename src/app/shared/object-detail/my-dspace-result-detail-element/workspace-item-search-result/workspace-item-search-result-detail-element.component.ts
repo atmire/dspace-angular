@@ -2,16 +2,18 @@ import {
   Component,
   OnInit,
 } from '@angular/core';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { LinkService } from '@dspace/core/cache/builders/link.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { Context } from '@dspace/core/shared/context.model';
-import { followLink } from '@dspace/core/shared/follow-link-config.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { WorkspaceItemSearchResult } from '@dspace/core/shared/object-collection/workspace-item-search-result.model';
-import { ViewMode } from '@dspace/core/shared/view-mode.model';
-import { WorkspaceItem } from '@dspace/core/submission/models/workspaceitem.model';
-import { isNotUndefined } from '@dspace/shared/utils/empty.util';
+import {
+  Context,
+  DSONameService,
+  followLink,
+  Item,
+  LinkService,
+  RemoteData,
+  ViewMode,
+  WorkspaceItem,
+  WorkspaceItemSearchResult,
+} from '@dspace/core';
+import { isNotUndefined } from '@dspace/utils';
 import { Observable } from 'rxjs';
 import { find } from 'rxjs/operators';
 

@@ -4,10 +4,12 @@ import {
   ResolveFn,
   RouterStateSnapshot,
 } from '@angular/router';
-import { BitstreamFormatDataService } from '@dspace/core/data/bitstream-format-data.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { BitstreamFormat } from '@dspace/core/shared/bitstream-format.model';
-import { getFirstCompletedRemoteData } from '@dspace/core/shared/operators';
+import {
+  BitstreamFormat,
+  BitstreamFormatDataService,
+  getFirstCompletedRemoteData,
+  RemoteData,
+} from '@dspace/core';
 import { Observable } from 'rxjs';
 
 /**

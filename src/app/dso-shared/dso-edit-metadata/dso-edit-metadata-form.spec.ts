@@ -1,5 +1,7 @@
-import { DSpaceObject } from '@dspace/core/shared/dspace-object.model';
-import { MetadataValue } from '@dspace/core/shared/metadata.models';
+import {
+  DSpaceObject,
+  MetadataValue,
+} from '@dspace/core';
 
 import {
   DsoEditMetadataChangeType,

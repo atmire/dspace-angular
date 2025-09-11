@@ -11,10 +11,12 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { BitstreamFormat } from '@dspace/core/shared/bitstream-format.model';
-import { BitstreamFormatSupportLevel } from '@dspace/core/shared/bitstream-format-support-level';
-import { RouterStub } from '@dspace/core/testing/router.stub';
-import { isEmpty } from '@dspace/shared/utils/empty.util';
+import {
+  BitstreamFormat,
+  BitstreamFormatSupportLevel,
+  RouterStub,
+} from '@dspace/core';
+import { isEmpty } from '@dspace/utils';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {
   DynamicCheckboxModel,

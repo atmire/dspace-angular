@@ -4,7 +4,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { ListableObject } from '@dspace/core/shared/object-collection/listable-object.model';
+import { ListableObject } from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({

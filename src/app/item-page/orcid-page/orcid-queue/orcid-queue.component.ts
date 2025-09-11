@@ -7,19 +7,21 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
-import { PaginatedList } from '@dspace/core/data/paginated-list.model';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { OrcidHistory } from '@dspace/core/orcid/model/orcid-history.model';
-import { OrcidQueue } from '@dspace/core/orcid/model/orcid-queue.model';
-import { OrcidAuthService } from '@dspace/core/orcid/orcid-auth.service';
-import { OrcidHistoryDataService } from '@dspace/core/orcid/orcid-history-data.service';
-import { OrcidQueueDataService } from '@dspace/core/orcid/orcid-queue-data.service';
-import { PaginationService } from '@dspace/core/pagination/pagination.service';
-import { PaginationComponentOptions } from '@dspace/core/pagination/pagination-component-options.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { getFirstCompletedRemoteData } from '@dspace/core/shared/operators';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+import {
+  getFirstCompletedRemoteData,
+  Item,
+  NotificationsService,
+  OrcidAuthService,
+  OrcidHistory,
+  OrcidHistoryDataService,
+  OrcidQueue,
+  OrcidQueueDataService,
+  PaginatedList,
+  PaginationComponentOptions,
+  PaginationService,
+  RemoteData,
+} from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import {
   TranslateModule,

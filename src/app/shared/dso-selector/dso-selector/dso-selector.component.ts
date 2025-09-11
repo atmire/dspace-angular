@@ -18,34 +18,32 @@ import {
   ReactiveFormsModule,
   UntypedFormControl,
 } from '@angular/forms';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { SortOptions } from '@dspace/core/cache/models/sort-options.model';
 import {
   buildPaginatedList,
-  PaginatedList,
-} from '@dspace/core/data/paginated-list.model';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { NotificationType } from '@dspace/core/notification-system/models/notification-type';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { Context } from '@dspace/core/shared/context.model';
-import { DSpaceObject } from '@dspace/core/shared/dspace-object.model';
-import { DSpaceObjectType } from '@dspace/core/shared/dspace-object-type.model';
-import { ListableNotificationObject } from '@dspace/core/shared/listable-notification-object.model';
-import { LISTABLE_NOTIFICATION_OBJECT } from '@dspace/core/shared/object-collection/listable-notification-object.resource-type';
-import { ListableObject } from '@dspace/core/shared/object-collection/listable-object.model';
-import {
+  Context,
+  DSONameService,
+  DSpaceObject,
+  DSpaceObjectType,
   getFirstCompletedRemoteData,
   getFirstSucceededRemoteDataPayload,
-} from '@dspace/core/shared/operators';
-import { PaginatedSearchOptions } from '@dspace/core/shared/search/models/paginated-search-options.model';
-import { SearchResult } from '@dspace/core/shared/search/models/search-result.model';
-import { ViewMode } from '@dspace/core/shared/view-mode.model';
+  LISTABLE_NOTIFICATION_OBJECT,
+  ListableNotificationObject,
+  ListableObject,
+  NotificationsService,
+  NotificationType,
+  PaginatedList,
+  PaginatedSearchOptions,
+  RemoteData,
+  SearchResult,
+  SortOptions,
+  ViewMode,
+} from '@dspace/core';
 import {
   hasNoValue,
   hasValue,
   isEmpty,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   TranslateModule,
   TranslateService,

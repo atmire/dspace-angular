@@ -10,10 +10,14 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { RemoteDataBuildService } from '@dspace/core/cache/builders/remote-data-build.service';
-import { RouteService } from '@dspace/core/services/route.service';
-import { yearFromString } from '@dspace/shared/utils/date.util';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+import {
+  RemoteDataBuildService,
+  RouteService,
+} from '@dspace/core';
+import {
+  hasValue,
+  yearFromString,
+} from '@dspace/utils';
 import {
   TranslateModule,
   TranslateService,

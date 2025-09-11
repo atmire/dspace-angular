@@ -5,7 +5,7 @@ import {
   InputSignal,
   output,
 } from '@angular/core';
-import { PaginationComponentOptions } from '@dspace/core/pagination/pagination-component-options.model';
+import { PaginationComponentOptions } from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { ThemedLoadingComponent } from '../../shared/loading/themed-loading.component';

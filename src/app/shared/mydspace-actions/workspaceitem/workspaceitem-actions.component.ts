@@ -9,20 +9,20 @@ import {
   Router,
   RouterLink,
 } from '@angular/router';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { AuthorizationDataService } from '@dspace/core/data/feature-authorization/authorization-data.service';
-import { FeatureID } from '@dspace/core/data/feature-authorization/feature-id';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { RequestService } from '@dspace/core/data/request.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { Item } from '@dspace/core/shared/item.model';
-import { NoContent } from '@dspace/core/shared/NoContent.model';
 import {
+  AuthorizationDataService,
+  AuthService,
+  FeatureID,
   getFirstCompletedRemoteData,
   getRemoteDataPayload,
-} from '@dspace/core/shared/operators';
-import { WorkspaceItem } from '@dspace/core/submission/models/workspaceitem.model';
-import { WorkspaceitemDataService } from '@dspace/core/submission/workspaceitem-data.service';
+  Item,
+  NoContent,
+  NotificationsService,
+  RemoteData,
+  RequestService,
+  WorkspaceItem,
+  WorkspaceitemDataService,
+} from '@dspace/core';
 import {
   NgbModal,
   NgbTooltipModule,

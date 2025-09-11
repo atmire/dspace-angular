@@ -1,10 +1,12 @@
-import { FormFieldMetadataValueObject } from '@dspace/core/shared/form/models/form-field-metadata-value.model';
-import { MetadataValue } from '@dspace/core/shared/metadata.models';
-import { RelationshipOptions } from '@dspace/core/shared/relationship-options.model';
+import {
+  FormFieldMetadataValueObject,
+  MetadataValue,
+  RelationshipOptions,
+} from '@dspace/core';
 import {
   hasNoValue,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   DynamicFormControlLayout,
   DynamicFormControlRelation,

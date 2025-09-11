@@ -17,10 +17,12 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { NotificationAnimationsStatus } from '@dspace/config/notifications-config.interfaces';
-import { INotification } from '@dspace/core/notification-system/models/notification.model';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { isNotEmpty } from '@dspace/shared/utils/empty.util';
+import { NotificationAnimationsStatus } from '@dspace/config';
+import {
+  INotification,
+  NotificationsService,
+} from '@dspace/core';
+import { isNotEmpty } from '@dspace/utils';
 import {
   Observable,
   of,

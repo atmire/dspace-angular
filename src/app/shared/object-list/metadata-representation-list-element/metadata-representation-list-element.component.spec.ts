@@ -7,8 +7,10 @@ import {
   TestBed,
   waitForAsync,
 } from '@angular/core/testing';
-import { MetadatumRepresentation } from '@dspace/core/shared/metadata-representation/metadatum/metadatum-representation.model';
-import { mockData } from '@dspace/core/testing/browse-definition-data-service.stub';
+import {
+  MetadatumRepresentation,
+  mockData,
+} from '@dspace/core';
 
 import { MetadataRepresentationListElementComponent } from './metadata-representation-list-element.component';
 

@@ -4,14 +4,18 @@ import {
   ResolveFn,
   RouterStateSnapshot,
 } from '@angular/router';
-import { ItemDataService } from '@dspace/core/data/item-data.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { ResolvedAction } from '@dspace/core/resolving/resolver.actions';
 import {
+  APP_CONFIG,
+  AppConfig,
+} from '@dspace/config';
+import {
+  getFirstCompletedRemoteData,
   getItemPageLinksToFollow,
   Item,
-} from '@dspace/core/shared/item.model';
-import { getFirstCompletedRemoteData } from '@dspace/core/shared/operators';
+  ItemDataService,
+  RemoteData,
+  ResolvedAction,
+} from '@dspace/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
@@ -22,12 +26,13 @@ export const itemResolver: ResolveFn<RemoteData<Item>> = (
   state: RouterStateSnapshot,
   itemService: ItemDataService = inject(ItemDataService),
   store: Store<AppState> = inject(Store<AppState>),
+  appConfig: AppConfig = inject(APP_CONFIG),
 ): Observable<RemoteData<Item>> => {
   const itemRD$ = itemService.findById(
     route.params.id,
     true,
     false,
-    ...getItemPageLinksToFollow(),
+    ...getItemPageLinksToFollow(appConfig.item.showAccessStatuses),
   ).pipe(
     getFirstCompletedRemoteData(),
   );
@@ -38,3 +43,4 @@ export const itemResolver: ResolveFn<RemoteData<Item>> = (
 
   return itemRD$;
 };
+

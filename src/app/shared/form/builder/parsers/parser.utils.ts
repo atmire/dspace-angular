@@ -1,7 +1,7 @@
 import {
   isNull,
   isUndefined,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   DynamicFormControlLayout,
   DynamicFormControlLayoutConfig,

@@ -1,6 +1,8 @@
 import { Route } from '@angular/router';
-import { i18nBreadcrumbResolver } from '@dspace/core/breadcrumbs/i18n-breadcrumb.resolver';
-import { collectionAdministratorGuard } from '@dspace/core/data/feature-authorization/feature-authorization-guard/collection-administrator.guard';
+import {
+  collectionAdministratorGuard,
+  i18nBreadcrumbResolver,
+} from '@dspace/core';
 
 import { ResourcePolicyCreateComponent } from '../../shared/resource-policies/create/resource-policy-create.component';
 import { ResourcePolicyEditComponent } from '../../shared/resource-policies/edit/resource-policy-edit.component';

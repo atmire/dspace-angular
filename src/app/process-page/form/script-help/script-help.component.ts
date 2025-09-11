@@ -3,8 +3,10 @@ import {
   Component,
   Input,
 } from '@angular/core';
-import { Script } from '@dspace/core/shared/scripts/script.model';
-import { ScriptParameterType } from '@dspace/core/shared/scripts/script-parameter-type.model';
+import {
+  Script,
+  ScriptParameterType,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 
 /**

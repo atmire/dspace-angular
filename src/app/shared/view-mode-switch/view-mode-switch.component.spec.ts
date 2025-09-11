@@ -11,9 +11,11 @@ import {
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ViewMode } from '@dspace/core/shared/view-mode.model';
-import { SearchServiceStub } from '@dspace/core/testing/search-service.stub';
-import { TranslateLoaderMock } from '@dspace/core/testing/translate-loader.mock';
+import {
+  SearchServiceStub,
+  TranslateLoaderMock,
+  ViewMode,
+} from '@dspace/core';
 import {
   TranslateLoader,
   TranslateModule,

@@ -8,16 +8,18 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { DSpaceObjectDataService } from '@dspace/core/data/dspace-object-data.service';
-import { PaginationService } from '@dspace/core/pagination/pagination.service';
-import { currentPath } from '@dspace/core/router/utils/route.utils';
-import { DSpaceObject } from '@dspace/core/shared/dspace-object.model';
-import { getFirstSucceededRemoteDataPayload } from '@dspace/core/shared/operators';
+import {
+  currentPath,
+  DSONameService,
+  DSpaceObject,
+  DSpaceObjectDataService,
+  getFirstSucceededRemoteDataPayload,
+  PaginationService,
+} from '@dspace/core';
 import {
   hasValue,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   NgbModal,
   NgbTooltipModule,

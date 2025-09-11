@@ -6,15 +6,17 @@ import {
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
-import { BrowseDefinitionDataService } from '@dspace/core/browse/browse-definition-data.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { PAGE_NOT_FOUND_PATH } from '@dspace/core/router/core-routing-paths';
-import { BrowseDefinition } from '@dspace/core/shared/browse-definition.model';
-import { getFirstCompletedRemoteData } from '@dspace/core/shared/operators';
+import {
+  BrowseDefinition,
+  BrowseDefinitionDataService,
+  getFirstCompletedRemoteData,
+  PAGE_NOT_FOUND_PATH,
+  RemoteData,
+} from '@dspace/core';
 import {
   hasNoValue,
   hasValue,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import { TranslateService } from '@ngx-translate/core';
 import {
   Observable,

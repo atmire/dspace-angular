@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { StoreActionTypes } from '@dspace/core/ngrx/type';
+import { StoreActionTypes } from '@dspace/core';
 import {
   Actions,
   createEffect,

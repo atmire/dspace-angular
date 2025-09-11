@@ -3,19 +3,17 @@ import {
   Inject,
   OnInit,
 } from '@angular/core';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { AuthMethod } from '@dspace/core/auth/models/auth.method';
 import {
+  AuthMethod,
+  AuthService,
+  CoreState,
+  HardRedirectService,
   isAuthenticated,
   isAuthenticationLoading,
-} from '@dspace/core/auth/selectors';
-import { CoreState } from '@dspace/core/core-state.model';
-import { HardRedirectService } from '@dspace/core/services/hard-redirect.service';
-import {
   NativeWindowRef,
   NativeWindowService,
-} from '@dspace/core/services/window.service';
-import { isEmpty } from '@dspace/shared/utils/empty.util';
+} from '@dspace/core';
+import { isEmpty } from '@dspace/utils';
 import {
   select,
   Store,

@@ -1,4 +1,3 @@
-
 import {
   Component,
   EventEmitter,
@@ -12,12 +11,14 @@ import {
   RouterLink,
   RouterLinkActive,
 } from '@angular/router';
-import { currentPath } from '@dspace/core/router/utils/route.utils';
-import { ViewMode } from '@dspace/core/shared/view-mode.model';
+import {
+  currentPath,
+  ViewMode,
+} from '@dspace/core';
 import {
   isEmpty,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';

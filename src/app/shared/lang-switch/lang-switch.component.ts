@@ -1,11 +1,10 @@
-
 import {
   Component,
   ElementRef,
   OnInit,
 } from '@angular/core';
-import { LangConfig } from '@dspace/config/lang-config.interface';
-import { LocaleService } from '@dspace/core/locale/locale.service';
+import { LangConfig } from '@dspace/config';
+import { LocaleService } from '@dspace/core';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import {
   TranslateModule,

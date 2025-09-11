@@ -18,21 +18,22 @@ import {
   APP_CONFIG,
   APP_CONFIG_STATE,
   AppConfig,
-} from '@dspace/config/app-config.interface';
-import { BuildConfig } from '@dspace/config/build-config.interface';
-import { extendEnvironmentWithAppConfig } from '@dspace/config/config.util';
-import { DefaultAppConfig } from '@dspace/config/default-app-config';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { OrejimeService } from '@dspace/core/cookies/orejime.service';
-import { coreSelector } from '@dspace/core/core.selectors';
-import { CorrelationIdService } from '@dspace/core/correlation-id/correlation-id.service';
-import { RequestService } from '@dspace/core/data/request.service';
-import { RootDataService } from '@dspace/core/data/root-data.service';
-import { LocaleService } from '@dspace/core/locale/locale.service';
-import { HeadTagService } from '@dspace/core/metadata/head-tag.service';
-import { StoreActionTypes } from '@dspace/core/ngrx/type';
-import { HALEndpointService } from '@dspace/core/shared/hal-endpoint.service';
-import { isNotEmpty } from '@dspace/shared/utils/empty.util';
+  BuildConfig,
+  DefaultAppConfig,
+} from '@dspace/config';
+import {
+  AuthService,
+  coreSelector,
+  CorrelationIdService,
+  HALEndpointService,
+  HeadTagService,
+  LocaleService,
+  OrejimeService,
+  RequestService,
+  RootDataService,
+  StoreActionTypes,
+} from '@dspace/core';
+import { isNotEmpty } from '@dspace/utils';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import {
@@ -57,6 +58,7 @@ import { Angulartics2DSpace } from '../../app/statistics/angulartics/dspace-prov
 import { GoogleAnalyticsService } from '../../app/statistics/google-analytics.service';
 import { MatomoService } from '../../app/statistics/matomo.service';
 import { StoreAction } from '../../app/store.actions';
+import { extendEnvironmentWithAppConfig } from '../../config/config.util';
 import { environment } from '../../environments/environment';
 
 /**

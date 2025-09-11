@@ -1,4 +1,3 @@
-
 import {
   Component,
   Inject,
@@ -6,10 +5,10 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
+  PaginationService,
   SortDirection,
   SortOptions,
-} from '@dspace/core/cache/models/sort-options.model';
-import { PaginationService } from '@dspace/core/pagination/pagination.service';
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { SEARCH_CONFIG_SERVICE } from '../../../my-dspace-page/my-dspace-configuration.service';

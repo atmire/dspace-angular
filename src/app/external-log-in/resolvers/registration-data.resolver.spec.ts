@@ -3,12 +3,12 @@ import {
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
 } from '@angular/router';
-import { EpersonRegistrationService } from '@dspace/core/data/eperson-registration.service';
-import { Registration } from '@dspace/core/shared/registration.model';
 import {
   createSuccessfulRemoteDataObject,
   createSuccessfulRemoteDataObject$,
-} from '@dspace/core/utilities/remote-data.utils';
+  EpersonRegistrationService,
+  Registration,
+} from '@dspace/core';
 
 import { RegistrationDataResolver } from './registration-data.resolver';
 

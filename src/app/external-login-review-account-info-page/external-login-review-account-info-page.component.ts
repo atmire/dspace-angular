@@ -4,9 +4,11 @@ import {
   OnInit,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { Registration } from '@dspace/core/shared/registration.model';
-import { hasNoValue } from '@dspace/shared/utils/empty.util';
+import {
+  Registration,
+  RemoteData,
+} from '@dspace/core';
+import { hasNoValue } from '@dspace/utils';
 import {
   first,
   map,

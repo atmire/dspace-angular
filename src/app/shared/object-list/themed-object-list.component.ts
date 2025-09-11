@@ -5,14 +5,14 @@ import {
   Output,
 } from '@angular/core';
 import {
+  Context,
+  ListableObject,
+  PaginatedList,
+  PaginationComponentOptions,
+  RemoteData,
   SortDirection,
   SortOptions,
-} from '@dspace/core/cache/models/sort-options.model';
-import { PaginatedList } from '@dspace/core/data/paginated-list.model';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { PaginationComponentOptions } from '@dspace/core/pagination/pagination-component-options.model';
-import { Context } from '@dspace/core/shared/context.model';
-import { ListableObject } from '@dspace/core/shared/object-collection/listable-object.model';
+} from '@dspace/core';
 
 import { CollectionElementLinkType } from '../object-collection/collection-element-link.type';
 import { ThemedComponent } from '../theme-support/themed.component';

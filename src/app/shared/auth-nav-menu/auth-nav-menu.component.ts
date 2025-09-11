@@ -12,15 +12,13 @@ import {
 } from '@angular/router';
 import {
   AuthService,
-  LOGIN_ROUTE,
-  LOGOUT_ROUTE,
-} from '@dspace/core/auth/auth.service';
-import {
+  EPerson,
   isAuthenticated,
   isAuthenticationLoading,
-} from '@dspace/core/auth/selectors';
-import { EPerson } from '@dspace/core/eperson/models/eperson.model';
-import { isNotUndefined } from '@dspace/shared/utils/empty.util';
+  LOGIN_ROUTE,
+  LOGOUT_ROUTE,
+} from '@dspace/core';
+import { isNotUndefined } from '@dspace/utils';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterReducerState } from '@ngrx/router-store';
 import {

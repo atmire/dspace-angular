@@ -5,16 +5,16 @@ import {
   Input,
   OnInit,
 } from '@angular/core';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { AuthMethod } from '@dspace/core/auth/models/auth.method';
-import { AuthMethodType } from '@dspace/core/auth/models/auth.method-type';
 import {
+  AuthMethod,
+  AuthMethodType,
+  AuthService,
+  CoreState,
   getAuthenticationError,
   isAuthenticated,
   isAuthenticationLoading,
-} from '@dspace/core/auth/selectors';
-import { CoreState } from '@dspace/core/core-state.model';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+} from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import {
   select,
   Store,

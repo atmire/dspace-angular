@@ -14,22 +14,22 @@ import {
   ActivatedRoute,
   Router,
 } from '@angular/router';
-import { LinkService } from '@dspace/core/cache/builders/link.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { ActionType } from '@dspace/core/resource-policy/models/action-type.model';
-import { PolicyType } from '@dspace/core/resource-policy/models/policy-type.model';
-import { RESOURCE_POLICY } from '@dspace/core/resource-policy/models/resource-policy.resource-type';
-import { ResourcePolicyDataService } from '@dspace/core/resource-policy/resource-policy-data.service';
-import { GroupMock } from '@dspace/core/testing/group-mock';
-import { getMockLinkService } from '@dspace/core/testing/link-service.mock';
-import { getMockResourcePolicyService } from '@dspace/core/testing/mock-resource-policy-service';
-import { NotificationsServiceStub } from '@dspace/core/testing/notifications-service.stub';
-import { RouterStub } from '@dspace/core/testing/router.stub';
-import { createTestComponent } from '@dspace/core/testing/utils.test';
 import {
+  ActionType,
   createFailedRemoteDataObject,
   createSuccessfulRemoteDataObject,
-} from '@dspace/core/utilities/remote-data.utils';
+  createTestComponent,
+  getMockLinkService,
+  getMockResourcePolicyService,
+  GroupMock,
+  LinkService,
+  NotificationsService,
+  NotificationsServiceStub,
+  PolicyType,
+  RESOURCE_POLICY,
+  ResourcePolicyDataService,
+  RouterStub,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   cold,

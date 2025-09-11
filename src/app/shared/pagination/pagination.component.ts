@@ -16,20 +16,20 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import {
+  ListableObject,
+  PaginatedList,
+  PaginationComponentOptions,
+  PaginationRouteParams,
+  PaginationService,
+  RemoteData,
   SortDirection,
   SortOptions,
-} from '@dspace/core/cache/models/sort-options.model';
-import { PaginatedList } from '@dspace/core/data/paginated-list.model';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { PaginationService } from '@dspace/core/pagination/pagination.service';
-import { PaginationComponentOptions } from '@dspace/core/pagination/pagination-component-options.model';
-import { PaginationRouteParams } from '@dspace/core/pagination/pagination-route-params.interface';
-import { ListableObject } from '@dspace/core/shared/object-collection/listable-object.model';
-import { ViewMode } from '@dspace/core/shared/view-mode.model';
+  ViewMode,
+} from '@dspace/core';
 import {
   hasValue,
   hasValueOperator,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   NgbDropdownModule,
   NgbPaginationModule,

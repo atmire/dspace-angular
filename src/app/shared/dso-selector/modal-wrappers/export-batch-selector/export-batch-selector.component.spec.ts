@@ -13,23 +13,21 @@ import {
   Router,
 } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthorizationDataService } from '@dspace/core/data/feature-authorization/authorization-data.service';
 import {
+  AuthorizationDataService,
   BATCH_EXPORT_SCRIPT_NAME,
-  ScriptDataService,
-} from '@dspace/core/data/processes/script-data.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { ProcessParameter } from '@dspace/core/processes/process-parameter.model';
-import { Collection } from '@dspace/core/shared/collection.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { NotificationsServiceStub } from '@dspace/core/testing/notifications-service.stub';
-import { SearchServiceStub } from '@dspace/core/testing/search-service.stub';
-import { TranslateLoaderMock } from '@dspace/core/testing/translate-loader.mock';
-import {
+  Collection,
   createFailedRemoteDataObject$,
   createSuccessfulRemoteDataObject,
   createSuccessfulRemoteDataObject$,
-} from '@dspace/core/utilities/remote-data.utils';
+  Item,
+  NotificationsService,
+  NotificationsServiceStub,
+  ProcessParameter,
+  ScriptDataService,
+  SearchServiceStub,
+  TranslateLoaderMock,
+} from '@dspace/core';
 import {
   NgbActiveModal,
   NgbModal,

@@ -5,12 +5,14 @@ import {
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { ResourcePolicy } from '@dspace/core/resource-policy/models/resource-policy.model';
-import { ResourcePolicyDataService } from '@dspace/core/resource-policy/resource-policy-data.service';
-import { followLink } from '@dspace/core/shared/follow-link-config.model';
-import { getFirstCompletedRemoteData } from '@dspace/core/shared/operators';
-import { isEmpty } from '@dspace/shared/utils/empty.util';
+import {
+  followLink,
+  getFirstCompletedRemoteData,
+  RemoteData,
+  ResourcePolicy,
+  ResourcePolicyDataService,
+} from '@dspace/core';
+import { isEmpty } from '@dspace/utils';
 import { Observable } from 'rxjs';
 
 /**

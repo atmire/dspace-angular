@@ -4,11 +4,13 @@ import {
   ResolveFn,
   RouterStateSnapshot,
 } from '@angular/router';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { getFirstCompletedRemoteData } from '@dspace/core/shared/operators';
-import { WorkspaceItem } from '@dspace/core/submission/models/workspaceitem.model';
-import { SUBMISSION_LINKS_TO_FOLLOW } from '@dspace/core/submission/resolver/submission-links-to-follow';
-import { WorkspaceitemDataService } from '@dspace/core/submission/workspaceitem-data.service';
+import {
+  getFirstCompletedRemoteData,
+  RemoteData,
+  SUBMISSION_LINKS_TO_FOLLOW,
+  WorkspaceItem,
+  WorkspaceitemDataService,
+} from '@dspace/core';
 import { Observable } from 'rxjs';
 
 /**

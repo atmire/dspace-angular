@@ -2,20 +2,22 @@ import {
   TestBed,
   waitForAsync,
 } from '@angular/core/testing';
-import { ObjectCacheService } from '@dspace/core/cache/object-cache.service';
-import { RestResponse } from '@dspace/core/cache/response.models';
-import { RelationshipDataService } from '@dspace/core/data/relationship-data.service';
-import { RelationshipTypeDataService } from '@dspace/core/data/relationship-type-data.service';
-import { RequestService } from '@dspace/core/data/request.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { Item } from '@dspace/core/shared/item.model';
-import { ItemType } from '@dspace/core/shared/item-relationships/item-type.model';
-import { Relationship } from '@dspace/core/shared/item-relationships/relationship.model';
-import { RelationshipType } from '@dspace/core/shared/item-relationships/relationship-type.model';
-import { MetadataValue } from '@dspace/core/shared/metadata.models';
-import { DEBOUNCE_TIME_OPERATOR } from '@dspace/core/shared/operators';
-import { WorkspaceItem } from '@dspace/core/submission/models/workspaceitem.model';
-import { createSuccessfulRemoteDataObject$ } from '@dspace/core/utilities/remote-data.utils';
+import {
+  createSuccessfulRemoteDataObject$,
+  DEBOUNCE_TIME_OPERATOR,
+  Item,
+  ItemType,
+  MetadataValue,
+  NotificationsService,
+  ObjectCacheService,
+  Relationship,
+  RelationshipDataService,
+  RelationshipType,
+  RelationshipTypeDataService,
+  RequestService,
+  RestResponse,
+  WorkspaceItem,
+} from '@dspace/core';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';

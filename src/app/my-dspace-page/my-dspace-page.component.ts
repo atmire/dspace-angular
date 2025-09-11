@@ -5,11 +5,13 @@ import {
   Inject,
   OnInit,
 } from '@angular/core';
-import { MyDSpaceResponseParsingService } from '@dspace/core/data/mydspace-response-parsing.service';
-import { MyDSpaceRequest } from '@dspace/core/data/request.models';
-import { RoleType } from '@dspace/core/roles/role-types';
-import { Context } from '@dspace/core/shared/context.model';
-import { ViewMode } from '@dspace/core/shared/view-mode.model';
+import {
+  Context,
+  MyDSpaceRequest,
+  MyDSpaceResponseParsingService,
+  RoleType,
+  ViewMode,
+} from '@dspace/core';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 

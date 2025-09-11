@@ -5,14 +5,16 @@ import {
   waitForAsync,
 } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import { buildPaginatedList } from '@dspace/core/data/paginated-list.model';
-import { PageInfo } from '@dspace/core/shared/page-info.model';
-import { FacetValue } from '@dspace/core/shared/search/models/facet-value.model';
-import { FilterType } from '@dspace/core/shared/search/models/filter-type.model';
-import { PaginatedSearchOptions } from '@dspace/core/shared/search/models/paginated-search-options.model';
-import { SearchFilterConfig } from '@dspace/core/shared/search/models/search-filter-config.model';
-import { SearchServiceStub } from '@dspace/core/testing/search-service.stub';
-import { createSuccessfulRemoteDataObject$ } from '@dspace/core/utilities/remote-data.utils';
+import {
+  buildPaginatedList,
+  createSuccessfulRemoteDataObject$,
+  FacetValue,
+  FilterType,
+  PageInfo,
+  PaginatedSearchOptions,
+  SearchFilterConfig,
+  SearchServiceStub,
+} from '@dspace/core';
 import { StoreModule } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';

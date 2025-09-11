@@ -10,10 +10,12 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { authReducer } from '@dspace/core/auth/auth.reducer';
-import { EPerson } from '@dspace/core/eperson/models/eperson.model';
-import { EPersonMock } from '@dspace/core/testing/eperson.mock';
-import { RouterStub } from '@dspace/core/testing/router.stub';
+import {
+  authReducer,
+  EPerson,
+  EPersonMock,
+  RouterStub,
+} from '@dspace/core';
 import {
   Store,
   StoreModule,

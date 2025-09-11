@@ -9,22 +9,24 @@ import {
   Router,
   RouterOutlet,
 } from '@angular/router';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { SortOptions } from '@dspace/core/cache/models/sort-options.model';
-import { AuthorizationDataService } from '@dspace/core/data/feature-authorization/authorization-data.service';
-import { FeatureID } from '@dspace/core/data/feature-authorization/feature-id';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { PaginationComponentOptions } from '@dspace/core/pagination/pagination-component-options.model';
-import { getCollectionPageRoute } from '@dspace/core/router/utils/dso-route.utils';
-import { redirectOn4xx } from '@dspace/core/shared/authorized.operators';
-import { Bitstream } from '@dspace/core/shared/bitstream.model';
-import { Collection } from '@dspace/core/shared/collection.model';
-import { getAllSucceededRemoteDataPayload } from '@dspace/core/shared/operators';
+import {
+  AuthorizationDataService,
+  AuthService,
+  Bitstream,
+  Collection,
+  DSONameService,
+  FeatureID,
+  getAllSucceededRemoteDataPayload,
+  getCollectionPageRoute,
+  PaginationComponentOptions,
+  redirectOn4xx,
+  RemoteData,
+  SortOptions,
+} from '@dspace/core';
 import {
   hasValue,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import { TranslateModule } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import {

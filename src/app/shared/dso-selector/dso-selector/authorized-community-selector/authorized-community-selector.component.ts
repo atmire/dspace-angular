@@ -7,11 +7,22 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { followLink } from '@dspace/core/shared/follow-link-config.model';
-import { CommunitySearchResult } from '@dspace/core/shared/object-collection/community-search-result.model';
-import { SearchResult } from '@dspace/core/shared/search/models/search-result.model';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+import {
+  buildPaginatedList,
+  Community,
+  CommunityDataService,
+  CommunitySearchResult,
+  DSONameService,
+  DSpaceObject,
+  FindListOptions,
+  followLink,
+  getFirstCompletedRemoteData,
+  NotificationsService,
+  PaginatedList,
+  RemoteData,
+  SearchResult,
+} from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import {
   TranslateModule,
   TranslateService,
@@ -20,17 +31,6 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { DSONameService } from '../../../../core/breadcrumbs/dso-name.service';
-import { CommunityDataService } from '../../../../core/data/community-data.service';
-import { FindListOptions } from '../../../../core/data/find-list-options.model';
-import {
-  buildPaginatedList,
-  PaginatedList,
-} from '../../../../core/data/paginated-list.model';
-import { RemoteData } from '../../../../core/data/remote-data';
-import { Community } from '../../../../core/shared/community.model';
-import { DSpaceObject } from '../../../../core/shared/dspace-object.model';
-import { getFirstCompletedRemoteData } from '../../../../core/shared/operators';
 import { HoverClassDirective } from '../../../hover-class.directive';
 import { ThemedLoadingComponent } from '../../../loading/themed-loading.component';
 import { ListableObjectComponentLoaderComponent } from '../../../object-collection/shared/listable-object/listable-object-component-loader.component';

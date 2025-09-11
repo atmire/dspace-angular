@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
-import { BreadcrumbConfig } from '@dspace/core/breadcrumbs/models/breadcrumb-config.model';
-import { SubmissionObject } from '@dspace/core/submission/models/submission-object.model';
-import { WorkflowItemDataService } from '@dspace/core/submission/workflowitem-data.service';
+import {
+  BreadcrumbConfig,
+  SubmissionObject,
+  WorkflowItemDataService,
+} from '@dspace/core';
 
 import { SubmissionParentBreadcrumbResolver } from '../submission/resolvers/submission-parent-breadcrumb.resolver';
 import { SubmissionParentBreadcrumbsService } from '../submission/resolvers/submission-parent-breadcrumb.service';

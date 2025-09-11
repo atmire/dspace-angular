@@ -14,14 +14,16 @@ import {
 import {
   APP_CONFIG,
   AppConfig,
-} from '@dspace/config/app-config.interface';
-import { FilterType } from '@dspace/core/shared/search/models/filter-type.model';
-import { SearchFilterConfig } from '@dspace/core/shared/search/models/search-filter-config.model';
-import { FilterConfig } from '@dspace/core/shared/search/search-filters/search-config.model';
+} from '@dspace/config';
+import {
+  FilterConfig,
+  FilterType,
+  SearchFilterConfig,
+} from '@dspace/core';
 import {
   hasValue,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   Observable,

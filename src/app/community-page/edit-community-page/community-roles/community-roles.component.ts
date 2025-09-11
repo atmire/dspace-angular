@@ -4,13 +4,13 @@ import {
   OnInit,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { Community } from '@dspace/core/shared/community.model';
-import { HALLink } from '@dspace/core/shared/hal-link.model';
 import {
+  Community,
   getFirstSucceededRemoteData,
   getRemoteDataPayload,
-} from '@dspace/core/shared/operators';
+  HALLink,
+  RemoteData,
+} from '@dspace/core';
 import { Observable } from 'rxjs';
 import {
   first,

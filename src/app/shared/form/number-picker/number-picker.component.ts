@@ -15,7 +15,7 @@ import {
   NG_VALUE_ACCESSOR,
   UntypedFormBuilder,
 } from '@angular/forms';
-import { isEmpty } from '@dspace/shared/utils/empty.util';
+import { isEmpty } from '@dspace/utils';
 import {
   TranslateModule,
   TranslateService,

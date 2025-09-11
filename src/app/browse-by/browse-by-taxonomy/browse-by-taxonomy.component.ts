@@ -10,13 +10,15 @@ import {
   Params,
   RouterLink,
 } from '@angular/router';
-import { BrowseByDataType } from '@dspace/core/browse/browse-by-data-type';
-import { BrowseDefinition } from '@dspace/core/shared/browse-definition.model';
-import { Context } from '@dspace/core/shared/context.model';
-import { HierarchicalBrowseDefinition } from '@dspace/core/shared/hierarchical-browse-definition.model';
-import { VocabularyEntryDetail } from '@dspace/core/submission/vocabularies/models/vocabulary-entry-detail.model';
-import { VocabularyOptions } from '@dspace/core/submission/vocabularies/models/vocabulary-options.model';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+import {
+  BrowseByDataType,
+  BrowseDefinition,
+  Context,
+  HierarchicalBrowseDefinition,
+  VocabularyEntryDetail,
+  VocabularyOptions,
+} from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import {
   TranslatePipe,
   TranslateService,

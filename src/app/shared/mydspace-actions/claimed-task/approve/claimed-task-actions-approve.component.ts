@@ -4,12 +4,14 @@ import {
   Injector,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { RequestService } from '@dspace/core/data/request.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { DSpaceObject } from '@dspace/core/shared/dspace-object.model';
-import { ClaimedApprovedTaskSearchResult } from '@dspace/core/shared/object-collection/claimed-approved-task-search-result.model';
-import { WorkflowItemDataService } from '@dspace/core/submission/workflowitem-data.service';
+import {
+  ClaimedApprovedTaskSearchResult,
+  DSpaceObject,
+  NotificationsService,
+  RemoteData,
+  RequestService,
+  WorkflowItemDataService,
+} from '@dspace/core';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import {
   TranslateModule,

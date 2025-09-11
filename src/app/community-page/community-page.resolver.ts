@@ -4,14 +4,14 @@ import {
   ResolveFn,
   RouterStateSnapshot,
 } from '@angular/router';
-import { CommunityDataService } from '@dspace/core/data/community-data.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { ResolvedAction } from '@dspace/core/resolving/resolver.actions';
 import {
   Community,
   COMMUNITY_PAGE_LINKS_TO_FOLLOW,
-} from '@dspace/core/shared/community.model';
-import { getFirstCompletedRemoteData } from '@dspace/core/shared/operators';
+  CommunityDataService,
+  getFirstCompletedRemoteData,
+  RemoteData,
+  ResolvedAction,
+} from '@dspace/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 

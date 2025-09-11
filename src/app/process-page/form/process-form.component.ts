@@ -1,4 +1,3 @@
-
 import {
   Component,
   Input,
@@ -13,15 +12,17 @@ import {
   Router,
   RouterLink,
 } from '@angular/router';
-import { ScriptDataService } from '@dspace/core/data/processes/script-data.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { Process } from '@dspace/core/processes/process.model';
-import { ProcessParameter } from '@dspace/core/processes/process-parameter.model';
-import { getFirstCompletedRemoteData } from '@dspace/core/shared/operators';
-import { Script } from '@dspace/core/shared/scripts/script.model';
-import { ScriptParameter } from '@dspace/core/shared/scripts/script-parameter.model';
-import { isEmpty } from '@dspace/shared/utils/empty.util';
+import {
+  getFirstCompletedRemoteData,
+  NotificationsService,
+  Process,
+  ProcessParameter,
+  RemoteData,
+  Script,
+  ScriptDataService,
+  ScriptParameter,
+} from '@dspace/core';
+import { isEmpty } from '@dspace/utils';
 import {
   TranslateModule,
   TranslateService,

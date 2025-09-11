@@ -11,7 +11,7 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { hasValueOperator } from '@dspace/shared/utils/empty.util';
+import { hasValueOperator } from '@dspace/utils';
 import {
   NgbTooltip,
   NgbTooltipModule,

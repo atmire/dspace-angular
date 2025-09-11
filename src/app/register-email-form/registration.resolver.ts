@@ -4,10 +4,12 @@ import {
   ResolveFn,
   RouterStateSnapshot,
 } from '@angular/router';
-import { EpersonRegistrationService } from '@dspace/core/data/eperson-registration.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { getFirstCompletedRemoteData } from '@dspace/core/shared/operators';
-import { Registration } from '@dspace/core/shared/registration.model';
+import {
+  EpersonRegistrationService,
+  getFirstCompletedRemoteData,
+  Registration,
+  RemoteData,
+} from '@dspace/core';
 import { Observable } from 'rxjs';
 
 export const registrationResolver: ResolveFn<RemoteData<Registration>> = (

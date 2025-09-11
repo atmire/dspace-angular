@@ -3,14 +3,14 @@ import {
   Resolve,
   RouterStateSnapshot,
 } from '@angular/router';
-import { BreadcrumbConfig } from '@dspace/core/breadcrumbs/models/breadcrumb-config.model';
-import { IdentifiableDataService } from '@dspace/core/data/base/identifiable-data.service';
 import {
+  BreadcrumbConfig,
   getFirstCompletedRemoteData,
   getRemoteDataPayload,
-} from '@dspace/core/shared/operators';
-import { SubmissionObject } from '@dspace/core/submission/models/submission-object.model';
-import { SUBMISSION_LINKS_TO_FOLLOW } from '@dspace/core/submission/resolver/submission-links-to-follow';
+  IdentifiableDataService,
+  SUBMISSION_LINKS_TO_FOLLOW,
+  SubmissionObject,
+} from '@dspace/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 

@@ -8,9 +8,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
-import { LocaleService } from '@dspace/core/locale/locale.service';
-import { ActivatedRouteStub } from '@dspace/core/testing/active-router.stub';
-import { HostWindowServiceStub } from '@dspace/core/testing/host-window-service.stub';
+import {
+  ActivatedRouteStub,
+  HostWindowServiceStub,
+  LocaleService,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 

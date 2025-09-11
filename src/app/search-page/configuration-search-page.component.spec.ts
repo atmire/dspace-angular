@@ -8,7 +8,7 @@ import {
   waitForAsync,
 } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { RouteService } from '@dspace/core/services/route.service';
+import { RouteService } from '@dspace/core';
 import { of } from 'rxjs';
 
 import { configureSearchComponentTestingModule } from '../shared/search/search.component.spec';

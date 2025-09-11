@@ -2,10 +2,12 @@ import {
   Component,
   Input,
 } from '@angular/core';
-import { Context } from '@dspace/core/shared/context.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { SearchResult } from '@dspace/core/shared/search/models/search-result.model';
-import { WorkflowItem } from '@dspace/core/submission/models/workflowitem.model';
+import {
+  Context,
+  Item,
+  SearchResult,
+  WorkflowItem,
+} from '@dspace/core';
 
 import { ThemedComponent } from '../../../theme-support/themed.component';
 import { ItemListPreviewComponent } from './item-list-preview.component';

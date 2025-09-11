@@ -1,10 +1,11 @@
-
 import {
   Component,
   Input,
 } from '@angular/core';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { Item } from '@dspace/core/shared/item.model';
+import {
+  DSONameService,
+  Item,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({

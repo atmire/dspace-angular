@@ -16,13 +16,15 @@ import {
 import {
   APP_CONFIG,
   AppConfig,
-} from '@dspace/config/app-config.interface';
-import { FilterVocabularyConfig } from '@dspace/config/filter-vocabulary-config';
-import { RemoteDataBuildService } from '@dspace/core/cache/builders/remote-data-build.service';
-import { PageInfo } from '@dspace/core/shared/page-info.model';
-import { VocabularyEntryDetail } from '@dspace/core/submission/vocabularies/models/vocabulary-entry-detail.model';
-import { VocabularyService } from '@dspace/core/submission/vocabularies/vocabulary.service';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+  FilterVocabularyConfig,
+} from '@dspace/config';
+import {
+  PageInfo,
+  RemoteDataBuildService,
+  VocabularyEntryDetail,
+  VocabularyService,
+} from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import {
   NgbModal,
   NgbModalRef,

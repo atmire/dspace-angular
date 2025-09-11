@@ -1,39 +1,38 @@
-
 import {
   ChangeDetectorRef,
   Component,
   Inject,
   ViewChild,
 } from '@angular/core';
-import { ObjectCacheService } from '@dspace/core/cache/object-cache.service';
-import { ConfigObject } from '@dspace/core/config/models/config.model';
-import { FormRowModel } from '@dspace/core/config/models/config-submission-form.model';
-import { SubmissionFormsModel } from '@dspace/core/config/models/config-submission-forms.model';
-import { SubmissionFormsConfigDataService } from '@dspace/core/config/submission-forms-config-data.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { RequestService } from '@dspace/core/data/request.service';
-import { JsonPatchOperationPathCombiner } from '@dspace/core/json-patch/builder/json-patch-operation-path-combiner';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { followLink } from '@dspace/core/shared/follow-link-config.model';
-import { FormFieldPreviousValueObject } from '@dspace/core/shared/form/models/form-field-previous-value-object';
 import {
+  ConfigObject,
+  followLink,
+  FormFieldPreviousValueObject,
+  FormRowModel,
   getFirstSucceededRemoteData,
   getRemoteDataPayload,
-} from '@dspace/core/shared/operators';
-import { SubmissionObject } from '@dspace/core/submission/models/submission-object.model';
-import { SubmissionSectionError } from '@dspace/core/submission/models/submission-section-error.model';
-import { SubmissionSectionObject } from '@dspace/core/submission/models/submission-section-object.model';
-import { WorkflowItem } from '@dspace/core/submission/models/workflowitem.model';
-import { WorkspaceItem } from '@dspace/core/submission/models/workspaceitem.model';
-import { WorkspaceitemSectionFormObject } from '@dspace/core/submission/models/workspaceitem-section-form.model';
-import { SubmissionScopeType } from '@dspace/core/submission/submission-scope-type';
+  JsonPatchOperationPathCombiner,
+  NotificationsService,
+  ObjectCacheService,
+  RemoteData,
+  RequestService,
+  SubmissionFormsConfigDataService,
+  SubmissionFormsModel,
+  SubmissionObject,
+  SubmissionScopeType,
+  SubmissionSectionError,
+  SubmissionSectionObject,
+  WorkflowItem,
+  WorkspaceItem,
+  WorkspaceitemSectionFormObject,
+} from '@dspace/core';
 import {
+  difference,
   hasValue,
   isEmpty,
   isNotEmpty,
   isUndefined,
-} from '@dspace/shared/utils/empty.util';
-import { difference } from '@dspace/shared/utils/object.util';
+} from '@dspace/utils';
 import {
   DynamicFormControlEvent,
   DynamicFormControlModel,

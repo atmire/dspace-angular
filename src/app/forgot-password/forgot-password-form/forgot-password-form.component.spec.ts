@@ -16,18 +16,18 @@ import {
   Router,
 } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthenticateAction } from '@dspace/core/auth/auth.actions';
-import { CoreState } from '@dspace/core/core-state.model';
-import { EPersonDataService } from '@dspace/core/eperson/eperson-data.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { Registration } from '@dspace/core/shared/registration.model';
-import { NotificationsServiceStub } from '@dspace/core/testing/notifications-service.stub';
-import { RouterStub } from '@dspace/core/testing/router.stub';
 import {
+  AuthenticateAction,
+  CoreState,
   createFailedRemoteDataObject$,
   createSuccessfulRemoteDataObject,
   createSuccessfulRemoteDataObject$,
-} from '@dspace/core/utilities/remote-data.utils';
+  EPersonDataService,
+  NotificationsService,
+  NotificationsServiceStub,
+  Registration,
+  RouterStub,
+} from '@dspace/core';
 import { Store } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';

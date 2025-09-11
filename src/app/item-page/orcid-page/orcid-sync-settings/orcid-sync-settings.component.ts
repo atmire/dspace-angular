@@ -1,4 +1,3 @@
-
 import {
   Component,
   EventEmitter,
@@ -11,17 +10,17 @@ import {
   FormsModule,
   UntypedFormGroup,
 } from '@angular/forms';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { ResearcherProfile } from '@dspace/core/profile/model/researcher-profile.model';
-import { ResearcherProfileDataService } from '@dspace/core/profile/researcher-profile-data.service';
-import { Item } from '@dspace/core/shared/item.model';
 import {
+  createFailedRemoteDataObjectFromError$,
   getFirstCompletedRemoteData,
   getRemoteDataPayload,
-} from '@dspace/core/shared/operators';
-import { createFailedRemoteDataObjectFromError$ } from '@dspace/core/utilities/remote-data.utils';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+  Item,
+  NotificationsService,
+  RemoteData,
+  ResearcherProfile,
+  ResearcherProfileDataService,
+} from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import {
   TranslateModule,
   TranslateService,

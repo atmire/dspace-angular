@@ -4,18 +4,18 @@ import {
   Injectable,
   runInInjectionContext,
 } from '@angular/core';
-import { OrejimeService } from '@dspace/core/cookies/orejime.service';
-import { ConfigurationDataService } from '@dspace/core/data/configuration-data.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { NativeWindowService } from '@dspace/core/services/window.service';
-import { ConfigurationProperty } from '@dspace/core/shared/configuration-property.model';
-import { getFirstCompletedRemoteData } from '@dspace/core/shared/operators';
 import {
+  ConfigurationDataService,
+  ConfigurationProperty,
+  getFirstCompletedRemoteData,
   MATOMO_ENABLED,
   MATOMO_SITE_ID,
   MATOMO_TRACKER_URL,
-} from '@dspace/core/statistics/models/matomo-type';
-import { isNotEmpty } from '@dspace/shared/utils/empty.util';
+  NativeWindowService,
+  OrejimeService,
+  RemoteData,
+} from '@dspace/core';
+import { isNotEmpty } from '@dspace/utils';
 import {
   MatomoInitializerService,
   MatomoTracker,

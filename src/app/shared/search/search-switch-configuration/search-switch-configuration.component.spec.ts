@@ -9,10 +9,12 @@ import {
   NavigationExtras,
   Router,
 } from '@angular/router';
-import { Context } from '@dspace/core/shared/context.model';
-import { RouterStub } from '@dspace/core/testing/router.stub';
-import { SearchConfigurationServiceStub } from '@dspace/core/testing/search-configuration-service.stub';
-import { TranslateLoaderMock } from '@dspace/core/testing/translate-loader.mock';
+import {
+  Context,
+  RouterStub,
+  SearchConfigurationServiceStub,
+  TranslateLoaderMock,
+} from '@dspace/core';
 import {
   TranslateLoader,
   TranslateModule,

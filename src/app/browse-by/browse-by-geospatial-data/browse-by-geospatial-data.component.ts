@@ -12,12 +12,12 @@ import {
   Params,
 } from '@angular/router';
 import {
+  FacetValues,
   getFirstCompletedRemoteData,
   getFirstSucceededRemoteDataPayload,
-} from '@dspace/core/shared/operators';
-import { FacetValues } from '@dspace/core/shared/search/models/facet-values.model';
-import { PaginatedSearchOptions } from '@dspace/core/shared/search/models/paginated-search-options.model';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+  PaginatedSearchOptions,
+} from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   combineLatest,

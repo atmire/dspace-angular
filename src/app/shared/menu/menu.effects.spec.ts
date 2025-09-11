@@ -2,7 +2,7 @@ import {
   TestBed,
   waitForAsync,
 } from '@angular/core/testing';
-import { StoreActionTypes } from '@dspace/core/ngrx/type';
+import { StoreActionTypes } from '@dspace/core';
 import { provideMockActions } from '@ngrx/effects/testing';
 import {
   cold,

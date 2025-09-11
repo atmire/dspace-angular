@@ -3,18 +3,18 @@ import {
   ComponentFixture,
   TestBed,
 } from '@angular/core/testing';
-import { APP_CONFIG } from '@dspace/config/app-config.interface';
+import { APP_CONFIG } from '@dspace/config';
 import {
+  createPaginatedList,
+  createSuccessfulRemoteDataObject,
+  PaginatedSearchOptions,
+  PaginationComponentOptions,
+  PaginationService,
+  PaginationServiceStub,
+  SearchServiceStub,
   SortDirection,
   SortOptions,
-} from '@dspace/core/cache/models/sort-options.model';
-import { PaginationService } from '@dspace/core/pagination/pagination.service';
-import { PaginationComponentOptions } from '@dspace/core/pagination/pagination-component-options.model';
-import { PaginatedSearchOptions } from '@dspace/core/shared/search/models/paginated-search-options.model';
-import { PaginationServiceStub } from '@dspace/core/testing/pagination-service.stub';
-import { SearchServiceStub } from '@dspace/core/testing/search-service.stub';
-import { createPaginatedList } from '@dspace/core/testing/utils.test';
-import { createSuccessfulRemoteDataObject } from '@dspace/core/utilities/remote-data.utils';
+} from '@dspace/core';
 import { of } from 'rxjs';
 
 import { environment } from '../../../environments/environment';

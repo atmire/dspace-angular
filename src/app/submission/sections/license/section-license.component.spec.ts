@@ -14,26 +14,26 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { APP_CONFIG } from '@dspace/config/app-config.interface';
-import { SubmissionFormsConfigDataService } from '@dspace/core/config/submission-forms-config-data.service';
-import { CollectionDataService } from '@dspace/core/data/collection-data.service';
-import { APP_DATA_SERVICES_MAP } from '@dspace/core/data-services-map-type';
-import { JsonPatchOperationPathCombiner } from '@dspace/core/json-patch/builder/json-patch-operation-path-combiner';
-import { JsonPatchOperationsBuilder } from '@dspace/core/json-patch/builder/json-patch-operations-builder';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { Collection } from '@dspace/core/shared/collection.model';
-import { FormFieldMetadataValueObject } from '@dspace/core/shared/form/models/form-field-metadata-value.model';
-import { License } from '@dspace/core/shared/license.model';
-import { SectionsType } from '@dspace/core/submission/sections-type';
-import { NotificationsServiceStub } from '@dspace/core/testing/notifications-service.stub';
-import { SectionsServiceStub } from '@dspace/core/testing/sections-service.stub';
-import { SubmissionServiceStub } from '@dspace/core/testing/submission-service.stub';
-import { createTestComponent } from '@dspace/core/testing/utils.test';
+import { APP_CONFIG } from '@dspace/config';
 import {
+  APP_DATA_SERVICES_MAP,
+  Collection,
+  CollectionDataService,
   createSuccessfulRemoteDataObject,
   createSuccessfulRemoteDataObject$,
-} from '@dspace/core/utilities/remote-data.utils';
-import { XSRFService } from '@dspace/core/xsrf/xsrf.service';
+  createTestComponent,
+  FormFieldMetadataValueObject,
+  JsonPatchOperationPathCombiner,
+  JsonPatchOperationsBuilder,
+  License,
+  NotificationsService,
+  NotificationsServiceStub,
+  SectionsServiceStub,
+  SectionsType,
+  SubmissionFormsConfigDataService,
+  SubmissionServiceStub,
+  XSRFService,
+} from '@dspace/core';
 import {
   DYNAMIC_FORM_CONTROL_MAP_FN,
   DynamicCheckboxModel,

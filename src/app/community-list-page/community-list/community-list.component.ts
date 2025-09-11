@@ -9,13 +9,13 @@ import {
   OnInit,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
 import {
+  DSONameService,
+  FindListOptions,
   SortDirection,
   SortOptions,
-} from '@dspace/core/cache/models/sort-options.model';
-import { FindListOptions } from '@dspace/core/data/find-list-options.model';
-import { isEmpty } from '@dspace/shared/utils/empty.util';
+} from '@dspace/core';
+import { isEmpty } from '@dspace/utils';
 import { TranslateModule } from '@ngx-translate/core';
 import { take } from 'rxjs/operators';
 

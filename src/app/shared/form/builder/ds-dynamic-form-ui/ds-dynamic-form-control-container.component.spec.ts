@@ -17,13 +17,15 @@ import {
   UntypedFormGroup,
 } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { APP_CONFIG } from '@dspace/config/app-config.interface';
-import { RelationshipDataService } from '@dspace/core/data/relationship-data.service';
-import { APP_DATA_SERVICES_MAP } from '@dspace/core/data-services-map-type';
-import { Item } from '@dspace/core/shared/item.model';
-import { WorkspaceItem } from '@dspace/core/submission/models/workspaceitem.model';
-import { VocabularyOptions } from '@dspace/core/submission/vocabularies/models/vocabulary-options.model';
-import { createSuccessfulRemoteDataObject } from '@dspace/core/utilities/remote-data.utils';
+import { APP_CONFIG } from '@dspace/config';
+import {
+  APP_DATA_SERVICES_MAP,
+  createSuccessfulRemoteDataObject,
+  Item,
+  RelationshipDataService,
+  VocabularyOptions,
+  WorkspaceItem,
+} from '@dspace/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {
   DYNAMIC_FORM_CONTROL_MAP_FN,

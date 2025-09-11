@@ -14,19 +14,19 @@ import {
   Router,
   RouterLink,
 } from '@angular/router';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { ItemDataService } from '@dspace/core/data/item-data.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { OrcidAuthService } from '@dspace/core/orcid/orcid-auth.service';
-import { ResearcherProfile } from '@dspace/core/profile/model/researcher-profile.model';
-import { getItemPageRoute } from '@dspace/core/router/utils/dso-route.utils';
-import { redirectOn4xx } from '@dspace/core/shared/authorized.operators';
-import { Item } from '@dspace/core/shared/item.model';
 import {
+  AuthService,
   getFirstCompletedRemoteData,
   getFirstSucceededRemoteDataPayload,
-} from '@dspace/core/shared/operators';
-import { isNotEmpty } from '@dspace/shared/utils/empty.util';
+  getItemPageRoute,
+  Item,
+  ItemDataService,
+  OrcidAuthService,
+  redirectOn4xx,
+  RemoteData,
+  ResearcherProfile,
+} from '@dspace/core';
+import { isNotEmpty } from '@dspace/utils';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   BehaviorSubject,

@@ -11,16 +11,18 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { PaginatedList } from '@dspace/core/data/paginated-list.model';
-import { Context } from '@dspace/core/shared/context.model';
-import { GenericConstructor } from '@dspace/core/shared/generic-constructor';
-import { ListableObject } from '@dspace/core/shared/object-collection/listable-object.model';
-import { ViewMode } from '@dspace/core/shared/view-mode.model';
+import {
+  Context,
+  GenericConstructor,
+  ListableObject,
+  PaginatedList,
+  ViewMode,
+} from '@dspace/core';
 import {
   hasNoValue,
   hasValue,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   combineLatest,
   Observable,

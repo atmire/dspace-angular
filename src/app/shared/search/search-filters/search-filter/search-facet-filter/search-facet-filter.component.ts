@@ -16,18 +16,20 @@ import {
   Params,
   Router,
 } from '@angular/router';
-import { RemoteDataBuildService } from '@dspace/core/cache/builders/remote-data-build.service';
-import { currentPath } from '@dspace/core/router/utils/route.utils';
-import { getFirstSucceededRemoteDataPayload } from '@dspace/core/shared/operators';
-import { AppliedFilter } from '@dspace/core/shared/search/models/applied-filter.model';
-import { FacetValue } from '@dspace/core/shared/search/models/facet-value.model';
-import { FacetValues } from '@dspace/core/shared/search/models/facet-values.model';
-import { SearchFilterConfig } from '@dspace/core/shared/search/models/search-filter-config.model';
-import { SearchOptions } from '@dspace/core/shared/search/models/search-options.model';
+import {
+  AppliedFilter,
+  currentPath,
+  FacetValue,
+  FacetValues,
+  getFirstSucceededRemoteDataPayload,
+  RemoteDataBuildService,
+  SearchFilterConfig,
+  SearchOptions,
+} from '@dspace/core';
 import {
   hasNoValue,
   hasValue,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   BehaviorSubject,
   combineLatest as observableCombineLatest,

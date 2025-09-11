@@ -9,21 +9,21 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { Item } from '@dspace/core/shared/item.model';
-import { ReorderableRelationship } from '@dspace/core/shared/item-relationships/reorderable-relationship';
-import { MetadataValue } from '@dspace/core/shared/metadata.models';
-import { ItemMetadataRepresentation } from '@dspace/core/shared/metadata-representation/item/item-metadata-representation.model';
-import { MetadataRepresentation } from '@dspace/core/shared/metadata-representation/metadata-representation.model';
-import { ItemSearchResult } from '@dspace/core/shared/object-collection/item-search-result.model';
 import {
   getAllSucceededRemoteData,
   getRemoteDataPayload,
-} from '@dspace/core/shared/operators';
-import { RelationshipOptions } from '@dspace/core/shared/relationship-options.model';
+  Item,
+  ItemMetadataRepresentation,
+  ItemSearchResult,
+  MetadataRepresentation,
+  MetadataValue,
+  RelationshipOptions,
+  ReorderableRelationship,
+} from '@dspace/core';
 import {
   hasValue,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import { Store } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
 import {

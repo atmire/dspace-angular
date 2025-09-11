@@ -3,24 +3,26 @@ import {
   OnInit,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { RequestParam } from '@dspace/core/cache/models/request-param.model';
-import { ComColDataService } from '@dspace/core/data/comcol-data.service';
-import { CommunityDataService } from '@dspace/core/data/community-data.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { RequestService } from '@dspace/core/data/request.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { getHomePageRoute } from '@dspace/core/router/core-routing-paths';
-import { RouteService } from '@dspace/core/services/route.service';
-import { Collection } from '@dspace/core/shared/collection.model';
-import { Community } from '@dspace/core/shared/community.model';
-import { getFirstSucceededRemoteDataPayload } from '@dspace/core/shared/operators';
-import { ResourceType } from '@dspace/core/shared/resource-type';
+import {
+  Collection,
+  ComColDataService,
+  Community,
+  CommunityDataService,
+  DSONameService,
+  getFirstSucceededRemoteDataPayload,
+  getHomePageRoute,
+  NotificationsService,
+  RemoteData,
+  RequestParam,
+  RequestService,
+  ResourceType,
+  RouteService,
+} from '@dspace/core';
 import {
   hasValue,
   isNotEmpty,
   isNotUndefined,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import { TranslateService } from '@ngx-translate/core';
 import {
   BehaviorSubject,

@@ -9,25 +9,27 @@ import {
   Output,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { ExternalSourceDataService } from '@dspace/core/data/external-source-data.service';
-import { PaginatedList } from '@dspace/core/data/paginated-list.model';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { PaginationService } from '@dspace/core/pagination/pagination.service';
-import { PaginationComponentOptions } from '@dspace/core/pagination/pagination-component-options.model';
-import { Collection } from '@dspace/core/shared/collection.model';
-import { Context } from '@dspace/core/shared/context.model';
-import { ExternalSource } from '@dspace/core/shared/external-source.model';
-import { ExternalSourceEntry } from '@dspace/core/shared/external-source-entry.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { ItemType } from '@dspace/core/shared/item-relationships/item-type.model';
-import { ListableObject } from '@dspace/core/shared/object-collection/listable-object.model';
-import { getFirstCompletedRemoteData } from '@dspace/core/shared/operators';
-import { RelationshipOptions } from '@dspace/core/shared/relationship-options.model';
-import { PaginatedSearchOptions } from '@dspace/core/shared/search/models/paginated-search-options.model';
+import {
+  Collection,
+  Context,
+  ExternalSource,
+  ExternalSourceDataService,
+  ExternalSourceEntry,
+  getFirstCompletedRemoteData,
+  Item,
+  ItemType,
+  ListableObject,
+  PaginatedList,
+  PaginatedSearchOptions,
+  PaginationComponentOptions,
+  PaginationService,
+  RelationshipOptions,
+  RemoteData,
+} from '@dspace/core';
 import {
   hasValue,
   hasValueOperator,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   NgbModal,
   NgbModalRef,

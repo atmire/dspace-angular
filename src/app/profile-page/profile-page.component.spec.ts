@@ -8,25 +8,23 @@ import {
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
-import { authReducer } from '@dspace/core/auth/auth.reducer';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { AuthTokenInfo } from '@dspace/core/auth/models/auth-token-info.model';
-import { RestResponse } from '@dspace/core/cache/response.models';
-import { ConfigurationDataService } from '@dspace/core/data/configuration-data.service';
-import { AuthorizationDataService } from '@dspace/core/data/feature-authorization/authorization-data.service';
-import { EPersonDataService } from '@dspace/core/eperson/eperson-data.service';
-import { EPerson } from '@dspace/core/eperson/models/eperson.model';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { ConfigurationProperty } from '@dspace/core/shared/configuration-property.model';
 import {
-  EmptySpecialGroupDataMock$,
-  SpecialGroupDataMock$,
-} from '@dspace/core/testing/special-group.mock';
-import { createPaginatedList } from '@dspace/core/testing/utils.test';
-import {
+  AuthorizationDataService,
+  authReducer,
+  AuthService,
+  AuthTokenInfo,
+  ConfigurationDataService,
+  ConfigurationProperty,
   createFailedRemoteDataObject$,
+  createPaginatedList,
   createSuccessfulRemoteDataObject$,
-} from '@dspace/core/utilities/remote-data.utils';
+  EmptySpecialGroupDataMock$,
+  EPerson,
+  EPersonDataService,
+  NotificationsService,
+  RestResponse,
+  SpecialGroupDataMock$,
+} from '@dspace/core';
 import { StoreModule } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
 import { TranslateModule } from '@ngx-translate/core';

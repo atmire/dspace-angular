@@ -16,7 +16,7 @@ import {
   Router,
 } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { TranslateLoaderMock } from '@dspace/core/testing/translate-loader.mock';
+import { TranslateLoaderMock } from '@dspace/core';
 import {
   TranslateLoader,
   TranslateModule,

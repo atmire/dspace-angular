@@ -7,10 +7,12 @@ import {
   Router,
   RouterLink,
 } from '@angular/router';
-import { RequestService } from '@dspace/core/data/request.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { WorkflowItem } from '@dspace/core/submission/models/workflowitem.model';
-import { WorkflowItemDataService } from '@dspace/core/submission/workflowitem-data.service';
+import {
+  NotificationsService,
+  RequestService,
+  WorkflowItem,
+  WorkflowItemDataService,
+} from '@dspace/core';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import {
   TranslateModule,

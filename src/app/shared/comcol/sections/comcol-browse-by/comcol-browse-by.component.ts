@@ -7,8 +7,10 @@ import {
   ActivatedRoute,
   Data,
 } from '@angular/router';
-import { BrowseByDataType } from '@dspace/core/browse/browse-by-data-type';
-import { BrowseDefinition } from '@dspace/core/shared/browse-definition.model';
+import {
+  BrowseByDataType,
+  BrowseDefinition,
+} from '@dspace/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 

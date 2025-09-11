@@ -7,10 +7,12 @@ import {
   TestBed,
   waitForAsync,
 } from '@angular/core/testing';
-import { Group } from '@dspace/core/eperson/models/group.model';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { SupervisionOrder } from '@dspace/core/supervision-order/models/supervision-order.model';
-import { SupervisionOrderDataService } from '@dspace/core/supervision-order/supervision-order-data.service';
+import {
+  Group,
+  NotificationsService,
+  SupervisionOrder,
+  SupervisionOrderDataService,
+} from '@dspace/core';
 import {
   NgbActiveModal,
   NgbPaginationModule,

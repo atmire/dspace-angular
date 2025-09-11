@@ -10,18 +10,18 @@ import {
   Params,
   Router,
 } from '@angular/router';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { RequestService } from '@dspace/core/data/request.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { RouteService } from '@dspace/core/services/route.service';
-import { Item } from '@dspace/core/shared/item.model';
 import {
   getAllSucceededRemoteData,
   getRemoteDataPayload,
-} from '@dspace/core/shared/operators';
-import { WorkflowItem } from '@dspace/core/submission/models/workflowitem.model';
-import { WorkflowItemDataService } from '@dspace/core/submission/workflowitem-data.service';
-import { isEmpty } from '@dspace/shared/utils/empty.util';
+  Item,
+  NotificationsService,
+  RemoteData,
+  RequestService,
+  RouteService,
+  WorkflowItem,
+  WorkflowItemDataService,
+} from '@dspace/core';
+import { isEmpty } from '@dspace/utils';
 import { TranslateService } from '@ngx-translate/core';
 import {
   combineLatest,

@@ -10,22 +10,22 @@ import {
 import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ExternalSourceDataService } from '@dspace/core/data/external-source-data.service';
-import { PaginationService } from '@dspace/core/pagination/pagination.service';
-import { Collection } from '@dspace/core/shared/collection.model';
-import { ExternalSource } from '@dspace/core/shared/external-source.model';
-import { ExternalSourceEntry } from '@dspace/core/shared/external-source-entry.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { ItemType } from '@dspace/core/shared/item-relationships/item-type.model';
-import { RelationshipOptions } from '@dspace/core/shared/relationship-options.model';
-import { PaginatedSearchOptions } from '@dspace/core/shared/search/models/paginated-search-options.model';
-import { PaginationServiceStub } from '@dspace/core/testing/pagination-service.stub';
-import { createPaginatedList } from '@dspace/core/testing/utils.test';
 import {
+  Collection,
   createFailedRemoteDataObject$,
+  createPaginatedList,
   createPendingRemoteDataObject$,
   createSuccessfulRemoteDataObject$,
-} from '@dspace/core/utilities/remote-data.utils';
+  ExternalSource,
+  ExternalSourceDataService,
+  ExternalSourceEntry,
+  Item,
+  ItemType,
+  PaginatedSearchOptions,
+  PaginationService,
+  PaginationServiceStub,
+  RelationshipOptions,
+} from '@dspace/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import {

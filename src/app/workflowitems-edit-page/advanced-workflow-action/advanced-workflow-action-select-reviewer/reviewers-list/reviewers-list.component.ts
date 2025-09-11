@@ -20,17 +20,19 @@ import {
   Router,
   RouterLink,
 } from '@angular/router';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { PaginatedList } from '@dspace/core/data/paginated-list.model';
-import { EPersonDataService } from '@dspace/core/eperson/eperson-data.service';
-import { GroupDataService } from '@dspace/core/eperson/group-data.service';
-import { EPerson } from '@dspace/core/eperson/models/eperson.model';
-import { EpersonDtoModel } from '@dspace/core/eperson/models/eperson-dto.model';
-import { Group } from '@dspace/core/eperson/models/group.model';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { PaginationService } from '@dspace/core/pagination/pagination.service';
-import { getFirstSucceededRemoteDataPayload } from '@dspace/core/shared/operators';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+import {
+  DSONameService,
+  EPerson,
+  EPersonDataService,
+  EpersonDtoModel,
+  getFirstSucceededRemoteDataPayload,
+  Group,
+  GroupDataService,
+  NotificationsService,
+  PaginatedList,
+  PaginationService,
+} from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import {
   TranslateModule,
   TranslateService,

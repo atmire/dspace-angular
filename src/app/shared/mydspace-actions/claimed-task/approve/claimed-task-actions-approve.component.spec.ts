@@ -10,18 +10,20 @@ import {
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { RequestService } from '@dspace/core/data/request.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { WorkflowItemDataService } from '@dspace/core/submission/workflowitem-data.service';
-import { ClaimedTaskDataService } from '@dspace/core/tasks/claimed-task-data.service';
-import { ClaimedTask } from '@dspace/core/tasks/models/claimed-task-object.model';
-import { ProcessTaskResponse } from '@dspace/core/tasks/models/process-task-response';
-import { PoolTaskDataService } from '@dspace/core/tasks/pool-task-data.service';
-import { NotificationsServiceStub } from '@dspace/core/testing/notifications-service.stub';
-import { getMockRequestService } from '@dspace/core/testing/request.service.mock';
-import { RouterStub } from '@dspace/core/testing/router.stub';
-import { getMockSearchService } from '@dspace/core/testing/search-service.mock';
-import { TranslateLoaderMock } from '@dspace/core/testing/translate-loader.mock';
+import {
+  ClaimedTask,
+  ClaimedTaskDataService,
+  getMockRequestService,
+  getMockSearchService,
+  NotificationsService,
+  NotificationsServiceStub,
+  PoolTaskDataService,
+  ProcessTaskResponse,
+  RequestService,
+  RouterStub,
+  TranslateLoaderMock,
+  WorkflowItemDataService,
+} from '@dspace/core';
 import {
   TranslateLoader,
   TranslateModule,

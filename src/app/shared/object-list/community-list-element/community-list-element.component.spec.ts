@@ -9,10 +9,12 @@ import {
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { Community } from '@dspace/core/shared/community.model';
-import { ActivatedRouteStub } from '@dspace/core/testing/active-router.stub';
-import { DSONameServiceMock } from '@dspace/core/testing/dso-name.service.mock';
+import {
+  ActivatedRouteStub,
+  Community,
+  DSONameService,
+  DSONameServiceMock,
+} from '@dspace/core';
 
 import { CommunityListElementComponent } from './community-list-element.component';
 

@@ -4,10 +4,12 @@ import {
   OnInit,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AuthMethodType } from '@dspace/core/auth/models/auth.method-type';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { Registration } from '@dspace/core/shared/registration.model';
-import { hasNoValue } from '@dspace/shared/utils/empty.util';
+import {
+  AuthMethodType,
+  Registration,
+  RemoteData,
+} from '@dspace/core';
+import { hasNoValue } from '@dspace/utils';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   first,

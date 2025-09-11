@@ -6,7 +6,7 @@ import {
   waitForAsync,
 } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { RequestCopyEmail } from '@dspace/core/shared/request-copy-email.model';
+import { RequestCopyEmail } from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 

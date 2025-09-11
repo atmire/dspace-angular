@@ -6,14 +6,16 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { AuthorizationDataService } from '@dspace/core/data/feature-authorization/authorization-data.service';
-import { FeatureID } from '@dspace/core/data/feature-authorization/feature-id';
-import { PaginatedList } from '@dspace/core/data/paginated-list.model';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { Item } from '@dspace/core/shared/item.model';
-import { getFirstCompletedRemoteData } from '@dspace/core/shared/operators';
-import { CorrectionTypeDataService } from '@dspace/core/submission/correctiontype-data.service';
-import { CorrectionType } from '@dspace/core/submission/models/correctiontype.model';
+import {
+  AuthorizationDataService,
+  CorrectionType,
+  CorrectionTypeDataService,
+  FeatureID,
+  getFirstCompletedRemoteData,
+  Item,
+  PaginatedList,
+  RemoteData,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   combineLatest,

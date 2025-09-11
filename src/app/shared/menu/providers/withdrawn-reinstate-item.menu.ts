@@ -6,12 +6,12 @@
  * http://www.dspace.org/license/
  */
 import { Injectable } from '@angular/core';
-import { Item } from '@dspace/core/shared/item.model';
 import {
+  CorrectionTypeDataService,
   getFirstCompletedRemoteData,
   getRemoteDataPayload,
-} from '@dspace/core/shared/operators';
-import { CorrectionTypeDataService } from '@dspace/core/submission/correctiontype-data.service';
+  Item,
+} from '@dspace/core';
 import {
   combineLatest,
   Observable,

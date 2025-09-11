@@ -1,10 +1,12 @@
 import { TestBed } from '@angular/core/testing';
-import { Item } from '@dspace/core/shared/item.model';
-import { ITEM } from '@dspace/core/shared/item.resource-type';
-import { CorrectionTypeDataService } from '@dspace/core/submission/correctiontype-data.service';
-import { CorrectionType } from '@dspace/core/submission/models/correctiontype.model';
-import { createPaginatedList } from '@dspace/core/testing/utils.test';
-import { createSuccessfulRemoteDataObject$ } from '@dspace/core/utilities/remote-data.utils';
+import {
+  CorrectionType,
+  CorrectionTypeDataService,
+  createPaginatedList,
+  createSuccessfulRemoteDataObject$,
+  ITEM,
+  Item,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 
 import {

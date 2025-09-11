@@ -14,7 +14,7 @@ import {
   FormsModule,
   UntypedFormGroup,
 } from '@angular/forms';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+import { hasValue } from '@dspace/utils';
 import {
   DynamicFormControlComponent,
   DynamicFormLayoutService,

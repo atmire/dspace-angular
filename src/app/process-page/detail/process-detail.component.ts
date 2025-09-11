@@ -17,26 +17,26 @@ import {
   Router,
   RouterLink,
 } from '@angular/router';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { BitstreamDataService } from '@dspace/core/data/bitstream-data.service';
-import { PaginatedList } from '@dspace/core/data/paginated-list.model';
-import { ProcessDataService } from '@dspace/core/data/processes/process-data.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { Process } from '@dspace/core/processes/process.model';
-import { ProcessStatus } from '@dspace/core/processes/process-status.model';
-import { redirectOn4xx } from '@dspace/core/shared/authorized.operators';
-import { Bitstream } from '@dspace/core/shared/bitstream.model';
-import { DSpaceObject } from '@dspace/core/shared/dspace-object.model';
 import {
+  AuthService,
+  Bitstream,
+  BitstreamDataService,
+  DSONameService,
+  DSpaceObject,
   getAllSucceededRemoteDataPayload,
   getFirstCompletedRemoteData,
   getFirstSucceededRemoteData,
   getFirstSucceededRemoteDataPayload,
-} from '@dspace/core/shared/operators';
-import { URLCombiner } from '@dspace/core/url-combiner/url-combiner';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+  NotificationsService,
+  PaginatedList,
+  Process,
+  ProcessDataService,
+  ProcessStatus,
+  redirectOn4xx,
+  RemoteData,
+  URLCombiner,
+} from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import {
   NgbModal,
   NgbModalRef,

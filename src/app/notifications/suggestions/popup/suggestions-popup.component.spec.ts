@@ -5,8 +5,10 @@ import {
   waitForAsync,
 } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import { ActivatedRouteStub } from '@dspace/core/testing/active-router.stub';
-import { mockSuggestionTargetsObjectOne } from '@dspace/core/testing/publication-claim-targets.mock';
+import {
+  ActivatedRouteStub,
+  mockSuggestionTargetsObjectOne,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 

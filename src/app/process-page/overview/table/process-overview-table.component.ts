@@ -15,27 +15,27 @@ import {
   Router,
   RouterLink,
 } from '@angular/router';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { FindListOptions } from '@dspace/core/data/find-list-options.model';
-import { PaginatedList } from '@dspace/core/data/paginated-list.model';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { EPersonDataService } from '@dspace/core/eperson/eperson-data.service';
-import { EPerson } from '@dspace/core/eperson/models/eperson.model';
-import { PaginationService } from '@dspace/core/pagination/pagination.service';
-import { PaginationComponentOptions } from '@dspace/core/pagination/pagination-component-options.model';
-import { Process } from '@dspace/core/processes/process.model';
-import { ProcessStatus } from '@dspace/core/processes/process-status.model';
-import { RouteService } from '@dspace/core/services/route.service';
-import { redirectOn4xx } from '@dspace/core/shared/authorized.operators';
 import {
+  AuthService,
+  DSONameService,
+  EPerson,
+  EPersonDataService,
+  FindListOptions,
   getAllCompletedRemoteData,
   getFirstCompletedRemoteData,
-} from '@dspace/core/shared/operators';
+  PaginatedList,
+  PaginationComponentOptions,
+  PaginationService,
+  Process,
+  ProcessStatus,
+  redirectOn4xx,
+  RemoteData,
+  RouteService,
+} from '@dspace/core';
 import {
   hasValue,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import {
   TranslateModule,

@@ -16,16 +16,18 @@ import {
   UntypedFormGroup,
 } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { APP_CONFIG } from '@dspace/config/app-config.interface';
-import { FormRowModel } from '@dspace/core/config/models/config-submission-form.model';
-import { SubmissionFormsModel } from '@dspace/core/config/models/config-submission-forms.model';
-import { APP_DATA_SERVICES_MAP } from '@dspace/core/data-services-map-type';
-import { FormFieldModel } from '@dspace/core/shared/form/models/form-field.model';
-import { FormFieldMetadataValueObject } from '@dspace/core/shared/form/models/form-field-metadata-value.model';
-import { VocabularyService } from '@dspace/core/submission/vocabularies/vocabulary.service';
-import { createTestComponent } from '@dspace/core/testing/utils.test';
-import { VocabularyServiceStub } from '@dspace/core/testing/vocabulary-service.stub';
-import { XSRFService } from '@dspace/core/xsrf/xsrf.service';
+import { APP_CONFIG } from '@dspace/config';
+import {
+  APP_DATA_SERVICES_MAP,
+  createTestComponent,
+  FormFieldMetadataValueObject,
+  FormFieldModel,
+  FormRowModel,
+  SubmissionFormsModel,
+  VocabularyService,
+  VocabularyServiceStub,
+  XSRFService,
+} from '@dspace/core';
 import {
   NgbModule,
   NgbTooltipModule,

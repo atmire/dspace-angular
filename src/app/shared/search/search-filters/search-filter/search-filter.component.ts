@@ -13,16 +13,18 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { AppliedFilter } from '@dspace/core/shared/search/models/applied-filter.model';
-import { FacetValues } from '@dspace/core/shared/search/models/facet-values.model';
-import { SearchFilterConfig } from '@dspace/core/shared/search/models/search-filter-config.model';
-import { SearchOptions } from '@dspace/core/shared/search/models/search-options.model';
-import { SequenceService } from '@dspace/core/shared/sequence.service';
+import {
+  AppliedFilter,
+  FacetValues,
+  RemoteData,
+  SearchFilterConfig,
+  SearchOptions,
+  SequenceService,
+} from '@dspace/core';
 import {
   hasValue,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   BehaviorSubject,

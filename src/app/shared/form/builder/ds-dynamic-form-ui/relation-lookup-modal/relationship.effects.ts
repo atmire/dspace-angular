@@ -1,31 +1,30 @@
-
 import {
   Inject,
   Injectable,
 } from '@angular/core';
-import { ObjectCacheService } from '@dspace/core/cache/object-cache.service';
-import { ServerSyncBufferActionTypes } from '@dspace/core/cache/server-sync-buffer.actions';
-import { RelationshipDataService } from '@dspace/core/data/relationship-data.service';
-import { RelationshipTypeDataService } from '@dspace/core/data/relationship-type-data.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { RequestService } from '@dspace/core/data/request.service';
-import { JsonPatchOperationsActionTypes } from '@dspace/core/json-patch/json-patch-operations.actions';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { followLink } from '@dspace/core/shared/follow-link-config.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { Relationship } from '@dspace/core/shared/item-relationships/relationship.model';
-import { RelationshipType } from '@dspace/core/shared/item-relationships/relationship-type.model';
 import {
   DEBOUNCE_TIME_OPERATOR,
+  followLink,
   getFirstSucceededRemoteData,
   getRemoteDataPayload,
-} from '@dspace/core/shared/operators';
-import { SubmissionObject } from '@dspace/core/submission/models/submission-object.model';
+  Item,
+  JsonPatchOperationsActionTypes,
+  NotificationsService,
+  ObjectCacheService,
+  Relationship,
+  RelationshipDataService,
+  RelationshipType,
+  RelationshipTypeDataService,
+  RemoteData,
+  RequestService,
+  ServerSyncBufferActionTypes,
+  SubmissionObject,
+} from '@dspace/core';
 import {
   hasNoValue,
   hasValue,
   hasValueOperator,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   Actions,
   createEffect,

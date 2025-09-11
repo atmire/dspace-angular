@@ -6,20 +6,22 @@ import {
 import {
   APP_CONFIG,
   AppConfig,
-} from '@dspace/config/app-config.interface';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { ACCESSIBILITY_COOKIE } from '@dspace/core/cookies/accessibility-cookie';
-import { CookieService } from '@dspace/core/cookies/cookie.service';
-import { OrejimeService } from '@dspace/core/cookies/orejime.service';
-import { EPersonDataService } from '@dspace/core/eperson/eperson-data.service';
-import { EPerson } from '@dspace/core/eperson/models/eperson.model';
-import { getFirstCompletedRemoteData } from '@dspace/core/shared/operators';
-import { createSuccessfulRemoteDataObject$ } from '@dspace/core/utilities/remote-data.utils';
+} from '@dspace/config';
+import {
+  ACCESSIBILITY_COOKIE,
+  AuthService,
+  CookieService,
+  createSuccessfulRemoteDataObject$,
+  EPerson,
+  EPersonDataService,
+  getFirstCompletedRemoteData,
+  OrejimeService,
+} from '@dspace/core';
 import {
   hasNoValue,
   hasValue,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import cloneDeep from 'lodash/cloneDeep';
 import {
   combineLatest,

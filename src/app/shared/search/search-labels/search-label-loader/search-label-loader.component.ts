@@ -4,8 +4,10 @@ import {
   OnChanges,
   OnInit,
 } from '@angular/core';
-import { GenericConstructor } from '@dspace/core/shared/generic-constructor';
-import { AppliedFilter } from '@dspace/core/shared/search/models/applied-filter.model';
+import {
+  AppliedFilter,
+  GenericConstructor,
+} from '@dspace/core';
 
 import { AbstractComponentLoaderComponent } from '../../../abstract-component-loader/abstract-component-loader.component';
 import { DynamicComponentLoaderDirective } from '../../../abstract-component-loader/dynamic-component-loader.directive';

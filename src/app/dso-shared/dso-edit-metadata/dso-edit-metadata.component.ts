@@ -13,24 +13,24 @@ import {
   ActivatedRoute,
   Data,
 } from '@angular/router';
-import { ArrayMoveChangeAnalyzer } from '@dspace/core/data/array-move-change-analyzer.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { UpdateDataService } from '@dspace/core/data/update-data.service';
 import {
   APP_DATA_SERVICES_MAP,
+  ArrayMoveChangeAnalyzer,
+  Context,
+  DSpaceObject,
+  getFirstCompletedRemoteData,
+  lazyDataService,
   LazyDataServicesMap,
-} from '@dspace/core/data-services-map-type';
-import { lazyDataService } from '@dspace/core/lazy-data-service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { Context } from '@dspace/core/shared/context.model';
-import { DSpaceObject } from '@dspace/core/shared/dspace-object.model';
-import { getFirstCompletedRemoteData } from '@dspace/core/shared/operators';
-import { ResourceType } from '@dspace/core/shared/resource-type';
+  NotificationsService,
+  RemoteData,
+  ResourceType,
+  UpdateDataService,
+} from '@dspace/core';
 import {
   hasNoValue,
   hasValue,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   TranslateModule,
   TranslateService,

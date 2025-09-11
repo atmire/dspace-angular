@@ -25,18 +25,20 @@ import {
   ActivatedRoute,
   Router,
 } from '@angular/router';
-import { LdnItemfiltersService } from '@dspace/core/coar-notify/ldn-services/ldn-itemfilters-data.service';
-import { LdnServicesService } from '@dspace/core/coar-notify/ldn-services/ldn-services-data.service';
-import { LDN_SERVICE } from '@dspace/core/coar-notify/ldn-services/models/ldn-service.resource-type';
-import { Itemfilter } from '@dspace/core/coar-notify/ldn-services/models/ldn-service-itemfilters';
-import { NotifyServicePattern } from '@dspace/core/coar-notify/ldn-services/models/ldn-service-patterns.model';
-import { LdnService } from '@dspace/core/coar-notify/ldn-services/models/ldn-services.model';
-import { FindListOptions } from '@dspace/core/data/find-list-options.model';
-import { PaginatedList } from '@dspace/core/data/paginated-list.model';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { PaginationService } from '@dspace/core/pagination/pagination.service';
-import { getFirstCompletedRemoteData } from '@dspace/core/shared/operators';
+import {
+  FindListOptions,
+  getFirstCompletedRemoteData,
+  Itemfilter,
+  LDN_SERVICE,
+  LdnItemfiltersService,
+  LdnService,
+  LdnServicesService,
+  NotificationsService,
+  NotifyServicePattern,
+  PaginatedList,
+  PaginationService,
+  RemoteData,
+} from '@dspace/core';
 import {
   NgbDropdownModule,
   NgbModal,

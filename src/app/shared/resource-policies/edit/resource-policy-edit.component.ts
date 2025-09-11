@@ -6,12 +6,14 @@ import {
   ActivatedRoute,
   Router,
 } from '@angular/router';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { ResourcePolicy } from '@dspace/core/resource-policy/models/resource-policy.model';
-import { RESOURCE_POLICY } from '@dspace/core/resource-policy/models/resource-policy.resource-type';
-import { ResourcePolicyDataService } from '@dspace/core/resource-policy/resource-policy-data.service';
-import { getFirstCompletedRemoteData } from '@dspace/core/shared/operators';
+import {
+  getFirstCompletedRemoteData,
+  NotificationsService,
+  RemoteData,
+  RESOURCE_POLICY,
+  ResourcePolicy,
+  ResourcePolicyDataService,
+} from '@dspace/core';
 import {
   TranslateModule,
   TranslateService,

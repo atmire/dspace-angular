@@ -4,8 +4,10 @@ import {
   TestBed,
 } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { DSONameServiceMock } from '@dspace/core/testing/dso-name.service.mock';
+import {
+  DSONameService,
+  DSONameServiceMock,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { BitstreamListItemComponent } from './bitstream-list-item.component';

@@ -4,8 +4,10 @@ import {
   OnInit,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { DSpaceObject } from '@dspace/core/shared/dspace-object.model';
+import {
+  DSpaceObject,
+  RemoteData,
+} from '@dspace/core';
 import { Observable } from 'rxjs';
 import {
   first,

@@ -8,7 +8,7 @@ import {
   ReactiveFormsModule,
   UntypedFormBuilder,
 } from '@angular/forms';
-import { isNotNull } from '@dspace/shared/utils/empty.util';
+import { isNotNull } from '@dspace/utils';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 

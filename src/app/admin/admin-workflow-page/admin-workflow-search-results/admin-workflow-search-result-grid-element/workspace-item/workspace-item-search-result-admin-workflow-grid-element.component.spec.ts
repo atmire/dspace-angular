@@ -6,26 +6,26 @@ import {
 } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { LinkService } from '@dspace/core/cache/builders/link.service';
-import { BitstreamDataService } from '@dspace/core/data/bitstream-data.service';
-import { AuthorizationDataService } from '@dspace/core/data/feature-authorization/authorization-data.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { DSpaceObject } from '@dspace/core/shared/dspace-object.model';
-import { followLink } from '@dspace/core/shared/follow-link-config.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { WorkflowItemSearchResult } from '@dspace/core/shared/object-collection/workflow-item-search-result.model';
-import { ViewMode } from '@dspace/core/shared/view-mode.model';
-import { WorkflowItem } from '@dspace/core/submission/models/workflowitem.model';
-import { SupervisionOrderDataService } from '@dspace/core/supervision-order/supervision-order-data.service';
-import { AuthServiceMock } from '@dspace/core/testing/auth.service.mock';
-import { getMockLinkService } from '@dspace/core/testing/link-service.mock';
-import { NotificationsServiceStub } from '@dspace/core/testing/notifications-service.stub';
 import {
+  AuthorizationDataService,
+  AuthService,
+  AuthServiceMock,
+  BitstreamDataService,
+  createSuccessfulRemoteDataObject$,
+  DSpaceObject,
+  followLink,
+  getMockLinkService,
+  Item,
+  LinkService,
+  NotificationsService,
+  NotificationsServiceStub,
+  SupervisionOrderDataService,
   supervisionOrderPaginatedListRD,
   supervisionOrderPaginatedListRD$,
-} from '@dspace/core/testing/supervision-order.mock';
-import { createSuccessfulRemoteDataObject$ } from '@dspace/core/utilities/remote-data.utils';
+  ViewMode,
+  WorkflowItem,
+  WorkflowItemSearchResult,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 

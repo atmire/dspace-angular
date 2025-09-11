@@ -4,8 +4,10 @@ import {
   OnInit,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { LogOutAction } from '@dspace/core/auth/auth.actions';
-import { getLogOutError } from '@dspace/core/auth/selectors';
+import {
+  getLogOutError,
+  LogOutAction,
+} from '@dspace/core';
 import {
   select,
   Store,

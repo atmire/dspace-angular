@@ -8,7 +8,7 @@ import {
   Router,
   RouterLink,
 } from '@angular/router';
-import { isNotEmpty } from '@dspace/shared/utils/empty.util';
+import { isNotEmpty } from '@dspace/utils';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { LinkMenuItemModel } from './models/link.model';

@@ -13,29 +13,27 @@ import {
 } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import {
-  SortDirection,
-  SortOptions,
-} from '@dspace/core/cache/models/sort-options.model';
-import { CollectionDataService } from '@dspace/core/data/collection-data.service';
-import { AuthorizationDataService } from '@dspace/core/data/feature-authorization/authorization-data.service';
-import { ItemDataService } from '@dspace/core/data/item-data.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { PaginationComponentOptions } from '@dspace/core/pagination/pagination-component-options.model';
-import { Collection } from '@dspace/core/shared/collection.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { PaginatedSearchOptions } from '@dspace/core/shared/search/models/paginated-search-options.model';
-import { HostWindowServiceStub } from '@dspace/core/testing/host-window-service.stub';
-import { NotificationsServiceStub } from '@dspace/core/testing/notifications-service.stub';
-import { ObjectSelectServiceStub } from '@dspace/core/testing/object-select-service.stub';
-import { RouterStub } from '@dspace/core/testing/router.stub';
-import { SearchServiceStub } from '@dspace/core/testing/search-service.stub';
-import { createPaginatedList } from '@dspace/core/testing/utils.test';
-import {
+  AuthorizationDataService,
+  Collection,
+  CollectionDataService,
   createFailedRemoteDataObject$,
+  createPaginatedList,
   createSuccessfulRemoteDataObject,
   createSuccessfulRemoteDataObject$,
-} from '@dspace/core/utilities/remote-data.utils';
+  HostWindowServiceStub,
+  Item,
+  ItemDataService,
+  NotificationsService,
+  NotificationsServiceStub,
+  ObjectSelectServiceStub,
+  PaginatedSearchOptions,
+  PaginationComponentOptions,
+  RemoteData,
+  RouterStub,
+  SearchServiceStub,
+  SortDirection,
+  SortOptions,
+} from '@dspace/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {
   TranslateModule,

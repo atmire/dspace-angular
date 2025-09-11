@@ -5,10 +5,9 @@ import {
 import {
   APP_CONFIG,
   AppConfig,
-} from '@dspace/config/app-config.interface';
-import { getDefaultThemeConfig } from '@dspace/config/config.util';
-import { BASE_THEME_NAME } from '@dspace/config/theme.config';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+  BASE_THEME_NAME,
+} from '@dspace/config';
+import { hasValue } from '@dspace/utils';
 import {
   Actions,
   createEffect,
@@ -18,6 +17,7 @@ import {
 import { map } from 'rxjs/operators';
 
 import { SetThemeAction } from './theme.actions';
+import { getDefaultThemeConfig } from './theme.utils';
 
 @Injectable()
 export class ThemeEffects {

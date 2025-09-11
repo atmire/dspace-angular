@@ -17,23 +17,21 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CookieService } from '@dspace/core/cookies/cookie.service';
-import { OrejimeService } from '@dspace/core/cookies/orejime.service';
-import { ConfigurationDataService } from '@dspace/core/data/configuration-data.service';
-import { EpersonRegistrationService } from '@dspace/core/data/eperson-registration.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
 import {
   CAPTCHA_NAME,
-  GoogleRecaptchaService,
-} from '@dspace/core/google-recaptcha/google-recaptcha.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { ConfigurationProperty } from '@dspace/core/shared/configuration-property.model';
-import {
+  ConfigurationDataService,
+  ConfigurationProperty,
+  CookieService,
+  EpersonRegistrationService,
   getAllSucceededRemoteDataPayload,
   getFirstSucceededRemoteDataPayload,
-} from '@dspace/core/shared/operators';
-import { Registration } from '@dspace/core/shared/registration.model';
-import { isNotEmpty } from '@dspace/shared/utils/empty.util';
+  GoogleRecaptchaService,
+  NotificationsService,
+  OrejimeService,
+  Registration,
+  RemoteData,
+} from '@dspace/core';
+import { isNotEmpty } from '@dspace/utils';
 import {
   TranslateModule,
   TranslateService,

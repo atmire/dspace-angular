@@ -16,19 +16,19 @@ import {
   UntypedFormGroup,
   Validators,
 } from '@angular/forms';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { PaginatedList } from '@dspace/core/data/paginated-list.model';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { SubscriptionsDataService } from '@dspace/core/data/subscriptions-data.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { DSpaceObject } from '@dspace/core/shared/dspace-object.model';
 import {
+  AuthService,
+  DSONameService,
+  DSpaceObject,
   getFirstCompletedRemoteData,
   getFirstSucceededRemoteDataPayload,
-} from '@dspace/core/shared/operators';
-import { Subscription } from '@dspace/core/shared/subscription.model';
-import { isNotEmpty } from '@dspace/shared/utils/empty.util';
+  NotificationsService,
+  PaginatedList,
+  RemoteData,
+  Subscription,
+  SubscriptionsDataService,
+} from '@dspace/core';
+import { isNotEmpty } from '@dspace/utils';
 import {
   NgbActiveModal,
   NgbModal,

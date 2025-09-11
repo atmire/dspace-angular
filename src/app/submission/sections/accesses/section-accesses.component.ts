@@ -4,19 +4,21 @@ import {
   ViewChild,
 } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
-import { AccessesConditionOption } from '@dspace/core/config/models/config-accesses-conditions-options.model';
-import { SubmissionAccessesConfigDataService } from '@dspace/core/config/submission-accesses-config-data.service';
-import { JsonPatchOperationPathCombiner } from '@dspace/core/json-patch/builder/json-patch-operation-path-combiner';
-import { JsonPatchOperationsBuilder } from '@dspace/core/json-patch/builder/json-patch-operations-builder';
-import { getFirstSucceededRemoteData } from '@dspace/core/shared/operators';
-import { WorkspaceitemSectionAccessesObject } from '@dspace/core/submission/models/workspaceitem-section-accesses.model';
-import { SubmissionJsonPatchOperationsService } from '@dspace/core/submission/submission-json-patch-operations.service';
-import { dateToISOFormat } from '@dspace/shared/utils/date.util';
 import {
+  AccessesConditionOption,
+  getFirstSucceededRemoteData,
+  JsonPatchOperationPathCombiner,
+  JsonPatchOperationsBuilder,
+  SubmissionAccessesConfigDataService,
+  SubmissionJsonPatchOperationsService,
+  WorkspaceitemSectionAccessesObject,
+} from '@dspace/core';
+import {
+  dateToISOFormat,
   hasValue,
   isNotEmpty,
   isNotNull,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   DYNAMIC_FORM_CONTROL_TYPE_CHECKBOX,
   DYNAMIC_FORM_CONTROL_TYPE_DATEPICKER,

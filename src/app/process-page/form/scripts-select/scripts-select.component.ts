@@ -17,15 +17,15 @@ import {
   ActivatedRoute,
   Router,
 } from '@angular/router';
-import { FindListOptions } from '@dspace/core/data/find-list-options.model';
-import { PaginatedList } from '@dspace/core/data/paginated-list.model';
-import { ScriptDataService } from '@dspace/core/data/processes/script-data.service';
 import {
+  FindListOptions,
   getFirstCompletedRemoteData,
   getRemoteDataPayload,
-} from '@dspace/core/shared/operators';
-import { Script } from '@dspace/core/shared/scripts/script.model';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+  PaginatedList,
+  Script,
+  ScriptDataService,
+} from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';

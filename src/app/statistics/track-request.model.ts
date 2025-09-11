@@ -1,7 +1,9 @@
-import { ResponseParsingService } from '@dspace/core/data/parsing.service';
-import { PostRequest } from '@dspace/core/data/request.models';
-import { StatusCodeOnlyResponseParsingService } from '@dspace/core/data/status-code-only-response-parsing.service';
-import { GenericConstructor } from '@dspace/core/shared/generic-constructor';
+import {
+  GenericConstructor,
+  PostRequest,
+  ResponseParsingService,
+  StatusCodeOnlyResponseParsingService,
+} from '@dspace/core';
 
 export class TrackRequest extends PostRequest {
 

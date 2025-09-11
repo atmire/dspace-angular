@@ -1,9 +1,11 @@
-import { FormRowModel } from '@dspace/core/config/models/config-submission-form.model';
-import { FormFieldModel } from '@dspace/core/shared/form/models/form-field.model';
-import { FormFieldMetadataValueObject } from '@dspace/core/shared/form/models/form-field-metadata-value.model';
-import { SubmissionScopeType } from '@dspace/core/submission/submission-scope-type';
-import { VocabularyEntry } from '@dspace/core/submission/vocabularies/models/vocabulary-entry.model';
-import { VocabularyOptions } from '@dspace/core/submission/vocabularies/models/vocabulary-options.model';
+import {
+  FormFieldMetadataValueObject,
+  FormFieldModel,
+  FormRowModel,
+  SubmissionScopeType,
+  VocabularyEntry,
+  VocabularyOptions,
+} from '@dspace/core';
 import { DynamicSelectModel } from '@ng-dynamic-forms/core';
 
 import { DsDynamicInputModel } from '../builder/ds-dynamic-form-ui/models/ds-dynamic-input.model';

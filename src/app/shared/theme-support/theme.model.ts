@@ -6,15 +6,17 @@ import {
   RegExThemeConfig,
   ThemeConfig,
   UUIDThemeConfig,
-} from '@dspace/config/theme.config';
-import { getDSORoute } from '@dspace/core/router/utils/dso-route.utils';
-import { DSpaceObject } from '@dspace/core/shared/dspace-object.model';
-import { HandleObject } from '@dspace/core/shared/handle-object.model';
+} from '@dspace/config';
+import {
+  DSpaceObject,
+  getDSORoute,
+  HandleObject,
+} from '@dspace/core';
 import {
   hasNoValue,
   hasValue,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   combineLatest,
   Observable,

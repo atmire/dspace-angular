@@ -9,10 +9,12 @@ import {
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { Collection } from '@dspace/core/shared/collection.model';
-import { ActivatedRouteStub } from '@dspace/core/testing/active-router.stub';
-import { DSONameServiceMock } from '@dspace/core/testing/dso-name.service.mock';
+import {
+  ActivatedRouteStub,
+  Collection,
+  DSONameService,
+  DSONameServiceMock,
+} from '@dspace/core';
 
 import { CollectionListElementComponent } from './collection-list-element.component';
 

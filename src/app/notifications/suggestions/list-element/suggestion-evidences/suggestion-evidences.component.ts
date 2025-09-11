@@ -1,9 +1,8 @@
-
 import {
   Component,
   Input,
 } from '@angular/core';
-import { SuggestionEvidences } from '@dspace/core/notifications/suggestions/models/suggestion.model';
+import { SuggestionEvidences } from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { fadeIn } from '../../../../shared/animations/fade';

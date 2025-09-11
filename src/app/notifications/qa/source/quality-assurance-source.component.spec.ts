@@ -10,14 +10,14 @@ import {
   waitForAsync,
 } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import { PaginationService } from '@dspace/core/pagination/pagination.service';
 import {
+  createTestComponent,
   getMockNotificationsStateService,
+  PaginationService,
+  PaginationServiceStub,
   qualityAssuranceSourceObjectMoreAbstract,
   qualityAssuranceSourceObjectMorePid,
-} from '@dspace/core/testing/notifications.mock';
-import { PaginationServiceStub } from '@dspace/core/testing/pagination-service.stub';
-import { createTestComponent } from '@dspace/core/testing/utils.test';
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { cold } from 'jasmine-marbles';
 import { of } from 'rxjs';

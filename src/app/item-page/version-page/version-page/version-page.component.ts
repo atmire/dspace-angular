@@ -6,18 +6,18 @@ import {
   ActivatedRoute,
   Router,
 } from '@angular/router';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { VersionDataService } from '@dspace/core/data/version-data.service';
-import { getPageNotFoundRoute } from '@dspace/core/router/core-routing-paths';
-import { getItemPageRoute } from '@dspace/core/router/utils/dso-route.utils';
-import { redirectOn4xx } from '@dspace/core/shared/authorized.operators';
-import { Item } from '@dspace/core/shared/item.model';
 import {
+  AuthService,
   getFirstCompletedRemoteData,
   getFirstSucceededRemoteDataPayload,
-} from '@dspace/core/shared/operators';
-import { Version } from '@dspace/core/shared/version.model';
+  getItemPageRoute,
+  getPageNotFoundRoute,
+  Item,
+  redirectOn4xx,
+  RemoteData,
+  Version,
+  VersionDataService,
+} from '@dspace/core';
 import { Observable } from 'rxjs';
 import {
   map,

@@ -5,7 +5,7 @@ import {
   Inject,
   OnInit,
 } from '@angular/core';
-import { WorkspaceitemSectionIdentifiersObject } from '@dspace/core/submission/models/workspaceitem-section-identifiers.model';
+import { WorkspaceitemSectionIdentifiersObject } from '@dspace/core';
 import {
   TranslateModule,
   TranslateService,

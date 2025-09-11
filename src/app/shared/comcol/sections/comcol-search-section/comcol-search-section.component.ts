@@ -11,11 +11,13 @@ import {
 import {
   APP_CONFIG,
   AppConfig,
-} from '@dspace/config/app-config.interface';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { Collection } from '@dspace/core/shared/collection.model';
-import { Community } from '@dspace/core/shared/community.model';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+} from '@dspace/config';
+import {
+  Collection,
+  Community,
+  RemoteData,
+} from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 

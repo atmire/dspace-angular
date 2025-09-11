@@ -20,14 +20,16 @@ import {
   ActivatedRoute,
   Router,
 } from '@angular/router';
-import { LdnItemfiltersService } from '@dspace/core/coar-notify/ldn-services/ldn-itemfilters-data.service';
-import { LdnServicesService } from '@dspace/core/coar-notify/ldn-services/ldn-services-data.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { RouteService } from '@dspace/core/services/route.service';
-import { MockActivatedRoute } from '@dspace/core/testing/active-router.mock';
-import { NotificationsServiceStub } from '@dspace/core/testing/notifications-service.stub';
-import { RouterStub } from '@dspace/core/testing/router.stub';
-import { createSuccessfulRemoteDataObject$ } from '@dspace/core/utilities/remote-data.utils';
+import {
+  createSuccessfulRemoteDataObject$,
+  LdnItemfiltersService,
+  LdnServicesService,
+  MockActivatedRoute,
+  NotificationsService,
+  NotificationsServiceStub,
+  RouterStub,
+  RouteService,
+} from '@dspace/core';
 import {
   NgbDropdownModule,
   NgbModal,

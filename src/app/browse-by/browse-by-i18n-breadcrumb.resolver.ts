@@ -3,8 +3,10 @@ import {
   ResolveFn,
   RouterStateSnapshot,
 } from '@angular/router';
-import { i18nBreadcrumbResolver } from '@dspace/core/breadcrumbs/i18n-breadcrumb.resolver';
-import { BreadcrumbConfig } from '@dspace/core/breadcrumbs/models/breadcrumb-config.model';
+import {
+  BreadcrumbConfig,
+  i18nBreadcrumbResolver,
+} from '@dspace/core';
 
 /**
  * Method for resolving a browse-by i18n breadcrumb configuration object

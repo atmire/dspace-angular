@@ -4,12 +4,12 @@ import {
   NavigationEnd,
   Router,
 } from '@angular/router';
-import { Breadcrumb } from '@dspace/core/breadcrumbs/models/breadcrumb.model';
+import { Breadcrumb } from '@dspace/core';
 import {
   hasNoValue,
   hasValue,
   isUndefined,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   combineLatest,
   Observable,

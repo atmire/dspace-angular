@@ -1,13 +1,14 @@
-
 import {
   Component,
   EventEmitter,
   Input,
   Output,
 } from '@angular/core';
-import { Suggestion } from '@dspace/core/notifications/suggestions/models/suggestion.model';
-import { Collection } from '@dspace/core/shared/collection.model';
-import { ItemType } from '@dspace/core/shared/item-relationships/item-type.model';
+import {
+  Collection,
+  ItemType,
+  Suggestion,
+} from '@dspace/core';
 import {
   NgbDropdownModule,
   NgbModal,

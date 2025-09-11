@@ -1,23 +1,23 @@
 import { Injectable } from '@angular/core';
-import { JsonPatchOperationPathCombiner } from '@dspace/core/json-patch/builder/json-patch-operation-path-combiner';
-import { JsonPatchOperationsBuilder } from '@dspace/core/json-patch/builder/json-patch-operations-builder';
-import { FormFieldLanguageValueObject } from '@dspace/core/shared/form/models/form-field-language-value.model';
-import { FormFieldMetadataValueObject } from '@dspace/core/shared/form/models/form-field-metadata-value.model';
-import { FormFieldPreviousValueObject } from '@dspace/core/shared/form/models/form-field-previous-value-object';
-import { VocabularyEntry } from '@dspace/core/submission/vocabularies/models/vocabulary-entry.model';
-import { VocabularyEntryDetail } from '@dspace/core/submission/vocabularies/models/vocabulary-entry-detail.model';
+import {
+  FormFieldLanguageValueObject,
+  FormFieldMetadataValueObject,
+  FormFieldPreviousValueObject,
+  JsonPatchOperationPathCombiner,
+  JsonPatchOperationsBuilder,
+  VocabularyEntry,
+  VocabularyEntryDetail,
+} from '@dspace/core';
 import {
   dateToString,
-  isNgbDateStruct,
-} from '@dspace/shared/utils/date.util';
-import {
   hasValue,
+  isNgbDateStruct,
   isNotEmpty,
   isNotNull,
   isNotUndefined,
   isNull,
   isUndefined,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   DYNAMIC_FORM_CONTROL_TYPE_ARRAY,
   DYNAMIC_FORM_CONTROL_TYPE_GROUP,

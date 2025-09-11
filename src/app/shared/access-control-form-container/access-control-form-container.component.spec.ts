@@ -6,8 +6,10 @@ import {
   TestBed,
 } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import { BulkAccessConfigDataService } from '@dspace/core/config/bulk-access-config-data.service';
-import { Item } from '@dspace/core/shared/item.model';
+import {
+  BulkAccessConfigDataService,
+  Item,
+} from '@dspace/core';
 import {
   NgbDatepickerModule,
   NgbModal,

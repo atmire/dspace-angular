@@ -3,10 +3,12 @@ import {
   OnInit,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Collection } from '@dspace/core/shared/collection.model';
-import { Context } from '@dspace/core/shared/context.model';
-import { CollectionSearchResult } from '@dspace/core/shared/object-collection/collection-search-result.model';
-import { ViewMode } from '@dspace/core/shared/view-mode.model';
+import {
+  Collection,
+  CollectionSearchResult,
+  Context,
+  ViewMode,
+} from '@dspace/core';
 
 import { getCollectionEditRoute } from '../../../../../collection-page/collection-page-routing-paths';
 import { listableObjectComponent } from '../../../../../shared/object-collection/shared/listable-object/listable-object.decorator';

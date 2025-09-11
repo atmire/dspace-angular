@@ -11,7 +11,7 @@ import {
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
 } from '@angular/router';
-import { CacheableObject } from '@dspace/core/cache/cacheable-object.model';
+import { CacheableObject } from '@dspace/core';
 import {
   Observable,
   of,

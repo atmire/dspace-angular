@@ -7,13 +7,13 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { ConfigurationDataService } from '@dspace/core/data/configuration-data.service';
 import {
+  ConfigurationDataService,
+  getFirstSucceededRemoteDataPayload,
   NativeWindowRef,
   NativeWindowService,
-} from '@dspace/core/services/window.service';
-import { getFirstSucceededRemoteDataPayload } from '@dspace/core/shared/operators';
-import { isNotEmpty } from '@dspace/shared/utils/empty.util';
+} from '@dspace/core';
+import { isNotEmpty } from '@dspace/utils';
 import { Observable } from 'rxjs';
 
 @Component({

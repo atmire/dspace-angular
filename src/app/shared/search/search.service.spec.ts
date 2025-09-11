@@ -1,25 +1,28 @@
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { RouterModule } from '@angular/router';
-import { RemoteDataBuildService } from '@dspace/core/cache/builders/remote-data-build.service';
-import { DSpaceObjectDataService } from '@dspace/core/data/dspace-object-data.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { RequestService } from '@dspace/core/data/request.service';
-import { RequestEntryState } from '@dspace/core/data/request-entry-state.model';
-import { PaginationService } from '@dspace/core/pagination/pagination.service';
-import { RouteService } from '@dspace/core/services/route.service';
-import { HALEndpointService } from '@dspace/core/shared/hal-endpoint.service';
-import { FacetValues } from '@dspace/core/shared/search/models/facet-values.model';
-import { PaginatedSearchOptions } from '@dspace/core/shared/search/models/paginated-search-options.model';
-import { SearchFilterConfig } from '@dspace/core/shared/search/models/search-filter-config.model';
-import { SearchObjects } from '@dspace/core/shared/search/models/search-objects.model';
-import { ViewMode } from '@dspace/core/shared/view-mode.model';
-import { HALEndpointServiceStub } from '@dspace/core/testing/hal-endpoint-service.stub';
-import { PaginationServiceStub } from '@dspace/core/testing/pagination-service.stub';
-import { getMockRemoteDataBuildService } from '@dspace/core/testing/remote-data-build.service.mock';
-import { getMockRequestService } from '@dspace/core/testing/request.service.mock';
-import { routeServiceStub } from '@dspace/core/testing/route-service.stub';
-import { SearchConfigurationServiceStub } from '@dspace/core/testing/search-configuration-service.stub';
+import {
+  DSpaceObjectDataService,
+  FacetValues,
+  getMockRemoteDataBuildService,
+  getMockRequestService,
+  HALEndpointService,
+  HALEndpointServiceStub,
+  PaginatedSearchOptions,
+  PaginationService,
+  PaginationServiceStub,
+  RemoteData,
+  RemoteDataBuildService,
+  RequestEntryState,
+  RequestService,
+  RouteService,
+  routeServiceStub,
+  SearchConfigurationServiceStub,
+  SearchFilterConfig,
+  SearchObjects,
+  ViewMode,
+} from '@dspace/core';
 import { Angulartics2 } from 'angulartics2';
 import { of } from 'rxjs';
 import { TestScheduler } from 'rxjs/testing';
@@ -28,7 +31,6 @@ import { SearchService } from './search.service';
 import { SearchConfigurationService } from './search-configuration.service';
 import anything = jasmine.anything;
 import SpyObj = jasmine.SpyObj;
-import { Component } from '@angular/core';
 
 @Component({
   template: '',

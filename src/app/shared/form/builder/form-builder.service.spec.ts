@@ -10,15 +10,17 @@ import {
   UntypedFormControl,
   UntypedFormGroup,
 } from '@angular/forms';
-import { FormRowModel } from '@dspace/core/config/models/config-submission-form.model';
-import { SubmissionFormsModel } from '@dspace/core/config/models/config-submission-forms.model';
-import { ConfigurationDataService } from '@dspace/core/data/configuration-data.service';
-import { ConfigurationProperty } from '@dspace/core/shared/configuration-property.model';
-import { FormFieldModel } from '@dspace/core/shared/form/models/form-field.model';
-import { FormFieldMetadataValueObject } from '@dspace/core/shared/form/models/form-field-metadata-value.model';
-import { VocabularyOptions } from '@dspace/core/submission/vocabularies/models/vocabulary-options.model';
-import { getMockTranslateService } from '@dspace/core/testing/translate.service.mock';
-import { createSuccessfulRemoteDataObject$ } from '@dspace/core/utilities/remote-data.utils';
+import {
+  ConfigurationDataService,
+  ConfigurationProperty,
+  createSuccessfulRemoteDataObject$,
+  FormFieldMetadataValueObject,
+  FormFieldModel,
+  FormRowModel,
+  getMockTranslateService,
+  SubmissionFormsModel,
+  VocabularyOptions,
+} from '@dspace/core';
 import {
   DynamicCheckboxGroupModel,
   DynamicCheckboxModel,

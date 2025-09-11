@@ -3,7 +3,7 @@ import {
   Component,
   Input,
 } from '@angular/core';
-import { HealthInfoComponent } from '@dspace/core/shared/health-component.model';
+import { HealthInfoComponent } from '@dspace/core';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { ObjNgFor } from '../../../shared/utils/object-ngfor.pipe';

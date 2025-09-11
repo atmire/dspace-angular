@@ -11,10 +11,12 @@ import {
   ActivatedRoute,
   Router,
 } from '@angular/router';
-import { Collection } from '@dspace/core/shared/collection.model';
-import { MetadataValue } from '@dspace/core/shared/metadata.models';
-import { RouterStub } from '@dspace/core/testing/router.stub';
-import { createSuccessfulRemoteDataObject } from '@dspace/core/utilities/remote-data.utils';
+import {
+  Collection,
+  createSuccessfulRemoteDataObject,
+  MetadataValue,
+  RouterStub,
+} from '@dspace/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 

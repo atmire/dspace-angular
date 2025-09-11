@@ -1,5 +1,7 @@
-import { ResourceType } from '@dspace/core/shared/resource-type';
-import { VocabularyOptions } from '@dspace/core/submission/vocabularies/models/vocabulary-options.model';
+import {
+  ResourceType,
+  VocabularyOptions,
+} from '@dspace/core';
 import {
   AUTOCOMPLETE_OFF,
   DynamicFormControlLayout,

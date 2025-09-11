@@ -8,20 +8,20 @@ import {
   ActivatedRoute,
   RouterLink,
 } from '@angular/router';
-import { APP_CONFIG } from '@dspace/config/app-config.interface';
-import { AuthorizationDataService } from '@dspace/core/data/feature-authorization/authorization-data.service';
-import { FeatureID } from '@dspace/core/data/feature-authorization/feature-id';
-import { APP_DATA_SERVICES_MAP } from '@dspace/core/data-services-map-type';
+import { APP_CONFIG } from '@dspace/config';
 import {
+  ActivatedRouteStub,
+  APP_DATA_SERVICES_MAP,
+  AuthorizationDataService,
+  Bitstream,
+  FeatureID,
   getBitstreamModuleRoute,
   getItemModuleRoute,
-} from '@dspace/core/router/core-routing-paths';
-import { Bitstream } from '@dspace/core/shared/bitstream.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { ItemRequest } from '@dspace/core/shared/item-request.model';
-import { ActivatedRouteStub } from '@dspace/core/testing/active-router.stub';
-import { RouterLinkDirectiveStub } from '@dspace/core/testing/router-link-directive.stub';
-import { URLCombiner } from '@dspace/core/url-combiner/url-combiner';
+  Item,
+  ItemRequest,
+  RouterLinkDirectiveStub,
+  URLCombiner,
+} from '@dspace/core';
 import { Store } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
 import {

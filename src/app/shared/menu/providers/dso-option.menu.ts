@@ -7,7 +7,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { DSpaceObject } from '@dspace/core/shared/dspace-object.model';
+import { DSpaceObject } from '@dspace/core';
 import {
   Observable,
   of,

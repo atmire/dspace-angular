@@ -10,13 +10,15 @@ import {
   ActivatedRoute,
   Router,
 } from '@angular/router';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { DSpaceObjectDataService } from '@dspace/core/data/dspace-object-data.service';
-import { Item } from '@dspace/core/shared/item.model';
-import { UsageReport } from '@dspace/core/statistics/models/usage-report.model';
-import { UsageReportDataService } from '@dspace/core/statistics/usage-report-data.service';
-import { createSuccessfulRemoteDataObject } from '@dspace/core/utilities/remote-data.utils';
+import {
+  AuthService,
+  createSuccessfulRemoteDataObject,
+  DSONameService,
+  DSpaceObjectDataService,
+  Item,
+  UsageReport,
+  UsageReportDataService,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 

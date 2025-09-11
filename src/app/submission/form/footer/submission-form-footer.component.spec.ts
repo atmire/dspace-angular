@@ -11,10 +11,12 @@ import {
   waitForAsync,
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { SubmissionRestService } from '@dspace/core/submission/submission-rest.service';
-import { SubmissionRestServiceStub } from '@dspace/core/testing/submission-rest-service.stub';
-import { SubmissionServiceStub } from '@dspace/core/testing/submission-service.stub';
-import { createTestComponent } from '@dspace/core/testing/utils.test';
+import {
+  createTestComponent,
+  SubmissionRestService,
+  SubmissionRestServiceStub,
+  SubmissionServiceStub,
+} from '@dspace/core';
 import {
   NgbModal,
   NgbModule,

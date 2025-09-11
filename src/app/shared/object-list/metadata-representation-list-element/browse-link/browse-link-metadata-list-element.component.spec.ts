@@ -8,10 +8,12 @@ import {
   waitForAsync,
 } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import { MetadataRepresentationType } from '@dspace/core/shared/metadata-representation/metadata-representation.model';
-import { MetadatumRepresentation } from '@dspace/core/shared/metadata-representation/metadatum/metadatum-representation.model';
-import { ValueListBrowseDefinition } from '@dspace/core/shared/value-list-browse-definition.model';
-import { ActivatedRouteStub } from '@dspace/core/testing/active-router.stub';
+import {
+  ActivatedRouteStub,
+  MetadataRepresentationType,
+  MetadatumRepresentation,
+  ValueListBrowseDefinition,
+} from '@dspace/core';
 
 import { BrowseLinkMetadataListElementComponent } from './browse-link-metadata-list-element.component';
 

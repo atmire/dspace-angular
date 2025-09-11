@@ -7,8 +7,10 @@ import {
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
-import { CSSVariableServiceStub } from '@dspace/core/testing/css-variable-service.stub';
-import { RouterStub } from '@dspace/core/testing/router.stub';
+import {
+  CSSVariableServiceStub,
+  RouterStub,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 

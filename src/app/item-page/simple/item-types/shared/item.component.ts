@@ -4,15 +4,15 @@ import {
   OnInit,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { getItemPageRoute } from '@dspace/core/router/utils/dso-route.utils';
-import { RouteService } from '@dspace/core/services/route.service';
-import { Item } from '@dspace/core/shared/item.model';
-import { ViewMode } from '@dspace/core/shared/view-mode.model';
 import {
   getDSpaceQuery,
+  getItemPageRoute,
   isIiifEnabled,
   isIiifSearchEnabled,
-} from '@dspace/core/utilities/item-iiif-utils';
+  Item,
+  RouteService,
+  ViewMode,
+} from '@dspace/core';
 import { Observable } from 'rxjs';
 import {
   map,

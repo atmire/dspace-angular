@@ -12,27 +12,27 @@ import {
   waitForAsync,
 } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { buildPaginatedList } from '@dspace/core/data/paginated-list.model';
-import { RequestService } from '@dspace/core/data/request.service';
 import {
   APP_DATA_SERVICES_MAP,
+  buildPaginatedList,
+  createSuccessfulRemoteDataObject,
+  createTestComponent,
+  DSONameService,
+  DSONameServiceMock,
+  EPERSON,
+  EPersonDataService,
+  EPersonMock,
+  getMockRequestService,
+  GROUP,
+  GroupDataService,
+  GroupMock,
   LazyDataServicesMap,
-} from '@dspace/core/data-services-map-type';
-import { EPersonDataService } from '@dspace/core/eperson/eperson-data.service';
-import { GroupDataService } from '@dspace/core/eperson/group-data.service';
-import { EPERSON } from '@dspace/core/eperson/models/eperson.resource-type';
-import { GROUP } from '@dspace/core/eperson/models/group.resource-type';
-import { PaginationService } from '@dspace/core/pagination/pagination.service';
-import { PaginationComponentOptions } from '@dspace/core/pagination/pagination-component-options.model';
-import { PageInfo } from '@dspace/core/shared/page-info.model';
-import { DSONameServiceMock } from '@dspace/core/testing/dso-name.service.mock';
-import { EPersonMock } from '@dspace/core/testing/eperson.mock';
-import { GroupMock } from '@dspace/core/testing/group-mock';
-import { PaginationServiceStub } from '@dspace/core/testing/pagination-service.stub';
-import { getMockRequestService } from '@dspace/core/testing/request.service.mock';
-import { createTestComponent } from '@dspace/core/testing/utils.test';
-import { createSuccessfulRemoteDataObject } from '@dspace/core/utilities/remote-data.utils';
+  PageInfo,
+  PaginationComponentOptions,
+  PaginationService,
+  PaginationServiceStub,
+  RequestService,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { hot } from 'jasmine-marbles';
 import uniqueId from 'lodash/uniqueId';

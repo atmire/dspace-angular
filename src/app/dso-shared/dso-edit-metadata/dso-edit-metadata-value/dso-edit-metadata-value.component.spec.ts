@@ -9,14 +9,14 @@ import {
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { RelationshipDataService } from '@dspace/core/data/relationship-data.service';
 import {
+  DsoEditMetadataFieldServiceStub,
+  DSONameService,
+  ItemMetadataRepresentation,
   MetadataValue,
+  RelationshipDataService,
   VIRTUAL_METADATA_PREFIX,
-} from '@dspace/core/shared/metadata.models';
-import { ItemMetadataRepresentation } from '@dspace/core/shared/metadata-representation/item/item-metadata-representation.model';
-import { DsoEditMetadataFieldServiceStub } from '@dspace/core/testing/dso-edit-metadata-field.service.stub';
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 

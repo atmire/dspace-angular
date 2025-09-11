@@ -12,13 +12,15 @@ import {
   Router,
   RouterOutlet,
 } from '@angular/router';
-import { INotificationBoardOptions } from '@dspace/config/notifications-config.interfaces';
-import { ThemeConfig } from '@dspace/config/theme.config';
-import { getPageInternalServerErrorRoute } from '@dspace/core/router/core-routing-paths';
 import {
+  INotificationBoardOptions,
+  ThemeConfig,
+} from '@dspace/config';
+import {
+  getPageInternalServerErrorRoute,
   NativeWindowRef,
   NativeWindowService,
-} from '@dspace/core/services/window.service';
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   BehaviorSubject,

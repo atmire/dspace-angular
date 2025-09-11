@@ -2,10 +2,12 @@ import {
   Component,
   OnInit,
 } from '@angular/core';
-import { DSpaceObject } from '@dspace/core/shared/dspace-object.model';
-import { Metadata } from '@dspace/core/shared/metadata.utils';
-import { SearchResult } from '@dspace/core/shared/search/models/search-result.model';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+import {
+  DSpaceObject,
+  Metadata,
+  SearchResult,
+} from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 
 import { AbstractListableElementComponent } from '../../object-collection/shared/object-collection-element/abstract-listable-element.component';
 

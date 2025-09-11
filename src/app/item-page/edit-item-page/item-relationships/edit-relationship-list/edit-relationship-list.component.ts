@@ -14,41 +14,41 @@ import {
 import {
   APP_CONFIG,
   AppConfig,
-} from '@dspace/config/app-config.interface';
-import { LinkService } from '@dspace/core/cache/builders/link.service';
-import { RequestParam } from '@dspace/core/cache/models/request-param.model';
-import { FieldChangeType } from '@dspace/core/data/object-updates/field-change-type.model';
-import { FieldUpdate } from '@dspace/core/data/object-updates/field-update.model';
-import { FieldUpdates } from '@dspace/core/data/object-updates/field-updates.model';
-import { RelationshipIdentifiable } from '@dspace/core/data/object-updates/object-updates.reducer';
-import { ObjectUpdatesService } from '@dspace/core/data/object-updates/object-updates.service';
-import { PaginatedList } from '@dspace/core/data/paginated-list.model';
-import { RelationshipDataService } from '@dspace/core/data/relationship-data.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { PaginationService } from '@dspace/core/pagination/pagination.service';
-import { PaginationComponentOptions } from '@dspace/core/pagination/pagination-component-options.model';
-import { Collection } from '@dspace/core/shared/collection.model';
-import { FollowLinkConfig } from '@dspace/core/shared/follow-link-config.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { ItemType } from '@dspace/core/shared/item-relationships/item-type.model';
-import { Relationship } from '@dspace/core/shared/item-relationships/relationship.model';
-import { RelationshipType } from '@dspace/core/shared/item-relationships/relationship-type.model';
-import { ItemSearchResult } from '@dspace/core/shared/object-collection/item-search-result.model';
+} from '@dspace/config';
 import {
+  Collection,
+  FieldChangeType,
+  FieldUpdate,
+  FieldUpdates,
+  FollowLinkConfig,
   getAllSucceededRemoteData,
   getFirstCompletedRemoteData,
   getFirstSucceededRemoteData,
   getFirstSucceededRemoteDataPayload,
   getRemoteDataPayload,
-} from '@dspace/core/shared/operators';
-import { RelationshipOptions } from '@dspace/core/shared/relationship-options.model';
-import { itemLinksToFollow } from '@dspace/core/utilities/relation-query.utils';
+  Item,
+  itemLinksToFollow,
+  ItemSearchResult,
+  ItemType,
+  LinkService,
+  ObjectUpdatesService,
+  PaginatedList,
+  PaginationComponentOptions,
+  PaginationService,
+  Relationship,
+  RelationshipDataService,
+  RelationshipIdentifiable,
+  RelationshipOptions,
+  RelationshipType,
+  RemoteData,
+  RequestParam,
+} from '@dspace/core';
 import {
   hasNoValue,
   hasValue,
   hasValueOperator,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   NgbModal,
   NgbModalRef,

@@ -1,5 +1,5 @@
-import { FormFieldMetadataValueObject } from '@dspace/core/shared/form/models/form-field-metadata-value.model';
-import { isNotEmpty } from '@dspace/shared/utils/empty.util';
+import { FormFieldMetadataValueObject } from '@dspace/core';
+import { isNotEmpty } from '@dspace/utils';
 import {
   DynamicSelectModel,
   DynamicSelectModelConfig,

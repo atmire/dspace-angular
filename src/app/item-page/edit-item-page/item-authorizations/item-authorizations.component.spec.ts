@@ -10,19 +10,17 @@ import {
 } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
-import { LinkService } from '@dspace/core/cache/builders/link.service';
-import { Bitstream } from '@dspace/core/shared/bitstream.model';
-import { Bundle } from '@dspace/core/shared/bundle.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { getMockLinkService } from '@dspace/core/testing/link-service.mock';
 import {
+  Bitstream,
+  Bundle,
   createPaginatedList,
-  createTestComponent,
-} from '@dspace/core/testing/utils.test';
-import {
   createSuccessfulRemoteDataObject,
   createSuccessfulRemoteDataObject$,
-} from '@dspace/core/utilities/remote-data.utils';
+  createTestComponent,
+  getMockLinkService,
+  Item,
+  LinkService,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { cold } from 'jasmine-marbles';
 import { of } from 'rxjs';

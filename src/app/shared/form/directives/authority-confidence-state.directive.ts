@@ -18,16 +18,18 @@ import {
   Renderer2,
   SimpleChanges,
 } from '@angular/core';
-import { ConfidenceIconConfig } from '@dspace/config/submission-config.interface';
-import { ConfidenceType } from '@dspace/core/shared/confidence-type';
-import { FormFieldMetadataValueObject } from '@dspace/core/shared/form/models/form-field-metadata-value.model';
-import { MetadataValue } from '@dspace/core/shared/metadata.models';
-import { VocabularyEntry } from '@dspace/core/submission/vocabularies/models/vocabulary-entry.model';
-import { VocabularyEntryDetail } from '@dspace/core/submission/vocabularies/models/vocabulary-entry-detail.model';
+import { ConfidenceIconConfig } from '@dspace/config';
+import {
+  ConfidenceType,
+  FormFieldMetadataValueObject,
+  MetadataValue,
+  VocabularyEntry,
+  VocabularyEntryDetail,
+} from '@dspace/core';
 import {
   isNotEmpty,
   isNull,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import { TranslateService } from '@ngx-translate/core';
 import findIndex from 'lodash/findIndex';
 

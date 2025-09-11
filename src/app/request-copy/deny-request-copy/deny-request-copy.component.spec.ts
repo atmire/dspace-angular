@@ -9,21 +9,21 @@ import {
   Router,
 } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { ItemDataService } from '@dspace/core/data/item-data.service';
-import { ItemRequestDataService } from '@dspace/core/data/item-request-data.service';
-import { EPerson } from '@dspace/core/eperson/models/eperson.model';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { Item } from '@dspace/core/shared/item.model';
-import { ItemRequest } from '@dspace/core/shared/item-request.model';
-import { RequestCopyEmail } from '@dspace/core/shared/request-copy-email.model';
-import { DSONameServiceMock } from '@dspace/core/testing/dso-name.service.mock';
 import {
+  AuthService,
   createFailedRemoteDataObject$,
   createSuccessfulRemoteDataObject,
   createSuccessfulRemoteDataObject$,
-} from '@dspace/core/utilities/remote-data.utils';
+  DSONameService,
+  DSONameServiceMock,
+  EPerson,
+  Item,
+  ItemDataService,
+  ItemRequest,
+  ItemRequestDataService,
+  NotificationsService,
+  RequestCopyEmail,
+} from '@dspace/core';
 import {
   TranslateModule,
   TranslateService,

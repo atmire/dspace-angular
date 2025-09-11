@@ -1,8 +1,10 @@
 import { AbstractControl } from '@angular/forms';
 import { Route } from '@angular/router';
-import { i18nBreadcrumbResolver } from '@dspace/core/breadcrumbs/i18n-breadcrumb.resolver';
-import { groupAdministratorGuard } from '@dspace/core/data/feature-authorization/feature-authorization-guard/group-administrator.guard';
-import { siteAdministratorGuard } from '@dspace/core/data/feature-authorization/feature-authorization-guard/site-administrator.guard';
+import {
+  groupAdministratorGuard,
+  i18nBreadcrumbResolver,
+  siteAdministratorGuard,
+} from '@dspace/core';
 import {
   DYNAMIC_ERROR_MESSAGES_MATCHER,
   DynamicErrorMessagesMatcher,

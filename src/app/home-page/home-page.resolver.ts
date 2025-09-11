@@ -4,8 +4,10 @@ import {
   ResolveFn,
   RouterStateSnapshot,
 } from '@angular/router';
-import { SiteDataService } from '@dspace/core/data/site-data.service';
-import { Site } from '@dspace/core/shared/site.model';
+import {
+  Site,
+  SiteDataService,
+} from '@dspace/core';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 

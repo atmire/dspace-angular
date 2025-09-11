@@ -1,17 +1,17 @@
 import { TestBed } from '@angular/core/testing';
-import { ConfigurationDataService } from '@dspace/core/data/configuration-data.service';
 import {
+  COLLECTION,
+  Collection,
+  COMMUNITY,
+  Community,
+  ConfigurationDataService,
+  ConfigurationDataServiceStub,
   getCollectionModuleRoute,
   getCommunityModuleRoute,
   getItemModuleRoute,
-} from '@dspace/core/router/core-routing-paths';
-import { Collection } from '@dspace/core/shared/collection.model';
-import { COLLECTION } from '@dspace/core/shared/collection.resource-type';
-import { Community } from '@dspace/core/shared/community.model';
-import { COMMUNITY } from '@dspace/core/shared/community.resource-type';
-import { Item } from '@dspace/core/shared/item.model';
-import { ITEM } from '@dspace/core/shared/item.resource-type';
-import { ConfigurationDataServiceStub } from '@dspace/core/testing/configuration-data.service.stub';
+  ITEM,
+  Item,
+} from '@dspace/core';
 
 import { HandleService } from '../handle.service';
 import {

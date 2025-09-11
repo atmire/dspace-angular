@@ -8,11 +8,13 @@ import {
   Router,
   RouterLink,
 } from '@angular/router';
-import { ItemDataService } from '@dspace/core/data/item-data.service';
-import { RequestService } from '@dspace/core/data/request.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { getItemPageRoute } from '@dspace/core/router/utils/dso-route.utils';
-import { Item } from '@dspace/core/shared/item.model';
+import {
+  getItemPageRoute,
+  Item,
+  ItemDataService,
+  NotificationsService,
+  RequestService,
+} from '@dspace/core';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import {
   TranslateModule,

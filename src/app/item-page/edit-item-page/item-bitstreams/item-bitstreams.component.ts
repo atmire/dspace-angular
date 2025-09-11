@@ -6,6 +6,7 @@ import {
   ChangeDetectorRef,
   Component,
   HostListener,
+  Inject,
   NgZone,
   OnDestroy,
 } from '@angular/core';
@@ -14,27 +15,31 @@ import {
   Router,
   RouterLink,
 } from '@angular/router';
-import { ObjectCacheService } from '@dspace/core/cache/object-cache.service';
-import { BitstreamDataService } from '@dspace/core/data/bitstream-data.service';
-import { BundleDataService } from '@dspace/core/data/bundle-data.service';
-import { ItemDataService } from '@dspace/core/data/item-data.service';
-import { ObjectUpdatesService } from '@dspace/core/data/object-updates/object-updates.service';
-import { PaginatedList } from '@dspace/core/data/paginated-list.model';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { RequestService } from '@dspace/core/data/request.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { PaginationComponentOptions } from '@dspace/core/pagination/pagination-component-options.model';
-import { Bundle } from '@dspace/core/shared/bundle.model';
-import { NoContent } from '@dspace/core/shared/NoContent.model';
 import {
+  APP_CONFIG,
+  AppConfig,
+} from '@dspace/config';
+import {
+  BitstreamDataService,
+  Bundle,
+  BundleDataService,
   getFirstSucceededRemoteData,
   getRemoteDataPayload,
-} from '@dspace/core/shared/operators';
-import { PaginatedSearchOptions } from '@dspace/core/shared/search/models/paginated-search-options.model';
+  ItemDataService,
+  NoContent,
+  NotificationsService,
+  ObjectCacheService,
+  ObjectUpdatesService,
+  PaginatedList,
+  PaginatedSearchOptions,
+  PaginationComponentOptions,
+  RemoteData,
+  RequestService,
+} from '@dspace/core';
 import {
   hasValue,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   TranslateModule,
   TranslateService,
@@ -144,6 +149,7 @@ export class ItemBitstreamsComponent extends AbstractItemUpdateComponent impleme
     public notificationsService: NotificationsService,
     public translateService: TranslateService,
     public route: ActivatedRoute,
+    @Inject(APP_CONFIG) public appConfig: AppConfig,
     public bitstreamService: BitstreamDataService,
     public objectCache: ObjectCacheService,
     public requestService: RequestService,
@@ -152,7 +158,7 @@ export class ItemBitstreamsComponent extends AbstractItemUpdateComponent impleme
     public zone: NgZone,
     public itemBitstreamsService: ItemBitstreamsService,
   ) {
-    super(itemService, objectUpdatesService, router, notificationsService, translateService, route);
+    super(itemService, objectUpdatesService, router, notificationsService, translateService, route, appConfig);
 
     this.columnSizes = this.itemBitstreamsService.getColumnSizes();
   }

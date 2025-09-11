@@ -1,14 +1,15 @@
-
 import {
   Component,
   Input,
 } from '@angular/core';
-import { getResourceTypeValueFor } from '@dspace/core/cache/object-cache.reducer';
-import { DSpaceObject } from '@dspace/core/shared/dspace-object.model';
+import {
+  DSpaceObject,
+  getResourceTypeValueFor,
+} from '@dspace/core';
 import {
   hasValue,
   isEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({

@@ -10,20 +10,22 @@ import {
   ActivatedRoute,
   Router,
 } from '@angular/router';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { RequestService } from '@dspace/core/data/request.service';
-import { EPersonDataService } from '@dspace/core/eperson/eperson-data.service';
-import { GroupDataService } from '@dspace/core/eperson/group-data.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { ResourcePolicy } from '@dspace/core/resource-policy/models/resource-policy.model';
-import { ResourcePolicyDataService } from '@dspace/core/resource-policy/resource-policy-data.service';
-import { followLink } from '@dspace/core/shared/follow-link-config.model';
-import { getAllSucceededRemoteData } from '@dspace/core/shared/operators';
+import {
+  DSONameService,
+  EPersonDataService,
+  followLink,
+  getAllSucceededRemoteData,
+  GroupDataService,
+  NotificationsService,
+  RequestService,
+  ResourcePolicy,
+  ResourcePolicyDataService,
+} from '@dspace/core';
 import {
   hasValue,
   isEmpty,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   TranslateModule,
   TranslateService,

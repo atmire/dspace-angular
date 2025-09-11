@@ -9,15 +9,17 @@ import {
   Router,
   RouterLink,
 } from '@angular/router';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { RequestService } from '@dspace/core/data/request.service';
-import { WorkflowActionDataService } from '@dspace/core/data/workflow-action-data.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { Item } from '@dspace/core/shared/item.model';
-import { WorkflowItem } from '@dspace/core/submission/models/workflowitem.model';
-import { ClaimedTaskDataService } from '@dspace/core/tasks/claimed-task-data.service';
-import { ClaimedTask } from '@dspace/core/tasks/models/claimed-task-object.model';
-import { WorkflowAction } from '@dspace/core/tasks/models/workflow-action-object.model';
+import {
+  ClaimedTask,
+  ClaimedTaskDataService,
+  Item,
+  NotificationsService,
+  RemoteData,
+  RequestService,
+  WorkflowAction,
+  WorkflowActionDataService,
+  WorkflowItem,
+} from '@dspace/core';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import {
   TranslateModule,

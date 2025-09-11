@@ -9,9 +9,11 @@ import {
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { LinkService } from '@dspace/core/cache/builders/link.service';
-import { Community } from '@dspace/core/shared/community.model';
-import { ActivatedRouteStub } from '@dspace/core/testing/active-router.stub';
+import {
+  ActivatedRouteStub,
+  Community,
+  LinkService,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { ThemedThumbnailComponent } from '../../../thumbnail/themed-thumbnail.component';

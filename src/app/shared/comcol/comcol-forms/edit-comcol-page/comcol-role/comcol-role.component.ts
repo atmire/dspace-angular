@@ -5,24 +5,24 @@ import {
   OnInit,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { RequestService } from '@dspace/core/data/request.service';
-import { GroupDataService } from '@dspace/core/eperson/group-data.service';
-import { Group } from '@dspace/core/eperson/models/group.model';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { Collection } from '@dspace/core/shared/collection.model';
-import { Community } from '@dspace/core/shared/community.model';
-import { HALLink } from '@dspace/core/shared/hal-link.model';
-import { NoContent } from '@dspace/core/shared/NoContent.model';
 import {
+  Collection,
+  Community,
+  DSONameService,
   getAllCompletedRemoteData,
   getFirstCompletedRemoteData,
-} from '@dspace/core/shared/operators';
+  Group,
+  GroupDataService,
+  HALLink,
+  NoContent,
+  NotificationsService,
+  RemoteData,
+  RequestService,
+} from '@dspace/core';
 import {
   hasNoValue,
   hasValue,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   TranslateModule,

@@ -4,22 +4,24 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { LinkService } from '@dspace/core/cache/builders/link.service';
-import { ObjectCacheService } from '@dspace/core/cache/object-cache.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { Context } from '@dspace/core/shared/context.model';
-import { followLink } from '@dspace/core/shared/follow-link-config.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { ClaimedTaskSearchResult } from '@dspace/core/shared/object-collection/claimed-task-search-result.model';
-import { getFirstCompletedRemoteData } from '@dspace/core/shared/operators';
-import { ViewMode } from '@dspace/core/shared/view-mode.model';
-import { WorkflowItem } from '@dspace/core/submission/models/workflowitem.model';
-import { ClaimedTask } from '@dspace/core/tasks/models/claimed-task-object.model';
+import {
+  ClaimedTask,
+  ClaimedTaskSearchResult,
+  Context,
+  DSONameService,
+  followLink,
+  getFirstCompletedRemoteData,
+  Item,
+  LinkService,
+  ObjectCacheService,
+  RemoteData,
+  ViewMode,
+  WorkflowItem,
+} from '@dspace/core';
 import {
   hasValue,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   BehaviorSubject,
   EMPTY,

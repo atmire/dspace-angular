@@ -8,11 +8,13 @@ import {
   waitForAsync,
 } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ConfigurationDataService } from '@dspace/core/data/configuration-data.service';
-import { EPersonDataService } from '@dspace/core/eperson/eperson-data.service';
-import { EPerson } from '@dspace/core/eperson/models/eperson.model';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { createSuccessfulRemoteDataObject$ } from '@dspace/core/utilities/remote-data.utils';
+import {
+  ConfigurationDataService,
+  createSuccessfulRemoteDataObject$,
+  EPerson,
+  EPersonDataService,
+  NotificationsService,
+} from '@dspace/core';
 import {
   TranslateModule,
   TranslateService,

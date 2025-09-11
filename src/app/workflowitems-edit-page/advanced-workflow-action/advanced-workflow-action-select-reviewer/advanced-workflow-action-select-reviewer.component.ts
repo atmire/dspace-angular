@@ -13,16 +13,18 @@ import {
   Params,
   Router,
 } from '@angular/router';
-import { RequestService } from '@dspace/core/data/request.service';
-import { WorkflowActionDataService } from '@dspace/core/data/workflow-action-data.service';
-import { EPerson } from '@dspace/core/eperson/models/eperson.model';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { RouteService } from '@dspace/core/services/route.service';
-import { WorkflowItemDataService } from '@dspace/core/submission/workflowitem-data.service';
-import { ClaimedTaskDataService } from '@dspace/core/tasks/claimed-task-data.service';
-import { SelectReviewerAdvancedWorkflowInfo } from '@dspace/core/tasks/models/select-reviewer-advanced-workflow-info.model';
-import { WorkflowAction } from '@dspace/core/tasks/models/workflow-action-object.model';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+import {
+  ClaimedTaskDataService,
+  EPerson,
+  NotificationsService,
+  RequestService,
+  RouteService,
+  SelectReviewerAdvancedWorkflowInfo,
+  WorkflowAction,
+  WorkflowActionDataService,
+  WorkflowItemDataService,
+} from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import {
   TranslateModule,
   TranslateService,

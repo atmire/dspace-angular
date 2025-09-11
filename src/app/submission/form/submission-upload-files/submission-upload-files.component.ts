@@ -1,20 +1,21 @@
-
 import {
   Component,
   Input,
   OnChanges,
   OnDestroy,
 } from '@angular/core';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { WorkspaceItem } from '@dspace/core/submission/models/workspaceitem.model';
-import { SectionsType } from '@dspace/core/submission/sections-type';
-import { SubmissionJsonPatchOperationsService } from '@dspace/core/submission/submission-json-patch-operations.service';
-import { normalizeSectionData } from '@dspace/core/submission/submission-response-parsing.service';
+import {
+  normalizeSectionData,
+  NotificationsService,
+  SectionsType,
+  SubmissionJsonPatchOperationsService,
+  WorkspaceItem,
+} from '@dspace/core';
 import {
   hasValue,
   isEmpty,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import { TranslateService } from '@ngx-translate/core';
 import {
   Observable,

@@ -8,9 +8,11 @@ import {
   TemplateRef,
   ViewContainerRef,
 } from '@angular/core';
-import { RoleService } from '@dspace/core/roles/role.service';
-import { RoleType } from '@dspace/core/roles/role-types';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+import {
+  RoleService,
+  RoleType,
+} from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import {
   combineLatest,
   Observable,

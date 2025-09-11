@@ -7,23 +7,25 @@ import {
   OnDestroy,
   SimpleChanges,
 } from '@angular/core';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { SubmissionDefinitionsModel } from '@dspace/core/config/models/config-submission-definitions.model';
-import { SubmissionSectionModel } from '@dspace/core/config/models/config-submission-section.model';
-import { Collection } from '@dspace/core/shared/collection.model';
-import { HALEndpointService } from '@dspace/core/shared/hal-endpoint.service';
-import { Item } from '@dspace/core/shared/item.model';
-import { SectionVisibility } from '@dspace/core/submission/models/section-visibility.model';
-import { SubmissionError } from '@dspace/core/submission/models/submission-error.model';
-import { SubmissionObject } from '@dspace/core/submission/models/submission-object.model';
-import { WorkspaceitemSectionsObject } from '@dspace/core/submission/models/workspaceitem-sections.model';
-import { SectionsType } from '@dspace/core/submission/sections-type';
-import { VisibilityType } from '@dspace/core/submission/visibility-type';
+import {
+  AuthService,
+  Collection,
+  HALEndpointService,
+  Item,
+  SectionsType,
+  SectionVisibility,
+  SubmissionDefinitionsModel,
+  SubmissionError,
+  SubmissionObject,
+  SubmissionSectionModel,
+  VisibilityType,
+  WorkspaceitemSectionsObject,
+} from '@dspace/core';
 import {
   hasValue,
   isNotEmpty,
   isNotUndefined,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import { TranslatePipe } from '@ngx-translate/core';
 import isEqual from 'lodash/isEqual';
 import {

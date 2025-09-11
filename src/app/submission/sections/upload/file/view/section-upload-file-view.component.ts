@@ -1,16 +1,15 @@
-
 import {
   Component,
   Input,
   OnInit,
 } from '@angular/core';
 import {
+  Metadata,
   MetadataMap,
   MetadataValue,
-} from '@dspace/core/shared/metadata.models';
-import { Metadata } from '@dspace/core/shared/metadata.utils';
-import { WorkspaceitemSectionUploadFileObject } from '@dspace/core/submission/models/workspaceitem-section-upload-file.model';
-import { isNotEmpty } from '@dspace/shared/utils/empty.util';
+  WorkspaceitemSectionUploadFileObject,
+} from '@dspace/core';
+import { isNotEmpty } from '@dspace/utils';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { FileSizePipe } from '../../../../../shared/utils/file-size-pipe';

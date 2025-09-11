@@ -1,11 +1,13 @@
-import { MetadataIconConfig } from '@dspace/config/submission-config.interface';
-import { PLACEHOLDER_PARENT_METADATA } from '@dspace/core/shared/form/ds-dynamic-form-constants';
-import { FormFieldMetadataValueObject } from '@dspace/core/shared/form/models/form-field-metadata-value.model';
-import { VocabularyEntry } from '@dspace/core/submission/vocabularies/models/vocabulary-entry.model';
+import { MetadataIconConfig } from '@dspace/config';
+import {
+  FormFieldMetadataValueObject,
+  PLACEHOLDER_PARENT_METADATA,
+  VocabularyEntry,
+} from '@dspace/core';
 import {
   hasValue,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import findIndex from 'lodash/findIndex';
 import isEqual from 'lodash/isEqual';
 import isObject from 'lodash/isObject';

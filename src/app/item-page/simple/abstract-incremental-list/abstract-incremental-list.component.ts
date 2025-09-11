@@ -6,7 +6,7 @@ import {
 import {
   hasValue,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import { Subscription } from 'rxjs';
 
 @Component({

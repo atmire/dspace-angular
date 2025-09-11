@@ -7,25 +7,25 @@ import {
   UntypedFormControl,
   UntypedFormGroup,
 } from '@angular/forms';
-import { SubmissionFormsModel } from '@dspace/core/config/models/config-submission-forms.model';
-import { ConfigurationDataService } from '@dspace/core/data/configuration-data.service';
-import { DYNAMIC_FORM_CONTROL_TYPE_RELATION_GROUP } from '@dspace/core/shared/form/ds-dynamic-form-constants';
-import { FormFieldMetadataValueObject } from '@dspace/core/shared/form/models/form-field-metadata-value.model';
-import { VIRTUAL_METADATA_PREFIX } from '@dspace/core/shared/metadata.models';
-import { getFirstCompletedRemoteData } from '@dspace/core/shared/operators';
+import {
+  ConfigurationDataService,
+  DYNAMIC_FORM_CONTROL_TYPE_RELATION_GROUP,
+  FormFieldMetadataValueObject,
+  getFirstCompletedRemoteData,
+  SubmissionFormsModel,
+  VIRTUAL_METADATA_PREFIX,
+} from '@dspace/core';
 import {
   dateToString,
-  isNgbDateStruct,
-} from '@dspace/shared/utils/date.util';
-import {
   hasNoValue,
   hasValue,
   isEmpty,
+  isNgbDateStruct,
   isNotEmpty,
   isNotNull,
   isNotUndefined,
   isNull,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   DYNAMIC_FORM_CONTROL_TYPE_ARRAY,
   DYNAMIC_FORM_CONTROL_TYPE_CHECKBOX_GROUP,

@@ -2,20 +2,22 @@ import {
   Inject,
   InjectionToken,
 } from '@angular/core';
-import { FormFieldModel } from '@dspace/core/shared/form/models/form-field.model';
-import { FormFieldMetadataValueObject } from '@dspace/core/shared/form/models/form-field-metadata-value.model';
-import { RelationshipOptions } from '@dspace/core/shared/relationship-options.model';
-import { SectionVisibility } from '@dspace/core/submission/models/section-visibility.model';
-import { SubmissionScopeType } from '@dspace/core/submission/submission-scope-type';
-import { VisibilityType } from '@dspace/core/submission/visibility-type';
-import { VocabularyOptions } from '@dspace/core/submission/vocabularies/models/vocabulary-options.model';
-import { isNgbDateStruct } from '@dspace/shared/utils/date.util';
+import {
+  FormFieldMetadataValueObject,
+  FormFieldModel,
+  RelationshipOptions,
+  SectionVisibility,
+  SubmissionScopeType,
+  VisibilityType,
+  VocabularyOptions,
+} from '@dspace/core';
 import {
   hasValue,
+  isNgbDateStruct,
   isNotEmpty,
   isNotNull,
   isNotUndefined,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import { DynamicFormControlLayout } from '@ng-dynamic-forms/core';
 import { TranslateService } from '@ngx-translate/core';
 import uniqueId from 'lodash/uniqueId';

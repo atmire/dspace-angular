@@ -1,5 +1,7 @@
-import { SubmissionSectionObject } from '@dspace/core/submission/models/submission-section-object.model';
-import { WorkspaceitemSectionUploadObject } from '@dspace/core/submission/models/workspaceitem-section-upload.model';
+import {
+  SubmissionSectionObject,
+  WorkspaceitemSectionUploadObject,
+} from '@dspace/core';
 import {
   hasValue,
   isEmpty,
@@ -7,7 +9,7 @@ import {
   isNotNull,
   isNull,
   isUndefined,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import differenceWith from 'lodash/differenceWith';
 import findKey from 'lodash/findKey';
 import isEqual from 'lodash/isEqual';

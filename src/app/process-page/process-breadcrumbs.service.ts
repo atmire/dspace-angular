@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { BreadcrumbsProviderService } from '@dspace/core/breadcrumbs/breadcrumbsProviderService';
-import { Breadcrumb } from '@dspace/core/breadcrumbs/models/breadcrumb.model';
-import { Process } from '@dspace/core/processes/process.model';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+import {
+  Breadcrumb,
+  BreadcrumbsProviderService,
+  Process,
+} from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import {
   Observable,
   of,

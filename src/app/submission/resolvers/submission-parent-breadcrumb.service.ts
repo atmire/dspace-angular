@@ -1,21 +1,21 @@
 import { Injectable } from '@angular/core';
-import { BreadcrumbsProviderService } from '@dspace/core/breadcrumbs/breadcrumbsProviderService';
-import { DSOBreadcrumbsService } from '@dspace/core/breadcrumbs/dso-breadcrumbs.service';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { Breadcrumb } from '@dspace/core/breadcrumbs/models/breadcrumb.model';
-import { CollectionDataService } from '@dspace/core/data/collection-data.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { getDSORoute } from '@dspace/core/router/utils/dso-route.utils';
-import { Collection } from '@dspace/core/shared/collection.model';
 import {
+  Breadcrumb,
+  BreadcrumbsProviderService,
+  Collection,
+  CollectionDataService,
+  DSOBreadcrumbsService,
+  DSONameService,
+  getDSORoute,
   getFirstCompletedRemoteData,
   getRemoteDataPayload,
-} from '@dspace/core/shared/operators';
-import { SubmissionObject } from '@dspace/core/submission/models/submission-object.model';
+  RemoteData,
+  SubmissionObject,
+} from '@dspace/core';
 import {
   hasValue,
   isEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   combineLatest,
   Observable,

@@ -1,5 +1,7 @@
-import { QualityAssuranceSourceObject } from '@dspace/core/notifications/qa/models/quality-assurance-source.model';
-import { QualityAssuranceTopicObject } from '@dspace/core/notifications/qa/models/quality-assurance-topic.model';
+import {
+  QualityAssuranceSourceObject,
+  QualityAssuranceTopicObject,
+} from '@dspace/core';
 import {
   createFeatureSelector,
   createSelector,

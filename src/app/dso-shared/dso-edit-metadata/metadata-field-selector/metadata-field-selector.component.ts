@@ -19,18 +19,16 @@ import {
   UntypedFormControl,
 } from '@angular/forms';
 import {
-  SortDirection,
-  SortOptions,
-} from '@dspace/core/cache/models/sort-options.model';
-import { FindListOptions } from '@dspace/core/data/find-list-options.model';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { followLink } from '@dspace/core/shared/follow-link-config.model';
-import {
+  FindListOptions,
+  followLink,
   getAllSucceededRemoteData,
   getFirstCompletedRemoteData,
   metadataFieldsToString,
-} from '@dspace/core/shared/operators';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+  NotificationsService,
+  SortDirection,
+  SortOptions,
+} from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import {
   TranslateModule,
   TranslateService,

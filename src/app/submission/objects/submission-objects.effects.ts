@@ -1,25 +1,27 @@
 import { Injectable } from '@angular/core';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { followLink } from '@dspace/core/shared/follow-link-config.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { getFirstSucceededRemoteDataPayload } from '@dspace/core/shared/operators';
-import { SubmissionObject } from '@dspace/core/submission/models/submission-object.model';
-import { SubmissionSectionError } from '@dspace/core/submission/models/submission-section-error.model';
-import { SubmissionSectionObject } from '@dspace/core/submission/models/submission-section-object.model';
-import { WorkflowItem } from '@dspace/core/submission/models/workflowitem.model';
-import { WorkspaceItem } from '@dspace/core/submission/models/workspaceitem.model';
-import { WorkspaceitemSectionDuplicatesObject } from '@dspace/core/submission/models/workspaceitem-section-duplicates.model';
-import { WorkspaceitemSectionUploadObject } from '@dspace/core/submission/models/workspaceitem-section-upload.model';
-import { WorkspaceitemSectionsObject } from '@dspace/core/submission/models/workspaceitem-sections.model';
-import { SectionsType } from '@dspace/core/submission/sections-type';
-import { SubmissionJsonPatchOperationsService } from '@dspace/core/submission/submission-json-patch-operations.service';
-import { WorkspaceitemDataService } from '@dspace/core/submission/workspaceitem-data.service';
+import {
+  followLink,
+  getFirstSucceededRemoteDataPayload,
+  Item,
+  NotificationsService,
+  RemoteData,
+  SectionsType,
+  SubmissionJsonPatchOperationsService,
+  SubmissionObject,
+  SubmissionSectionError,
+  SubmissionSectionObject,
+  WorkflowItem,
+  WorkspaceItem,
+  WorkspaceitemDataService,
+  WorkspaceitemSectionDuplicatesObject,
+  WorkspaceitemSectionsObject,
+  WorkspaceitemSectionUploadObject,
+} from '@dspace/core';
 import {
   isEmpty,
   isNotEmpty,
   isNotUndefined,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   Actions,
   createEffect,

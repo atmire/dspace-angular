@@ -6,9 +6,11 @@ import {
   ActivatedRoute,
   Router,
 } from '@angular/router';
-import { MockActivatedRoute } from '@dspace/core/testing/active-router.mock';
-import { RouterStub } from '@dspace/core/testing/router.stub';
-import { SearchConfigurationServiceStub } from '@dspace/core/testing/search-configuration-service.stub';
+import {
+  MockActivatedRoute,
+  RouterStub,
+  SearchConfigurationServiceStub,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { SEARCH_CONFIG_SERVICE } from '../../../../my-dspace-page/my-dspace-configuration.service';

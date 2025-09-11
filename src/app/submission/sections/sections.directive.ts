@@ -5,13 +5,15 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { SubmissionSectionError } from '@dspace/core/submission/models/submission-section-error.model';
-import { SectionsType } from '@dspace/core/submission/sections-type';
+import {
+  SectionsType,
+  SubmissionSectionError,
+} from '@dspace/core';
 import {
   hasValue,
   isNotEmpty,
   isNotNull,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import uniq from 'lodash/uniq';
 import {
   Observable,

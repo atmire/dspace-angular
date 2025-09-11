@@ -2,8 +2,10 @@ import {
   Component,
   Input,
 } from '@angular/core';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { SearchFilterConfig } from '@dspace/core/shared/search/models/search-filter-config.model';
+import {
+  RemoteData,
+  SearchFilterConfig,
+} from '@dspace/core';
 import { Observable } from 'rxjs';
 
 import { ThemedComponent } from '../../theme-support/themed.component';

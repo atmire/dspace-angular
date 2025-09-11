@@ -5,19 +5,19 @@ import {
   OnInit,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { EPerson } from '@dspace/core/eperson/models/eperson.model';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { ResearcherProfile } from '@dspace/core/profile/model/researcher-profile.model';
-import { ResearcherProfileDataService } from '@dspace/core/profile/researcher-profile-data.service';
-import { followLink } from '@dspace/core/shared/follow-link-config.model';
-import { NoContent } from '@dspace/core/shared/NoContent.model';
 import {
+  AuthService,
+  EPerson,
+  followLink,
   getFirstCompletedRemoteData,
   getFirstSucceededRemoteDataPayload,
-} from '@dspace/core/shared/operators';
-import { isNotEmpty } from '@dspace/shared/utils/empty.util';
+  NoContent,
+  NotificationsService,
+  RemoteData,
+  ResearcherProfile,
+  ResearcherProfileDataService,
+} from '@dspace/core';
+import { isNotEmpty } from '@dspace/utils';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   TranslateModule,

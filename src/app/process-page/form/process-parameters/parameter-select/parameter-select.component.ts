@@ -1,4 +1,3 @@
-
 import {
   Component,
   EventEmitter,
@@ -11,8 +10,10 @@ import {
   FormsModule,
   NgForm,
 } from '@angular/forms';
-import { ProcessParameter } from '@dspace/core/processes/process-parameter.model';
-import { ScriptParameter } from '@dspace/core/shared/scripts/script-parameter.model';
+import {
+  ProcessParameter,
+  ScriptParameter,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { controlContainerFactory } from '../../process-form-factory';

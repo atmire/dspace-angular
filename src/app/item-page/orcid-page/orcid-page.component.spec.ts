@@ -12,26 +12,26 @@ import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { ItemDataService } from '@dspace/core/data/item-data.service';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { OrcidAuthService } from '@dspace/core/orcid/orcid-auth.service';
-import { OrcidHistoryDataService } from '@dspace/core/orcid/orcid-history-data.service';
-import { OrcidQueueDataService } from '@dspace/core/orcid/orcid-queue-data.service';
-import { PaginationService } from '@dspace/core/pagination/pagination.service';
-import { ResearcherProfile } from '@dspace/core/profile/model/researcher-profile.model';
-import { ResearcherProfileDataService } from '@dspace/core/profile/researcher-profile-data.service';
-import { Item } from '@dspace/core/shared/item.model';
-import { ActivatedRouteStub } from '@dspace/core/testing/active-router.stub';
-import { NotificationsServiceStub } from '@dspace/core/testing/notifications-service.stub';
-import { PaginationServiceStub } from '@dspace/core/testing/pagination-service.stub';
-import { TranslateLoaderMock } from '@dspace/core/testing/translate-loader.mock';
-import { createPaginatedList } from '@dspace/core/testing/utils.test';
 import {
+  ActivatedRouteStub,
+  AuthService,
   createFailedRemoteDataObject$,
+  createPaginatedList,
   createSuccessfulRemoteDataObject,
   createSuccessfulRemoteDataObject$,
-} from '@dspace/core/utilities/remote-data.utils';
+  Item,
+  ItemDataService,
+  NotificationsService,
+  NotificationsServiceStub,
+  OrcidAuthService,
+  OrcidHistoryDataService,
+  OrcidQueueDataService,
+  PaginationService,
+  PaginationServiceStub,
+  ResearcherProfile,
+  ResearcherProfileDataService,
+  TranslateLoaderMock,
+} from '@dspace/core';
 import {
   TranslateLoader,
   TranslateModule,

@@ -8,11 +8,13 @@ import {
   NG_VALIDATORS,
   ValidationErrors,
 } from '@angular/forms';
-import { MetadataFieldDataService } from '@dspace/core/data/metadata-field-data.service';
-import { PaginatedList } from '@dspace/core/data/paginated-list.model';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { MetadataField } from '@dspace/core/metadata/metadata-field.model';
-import { getFirstSucceededRemoteData } from '@dspace/core/shared/operators';
+import {
+  getFirstSucceededRemoteData,
+  MetadataField,
+  MetadataFieldDataService,
+  PaginatedList,
+  RemoteData,
+} from '@dspace/core';
 import {
   Observable,
   of,

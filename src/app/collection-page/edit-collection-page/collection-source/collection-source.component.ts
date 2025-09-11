@@ -12,29 +12,27 @@ import {
   ActivatedRoute,
   Router,
 } from '@angular/router';
-import { CollectionDataService } from '@dspace/core/data/collection-data.service';
-import { FieldUpdate } from '@dspace/core/data/object-updates/field-update.model';
-import { FieldUpdates } from '@dspace/core/data/object-updates/field-updates.model';
-import { ObjectUpdatesService } from '@dspace/core/data/object-updates/object-updates.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { RequestService } from '@dspace/core/data/request.service';
-import { INotification } from '@dspace/core/notification-system/models/notification.model';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { Collection } from '@dspace/core/shared/collection.model';
 import {
+  Collection,
+  CollectionDataService,
   ContentSource,
   ContentSourceHarvestType,
-} from '@dspace/core/shared/content-source.model';
-import { MetadataConfig } from '@dspace/core/shared/metadata-config.model';
-import {
+  FieldUpdate,
+  FieldUpdates,
   getFirstCompletedRemoteData,
   getFirstSucceededRemoteData,
-} from '@dspace/core/shared/operators';
+  INotification,
+  MetadataConfig,
+  NotificationsService,
+  ObjectUpdatesService,
+  RemoteData,
+  RequestService,
+} from '@dspace/core';
 import {
   hasNoValue,
   hasValue,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   DynamicFormControlModel,
   DynamicFormGroupModel,

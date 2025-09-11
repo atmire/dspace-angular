@@ -5,8 +5,10 @@ import {
 } from 'node:fs';
 import { join } from 'node:path';
 
-import { AppConfig } from '../src/config/app-config.interface';
+import { AppConfig } from '@dspace/config';
+
 import { buildAppConfig } from '../src/config/config.server';
+
 
 /**
  * Script to set baseHref as `ui.nameSpace` for development mode. Adds `baseHref` to angular.json build options.

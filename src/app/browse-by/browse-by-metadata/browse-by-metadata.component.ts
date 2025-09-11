@@ -20,28 +20,28 @@ import {
 import {
   APP_CONFIG,
   AppConfig,
-} from '@dspace/config/app-config.interface';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { BrowseService } from '@dspace/core/browse/browse.service';
-import { BrowseByDataType } from '@dspace/core/browse/browse-by-data-type';
-import { BrowseEntrySearchOptions } from '@dspace/core/browse/browse-entry-search-options.model';
+} from '@dspace/config';
 import {
+  BrowseByDataType,
+  BrowseEntry,
+  BrowseEntrySearchOptions,
+  BrowseService,
+  Context,
+  DSONameService,
+  DSpaceObjectDataService,
+  getFirstSucceededRemoteData,
+  Item,
+  PaginatedList,
+  PaginationComponentOptions,
+  PaginationService,
+  RemoteData,
   SortDirection,
   SortOptions,
-} from '@dspace/core/cache/models/sort-options.model';
-import { DSpaceObjectDataService } from '@dspace/core/data/dspace-object-data.service';
-import { PaginatedList } from '@dspace/core/data/paginated-list.model';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { PaginationService } from '@dspace/core/pagination/pagination.service';
-import { PaginationComponentOptions } from '@dspace/core/pagination/pagination-component-options.model';
-import { BrowseEntry } from '@dspace/core/shared/browse-entry.model';
-import { Context } from '@dspace/core/shared/context.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { getFirstSucceededRemoteData } from '@dspace/core/shared/operators';
+} from '@dspace/core';
 import {
   hasValue,
   isNotEmpty,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   BehaviorSubject,

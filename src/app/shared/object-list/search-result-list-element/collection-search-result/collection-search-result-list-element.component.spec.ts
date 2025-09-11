@@ -10,12 +10,14 @@ import {
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { APP_CONFIG } from '@dspace/config/app-config.interface';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { Collection } from '@dspace/core/shared/collection.model';
-import { CollectionSearchResult } from '@dspace/core/shared/object-collection/collection-search-result.model';
-import { ActivatedRouteStub } from '@dspace/core/testing/active-router.stub';
-import { DSONameServiceMock } from '@dspace/core/testing/dso-name.service.mock';
+import { APP_CONFIG } from '@dspace/config';
+import {
+  ActivatedRouteStub,
+  Collection,
+  CollectionSearchResult,
+  DSONameService,
+  DSONameServiceMock,
+} from '@dspace/core';
 import { of } from 'rxjs';
 
 import { getMockThemeService } from '../../../theme-support/test/theme-service.mock';

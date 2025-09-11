@@ -12,8 +12,8 @@ import { Router } from '@angular/router';
 import {
   APP_CONFIG,
   AppConfig,
-} from '@dspace/config/app-config.interface';
-import { RouteService } from '@dspace/core/services/route.service';
+} from '@dspace/config';
+import { RouteService } from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { SEARCH_CONFIG_SERVICE } from '../my-dspace-page/my-dspace-configuration.service';

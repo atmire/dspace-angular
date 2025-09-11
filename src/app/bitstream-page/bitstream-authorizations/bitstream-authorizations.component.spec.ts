@@ -9,10 +9,12 @@ import {
   waitForAsync,
 } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import { Bitstream } from '@dspace/core/shared/bitstream.model';
-import { DSpaceObject } from '@dspace/core/shared/dspace-object.model';
-import { TranslateLoaderMock } from '@dspace/core/testing/translate-loader.mock';
-import { createSuccessfulRemoteDataObject } from '@dspace/core/utilities/remote-data.utils';
+import {
+  Bitstream,
+  createSuccessfulRemoteDataObject,
+  DSpaceObject,
+  TranslateLoaderMock,
+} from '@dspace/core';
 import {
   TranslateLoader,
   TranslateModule,

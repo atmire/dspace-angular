@@ -8,21 +8,21 @@ import {
   ActivatedRoute,
   Router,
 } from '@angular/router';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { ItemRequestDataService } from '@dspace/core/data/item-request-data.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { getItemModuleRoute } from '@dspace/core/router/core-routing-paths';
-import { HardRedirectService } from '@dspace/core/services/hard-redirect.service';
-import { redirectOn4xx } from '@dspace/core/shared/authorized.operators';
-import { ItemRequest } from '@dspace/core/shared/item-request.model';
 import {
+  AuthService,
   getFirstCompletedRemoteData,
   getFirstSucceededRemoteDataPayload,
-} from '@dspace/core/shared/operators';
-import { RequestCopyEmail } from '@dspace/core/shared/request-copy-email.model';
-import { URLCombiner } from '@dspace/core/url-combiner/url-combiner';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+  getItemModuleRoute,
+  HardRedirectService,
+  ItemRequest,
+  ItemRequestDataService,
+  NotificationsService,
+  redirectOn4xx,
+  RemoteData,
+  RequestCopyEmail,
+  URLCombiner,
+} from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import {
   TranslatePipe,
   TranslateService,

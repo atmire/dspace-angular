@@ -1,15 +1,16 @@
-
 import {
   Component,
   Input,
   OnInit,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { ExternalSourceEntry } from '@dspace/core/shared/external-source-entry.model';
-import { MetadataValue } from '@dspace/core/shared/metadata.models';
-import { Metadata } from '@dspace/core/shared/metadata.utils';
-import { SubmissionObject } from '@dspace/core/submission/models/submission-object.model';
+import {
+  ExternalSourceEntry,
+  Metadata,
+  MetadataValue,
+  NotificationsService,
+  SubmissionObject,
+} from '@dspace/core';
 import {
   NgbActiveModal,
   NgbModal,

@@ -10,12 +10,12 @@ import {
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {
+  getMockTranslateService,
+  mockTruncatableService,
   NativeWindowRef,
   NativeWindowService,
-} from '@dspace/core/services/window.service';
-import { mockTruncatableService } from '@dspace/core/testing/mock-trucatable.service';
-import { getMockTranslateService } from '@dspace/core/testing/translate.service.mock';
-import { TranslateLoaderMock } from '@dspace/core/testing/translate-loader.mock';
+  TranslateLoaderMock,
+} from '@dspace/core';
 import {
   TranslateLoader,
   TranslateModule,

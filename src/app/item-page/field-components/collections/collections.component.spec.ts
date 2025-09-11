@@ -9,24 +9,22 @@ import {
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
-import { RemoteDataBuildService } from '@dspace/core/cache/builders/remote-data-build.service';
-import { CollectionDataService } from '@dspace/core/data/collection-data.service';
-import { FindListOptions } from '@dspace/core/data/find-list-options.model';
 import {
+  ActivatedRouteStub,
   buildPaginatedList,
-  PaginatedList,
-} from '@dspace/core/data/paginated-list.model';
-import { Collection } from '@dspace/core/shared/collection.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { PageInfo } from '@dspace/core/shared/page-info.model';
-import { ActivatedRouteStub } from '@dspace/core/testing/active-router.stub';
-import { DSONameServiceMock } from '@dspace/core/testing/dso-name.service.mock';
-import { getMockRemoteDataBuildService } from '@dspace/core/testing/remote-data-build.service.mock';
-import {
+  Collection,
+  CollectionDataService,
   createFailedRemoteDataObject$,
   createSuccessfulRemoteDataObject$,
-} from '@dspace/core/utilities/remote-data.utils';
+  DSONameService,
+  DSONameServiceMock,
+  FindListOptions,
+  getMockRemoteDataBuildService,
+  Item,
+  PageInfo,
+  PaginatedList,
+  RemoteDataBuildService,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { CollectionsComponent } from './collections.component';

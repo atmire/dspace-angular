@@ -8,20 +8,18 @@ import {
   waitForAsync,
 } from '@angular/core/testing';
 import {
+  createFailedRemoteDataObject$,
+  createPaginatedList,
+  createSuccessfulRemoteDataObject$,
+  DSpaceObjectType,
+  Item,
+  ItemSearchResult,
+  NotificationsService,
+  PaginatedSearchOptions,
   SortDirection,
   SortOptions,
-} from '@dspace/core/cache/models/sort-options.model';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { DSpaceObjectType } from '@dspace/core/shared/dspace-object-type.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { ItemSearchResult } from '@dspace/core/shared/object-collection/item-search-result.model';
-import { PaginatedSearchOptions } from '@dspace/core/shared/search/models/paginated-search-options.model';
-import { createPaginatedList } from '@dspace/core/testing/utils.test';
-import {
-  createFailedRemoteDataObject$,
-  createSuccessfulRemoteDataObject$,
-} from '@dspace/core/utilities/remote-data.utils';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+} from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { ListableObjectComponentLoaderComponent } from '../../object-collection/shared/listable-object/listable-object-component-loader.component';

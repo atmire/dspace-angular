@@ -2,13 +2,15 @@ import {
   TestBed,
   waitForAsync,
 } from '@angular/core/testing';
-import { APP_DATA_SERVICES_MAP } from '@dspace/core/data-services-map-type';
-import { JsonPatchOperationPathCombiner } from '@dspace/core/json-patch/builder/json-patch-operation-path-combiner';
-import { JsonPatchOperationsBuilder } from '@dspace/core/json-patch/builder/json-patch-operations-builder';
-import { FormFieldMetadataValueObject } from '@dspace/core/shared/form/models/form-field-metadata-value.model';
-import { FormFieldPreviousValueObject } from '@dspace/core/shared/form/models/form-field-previous-value-object';
-import { VocabularyEntry } from '@dspace/core/submission/vocabularies/models/vocabulary-entry.model';
-import { TranslateLoaderMock } from '@dspace/core/testing/translate-loader.mock';
+import {
+  APP_DATA_SERVICES_MAP,
+  FormFieldMetadataValueObject,
+  FormFieldPreviousValueObject,
+  JsonPatchOperationPathCombiner,
+  JsonPatchOperationsBuilder,
+  TranslateLoaderMock,
+  VocabularyEntry,
+} from '@dspace/core';
 import {
   DYNAMIC_FORM_CONTROL_TYPE_ARRAY,
   DYNAMIC_FORM_CONTROL_TYPE_GROUP,

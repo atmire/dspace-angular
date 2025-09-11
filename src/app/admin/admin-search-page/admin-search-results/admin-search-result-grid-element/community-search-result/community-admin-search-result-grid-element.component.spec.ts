@@ -7,18 +7,20 @@ import {
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthService } from '@dspace/core/auth/auth.service';
-import { LinkService } from '@dspace/core/cache/builders/link.service';
-import { BitstreamDataService } from '@dspace/core/data/bitstream-data.service';
-import { AuthorizationDataService } from '@dspace/core/data/feature-authorization/authorization-data.service';
-import { Community } from '@dspace/core/shared/community.model';
-import { FileService } from '@dspace/core/shared/file.service';
-import { CommunitySearchResult } from '@dspace/core/shared/object-collection/community-search-result.model';
-import { ViewMode } from '@dspace/core/shared/view-mode.model';
-import { AuthServiceStub } from '@dspace/core/testing/auth-service.stub';
-import { AuthorizationDataServiceStub } from '@dspace/core/testing/authorization-service.stub';
-import { FileServiceStub } from '@dspace/core/testing/file-service.stub';
-import { mockTruncatableService } from '@dspace/core/testing/mock-trucatable.service';
+import {
+  AuthorizationDataService,
+  AuthorizationDataServiceStub,
+  AuthService,
+  AuthServiceStub,
+  BitstreamDataService,
+  Community,
+  CommunitySearchResult,
+  FileService,
+  FileServiceStub,
+  LinkService,
+  mockTruncatableService,
+  ViewMode,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { getCommunityEditRoute } from '../../../../../community-page/community-page-routing-paths';

@@ -10,20 +10,22 @@ import {
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
-import { APP_CONFIG } from '@dspace/config/app-config.interface';
-import { RemoteDataBuildService } from '@dspace/core/cache/builders/remote-data-build.service';
-import { ExternalSourceDataService } from '@dspace/core/data/external-source-data.service';
-import { APP_DATA_SERVICES_MAP } from '@dspace/core/data-services-map-type';
-import { Collection } from '@dspace/core/shared/collection.model';
-import { ExternalSource } from '@dspace/core/shared/external-source.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { ItemSearchResult } from '@dspace/core/shared/object-collection/item-search-result.model';
-import { RelationshipOptions } from '@dspace/core/shared/relationship-options.model';
-import { PaginatedSearchOptions } from '@dspace/core/shared/search/models/paginated-search-options.model';
-import { WorkspaceItem } from '@dspace/core/submission/models/workspaceitem.model';
-import { createPaginatedList } from '@dspace/core/testing/utils.test';
-import { createSuccessfulRemoteDataObject$ } from '@dspace/core/utilities/remote-data.utils';
-import { XSRFService } from '@dspace/core/xsrf/xsrf.service';
+import { APP_CONFIG } from '@dspace/config';
+import {
+  APP_DATA_SERVICES_MAP,
+  Collection,
+  createPaginatedList,
+  createSuccessfulRemoteDataObject$,
+  ExternalSource,
+  ExternalSourceDataService,
+  Item,
+  ItemSearchResult,
+  PaginatedSearchOptions,
+  RelationshipOptions,
+  RemoteDataBuildService,
+  WorkspaceItem,
+  XSRFService,
+} from '@dspace/core';
 import {
   NgbActiveModal,
   NgbModule,

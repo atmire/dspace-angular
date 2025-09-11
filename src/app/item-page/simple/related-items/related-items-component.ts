@@ -14,14 +14,16 @@ import {
 import {
   APP_CONFIG,
   AppConfig,
-} from '@dspace/config/app-config.interface';
-import { FindListOptions } from '@dspace/core/data/find-list-options.model';
-import { PaginatedList } from '@dspace/core/data/paginated-list.model';
-import { RelationshipDataService } from '@dspace/core/data/relationship-data.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { Item } from '@dspace/core/shared/item.model';
-import { ViewMode } from '@dspace/core/shared/view-mode.model';
-import { setPlaceHolderAttributes } from '@dspace/shared/utils/object-list-utils';
+} from '@dspace/config';
+import {
+  FindListOptions,
+  Item,
+  PaginatedList,
+  RelationshipDataService,
+  RemoteData,
+  ViewMode,
+} from '@dspace/core';
+import { setPlaceHolderAttributes } from '@dspace/utils';
 import { TranslateModule } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 

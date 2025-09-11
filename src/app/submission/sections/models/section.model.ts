@@ -7,7 +7,7 @@ import {
 import {
   hasValue,
   isNotUndefined,
-} from '@dspace/shared/utils/empty.util';
+} from '@dspace/utils';
 import {
   Observable,
   Subscription,

@@ -1,7 +1,10 @@
-import { BuildConfig } from './build-config.interface';
+import {
+  BuildConfig,
+  DefaultAppConfig,
+  HandleThemeConfig,
+} from '@dspace/config';
+
 import { extendEnvironmentWithAppConfig } from './config.util';
-import { DefaultAppConfig } from './default-app-config';
-import { HandleThemeConfig } from './theme.config';
 
 describe('Config Util', () => {
 

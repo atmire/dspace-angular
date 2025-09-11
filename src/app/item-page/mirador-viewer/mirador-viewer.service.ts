@@ -2,19 +2,19 @@ import {
   Injectable,
   isDevMode,
 } from '@angular/core';
-import { BitstreamDataService } from '@dspace/core/data/bitstream-data.service';
-import { BundleDataService } from '@dspace/core/data/bundle-data.service';
-import { PaginatedList } from '@dspace/core/data/paginated-list.model';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { Bitstream } from '@dspace/core/shared/bitstream.model';
-import { BitstreamFormat } from '@dspace/core/shared/bitstream-format.model';
-import { Bundle } from '@dspace/core/shared/bundle.model';
 import {
+  Bitstream,
+  BitstreamDataService,
+  BitstreamFormat,
+  Bundle,
+  BundleDataService,
   followLink,
   FollowLinkConfig,
-} from '@dspace/core/shared/follow-link-config.model';
-import { Item } from '@dspace/core/shared/item.model';
-import { getFirstCompletedRemoteData } from '@dspace/core/shared/operators';
+  getFirstCompletedRemoteData,
+  Item,
+  PaginatedList,
+  RemoteData,
+} from '@dspace/core';
 import { Observable } from 'rxjs';
 import {
   filter,

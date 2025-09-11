@@ -8,29 +8,27 @@ import {
   Router,
 } from '@angular/router';
 import {
-  SortDirection,
-  SortOptions,
-} from '@dspace/core/cache/models/sort-options.model';
-import { ConfigurationDataService } from '@dspace/core/data/configuration-data.service';
-import { RemoteData } from '@dspace/core/data/remote-data';
-import { GroupDataService } from '@dspace/core/eperson/group-data.service';
-import { PaginationService } from '@dspace/core/pagination/pagination.service';
-import { PaginationComponentOptions } from '@dspace/core/pagination/pagination-component-options.model';
-import { LinkHeadService } from '@dspace/core/services/link-head.service';
-import { Collection } from '@dspace/core/shared/collection.model';
-import { ConfigurationProperty } from '@dspace/core/shared/configuration-property.model';
-import { PaginatedSearchOptions } from '@dspace/core/shared/search/models/paginated-search-options.model';
-import { SearchFilter } from '@dspace/core/shared/search/models/search-filter.model';
-import { MockActivatedRoute } from '@dspace/core/testing/active-router.mock';
-import { PaginationServiceStub } from '@dspace/core/testing/pagination-service.stub';
-import { RouterMock } from '@dspace/core/testing/router.mock';
-import { SearchConfigurationServiceStub } from '@dspace/core/testing/search-configuration-service.stub';
-import { getMockTranslateService } from '@dspace/core/testing/translate.service.mock';
-import { createPaginatedList } from '@dspace/core/testing/utils.test';
-import {
+  Collection,
+  ConfigurationDataService,
+  ConfigurationProperty,
+  createPaginatedList,
   createSuccessfulRemoteDataObject,
   createSuccessfulRemoteDataObject$,
-} from '@dspace/core/utilities/remote-data.utils';
+  getMockTranslateService,
+  GroupDataService,
+  LinkHeadService,
+  MockActivatedRoute,
+  PaginatedSearchOptions,
+  PaginationComponentOptions,
+  PaginationService,
+  PaginationServiceStub,
+  RemoteData,
+  RouterMock,
+  SearchConfigurationServiceStub,
+  SearchFilter,
+  SortDirection,
+  SortOptions,
+} from '@dspace/core';
 import { TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
 

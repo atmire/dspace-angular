@@ -20,8 +20,8 @@ import {
   ReactiveFormsModule,
   UntypedFormGroup,
 } from '@angular/forms';
-import { Relationship } from '@dspace/core/shared/item-relationships/relationship.model';
-import { hasValue } from '@dspace/shared/utils/empty.util';
+import { Relationship } from '@dspace/core';
+import { hasValue } from '@dspace/utils';
 import {
   DynamicFormArrayComponent,
   DynamicFormControlCustomEvent,
