@@ -3,9 +3,12 @@
  */
 
 export * from './head-tag.service';
+export * from './head-tag.service.spec';
 export * from './meta-tag.actions';
 export * from './meta-tag.reducer';
+export * from './meta-tag.reducer.spec';
 export * from './metadata.service';
+export * from './metadata.service.spec';
 export * from './metadata-field.model';
 export * from './metadata-field.resource-type';
 export * from './metadata-schema.model';

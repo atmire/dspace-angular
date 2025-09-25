@@ -4,3 +4,4 @@
 
 export * from './models/index';
 export * from './supervision-order-data.service';
+export * from './supervision-order-data.service.spec';

@@ -5,4 +5,5 @@
 export * from './models/index';
 export * from './source/index';
 export * from './suggestion-data.service';
+export * from './suggestion-data.service.spec';
 export * from './target/index';

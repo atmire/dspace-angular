@@ -3,4 +3,6 @@
  */
 
 export * from './process-data.service';
+export * from './process-data.service.spec';
 export * from './script-data.service';
+export * from './script-data.service.spec';

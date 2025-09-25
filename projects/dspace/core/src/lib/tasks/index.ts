@@ -3,7 +3,10 @@
  */
 
 export * from './claimed-task-data.service';
+export * from './claimed-task-data.service.spec';
 export * from './models/index';
 export * from './pool-task-data.service';
+export * from './pool-task-data.service.spec';
 export * from './task-response-parsing.service';
 export * from './tasks.service';
+export * from './tasks.service.spec';

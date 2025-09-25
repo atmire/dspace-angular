@@ -3,3 +3,4 @@
  */
 
 export * from './forward-client-ip.interceptor';
+export * from './forward-client-ip.interceptor.spec';

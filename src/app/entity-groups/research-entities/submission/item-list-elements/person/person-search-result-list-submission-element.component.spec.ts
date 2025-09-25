@@ -27,6 +27,7 @@ import {
   ObjectCacheService,
   RemoteData,
   RemoteDataBuildService,
+  REQUEST,
   UUIDService,
   XSRFService,
 } from '@dspace/core';
@@ -38,7 +39,6 @@ import {
   of,
 } from 'rxjs';
 
-import { REQUEST } from '../../../../../../express.tokens';
 import { NameVariantService } from '../../../../../shared/form/builder/ds-dynamic-form-ui/relation-lookup-modal/name-variant.service';
 import { CollectionElementLinkType } from '../../../../../shared/object-collection/collection-element-link.type';
 import { SelectableListService } from '../../../../../shared/object-list/selectable-list/selectable-list.service';

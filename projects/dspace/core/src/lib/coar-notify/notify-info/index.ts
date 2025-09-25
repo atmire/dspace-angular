@@ -3,7 +3,11 @@
  */
 
 export * from './admin-notify-messages-data.service';
+export * from './admin-notify-messages-data.service.spec';
 export * from './models/index';
 export * from './notify-info.guard';
+export * from './notify-info.guard.spec';
 export * from './notify-info.service';
+export * from './notify-info.service.spec';
 export * from './notify-services-status-data.service';
+export * from './notify-services-status-data.service.spec';

@@ -3,5 +3,7 @@
  */
 
 export * from './locale.interceptor';
+export * from './locale.interceptor.spec';
 export * from './locale.service';
+export * from './locale.service.spec';
 export * from './server-locale.service';

@@ -3,5 +3,8 @@
  */
 
 export * from './build-decorators';
+export * from './build-decorators.spec';
 export * from './link.service';
+export * from './link.service.spec';
 export * from './remote-data-build.service';
+export * from './remote-data-build.service.spec';

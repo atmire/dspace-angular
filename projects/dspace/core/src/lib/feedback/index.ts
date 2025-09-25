@@ -4,4 +4,5 @@
 
 export * from './feedback.guard';
 export * from './feedback-data.service';
+export * from './feedback-data.service.spec';
 export * from './models/index';

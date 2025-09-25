@@ -3,3 +3,4 @@
  */
 
 export * from './suggestion-source-data.service';
+export * from './suggestion-source-data.service.spec';

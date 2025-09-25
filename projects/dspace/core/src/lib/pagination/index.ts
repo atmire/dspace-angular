@@ -3,6 +3,7 @@
  */
 
 export * from './pagination.service';
+export * from './pagination.service.spec';
 export * from './pagination.utils';
 export * from './pagination-component-options.model';
 export * from './pagination-route-params.interface';

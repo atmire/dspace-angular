@@ -3,3 +3,4 @@
  */
 
 export * from './quality-assurance-topic-data.service';
+export * from './quality-assurance-topic-data.service.spec';

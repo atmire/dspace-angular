@@ -3,11 +3,19 @@
  */
 
 export * from './base-data.service';
+export * from './base-data.service.spec';
 export * from './create-data';
+export * from './create-data.spec';
 export * from './delete-data';
+export * from './delete-data.spec';
 export * from './find-all-data';
+export * from './find-all-data.spec';
 export * from './hal-data-service.interface';
 export * from './identifiable-data.service';
+export * from './identifiable-data.service.spec';
 export * from './patch-data';
+export * from './patch-data.spec';
 export * from './put-data';
+export * from './put-data.spec';
 export * from './search-data';
+export * from './search-data.spec';

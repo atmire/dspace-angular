@@ -3,3 +3,4 @@
  */
 
 export * from './end-user-agreement.service';
+export * from './end-user-agreement.service.spec';

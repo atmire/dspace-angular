@@ -4,5 +4,8 @@
 
 export * from './models/index';
 export * from './vocabulary.data.service';
+export * from './vocabulary.data.service.spec';
 export * from './vocabulary.service';
+export * from './vocabulary.service.spec';
 export * from './vocabulary-entry-details.data.service';
+export * from './vocabulary-entry-details.data.service.spec';

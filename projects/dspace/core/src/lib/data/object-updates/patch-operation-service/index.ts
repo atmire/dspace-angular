@@ -3,5 +3,6 @@
  */
 
 export * from './metadata-patch-operation.service';
+export * from './metadata-patch-operation.service.spec';
 export * from './operations/index';
 export * from './patch-operation.service';

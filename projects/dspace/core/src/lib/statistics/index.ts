@@ -4,3 +4,4 @@
 
 export * from './models/index';
 export * from './usage-report-data.service';
+export * from './usage-report-data.service.spec';

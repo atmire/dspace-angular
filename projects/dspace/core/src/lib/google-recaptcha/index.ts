@@ -3,3 +3,4 @@
  */
 
 export * from './google-recaptcha.service';
+export * from './google-recaptcha.service.spec';

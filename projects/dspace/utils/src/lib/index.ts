@@ -3,9 +3,13 @@
  */
 
 export * from './date.util';
+export * from './date.util.spec';
 export * from './empty.util';
+export * from './empty.util.spec';
 export * from './license.utils';
 export * from './numeric.util';
+export * from './numeric.util.spec';
 export * from './object.util';
+export * from './object.util.spec';
 export * from './object-list-utils';
 export * from './validator.functions';

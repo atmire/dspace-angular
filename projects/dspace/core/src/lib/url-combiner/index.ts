@@ -4,3 +4,4 @@
 
 export * from './rest-url-combiner';
 export * from './url-combiner';
+export * from './url-combiner.spec';

@@ -3,6 +3,7 @@
  */
 
 export * from './authorization-data.service';
+export * from './authorization-data.service.spec';
 export * from './authorization-search-params';
 export * from './authorization-utils';
 export * from './feature-authorization-guard/index';

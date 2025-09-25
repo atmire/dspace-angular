@@ -4,3 +4,4 @@
 
 export * from './models/index';
 export * from './resource-policy-data.service';
+export * from './resource-policy-data.service.spec';

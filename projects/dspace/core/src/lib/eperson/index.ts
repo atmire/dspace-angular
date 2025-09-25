@@ -3,5 +3,7 @@
  */
 
 export * from './eperson-data.service';
+export * from './eperson-data.service.spec';
 export * from './group-data.service';
+export * from './group-data.service.spec';
 export * from './models/index';

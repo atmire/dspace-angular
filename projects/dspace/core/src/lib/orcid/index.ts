@@ -4,5 +4,6 @@
 
 export * from './model/index';
 export * from './orcid-auth.service';
+export * from './orcid-auth.service.spec';
 export * from './orcid-history-data.service';
 export * from './orcid-queue-data.service';

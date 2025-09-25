@@ -4,5 +4,7 @@
 
 export * from './correlation-id.actions';
 export * from './correlation-id.reducer';
+export * from './correlation-id.reducer.spec';
 export * from './correlation-id.selector';
 export * from './correlation-id.service';
+export * from './correlation-id.service.spec';

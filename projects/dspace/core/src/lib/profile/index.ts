@@ -4,3 +4,4 @@
 
 export * from './model/index';
 export * from './researcher-profile-data.service';
+export * from './researcher-profile-data.service.spec';

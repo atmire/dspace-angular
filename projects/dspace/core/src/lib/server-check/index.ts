@@ -3,3 +3,4 @@
  */
 
 export * from './server-check.guard';
+export * from './server-check.guard.spec';

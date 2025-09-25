@@ -3,3 +3,4 @@
  */
 
 export * from './metadatum-representation.model';
+export * from './metadatum-representation.model.spec';

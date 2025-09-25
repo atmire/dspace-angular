@@ -4,8 +4,10 @@
 
 export * from './accessibility-cookie';
 export * from './browser-orejime.service';
+export * from './browser-orejime.service.spec';
 export * from './client-cookie.service';
 export * from './cookie.service';
+export * from './cookie.service.spec';
 export * from './orejime.service';
 export * from './orejime.service.stub';
 export * from './orejime-configuration';

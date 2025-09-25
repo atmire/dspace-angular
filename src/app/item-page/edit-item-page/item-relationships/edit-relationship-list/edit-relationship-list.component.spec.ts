@@ -39,6 +39,7 @@ import {
   RelationshipDataService,
   RelationshipType,
   RelationshipTypeDataService,
+  REQUEST,
   SearchConfigurationServiceStub,
   XSRFService,
 } from '@dspace/core';
@@ -51,7 +52,6 @@ import {
 } from 'rxjs';
 
 import { environment } from '../../../../../environments/environment.test';
-import { REQUEST } from '../../../../../express.tokens';
 import { NameVariantService } from '../../../../shared/form/builder/ds-dynamic-form-ui/relation-lookup-modal/name-variant.service';
 import { HostWindowService } from '../../../../shared/host-window.service';
 import { SelectableListService } from '../../../../shared/object-list/selectable-list/selectable-list.service';

@@ -3,3 +3,4 @@
  */
 
 export * from './item-metadata-representation.model';
+export * from './item-metadata-representation.model.spec';

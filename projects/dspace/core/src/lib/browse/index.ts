@@ -3,6 +3,8 @@
  */
 
 export * from './browse.service';
+export * from './browse.service.spec';
 export * from './browse-by-data-type';
 export * from './browse-definition-data.service';
+export * from './browse-definition-data.service.spec';
 export * from './browse-entry-search-options.model';

@@ -3,3 +3,4 @@
  */
 
 export * from './reload.guard';
+export * from './reload.guard.spec';
