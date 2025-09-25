@@ -17,7 +17,6 @@ import {
 import {
   APP_CONFIG,
   AppConfig,
-  StoreDevModules,
 } from '@dspace/config';
 import {
   AuthInterceptor,
@@ -65,6 +64,7 @@ import {
 } from './app-routes';
 import { BROWSE_BY_DECORATOR_MAP } from './browse-by/browse-by-switcher/browse-by-decorator';
 import { LOGIN_METHOD_FOR_DECORATOR_MAP } from './external-log-in/decorators/external-log-in.methods-decorator';
+import { StoreDevModules } from './ngrx-devtools/devtools';
 import { RootModule } from './root.module';
 import { ListableModule } from './shared/listable.module';
 import { AUTH_METHOD_FOR_DECORATOR_MAP } from './shared/log-in/methods/log-in.methods-decorator';

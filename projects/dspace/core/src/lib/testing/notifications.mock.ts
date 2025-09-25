@@ -1092,7 +1092,7 @@ export const ItemMockPid9: Item = Object.assign(
   },
 );
 
-export const ItemMockPid10: Item = Object.assign(
+const ItemMockPid10: Item = Object.assign(
   new Item(),
   {
     handle: '10713/29832',
@@ -1862,7 +1862,7 @@ export function getMockQualityAssuranceEventRestService(): QualityAssuranceEvent
 /**
  * Mock for [[QualityAssuranceEventDataService]]
  */
-export function getMockSuggestionsService(): any {
+function getMockSuggestionsService(): any {
   return jasmine.createSpyObj('SuggestionsService', {
     getTargets: jasmine.createSpy('getTargets'),
     getSuggestions: jasmine.createSpy('getSuggestions'),

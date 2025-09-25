@@ -29,6 +29,7 @@ import { DSpaceObject } from '../shared/dspace-object.model';
 import { GenericConstructor } from '../shared/generic-constructor';
 import { PageInfo } from '../shared/page-info.model';
 import { URLCombiner } from '../url-combiner/url-combiner';
+import { isRestPaginatedList } from './base-response-parsing.service';
 import {
   buildPaginatedList,
   PaginatedList,
@@ -44,20 +45,6 @@ import { RestRequest } from './rest-request.model';
  */
 export function isCacheableObject(obj: any): boolean {
   return hasValue(obj) && hasValue(obj._links) && hasValue(obj._links.self) && hasValue(obj._links.self.href);
-}
-
-/**
- * Return true if halObj has a value for `page` with properties
- * `size`, `totalElements`, `totalPages`, `number`
- *
- * @param {any} halObj The object to test
- */
-export function isRestPaginatedList(halObj: any): boolean {
-  return hasValue(halObj.page) &&
-    hasValue(halObj.page.size) &&
-    hasValue(halObj.page.totalElements) &&
-    hasValue(halObj.page.totalPages) &&
-    hasValue(halObj.page.number);
 }
 
 /**
