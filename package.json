@@ -6,7 +6,7 @@
     "config:watch": "nodemon",
     "test:rest": "ts-node --project ./tsconfig.ts-node.json scripts/test-rest.ts",
     "start": "npm run start:prod",
-    "start:dev": "nodemon --exec \"cross-env NODE_ENV=development npm run serve\"",
+    "start:dev": "npm run generate:barrels && nodemon --exec \"cross-env NODE_ENV=development npm run serve\"",
     "start:prod": "npm run build:prod && cross-env NODE_ENV=production npm run serve:ssr",
     "start:mirador:prod": "npm run build:mirador && npm run start:prod",
     "preserve": "npm run base-href",
@@ -164,6 +164,7 @@
     "pem": "1.14.8",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.0",
+    "tslib": "^2.3.0",
     "uuid": "^8.3.2",
     "zone.js": "~0.14.10"
   },

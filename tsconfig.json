@@ -48,6 +48,9 @@
       "@dspace/config": [
         "./projects/dspace/config/src/public-api.ts"
       ],
+      "@dspace/customization": [
+        "./projects/dspace/customization/src/public-api.ts"
+      ],
       "@dspace/utils": [
         "./projects/dspace/utils/src/public-api.ts"
       ]

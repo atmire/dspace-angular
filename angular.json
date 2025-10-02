@@ -402,6 +402,48 @@
           }
         }
       }
+    },
+    "@dspace/customization": {
+      "projectType": "library",
+      "root": "projects/dspace/customization",
+      "sourceRoot": "projects/dspace/customization/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/dspace/customization/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/dspace/customization/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/dspace/customization/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/dspace/customization/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/dspace/customization/**/*.ts",
+              "projects/dspace/customization/**/*.html"
+            ]
+          }
+        }
+      }
     }
   },
   "cli": {

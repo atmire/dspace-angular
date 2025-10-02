@@ -2,7 +2,8 @@
   "directory": [
     "projects/dspace/config/src/lib/",
     "projects/dspace/core/src/lib/",
-    "projects/dspace/utils/src/lib/"
+    "projects/dspace/utils/src/lib/",
+    "projects/dspace/customization/src/lib/"
   ],
   "delete": true,
   "exclude": [
