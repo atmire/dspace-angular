@@ -7,3 +7,4 @@ export * from './customization.component';
 export * from './customization.routes';
 export * from './customization.service.spec';
 export * from './customization.service';
+export * from './featured-items/index';

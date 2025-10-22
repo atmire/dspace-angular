@@ -1,0 +1,14 @@
+@if ((featuredItems$ | async).length > 0) {
+  <h2>Featured Items</h2>
+  <div class="featured-items">
+    <div class="row">
+      @for (itemRD of featuredItems$ | async; track itemRD) {
+        <div class="col-sm-4 mb-3">
+          <ds-item-grid-element [object]="itemRD?.payload"></ds-item-grid-element>
+        </div>
+      }
+    </div>
+  </div>
+} @else {
+  <ds-loading></ds-loading>
+}

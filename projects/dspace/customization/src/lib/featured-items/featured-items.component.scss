@@ -1,0 +1,11 @@
+.featured-items {
+  ::ng-deep .thumbnail > .thumbnail-content {
+    height: var(--ds-card-thumbnail-height);
+    width: 100%;
+    display: block;
+    min-width: 100%;
+    min-height: 100%;
+    object-fit: cover;
+    object-position: 50% 15%;
+  }
+}
