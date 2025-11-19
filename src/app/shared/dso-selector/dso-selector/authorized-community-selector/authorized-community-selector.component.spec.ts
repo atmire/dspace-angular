@@ -5,14 +5,16 @@ import {
   waitForAsync,
 } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { NotificationsService } from '@dspace/core/notification-system/notifications.service';
-import { createPaginatedList } from '@dspace/core/testing/utils.test';
-import { createSuccessfulRemoteDataObject$ } from '@dspace/core/utilities/remote-data.utils';
+import {
+  Community,
+  CommunityDataService,
+  createPaginatedList,
+  createSuccessfulRemoteDataObject$,
+  DSpaceObjectType,
+  NotificationsService,
+} from '@dspace/core';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { CommunityDataService } from '../../../../core/data/community-data.service';
-import { Community } from '../../../../core/shared/community.model';
-import { DSpaceObjectType } from '../../../../core/shared/dspace-object-type.model';
 import { ThemedLoadingComponent } from '../../../loading/themed-loading.component';
 import { ListableObjectComponentLoaderComponent } from '../../../object-collection/shared/listable-object/listable-object-component-loader.component';
 import { SearchService } from '../../../search/search.service';

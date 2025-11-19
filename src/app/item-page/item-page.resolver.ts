@@ -35,6 +35,7 @@ import { AppState } from '../app.reducer';
  * @param {ItemDataService} itemService
  * @param {Store<AppState>} store
  * @param {AuthService} authService
+ * @param {AppConfig} appConfig
  * @returns Observable<<RemoteData<Item>> Emits the found item based on the parameters in the current route,
  * or an error if something went wrong
  */

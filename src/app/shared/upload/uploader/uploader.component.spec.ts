@@ -54,7 +54,7 @@ describe('UploaderComponent', () => {
   // synchronous beforeEach
   beforeEach(() => {
     html = `
-      <ds-uploader [onBeforeUpload]="onBeforeUpload"
+      <ds-uploader [beforeUpload]="beforeUpload"
                    [uploadFilesOptions]="uploadFilesOptions"
                    (onCompleteItem)="onCompleteItem($event)"></ds-uploader>`;
 
@@ -75,7 +75,7 @@ describe('UploaderComponent', () => {
   template: `<ds-uploader></ds-uploader>`,
   imports: [
     FileUploadModule,
-
+    UploaderComponent,
   ],
 })
 class TestComponent {
@@ -87,7 +87,7 @@ class TestComponent {
   });
 
   /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
-  public onBeforeUpload = () => {
+  public beforeUpload = () => {
   };
 
   onCompleteItem(event) {

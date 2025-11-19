@@ -1,7 +1,4 @@
-import {
-  ChangeDetectorRef,
-  DebugElement,
-} from '@angular/core';
+import { DebugElement } from '@angular/core';
 import {
   ComponentFixture,
   fakeAsync,
@@ -9,31 +6,17 @@ import {
   tick,
   waitForAsync,
 } from '@angular/core/testing';
-import {
-  BrowserModule,
-  By,
-} from '@angular/platform-browser';
+import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
-  Notification,
   NotificationOptions,
-  notificationsReducer,
   NotificationsService,
+  NotificationsServiceStub,
   NotificationType,
-  TranslateLoaderMock,
 } from '@dspace/core';
-import {
-  Store,
-  StoreModule,
-} from '@ngrx/store';
-import {
-  TranslateLoader,
-  TranslateModule,
-  TranslateService,
-} from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs';
 
-import { storeModuleConfig } from '../../app.reducer';
 import { NotificationComponent } from './notification.component';
 
 describe('NotificationComponent', () => {
@@ -47,29 +30,14 @@ describe('NotificationComponent', () => {
   let elType: HTMLElement;
 
   beforeEach(waitForAsync(() => {
-    const store: Store<Notification> = jasmine.createSpyObj('store', {
-      /* eslint-disable no-empty, @typescript-eslint/no-empty-function */
-      notifications: [],
-    });
-
     TestBed.configureTestingModule({
       imports: [
-        BrowserModule,
         BrowserAnimationsModule,
-        StoreModule.forRoot({ notificationsReducer }, storeModuleConfig),
-        TranslateModule.forRoot({
-          loader: {
-            provide: TranslateLoader,
-            useClass: TranslateLoaderMock,
-          },
-        }),
+        TranslateModule.forRoot(),
         NotificationComponent,
       ],
       providers: [
-        { provide: Store, useValue: store },
-        ChangeDetectorRef,
-        NotificationsService,
-        TranslateService,
+        { provide: NotificationsService, useClass: NotificationsServiceStub },
       ],
     }).compileComponents();  // compile template and css
 

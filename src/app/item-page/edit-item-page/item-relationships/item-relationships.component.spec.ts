@@ -12,6 +12,7 @@ import {
   ActivatedRoute,
   Router,
 } from '@angular/router';
+import { APP_CONFIG } from '@dspace/config';
 import {
   createPaginatedList,
   createSuccessfulRemoteDataObject,
@@ -43,6 +44,7 @@ import {
   of,
 } from 'rxjs';
 
+import { environment } from '../../../../environments/environment';
 import { AlertComponent } from '../../../shared/alert/alert.component';
 import { getMockThemeService } from '../../../shared/theme-support/test/theme-service.mock';
 import { ThemeService } from '../../../shared/theme-support/theme.service';
@@ -236,6 +238,7 @@ describe('ItemRelationshipsComponent', () => {
         { provide: ObjectCacheService, useValue: objectCache },
         { provide: RequestService, useValue: requestService },
         { provide: RelationshipTypeDataService, useValue: relationshipTypeService },
+        { provide: APP_CONFIG, useValue: environment },
         ChangeDetectorRef,
       ], schemas: [
         NO_ERRORS_SCHEMA,

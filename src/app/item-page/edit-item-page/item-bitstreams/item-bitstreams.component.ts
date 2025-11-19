@@ -3,7 +3,6 @@ import {
   NgClass,
 } from '@angular/common';
 import {
-  ChangeDetectorRef,
   Component,
   HostListener,
   Inject,
@@ -153,7 +152,6 @@ export class ItemBitstreamsComponent extends AbstractItemUpdateComponent impleme
     public bitstreamService: BitstreamDataService,
     public objectCache: ObjectCacheService,
     public requestService: RequestService,
-    public cdRef: ChangeDetectorRef,
     public bundleService: BundleDataService,
     public zone: NgZone,
     public itemBitstreamsService: ItemBitstreamsService,

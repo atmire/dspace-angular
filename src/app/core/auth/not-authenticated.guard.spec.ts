@@ -4,13 +4,15 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 import {
+  AuthService,
+  HardRedirectService,
+  PAGE_NOT_FOUND_PATH,
+} from '@dspace/core';
+import {
   firstValueFrom,
   of,
 } from 'rxjs';
 
-import { PAGE_NOT_FOUND_PATH } from '../router/core-routing-paths';
-import { HardRedirectService } from '../services/hard-redirect.service';
-import { AuthService } from './auth.service';
 import { notAuthenticatedGuard } from './not-authenticated.guard';
 
 describe('notAuthenticatedGuard', () => {

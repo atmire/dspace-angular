@@ -9,8 +9,8 @@
 import {
   Agent as HttpAgent,
   AgentOptions as HttpAgentOptions,
-} from 'http';
-import { Agent as HttpsAgent } from 'https';
+} from 'node:http';
+import { Agent as HttpsAgent } from 'node:https';
 
 import { XhrFactory } from '@angular/common';
 import { Injectable } from '@angular/core';

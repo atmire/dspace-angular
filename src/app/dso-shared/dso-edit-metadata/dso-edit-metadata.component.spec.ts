@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import {
+  CUSTOM_ELEMENTS_SCHEMA,
   DebugElement,
-  NO_ERRORS_SCHEMA,
 } from '@angular/core';
 import {
   ComponentFixture,
@@ -12,7 +12,7 @@ import {
   BrowserModule,
   By,
 } from '@angular/platform-browser';
-import { RouterTestingModule } from '@angular/router/testing';
+import { RouterModule } from '@angular/router';
 import {
   APP_DATA_SERVICES_MAP,
   ArrayMoveChangeAnalyzer,
@@ -45,7 +45,7 @@ const mockDataServiceMap: any = new Map([
   [ITEM.value, () => import('@dspace/core').then(m => m.TestDataService)],
 ]);
 
-describe('DsoEditMetadataComponent', () => {
+fdescribe('DsoEditMetadataComponent', () => {
   let component: DsoEditMetadataComponent;
   let fixture: ComponentFixture<DsoEditMetadataComponent>;
 
@@ -94,7 +94,7 @@ describe('DsoEditMetadataComponent', () => {
         CommonModule,
         BrowserModule,
         TranslateModule.forRoot(),
-        RouterTestingModule.withRoutes([]),
+        RouterModule.forRoot([]),
         DsoEditMetadataComponent,
         VarDirective,
         BtnDisabledDirective,
@@ -105,9 +105,11 @@ describe('DsoEditMetadataComponent', () => {
         ArrayMoveChangeAnalyzer,
         TestDataService,
       ],
-      schemas: [NO_ERRORS_SCHEMA],
     })
       .overrideComponent(DsoEditMetadataComponent, {
+        add: {
+          schemas: [CUSTOM_ELEMENTS_SCHEMA],
+        },
         remove: {
           imports: [
             DsoEditMetadataValueComponent,

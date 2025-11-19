@@ -11,6 +11,7 @@ import {
 } from '@dspace/core';
 import { first } from 'rxjs/operators';
 
+import { environment } from '../../environments/environment';
 import { itemPageResolver } from './item-page.resolver';
 
 describe('itemPageResolver', () => {
@@ -62,6 +63,7 @@ describe('itemPageResolver', () => {
           itemService,
           store,
           authService,
+          environment,
         ).pipe(first())
           .subscribe(
             () => {
@@ -82,6 +84,7 @@ describe('itemPageResolver', () => {
           itemService,
           store,
           authService,
+          environment,
         ).pipe(first())
           .subscribe(
             () => {

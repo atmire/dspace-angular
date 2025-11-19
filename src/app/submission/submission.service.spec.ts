@@ -19,6 +19,7 @@ import {
   Item,
   MockActivatedRoute,
   NotificationsService,
+  NotificationsServiceStub,
   RequestError,
   RequestService,
   RouterMock,
@@ -29,11 +30,9 @@ import {
   SubmissionRestService,
   SubmissionRestServiceStub,
   SubmissionScopeType,
-  TranslateLoaderMock,
 } from '@dspace/core';
 import { StoreModule } from '@ngrx/store';
 import {
-  TranslateLoader,
   TranslateModule,
   TranslateService,
 } from '@ngx-translate/core';
@@ -406,12 +405,7 @@ describe('SubmissionService test suite', () => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({ submissionReducers } as any, storeModuleConfig),
-        TranslateModule.forRoot({
-          loader: {
-            provide: TranslateLoader,
-            useClass: TranslateLoaderMock,
-          },
-        }),
+        TranslateModule.forRoot(),
       ],
       providers: [
         { provide: Router, useValue: router },
@@ -420,7 +414,7 @@ describe('SubmissionService test suite', () => {
         { provide: SearchService, useValue: searchService },
         { provide: RequestService, useValue: requestServce },
         { provide: SubmissionJsonPatchOperationsService, useValue: submissionJsonPatchOperationsService },
-        NotificationsService,
+        { provide: NotificationsService, useClass: NotificationsServiceStub },
         RouteService,
         SubmissionService,
         TranslateService,
@@ -1053,8 +1047,6 @@ describe('SubmissionService test suite', () => {
   describe('notifyNewSection', () => {
     it('should return true/false when section is loading/not loading', fakeAsync(() => {
       spyOn((service as any).translate, 'get').and.returnValue(of('test'));
-
-      spyOn((service as any).notificationsService, 'info');
 
       service.notifyNewSection(submissionId, sectionId);
       flush();

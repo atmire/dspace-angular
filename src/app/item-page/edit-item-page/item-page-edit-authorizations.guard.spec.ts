@@ -3,8 +3,8 @@ import {
   Router,
   UrlTree,
 } from '@angular/router';
+import { APP_CONFIG } from '@dspace/config';
 import {
-  APP_DATA_SERVICES_MAP,
   AuthorizationDataService,
   AuthService,
   createSuccessfulRemoteDataObject$,
@@ -20,6 +20,7 @@ import {
   of,
 } from 'rxjs';
 
+import { environment } from '../../../environments/environment';
 import { itemPageEditAuthorizationsGuard } from './item-page-edit-authorizations.guard';
 
 describe('itemPageEditAuthorizationsGuard', () => {
@@ -71,7 +72,7 @@ describe('itemPageEditAuthorizationsGuard', () => {
         { provide: Router, useValue: router },
         { provide: AuthService, useValue: authService },
         { provide: Store, useValue: store },
-        { provide: APP_DATA_SERVICES_MAP, useValue: {} },
+        { provide: APP_CONFIG, useValue: environment },
         { provide: TranslateService, useValue: getMockTranslateService() },
         { provide: ItemDataService, useValue: itemService },
       ],

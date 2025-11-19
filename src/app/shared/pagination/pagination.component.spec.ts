@@ -1,4 +1,3 @@
-// Load the implementations that should be tested
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectorRef,
@@ -9,7 +8,6 @@ import {
 import {
   ComponentFixture,
   fakeAsync,
-  inject,
   TestBed,
   tick,
   waitForAsync,
@@ -18,8 +16,8 @@ import { By } from '@angular/platform-browser';
 import {
   ActivatedRoute,
   Router,
+  RouterModule,
 } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
 import {
   createTestComponent,
   FindListOptions,
@@ -30,14 +28,10 @@ import {
   RouterMock,
   SortDirection,
   SortOptions,
-  TranslateLoaderMock,
 } from '@dspace/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { StoreModule } from '@ngrx/store';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { BehaviorSubject } from 'rxjs';
 
@@ -109,7 +103,7 @@ function normalizeText(txt: string): string {
   return matches ? matches[0] : '';
 }
 
-describe('Pagination component', () => {
+describe('PaginationComponent', () => {
 
   let testComp: TestComponent;
   let testFixture: ComponentFixture<TestComponent>;
@@ -159,15 +153,10 @@ describe('Pagination component', () => {
       imports: [
         CommonModule,
         StoreModule.forRoot({}, storeModuleConfig),
-        TranslateModule.forRoot({
-          loader: {
-            provide: TranslateLoader,
-            useClass: TranslateLoaderMock,
-          },
-        }),
+        TranslateModule.forRoot(),
         NgxPaginationModule,
         NgbModule,
-        RouterTestingModule.withRoutes([
+        RouterModule.forRoot([
           { path: 'home', component: TestComponent },
         ]),
         PaginationComponent,
@@ -180,7 +169,6 @@ describe('Pagination component', () => {
         { provide: HostWindowService, useValue: hostWindowServiceStub },
         { provide: PaginationService, useValue: paginationService },
         ChangeDetectorRef,
-        PaginationComponent,
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).overrideComponent(PaginationComponent, {
@@ -211,9 +199,9 @@ describe('Pagination component', () => {
       testComp = testFixture.componentInstance;
     });
 
-    it('should create Pagination Component', inject([PaginationComponent], (app: PaginationComponent) => {
-      expect(app).toBeDefined();
-    }));
+    it('should create Pagination Component', () => {
+      expect(testComp).toBeDefined();
+    });
 
     it('should render', () => {
       expect(testComp.paginationOptions.id).toEqual('test');
@@ -400,7 +388,7 @@ describe('Pagination component', () => {
   imports: [
     NgbModule,
     NgxPaginationModule,
-
+    PaginationComponent,
   ],
 })
 class TestComponent {

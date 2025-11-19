@@ -1,4 +1,7 @@
-import { CommonModule } from '@angular/common';
+import {
+  AsyncPipe,
+  CommonModule,
+} from '@angular/common';
 import {
   ChangeDetectorRef,
   Component,
@@ -279,6 +282,7 @@ describe('SubmissionSectionUploadFileComponent', () => {
   selector: 'ds-test-cmp',
   template: '{{ obs | async }}',
   imports: [
+    AsyncPipe,
     NgbModule,
   ],
 })

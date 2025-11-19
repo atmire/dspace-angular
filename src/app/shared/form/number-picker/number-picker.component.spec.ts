@@ -159,6 +159,7 @@ describe('NumberPickerComponent', () => {
   imports: [
     FormsModule,
     NgbModule,
+    NumberPickerComponent,
     ReactiveFormsModule,
   ],
 })

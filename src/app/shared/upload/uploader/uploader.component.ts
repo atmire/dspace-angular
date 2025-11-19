@@ -74,7 +74,7 @@ export class UploaderComponent implements OnInit, AfterViewInit {
   /**
    * The function to call before an upload
    */
-  @Input() onBeforeUpload: () => void;
+  @Input() beforeUpload: () => void;
 
   /**
    * Configuration for the ng2-file-upload component.
@@ -163,8 +163,8 @@ export class UploaderComponent implements OnInit, AfterViewInit {
     this.uploader.onAfterAddingAll = ((items) => {
       this.onFileSelected.emit(items);
     });
-    if (isUndefined(this.onBeforeUpload)) {
-      this.onBeforeUpload = () => {return;};
+    if (isUndefined(this.beforeUpload)) {
+      this.beforeUpload = () => {return;};
     }
     this.uploader.onBeforeUploadItem = (item) => {
       if (item.url !== this.uploader.options.url) {
@@ -178,7 +178,7 @@ export class UploaderComponent implements OnInit, AfterViewInit {
       if (hasValue(this.uploadFilesOptions.impersonatingID)) {
         this.uploader.options.headers.push({ name: this.ON_BEHALF_HEADER, value: this.uploadFilesOptions.impersonatingID });
       }
-      this.onBeforeUpload();
+      this.beforeUpload();
       this.isOverDocumentDropZone = of(false);
     };
     if (hasValue(this.uploadProperties)) {

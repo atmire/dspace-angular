@@ -1,17 +1,14 @@
-import {
-  ChangeDetectorRef,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {
   ComponentFixture,
   TestBed,
   waitForAsync,
 } from '@angular/core/testing';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   ActivatedRoute,
   Router,
 } from '@angular/router';
+import { APP_CONFIG } from '@dspace/config';
 import {
   Bitstream,
   BitstreamDataService,
@@ -37,6 +34,8 @@ import {
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 
+import { environment } from '../../../../environments/environment';
+import { AlertComponent } from '../../../shared/alert/alert.component';
 import { ThemedLoadingComponent } from '../../../shared/loading/themed-loading.component';
 import { SearchConfigurationService } from '../../../shared/search/search-configuration.service';
 import { ObjectValuesPipe } from '../../../shared/utils/object-values-pipe';
@@ -179,7 +178,6 @@ describe('ItemBitstreamsComponent', () => {
         ItemBitstreamsComponent,
         ObjectValuesPipe,
         VarDirective,
-        BrowserAnimationsModule,
       ],
       providers: [
         { provide: ItemDataService, useValue: itemService },
@@ -193,18 +191,20 @@ describe('ItemBitstreamsComponent', () => {
         { provide: SearchConfigurationService, useValue: searchConfig },
         { provide: BundleDataService, useValue: bundleService },
         { provide: ItemBitstreamsService, useValue: itemBitstreamsService },
-        ChangeDetectorRef,
-      ], schemas: [
-        NO_ERRORS_SCHEMA,
+        { provide: APP_CONFIG, useValue: environment },
       ],
-    })
-      .overrideComponent(ItemBitstreamsComponent, {
-        remove: {
-          imports: [ItemEditBitstreamBundleComponent,
-            ThemedLoadingComponent],
-        },
-      })
-      .compileComponents();
+    }).overrideComponent(ItemBitstreamsComponent, {
+      add: {
+        schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      },
+      remove: {
+        imports: [
+          AlertComponent,
+          ItemEditBitstreamBundleComponent,
+          ThemedLoadingComponent,
+        ],
+      },
+    }).compileComponents();
   }));
 
   beforeEach(() => {
