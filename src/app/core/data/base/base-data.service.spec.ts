@@ -787,4 +787,50 @@ describe('BaseDataService', () => {
       expect(addDependencySpy).toHaveBeenCalled();
     });
   });
+
+
+  describe('addEmbedParams', () => {
+    let href;
+
+    beforeEach(() => {
+      href = 'http://localhost:8080/server/api/core/bitstreams/c7a20e2c-dcf6-40c7-a39f-bd032269c9c8';
+    });
+
+    it('should properly handle edit/bitstream nested followLinks', () => {
+      let links = [
+        followLink('bundle', {}, followLink('primaryBitstream'), followLink('item')),
+        followLink('format')
+      ];
+
+      let result = (service as any).addEmbedParams(href, [], ...links);
+      expect(result).toEqual(['embed=bundle%2FprimaryBitstream', 'embed=bundle%2Fitem', 'embed=format']);
+    });
+
+
+
+    it('should properly handle deeper levels of recursive followLinks', () => {
+      let links = [
+        followLink('lvl1-1',
+          {},
+          followLink('lvl2-1'),
+          followLink('lvl2-2',
+            {},
+            followLink('lvl3-1'),
+            followLink('lvl3-2')
+          ),
+          followLink('lvl2-3')
+        ),
+        followLink('lvl1-2')
+      ];
+
+      let result = (service as any).addEmbedParams(href, [], ...links);
+      expect(result).toEqual([
+        'embed=lvl1-1%2Flvl2-1',
+        'embed=lvl1-1%2Flvl2-2%2Flvl3-1',
+        'embed=lvl1-1%2Flvl2-2%2Flvl3-2',
+        'embed=lvl1-1%2Flvl2-3',
+        'embed=lvl1-2',
+      ]);
+    });
+  });
 });
