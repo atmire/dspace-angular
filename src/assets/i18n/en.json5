@@ -3198,9 +3198,17 @@
 
   "process.detail.status": "Status",
 
+  "process.detail.status.pending.context-help": "This Process has not been scheduled yet, it will start at a later time. Please consult the repository administrator on further details regarding the exact timing.",
+
   "process.detail.create": "Create similar process",
 
   "process.detail.actions": "Actions",
+
+  "process.detail.start.button": "Start process",
+
+  "process.detail.start.success": "Process started successfully",
+
+  "process.detail.start.failed": "Failed to start process",
 
   "process.detail.delete.button": "Delete process",
 

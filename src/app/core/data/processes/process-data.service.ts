@@ -19,11 +19,16 @@ import { dataService } from '../base/data-service.decorator';
 import { DeleteData, DeleteDataImpl } from '../base/delete-data';
 import { NotificationsService } from '../../../shared/notifications/notifications.service';
 import { NoContent } from '../../shared/NoContent.model';
+import { Operation } from 'fast-json-patch';
+import { PatchDataImpl, PatchData } from '../base/patch-data';
+import { RestRequestMethod } from '../rest-request-method';
+import { DefaultChangeAnalyzer } from '../default-change-analyzer.service';
 
 @Injectable()
 @dataService(PROCESS)
-export class ProcessDataService extends IdentifiableDataService<Process> implements FindAllData<Process>, DeleteData<Process> {
+export class ProcessDataService extends IdentifiableDataService<Process> implements FindAllData<Process>, PatchData<Process>, DeleteData<Process> {
   private findAllData: FindAllData<Process>;
+  private patchData: PatchData<Process>;
   private deleteData: DeleteData<Process>;
 
   constructor(
@@ -33,10 +38,12 @@ export class ProcessDataService extends IdentifiableDataService<Process> impleme
     protected halService: HALEndpointService,
     protected bitstreamDataService: BitstreamDataService,
     protected notificationsService: NotificationsService,
+    protected comparator: DefaultChangeAnalyzer<Process>,
   ) {
     super('processes', requestService, rdbService, objectCache, halService);
 
     this.findAllData = new FindAllDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, this.responseMsToLive);
+    this.patchData = new PatchDataImpl<Process>(this.linkPath, requestService, rdbService, objectCache, halService, comparator, this.responseMsToLive, this.constructIdEndpoint);
     this.deleteData = new DeleteDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, notificationsService, this.responseMsToLive, this.constructIdEndpoint);
   }
 
@@ -75,6 +82,27 @@ export class ProcessDataService extends IdentifiableDataService<Process> impleme
    */
   findAll(options?: FindListOptions, useCachedVersionIfAvailable?: boolean, reRequestOnStale?: boolean, ...linksToFollow: FollowLinkConfig<Process>[]): Observable<RemoteData<PaginatedList<Process>>> {
     return this.findAllData.findAll(options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  }
+
+  update(object: Process): Observable<RemoteData<Process>> {
+    throw new Error('Method not implemented.');
+  }
+
+  commitUpdates(method?: RestRequestMethod): void {
+    throw new Error('Method not implemented.');
+  }
+
+  createPatchFromCache(object: Process): Observable<Operation[]> {
+    throw new Error('Method not implemented.');
+  }
+
+  /**
+   * Send a patch request for a specified object
+   * @param {T} object The object to send a patch request for
+   * @param {Operation[]} operations The patch operations to be performed
+   */
+  public patch(object: Process, operations: Operation[]): Observable<RemoteData<Process>> {
+    return this.patchData.patch(object, operations);
   }
 
   /**

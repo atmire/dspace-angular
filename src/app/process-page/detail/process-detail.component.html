@@ -43,7 +43,17 @@
 
     <ds-process-detail-field *ngIf="process && process.processStatus" id="process-status"
                              [title]="'process.detail.status' | translate">
-        <div>{{ process.processStatus }}</div>
+        <div *ngIf="isProcessPending(process)">
+          <div *dsContextHelp="{
+            content: 'process.detail.status.pending.context-help',
+            id: 'process-pending-status',
+            iconPlacement: 'left',
+            tooltipPlacement: ['top', 'left']
+            }">{{ process.processStatus }}</div>
+        </div>
+        <div *ngIf="!isProcessPending(process)">
+          <div>{{ process.processStatus }}</div>
+        </div>
     </ds-process-detail-field>
 
     <ds-process-detail-field *ngIf="isProcessFinished(process)" id="process-output" [title]="'process.detail.output'">
@@ -64,6 +74,10 @@
     <ds-process-detail-field id="process-actions" [title]="'process.detail.actions'">
         <button class="btn btn-success mr-2" routerLink="/processes/new" [queryParams]="{id: process?.processId}"><i
                 class="fas fa-plus pr-2"></i>{{'process.detail.create' | translate}}</button>
+        <button *ngIf="isProcessPending(process) && (isAdmin$ | async)" id="start" class="btn btn-primary"
+                (click)="startPendingProcess(process)">
+          <i class="fas fa-play pr-2"></i>{{ 'process.detail.start.button' | translate }}
+        </button>
         <button *ngIf="isProcessFinished(process)" id="delete" class="btn btn-danger"
                 (click)="openDeleteModal(deleteModal)">
             <i class="fas fa-trash pr-2"></i>{{ 'process.detail.delete.button' | translate }}

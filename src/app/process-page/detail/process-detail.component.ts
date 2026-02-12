@@ -28,6 +28,9 @@ import { NotificationsService } from '../../shared/notifications/notifications.s
 import { TranslateService } from '@ngx-translate/core';
 import { followLink } from '../../shared/utils/follow-link-config.model';
 import { isPlatformBrowser } from '@angular/common';
+import { AuthorizationDataService } from '../../core/data/feature-authorization/authorization-data.service';
+import { FeatureID } from '../../core/data/feature-authorization/feature-id';
+import { Operation } from 'fast-json-patch';
 
 @Component({
   selector: 'ds-process-detail',
@@ -81,6 +84,11 @@ export class ProcessDetailComponent implements OnInit, OnDestroy {
   refreshCounter$ = new BehaviorSubject(0);
 
   /**
+   * Whether the current user is an admin or not
+   */
+  isAdmin$: Observable<boolean>;
+
+  /**
    * Reference to NgbModal
    */
   protected modalRef: NgbModalRef;
@@ -99,7 +107,8 @@ export class ProcessDetailComponent implements OnInit, OnDestroy {
     protected http: HttpClient,
     protected modalService: NgbModal,
     protected notificationsService: NotificationsService,
-    protected translateService: TranslateService
+    protected translateService: TranslateService,
+    protected authorizationService: AuthorizationDataService,
   ) {}
 
   /**
@@ -125,6 +134,8 @@ export class ProcessDetailComponent implements OnInit, OnDestroy {
       getFirstSucceededRemoteDataPayload(),
       switchMap((process: Process) => this.processService.getFiles(process.processId))
     );
+
+    this.isAdmin$ = this.authorizationService.isAuthorized(FeatureID.AdministratorOf);
   }
 
   refresh() {
@@ -242,6 +253,32 @@ export class ProcessDetailComponent implements OnInit, OnDestroy {
     return (hasValue(process) && hasValue(process.processStatus) &&
       (process.processStatus.toString() === ProcessStatus[ProcessStatus.COMPLETED].toString()
         || process.processStatus.toString() === ProcessStatus[ProcessStatus.FAILED].toString()));
+  }
+
+  /**
+   * Whether the given process has Pending status
+   * @param process Process to check if pending
+   */
+  isProcessPending(process: Process): boolean {
+    return (hasValue(process) && hasValue(process.processStatus) &&
+      (process.processStatus.toString() === ProcessStatus[ProcessStatus.PENDING].toString()));
+  }
+
+  startPendingProcess(process: Process): void {
+    const operations: Operation[] = [{
+      op: 'replace',
+      path: '/processStatus',
+      value: 'SCHEDULED',
+    }];
+    this.processService.patch(process, operations).pipe(
+      getFirstCompletedRemoteData()
+    ).subscribe((rd: RemoteData<Process>) => {
+      if (rd.hasSucceeded) {
+        this.notificationsService.success(this.translateService.get('process.detail.start.success'));
+      } else {
+        this.notificationsService.success(this.translateService.get('process.detail.start.failed'));
+      }
+    });
   }
 
   /**

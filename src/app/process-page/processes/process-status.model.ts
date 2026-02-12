@@ -5,5 +5,6 @@ export enum ProcessStatus {
   SCHEDULED,
   RUNNING,
   COMPLETED,
-  FAILED
+  FAILED,
+  PENDING,
 }
