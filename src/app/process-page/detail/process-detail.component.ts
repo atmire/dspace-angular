@@ -276,7 +276,7 @@ export class ProcessDetailComponent implements OnInit, OnDestroy {
       if (rd.hasSucceeded) {
         this.notificationsService.success(this.translateService.get('process.detail.start.success'));
       } else {
-        this.notificationsService.success(this.translateService.get('process.detail.start.failed'));
+        this.notificationsService.error(this.translateService.get('process.detail.start.failed'));
       }
     });
   }

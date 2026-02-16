@@ -84,16 +84,29 @@ export class ProcessDataService extends IdentifiableDataService<Process> impleme
     return this.findAllData.findAll(options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
   }
 
+  /**
+   * Add a new patch to the object cache
+   * The patch is derived from the differences between the given object and its version in the object cache
+   * @param {DSpaceObject} object The given object
+   */
   update(object: Process): Observable<RemoteData<Process>> {
-    throw new Error('Method not implemented.');
+    return this.patchData.update(object);
   }
 
+  /**
+   * Commit current object changes to the server
+   * @param method The RestRequestMethod for which de server sync buffer should be committed
+   */
   commitUpdates(method?: RestRequestMethod): void {
-    throw new Error('Method not implemented.');
+    this.patchData.commitUpdates(method);
   }
 
+  /**
+   * Return a list of operations representing the difference between an object and its latest value in the cache.
+   * @param object  the object to resolve to a list of patch operations
+   */
   createPatchFromCache(object: Process): Observable<Operation[]> {
-    throw new Error('Method not implemented.');
+    return this.patchData.createPatchFromCache(object);
   }
 
   /**
@@ -102,7 +115,7 @@ export class ProcessDataService extends IdentifiableDataService<Process> impleme
    * @param {Operation[]} operations The patch operations to be performed
    */
   public patch(object: Process, operations: Operation[]): Observable<RemoteData<Process>> {
-    return this.patchData.patch(object, operations);
+    return this.patchData.patch(object, operations, object.processId);
   }
 
   /**

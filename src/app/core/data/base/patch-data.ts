@@ -30,8 +30,9 @@ export interface PatchData<T extends CacheableObject> {
    * Send a patch request for a specified object
    * @param {T} object The object to send a patch request for
    * @param {Operation[]} operations The patch operations to be performed
+   * @param objectId Optional ID that can be given when the object doesn't use the standard UUID identifier
    */
-  patch(object: T, operations: Operation[]): Observable<RemoteData<T>>;
+  patch(object: T, operations: Operation[], objectId?: any): Observable<RemoteData<T>>;
 
   /**
    * Add a new patch to the object cache
@@ -83,12 +84,13 @@ export class PatchDataImpl<T extends CacheableObject> extends IdentifiableDataSe
    * Send a patch request for a specified object
    * @param {T} object The object to send a patch request for
    * @param {Operation[]} operations The patch operations to be performed
+   * @param objectId Optional ID that can be given when the object doesn't use the standard UUID identifier
    */
-  patch(object: T, operations: Operation[]): Observable<RemoteData<T>> {
+  patch(object: T, operations: Operation[], objectId?: any): Observable<RemoteData<T>> {
     const requestId = this.requestService.generateRequestId();
 
     const hrefObs = this.halService.getEndpoint(this.linkPath).pipe(
-      map((endpoint: string) => this.getIDHref(endpoint, object.uuid)),
+      map((endpoint: string) => this.getIDHref(endpoint, objectId || object.uuid)),
     );
 
     hrefObs.pipe(
