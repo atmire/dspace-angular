@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 import { getFirstCompletedRemoteData } from '../../core/shared/operators';
 import { RemoteData } from '../../core/data/remote-data';
 import { getProcessListRoute } from '../process-page-routing.paths';
-import { isEmpty } from '../../shared/empty.util';
+import { isEmpty, hasValue } from '../../shared/empty.util';
 
 /**
  * Component to create a new script
@@ -53,6 +53,11 @@ export class ProcessFormComponent implements OnInit {
    */
   public missingParameters = [];
 
+  /**
+   * Whether the selectedScript should be immediately start or not
+   */
+  public immediatelyStartScript: boolean;
+
   constructor(
     private scriptService: ScriptDataService,
     private notificationsService: NotificationsService,
@@ -84,7 +89,7 @@ export class ProcessFormComponent implements OnInit {
         };
       }
     );
-    this.scriptService.invoke(this.selectedScript.id, stringParameters, this.files)
+    this.scriptService.invoke(this.selectedScript.id, stringParameters, this.files, this.immediatelyStartScript)
       .pipe(getFirstCompletedRemoteData())
       .subscribe((rd: RemoteData<Process>) => {
         if (rd.hasSucceeded) {
@@ -148,6 +153,23 @@ export class ProcessFormComponent implements OnInit {
     /* should subscribe on the previous method to know the action is finished and then navigate,
     will fix this when the removeByHrefSubstring changes are merged */
     this.router.navigateByUrl(getProcessListRoute());
+  }
+
+  /**
+   * Checks if the selected script is allowed to start immediately
+   * @param selectedScript The selected script
+   * @return Whether the selected script is allowed to start immediately
+   */
+  allowedImmediateStart(selectedScript: Script): boolean {
+    return hasValue(selectedScript) && selectedScript.allowImmediateStart;
+  }
+
+  /**
+   * Sets immediatelyStartScript to be used in submitForm
+   * @param start Whether the script should start immediately or not
+   */
+  setImmediatelyStartScript(start: boolean): void {
+    this.immediatelyStartScript = start;
   }
 }
 

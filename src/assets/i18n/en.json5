@@ -3136,6 +3136,10 @@
 
   "process.new.submit": "Save",
 
+  "process.new.start": "Start",
+
+  "process.new.schedule": "Schedule",
+
   "process.new.select-script": "Script",
 
   "process.new.select-script.placeholder": "Choose a script...",
