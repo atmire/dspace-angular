@@ -12,7 +12,7 @@ import { testDeleteDataImplementation } from '../base/delete-data.spec';
 
 describe('ProcessDataService', () => {
   describe('composition', () => {
-    const initService = () => new ProcessDataService(null, null, null, null, null, null);
+    const initService = () => new ProcessDataService(null, null, null, null, null, null, null);
     testFindAllDataImplementation(initService);
     testDeleteDataImplementation(initService);
   });
