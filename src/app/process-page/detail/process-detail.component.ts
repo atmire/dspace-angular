@@ -25,6 +25,7 @@ import {
   TranslateModule,
   TranslateService,
 } from '@ngx-translate/core';
+import { Operation } from 'fast-json-patch';
 import {
   BehaviorSubject,
   Observable,
@@ -43,6 +44,8 @@ import {
 import { AuthService } from '../../core/auth/auth.service';
 import { DSONameService } from '../../core/breadcrumbs/dso-name.service';
 import { BitstreamDataService } from '../../core/data/bitstream-data.service';
+import { AuthorizationDataService } from '../../core/data/feature-authorization/authorization-data.service';
+import { FeatureID } from '../../core/data/feature-authorization/feature-id';
 import { PaginatedList } from '../../core/data/paginated-list.model';
 import { ProcessDataService } from '../../core/data/processes/process-data.service';
 import { RemoteData } from '../../core/data/remote-data';
@@ -139,6 +142,11 @@ export class ProcessDetailComponent implements OnInit, OnDestroy {
   protected autoRefreshingID: string;
 
   /**
+   * Whether the current user is an admin or not
+   */
+  isAdmin$: Observable<boolean>;
+
+  /**
    * Reference to NgbModal
    */
   protected modalRef: NgbModalRef;
@@ -156,6 +164,7 @@ export class ProcessDetailComponent implements OnInit, OnDestroy {
     protected modalService: NgbModal,
     protected notificationsService: NotificationsService,
     protected translateService: TranslateService,
+    protected authorizationService: AuthorizationDataService,
   ) {}
 
   /**
@@ -186,6 +195,8 @@ export class ProcessDetailComponent implements OnInit, OnDestroy {
       getAllSucceededRemoteDataPayload(),
       switchMap((process: Process) => process.files),
     );
+
+    this.isAdmin$ = this.authorizationService.isAuthorized(FeatureID.AdministratorOf);
   }
 
   /**
@@ -265,6 +276,32 @@ export class ProcessDetailComponent implements OnInit, OnDestroy {
     return (hasValue(process) && hasValue(process.processStatus) &&
       (process.processStatus.toString() === ProcessStatus[ProcessStatus.COMPLETED].toString()
         || process.processStatus.toString() === ProcessStatus[ProcessStatus.FAILED].toString()));
+  }
+
+  /**
+   * Whether the given process has Pending status
+   * @param process Process to check if pending
+   */
+  isProcessPending(process: Process): boolean {
+    return (hasValue(process) && hasValue(process.processStatus) &&
+      (process.processStatus.toString() === ProcessStatus[ProcessStatus.PENDING].toString()));
+  }
+
+  startPendingProcess(process: Process): void {
+    const operations: Operation[] = [{
+      op: 'replace',
+      path: '/processStatus',
+      value: 'SCHEDULED',
+    }];
+    this.processService.patch(process, operations).pipe(
+      getFirstCompletedRemoteData(),
+    ).subscribe((rd: RemoteData<Process>) => {
+      if (rd.hasSucceeded) {
+        this.notificationsService.success(this.translateService.get('process.detail.start.success'));
+      } else {
+        this.notificationsService.error(this.translateService.get('process.detail.start.failed'));
+      }
+    });
   }
 
   /**

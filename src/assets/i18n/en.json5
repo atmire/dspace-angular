@@ -3939,6 +3939,10 @@
 
   "process.new.submit": "Save",
 
+  "process.new.start": "Start",
+
+  "process.new.schedule": "Schedule",
+
   "process.new.select-script": "Script",
 
   "process.new.select-script.placeholder": "Choose a script...",
@@ -4003,9 +4007,17 @@
 
   "process.detail.status": "Status",
 
+  "process.detail.status.pending.context-help": "This Process has not been scheduled yet, it will start at a later time. Please consult the repository administrator on further details regarding the exact timing.",
+
   "process.detail.create": "Create similar process",
 
   "process.detail.actions": "Actions",
+
+  "process.detail.start.button": "Start process",
+
+  "process.detail.start.success": "Process started successfully",
+
+  "process.detail.start.failed": "Failed to start process",
 
   "process.detail.delete.button": "Delete process",
 
@@ -4046,6 +4058,10 @@
   "process.overview.table.scheduled.info": "Creation time (UTC)",
 
   "process.overview.table.scheduled.title": "Scheduled processes",
+
+  "process.overview.table.pending.info": "Creation time (UTC)",
+
+  "process.overview.table.pending.title": "Pending processes",
 
   "process.overview.table.start": "Start time (UTC)",
 
