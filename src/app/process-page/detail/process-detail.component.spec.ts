@@ -39,7 +39,7 @@ import { ProcessStatus } from '../processes/process-status.model';
 import { DefaultChangeAnalyzer } from '../../core/data/default-change-analyzer.service';
 import { AuthorizationDataService } from '../../core/data/feature-authorization/authorization-data.service';
 
-fdescribe('ProcessDetailComponent', () => {
+describe('ProcessDetailComponent', () => {
   let component: ProcessDetailComponent;
   let fixture: ComponentFixture<ProcessDetailComponent>;
 
