@@ -50,6 +50,12 @@ export class Script implements CacheableObject {
   parameters: ScriptParameter[];
 
   /**
+   * Whether the script is allowed to start immediately or not
+   */
+  @autoserialize
+  allowImmediateStart: boolean;
+
+  /**
    * The {@link HALLink}s for this Script
    */
   @deserialize

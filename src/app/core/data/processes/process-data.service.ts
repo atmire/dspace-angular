@@ -4,7 +4,9 @@ import {
   InjectionToken,
   NgZone,
 } from '@angular/core';
+import { RestRequestMethod } from '@dspace/config/rest-request-method';
 import { hasValue } from '@dspace/shared/utils/empty.util';
+import { Operation } from 'fast-json-patch';
 import {
   Observable,
   Subscription,
@@ -36,10 +38,15 @@ import {
 } from '../base/find-all-data';
 import { IdentifiableDataService } from '../base/identifiable-data.service';
 import {
+  PatchData,
+  PatchDataImpl,
+} from '../base/patch-data';
+import {
   SearchData,
   SearchDataImpl,
 } from '../base/search-data';
 import { BitstreamDataService } from '../bitstream-data.service';
+import { DefaultChangeAnalyzer } from '../default-change-analyzer.service';
 import { FindListOptions } from '../find-list-options.model';
 import { PaginatedList } from '../paginated-list.model';
 import { RemoteData } from '../remote-data';
@@ -55,8 +62,9 @@ export const TIMER_FACTORY = new InjectionToken<(callback: (...args: any[]) => v
 });
 
 @Injectable({ providedIn: 'root' })
-export class ProcessDataService extends IdentifiableDataService<Process> implements FindAllData<Process>, DeleteData<Process>, SearchData<Process> {
+export class ProcessDataService extends IdentifiableDataService<Process> implements FindAllData<Process>, PatchData<Process>, DeleteData<Process>, SearchData<Process> {
   private findAllData: FindAllData<Process>;
+  private patchData: PatchData<Process>;
   private deleteData: DeleteData<Process>;
   private searchData: SearchData<Process>;
   protected activelyBeingPolled: Map<string, NodeJS.Timeout> = new Map();
@@ -71,10 +79,12 @@ export class ProcessDataService extends IdentifiableDataService<Process> impleme
     protected notificationsService: NotificationsService,
     protected zone: NgZone,
     @Inject(TIMER_FACTORY) protected timer: (callback: (...args: any[]) => void, ms?: number, ...args: any[]) => NodeJS.Timeout,
+    protected comparator: DefaultChangeAnalyzer<Process>,
   ) {
     super('processes', requestService, rdbService, objectCache, halService);
 
     this.findAllData = new FindAllDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, this.responseMsToLive);
+    this.patchData = new PatchDataImpl<Process>(this.linkPath, requestService, rdbService, objectCache, halService, comparator, this.responseMsToLive, this.constructIdEndpoint);
     this.deleteData = new DeleteDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, notificationsService, this.responseMsToLive, this.constructIdEndpoint);
     this.searchData = new SearchDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, this.responseMsToLive);
   }
@@ -195,6 +205,40 @@ export class ProcessDataService extends IdentifiableDataService<Process> impleme
       this.subs.get(id).unsubscribe();
       this.subs.delete(id);
     }
+  }
+
+  /**
+   * Add a new patch to the object cache
+   * The patch is derived from the differences between the given object and its version in the object cache
+   * @param {DSpaceObject} object The given object
+   */
+  update(object: Process): Observable<RemoteData<Process>> {
+    return this.patchData.update(object);
+  }
+
+  /**
+   * Commit current object changes to the server
+   * @param method The RestRequestMethod for which de server sync buffer should be committed
+   */
+  commitUpdates(method?: RestRequestMethod): void {
+    this.patchData.commitUpdates(method);
+  }
+
+  /**
+   * Return a list of operations representing the difference between an object and its latest value in the cache.
+   * @param object  the object to resolve to a list of patch operations
+   */
+  createPatchFromCache(object: Process): Observable<Operation[]> {
+    return this.patchData.createPatchFromCache(object);
+  }
+
+  /**
+   * Send a patch request for a specified object
+   * @param {T} object The object to send a patch request for
+   * @param {Operation[]} operations The patch operations to be performed
+   */
+  public patch(object: Process, operations: Operation[]): Observable<RemoteData<Process>> {
+    return this.patchData.patch(object, operations, object.processId);
   }
 
   /**

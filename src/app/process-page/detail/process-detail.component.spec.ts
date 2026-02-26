@@ -21,6 +21,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AuthService } from '@dspace/core/auth/auth.service';
 import { DSONameService } from '@dspace/core/breadcrumbs/dso-name.service';
 import { BitstreamDataService } from '@dspace/core/data/bitstream-data.service';
+import { DefaultChangeAnalyzer } from '@dspace/core/data/default-change-analyzer.service';
+import { AuthorizationDataService } from '@dspace/core/data/feature-authorization/authorization-data.service';
 import { PaginatedList } from '@dspace/core/data/paginated-list.model';
 import { ProcessDataService } from '@dspace/core/data/processes/process-data.service';
 import { LocaleService } from '@dspace/core/locale/locale.service';
@@ -73,6 +75,8 @@ describe('ProcessDetailComponent', () => {
   let files: Bitstream[];
 
   let processOutput: string;
+
+  let authorizationService;
 
   function init() {
     fileName = 'fake-file-name';
@@ -130,6 +134,7 @@ describe('ProcessDetailComponent', () => {
       delete: createSuccessfulRemoteDataObject$(null),
       findById: createSuccessfulRemoteDataObject$(process),
       autoRefreshUntilCompletion: createSuccessfulRemoteDataObject$(process),
+      patch: createSuccessfulRemoteDataObject$(process),
     });
     bitstreamDataService = jasmine.createSpyObj('bitstreamDataService', {
       findByHref: createSuccessfulRemoteDataObject$(logBitstream),
@@ -154,6 +159,9 @@ describe('ProcessDetailComponent', () => {
     }, {
       process: createSuccessfulRemoteDataObject$(process),
     });
+    authorizationService = jasmine.createSpyObj('authorizationDataService', {
+      isAuthorized: of(true),
+    });
   }
 
   beforeEach(waitForAsync(() => {
@@ -177,6 +185,8 @@ describe('ProcessDetailComponent', () => {
         { provide: NotificationsService, useValue: notificationsService },
         { provide: Router, useValue: router },
         { provide: LocaleService, useValue: mockLocaleService },
+        { provide: DefaultChangeAnalyzer, useValue: {} as DefaultChangeAnalyzer<Process> },
+        { provide: AuthorizationDataService, useValue: authorizationService },
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
@@ -305,6 +315,47 @@ describe('ProcessDetailComponent', () => {
       expect(notificationsService.error).toHaveBeenCalled();
       expect(component.closeModal).not.toHaveBeenCalled();
       expect(router.navigateByUrl).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('when process does not have a PENDING status', () => {
+    it('should not show a start process button', () => {
+      expect(fixture.debugElement.query(By.css('#start'))).toBeNull();
+    });
+  });
+
+  describe('when process has a PENDING status', () => {
+    beforeEach(() => {
+      process = Object.assign(process, { processStatus: 'PENDING' });
+
+      fixture.detectChanges();
+    });
+
+    it('should show a start process button', () => {
+      expect(fixture.debugElement.query(By.css('#start'))).not.toBeNull();
+    });
+
+    describe('when start process is pressed', () => {
+      beforeEach(fakeAsync(() => {
+        spyOn(component, 'startPendingProcess').and.callThrough();
+        fixture.detectChanges();
+
+        const startButton = fixture.debugElement.query(By.css('#start'));
+        startButton.triggerEventHandler('click', {
+          preventDefault: () => {/**/
+          },
+        });
+        tick();
+      }));
+
+      it('should call startPendingProcess method', () => {
+        expect(component.startPendingProcess).toHaveBeenCalled();
+      });
+
+      it('should call processService.patch', () => {
+        expect(processService.patch).toHaveBeenCalled();
+        expect(notificationsService.success).toHaveBeenCalled();
+      });
     });
   });
 });

@@ -7,8 +7,23 @@
       <form #form="ngForm" (ngSubmit)="submitForm(form)">
         <ds-scripts-select [script]="selectedScript" (select)="selectedScript = $event; parameters = undefined"></ds-scripts-select>
         <ds-process-parameters [initialParams]="parameters" [script]="selectedScript" (updateParameters)="parameters = $event"></ds-process-parameters>
-        <a [routerLink]="['/processes']" class="btn btn-danger float-start">{{ 'process.new.cancel' | translate }}</a>
-        <button type="submit" class="btn btn-primary float-end">{{ 'process.new.submit' | translate }}</button>
+        <div class="d-flex justify-content-between">
+          <a [routerLink]="['/processes']" class="btn btn-danger float-start">{{ 'process.new.cancel' | translate }}</a>
+          <div class="d-flex">
+            <button type="submit"
+                    (click)="setImmediatelyStartScript(false)"
+                    class="btn btn-light mr-1">
+              {{ 'process.new.schedule' | translate }}
+            </button>
+            @if (allowedImmediateStart(selectedScript)) {
+              <button type="submit"
+                      (click)="setImmediatelyStartScript(true)"
+                      class="btn btn-light">
+                {{ 'process.new.start' | translate }}
+              </button>
+            }
+          </div>
+        </div>
       </form>
     </div>
     <div class="col-12 col-md-6">

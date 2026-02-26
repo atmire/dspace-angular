@@ -117,7 +117,29 @@ describe('ProcessFormComponent', () => {
 
     it('should invoke the script with an empty array of parameters', () => {
       component.submitForm({ controls: {} } as any);
-      expect(scriptService.invoke).toHaveBeenCalledWith(script.id, [], jasmine.anything());
+      expect(scriptService.invoke).toHaveBeenCalledWith(script.id, [], jasmine.anything(), undefined);
+    });
+  });
+
+  describe('when immediatelyStartScript is true', () => {
+    beforeEach(() => {
+      component.immediatelyStartScript = true;
+    });
+
+    it('should invoke the script with false as the start value', () => {
+      component.submitForm({ controls: {} } as any);
+      expect(scriptService.invoke).toHaveBeenCalledWith(script.id, jasmine.anything(), jasmine.anything(), true);
+    });
+  });
+
+  describe('when immediatelyStartScript is false', () => {
+    beforeEach(() => {
+      component.immediatelyStartScript = false;
+    });
+
+    it('should invoke the script with false as the start value', () => {
+      component.submitForm({ controls: {} } as any);
+      expect(scriptService.invoke).toHaveBeenCalledWith(script.id, jasmine.anything(), jasmine.anything(), false);
     });
   });
 });

@@ -10,6 +10,10 @@
       [useAutoRefreshingSearchBy]="true"
       [getInfoValueMethod]="processOverviewService.timeStarted"/>
     <ds-process-overview-table
+      [processStatus]="ProcessStatus.PENDING"
+      [useAutoRefreshingSearchBy]="true"
+      [getInfoValueMethod]="processOverviewService.timeCreated"/>
+    <ds-process-overview-table
       [processStatus]="ProcessStatus.SCHEDULED"
       [useAutoRefreshingSearchBy]="true"
       [getInfoValueMethod]="processOverviewService.timeCreated"/>

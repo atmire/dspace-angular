@@ -53,7 +53,16 @@
     @if (process && process.processStatus) {
       <ds-process-detail-field id="process-status"
         [title]="'process.detail.status' | translate">
-        <div>{{ process.processStatus }}</div>
+        @if (isProcessPending(process)) {
+          <div *dsContextHelp="{
+          content: 'process.detail.status.pending.context-help',
+          id: 'process-pending-status',
+          iconPlacement: 'left',
+          tooltipPlacement: ['top', 'left']
+          }">{{ process.processStatus }}</div>
+        } @else {
+          <div>{{ process.processStatus }}</div>
+        }
       </ds-process-detail-field>
     }
     @if (isProcessFinished(process)) {
@@ -83,6 +92,12 @@
     <ds-process-detail-field id="process-actions" [title]="'process.detail.actions'">
       <button class="btn btn-success me-2" routerLink="/processes/new" [queryParams]="{id: process?.processId}"><i
       class="fas fa-plus pe-2"></i>{{'process.detail.create' | translate}}</button>
+      @if (isProcessPending(process) && (isAdmin$ | async)) {
+        <button id="start" class="btn btn-primary"
+          (click)="startPendingProcess(process)">
+          <i class="fas fa-play pe-2"></i>{{ 'process.detail.start.button' | translate }}
+        </button>
+      }
       @if (isProcessFinished(process)) {
         <button id="delete" class="btn btn-danger"
           (click)="openDeleteModal(deleteModal)">

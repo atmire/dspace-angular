@@ -21,7 +21,10 @@ import { ProcessParameter } from '@dspace/core/processes/process-parameter.model
 import { getFirstCompletedRemoteData } from '@dspace/core/shared/operators';
 import { Script } from '@dspace/core/shared/scripts/script.model';
 import { ScriptParameter } from '@dspace/core/shared/scripts/script-parameter.model';
-import { isEmpty } from '@dspace/shared/utils/empty.util';
+import {
+  hasValue,
+  isEmpty,
+} from '@dspace/shared/utils/empty.util';
 import {
   TranslateModule,
   TranslateService,
@@ -79,6 +82,11 @@ export class ProcessFormComponent implements OnInit {
    */
   public missingParameters = [];
 
+  /**
+   * Whether the selectedScript should be immediately start or not
+   */
+  public immediatelyStartScript: boolean;
+
   constructor(
     private scriptService: ScriptDataService,
     private notificationsService: NotificationsService,
@@ -109,7 +117,7 @@ export class ProcessFormComponent implements OnInit {
       };
     },
     );
-    this.scriptService.invoke(this.selectedScript.id, stringParameters, this.files)
+    this.scriptService.invoke(this.selectedScript.id, stringParameters, this.files, this.immediatelyStartScript)
       .pipe(getFirstCompletedRemoteData())
       .subscribe((rd: RemoteData<Process>) => {
         if (rd.hasSucceeded) {
@@ -192,6 +200,23 @@ export class ProcessFormComponent implements OnInit {
       return isEmpty(value) ? p.name : `${p.name} ${value}`;
     }).join(' ') || '';
     return isEmpty(paramsString) ? this.selectedScript.name : `${this.selectedScript.name} ${paramsString}`;
+  }
+
+  /**
+   * Checks if the selected script is allowed to start immediately
+   * @param selectedScript The selected script
+   * @return Whether the selected script is allowed to start immediately
+   */
+  allowedImmediateStart(selectedScript: Script): boolean {
+    return hasValue(selectedScript) && selectedScript.allowImmediateStart;
+  }
+
+  /**
+   * Sets immediatelyStartScript to be used in submitForm
+   * @param start Whether the script should start immediately or not
+   */
+  setImmediatelyStartScript(start: boolean): void {
+    this.immediatelyStartScript = start;
   }
 
   private parseValue(value: any) {
