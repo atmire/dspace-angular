@@ -10,7 +10,7 @@
   /** Mobile menu styling **/
   @media screen and (max-width: map-get($grid-breakpoints, md)-0.02) {
     .navbar {
-      width: 100vw;
+      width: 100%;
       background-color: var(--bs-white);
       position: absolute;
       overflow: hidden;
@@ -43,17 +43,16 @@
 
   #main-navbar ::ng-deep {
     .ds-menu-item, .ds-menu-toggler-wrapper {
-      white-space: nowrap;
       text-decoration: none;
     }
 
     .dropdown-menu {
-      padding: 0.5rem !important;
+      padding: 0.5rem 0!important;
     }
 
     .ds-menu-item {
       display: block;
-      padding: 0.5rem 0;
+      padding: var(--ds-expandable-navbar-item-padding);
     }
   }
 
