@@ -99,7 +99,7 @@ export class ProcessFormComponent implements OnInit {
           this.sendBack();
         } else if (rd.statusCode === 422) {
           const title = this.translationService.get('process.new.notification.error.title');
-          this.notificationsService.error(title, rd.errorMessage);
+          this.notificationsService.error(title, rd.errorMessage, undefined, true);
         } else {
           const title = this.translationService.get('process.new.notification.error.title');
           const content = this.translationService.get('process.new.notification.error.content');
