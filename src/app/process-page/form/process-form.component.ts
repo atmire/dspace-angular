@@ -125,6 +125,9 @@ export class ProcessFormComponent implements OnInit {
           const content = this.translationService.get('process.new.notification.success.content');
           this.notificationsService.success(title, content);
           this.sendBack(rd.payload);
+        } else if (rd.statusCode === 422) {
+          const title = this.translationService.get('process.new.notification.error.title');
+          this.notificationsService.error(title, rd.errorMessage, undefined, true);
         } else {
           const title = this.translationService.get('process.new.notification.error.title');
           const content = this.translationService.get('process.new.notification.error.content');
