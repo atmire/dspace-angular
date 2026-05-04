@@ -36,6 +36,7 @@
     </div>
     <!-- TOGGLER -->
     <div class="sidebar-full-width-container" id="sidebar-collapse-toggle-container">
+      @let isMenuCollapsed = (menuCollapsed | async);
       <a class="sidebar-section-wrapper sidebar-full-width-container"
         id="sidebar-collapse-toggle"
         [attr.data-test]="'sidebar-collapse-toggle' | dsBrowserOnly"
@@ -44,18 +45,15 @@
         (keyup.space)="toggle($event)"
         >
         <div class="sidebar-fixed-element-wrapper">
-          @if ((menuCollapsed | async)) {
-            <i class="fas fa-fw fa-angle-double-right"
-            [title]="'menu.section.icon.pin' | translate"></i>
-          }
-          @if ((menuCollapsed | async) !== true) {
-            <i class="fas fa-fw fa-angle-double-left"
-            [title]="'menu.section.icon.unpin' | translate"></i>
+          @if (isMenuCollapsed) {
+            <i aria-hidden="true" class="fas fa-fw fa-angle-double-right"></i>
+          } @else {
+            <i aria-hidden="true" class="fas fa-fw fa-angle-double-left"></i>
           }
         </div>
         <div class="sidebar-collapsible-element-outer-wrapper">
           <div class="sidebar-collapsible-element-inner-wrapper sidebar-item">
-            {{ ((menuCollapsed | async) ? 'menu.section.pin' : 'menu.section.unpin' ) | translate }}
+            {{ (isMenuCollapsed ? 'menu.section.pin' : 'menu.section.unpin' ) | translate }}
           </div>
         </div>
       </a>

@@ -31,6 +31,8 @@
       flex: 1 1 auto; // Fill available vertical space
       overflow-x: hidden;
       overflow-y: auto;
+      scrollbar-gutter: stable;
+      scrollbar-width: thin;
       @include dark-scrollbar;
     }
 
