@@ -79,6 +79,21 @@ describe('ExpandableAdminSidebarSectionComponent', () => {
         expect(menuService.toggleActiveSection).toHaveBeenCalled();
       });
     });
+
+    describe('when space is pressed on the section header', () => {
+      beforeEach(() => {
+        spyOn(menuService, 'toggleActiveSection');
+        const sidebarToggler = fixture.debugElement.query(By.css('a.sidebar-section-wrapper'));
+        sidebarToggler.triggerEventHandler('keyup.space', {
+          preventDefault: () => {/**/
+          },
+        });
+      });
+
+      it('should call toggleActiveSection on the menuService', () => {
+        expect(menuService.toggleActiveSection).toHaveBeenCalled();
+      });
+    });
   });
 
 
