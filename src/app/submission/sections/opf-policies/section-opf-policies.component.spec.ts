@@ -1,7 +1,7 @@
 import { SharedModule } from '../../../shared/shared.module';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { SubmissionServiceStub } from '../../../shared/testing/submission-service.stub';
-import { SherpaDataResponse } from '../../../shared/mocks/section-sherpa-policies.service.mock';
+import { OpfDataResponse } from '../../../shared/testing/section-opf-policies.service.mock';
 import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 
 import { SectionsService } from '../sections.service';
@@ -19,9 +19,9 @@ import { TranslateLoaderMock } from '../../../shared/mocks/translate-loader.mock
 import { of as observableOf } from 'rxjs';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-describe('SubmissionSectionSherpaPoliciesComponent', () => {
-  let component: SubmissionSectionSherpaPoliciesComponent;
-  let fixture: ComponentFixture<SubmissionSectionSherpaPoliciesComponent>;
+describe('SubmissionSectionJiscOpfPoliciesComponent', () => {
+  let component: SubmissionSectionJiscOpfPoliciesComponent;
+  let fixture: ComponentFixture<SubmissionSectionJiscOpfPoliciesComponent>;
   let de: DebugElement;
 
   const sectionsServiceStub = new SectionsServiceStub();
@@ -35,20 +35,20 @@ describe('SubmissionSectionSherpaPoliciesComponent', () => {
   const storeStub = jasmine.createSpyObj('store', ['dispatch']);
 
   const sectionData = {
-    header: 'submit.progressbar.sherpaPolicies',
-    config: 'http://localhost:8080/server/api/config/submissionaccessoptions/SherpaPoliciesDefaultConfiguration',
+    header: 'submit.progressbar.opfPolicies',
+    config: 'http://localhost:8080/server/api/config/submissionaccessoptions/OpfPoliciesDefaultConfiguration',
     mandatory: true,
-    sectionType: 'sherpaPolicies',
+    sectionType: 'opfPolicies',
     collapsed: false,
     enabled: true,
-    data: SherpaDataResponse,
+    data: OpfDataResponse,
     errorsToShow: [],
     serverValidationErrors: [],
     isLoading: false,
     isValid: true
   };
 
-  describe('SubmissionSectionSherpaPoliciesComponent', () => {
+  describe('SubmissionSectionJiscOpfPoliciesComponent', () => {
 
     beforeEach(async () => {
       await TestBed.configureTestingModule({
@@ -78,10 +78,10 @@ describe('SubmissionSectionSherpaPoliciesComponent', () => {
     });
 
     beforeEach(inject([Store], (store: Store<AppState>) => {
-      fixture = TestBed.createComponent(SubmissionSectionSherpaPoliciesComponent);
+      fixture = TestBed.createComponent(SubmissionSectionJiscOpfPoliciesComponent);
       component = fixture.componentInstance;
       de = fixture.debugElement;
-      sectionsServiceStub.getSectionData.and.returnValue(observableOf(SherpaDataResponse));
+      sectionsServiceStub.getSectionData.and.returnValue(observableOf(OpfDataResponse));
       fixture.detectChanges();
     }));
 
