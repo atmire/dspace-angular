@@ -5,6 +5,7 @@ import { authReducer } from './auth/auth.reducer';
 import { objectCacheReducer } from './cache/object-cache.reducer';
 import { serverSyncBufferReducer } from './cache/server-sync-buffer.reducer';
 import { CoreState } from './core-state.model';
+import { crossTabStateReducer } from './cross-tab-state/cross-tab-state.reducer';
 import { objectUpdatesReducer } from './data/object-updates/object-updates.reducer';
 import { requestReducer } from './data/request.reducer';
 import { historyReducer } from './history/history.reducer';
@@ -25,4 +26,5 @@ export const coreReducers: ActionReducerMap<CoreState> = {
   'json/patch': jsonPatchOperationsReducer,
   'metaTag': metaTagReducer,
   'route': routeReducer,
+  'crosstab': crossTabStateReducer,
 };

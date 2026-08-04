@@ -18,7 +18,7 @@ export function universalMetaReducer(reducer) {
   return (state, action) => {
     switch (action.type) {
       case StoreActionTypes.REHYDRATE:
-        state = Object.assign({}, state, action.payload);
+        state = Object.assign({}, state, action.payload, { ready: true });
         break;
       case StoreActionTypes.REPLAY:
       default:

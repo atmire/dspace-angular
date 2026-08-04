@@ -2,6 +2,7 @@ import { MenuEffects } from '../shared/menu/menu.effects';
 import { AuthEffects } from './auth/auth.effects';
 import { ObjectCacheEffects } from './cache/object-cache.effects';
 import { ServerSyncBufferEffects } from './cache/server-sync-buffer.effects';
+import { CrossTabStateEffects } from './cross-tab-state/cross-tab-state.effects';
 import { ObjectUpdatesEffects } from './data/object-updates/object-updates.effects';
 import { RequestEffects } from './data/request.effects';
 import { UUIDIndexEffects } from './index/index.effects';
@@ -20,4 +21,5 @@ export const coreEffects = [
   RouteEffects,
   RouterEffects,
   MenuEffects,
+  CrossTabStateEffects,
 ];
