@@ -175,8 +175,8 @@ export class BrowserInitService extends InitService {
           map(() => true),
         ).toPromise();
       } else {
-        console.log('Retrieving state from '); // todo: remove this
-        this.store.dispatch(new CrossTabStateRequest(this.uuidService.generate()));  // todo: should have some sort of timeout though
+        console.log('Retrieving state from another tab');
+        this.store.dispatch(new CrossTabStateRequest(this.uuidService.generate()));
 
         return this.store.select(coreSelector).pipe(
           find((core: any) => core.crosstab.status === CrossTabStateStatus.SYNCED || core.crosstab.status === CrossTabStateStatus.TIMED_OUT),

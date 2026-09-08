@@ -5,12 +5,7 @@
  *
  * http://www.dspace.org/license/
  */
-import { isPlatformBrowser } from '@angular/common';
-import {
-  Inject,
-  Injectable,
-  PLATFORM_ID,
-} from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
   Actions,
   createEffect,
@@ -18,15 +13,14 @@ import {
 } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import {
-  filter,
-  fromEvent,
-  NEVER,
-  Observable,
+  EMPTY,
+  from,
   of,
 } from 'rxjs';
 import {
   catchError,
   delay,
+  filter,
   map,
   switchMap,
   tap,
@@ -34,12 +28,14 @@ import {
 } from 'rxjs/operators';
 
 import { AppState } from '../../app.reducer';
-import { hasValue } from '../../shared/empty.util';
+import { hasNoValue } from '../../shared/empty.util';
 import { NoOpAction } from '../../shared/ngrx/no-op.action';
 import {
   StoreAction,
   StoreActionTypes,
 } from '../../store.actions';
+import { BroadcastService } from './broadcast.service';
+import { CrossTabStateStorageService } from './cross-tab-state-storage.service';
 import {
   CrossTabStateActionTypes,
   CrossTabStateCancel,
@@ -47,126 +43,112 @@ import {
   CrossTabStateRequest,
   CrossTabStateTimeout,
 } from './cross-tab-state.actions';
+import {
+  CROSS_TAB_STATE_TIMEOUT_MS,
+  CrossTabStateMessageType,
+  isCrossTabStateReadyMessage,
+  isCrossTabStateRequestMessage,
+} from './cross-tab-state.messages';
 import { CrossTabStateStatus } from './cross-tab-state.reducer';
-
-function ifWindowAvailable<T>(somethingSomethingWindow: T): T | undefined {
-  if (typeof window !== 'undefined') {
-    return somethingSomethingWindow;
-  } else {
-    return undefined;
-  }
-}
 
 @Injectable()
 export class CrossTabStateEffects {
-  REQUEST_KEY_PREFIX = '__DSpace_cross_tab_state_request_';  // todo: need to specify host as well
-  RESPONSE_KEY_PREFIX = '__DSpace_cross_tab_state_response_';
 
   constructor(
     protected actions$: Actions,
     protected store$: Store<any>,
-    @Inject(PLATFORM_ID) private platformID: any,
+    protected broadcastService: BroadcastService,
+    protected storage: CrossTabStateStorageService,
   ) {
   }
 
+  /**
+   * Ask other tabs for a cache snapshot, then time out if none of them answer.
+   */
   public sendStateRequest$ = createEffect(() => {
     return this.actions$.pipe(
-      // todo: could make more sense to keep track of a shared entry that each tab updates once in a while
       ofType(CrossTabStateActionTypes.REQUEST),
-      map((action: CrossTabStateRequest) => {
-        console.log('Request cross-tab state'); // todo: remove this
-        const key = this.getRequestKey(action.payload.requestId);
-        this.localStorage.setItem(key, 'pls');
+      tap((action: CrossTabStateRequest) => {
+        console.log('Request cross-tab state', action.payload.requestId);
+        this.broadcastService.post({
+          type: CrossTabStateMessageType.STATE_REQUEST,
+          requestId: action.payload.requestId,
+        });
       }),
-      delay(50),
+      delay(CROSS_TAB_STATE_TIMEOUT_MS),
       withLatestFrom(this.store$),
-      map(([_, store]) => {
+      switchMap(([action, store]: [CrossTabStateRequest, any]) => {
         if (store.core.crosstab.status === CrossTabStateStatus.PENDING) {
-          console.log('Timed out!'); // todo: remove this
-          const key = this.getRequestKey(store.core.crosstab.requestId);
-          this.localStorage.removeItem(key);
-          return new CrossTabStateTimeout();
-        } else {
-          return new NoOpAction();
+          console.log('Timed out waiting for cross-tab state');
+          return from(this.storage.remove(action.payload.requestId)).pipe(
+            map(() => new CrossTabStateTimeout()),
+            catchError(() => of(new CrossTabStateTimeout())),
+          );
         }
+        return of(new NoOpAction());
       }),
       catchError(() => of(new CrossTabStateCancel())),
     );
   });
 
+  /**
+   * An already-running tab writes its shareable cache to IndexedDB and signals that it is ready.
+   * Tabs that are themselves still waiting for a snapshot do not answer.
+   */
   public handleStateRequest$ = createEffect(() => {
-    return this.localStorageEvents$.pipe(  // todo: this won't fly in the server!
+    return this.broadcastService.messages$.pipe(
+      filter(isCrossTabStateRequestMessage),
       withLatestFrom(this.store$),
-      filter(([event, _]) => hasValue(event)),  // don't care about removed items
-      filter(([event, _]) => event.key.startsWith(this.REQUEST_KEY_PREFIX)),
-      // filter(([event, store]) => store.core.crosstab.status !== CrossTabStateStatus.PENDING
-      //   && !event.key.endsWith(store.core.crosstab.status.requestId)),
-      tap(([event, store]) => {
-        console.log('Got cross-tab state request:', event.newValue); // todo: remove this
-        const requestId = this.getRequestId(event.key);
-        const newKey = this.getResponseKey(requestId);
-        this.localStorage.setItem(newKey, JSON.stringify(this.shareableState(store)));
-      }),
-      delay(1000),
-      map(([event, _]) => {
-        console.log('Cleaning up after handled state request: ', event.newValue); // todo: remove this
-        const requestId = this.getRequestId(event.key);
-        const newKey = this.getResponseKey(requestId);
-        this.localStorage.removeItem(newKey);
+      filter(([, store]) => store.core.crosstab.status !== CrossTabStateStatus.PENDING),
+      switchMap(([message, store]) => {
+        console.log('Got cross-tab state request', message.requestId);
+        return from(this.storage.save(message.requestId, this.shareableState(store))).pipe(
+          tap(() => this.broadcastService.post({
+            type: CrossTabStateMessageType.STATE_READY,
+            requestId: message.requestId,
+          })),
+          catchError((error: unknown) => {
+            console.log('Skipping cross-tab state response', error);
+            return EMPTY;
+          }),
+        );
       }),
     );
   }, { dispatch: false });
 
+  /**
+   * The requesting tab reads the first matching snapshot and rehydrates from it.
+   */
   public handleStateResponse$ = createEffect(() => {
-    return this.localStorageEvents$.pipe(
+    return this.broadcastService.messages$.pipe(
+      filter(isCrossTabStateReadyMessage),
       withLatestFrom(this.store$),
-      filter(([event, _]) => hasValue(event)),  // don't care about removed items
-      filter(([event, state]) => state.core.crosstab.status === CrossTabStateStatus.PENDING
-        && event.key === this.getResponseKey(state.core.crosstab.requestId),
-      ),
-      switchMap(([event, store]) => {
-        console.log('Got cross-tab state response:', event.newValue);
+      filter(([message, state]) => state.core.crosstab.status === CrossTabStateStatus.PENDING
+        && message.requestId === state.core.crosstab.requestId),
+      switchMap(([message]) => {
+        return from(this.storage.load(message.requestId)).pipe(
+          switchMap((shareableState: unknown) => {
+            if (hasNoValue(shareableState)) {
+              return EMPTY;
+            }
 
-        this.localStorage.removeItem(this.getRequestKey(store.core.crosstab.requestId));
-
-        return of(
-          new StoreAction(StoreActionTypes.REHYDRATE, JSON.parse(event.newValue) as unknown as AppState),
-          new CrossTabStateReceive(),
+            console.log('Got cross-tab state response', message.requestId);
+            return from(this.storage.remove(message.requestId)).pipe(
+              switchMap(() => this.rehydrateFrom(shareableState)),
+              catchError(() => this.rehydrateFrom(shareableState)),
+            );
+          }),
+          catchError(() => EMPTY),
         );
       }),
     );
   });
 
-  private get localStorageEvents$(): Observable<StorageEvent> {
-    if (isPlatformBrowser(this.platformID)) {
-      return fromEvent<StorageEvent>(window, 'storage');
-    } else {
-      return NEVER;
-    }
-  }
-
-  private get localStorage(): Storage {
-    if (isPlatformBrowser(this.platformID)) {
-      return window.localStorage;
-    } else {
-      throw new Error('No localStore API on the server, why are we trying to use it?');
-    }
-  }
-
-  private getRequestId(key: string) {
-    if (key.startsWith(this.REQUEST_KEY_PREFIX)) {
-      return key.split(this.REQUEST_KEY_PREFIX)[1];
-    } else {
-      return undefined;
-    }
-  }
-
-  private getRequestKey(requestId: string) {
-    return this.REQUEST_KEY_PREFIX + requestId;
-  }
-
-  private getResponseKey(requestId: string) {
-    return this.RESPONSE_KEY_PREFIX + requestId;
+  private rehydrateFrom(shareableState: unknown) {
+    return of(
+      new StoreAction(StoreActionTypes.REHYDRATE, shareableState as AppState),
+      new CrossTabStateReceive(),
+    );
   }
 
   private shareableState(state: any): any {
