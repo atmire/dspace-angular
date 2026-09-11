@@ -2,6 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import {
   Inject,
   Injectable,
+  Optional,
 } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import {
@@ -22,6 +23,7 @@ import {
   isNotEmpty,
 } from '../../shared/empty.util';
 import { AuthService } from '../auth/auth.service';
+import { CrossTabCacheService } from '../cross-tab-state/cross-tab-cache.service';
 import { CookieService } from '../services/cookie.service';
 import { RouteService } from '../services/route.service';
 import {
@@ -58,6 +60,7 @@ export class LocaleService {
     protected authService: AuthService,
     protected routeService: RouteService,
     @Inject(DOCUMENT) protected document: any,
+    @Optional() protected crossTabCacheService?: CrossTabCacheService,
   ) {
   }
 
@@ -206,11 +209,11 @@ export class LocaleService {
    */
   public refreshAfterChangeLanguage() {
     this.routeService.getCurrentUrl().pipe(take(1)).subscribe((currentURL) => {
-      // Hard redirect to the reload page with a unique number behind it
-      // so that all state is definitely lost
+      if (this.crossTabCacheService) {
+        void this.crossTabCacheService.clearSharedCache();
+      }
       this._window.nativeWindow.location.href = `reload/${new Date().getTime()}?redirect=` + encodeURIComponent(currentURL);
     });
-
   }
 
 }

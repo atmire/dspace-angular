@@ -1,31 +1,16 @@
+/**
+ * The contents of this file are subject to the license and copyright
+ * detailed in the LICENSE and NOTICE files at the root of the source
+ * tree and available online at
+ *
+ * http://www.dspace.org/license/
+ */
 import { Injectable } from '@angular/core';
-import {
-  Actions,
-  createEffect,
-  ofType,
-} from '@ngrx/effects';
-import { map } from 'rxjs/operators';
 
-import { StoreActionTypes } from '../../store.actions';
-import { ResetObjectCacheTimestampsAction } from './object-cache.actions';
-
+/**
+ * Object-cache side effects. Timestamp reset after SSR rehydrate is done
+ * explicitly in BrowserInitService so IndexedDB hydrate is not made to look fresh.
+ */
 @Injectable()
 export class ObjectCacheEffects {
-
-  /**
-   * When the store is rehydrated in the browser, set all cache
-   * timestamps to 'now', because the time zone of the server can
-   * differ from the client.
-   *
-   * This assumes that the server cached everything a negligible
-   * time ago, and will likely need to be revisited later
-   */
-  fixTimestampsOnRehydrate = createEffect(() => this.actions$
-    .pipe(ofType(StoreActionTypes.REHYDRATE),
-      map(() => new ResetObjectCacheTimestampsAction(new Date().getTime())),
-    ));
-
-  constructor(private actions$: Actions) {
-  }
-
 }

@@ -19,7 +19,9 @@ import {
 } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { hasValue } from '../../shared/empty.util';
 import { CROSS_TAB_BROADCAST_CHANNEL } from './cross-tab-state.messages';
+import { cloneShareable } from './shared-cache.model';
 
 /**
  * Thin wrapper around {@link BroadcastChannel} so tabs of the same origin can
@@ -48,7 +50,14 @@ export class BroadcastService implements OnDestroy {
   }
 
   post(message: unknown): void {
-    this.channel?.postMessage(message);
+    if (!hasValue(this.channel)) {
+      return;
+    }
+    try {
+      this.channel.postMessage(cloneShareable(message));
+    } catch (error: unknown) {
+      console.error('Failed to broadcast cache delta', error);
+    }
   }
 
   ngOnDestroy(): void {

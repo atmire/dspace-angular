@@ -7,42 +7,47 @@
  */
 
 import { hasValue } from '../../shared/empty.util';
-
-/**
- * How long a new tab waits for another tab to share its NgRx cache.
- * The requesting tab can still continue earlier if a response arrives before this.
- */
-export const CROSS_TAB_STATE_TIMEOUT_MS = 2000;
+import { SharedCacheDelta } from './shared-cache.model';
 
 export const CROSS_TAB_BROADCAST_CHANNEL = 'dspace-cross-tab-state';
 
 export const CrossTabStateMessageType = {
-  STATE_REQUEST: 'STATE_REQUEST',
-  STATE_READY: 'STATE_READY',
+  CACHE_PUT: 'CACHE_PUT',
+  CACHE_DELETE: 'CACHE_DELETE',
+  CACHE_CLEAR: 'CACHE_CLEAR',
 } as const;
 
-export interface CrossTabStateRequestMessage {
-  type: typeof CrossTabStateMessageType.STATE_REQUEST;
-  requestId: string;
+export interface CrossTabCachePutMessage extends SharedCacheDelta {
+  type: typeof CrossTabStateMessageType.CACHE_PUT;
 }
 
-export interface CrossTabStateReadyMessage {
-  type: typeof CrossTabStateMessageType.STATE_READY;
-  requestId: string;
+export interface CrossTabCacheDeleteMessage extends SharedCacheDelta {
+  type: typeof CrossTabStateMessageType.CACHE_DELETE;
 }
 
-export type CrossTabStateMessage = CrossTabStateRequestMessage | CrossTabStateReadyMessage;
+export interface CrossTabCacheClearMessage {
+  type: typeof CrossTabStateMessageType.CACHE_CLEAR;
+}
 
-export function isCrossTabStateRequestMessage(message: unknown): message is CrossTabStateRequestMessage {
+export type CrossTabStateMessage
+  = CrossTabCachePutMessage
+  | CrossTabCacheDeleteMessage
+  | CrossTabCacheClearMessage;
+
+export function isCrossTabCachePutMessage(message: unknown): message is CrossTabCachePutMessage {
   return hasValue(message)
     && typeof message === 'object'
-    && (message as CrossTabStateMessage).type === CrossTabStateMessageType.STATE_REQUEST
-    && hasValue((message as CrossTabStateRequestMessage).requestId);
+    && (message as CrossTabStateMessage).type === CrossTabStateMessageType.CACHE_PUT;
 }
 
-export function isCrossTabStateReadyMessage(message: unknown): message is CrossTabStateReadyMessage {
+export function isCrossTabCacheDeleteMessage(message: unknown): message is CrossTabCacheDeleteMessage {
   return hasValue(message)
     && typeof message === 'object'
-    && (message as CrossTabStateMessage).type === CrossTabStateMessageType.STATE_READY
-    && hasValue((message as CrossTabStateReadyMessage).requestId);
+    && (message as CrossTabStateMessage).type === CrossTabStateMessageType.CACHE_DELETE;
+}
+
+export function isCrossTabCacheClearMessage(message: unknown): message is CrossTabCacheClearMessage {
+  return hasValue(message)
+    && typeof message === 'object'
+    && (message as CrossTabStateMessage).type === CrossTabStateMessageType.CACHE_CLEAR;
 }

@@ -2,7 +2,6 @@ import { BitstreamFormatRegistryState } from '../admin/admin-registries/bitstrea
 import { AuthState } from './auth/auth.reducer';
 import { ObjectCacheState } from './cache/object-cache.reducer';
 import { ServerSyncBufferState } from './cache/server-sync-buffer.reducer';
-import { CrossTabState } from './cross-tab-state/cross-tab-state.reducer';
 import { ObjectUpdatesState } from './data/object-updates/object-updates.reducer';
 import { RequestState } from './data/request-state.model';
 import { HistoryState } from './history/history.reducer';
@@ -26,5 +25,4 @@ export interface CoreState {
     'json/patch': JsonPatchOperationsState;
     'metaTag': MetaTagState;
     'route': RouteState;
-    'crosstab': CrossTabState;
 }

@@ -30,16 +30,15 @@ import { logStartupMessage } from '../../../startup-message';
 import { AppState } from '../../app/app.reducer';
 import { BreadcrumbsService } from '../../app/breadcrumbs/breadcrumbs.service';
 import { AuthService } from '../../app/core/auth/auth.service';
+import { ResetObjectCacheTimestampsAction } from '../../app/core/cache/object-cache.actions';
 import { coreSelector } from '../../app/core/core.selectors';
-import { CrossTabStateRequest } from '../../app/core/cross-tab-state/cross-tab-state.actions';
-import { CrossTabStateStatus } from '../../app/core/cross-tab-state/cross-tab-state.reducer';
+import { CrossTabCacheService } from '../../app/core/cross-tab-state/cross-tab-cache.service';
+import { ResetResponseTimestampsAction } from '../../app/core/data/request.actions';
 import { RequestService } from '../../app/core/data/request.service';
 import { RootDataService } from '../../app/core/data/root-data.service';
 import { LocaleService } from '../../app/core/locale/locale.service';
 import { HeadTagService } from '../../app/core/metadata/head-tag.service';
-import { CookieService } from '../../app/core/services/cookie.service';
 import { HALEndpointService } from '../../app/core/shared/hal-endpoint.service';
-import { UUIDService } from '../../app/core/shared/uuid.service';
 import { CorrelationIdService } from '../../app/correlation-id/correlation-id.service';
 import { InitService } from '../../app/init.service';
 import { OrejimeService } from '../../app/shared/cookies/orejime.service';
@@ -93,8 +92,7 @@ export class BrowserInitService extends InitService {
     private halService: HALEndpointService,
     private matomoService: MatomoService,
     protected menuProviderService: MenuProviderService,
-    protected cookieService: CookieService,
-    protected uuidService: UUIDService,
+    private crossTabCacheService: CrossTabCacheService,
   ) {
     super(
       store,
@@ -141,12 +139,6 @@ export class BrowserInitService extends InitService {
 
       this.initOrejime();
 
-      // As long as this tab is open, mark all requests as "coming from a browser session"
-      // todo: should probably be an effect?
-      setInterval(() => {
-        this.cookieService.set('DSPACE_CSR_SESSION_HEARTBEAT', Date.now());
-      }, 1000);
-
       await this.authenticationReady$().toPromise();
 
       this.menuProviderService.initPersistentMenus(false);
@@ -158,34 +150,29 @@ export class BrowserInitService extends InitService {
   // Browser-only initialization steps
 
   /**
-   * Retrieve server-side application state from the {@link NGRX_STATE} key and rehydrate the store.
-   * Resolves once the store is no longer empty.
-   * @private
+   * Rehydrate from SSR transfer state when present, then merge the IndexedDB REST cache.
+   * SSR timestamps are reset first so IDB entries only fill in objects the server did not send.
    */
   private async loadAppState(): Promise<boolean> {
-    // The app state can be transferred only when SSR and CSR are using the same base url for the REST API
     if (this.appConfig.ssr.transferState) {
       const state = this.transferState.get<any>(InitService.NGRX_STATE, null);
       if (state != null) {
         this.transferState.remove(InitService.NGRX_STATE);
         this.store.dispatch(new StoreAction(StoreActionTypes.REHYDRATE, state));
+        const now = new Date().getTime();
+        this.store.dispatch(new ResetObjectCacheTimestampsAction(now));
+        this.store.dispatch(new ResetResponseTimestampsAction(now));
 
-        return this.store.select(coreSelector).pipe(
+        await this.store.select(coreSelector).pipe(
           find((core: any) => isNotEmpty(core)),
           map(() => true),
         ).toPromise();
-      } else {
-        console.log('Retrieving state from another tab');
-        this.store.dispatch(new CrossTabStateRequest(this.uuidService.generate()));
-
-        return this.store.select(coreSelector).pipe(
-          find((core: any) => core.crosstab.status === CrossTabStateStatus.SYNCED || core.crosstab.status === CrossTabStateStatus.TIMED_OUT),
-          map(() => true),
-        ).toPromise();
       }
-    } else {
-      return Promise.resolve(true);
     }
+
+    await this.crossTabCacheService.hydrateIntoStore();
+    await this.crossTabCacheService.persistStoreSnapshot();
+    return true;
   }
 
   private trackAuthTokenExpiration(): void {

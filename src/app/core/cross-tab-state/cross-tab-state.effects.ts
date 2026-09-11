@@ -13,43 +13,46 @@ import {
 } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import {
-  EMPTY,
-  from,
-  of,
-} from 'rxjs';
-import {
-  catchError,
-  delay,
   filter,
-  map,
-  switchMap,
   tap,
   withLatestFrom,
 } from 'rxjs/operators';
 
-import { AppState } from '../../app.reducer';
-import { hasNoValue } from '../../shared/empty.util';
-import { NoOpAction } from '../../shared/ngrx/no-op.action';
+import { hasValue } from '../../shared/empty.util';
 import {
-  StoreAction,
-  StoreActionTypes,
-} from '../../store.actions';
+  AddToObjectCacheAction,
+  ObjectCacheActionTypes,
+  RemoveFromObjectCacheAction,
+} from '../cache/object-cache.actions';
+import {
+  RequestActionTypes,
+  RequestErrorAction,
+  RequestRemoveAction,
+  RequestSuccessAction,
+} from '../data/request.actions';
+import { RequestEntry } from '../data/request-entry.model';
+import { IndexName } from '../index/index-name.model';
+import {
+  AddToIndexAction,
+  IndexActionTypes,
+  RemoveFromIndexBySubstringAction,
+  RemoveFromIndexByValueAction,
+} from '../index/index.actions';
+import { getUrlWithoutEmbedParams } from '../index/index.selectors';
 import { BroadcastService } from './broadcast.service';
+import { CrossTabCacheService } from './cross-tab-cache.service';
 import { CrossTabStateStorageService } from './cross-tab-state-storage.service';
 import {
-  CrossTabStateActionTypes,
-  CrossTabStateCancel,
-  CrossTabStateReceive,
-  CrossTabStateRequest,
-  CrossTabStateTimeout,
-} from './cross-tab-state.actions';
-import {
-  CROSS_TAB_STATE_TIMEOUT_MS,
-  CrossTabStateMessageType,
-  isCrossTabStateReadyMessage,
-  isCrossTabStateRequestMessage,
+  isCrossTabCacheClearMessage,
+  isCrossTabCacheDeleteMessage,
+  isCrossTabCachePutMessage,
 } from './cross-tab-state.messages';
-import { CrossTabStateStatus } from './cross-tab-state.reducer';
+import {
+  isObjectCacheExpired,
+  isShareableRequestEntry,
+  isSensitiveCacheHref,
+  SharedCacheDelta,
+} from './shared-cache.model';
 
 @Injectable()
 export class CrossTabStateEffects {
@@ -57,116 +60,153 @@ export class CrossTabStateEffects {
   constructor(
     protected actions$: Actions,
     protected store$: Store<any>,
-    protected broadcastService: BroadcastService,
+    protected cacheService: CrossTabCacheService,
     protected storage: CrossTabStateStorageService,
+    protected broadcastService: BroadcastService,
   ) {
   }
 
   /**
-   * Ask other tabs for a cache snapshot, then time out if none of them answer.
+   * Persist object-cache mutations to IndexedDB and notify other tabs.
    */
-  public sendStateRequest$ = createEffect(() => {
+  public persistObjectCache$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(CrossTabStateActionTypes.REQUEST),
-      tap((action: CrossTabStateRequest) => {
-        console.log('Request cross-tab state', action.payload.requestId);
-        this.broadcastService.post({
-          type: CrossTabStateMessageType.STATE_REQUEST,
-          requestId: action.payload.requestId,
-        });
-      }),
-      delay(CROSS_TAB_STATE_TIMEOUT_MS),
+      ofType(ObjectCacheActionTypes.ADD, ObjectCacheActionTypes.REMOVE),
       withLatestFrom(this.store$),
-      switchMap(([action, store]: [CrossTabStateRequest, any]) => {
-        if (store.core.crosstab.status === CrossTabStateStatus.PENDING) {
-          console.log('Timed out waiting for cross-tab state');
-          return from(this.storage.remove(action.payload.requestId)).pipe(
-            map(() => new CrossTabStateTimeout()),
-            catchError(() => of(new CrossTabStateTimeout())),
-          );
+      tap(([action, state]: [AddToObjectCacheAction | RemoveFromObjectCacheAction, any]) => {
+        if (action.type === ObjectCacheActionTypes.REMOVE) {
+          const href = (action as RemoveFromObjectCacheAction).payload;
+          if (!isSensitiveCacheHref(href)) {
+            this.cacheService.enqueueDelta({ deleteObjects: [href] });
+          }
+          return;
         }
-        return of(new NoOpAction());
-      }),
-      catchError(() => of(new CrossTabStateCancel())),
-    );
-  });
 
-  /**
-   * An already-running tab writes its shareable cache to IndexedDB and signals that it is ready.
-   * Tabs that are themselves still waiting for a snapshot do not answer.
-   */
-  public handleStateRequest$ = createEffect(() => {
-    return this.broadcastService.messages$.pipe(
-      filter(isCrossTabStateRequestMessage),
-      withLatestFrom(this.store$),
-      filter(([, store]) => store.core.crosstab.status !== CrossTabStateStatus.PENDING),
-      switchMap(([message, store]) => {
-        console.log('Got cross-tab state request', message.requestId);
-        return from(this.storage.save(message.requestId, this.shareableState(store))).pipe(
-          tap(() => this.broadcastService.post({
-            type: CrossTabStateMessageType.STATE_READY,
-            requestId: message.requestId,
-          })),
-          catchError((error: unknown) => {
-            console.log('Skipping cross-tab state response', error);
-            return EMPTY;
-          }),
-        );
+        const addAction = action as AddToObjectCacheAction;
+        const href = hasValue(addAction.payload.objectToCache?._links?.self)
+          ? addAction.payload.objectToCache._links.self.href
+          : addAction.payload.alternativeLink;
+        const entry = state?.core?.['cache/object']?.[href];
+        if (!hasValue(href) || isSensitiveCacheHref(href) || isObjectCacheExpired(entry)) {
+          return;
+        }
+        if (hasValue(entry)) {
+          this.cacheService.enqueueDelta({ objects: { [href]: entry } });
+        }
       }),
     );
   }, { dispatch: false });
 
   /**
-   * The requesting tab reads the first matching snapshot and rehydrates from it.
+   * Persist completed request-cache mutations. CONFIGURE/EXECUTE/STALE are skipped:
+   * in-flight HTTP must stay local, and STALE from a local CONFIGURE would invalidate
+   * the other tab's still-valid request for the same href.
    */
-  public handleStateResponse$ = createEffect(() => {
-    return this.broadcastService.messages$.pipe(
-      filter(isCrossTabStateReadyMessage),
+  public persistRequestCache$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(
+        RequestActionTypes.SUCCESS,
+        RequestActionTypes.ERROR,
+        RequestActionTypes.REMOVE,
+      ),
       withLatestFrom(this.store$),
-      filter(([message, state]) => state.core.crosstab.status === CrossTabStateStatus.PENDING
-        && message.requestId === state.core.crosstab.requestId),
-      switchMap(([message]) => {
-        return from(this.storage.load(message.requestId)).pipe(
-          switchMap((shareableState: unknown) => {
-            if (hasNoValue(shareableState)) {
-              return EMPTY;
-            }
+      tap(([action, state]: [RequestSuccessAction | RequestErrorAction | RequestRemoveAction, any]) => {
+        if (action.type === RequestActionTypes.REMOVE) {
+          this.cacheService.enqueueDelta({
+            deleteRequests: [(action as RequestRemoveAction).uuid],
+          });
+          return;
+        }
 
-            console.log('Got cross-tab state response', message.requestId);
-            return from(this.storage.remove(message.requestId)).pipe(
-              switchMap(() => this.rehydrateFrom(shareableState)),
-              catchError(() => this.rehydrateFrom(shareableState)),
-            );
-          }),
-          catchError(() => EMPTY),
-        );
+        const uuid = (action as RequestSuccessAction | RequestErrorAction).payload.uuid;
+        const entry: RequestEntry = state?.core?.['data/request']?.[uuid];
+        if (!isShareableRequestEntry(entry)) {
+          return;
+        }
+
+        const delta: SharedCacheDelta = {
+          requests: { [uuid]: entry },
+        };
+        if (hasValue(entry.request?.href)) {
+          delta.index = {
+            [IndexName.REQUEST]: {
+              [getUrlWithoutEmbedParams(entry.request.href)]: uuid,
+            },
+          };
+        }
+        this.cacheService.enqueueDelta(delta);
       }),
     );
-  });
+  }, { dispatch: false });
 
-  private rehydrateFrom(shareableState: unknown) {
-    return of(
-      new StoreAction(StoreActionTypes.REHYDRATE, shareableState as AppState),
-      new CrossTabStateReceive(),
+  /**
+   * Persist index ADD/REMOVE. Bulk removes resolve matching IndexedDB keys first.
+   */
+  public persistIndex$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(
+        IndexActionTypes.ADD,
+        IndexActionTypes.REMOVE_BY_VALUE,
+        IndexActionTypes.REMOVE_BY_SUBSTRING,
+      ),
+      tap((action: AddToIndexAction | RemoveFromIndexByValueAction | RemoveFromIndexBySubstringAction) => {
+        if (action.type === IndexActionTypes.ADD) {
+          const addAction = action as AddToIndexAction;
+          if (addAction.payload.name === IndexName.REQUEST) {
+            return;
+          }
+          if (isSensitiveCacheHref(addAction.payload.key) || isSensitiveCacheHref(String(addAction.payload.value))) {
+            return;
+          }
+          this.cacheService.enqueueDelta({
+            index: {
+              [addAction.payload.name]: {
+                [addAction.payload.key]: addAction.payload.value,
+              },
+            },
+          });
+          return;
+        }
+
+        void this.persistIndexRemoval(action as RemoveFromIndexByValueAction | RemoveFromIndexBySubstringAction)
+          .catch((error: unknown) => console.log('Failed to persist index removal', error));
+      }),
     );
+  }, { dispatch: false });
+
+  /**
+   * Apply cache deltas coming from other tabs into this tab's NgRx store.
+   */
+  public applyRemoteCache$ = createEffect(() => {
+    return this.broadcastService.messages$.pipe(
+      filter((message) => isCrossTabCachePutMessage(message) || isCrossTabCacheDeleteMessage(message)),
+      tap((message: SharedCacheDelta) => {
+        this.cacheService.applyRemoteDelta(message);
+      }),
+    );
+  }, { dispatch: false });
+
+  /**
+   * Another tab wiped the shared cache (login/logout/impersonate/locale).
+   */
+  public applyRemoteClear$ = createEffect(() => {
+    return this.broadcastService.messages$.pipe(
+      filter(isCrossTabCacheClearMessage),
+      tap(() => {
+        console.log('Applied remote cache clear');
+        this.cacheService.clearLocalSharedCache();
+      }),
+    );
+  }, { dispatch: false });
+
+  private async persistIndexRemoval(action: RemoveFromIndexByValueAction | RemoveFromIndexBySubstringAction): Promise<void> {
+    const deleted = action.type === IndexActionTypes.REMOVE_BY_VALUE
+      ? await this.storage.deleteIndexByValue(action.payload.name, action.payload.value)
+      : await this.storage.deleteIndexBySubstring(action.payload.name, action.payload.value);
+
+    if (deleted.length > 0) {
+      this.cacheService.enqueueDelta({ deleteIndex: deleted });
+    }
   }
 
-  private shareableState(state: any): any {
-    return {
-      core: {
-        'cache/object': {
-          ...state.core['cache/object'],
-          // todo: limit this to "safe" data somehow? don't imagine this matters since we already have a shared authorization cookie 🤷‍
-        },
-        'data/request': {
-          ...state.core['data/request'],
-          // todo: determine what to retain based on the previous thing
-        },
-        'index': {
-          ...state.core.index,
-          // todo: determine what to retain based on the previous things
-        },
-      },
-    };
-  }
 }

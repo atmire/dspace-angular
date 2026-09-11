@@ -2,6 +2,7 @@ import { HttpHeaders } from '@angular/common/http';
 import {
   Inject,
   Injectable,
+  Optional,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import {
@@ -36,6 +37,7 @@ import {
 import { NotificationsService } from '../../shared/notifications/notifications.service';
 import { createSuccessfulRemoteDataObject$ } from '../../shared/remote-data.utils';
 import { followLink } from '../../shared/utils/follow-link-config.model';
+import { CrossTabCacheService } from '../cross-tab-state/cross-tab-cache.service';
 import {
   buildPaginatedList,
   PaginatedList,
@@ -119,6 +121,7 @@ export class AuthService {
     protected hardRedirectService: HardRedirectService,
     protected notificationService: NotificationsService,
     protected translateService: TranslateService,
+    @Optional() protected crossTabCacheService?: CrossTabCacheService,
   ) {
     this.store.pipe(
       // when this service is constructed the store is not fully initialized yet
@@ -542,6 +545,9 @@ export class AuthService {
       let url = `reload/${new Date().getTime()}`;
       if (isNotEmpty(redirectUrl) && !redirectUrl.startsWith(LOGIN_ROUTE)) {
         url += `?redirect=${encodeURIComponent(redirectUrl)}`;
+      }
+      if (hasValue(this.crossTabCacheService)) {
+        void this.crossTabCacheService.clearSharedCache();
       }
       this.hardRedirectService.redirect(url);
     }

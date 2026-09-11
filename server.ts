@@ -222,7 +222,7 @@ export function app() {
  * The callback function to serve server side angular
  */
 function ngApp(req, res, next) {
-  if (environment.ssr.enabled && req.method === 'GET' && (req.path === '/' || !isExcludedFromSsr(req.path, environment.ssr.excludePathPatterns)) && !hasActiveCsrSession(req)) {
+  if (environment.ssr.enabled && req.method === 'GET' && (req.path === '/' || !isExcludedFromSsr(req.path, environment.ssr.excludePathPatterns))) {
     // Render the page to user via SSR (server side rendering)
     serverSideRender(req, res, next);
   } else {
@@ -230,19 +230,6 @@ function ngApp(req, res, next) {
     console.log('Serving for direct client-side rendering (CSR)');
     clientSideRender(req, res);
   }
-}
-
-
-/**
- * The lifetime of an active CSR session in milliseconds.
- * Requests coming from active sessions will not trigger SSR to reduce CPU load on the server.
- * Active sessions will have cached most of the necessary resources already, reducing their TTI.
- */
-const CSR_SESSION_ACTIVITY_WINDOW = 10000;
-
-function hasActiveCsrSession(req): boolean {
-  const csrHeartbeat = req.cookies.DSPACE_CSR_SESSION_HEARTBEAT;
-  return hasValue(csrHeartbeat) && (Date.now() - Number.parseInt(csrHeartbeat, 10)) < CSR_SESSION_ACTIVITY_WINDOW;
 }
 
 /**
