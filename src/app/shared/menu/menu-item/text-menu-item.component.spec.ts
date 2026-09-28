@@ -43,4 +43,10 @@ describe('TextMenuItemComponent', () => {
     const textContent = debugElement.query(By.css('span')).nativeElement.textContent;
     expect(textContent).toEqual(text);
   });
+
+  it('should be plain text without a nested widget role so parent menuitems stay valid', () => {
+    const label = debugElement.query(By.css('span')).nativeElement;
+    expect(label.getAttribute('role')).toBeNull();
+    expect(label.getAttribute('tabindex')).toBeNull();
+  });
 });

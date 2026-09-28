@@ -55,4 +55,21 @@ describe('OnClickMenuItemComponent', () => {
     debugElement.query(By.css('a.ds-menu-item')).triggerEventHandler('click', new Event(('click')));
     expect(item.function).toHaveBeenCalled();
   });
+
+  it('should declare role="menuitem" on the activated control', () => {
+    expect(debugElement.query(By.css('a.ds-menu-item')).nativeElement.getAttribute('role')).toBe('menuitem');
+  });
+
+  describe('when the item is disabled', () => {
+    beforeEach(() => {
+      component.item = Object.assign(new OnClickMenuItemModel(), { text, function: func, disabled: true });
+      fixture.detectChanges();
+    });
+
+    it('should declare role="menuitem" with aria-disabled so parent menus satisfy aria-required-children', () => {
+      const disabledItem = debugElement.query(By.css('[data-test="' + text + '"]')).nativeElement;
+      expect(disabledItem.getAttribute('role')).toBe('menuitem');
+      expect(disabledItem.getAttribute('aria-disabled')).toBe('true');
+    });
+  });
 });

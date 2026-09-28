@@ -11,5 +11,8 @@
   >{{item.text | translate}}</a>
 }
 @if (item.disabled) {
-  <span [attr.data-test]="item.text" class="nav-item nav-link disabled">{{item.text | translate}}</span>
+  <span [attr.data-test]="item.text"
+    class="nav-item nav-link disabled"
+    role="menuitem"
+    aria-disabled="true">{{item.text | translate}}</span>
 }

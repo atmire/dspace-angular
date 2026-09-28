@@ -64,6 +64,15 @@ describe('ExpandableNavbarSectionComponent', () => {
         expect(toggler.getAttribute('type')).toBe('button');
         expect(toggler.getAttribute('role')).toBe('menuitem');
       });
+
+      it('should expose aria-disabled when the section model is disabled', () => {
+        component.section = Object.assign({}, component.section, {
+          model: Object.assign({}, component.section.model, { disabled: true }),
+        });
+        fixture.detectChanges();
+        const toggler = fixture.debugElement.query(By.css('[data-test="navbar-section-toggler"]')).nativeElement;
+        expect(toggler.getAttribute('aria-disabled')).toBe('true');
+      });
     });
 
     describe('when the mouse enters the section header (while inactive)', () => {

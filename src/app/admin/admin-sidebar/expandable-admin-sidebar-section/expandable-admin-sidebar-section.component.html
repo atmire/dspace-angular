@@ -12,6 +12,7 @@
       [attr.aria-expanded]="isExpanded$ | async"
       [attr.aria-label]="('menu.section.toggle.' + section.id) | translate"
       [class.disabled]="section.model?.disabled"
+      [attr.aria-disabled]="section.model?.disabled || null"
       (click)="toggleSection($event)"
       (keyup.space)="toggleSection($event)"
       href="javascript:void(0);"
