@@ -26,6 +26,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { lastValueFrom } from 'rxjs';
 import { take } from 'rxjs/operators';
 
+import { ColorSchemeService } from '../../app/accessibility/color-scheme.service';
 import { AppState } from '../../app/app.reducer';
 import { BreadcrumbsService } from '../../app/breadcrumbs/breadcrumbs.service';
 import { InitService } from '../../app/init.service';
@@ -53,6 +54,7 @@ export class ServerInitService extends InitService {
     protected themeService: ThemeService,
     protected menuService: MenuService,
     protected menuProviderService: MenuProviderService,
+    protected colorSchemeService: ColorSchemeService,
   ) {
     super(
       store,
@@ -66,6 +68,7 @@ export class ServerInitService extends InitService {
       themeService,
       menuService,
       menuProviderService,
+      colorSchemeService,
     );
   }
 
@@ -77,6 +80,7 @@ export class ServerInitService extends InitService {
       this.initCorrelationId();
 
       this.checkEnvironment();
+      this.initColorScheme();
       this.initI18n();
       this.initAngulartics();
       this.initRouteListeners();

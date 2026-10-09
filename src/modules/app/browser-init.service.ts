@@ -47,6 +47,7 @@ import {
 } from 'rxjs/operators';
 
 import { logStartupMessage } from '../../../startup-message';
+import { ColorSchemeService } from '../../app/accessibility/color-scheme.service';
 import { AppState } from '../../app/app.reducer';
 import { BreadcrumbsService } from '../../app/breadcrumbs/breadcrumbs.service';
 import { InitService } from '../../app/init.service';
@@ -88,6 +89,7 @@ export class BrowserInitService extends InitService {
     private halService: HALEndpointService,
     private matomoService: MatomoService,
     protected menuProviderService: MenuProviderService,
+    protected colorSchemeService: ColorSchemeService,
   ) {
     super(
       store,
@@ -101,6 +103,7 @@ export class BrowserInitService extends InitService {
       themeService,
       menuService,
       menuProviderService,
+      colorSchemeService,
     );
   }
 
@@ -124,6 +127,7 @@ export class BrowserInitService extends InitService {
       this.checkEnvironment();
       logStartupMessage(environment);
 
+      this.initColorScheme();
       this.initI18n();
       this.initAngulartics();
       this.initGoogleAnalytics();

@@ -40,6 +40,7 @@ import {
 
 import { DATA_SERVICE_MAP } from '../decorator-registries/data-service-registry';
 import { environment } from '../environments/environment';
+import { ColorSchemeService } from './accessibility/color-scheme.service';
 import { AppState } from './app.reducer';
 import { BreadcrumbsService } from './breadcrumbs/breadcrumbs.service';
 import { dsDynamicFormControlMapFn } from './shared/form/builder/ds-dynamic-form-ui/ds-dynamic-form-control-map-fn';
@@ -77,7 +78,7 @@ export abstract class InitService {
     protected themeService: ThemeService,
     protected menuService: MenuService,
     protected menuProviderService: MenuProviderService,
-
+    protected colorSchemeService: ColorSchemeService,
   ) {
   }
 
@@ -173,6 +174,14 @@ export abstract class InitService {
     if (environment.debug) {
       console.info(environment);
     }
+  }
+
+  /**
+   * Apply the opt-in prefers-color-scheme dark mapping class when configured.
+   * @protected
+   */
+  protected initColorScheme(): void {
+    this.colorSchemeService.init();
   }
 
   /**

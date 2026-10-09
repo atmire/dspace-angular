@@ -1,0 +1,53 @@
+/**
+ * Baseline prefers-color-scheme: dark mapping for the dspace theme.
+ *
+ * Remaps a small, well-defined set of CSS custom properties
+ * (background, surface, text, border) when the OS preference is dark.
+ *
+ * Opt-in: only applies when <html> has the class set by
+ * accessibility.enablePrefersColorScheme (see ColorSchemeService).
+ */
+
+@media (prefers-color-scheme: dark) {
+  html.ds-enable-prefers-color-scheme {
+    color-scheme: dark;
+
+    // Background
+    --bs-body-bg: #{$gray-900};
+    --bs-body-bg-rgb: #{to-rgb($gray-900)};
+    --ds-header-bg: #{$gray-900};
+    --ds-navbar-bg: #{$gray-900};
+
+    // Surface
+    --bs-secondary-bg: #{$gray-800};
+    --bs-secondary-bg-rgb: #{to-rgb($gray-800)};
+    --bs-tertiary-bg: #{mix($gray-800, $gray-900, 50%)};
+    --bs-tertiary-bg-rgb: #{to-rgb(mix($gray-800, $gray-900, 50%))};
+    --bs-light: #{$gray-800};
+    --ds-expandable-navbar-bg: #{$gray-800};
+    --ds-breadcrumb-bg: #{$gray-800};
+    --ds-top-footer-bg: #{$gray-800};
+    --ds-home-news-background-color: #{$gray-800};
+    --ds-user-menu-bg: #{$gray-800};
+
+    // Text
+    --bs-body-color: #{$gray-300};
+    --bs-body-color-rgb: #{to-rgb($gray-300)};
+    --bs-emphasis-color: #{$white};
+    --bs-emphasis-color-rgb: #{to-rgb($white)};
+    --bs-secondary-color: #{rgba($gray-300, .75)};
+    --bs-tertiary-color: #{rgba($gray-300, .5)};
+    --ds-navbar-link-color: #{$gray-300};
+    --ds-navbar-link-color-hover: #{$white};
+    --ds-header-icon-color: #{$gray-300};
+    --ds-header-icon-color-hover: #{$white};
+    --ds-expandable-navbar-link-color: #{$gray-300};
+    --ds-expandable-navbar-link-color-hover: #{$white};
+
+    // Border
+    --bs-border-color: #{$gray-700};
+    --bs-border-color-translucent: #{rgba($white, .15)};
+    --ds-header-navbar-border-bottom-color: #{$gray-700};
+    --ds-footer-border: 1px solid #{$gray-700};
+  }
+}

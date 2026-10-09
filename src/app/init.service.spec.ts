@@ -31,12 +31,14 @@ import {
 } from '@ngx-translate/core';
 
 import { environment } from '../environments/environment';
+import { ColorSchemeService } from './accessibility/color-scheme.service';
 import { AppComponent } from './app.component';
 import { getMockLocaleService } from './app.component.spec';
 import { storeModuleConfig } from './app.reducer';
 import { BreadcrumbsService } from './breadcrumbs/breadcrumbs.service';
 import { InitService } from './init.service';
 import { MenuService } from './shared/menu/menu.service';
+import { MenuProviderService } from './shared/menu/menu-provider.service';
 import { getMockThemeService } from './shared/theme-support/test/theme-service.mock';
 import { ThemeService } from './shared/theme-support/theme.service';
 import { Angulartics2DSpace } from './statistics/angulartics/dspace-provider';
@@ -117,6 +119,7 @@ describe('InitService', () => {
     let headTagService: HeadTagServiceMock;
     let breadcrumbsServiceSpy;
     let menuServiceSpy;
+    let colorSchemeServiceSpy;
 
     const BLOCKING = {
       t: {  core: { auth: { blocking: true } } },
@@ -144,6 +147,9 @@ describe('InitService', () => {
       menuServiceSpy = jasmine.createSpyObj('menuServiceSpy', [
         'listenForRouteChanges',
       ]);
+      colorSchemeServiceSpy = jasmine.createSpyObj('colorSchemeServiceSpy', [
+        'init',
+      ]);
 
 
       TestBed.resetTestingModule();
@@ -170,7 +176,9 @@ describe('InitService', () => {
           { provide: Router, useValue: new RouterMock() },
           { provide: ActivatedRoute, useValue: new MockActivatedRoute() },
           { provide: MenuService, useValue: menuServiceSpy },
+          { provide: MenuProviderService, useValue: {} },
           { provide: ThemeService, useValue: getMockThemeService() },
+          { provide: ColorSchemeService, useValue: colorSchemeServiceSpy },
           provideMockStore({ initialState }),
           AppComponent,
           RouteService,
