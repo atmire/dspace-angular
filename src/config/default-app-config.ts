@@ -736,6 +736,8 @@ export class DefaultAppConfig implements AppConfig {
   // Accessibility settings configuration, used by the AccessibilitySettingsService
   accessibility: AccessibilitySettingsConfig = {
     cookieExpirationDuration: 7,
+    // When true, honour OS prefers-color-scheme: dark via CSS custom property remapping
+    enablePrefersColorScheme: false,
   };
 
   // Layout configuration for authority-controlled metadata display

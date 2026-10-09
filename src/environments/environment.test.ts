@@ -530,6 +530,7 @@ export const environment: BuildConfig = {
 
   accessibility: {
     cookieExpirationDuration: 7,
+    enablePrefersColorScheme: false,
   },
 
   // Configuration for layout customization of metadata rendering in Item page

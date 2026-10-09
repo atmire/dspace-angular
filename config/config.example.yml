@@ -710,6 +710,9 @@ geospatialMapViewer:
 accessibility:
   # The duration in days after which the accessibility settings cookie expires
   cookieExpirationDuration: 7
+  # When true, honour the OS prefers-color-scheme: dark preference by remapping
+  # a small set of CSS custom properties (background, surface, text, border).
+  enablePrefersColorScheme: false
 
 # Configuration for layout customization of metadata rendering in Item page
 # Currently only the authority reference config is available, more will follow with the integration of the so called CRIS layout.
