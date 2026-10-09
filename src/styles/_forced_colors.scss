@@ -1,0 +1,25 @@
+/**
+ * Adjustments for Windows High Contrast Mode / forced colors.
+ *
+ * Prefer system colour keywords so the UA palette stays in control.
+ * Use forced-color-adjust only where author colours would otherwise
+ * leave chrome invisible or low-contrast under HCM.
+ *
+ * See: https://developer.mozilla.org/en-US/docs/Web/CSS/@media/forced-colors
+ */
+
+@media (forced-colors: active) {
+  // Focus rings: box-shadow is forced to none; keep a visible outline.
+  .btn:focus,
+  .btn:focus-visible,
+  a:focus-visible,
+  button:focus-visible,
+  [tabindex]:focus-visible,
+  .form-control:focus,
+  .form-select:focus,
+  .form-check-input:focus {
+    outline: 2px solid Highlight !important;
+    outline-offset: 2px !important;
+    box-shadow: none !important;
+  }
+}
