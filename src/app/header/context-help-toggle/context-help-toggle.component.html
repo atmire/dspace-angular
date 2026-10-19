@@ -1,7 +1,8 @@
 @if (buttonVisible$ | async) {
   <div>
-    <button type="button"
-      class="ds-context-help-toggle-button"
+    <button
+      class="btn btn-link px-0"
+      type="button"
       (click)="onClick()"
       [attr.aria-label]="'nav.context-help-toggle' | translate"
       [title]="'nav.context-help-toggle' | translate">

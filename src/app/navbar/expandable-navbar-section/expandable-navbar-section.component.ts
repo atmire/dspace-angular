@@ -11,7 +11,6 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { RouterLinkActive } from '@angular/router';
 import { isNotEmpty } from '@dspace/shared/utils/empty.util';
 import { Observable } from 'rxjs';
 import {
@@ -39,7 +38,6 @@ import { NavbarSectionComponent } from '../navbar-section/navbar-section.compone
     AsyncPipe,
     HoverOutsideDirective,
     NgComponentOutlet,
-    RouterLinkActive,
   ],
 })
 export class ExpandableNavbarSectionComponent extends NavbarSectionComponent implements AfterViewChecked, OnInit, OnDestroy {

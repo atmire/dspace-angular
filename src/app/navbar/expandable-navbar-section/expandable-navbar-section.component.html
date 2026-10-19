@@ -14,7 +14,7 @@
       data-test="navbar-section-toggler"
       [attr.aria-expanded]="(active$ | async).valueOf()"
       [attr.aria-controls]="expandableNavbarSectionId()"
-      class="d-flex flex-row flex-nowrap align-items-center gapx-1 ds-menu-toggler-wrapper"
+      class="btn btn-link d-flex flex-row flex-nowrap align-items-center gapx-1 ds-menu-toggler-wrapper border-0 p-0"
       [class.disabled]="section.model?.disabled"
       [attr.aria-disabled]="section.model?.disabled || null">
       <span class="flex-fill">

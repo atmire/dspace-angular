@@ -9,8 +9,7 @@
     (keyup.enter)="activate($event)"
     [attr.data-test]="item.text"
   >{{item.text | translate}}</a>
-}
-@if (item.disabled) {
+} @else {
   <span [attr.data-test]="item.text"
     class="nav-item nav-link disabled"
     role="menuitem"
