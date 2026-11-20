@@ -105,6 +105,10 @@ describe('DsoEditMenuExpandableSectionComponent', () => {
         fixture.detectChanges();
         tick();
         fixture.detectChanges();
+        toggler.nativeElement.dispatchEvent(new KeyboardEvent('keyup', { code: 'Enter', bubbles: true }));
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
 
         expect(dropdown.isOpen()).toBeTrue();
         const items = document.querySelectorAll(`#${component.expandableSectionId()} *[role="menuitem"]`);

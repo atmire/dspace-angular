@@ -68,7 +68,7 @@ describe('ExpandableAdminSidebarSectionComponent', () => {
     describe('when the header text is clicked', () => {
       beforeEach(() => {
         spyOn(menuService, 'toggleActiveSection');
-        const sidebarToggler = fixture.debugElement.query(By.css('a.sidebar-section-wrapper'));
+        const sidebarToggler = fixture.debugElement.query(By.css('button.sidebar-section-wrapper'));
         sidebarToggler.triggerEventHandler('click', {
           preventDefault: () => {/**/
           },
@@ -83,7 +83,7 @@ describe('ExpandableAdminSidebarSectionComponent', () => {
     describe('when space is pressed on the section header', () => {
       beforeEach(() => {
         spyOn(menuService, 'toggleActiveSection');
-        const sidebarToggler = fixture.debugElement.query(By.css('a.sidebar-section-wrapper'));
+        const sidebarToggler = fixture.debugElement.query(By.css('button.sidebar-section-wrapper'));
         sidebarToggler.triggerEventHandler('keyup.space', {
           preventDefault: () => {/**/
           },
